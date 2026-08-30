@@ -1,0 +1,1821 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biblioteca de Resumos — Medicina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0A0E13; --surface:#121821; --surface-2:#182029;
+    --line:#233040; --line-soft:#1A232C;
+    --teal:#4FB6A6; --teal-soft:rgba(79,182,166,0.14); --teal-line:rgba(79,182,166,0.45);
+    --amber:#D9A441; --amber-soft:rgba(217,164,65,0.14); --amber-line:rgba(217,164,65,0.45);
+    --violet:#8C7AE6; --violet-soft:rgba(140,122,230,0.14); --violet-line:rgba(140,122,230,0.45);
+    --crimson:#C1584B;
+    --text:#E9EEF2; --text-dim:#93A5B4; --text-faint:#5B6E7E;
+    --font-display:'Source Serif 4', Georgia, serif;
+    --font-body:'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono:'IBM Plex Mono', 'Courier New', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; background:var(--void); color:var(--text); font-family:var(--font-body); line-height:1.6;
+    background-attachment:fixed; background-repeat:no-repeat; background-size:cover;
+    transition:background-color .4s ease, box-shadow .4s ease; box-shadow:none;
+  }
+  main{ max-width:1000px; margin:0 auto; padding:56px 28px 100px; }
+
+  /* ================================================================
+     TEMAS DE FUNDO
+     Seis atmosferas distintas, todas em CSS puro (sem imagens),
+     pensadas para ficar escuras e discretas na maior parte da tela,
+     só respirando cor perto das bordas.
+     ================================================================ */
+
+  /* Padrão — o sutil original, glow quase imperceptível nos cantos */
+  body.theme-default{
+    background-color:var(--void);
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(79,182,166,0.07), transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(140,122,230,0.05), transparent 40%);
+  }
+
+  /* Abismo — quase preto absoluto, uma névoa mínima ao centro, vinheta pesada */
+  body.theme-abismo{
+    background-color:#050708;
+    background-image:
+      radial-gradient(ellipse 900px 560px at 50% -6%, rgba(79,182,166,0.055), transparent 60%),
+      radial-gradient(ellipse 1500px 1000px at 50% 55%, transparent 35%, rgba(0,0,0,0.55) 100%);
+  }
+
+  /* Pergaminho — inspirado num pergaminho antigo com moldura ornamental: medalhões em
+     sunburst desenhados em SVG nos quatro cantos, moldura tripla vermelho-dourado-vermelho,
+     dourado quente e saturado, fibra de papel cruzada e vinheta funda */
+  body.theme-pergaminho{
+    background-color:#0F0A05;
+    box-shadow:
+      inset 0 0 0 3px rgba(168,42,26,0.68),
+      inset 0 0 0 6px rgba(10,6,3,0.62),
+      inset 0 0 0 8px rgba(228,180,86,0.40),
+      inset 0 0 0 11px rgba(10,6,3,0.62),
+      inset 0 0 0 14px rgba(150,34,20,0.48),
+      inset 0 0 130px rgba(120,20,15,0.32);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 140'%3E%3Cg fill='%23c14a2c' fill-opacity='0.68'%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(-8 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(2 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(12 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(22 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(32 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(42 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(52 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(62 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(72 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(82 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(92 30 30)'/%3E%3C/g%3E%3Ccircle cx='30' cy='30' r='13' fill='none' stroke='%23c14a2c' stroke-opacity='0.6' stroke-width='2'/%3E%3Ccircle cx='30' cy='30' r='6' fill='%23e8b656' fill-opacity='0.7'/%3E%3Cpath d='M30,17 C16,17 17,5 6,5' fill='none' stroke='%23c14a2c' stroke-opacity='0.55' stroke-width='2'/%3E%3Cpath d='M17,30 C17,16 5,17 5,6' fill='none' stroke='%23c14a2c' stroke-opacity='0.55' stroke-width='2'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 140'%3E%3Cg transform='translate(140,0) scale(-1,1)'%3E%3Cg fill='%23c14a2c' fill-opacity='0.68'%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(-8 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(2 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(12 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(22 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(32 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(42 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(52 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(62 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(72 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(82 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(92 30 30)'/%3E%3C/g%3E%3Ccircle cx='30' cy='30' r='13' fill='none' stroke='%23c14a2c' stroke-opacity='0.6' stroke-width='2'/%3E%3Ccircle cx='30' cy='30' r='6' fill='%23e8b656' fill-opacity='0.7'/%3E%3Cpath d='M30,17 C16,17 17,5 6,5' fill='none' stroke='%23c14a2c' stroke-opacity='0.55' stroke-width='2'/%3E%3Cpath d='M17,30 C17,16 5,17 5,6' fill='none' stroke='%23c14a2c' stroke-opacity='0.55' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 140'%3E%3Cg transform='translate(0,140) scale(1,-1)'%3E%3Cg fill='%23c14a2c' fill-opacity='0.68'%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(-8 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(2 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(12 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(22 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(32 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(42 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(52 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(62 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(72 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(82 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(92 30 30)'/%3E%3C/g%3E%3Ccircle cx='30' cy='30' r='13' fill='none' stroke='%23c14a2c' stroke-opacity='0.6' stroke-width='2'/%3E%3Ccircle cx='30' cy='30' r='6' fill='%23e8b656' fill-opacity='0.7'/%3E%3Cpath d='M30,17 C16,17 17,5 6,5' fill='none' stroke='%23c14a2c' stroke-opacity='0.55' stroke-width='2'/%3E%3Cpath d='M17,30 C17,16 5,17 5,6' fill='none' stroke='%23c14a2c' stroke-opacity='0.55' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 140'%3E%3Cg transform='translate(140,140) scale(-1,-1)'%3E%3Cg fill='%23c14a2c' fill-opacity='0.68'%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(-8 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(2 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(12 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(22 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(32 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(42 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(52 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(62 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(72 30 30)'/%3E%3Cpolygon points='8,28 52,30 8,32' transform='rotate(82 30 30)'/%3E%3Cpolygon points='8,28 70,30 8,32' transform='rotate(92 30 30)'/%3E%3C/g%3E%3Ccircle cx='30' cy='30' r='13' fill='none' stroke='%23c14a2c' stroke-opacity='0.6' stroke-width='2'/%3E%3Ccircle cx='30' cy='30' r='6' fill='%23e8b656' fill-opacity='0.7'/%3E%3Cpath d='M30,17 C16,17 17,5 6,5' fill='none' stroke='%23c14a2c' stroke-opacity='0.55' stroke-width='2'/%3E%3Cpath d='M17,30 C17,16 5,17 5,6' fill='none' stroke='%23c14a2c' stroke-opacity='0.55' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E"),
+      radial-gradient(ellipse 1100px 850px at 18% 12%, rgba(232,182,86,0.34), transparent 60%),
+      radial-gradient(ellipse 750px 600px at 42% 34%, rgba(210,150,58,0.18), transparent 55%),
+      radial-gradient(circle at 6% 94%, rgba(160,35,20,0.18), transparent 42%),
+      radial-gradient(circle at 94% 6%, rgba(160,35,20,0.16), transparent 40%),
+      radial-gradient(circle at 84% 88%, rgba(120,25,15,0.16), transparent 44%),
+      repeating-linear-gradient(113deg, rgba(224,175,80,0.055) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(24deg, rgba(0,0,0,0.06) 0 1px, transparent 1px 5px),
+      radial-gradient(ellipse 1500px 1000px at 50% 45%, transparent 22%, rgba(0,0,0,0.82) 100%);
+    background-repeat:
+      no-repeat, no-repeat, no-repeat, no-repeat,
+      repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat;
+    background-position:
+      top left, top right, bottom left, bottom right,
+      0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+    background-size:
+      190px 190px, 190px 190px, 190px 190px, 190px 190px,
+      auto, auto, auto, auto, auto, auto, auto, auto;
+  }
+
+  /* Synthwave — horizonte neon num vazio quase preto, grade fina ao fundo, respirando devagar */
+  body.theme-synthwave{
+    background-color:#07040B;
+    background-image:
+      radial-gradient(ellipse 1000px 620px at 50% 108%, rgba(255,64,175,0.20), transparent 62%),
+      radial-gradient(ellipse 820px 520px at 50% 112%, rgba(64,220,255,0.13), transparent 58%),
+      linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size:auto, auto, 48px 48px, 48px 48px;
+    animation:glowPulse 6s ease-in-out infinite;
+  }
+
+  /* Circuito — placa de circuito impresso: trilhas finas, vias, glow técnico, pulsando devagar */
+  body.theme-circuito{
+    background-color:#050B0C;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(79,182,166,0.05) 0 1px, transparent 1px 64px),
+      repeating-linear-gradient(0deg, rgba(79,182,166,0.05) 0 1px, transparent 1px 64px),
+      radial-gradient(rgba(79,182,166,0.16) 1.4px, transparent 2px),
+      radial-gradient(circle at 18% 10%, rgba(79,182,166,0.08), transparent 42%),
+      radial-gradient(circle at 85% 90%, rgba(140,122,230,0.06), transparent 42%);
+    background-size:auto, auto, 64px 64px, auto, auto;
+    animation:glowPulse 7s ease-in-out infinite;
+  }
+
+  @keyframes glowPulse{
+    0%, 100%{ filter:brightness(1); }
+    50%{ filter:brightness(1.09); }
+  }
+
+  /* Observatório — inspirado numa foto real da Via Láctea: fundo azul quase preto para
+     contraste máximo, oito camadas de estrelas em tamanhos variados (bem mais denso) e
+     uma faixa horizontal difusa (a Via Láctea) discreta cruzando o meio da tela */
+  body.theme-observatorio{
+    background-color:#01030A;
+    background-image:
+      radial-gradient(rgba(255,255,255,0.95) 1px, transparent 1.3px),
+      radial-gradient(rgba(255,255,255,0.65) 1px, transparent 1.2px),
+      radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1.2px),
+      radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1.1px),
+      radial-gradient(rgba(255,255,255,0.32) 1px, transparent 1px),
+      radial-gradient(rgba(200,220,245,0.42) 1px, transparent 1.3px),
+      radial-gradient(rgba(180,205,235,0.5) 1.3px, transparent 1.7px),
+      radial-gradient(rgba(255,255,255,0.85) 1.6px, transparent 2.1px),
+      radial-gradient(ellipse 2000px 420px at 50% 48%, rgba(140,175,215,0.11), transparent 65%),
+      radial-gradient(ellipse 1700px 1150px at 50% 50%, transparent 28%, rgba(0,0,0,0.68) 100%);
+    background-size:40px 40px, 58px 58px, 75px 75px, 90px 90px, 125px 125px, 150px 150px, 220px 220px, 290px 290px, auto, auto;
+    background-position:10px 15px, 0 0, 55px 25px, 30px 50px, 70px 10px, 95px 130px, 110px 90px, 40px 160px, 0 0, 0 0;
+  }
+
+  .hero-block{
+    position:relative; isolation:isolate; overflow:hidden;
+    border-radius:16px; padding:26px 26px 2px;
+    background-size:cover; background-position:center;
+    transition:box-shadow .18s ease;
+  }
+  .hero-block.has-cover::before{
+    content:""; position:absolute; inset:0; z-index:0;
+    background:linear-gradient(175deg, rgba(10,14,19,.42) 0%, rgba(10,14,19,.80) 55%, rgba(10,14,19,.93) 100%);
+  }
+  .hero-block > *{ position:relative; z-index:1; }
+  .hero-block .cover-tools{ position:absolute; top:16px; right:16px; z-index:2; opacity:.55; }
+  .hero-block:hover .cover-tools, .hero-block:focus-within .cover-tools{ opacity:1; }
+
+  header{ margin-bottom:36px; }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--teal); margin-bottom:12px;
+  }
+  h1{
+    font-family:var(--font-display); font-size:2.6rem; margin:0 0 12px 0; font-weight:600; letter-spacing:-.01em;
+    background:linear-gradient(120deg, var(--text) 40%, var(--teal) 100%);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  header p{ color:var(--text-dim); max-width:640px; margin:0; font-size:15px; }
+
+  .controls{ display:flex; flex-wrap:wrap; gap:10px; margin:32px 0 6px 0; align-items:center; position:relative; }
+  #search{
+    flex:1; min-width:220px;
+    background:var(--surface); border:1px solid var(--line); border-radius:10px;
+    color:var(--text); font-family:var(--font-body); font-size:14.5px;
+    padding:12px 15px; outline:none; transition:border-color .15s ease;
+  }
+  #search::placeholder{ color:var(--text-faint); }
+  #search:focus{ border-color:var(--teal-line); }
+
+  .clear-covers{
+    font-family:var(--font-mono); font-size:11px; color:var(--text-faint); background:none; border:none;
+    cursor:pointer; text-decoration:underline; text-underline-offset:3px; padding:4px;
+  }
+  .clear-covers:hover{ color:var(--crimson); }
+
+  .fs-connect-btn{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.03em;
+    background:var(--teal-soft); border:1px solid var(--teal-line); color:var(--teal);
+    border-radius:20px; padding:9px 14px; cursor:pointer; white-space:nowrap;
+  }
+  .fs-connect-btn:hover{ background:rgba(79,182,166,0.22); }
+  .fs-connect-btn.connected{ background:var(--surface-2); border-color:var(--line); color:var(--text-dim); cursor:default; }
+
+  .card.add-card{
+    background:transparent; border:1.5px dashed var(--line); border-top:1.5px dashed var(--line);
+    align-items:center; justify-content:center; gap:8px; min-height:150px; cursor:pointer;
+    color:var(--text-faint); font-family:var(--font-body); width:100%;
+  }
+  .card.add-card:hover{ border-color:var(--teal-line); color:var(--teal); background:var(--teal-soft); }
+  .card.add-card .add-plus{ font-family:var(--font-display); font-size:2rem; line-height:1; }
+  .card.add-card .add-label{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.04em; text-transform:uppercase; }
+
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(6,9,13,.72); backdrop-filter:blur(2px);
+    display:none; align-items:center; justify-content:center; padding:20px; z-index:50;
+  }
+  .modal{
+    background:var(--surface-2); border:1px solid var(--line); border-radius:14px;
+    padding:28px 26px; width:100%; max-width:440px; box-shadow:0 20px 50px rgba(0,0,0,.5);
+  }
+  .modal h3{ font-family:var(--font-display); font-size:1.3rem; margin:0 0 6px 0; font-weight:600; }
+  .modal .modal-context{
+    font-family:var(--font-mono); font-size:11px; color:var(--teal); letter-spacing:.03em;
+    margin:0 0 20px 0;
+  }
+  .modal label{
+    display:block; font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--text-faint); margin-bottom:16px;
+  }
+  .modal label input{
+    display:block; width:100%; margin-top:7px; background:var(--surface); border:1px solid var(--line);
+    border-radius:8px; color:var(--text); font-family:var(--font-body); font-size:14px; padding:10px 12px;
+    outline:none;
+  }
+  .modal label input:focus{ border-color:var(--teal-line); }
+  .dropzone{
+    border:1.5px dashed var(--line); border-radius:10px; padding:22px 16px; text-align:center;
+    margin-bottom:20px; transition:border-color .15s ease, background .15s ease;
+  }
+  .dropzone.drag-over{ border-color:var(--teal-line); background:var(--teal-soft); }
+  .dropzone p{ margin:0; font-size:13px; color:var(--text-dim); }
+  .dropzone button{
+    background:none; border:none; color:var(--teal); font-family:var(--font-body); font-size:13px;
+    text-decoration:underline; text-underline-offset:2px; cursor:pointer; padding:0;
+  }
+  .modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:6px; }
+  .btn-secondary, .btn-primary{
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.03em; text-transform:uppercase;
+    border-radius:20px; padding:10px 18px; cursor:pointer; border:1px solid var(--line);
+  }
+  .btn-secondary{ background:none; color:var(--text-dim); }
+  .btn-secondary:hover{ color:var(--text); border-color:var(--text-faint); }
+  .btn-primary{ background:var(--teal); border-color:var(--teal); color:var(--void); font-weight:600; }
+  .btn-primary:disabled{ background:var(--surface); border-color:var(--line); color:var(--text-faint); cursor:not-allowed; }
+  .btn-primary:not(:disabled):hover{ background:#5fc3b3; }
+
+  .fs-note{ font-family:var(--font-mono); font-size:11px; color:var(--text-faint); margin:8px 0 0 0; }
+
+  .theme-panel{
+    position:fixed; z-index:60;
+    background:var(--surface-2); border:1px solid var(--line); border-radius:14px;
+    padding:18px; box-shadow:0 20px 45px rgba(0,0,0,.55);
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; width:300px;
+    max-width:calc(100vw - 24px);
+  }
+  .theme-swatch{
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    cursor:pointer; border:none; background:none; padding:0; font-family:var(--font-body);
+  }
+  .theme-swatch .swatch-preview{
+    width:100%; height:52px; border-radius:9px; border:1.5px solid var(--line); overflow:hidden;
+    transition:border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+  }
+  .theme-swatch:hover .swatch-preview{ border-color:var(--teal-line); transform:translateY(-2px); }
+  .theme-swatch.active .swatch-preview{
+    border-color:var(--teal); box-shadow:0 0 0 2px var(--teal-soft), 0 6px 16px rgba(79,182,166,.25);
+  }
+  .theme-swatch .swatch-label{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.03em; color:var(--text-dim); text-align:center;
+  }
+  .theme-swatch.active .swatch-label{ color:var(--teal); }
+
+  .cat-color-panel{
+    position:fixed; z-index:60;
+    background:var(--surface-2); border:1px solid var(--line); border-radius:14px;
+    padding:18px; box-shadow:0 20px 45px rgba(0,0,0,.55);
+    display:flex; flex-direction:column; gap:12px; width:230px; max-width:calc(100vw - 24px);
+  }
+  .cat-color-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .cat-color-row label{ display:flex; align-items:center; gap:7px; font-family:var(--font-mono); font-size:11.5px; color:var(--text-dim); }
+  .cat-color-row label svg{ width:14px; height:14px; flex-shrink:0; }
+  .cat-color-row input[type=color]{
+    width:34px; height:26px; border:1px solid var(--line); border-radius:6px; background:none; cursor:pointer; padding:0;
+  }
+  .cat-color-reset{
+    align-self:flex-start; font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint);
+    background:none; border:none; text-decoration:underline; text-underline-offset:3px; cursor:pointer; margin-top:2px;
+  }
+  .cat-color-reset:hover{ color:var(--crimson); }
+
+  .view-toggle{
+    display:inline-flex; gap:4px; background:var(--surface); border:1px solid var(--line);
+    border-radius:24px; padding:4px; margin-bottom:20px;
+  }
+  .view-toggle-btn{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; text-transform:uppercase;
+    background:none; border:none; color:var(--text-dim); padding:7px 16px; border-radius:20px; cursor:pointer;
+  }
+  .view-toggle-btn.active{ background:var(--teal); color:var(--void); font-weight:600; }
+  .view-toggle-btn:hover:not(.active){ color:var(--text); }
+
+  .uc-map{ display:flex; flex-wrap:wrap; align-items:center; gap:2px 0; margin-bottom:10px; }
+  .uc-map-node{
+    background:var(--surface-2); border:1px solid var(--line); border-radius:12px;
+    padding:18px 20px; min-width:130px; cursor:pointer; text-align:center; font-family:var(--font-body);
+    border-top:3px solid var(--cat-color, var(--teal));
+    transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+  }
+  .uc-map-node:hover{
+    transform:translateY(-3px); box-shadow:0 14px 30px -12px rgba(0,0,0,.5);
+    border-color:color-mix(in srgb, var(--cat-color, var(--teal)) 45%, transparent);
+  }
+  .uc-map-node .map-icon{ color:var(--cat-color, var(--teal)); margin-bottom:8px; }
+  .uc-map-node .map-icon svg{ width:22px; height:22px; }
+  .uc-map-node .map-title{ font-family:var(--font-display); font-size:1.05rem; font-weight:600; margin-bottom:4px; }
+  .uc-map-node .map-count{ font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint); }
+  .uc-map-arrow{ color:var(--text-faint); font-size:19px; padding:0 12px; flex-shrink:0; }
+
+  .cat-stats{
+    display:flex; flex-direction:column; gap:9px; margin:0 0 24px 0;
+    padding:16px 18px; background:var(--surface); border:1px solid var(--line); border-radius:12px;
+  }
+  .cat-stat-row{ display:flex; align-items:center; gap:10px; }
+  .cat-stat-label{
+    width:78px; flex-shrink:0; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.03em;
+    display:flex; align-items:center; gap:5px;
+  }
+  .cat-stat-label svg{ width:12px; height:12px; flex-shrink:0; }
+  .cat-stat-track{ flex:1; height:8px; background:var(--surface-2); border-radius:6px; overflow:hidden; }
+  .cat-stat-fill{ height:100%; border-radius:6px; transition:width .4s ease; }
+  .cat-stat-count{ width:22px; text-align:right; font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint); }
+
+  @media (max-width:480px){
+    .uc-map{ flex-direction:column; align-items:stretch; }
+    .uc-map-arrow{ align-self:center; transform:rotate(90deg); padding:2px 0; }
+  }
+
+  .section-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--text-faint); margin:36px 0 16px 0;
+  }
+
+  /* breadcrumb */
+  .crumb{
+    display:flex; flex-wrap:wrap; align-items:center; gap:6px;
+    font-family:var(--font-mono); font-size:12px; color:var(--text-faint);
+    margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--line-soft);
+  }
+  .crumb button{
+    background:none; border:none; color:var(--text-dim); font-family:var(--font-mono);
+    font-size:12px; cursor:pointer; padding:3px 5px; letter-spacing:.02em; border-radius:4px;
+  }
+  .crumb button:hover:not(:disabled){ color:var(--teal); background:var(--teal-soft); }
+  .crumb button:disabled{ color:var(--text); cursor:default; }
+  .crumb .sep{ color:var(--line); }
+
+  /* grids de blocos (fase / uc / categoria) */
+  .block-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:18px; margin-bottom:10px; }
+  .block-card{
+    position:relative; isolation:isolate; overflow:hidden;
+    background-color:var(--surface-2); background-size:cover; background-position:center;
+    border:1px solid var(--line); border-top:3px solid var(--teal); border-radius:12px;
+    padding:26px 22px 24px; cursor:pointer; text-align:left; color:var(--text);
+    font-family:var(--font-body); min-height:118px;
+    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+  .block-card:hover, .block-card:focus-visible{
+    transform:translateY(-3px); border-color:var(--teal-line);
+    box-shadow:0 14px 30px -10px rgba(0,0,0,.5);
+    outline:none;
+  }
+  .block-card.k-uc{ border-top-color:var(--amber); }
+  .block-card.k-uc:hover{ border-color:var(--amber-line); }
+  .block-card.k-cat{ border-top-color:var(--cat-color, var(--violet)); }
+  .block-card.k-cat:hover{ border-color:color-mix(in srgb, var(--cat-color, var(--violet)) 45%, transparent); }
+  .block-card.k-cat .count{ color:var(--cat-color, var(--violet)); }
+  .block-card h3{ display:flex; align-items:center; gap:8px; }
+  .block-card h3 svg{ width:19px; height:19px; flex-shrink:0; }
+
+  .block-card.has-cover::before{
+    content:""; position:absolute; inset:0; z-index:0;
+    background:linear-gradient(165deg, rgba(10,14,19,.20) 0%, rgba(10,14,19,.72) 60%, rgba(10,14,19,.92) 100%);
+  }
+  .block-card .count, .block-card h3, .block-card .cover-tools{ position:relative; z-index:1; }
+
+  .block-card .count{
+    font-family:var(--font-mono); font-size:11px; color:var(--teal); letter-spacing:.05em; margin-bottom:12px; display:block;
+  }
+  .block-card.k-uc .count{ color:var(--amber); }
+  .block-card.k-cat .count{ color:var(--violet); }
+  .block-card h3{ font-family:var(--font-display); font-size:1.35rem; margin:0; font-weight:600; text-shadow:0 1px 8px rgba(0,0,0,.4); }
+
+  .cover-tools{ position:absolute; top:10px; right:10px; display:flex; gap:6px; opacity:.55; transition:opacity .15s ease; }
+  .block-card:hover .cover-tools, .block-card:focus-within .cover-tools{ opacity:1; }
+  .cover-btn{
+    width:27px; height:27px; border-radius:50%; border:1px solid var(--line);
+    background:rgba(10,14,19,.65); color:var(--text-dim); font-family:var(--font-body); font-size:13px;
+    display:flex; align-items:center; justify-content:center; cursor:pointer; backdrop-filter:blur(3px);
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .cover-btn:hover{ border-color:var(--teal-line); color:var(--text); }
+  .cover-btn.remove{ color:var(--crimson); }
+  .cover-btn.remove:hover{ border-color:var(--crimson); color:var(--crimson); }
+
+  .list-title{ font-family:var(--font-display); font-size:1.5rem; font-weight:600; margin:0 0 22px 0; }
+
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(270px, 1fr)); gap:16px; }
+  .card-wrap{ position:relative; }
+  .card-wrap .card{ height:100%; }
+  .card-delete{
+    position:absolute; top:10px; right:10px; z-index:2;
+    width:26px; height:26px; border-radius:50%; border:1px solid var(--line);
+    background:rgba(10,14,19,.72); color:var(--crimson); font-family:var(--font-body); font-size:14px;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    opacity:0; transition:opacity .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .card-wrap:hover .card-delete, .card-wrap:focus-within .card-delete{ opacity:1; }
+  .card-delete:hover{ border-color:var(--crimson); background:rgba(193,88,75,.18); }
+  .card-fav{
+    position:absolute; top:10px; left:10px; z-index:2;
+    width:26px; height:26px; border-radius:50%; border:1px solid var(--line);
+    background:rgba(10,14,19,.72); color:var(--text-dim); font-family:var(--font-body);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    opacity:0; transition:opacity .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .card-fav svg{ width:14px; height:14px; }
+  .card-wrap:hover .card-fav, .card-wrap:focus-within .card-fav{ opacity:1; }
+  .card-fav.active{ opacity:1; color:var(--amber); border-color:var(--amber-line); }
+  .card-fav:hover{ border-color:var(--amber-line); color:var(--amber); }
+  .card{
+    background:var(--surface); border:1px solid var(--line); border-top:3px solid var(--cat-color, var(--teal));
+    border-radius:10px; padding:20px 20px 18px; text-decoration:none; color:var(--text);
+    display:flex; flex-direction:column; transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{
+    transform:translateY(-3px); box-shadow:0 14px 30px -12px rgba(0,0,0,.5);
+    border-color:color-mix(in srgb, var(--cat-color, var(--teal)) 45%, transparent);
+  }
+  .card .tag{
+    align-self:flex-start; display:inline-flex; align-items:center; gap:5px;
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--cat-color, var(--teal)); background:color-mix(in srgb, var(--cat-color, var(--teal)) 14%, transparent);
+    border-radius:20px; padding:3px 10px 3px 8px; margin-bottom:12px;
+  }
+  .card .tag svg{ width:12px; height:12px; flex-shrink:0; }
+  .card h3{ font-family:var(--font-display); font-size:1.15rem; margin:0 0 8px 0; line-height:1.3; font-weight:600; }
+  .card p{ font-size:13.5px; color:var(--text-dim); margin:0 0 14px 0; flex:1; }
+  .card .open{ font-family:var(--font-mono); font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--text-faint); }
+  .card:hover .open{ color:var(--cat-color, var(--teal)); }
+
+  @keyframes cardEnter{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .card-enter{ animation:cardEnter .4s ease both; }
+
+  .empty{ color:var(--text-faint); font-size:14px; padding:40px 0; text-align:center; }
+
+  footer{
+    margin-top:64px; padding-top:22px; border-top:1px solid var(--line-soft);
+    font-family:var(--font-mono); font-size:11px; color:var(--text-faint); line-height:1.8;
+  }
+
+  @media (max-width:480px){
+    main{ padding:40px 18px 80px; }
+    h1{ font-size:2rem; }
+    .block-grid{ grid-template-columns:1fr 1fr; gap:12px; }
+    .block-card{ padding:20px 16px 18px; min-height:96px; }
+  }
+
+  /* ================================================================
+     INTEGRAÇÃO COM O RASTREADOR PESSOAL
+     Bloco 100% aditivo — não altera nem remove nenhuma regra acima.
+     Estiliza apenas o link opcional de retorno ao rastreador, que só
+     é exibido quando esta página é aberta a partir dele (ver script
+     no final do arquivo).
+     ================================================================ */
+  .back-to-tracker{
+    display:none; position:fixed; top:16px; left:16px; z-index:80;
+    align-items:center; gap:6px;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.03em;
+    color:var(--text-dim); text-decoration:none; cursor:pointer;
+    background:var(--surface); border:1px solid var(--line);
+    padding:8px 14px 8px 12px; border-radius:999px;
+    transition: color .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .back-to-tracker:hover{ color:var(--text); border-color:var(--teal-line); background:var(--surface-2); }
+</style>
+</head>
+<body>
+<main>
+  <div class="hero-block" id="heroBlock">
+    <!-- Link adicionado para a integração com o rastreador — só aparece
+         quando esta página é aberta a partir dele (ver script no final). -->
+    <a class="back-to-tracker" id="backToTrackerLink" href="javascript:void(0)">&larr; Voltar ao rastreador</a>
+
+    <div class="cover-tools">
+      <button type="button" class="cover-btn edit" id="heroEditBtn" title="Alterar imagem de fundo">&#9998;</button>
+      <button type="button" class="cover-btn remove" id="heroRemoveBtn" title="Remover imagem" style="display:none;">&times;</button>
+    </div>
+
+    <header>
+      <div class="eyebrow">100% aprendizagem 0% de esforço</div>
+      <h1>Resumos de cuiudo</h1>
+      <p>Use com moderação pra não fica muito gênio 8====D---(l).</p>
+    </header>
+
+    <div class="controls">
+      <input type="text" id="search" placeholder="Buscar em todos os resumos...">
+      <button type="button" class="fs-connect-btn" id="bgThemeBtn">Fundo da página</button>
+      <div class="theme-panel" id="themePanel" style="display:none;"></div>
+      <button type="button" class="fs-connect-btn" id="catColorBtn">Cores das categorias</button>
+      <div class="cat-color-panel" id="catColorPanel" style="display:none;"></div>
+      <button type="button" class="fs-connect-btn" id="fsConnectBtn">Conectar pasta para adicionar resumos por aqui</button>
+      <button type="button" class="clear-covers" id="clearCovers">Limpar todas as capas</button>
+    </div>
+
+    <div class="crumb" id="crumb"></div>
+  </div>
+
+  <!-- FAVORITOS — resumos fixados, aparecem independente da categoria -->
+  <div id="favoritesSection" style="display:none;">
+    <div class="section-label">Favoritos</div>
+    <div class="grid" id="favoritesGrid"></div>
+  </div>
+
+  <!-- NÍVEL 0: fases -->
+  <div id="faseView">
+    <div class="section-label">Fases</div>
+    <div class="block-grid" id="faseGrid"></div>
+  </div>
+
+  <!-- NÍVEL 1: UCs de uma fase -->
+  <div id="ucView" style="display:none;">
+    <div class="section-label">Unidades Curriculares</div>
+    <div class="block-grid" id="ucGrid"></div>
+  </div>
+
+  <!-- NÍVEL 2: categorias (PBL/LMF/LPF/TBL/Clínicas) de uma UC -->
+  <div id="categoryView" style="display:none;">
+    <div class="view-toggle" id="catViewToggle">
+      <button type="button" class="view-toggle-btn active" data-mode="grid">Grade</button>
+      <button type="button" class="view-toggle-btn" data-mode="map">Mapa</button>
+    </div>
+    <div class="cat-stats" id="catStats"></div>
+    <div class="section-label">Categorias</div>
+    <div class="block-grid" id="blockGrid"></div>
+    <div class="uc-map" id="ucMap" style="display:none;"></div>
+  </div>
+
+  <!-- NÍVEL 3: lista de resumos (ou resultado de busca) -->
+  <div id="listView" style="display:none;">
+    <h2 class="list-title" id="listTitle"></h2>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" style="display:none;"></div>
+  </div>
+
+  <footer>
+    COMO ADICIONAR UM NOVO RESUMO (mais fácil): clique em "Conectar pasta" no topo e selecione a pasta onde ficam este<br>
+    índice e todos os seus resumos. Depois disso, entre em Fase → UC → Categoria e use o cartão "+ Adicionar resumo":<br>
+    arraste o arquivo .html ali (ou escolha pelo seletor), preencha o título e a descrição, e pronto — o arquivo é salvo<br>
+    na pasta e o índice se atualiza sozinho. Isso funciona em navegadores baseados em Chromium (Opera, Chrome, Edge).<br><br>
+    COMO REMOVER UM RESUMO: passe o mouse sobre o card do resumo (dentro de uma categoria ou num resultado de busca) e<br>
+    clique no "×" que aparece no canto. Com a pasta conectada, você escolhe se quer apagar o arquivo .html também ou só<br>
+    tirar ele do índice.<br><br>
+    COMO ADICIONAR MANUALMENTE (se o navegador não suportar): abra este arquivo em um editor de texto, encontre a lista<br>
+    GUIDES no final do HTML e copie um bloco existente, trocando title / tag / file / desc / fase / uc. "tag" precisa ser<br>
+    exatamente PBL, LMF, LPF, TBL ou CLÍNICAS. "fase" e "uc" precisam bater com um id existente em FASES. "file" precisa<br>
+    ser o nome exato do .html salvo na mesma pasta.<br><br>
+    SOBRE AS CAPAS: a imagem que você escolhe em cada bloco fica salva no armazenamento local deste navegador, associada a<br>
+    este arquivo. Ela continua aparecendo da próxima vez que você abrir o mesmo arquivo neste mesmo navegador, mas não é<br>
+    copiada para dentro do HTML — se você mover o arquivo para outra pasta, renomear, ou abrir em outro navegador/computador,<br>
+    vai precisar escolher as imagens de novo.
+  </footer>
+</main>
+
+<div class="modal-overlay" id="addModalOverlay">
+  <div class="modal">
+    <h3>Adicionar resumo</h3>
+    <p class="modal-context" id="addModalContext"></p>
+
+    <label>Título
+      <input type="text" id="addTitle" placeholder="Ex: Corticoides">
+    </label>
+    <label>Descrição (opcional)
+      <input type="text" id="addDesc" placeholder="Uma frase curta sobre o conteúdo">
+    </label>
+
+    <div class="dropzone" id="addDropzone">
+      <p id="dropzoneText">Arraste o arquivo .html aqui, ou <button type="button" id="browseBtn">escolher arquivo</button></p>
+      <input type="file" id="addFileInput" accept=".html,.htm,text/html" style="display:none;">
+    </div>
+    <p class="fs-note" id="addFsNote" style="display:none;"></p>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-secondary" id="addCancelBtn">Cancelar</button>
+      <button type="button" class="btn-primary" id="addSaveBtn" disabled>Adicionar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ================================================================
+  // ESTRUTURA DO CURSO — edite aqui para adicionar novas fases/UCs
+  // conforme você avança no curso. "id" é o valor usado no campo
+  // "fase" e "uc" de cada item de GUIDES lá embaixo.
+  // ================================================================
+  const FASES = [
+    {
+      id: "5",
+      label: "Fase 5",
+      ucs: [
+        { id: "XIII", label: "UC XIII" },
+        { id: "XIV",  label: "UC XIV" },
+        { id: "XV",   label: "UC XV" }
+      ]
+    }
+    // Exemplo de como adicionar a próxima fase quando chegar lá:
+    // {
+    //   id: "6",
+    //   label: "Fase 6",
+    //   ucs: [
+    //     { id: "XVI", label: "UC XVI" },
+    //     { id: "XVII", label: "UC XVII" }
+    //   ]
+    // }
+  ];
+
+  // Categorias fixas dentro de cada UC — sempre aparecem nesta ordem,
+  // mesmo que ainda estejam vazias.
+  const BLOCKS = ["PBL", "LMF", "LPF", "TBL", "CLÍNICAS"];
+
+  // ================================================================
+  // CORES, ÍCONES E TEXTURAS POR CATEGORIA
+  // As cores são editáveis pelo botão "Cores das categorias"; os
+  // ícones e as texturas são fixos, só para diferenciar visualmente.
+  // ================================================================
+  const CAT_COLOR_KEY = 'biblioteca_cores_categorias';
+  const DEFAULT_CAT_COLORS = { PBL:'#4FB6A6', LMF:'#D97757', LPF:'#6C9BD1', TBL:'#C77DD1', 'CLÍNICAS':'#6FCF7A' };
+  let CATEGORY_COLORS = Object.assign({}, DEFAULT_CAT_COLORS);
+  try{ Object.assign(CATEGORY_COLORS, JSON.parse(localStorage.getItem(CAT_COLOR_KEY) || '{}')); }catch(e){}
+
+  function catColor(tag){ return CATEGORY_COLORS[tag] || DEFAULT_CAT_COLORS.PBL; }
+  function saveCatColors(){
+    try{ localStorage.setItem(CAT_COLOR_KEY, JSON.stringify(CATEGORY_COLORS)); }catch(e){}
+  }
+
+  const CATEGORY_ICONS = {
+    PBL: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"><path d="M9.5 4.5c-1.7 0-3 1.2-3.2 2.8C4.9 7.6 4 8.8 4 10.2c0 .9.4 1.7.9 2.3-.4.6-.6 1.3-.6 2 0 1.9 1.5 3.4 3.4 3.4.3 0 .5 0 .8-.1.5 1.3 1.8 2.2 3.3 2.2h.4c1.5 0 2.8-.9 3.3-2.2.3.1.5.1.8.1 1.9 0 3.4-1.5 3.4-3.4 0-.7-.2-1.4-.6-2 .5-.6.9-1.4.9-2.3 0-1.4-.9-2.6-2.1-3-.2-1.6-1.5-2.8-3.2-2.8-.7 0-1.4.2-1.9.6-.5-.4-1.2-.6-1.9-.6z"/><path d="M12 5.5v14"/></svg>',
+    LMF: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6"/><circle cx="5.3" cy="18.7" r="2"/><circle cx="18.7" cy="5.3" r="2"/></svg>',
+    LPF: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(45 12 12)"/><line x1="8.5" y1="15.5" x2="15.5" y2="8.5"/></svg>',
+    TBL: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="13" r="3.2"/><circle cx="17" cy="13" r="3.2"/><path d="M10.2 13h3.6M3.5 12l1-2M20.5 12l-1-2"/></svg>',
+    'CLÍNICAS': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/><path d="M12 16.5v3M10.5 18h3"/></svg>'
+  };
+  function catIconSVG(tag){ return CATEGORY_ICONS[tag] || ''; }
+
+  function hexToRgb(hex){
+    hex = hex.replace('#', '');
+    if(hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+    const num = parseInt(hex, 16);
+    return [(num >> 16) & 255, (num >> 8) & 255, num & 255];
+  }
+  function rgbaFromHex(hex, a){ const [r,g,b] = hexToRgb(hex); return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')'; }
+
+  // Cada categoria ganha um padrão de fundo bem sutil, ecoando o assunto,
+  // sem depender de foto — igual à lógica dos temas de fundo.
+  function catTexture(tag){
+    const c = catColor(tag);
+    switch(tag){
+      case 'PBL': return 'radial-gradient(' + rgbaFromHex(c, 0.09) + ' 1px, transparent 1.4px)'; // dispersão tipo sinapses
+      case 'LMF': return 'linear-gradient(' + rgbaFromHex(c, 0.07) + ' 1px, transparent 1px), linear-gradient(90deg, ' + rgbaFromHex(c, 0.07) + ' 1px, transparent 1px)'; // grade anatômica
+      case 'LPF': return 'repeating-linear-gradient(' + rgbaFromHex(c, 0.075) + ' 0 1px, transparent 1px 9px)'; // linhas tipo receita
+      case 'TBL': return 'radial-gradient(' + rgbaFromHex(c, 0.11) + ' 1.1px, transparent 1.5px)'; // grade de pontos uniforme
+      case 'CLÍNICAS': return 'linear-gradient(' + rgbaFromHex(c, 0.08) + ' 1px, transparent 1px), linear-gradient(90deg, ' + rgbaFromHex(c, 0.08) + ' 1px, transparent 1px)'; // grade ampla tipo cruz médica
+      default: return 'none';
+    }
+  }
+  function catTextureSize(tag){
+    switch(tag){
+      case 'PBL': return '24px 24px';
+      case 'LMF': return '15px 15px';
+      case 'LPF': return 'auto';
+      case 'TBL': return '12px 12px';
+      case 'CLÍNICAS': return '34px 34px';
+      default: return 'auto';
+    }
+  }
+
+  // ================================================================
+  // SUA LISTA DE RESUMOS — edite aqui para adicionar/remover itens.
+  // "fase" e "uc" precisam bater com os ids definidos em FASES acima.
+  // "tag" define a categoria (precisa ser um dos valores de BLOCKS).
+  // "file" precisa ser o nome exato do arquivo .html salvo NESTA MESMA PASTA.
+  //
+  // Os itens abaixo foram migrados do índice antigo e marcados como
+  // Fase 5 / UC XIII (tema "dor") por padrão — ajuste o campo "uc" de
+  // qualquer um deles se pertencer a outra UC.
+  // ================================================================
+  // ===GUIDES_START===
+  const GUIDES = [
+  {
+    "title": "Dor Nociceptiva",
+    "tag": "PBL",
+    "file": "resumo_dor_nociceptiva.html",
+    "desc": "cuzin bosta mijo penis etc.",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "Somatossensorial elizama",
+    "tag": "LMF",
+    "file": "LMF_Somatossensorial.html",
+    "desc": "bgl fodido real",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "nervos espinhais",
+    "tag": "LMF",
+    "file": "nervos_espinhais.html",
+    "desc": "plexos e tal",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "sistema muscular",
+    "tag": "LMF",
+    "file": "sistema_muscular.html",
+    "desc": "contração e musculos",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "Anatomia dorso e frente",
+    "tag": "LMF",
+    "file": "Atlas Muscular - Dorso Torax e Abdome.html",
+    "desc": "brincadeira e tals",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "AINEs e analgésico",
+    "tag": "LPF",
+    "file": "AINEs_e_Analgesicos_Resumo (1).html",
+    "desc": "Remedio e tal dor",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "Corticoides",
+    "tag": "LPF",
+    "file": "Corticoterapia.html",
+    "desc": "AIEs",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "Anti-histamínicos",
+    "tag": "LPF",
+    "file": "farmacos_antihistaminicos.html",
+    "desc": "ATCHIM",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "Opioides",
+    "tag": "LPF",
+    "file": "opioides_resumo (1).html",
+    "desc": "melhor bosta que tem",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "Antidepressivo e anticonvulsivante",
+    "tag": "LPF",
+    "file": "Resumo Claude LPF antidepressivos e anticonvulsivantes (1).html",
+    "desc": "211 mil coisas",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "Analgesico locais",
+    "tag": "LPF",
+    "file": "anestesicos_locais_livre.html",
+    "desc": "divertido cpa",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "SP 2 dor neuropatica",
+    "tag": "PBL",
+    "file": "dor_neuropatica (1).html",
+    "desc": "33 bilhoes de questoes",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "SP 3 dor nociplástica",
+    "tag": "PBL",
+    "file": "dor-nociplastica-fibromialgia (1).html",
+    "desc": "fibromialgia e tal",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "SP 4 e SP 5",
+    "tag": "PBL",
+    "file": "cefaleias-cervicalgia-lombalgia.html",
+    "desc": "cefaleias e dores nas coxtcha",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "Manejo dor crônica",
+    "tag": "TBL",
+    "file": "dor_cronica_opioides_UCXIII.html",
+    "desc": "chatisse do krl mds",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "Cefaleia",
+    "tag": "TBL",
+    "file": "Resumo Claude TBL Aula 4 cefaleia_enxaqueca_manejo.html",
+    "desc": "ain que dor de beça",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "LER e DORT",
+    "tag": "TBL",
+    "file": "aula5_ler_dort_aines.html",
+    "desc": "dor de corpo e os krl",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "Manejo dor aguda",
+    "tag": "TBL",
+    "file": "estudo_dor_hz_nph_1 (1).html",
+    "desc": "fffffffffffuck",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "BGL pra decora todos os remedios",
+    "tag": "LPF",
+    "file": "atlas_farmacos (1).html",
+    "desc": "fico pica",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "Todas as aulas  do anderson lucas",
+    "tag": "LMF",
+    "file": "Resumo - Lucas - Todas as aulas (1).html",
+    "desc": "menos mialgia",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "Coluna Vertebral ossos",
+    "tag": "LMF",
+    "file": "LMF_ColunaVertebral_editado.html",
+    "desc": "Decorar easy peasy",
+    "fase": "5",
+    "uc": "XIII"
+  },
+  {
+    "title": "Diagnostico por imagem tudo",
+    "tag": "CLÍNICAS",
+    "file": "UCXIII_Patologias_em_Imagem_Resumo.html",
+    "desc": "hyper fucking blaster",
+    "fase": "5",
+    "uc": "XIII"
+  }
+];
+  // ===GUIDES_END===
+
+  // ================================================================
+  // RESOLVEDOR DE CAMINHOS DOS RESUMOS
+  // ------------------------------------------------------------------
+  // Os arquivos físicos dos resumos ficam na pasta "resumos medicina/",
+  // ao lado deste índice. O campo GUIDES[].file guarda só o nome do
+  // arquivo (ex: "farmacos_antihistaminicos.html"), sem a pasta —
+  // essa arquitetura não muda aqui, só a forma de montar a URL final.
+  //
+  // resolveGuideUrl() transforma esse nome em um caminho RELATIVO à
+  // localização deste próprio HTML (indice_resumos_integrado.html):
+  //   "farmacos_antihistaminicos.html"
+  //     -> "resumos%20medicina/farmacos_antihistaminicos.html"
+  //   "resumos medicina/farmacos_antihistaminicos.html" (já teria a pasta)
+  //     -> mantém como está, só codifica os espaços/acentos
+  //   "http://..." / "https://..." (URL absoluta, ex: link externo)
+  //     -> mantém como está, sem mexer
+  //
+  // Isso funciona tanto localmente (file://) quanto hospedado num
+  // subcaminho como o GitHub Pages (/rastreador-pessoal/), porque
+  // NUNCA usamos um caminho começando com "/" — é sempre relativo a
+  // onde este arquivo está, então o navegador resolve corretamente
+  // em qualquer um dos dois casos.
+  // ================================================================
+  const RESUMOS_FOLDER = 'resumos medicina/';
+  function resolveGuideUrl(file){
+    if(!file) return file;
+    if(/^[a-z][a-z0-9+.-]*:\/\//i.test(file)) return file; // URL absoluta — não mexe
+    const withFolder = file.includes('/') ? file : (RESUMOS_FOLDER + file);
+    // codifica cada segmento do caminho (trata espaço, acento, parênteses, etc.)
+    // sem re-codificar a barra "/" que separa a pasta do nome do arquivo
+    return withFolder.split('/').map(seg => encodeURIComponent(seg)).join('/');
+  }
+
+  // ================================================================
+  // ACESSO À PASTA LOCAL — permite adicionar resumos direto pelo índice.
+  // Funciona em navegadores baseados em Chromium (Opera, Chrome, Edge).
+  // Você conecta a pasta uma vez; a permissão fica salva neste navegador.
+  // ================================================================
+  const FS_SUPPORTED = 'showDirectoryPicker' in window;
+  const DB_NAME = 'biblioteca_resumos_fs';
+  const STORE_NAME = 'handles';
+  let dirHandle = null;
+  let storedHandle = null;
+
+  function idbGet(key){
+    return new Promise((resolve) => {
+      const req = indexedDB.open(DB_NAME, 1);
+      req.onupgradeneeded = () => req.result.createObjectStore(STORE_NAME);
+      req.onsuccess = () => {
+        const tx = req.result.transaction(STORE_NAME, 'readonly');
+        const getReq = tx.objectStore(STORE_NAME).get(key);
+        getReq.onsuccess = () => resolve(getReq.result || null);
+        getReq.onerror = () => resolve(null);
+      };
+      req.onerror = () => resolve(null);
+    });
+  }
+  function idbSet(key, value){
+    return new Promise((resolve) => {
+      const req = indexedDB.open(DB_NAME, 1);
+      req.onupgradeneeded = () => req.result.createObjectStore(STORE_NAME);
+      req.onsuccess = () => {
+        const tx = req.result.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).put(value, key);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => resolve();
+      };
+      req.onerror = () => resolve();
+    });
+  }
+
+  function updateFsUI(){
+    const btn = document.getElementById('fsConnectBtn');
+    if(!FS_SUPPORTED){
+      btn.textContent = 'Edição direta indisponível neste navegador';
+      btn.classList.add('connected');
+      btn.disabled = true;
+      return;
+    }
+    if(dirHandle){
+      btn.textContent = 'Pasta conectada — adicionar habilitado';
+      btn.classList.add('connected');
+    } else {
+      btn.textContent = 'Conectar pasta para adicionar resumos por aqui';
+      btn.classList.remove('connected');
+    }
+  }
+
+  async function tryRestoreFolder(){
+    if(!FS_SUPPORTED){ updateFsUI(); return; }
+    const handle = await idbGet('dir');
+    if(!handle){ updateFsUI(); return; }
+    storedHandle = handle;
+    try{
+      const perm = await handle.queryPermission({ mode: 'readwrite' });
+      if(perm === 'granted') dirHandle = handle;
+    }catch(e){ /* handle inválido, ignora */ }
+    updateFsUI();
+  }
+
+  async function connectFolder(){
+    if(!FS_SUPPORTED){
+      alert('Esse recurso funciona em navegadores baseados em Chromium (Opera, Chrome, Edge). Continue adicionando manualmente pelo rodapé, por enquanto.');
+      return false;
+    }
+    try{
+      if(storedHandle){
+        const perm = await storedHandle.requestPermission({ mode: 'readwrite' });
+        if(perm === 'granted'){ dirHandle = storedHandle; updateFsUI(); return true; }
+      }
+      const handle = await window.showDirectoryPicker();
+      dirHandle = handle;
+      storedHandle = handle;
+      await idbSet('dir', handle);
+      updateFsUI();
+      return true;
+    }catch(e){
+      return false; // usuário cancelou o seletor
+    }
+  }
+
+  async function writeFileToDir(filename, content){
+    const fileHandle = await dirHandle.getFileHandle(filename, { create: true });
+    const writable = await fileHandle.createWritable();
+    await writable.write(content);
+    await writable.close();
+  }
+
+  async function fileExistsInDir(filename){
+    try{ await dirHandle.getFileHandle(filename); return true; }
+    catch(e){ return false; }
+  }
+
+  function selfFileName(){
+    const parts = location.pathname.split('/').filter(Boolean);
+    return decodeURIComponent(parts[parts.length - 1] || 'indice_resumos.html');
+  }
+
+  async function persistGuidesToIndexFile(){
+    if(!dirHandle) return false;
+    try{
+      const name = selfFileName();
+      const fileHandle = await dirHandle.getFileHandle(name);
+      const file = await fileHandle.getFile();
+      const text = await file.text();
+      const startMarker = '// ===GUIDES_START===';
+      const endMarker = '// ===GUIDES_END===';
+      const startIdx = text.indexOf(startMarker);
+      const endIdx = text.indexOf(endMarker);
+      if(startIdx === -1 || endIdx === -1){
+        alert('Não encontrei os marcadores da lista de resumos neste arquivo. O resumo foi salvo na pasta, mas adicione o item na lista GUIDES manualmente também.');
+        return false;
+      }
+      const before = text.slice(0, startIdx + startMarker.length);
+      const after = text.slice(endIdx);
+      const serialized = 'const GUIDES = ' + JSON.stringify(GUIDES, null, 2) + ';';
+      const newText = before + '\n  ' + serialized + '\n  ' + after;
+      const writable = await fileHandle.createWritable();
+      await writable.write(newText);
+      await writable.close();
+      return true;
+    }catch(e){
+      alert('Não consegui salvar a alteração no próprio índice. Verifique se a pasta conectada é a mesma onde este arquivo está salvo.');
+      return false;
+    }
+  }
+
+  document.getElementById('fsConnectBtn').addEventListener('click', () => {
+    if(!dirHandle) connectFolder();
+  });
+
+  // ================================================================
+  // FAVORITOS — resumos fixados, guardados no navegador
+  // ================================================================
+  const FAV_KEY = 'biblioteca_favoritos';
+  let favorites = new Set();
+  try{ favorites = new Set(JSON.parse(localStorage.getItem(FAV_KEY)) || []); }catch(e){}
+  function saveFavorites(){
+    try{ localStorage.setItem(FAV_KEY, JSON.stringify([...favorites])); }catch(e){}
+  }
+  function isFavorite(file){ return favorites.has(file); }
+  function toggleFavorite(file){
+    if(favorites.has(file)) favorites.delete(file); else favorites.add(file);
+    saveFavorites();
+  }
+  function starSVG(active){
+    return '<svg viewBox="0 0 24 24"><path d="M12 3.5l2.5 5.6 6 .6-4.5 4.1 1.3 6-5.3-3.1-5.3 3.1 1.3-6-4.5-4.1 6-.6z" fill="' +
+      (active ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>';
+  }
+
+  // ================================================================
+  // CAPAS PERSONALIZADAS — imagens de fundo salvas no navegador
+  // ================================================================
+  const COVER_STORE_KEY = 'biblioteca_resumos_capas_v1';
+
+  function loadCovers(){
+    try{ return JSON.parse(localStorage.getItem(COVER_STORE_KEY)) || {}; }
+    catch(e){ return {}; }
+  }
+  function saveCovers(){
+    try{ localStorage.setItem(COVER_STORE_KEY, JSON.stringify(covers)); }
+    catch(e){ alert('Não foi possível salvar essa imagem (armazenamento local cheio ou indisponível). Tente uma imagem menor.'); }
+  }
+  let covers = loadCovers();
+
+  function compressImage(file, maxW, quality){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          let w = img.width, h = img.height;
+          if(w > maxW){ h = Math.round(h * (maxW / w)); w = maxW; }
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function pickCoverImage(key, cardEl){
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.addEventListener('change', async () => {
+      const file = input.files && input.files[0];
+      if(!file) return;
+      try{
+        const dataUrl = await compressImage(file, 900, 0.78);
+        covers[key] = dataUrl;
+        saveCovers();
+        applyCover(cardEl, key);
+      }catch(err){
+        alert('Não foi possível carregar essa imagem.');
+      }
+    });
+    input.click();
+  }
+
+  function removeCoverImage(key, cardEl){
+    delete covers[key];
+    saveCovers();
+    applyCover(cardEl, key);
+  }
+
+  function applyCover(cardEl, key){
+    const url = covers[key];
+    const removeBtn = cardEl.querySelector('.cover-btn.remove');
+    if(url){
+      cardEl.style.backgroundImage = "url('" + url + "')";
+      cardEl.style.backgroundSize = 'cover';
+      cardEl.style.backgroundPosition = 'center';
+      cardEl.style.backgroundRepeat = 'no-repeat';
+      cardEl.classList.add('has-cover');
+      if(removeBtn) removeBtn.style.display = 'flex';
+    } else {
+      cardEl.style.backgroundImage = '';
+      cardEl.classList.remove('has-cover');
+      if(removeBtn) removeBtn.style.display = 'none';
+    }
+  }
+
+  document.getElementById('clearCovers').addEventListener('click', () => {
+    if(confirm('Remover todas as imagens de fundo personalizadas?')){
+      covers = {};
+      saveCovers();
+      applyCover(heroBlockEl, 'header');
+      renderCurrentView();
+    }
+  });
+
+  // ---------- capa do cabeçalho (Biblioteca de Resumos até o breadcrumb) ----------
+  const heroBlockEl = document.getElementById('heroBlock');
+  document.getElementById('heroEditBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    pickCoverImage('header', heroBlockEl);
+  });
+  document.getElementById('heroRemoveBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    removeCoverImage('header', heroBlockEl);
+  });
+  applyCover(heroBlockEl, 'header');
+
+  // ---------- construtor genérico de "bloco" (fase / uc / categoria) ----------
+  function buildBlockCard(container, { key, kindClass, index, count, title, tag, onClick }){
+    const wrap = document.createElement('div');
+    wrap.className = 'block-card card-enter' + (kindClass ? ' ' + kindClass : '');
+    wrap.style.animationDelay = Math.min(index * 40, 320) + 'ms';
+    wrap.tabIndex = 0;
+    if(tag) wrap.style.setProperty('--cat-color', catColor(tag));
+    const titleHTML = tag ? (catIconSVG(tag) + '<span>' + title + '</span>') : title;
+    wrap.innerHTML =
+      '<div class="cover-tools">' +
+        '<button type="button" class="cover-btn edit" title="Alterar imagem de fundo">&#9998;</button>' +
+        '<button type="button" class="cover-btn remove" title="Remover imagem" style="display:none;">&times;</button>' +
+      '</div>' +
+      '<span class="count">' + (index + 1) + ' · ' + count + (count === 1 ? ' resumo' : ' resumos') + '</span>' +
+      '<h3>' + titleHTML + '</h3>';
+
+    wrap.addEventListener('click', onClick);
+    wrap.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); onClick(); }
+    });
+    wrap.querySelector('.cover-btn.edit').addEventListener('click', (e) => {
+      e.stopPropagation();
+      pickCoverImage(key, wrap);
+    });
+    wrap.querySelector('.cover-btn.remove').addEventListener('click', (e) => {
+      e.stopPropagation();
+      removeCoverImage(key, wrap);
+    });
+
+    container.appendChild(wrap);
+    applyCover(wrap, key);
+  }
+
+  const faseView = document.getElementById('faseView');
+  const ucView = document.getElementById('ucView');
+  const categoryView = document.getElementById('categoryView');
+  const listView = document.getElementById('listView');
+
+  const faseGrid = document.getElementById('faseGrid');
+  const ucGrid = document.getElementById('ucGrid');
+  const blockGrid = document.getElementById('blockGrid');
+  const grid = document.getElementById('grid');
+  const emptyMsg = document.getElementById('empty');
+  const searchInput = document.getElementById('search');
+  const listTitle = document.getElementById('listTitle');
+  const crumbEl = document.getElementById('crumb');
+
+  let state = { level: 'fase', faseId: null, ucId: null, tag: null, searchQuery: null };
+
+  function showOnly(view){
+    faseView.style.display = view === 'fase' ? 'block' : 'none';
+    ucView.style.display = view === 'uc' ? 'block' : 'none';
+    categoryView.style.display = view === 'category' ? 'block' : 'none';
+    listView.style.display = view === 'list' ? 'block' : 'none';
+  }
+
+  function faseLabel(id){ const f = FASES.find(f => f.id === id); return f ? f.label : id; }
+  function ucLabel(faseId, ucId){
+    const f = FASES.find(f => f.id === faseId);
+    if(!f) return ucId;
+    const u = f.ucs.find(u => u.id === ucId);
+    return u ? u.label : ucId;
+  }
+
+  function renderCrumb(){
+    const parts = [{ label: 'Fases', action: () => goFase() }];
+    if(state.faseId) parts.push({ label: faseLabel(state.faseId), action: () => goUC(state.faseId) });
+    if(state.ucId) parts.push({ label: ucLabel(state.faseId, state.ucId), action: () => goCategory(state.faseId, state.ucId) });
+    if(state.tag) parts.push({ label: state.tag, action: null });
+    if(state.searchQuery) parts.push({ label: 'Busca: "' + state.searchQuery + '"', action: null });
+
+    crumbEl.innerHTML = '';
+    parts.forEach((p, i) => {
+      if(i > 0){
+        const sep = document.createElement('span');
+        sep.className = 'sep';
+        sep.textContent = '›';
+        crumbEl.appendChild(sep);
+      }
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = p.label;
+      if(!p.action || i === parts.length - 1) btn.disabled = true;
+      else btn.addEventListener('click', p.action);
+      crumbEl.appendChild(btn);
+    });
+  }
+
+  // guarda a última view renderizada, para poder re-renderizar após "limpar capas"
+  let renderCurrentView = () => goFase();
+
+  // ---------- NÍVEL 0: fases ----------
+  function renderFases(){
+    faseGrid.innerHTML = '';
+    FASES.forEach((f, i) => {
+      const count = GUIDES.filter(g => g.fase === f.id).length;
+      buildBlockCard(faseGrid, {
+        key: 'fase:' + f.id, kindClass: '', index: i, count, title: f.label,
+        onClick: () => goUC(f.id)
+      });
+    });
+  }
+  function goFase(){
+    state = { level: 'fase', faseId: null, ucId: null, tag: null, searchQuery: null };
+    searchInput.value = '';
+    renderCrumb();
+    renderFases();
+    renderFavoritesSection();
+    showOnly('fase');
+    renderCurrentView = goFase;
+  }
+
+  // ---------- NÍVEL 1: UCs ----------
+  function renderUCs(faseId){
+    const f = FASES.find(f => f.id === faseId);
+    ucGrid.innerHTML = '';
+    if(!f || !f.ucs.length){
+      ucGrid.innerHTML = '<div class="empty">Nenhuma UC cadastrada nesta fase ainda. Adicione em FASES no final do HTML.</div>';
+      return;
+    }
+    f.ucs.forEach((u, i) => {
+      const count = GUIDES.filter(g => g.fase === faseId && g.uc === u.id).length;
+      buildBlockCard(ucGrid, {
+        key: 'uc:' + faseId + ':' + u.id, kindClass: 'k-uc', index: i, count, title: u.label,
+        onClick: () => goCategory(faseId, u.id)
+      });
+    });
+  }
+  function goUC(faseId){
+    state = { level: 'uc', faseId, ucId: null, tag: null, searchQuery: null };
+    searchInput.value = '';
+    renderCrumb();
+    renderUCs(faseId);
+    showOnly('uc');
+    renderCurrentView = () => goUC(faseId);
+  }
+
+  // ---------- NÍVEL 2: categorias ----------
+  const MAP_ORDER = ['PBL', 'TBL', 'LPF', 'LMF', 'CLÍNICAS'];
+
+  function renderCategories(faseId, ucId){
+    blockGrid.innerHTML = '';
+    BLOCKS.forEach((tag, i) => {
+      const count = GUIDES.filter(g => g.fase === faseId && g.uc === ucId && g.tag === tag).length;
+      buildBlockCard(blockGrid, {
+        key: 'cat:' + faseId + ':' + ucId + ':' + tag, kindClass: 'k-cat', index: i, count, title: tag, tag,
+        onClick: () => goList(faseId, ucId, tag)
+      });
+    });
+  }
+
+  function renderCategoryStats(faseId, ucId){
+    const statsEl = document.getElementById('catStats');
+    statsEl.innerHTML = '';
+    const counts = BLOCKS.map(tag => GUIDES.filter(g => g.fase === faseId && g.uc === ucId && g.tag === tag).length);
+    const max = Math.max(1, ...counts);
+    BLOCKS.forEach((tag, i) => {
+      const count = counts[i];
+      const color = catColor(tag);
+      const row = document.createElement('div');
+      row.className = 'cat-stat-row';
+      row.innerHTML =
+        '<span class="cat-stat-label" style="color:' + color + ';">' + catIconSVG(tag) + tag + '</span>' +
+        '<span class="cat-stat-track"><span class="cat-stat-fill" style="width:' + ((count / max) * 100) + '%; background:' + color + ';"></span></span>' +
+        '<span class="cat-stat-count">' + count + '</span>';
+      statsEl.appendChild(row);
+    });
+  }
+
+  function renderUcMap(faseId, ucId){
+    const mapEl = document.getElementById('ucMap');
+    mapEl.innerHTML = '';
+    MAP_ORDER.forEach((tag, i) => {
+      if(i > 0){
+        const arrow = document.createElement('span');
+        arrow.className = 'uc-map-arrow';
+        arrow.textContent = '→';
+        mapEl.appendChild(arrow);
+      }
+      const count = GUIDES.filter(g => g.fase === faseId && g.uc === ucId && g.tag === tag).length;
+      const node = document.createElement('button');
+      node.type = 'button';
+      node.className = 'uc-map-node';
+      node.style.setProperty('--cat-color', catColor(tag));
+      node.innerHTML =
+        '<div class="map-icon">' + catIconSVG(tag) + '</div>' +
+        '<div class="map-title">' + tag + '</div>' +
+        '<div class="map-count">' + count + (count === 1 ? ' resumo' : ' resumos') + '</div>';
+      node.addEventListener('click', () => goList(faseId, ucId, tag));
+      mapEl.appendChild(node);
+    });
+  }
+
+  const catViewToggle = document.getElementById('catViewToggle');
+  catViewToggle.addEventListener('click', (e) => {
+    const btn = e.target.closest('.view-toggle-btn');
+    if(!btn) return;
+    const mode = btn.dataset.mode;
+    catViewToggle.querySelectorAll('.view-toggle-btn').forEach(b => b.classList.toggle('active', b === btn));
+    blockGrid.style.display = mode === 'grid' ? 'grid' : 'none';
+    document.getElementById('ucMap').style.display = mode === 'map' ? 'flex' : 'none';
+  });
+
+  function goCategory(faseId, ucId){
+    state = { level: 'category', faseId, ucId, tag: null, searchQuery: null };
+    searchInput.value = '';
+    renderCrumb();
+    renderCategories(faseId, ucId);
+    renderCategoryStats(faseId, ucId);
+    renderUcMap(faseId, ucId);
+    catViewToggle.querySelectorAll('.view-toggle-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === 'grid'));
+    blockGrid.style.display = 'grid';
+    document.getElementById('ucMap').style.display = 'none';
+    showOnly('category');
+    renderCurrentView = () => goCategory(faseId, ucId);
+  }
+
+  // ---------- NÍVEL 3: lista de resumos ----------
+  function buildGuideCard(g, delay){
+    const wrap = document.createElement('div');
+    wrap.className = 'card-wrap card-enter';
+    wrap.style.animationDelay = Math.min(delay || 0, 320) + 'ms';
+    wrap.style.setProperty('--cat-color', catColor(g.tag));
+
+    const a = document.createElement('a');
+    a.href = resolveGuideUrl(g.file);
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.className = 'card';
+    a.style.backgroundImage = catTexture(g.tag);
+    a.style.backgroundSize = catTextureSize(g.tag);
+    a.innerHTML =
+      '<span class="tag">' + catIconSVG(g.tag) + g.tag + '</span>' +
+      '<h3>' + g.title + '</h3>' +
+      '<p>' + g.desc + '</p>' +
+      '<span class="open">Abrir resumo →</span>';
+
+    const favBtn = document.createElement('button');
+    favBtn.type = 'button';
+    favBtn.className = 'card-fav' + (isFavorite(g.file) ? ' active' : '');
+    favBtn.title = isFavorite(g.file) ? 'Remover dos favoritos' : 'Marcar como favorito';
+    favBtn.innerHTML = starSVG(isFavorite(g.file));
+    favBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleFavorite(g.file);
+      renderCurrentView();
+      renderFavoritesSection();
+    });
+
+    const delBtn = document.createElement('button');
+    delBtn.type = 'button';
+    delBtn.className = 'card-delete';
+    delBtn.title = 'Remover este resumo do índice';
+    delBtn.innerHTML = '&times;';
+    delBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      removeGuide(g);
+    });
+
+    wrap.appendChild(a);
+    wrap.appendChild(favBtn);
+    wrap.appendChild(delBtn);
+    return wrap;
+  }
+
+  function renderCards(list, addCtx){
+    grid.innerHTML = '';
+    emptyMsg.style.display = list.length ? 'none' : 'block';
+    list.forEach((g, i) => grid.appendChild(buildGuideCard(g, i * 35)));
+    if(addCtx && FS_SUPPORTED){
+      const addCard = document.createElement('button');
+      addCard.type = 'button';
+      addCard.className = 'card add-card';
+      addCard.innerHTML = '<span class="add-plus">+</span><span class="add-label">Adicionar resumo</span>';
+      addCard.addEventListener('click', () => openAddModal(addCtx.faseId, addCtx.ucId, addCtx.tag));
+      grid.appendChild(addCard);
+      emptyMsg.style.display = 'none';
+    }
+  }
+
+  function renderFavoritesSection(){
+    const favSection = document.getElementById('favoritesSection');
+    const favGrid = document.getElementById('favoritesGrid');
+    const favGuides = GUIDES.filter(g => favorites.has(g.file));
+    if(!favGuides.length){ favSection.style.display = 'none'; return; }
+    favGrid.innerHTML = '';
+    favGuides.forEach((g, i) => favGrid.appendChild(buildGuideCard(g, i * 35)));
+    favSection.style.display = 'block';
+  }
+  function goList(faseId, ucId, tag){
+    state = { level: 'list', faseId, ucId, tag, searchQuery: null };
+    searchInput.value = '';
+    renderCrumb();
+    listTitle.textContent = ucLabel(faseId, ucId) + ' — ' + tag;
+    const list = GUIDES.filter(g => g.fase === faseId && g.uc === ucId && g.tag === tag);
+    emptyMsg.textContent = 'Nenhum resumo nesta categoria ainda.';
+    renderCards(list, { faseId, ucId, tag });
+    showOnly('list');
+    renderCurrentView = () => goList(faseId, ucId, tag);
+  }
+
+  // ---------- busca global ----------
+  function openSearchResults(q){
+    state = { level: 'search', faseId: null, ucId: null, tag: null, searchQuery: q };
+    renderCrumb();
+    listTitle.textContent = 'Resultados para "' + q + '"';
+    emptyMsg.textContent = 'Nenhum resumo encontrado com esse termo.';
+    const results = GUIDES.filter(g =>
+      (g.title + ' ' + g.tag + ' ' + g.desc + ' ' + faseLabel(g.fase) + ' ' + ucLabel(g.fase, g.uc))
+        .toLowerCase().includes(q.toLowerCase())
+    );
+    renderCards(results);
+    showOnly('list');
+    renderCurrentView = () => openSearchResults(q);
+  }
+
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.trim();
+    if(q) openSearchResults(q);
+    else goFase();
+  });
+
+  // ================================================================
+  // MODAL "ADICIONAR RESUMO"
+  // ================================================================
+  let addContext = null;   // { faseId, ucId, tag }
+  let pendingFile = null;  // { name, content }
+
+  const addModalOverlay = document.getElementById('addModalOverlay');
+  const addModalContext = document.getElementById('addModalContext');
+  const addTitleInput = document.getElementById('addTitle');
+  const addDescInput = document.getElementById('addDesc');
+  const addDropzone = document.getElementById('addDropzone');
+  const dropzoneText = document.getElementById('dropzoneText');
+  const addFileInput = document.getElementById('addFileInput');
+  const addSaveBtn = document.getElementById('addSaveBtn');
+  const addCancelBtn = document.getElementById('addCancelBtn');
+  const addFsNote = document.getElementById('addFsNote');
+
+  function resetDropzoneText(){
+    dropzoneText.innerHTML = 'Arraste o arquivo .html aqui, ou <button type="button" id="browseBtn">escolher arquivo</button>';
+    document.getElementById('browseBtn').addEventListener('click', () => addFileInput.click());
+  }
+
+  function openAddModal(faseId, ucId, tag){
+    addContext = { faseId, ucId, tag };
+    pendingFile = null;
+    addModalContext.textContent = faseLabel(faseId) + ' › ' + ucLabel(faseId, ucId) + ' › ' + tag;
+    addTitleInput.value = '';
+    addDescInput.value = '';
+    resetDropzoneText();
+    addFsNote.style.display = FS_SUPPORTED ? 'none' : 'block';
+    addFsNote.textContent = 'Seu navegador não salva direto na pasta — ao adicionar, vou gerar os arquivos para você baixar e mover manualmente.';
+    checkAddFormValid();
+    addModalOverlay.style.display = 'flex';
+  }
+  function closeAddModal(){
+    addModalOverlay.style.display = 'none';
+  }
+  addCancelBtn.addEventListener('click', closeAddModal);
+  addModalOverlay.addEventListener('click', (e) => { if(e.target === addModalOverlay) closeAddModal(); });
+
+  async function handlePickedFile(file){
+    if(!file || !/\.html?$/i.test(file.name)){
+      alert('Escolha um arquivo .html.');
+      return;
+    }
+    const content = await file.text();
+    pendingFile = { name: file.name, content };
+    dropzoneText.textContent = 'Selecionado: ' + file.name;
+    if(!addTitleInput.value.trim()){
+      addTitleInput.value = file.name.replace(/\.html?$/i, '').replace(/[_-]+/g, ' ');
+    }
+    checkAddFormValid();
+  }
+  function checkAddFormValid(){
+    addSaveBtn.disabled = !(addTitleInput.value.trim().length > 0 && pendingFile);
+  }
+  addTitleInput.addEventListener('input', checkAddFormValid);
+
+  addFileInput.addEventListener('change', () => {
+    if(addFileInput.files && addFileInput.files[0]) handlePickedFile(addFileInput.files[0]);
+  });
+  addDropzone.addEventListener('dragover', (e) => { e.preventDefault(); addDropzone.classList.add('drag-over'); });
+  addDropzone.addEventListener('dragleave', () => addDropzone.classList.remove('drag-over'));
+  addDropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    addDropzone.classList.remove('drag-over');
+    const file = e.dataTransfer.files && e.dataTransfer.files[0];
+    if(file) handlePickedFile(file);
+  });
+
+  function downloadFile(filename, content){
+    const blob = new Blob([content], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function serializedIndexHtml(){
+    const startMarker = '// ===GUIDES_START===';
+    const endMarker = '// ===GUIDES_END===';
+    const fullText = document.documentElement.outerHTML;
+    const startIdx = fullText.indexOf(startMarker);
+    const endIdx = fullText.indexOf(endMarker);
+    if(startIdx === -1 || endIdx === -1) return null;
+    const before = fullText.slice(0, startIdx + startMarker.length);
+    const after = fullText.slice(endIdx);
+    const serialized = 'const GUIDES = ' + JSON.stringify(GUIDES, null, 2) + ';';
+    return '<!DOCTYPE html>\n' + before + '\n  ' + serialized + '\n  ' + after;
+  }
+
+  async function removeGuide(guide){
+    if(!confirm('Remover "' + guide.title + '" do índice?')) return;
+
+    const idx = GUIDES.indexOf(guide);
+    if(idx === -1) return;
+    GUIDES.splice(idx, 1);
+    if(favorites.has(guide.file)){ favorites.delete(guide.file); saveFavorites(); }
+
+    if(dirHandle){
+      const deleteFileToo = confirm(
+        'Também apagar o arquivo "' + guide.file + '" da pasta? Isso não pode ser desfeito.\n\n' +
+        'OK = apagar o arquivo também\nCancelar = manter o arquivo, só remover do índice'
+      );
+      if(deleteFileToo){
+        try{ await dirHandle.removeEntry(guide.file); }
+        catch(e){ alert('Não consegui apagar o arquivo da pasta (talvez ele já não exista ali). O item foi removido do índice mesmo assim.'); }
+      }
+      await persistGuidesToIndexFile();
+    } else {
+      const newText = serializedIndexHtml();
+      if(newText){
+        downloadFile(selfFileName(), newText);
+        alert('Removi da lista e baixei uma nova versão do índice. Substitua o arquivo antigo por este baixado (o arquivo .html do resumo em si continua na pasta, se quiser apagar é manual).');
+      }
+    }
+
+    renderCurrentView();
+    renderFavoritesSection();
+  }
+
+  addSaveBtn.addEventListener('click', async () => {
+    if(!pendingFile || !addContext) return;
+    addSaveBtn.disabled = true;
+    addSaveBtn.textContent = 'Adicionando...';
+
+    if(FS_SUPPORTED){
+      if(!dirHandle){
+        const ok = await connectFolder();
+        if(!ok){ addSaveBtn.disabled = false; addSaveBtn.textContent = 'Adicionar'; return; }
+      }
+      const finalName = pendingFile.name;
+      if(await fileExistsInDir(finalName)){
+        if(!confirm('Já existe um arquivo "' + finalName + '" nesta pasta. Substituir?')){
+          addSaveBtn.disabled = false; addSaveBtn.textContent = 'Adicionar'; return;
+        }
+      }
+      try{
+        await writeFileToDir(finalName, pendingFile.content);
+        GUIDES.push({
+          title: addTitleInput.value.trim(), tag: addContext.tag, file: finalName,
+          desc: addDescInput.value.trim(), fase: addContext.faseId, uc: addContext.ucId
+        });
+        await persistGuidesToIndexFile();
+        closeAddModal();
+        goList(addContext.faseId, addContext.ucId, addContext.tag);
+      }catch(e){
+        alert('Não consegui salvar o arquivo na pasta conectada. Verifique a permissão de escrita e tente de novo.');
+      }
+    } else {
+      // Fallback: navegador sem File System Access API — gera os downloads
+      GUIDES.push({
+        title: addTitleInput.value.trim(), tag: addContext.tag, file: pendingFile.name,
+        desc: addDescInput.value.trim(), fase: addContext.faseId, uc: addContext.ucId
+      });
+      downloadFile(pendingFile.name, pendingFile.content);
+      const newText = serializedIndexHtml();
+      if(newText){
+        downloadFile(selfFileName(), newText);
+        alert('Baixei o resumo e uma nova versão deste índice. Mova os dois arquivos baixados para a pasta da biblioteca, substituindo o índice atual.');
+      }
+      closeAddModal();
+      goList(addContext.faseId, addContext.ucId, addContext.tag);
+    }
+    addSaveBtn.disabled = false;
+    addSaveBtn.textContent = 'Adicionar';
+  });
+
+  // ================================================================
+  // TEMAS DE FUNDO — seis atmosferas em CSS puro, sem depender de foto.
+  // ================================================================
+  const BG_THEMES = [
+    { id: 'default', label: 'Padrão',
+      preview: 'radial-gradient(circle at 20% 10%, rgba(79,182,166,.5), transparent 55%), radial-gradient(circle at 85% 80%, rgba(140,122,230,.35), #0A0E13 65%)' },
+    { id: 'abismo', label: 'Abismo',
+      preview: 'radial-gradient(circle at 50% 20%, rgba(79,182,166,.20), #050708 70%)' },
+    { id: 'pergaminho', label: 'Pergaminho',
+      preview: 'radial-gradient(circle at 20% 18%, rgba(232,182,86,.75), transparent 46%), radial-gradient(circle at 88% 85%, rgba(160,35,20,.45), #0F0A05 62%), linear-gradient(rgba(168,42,26,.9), rgba(168,42,26,.9)) top/100% 3px no-repeat, linear-gradient(rgba(168,42,26,.9), rgba(168,42,26,.9)) bottom/100% 3px no-repeat, linear-gradient(90deg, rgba(168,42,26,.9), rgba(168,42,26,.9)) left/3px 100% no-repeat, linear-gradient(90deg, rgba(168,42,26,.9), rgba(168,42,26,.9)) right/3px 100% no-repeat' },
+    { id: 'synthwave', label: 'Synthwave',
+      preview: 'linear-gradient(180deg, #07040B 35%, rgba(255,64,175,.6) 82%, rgba(64,220,255,.55) 100%)' },
+    { id: 'circuito', label: 'Circuito',
+      preview: 'repeating-linear-gradient(90deg, rgba(79,182,166,.6) 0 2px, transparent 2px 11px), repeating-linear-gradient(0deg, rgba(79,182,166,.35) 0 2px, transparent 2px 11px), #050B0C' },
+    { id: 'observatorio', label: 'Observatório',
+      preview: 'radial-gradient(circle at 25% 30%, #fff 1.1px, transparent 1.5px) 0 0/9px 9px, radial-gradient(circle at 60% 70%, #fff 1px, transparent 1.4px) 0 0/16px 16px, linear-gradient(180deg, transparent 42%, rgba(150,190,230,.35) 50%, transparent 58%), #01030A' }
+  ];
+
+  const bgThemeBtn = document.getElementById('bgThemeBtn');
+  const themePanel = document.getElementById('themePanel');
+  let currentBgTheme = localStorage.getItem('biblioteca_bg_theme') || 'default';
+
+  function renderThemeSwatches(){
+    themePanel.innerHTML = '';
+    BG_THEMES.forEach(t => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'theme-swatch' + (t.id === currentBgTheme ? ' active' : '');
+      btn.innerHTML =
+        '<span class="swatch-preview" style="background:' + t.preview + ';"></span>' +
+        '<span class="swatch-label">' + t.label + '</span>';
+      btn.addEventListener('click', () => applyBgTheme(t.id));
+      themePanel.appendChild(btn);
+    });
+  }
+
+  function applyBgTheme(id){
+    document.body.className = document.body.className.replace(/\btheme-\S+/g, '').trim();
+    document.body.classList.add('theme-' + id);
+    currentBgTheme = id;
+    localStorage.setItem('biblioteca_bg_theme', id);
+    renderThemeSwatches();
+  }
+
+  bgThemeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = themePanel.style.display === 'grid';
+    if(isOpen){
+      themePanel.style.display = 'none';
+    } else {
+      const rect = bgThemeBtn.getBoundingClientRect();
+      themePanel.style.top = (rect.bottom + 10) + 'px';
+      themePanel.style.left = 'auto';
+      themePanel.style.right = Math.max(12, window.innerWidth - rect.right) + 'px';
+      themePanel.style.display = 'grid';
+    }
+  });
+  document.addEventListener('click', (e) => {
+    if(themePanel.style.display === 'grid' && !themePanel.contains(e.target) && e.target !== bgThemeBtn){
+      themePanel.style.display = 'none';
+    }
+  });
+
+  applyBgTheme(currentBgTheme);
+
+  // ================================================================
+  // PAINEL DE CORES POR CATEGORIA
+  // ================================================================
+  const catColorBtn = document.getElementById('catColorBtn');
+  const catColorPanel = document.getElementById('catColorPanel');
+
+  function refreshAllCategoryColors(){
+    renderCurrentView();
+    renderFavoritesSection();
+  }
+
+  function renderCatColorPanel(){
+    catColorPanel.innerHTML = '';
+    BLOCKS.forEach(tag => {
+      const row = document.createElement('div');
+      row.className = 'cat-color-row';
+      row.innerHTML =
+        '<label>' + catIconSVG(tag) + tag + '</label>' +
+        '<input type="color" value="' + catColor(tag) + '">';
+      const input = row.querySelector('input');
+      input.addEventListener('input', () => {
+        CATEGORY_COLORS[tag] = input.value;
+        saveCatColors();
+        refreshAllCategoryColors();
+      });
+      catColorPanel.appendChild(row);
+    });
+    const resetBtn = document.createElement('button');
+    resetBtn.type = 'button';
+    resetBtn.className = 'cat-color-reset';
+    resetBtn.textContent = 'Restaurar cores padrão';
+    resetBtn.addEventListener('click', () => {
+      CATEGORY_COLORS = Object.assign({}, DEFAULT_CAT_COLORS);
+      saveCatColors();
+      renderCatColorPanel();
+      refreshAllCategoryColors();
+    });
+    catColorPanel.appendChild(resetBtn);
+  }
+
+  catColorBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = catColorPanel.style.display === 'flex';
+    if(isOpen){
+      catColorPanel.style.display = 'none';
+    } else {
+      const rect = catColorBtn.getBoundingClientRect();
+      catColorPanel.style.top = (rect.bottom + 10) + 'px';
+      catColorPanel.style.left = 'auto';
+      catColorPanel.style.right = Math.max(12, window.innerWidth - rect.right) + 'px';
+      renderCatColorPanel();
+      catColorPanel.style.display = 'flex';
+    }
+  });
+  document.addEventListener('click', (e) => {
+    if(catColorPanel.style.display === 'flex' && !catColorPanel.contains(e.target) && e.target !== catColorBtn){
+      catColorPanel.style.display = 'none';
+    }
+  });
+
+  tryRestoreFolder();
+  goFase();
+</script>
+
+<script>
+  // ================================================================
+  // INTEGRAÇÃO COM O RASTREADOR PESSOAL — bloco adicionado à parte,
+  // depois de todo o script original. Não declara nenhuma variável ou
+  // função com nome usado acima, não toca em FASES/GUIDES/estado, e
+  // não altera nenhum comportamento da biblioteca.
+  //
+  // Único efeito: se esta página foi aberta em nova aba a partir do
+  // rastreador (via window.open/target="_blank"), mostra um link
+  // "Voltar ao rastreador" que fecha esta aba e retorna à aba de
+  // origem. Se for aberta de qualquer outra forma (direto no
+  // navegador, atalho, outro link), o link permanece oculto e nada
+  // muda.
+  // ================================================================
+  (function(){
+    try{
+      if(window.opener && !window.opener.closed){
+        var link = document.getElementById('backToTrackerLink');
+        if(link){
+          link.style.display = 'inline-flex';
+          link.addEventListener('click', function(){
+            window.close();
+            // fallback caso o navegador não permita fechar a aba
+            setTimeout(function(){ if(!window.closed) history.back(); }, 250);
+          });
+        }
+      }
+    }catch(e){
+      // acesso a window.opener bloqueado (ex.: rel="noopener") — sem
+      // problema, o link simplesmente continua oculto.
+    }
+  })();
+</script>
+</body>
+</html>
