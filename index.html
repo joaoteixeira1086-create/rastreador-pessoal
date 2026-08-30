@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
   :root{
     --bg: #07080B;
@@ -625,6 +626,20 @@
   .ask-chip:hover{ border-color: var(--treino); color: var(--treino); background: var(--treino-dim); }
   .ask-result{ margin-top:14px; padding-top:14px; border-top: 1px solid var(--border-soft); position:relative; font-size: 13px; line-height:1.6; color: var(--text); }
   .ask-result .q{ font-family:'JetBrains Mono',monospace; font-size:10.5px; color: var(--text-faint); margin-bottom:8px; }
+
+  /* ===================== SYNC / CONTA (widget discreto) ===================== */
+  .sync-tag{ font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.05em; text-transform:uppercase; padding:4px 8px; border-radius:999px; border:1px solid var(--border); color: var(--text-secondary); cursor:pointer; user-select:none; white-space:nowrap; }
+  .sync-tag.synced{ color: var(--dieta); border-color: rgba(79,209,174,0.35); }
+  .sync-tag.syncing{ color: var(--treino); border-color: rgba(167,139,250,0.35); }
+  .sync-tag.error{ color: var(--danger); border-color: rgba(240,113,90,0.35); }
+  .sync-panel{ background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin: -4px 0 16px; animation: fadeSlide .2s var(--ease); }
+  .sync-panel input[type=email], .sync-panel input[type=password]{ width:100%; background: var(--bg3); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 9px 10px; font-family:'Inter',sans-serif; font-size: 13px; outline:none; margin-bottom:8px; }
+  .sync-panel .row{ display:flex; gap:8px; }
+  .sync-panel .row button{ flex:1; }
+  .sync-panel .msg{ font-size:11px; color: var(--text-faint); margin-top:8px; font-family:'JetBrains Mono',monospace; }
+  .sync-panel .msg.error{ color: var(--danger); }
+  .sync-account-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .sync-account-email{ font-size:12.5px; color: var(--text-secondary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 </style>
 </head>
 <body>
@@ -632,8 +647,12 @@
 
   <header>
     <div class="brand">painel<span class="brand-dot">.</span>pessoal</div>
-    <div class="date-tag" id="date-tag"></div>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <div class="sync-tag" id="sync-tag"></div>
+      <div class="date-tag" id="date-tag"></div>
+    </div>
   </header>
+  <div id="sync-account-panel"></div>
 
   <div class="segnav" id="segnav">
     <div class="segnav-indicator" id="segnav-indicator"></div>
@@ -871,6 +890,463 @@ const storage = {
     }
   }
 };
+
+/* ======================================================================
+   SUPABASE — CAMADA DE SINCRONIZAÇÃO (separada do IndexedDB)
+   ------------------------------------------------------------------
+   O IndexedDB (bloco acima) continua sendo o armazenamento local
+   principal e funcional do app, sempre. Esta camada é estritamente
+   aditiva: ela lê/escreve nas MESMAS variáveis de estado já existentes
+   (treinoBlocks, workoutHistory, bodyWeightLog, dietaTargets, dietaLog,
+   dietMode/dietSlots/jantarEscolha/almocoDiaSelecionado) e, quando há
+   um usuário autenticado, espelha as alterações no Supabase. Se não
+   houver login, ou se o Supabase estiver fora do ar, nada aqui é
+   executado e o app segue 100% funcional local, como antes.
+
+   Apenas a Publishable Key (anon) é usada aqui — nunca a service_role.
+   Todas as tabelas têm RLS restringindo por auth.uid() = user_id, então
+   mesmo que a key vaze, ela sozinha não dá acesso a dados de outro
+   usuário.
+====================================================================== */
+const SUPABASE_URL = 'https://pwyjomnwkzzjeihljown.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_kE2EuqaWN_qA8b3fO9KO8Q_EJvH0cIB';
+
+let supabaseClient = null;
+let currentSyncUser = null;      // { id, email, ... } | null — nunca digitado manualmente, sempre vindo de supabase.auth
+let syncStatusState = 'idle';    // 'idle' | 'syncing' | 'synced' | 'error'
+const syncDebounce = {};         // um timer por entidade, para não disparar 1 requisição por tecla digitada
+
+function initSupabase(){
+  try{
+    if(!window.supabase || typeof window.supabase.createClient !== 'function'){
+      console.warn('[sync] biblioteca supabase-js não carregou (offline/bloqueada) — sincronização desativada, app continua local.');
+      return null;
+    }
+    if(!supabaseClient) supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    return supabaseClient;
+  }catch(e){
+    console.warn('[sync] falha ao inicializar Supabase:', e);
+    return null;
+  }
+}
+
+async function getCurrentUser(){
+  try{
+    const sb = initSupabase();
+    if(!sb) return null;
+    const { data, error } = await sb.auth.getUser();
+    if(error || !data || !data.user) return null;
+    return data.user;
+  }catch(e){ return null; }
+}
+
+async function ensureProfile(user){
+  try{
+    const sb = initSupabase(); if(!sb || !user) return;
+    await sb.from('profiles').upsert({ id: user.id }, { onConflict: 'id' });
+  }catch(e){ console.warn('[sync] ensureProfile falhou (não bloqueante):', e.message||e); }
+}
+
+function setSyncStatus(status, label){
+  syncStatusState = status;
+  const el = document.getElementById('sync-tag');
+  if(!el) return;
+  el.className = 'sync-tag' + (status && status !== 'idle' ? ' ' + status : '');
+  el.textContent = label || (currentSyncUser ? 'conta' : 'entrar');
+}
+
+/* ======================================================================
+   AUTENTICAÇÃO
+====================================================================== */
+async function signIn(email, password){
+  const sb = initSupabase();
+  if(!sb) return { error: 'Supabase indisponível neste navegador (sem rede ou biblioteca não carregada).' };
+  try{
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+    if(error) return { error: error.message };
+    currentSyncUser = data.user;
+    await ensureProfile(currentSyncUser);
+    renderSyncUI();
+    runInitialSyncFlow(); // roda em background, não bloqueia a UI
+    return { user: currentSyncUser };
+  }catch(e){
+    return { error: 'Falha de rede ao entrar: ' + (e.message||e) };
+  }
+}
+
+async function signOut(){
+  const sb = initSupabase();
+  currentSyncUser = null;
+  setSyncStatus('idle', 'entrar');
+  try{ if(sb) await sb.auth.signOut(); }catch(e){}
+  renderSyncUI();
+}
+
+/* ======================================================================
+   PULL — lê do Supabase e funde no estado local (nunca apaga dado local)
+====================================================================== */
+async function pullWorkoutBlocks(user){
+  const sb = initSupabase(); if(!sb) return;
+  const { data, error } = await sb.from('workout_blocks').select('*').eq('user_id', user.id);
+  if(error){ console.warn('[sync] pull workout_blocks:', error.message); return; }
+  (data||[]).forEach(row => {
+    const local = treinoBlocks.find(b => b.remoteId === row.id);
+    if(local){
+      local.name = row.name;
+      local.restSeconds = row.rest_seconds || undefined;
+      local.exercises = Array.isArray(row.data) ? row.data : (local.exercises||[]);
+    } else {
+      treinoBlocks.push({
+        id: Date.now() + treinoBlocks.length + Math.floor(Math.random()*1000),
+        name: row.name, open:false, restSeconds: row.rest_seconds || undefined,
+        exercises: Array.isArray(row.data) ? row.data : [],
+        remoteId: row.id
+      });
+    }
+  });
+}
+
+function historyLegacyKey(entry){
+  const block = treinoBlocks.find(b => b.id === entry.blockId);
+  const blockPart = (block && block.remoteId) ? block.remoteId : ('local' + entry.blockId);
+  return entry.date + '_' + blockPart;
+}
+
+async function pullWorkoutHistory(user){
+  const sb = initSupabase(); if(!sb) return;
+  const { data, error } = await sb.from('workout_history').select('*').eq('user_id', user.id);
+  if(error){ console.warn('[sync] pull workout_history:', error.message); return; }
+  (data||[]).forEach(row => {
+    const localMatch = workoutHistory.find(h => historyLegacyKey(h) === row.legacy_id);
+    if(localMatch){
+      if(JSON.stringify(localMatch) !== JSON.stringify(row.data)){
+        console.warn('[sync] CONFLITO em workout_history:', row.legacy_id, '— mantendo a versão local; servidor tem uma versão diferente para esta sessão. Revisar manualmente se necessário.');
+      }
+      return;
+    }
+    if(row.data && typeof row.data === 'object'){
+      const restored = { ...row.data };
+      restored.id = restored.id || (row.workout_date + '_remote_' + row.id);
+      restored.date = restored.date || row.workout_date;
+      workoutHistory.push(restored);
+    }
+  });
+}
+
+async function pullBodyWeight(user){
+  const sb = initSupabase(); if(!sb) return;
+  const { data, error } = await sb.from('body_weight').select('*').eq('user_id', user.id);
+  if(error){ console.warn('[sync] pull body_weight:', error.message); return; }
+  (data||[]).forEach(row => {
+    const idx = bodyWeightLog.findIndex(w => w.date === row.weight_date);
+    if(idx >= 0){
+      if(Number(bodyWeightLog[idx].weight) !== Number(row.weight)){
+        console.warn('[sync] CONFLITO em body_weight para', row.weight_date, '— mantendo valor local:', bodyWeightLog[idx].weight, 'servidor tinha:', row.weight);
+      }
+      return;
+    }
+    bodyWeightLog.push({ date: row.weight_date, time: row.recorded_time || '', weight: Number(row.weight) });
+  });
+  bodyWeightLog.sort((a,b) => a.date.localeCompare(b.date));
+}
+
+async function pullDietTargets(user){
+  const sb = initSupabase(); if(!sb) return false;
+  const { data, error } = await sb.from('diet_targets').select('*').eq('user_id', user.id).maybeSingle();
+  if(error){ console.warn('[sync] pull diet_targets:', error.message); return false; }
+  if(!data) return false;
+  dietaTargets = { kcal: Number(data.kcal)||0, prot: Number(data.prot)||0, carb: Number(data.carb)||0, gord: Number(data.gord)||0 };
+  return true;
+}
+
+async function pullDietSelections(user){
+  const sb = initSupabase(); if(!sb) return false;
+  const { data, error } = await sb.from('diet_selections').select('*').eq('user_id', user.id).maybeSingle();
+  if(error){ console.warn('[sync] pull diet_selections:', error.message); return false; }
+  if(!data || !data.data) return false;
+  const sel = data.data;
+  if(sel.dietMode) dietMode = { ...dietMode, ...sel.dietMode };
+  if(sel.dietSlots) dietSlots = { ...dietSlots, ...sel.dietSlots };
+  if(sel.jantarEscolha) jantarEscolha = sel.jantarEscolha;
+  if(sel.almocoDiaSelecionado) almocoDiaSelecionado = sel.almocoDiaSelecionado;
+  return true;
+}
+
+async function pullDietLog(user){
+  const sb = initSupabase(); if(!sb) return;
+  const { data, error } = await sb.from('diet_log').select('*').eq('user_id', user.id);
+  if(error){ console.warn('[sync] pull diet_log:', error.message); return; }
+  (data||[]).forEach(row => {
+    dietaLog[row.log_date] = dietaLog[row.log_date] || {};
+    const existing = dietaLog[row.log_date][row.meal_slot];
+    if(existing){
+      if(JSON.stringify(existing) !== JSON.stringify(row.data)){
+        console.warn('[sync] CONFLITO em diet_log:', row.log_date, row.meal_slot, '— mantendo versão local.');
+      }
+      return;
+    }
+    dietaLog[row.log_date][row.meal_slot] = row.data;
+  });
+}
+
+/* ======================================================================
+   PUSH — escreve no Supabase a partir do estado local
+====================================================================== */
+function isDefaultBlocksState(){
+  const d = defaultBlocks();
+  if(treinoBlocks.length !== d.length) return false;
+  return treinoBlocks.every((b,i) => b.name === d[i].name && (b.exercises||[]).length === 0 && !b.remoteId);
+}
+
+async function pushWorkoutBlocks(){
+  const sb = initSupabase(); if(!sb || !currentSyncUser) return;
+  if(isDefaultBlocksState()) return; // não envia os 4 blocos padrão vazios, nunca editados
+  for(const b of treinoBlocks){
+    const payload = { user_id: currentSyncUser.id, name: b.name || 'Sem nome', rest_seconds: b.restSeconds || null, data: b.exercises || [] };
+    try{
+      if(b.remoteId){
+        const { error } = await sb.from('workout_blocks').update(payload).eq('id', b.remoteId).eq('user_id', currentSyncUser.id);
+        if(error) throw error;
+      } else {
+        const { data, error } = await sb.from('workout_blocks').insert(payload).select('id').single();
+        if(error) throw error;
+        b.remoteId = data.id;
+      }
+    }catch(e){ console.warn('[sync] push workout_blocks falhou para bloco', b.name, e.message||e); }
+  }
+  await storage.set('treino:blocks', JSON.stringify(treinoBlocks)); // persiste os remoteIds obtidos, sem re-disparar push
+}
+
+async function pushWorkoutHistory(entriesToPush){
+  const sb = initSupabase(); if(!sb || !currentSyncUser) return;
+  const list = entriesToPush || workoutHistory;
+  for(const h of list){
+    const block = treinoBlocks.find(b => b.id === h.blockId);
+    const payload = {
+      user_id: currentSyncUser.id,
+      legacy_id: historyLegacyKey(h),
+      workout_date: h.date,
+      workout_time: h.time || null,
+      block_id: block && block.remoteId ? block.remoteId : null,
+      block_legacy_id: String(h.blockId),
+      block_name: h.blockName || '',
+      data: h,
+      volume: h.volume || 0,
+      set_count: h.setCount || 0,
+      filled_sets: h.filledSets || 0
+    };
+    try{
+      const { error } = await sb.from('workout_history').upsert(payload, { onConflict: 'user_id,legacy_id' });
+      if(error) throw error;
+    }catch(e){ console.warn('[sync] push workout_history falhou para', h.id, e.message||e); }
+  }
+}
+
+async function pushBodyWeight(entriesToPush){
+  const sb = initSupabase(); if(!sb || !currentSyncUser) return;
+  const list = entriesToPush || bodyWeightLog;
+  for(const w of list){
+    const payload = { user_id: currentSyncUser.id, weight_date: w.date, weight: w.weight, recorded_time: w.time || null };
+    try{
+      const { error } = await sb.from('body_weight').upsert(payload, { onConflict: 'user_id,weight_date' });
+      if(error) throw error;
+    }catch(e){ console.warn('[sync] push body_weight falhou para', w.date, e.message||e); }
+  }
+}
+
+async function pushDietTargets(){
+  const sb = initSupabase(); if(!sb || !currentSyncUser) return;
+  const payload = { user_id: currentSyncUser.id, kcal: dietaTargets.kcal, prot: dietaTargets.prot, carb: dietaTargets.carb, gord: dietaTargets.gord };
+  try{
+    const { error } = await sb.from('diet_targets').upsert(payload, { onConflict: 'user_id' });
+    if(error) throw error;
+  }catch(e){ console.warn('[sync] push diet_targets falhou:', e.message||e); }
+}
+
+async function pushDietSelections(){
+  const sb = initSupabase(); if(!sb || !currentSyncUser) return;
+  const payload = { user_id: currentSyncUser.id, data: { dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado } };
+  try{
+    const { error } = await sb.from('diet_selections').upsert(payload, { onConflict: 'user_id' });
+    if(error) throw error;
+  }catch(e){ console.warn('[sync] push diet_selections falhou:', e.message||e); }
+}
+
+async function pushDietLog(day){
+  const sb = initSupabase(); if(!sb || !currentSyncUser) return;
+  const targetDay = day || todayKey();
+  const slots = dietaLog[targetDay] || {};
+  for(const slot of Object.keys(slots)){
+    const payload = { user_id: currentSyncUser.id, log_date: targetDay, meal_slot: slot, data: slots[slot] };
+    try{
+      const { error } = await sb.from('diet_log').upsert(payload, { onConflict: 'user_id,log_date,meal_slot' });
+      if(error) throw error;
+    }catch(e){ console.warn('[sync] push diet_log falhou para', targetDay, slot, e.message||e); }
+  }
+}
+
+async function pushAllDietLog(){
+  for(const day of Object.keys(dietaLog)) await pushDietLog(day);
+}
+
+async function deleteDietLogRemote(day, slot){
+  const sb = initSupabase(); if(!sb || !currentSyncUser) return;
+  try{
+    await sb.from('diet_log').delete().eq('user_id', currentSyncUser.id).eq('log_date', day).eq('meal_slot', slot);
+  }catch(e){ console.warn('[sync] delete diet_log falhou (não bloqueante):', e.message||e); }
+}
+
+/* ======================================================================
+   ORQUESTRAÇÃO
+====================================================================== */
+async function syncFromSupabase(user){
+  await Promise.all([
+    pullWorkoutBlocks(user),
+    pullWorkoutHistory(user),
+    pullBodyWeight(user),
+    pullDietTargets(user),
+    pullDietSelections(user),
+    pullDietLog(user)
+  ]);
+  await storage.set('treino:blocks', JSON.stringify(treinoBlocks));
+  await storage.set('treino:history', JSON.stringify(workoutHistory));
+  await storage.set('treino:bodyweight', JSON.stringify(bodyWeightLog));
+  await storage.set('dieta:targets', JSON.stringify(dietaTargets));
+  await storage.set('dieta:log', JSON.stringify(dietaLog));
+  await storage.set('dieta:selecoes', JSON.stringify({ dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado }));
+}
+
+async function syncToSupabase(){
+  await pushWorkoutBlocks();
+  await pushWorkoutHistory();
+  await pushBodyWeight();
+  await pushDietTargets();
+  await pushAllDietLog();
+  await pushDietSelections();
+}
+
+async function runInitialSyncFlow(){
+  if(!currentSyncUser) return;
+  setSyncStatus('syncing', 'sincronizando...');
+  try{
+    await syncFromSupabase(currentSyncUser); // 1) traz o que já existe na nuvem (aditivo, não destrutivo)
+    await syncToSupabase();                   // 2) envia o que só existia localmente
+    setSyncStatus('synced', currentSyncUser.email || 'sincronizado');
+    refreshAllViews();
+  }catch(e){
+    console.warn('[sync] runInitialSyncFlow falhou:', e);
+    setSyncStatus('error', 'erro de sincronização');
+  }
+}
+
+function triggerSync(entity){
+  if(!currentSyncUser) return; // sem login: nada acontece, app 100% local via IndexedDB
+  clearTimeout(syncDebounce[entity]);
+  syncDebounce[entity] = setTimeout(async () => {
+    setSyncStatus('syncing', 'sincronizando...');
+    try{
+      if(entity === 'workout_blocks') await pushWorkoutBlocks();
+      else if(entity === 'workout_history') await pushWorkoutHistory();
+      else if(entity === 'body_weight') await pushBodyWeight();
+      else if(entity === 'diet_targets') await pushDietTargets();
+      else if(entity === 'diet_log') await pushDietLog();
+      else if(entity === 'diet_selections') await pushDietSelections();
+      setSyncStatus('synced', currentSyncUser.email || 'sincronizado');
+    }catch(e){
+      console.warn('[sync] push falhou para', entity, e);
+      setSyncStatus('error', 'erro de sincronização');
+    }
+  }, 600);
+}
+
+function refreshAllViews(){
+  renderBlocksLibrary();
+  renderBodyWeightSection();
+  renderRefeicoes();
+  renderHoje();
+  const histPanel = document.getElementById('panel-historico');
+  if(histPanel && histPanel.classList.contains('active')) renderHistorico();
+}
+
+/* ======================================================================
+   UI DE CONTA (login/logout) — painel discreto, aberto/fechado via clique na tag
+====================================================================== */
+let syncPanelOpen = false;
+function toggleSyncPanel(){
+  syncPanelOpen = !syncPanelOpen;
+  renderSyncUI();
+}
+function renderSyncUI(){
+  const tag = document.getElementById('sync-tag');
+  const panel = document.getElementById('sync-account-panel');
+  if(!tag || !panel) return;
+  tag.onclick = toggleSyncPanel;
+  if(!currentSyncUser){
+    setSyncStatus('idle', 'entrar');
+    panel.innerHTML = !syncPanelOpen ? '' : `
+      <div class="sync-panel">
+        <label>e-mail</label>
+        <input type="email" id="sync-email" placeholder="voce@exemplo.com">
+        <label>senha</label>
+        <input type="password" id="sync-password" placeholder="••••••••">
+        <div class="row">
+          <button class="btn-primary" onclick="handleSignInClick()">ENTRAR</button>
+        </div>
+        <div class="msg" id="sync-msg"></div>
+      </div>`;
+  } else {
+    tag.textContent = syncStatusState === 'syncing' ? 'sincronizando...' : (syncStatusState === 'error' ? 'erro de sync' : 'sincronizado');
+    tag.className = 'sync-tag' + (syncStatusState && syncStatusState !== 'idle' ? ' ' + syncStatusState : ' synced');
+    panel.innerHTML = !syncPanelOpen ? '' : `
+      <div class="sync-panel">
+        <div class="sync-account-row">
+          <span class="sync-account-email">${escapeHtml(currentSyncUser.email||'')}</span>
+          <button class="btn-ghost" onclick="handleSignOutClick()">SAIR</button>
+        </div>
+      </div>`;
+  }
+}
+async function handleSignInClick(){
+  const email = document.getElementById('sync-email').value.trim();
+  const password = document.getElementById('sync-password').value;
+  const msgEl = document.getElementById('sync-msg');
+  if(!email || !password){ msgEl.textContent = 'Preencha e-mail e senha.'; msgEl.className='msg error'; return; }
+  msgEl.textContent = 'Entrando...'; msgEl.className = 'msg';
+  const res = await signIn(email, password);
+  if(res.error){ msgEl.textContent = res.error; msgEl.className = 'msg error'; return; }
+  syncPanelOpen = false;
+  renderSyncUI();
+}
+async function handleSignOutClick(){
+  await signOut();
+}
+
+/* ======================================================================
+   INICIALIZAÇÃO DE AUTENTICAÇÃO E SYNC
+   Chamada no fim de loadAll(), depois que a UI local já renderizou —
+   assim o app abre instantaneamente com os dados locais, e a
+   sincronização (se houver login) acontece por cima, sem bloquear.
+====================================================================== */
+async function initAuthAndSync(){
+  try{
+    const sb = initSupabase();
+    if(!sb){ setSyncStatus('idle', ''); return; }
+    const user = await getCurrentUser();
+    if(user){
+      currentSyncUser = user;
+      renderSyncUI();
+      await runInitialSyncFlow();
+    } else {
+      renderSyncUI();
+    }
+    sb.auth.onAuthStateChange((event, session) => {
+      if(event === 'SIGNED_OUT'){ currentSyncUser = null; setSyncStatus('idle',''); renderSyncUI(); }
+    });
+  }catch(e){
+    console.warn('[sync] initAuthAndSync falhou (app continua local):', e);
+    setSyncStatus('idle', '');
+  }
+}
 
 /* ======================================================================
    ESTADO GERAL
@@ -1170,9 +1646,9 @@ const ruWeek = {
 const mealMeta = { cafe:{title:'Café da manhã'}, almoco:{title:'Almoço (RU)'}, lanche:{title:'Lanche da tarde'}, jantar:{title:'Jantar'}, ceia:{title:'Ceia'} };
 const mealOrder = ['cafe','almoco','lanche','jantar','ceia'];
 
-async function saveTargets(){ await storage.set('dieta:targets', JSON.stringify(dietaTargets)); }
-async function saveLog(){ await storage.set('dieta:log', JSON.stringify(dietaLog)); }
-async function saveSelecoes(){ await storage.set('dieta:selecoes', JSON.stringify({ dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado })); }
+async function saveTargets(){ await storage.set('dieta:targets', JSON.stringify(dietaTargets)); triggerSync('diet_targets'); }
+async function saveLog(){ await storage.set('dieta:log', JSON.stringify(dietaLog)); triggerSync('diet_log'); }
+async function saveSelecoes(){ await storage.set('dieta:selecoes', JSON.stringify({ dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado })); triggerSync('diet_selections'); }
 
 
 /* ======================================================================
@@ -1425,7 +1901,7 @@ async function registrarLivre(key){
   }
 }
 
-async function undoMeal(key){ const day = todayKey(); if(dietaLog[day]) delete dietaLog[day][key]; await saveLog(); renderRefeicoes(); }
+async function undoMeal(key){ const day = todayKey(); if(dietaLog[day]) delete dietaLog[day][key]; await saveLog(); if(currentSyncUser) deleteDietLogRemote(day, key); renderRefeicoes(); }
 
 /* ======================================================================
    PERGUNTE AO SEU PAINEL
@@ -1593,6 +2069,8 @@ async function loadAll(){
   renderBodyWeightSection();
   renderRefeicoes();
   renderHoje();
+
+  initAuthAndSync(); // não bloqueia: a UI local acima já está pronta e usável antes disso terminar
 }
 
 /* ======================================================================
@@ -1666,9 +2144,9 @@ function defaultBlocks(){
     { id:4, name:'Bloco D', open:false, exercises:[] },
   ];
 }
-async function saveTreino(){ await storage.set('treino:blocks', JSON.stringify(treinoBlocks)); }
-async function saveHistory(){ await storage.set('treino:history', JSON.stringify(workoutHistory)); }
-async function saveBodyWeight(){ await storage.set('treino:bodyweight', JSON.stringify(bodyWeightLog)); }
+async function saveTreino(){ await storage.set('treino:blocks', JSON.stringify(treinoBlocks)); triggerSync('workout_blocks'); }
+async function saveHistory(){ await storage.set('treino:history', JSON.stringify(workoutHistory)); triggerSync('workout_history'); }
+async function saveBodyWeight(){ await storage.set('treino:bodyweight', JSON.stringify(bodyWeightLog)); triggerSync('body_weight'); }
 
 /* ======================================================================
    CÁLCULOS DERIVADOS
