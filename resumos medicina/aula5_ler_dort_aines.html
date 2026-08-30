@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LER/DORT, Exames de Imagem e AINEs — Material de Estudo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080b14;
+  --bg-alt:#0d1220;
+  --panel:#111827;
+  --panel-2:#141b2e;
+  --border:#232f4a;
+  --border-soft:#1b2438;
+  --text:#e7ecf7;
+  --text-dim:#8b97b9;
+  --text-faint:#5c6786;
+
+  --cyan:#22d3ee;
+  --cyan-bg:rgba(34,211,238,.08);
+  --red:#f8717a;
+  --red-bg:rgba(248,113,122,.08);
+  --amber:#fbbf24;
+  --amber-bg:rgba(251,191,36,.08);
+  --green:#4ade80;
+  --green-bg:rgba(74,222,128,.08);
+  --violet:#a78bfa;
+  --violet-bg:rgba(167,139,250,.08);
+  --orange:#fb923c;
+  --orange-bg:rgba(251,146,60,.08);
+  --teal:#2dd4bf;
+  --teal-bg:rgba(45,212,191,.08);
+  --lime:#a3e635;
+  --lime-bg:rgba(163,230,53,.08);
+
+  --radius:14px;
+  --radius-sm:8px;
+  --sidebar-w:290px;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(34,211,238,.06), transparent 60%),
+    radial-gradient(1000px 500px at 0% 100%, rgba(167,139,250,.05), transparent 60%),
+    var(--bg);
+  color:var(--text);
+  font-family:'DM Sans', sans-serif;
+  line-height:1.65;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4{font-family:'Merriweather', serif; font-weight:700; letter-spacing:-.01em;}
+
+.label, .mono{font-family:'DM Mono', monospace;}
+
+a{color:inherit; text-decoration:none;}
+
+/* ================= SIDEBAR ================= */
+.sidebar{
+  position:fixed; top:0; left:0; bottom:0; width:var(--sidebar-w);
+  background:linear-gradient(180deg, var(--panel) 0%, var(--bg-alt) 100%);
+  border-right:1px solid var(--border-soft);
+  padding:28px 22px 24px;
+  overflow-y:auto;
+  z-index:100;
+}
+.sidebar::-webkit-scrollbar{width:6px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border); border-radius:6px;}
+
+.sb-brand{
+  display:flex; flex-direction:column; gap:4px; margin-bottom:6px;
+  padding-bottom:20px; border-bottom:1px solid var(--border-soft);
+}
+.sb-tag{
+  font-family:'DM Mono', monospace; font-size:11px; letter-spacing:.14em;
+  color:var(--cyan); text-transform:uppercase;
+}
+.sb-title{font-family:'Merriweather', serif; font-size:20px; line-height:1.3; color:var(--text);}
+.sb-sub{font-size:12.5px; color:var(--text-dim); font-family:'DM Mono', monospace;}
+
+.sb-nav{margin-top:22px; display:flex; flex-direction:column; gap:2px;}
+.sb-group-title{
+  font-family:'DM Mono', monospace; font-size:10.5px; letter-spacing:.12em;
+  color:var(--text-faint); text-transform:uppercase; margin:16px 0 8px; padding-left:10px;
+}
+.sb-nav a{
+  display:flex; align-items:center; gap:10px;
+  font-size:13.5px; color:var(--text-dim); padding:8px 10px; border-radius:8px;
+  transition:.15s;
+}
+.sb-nav a:hover{background:var(--panel-2); color:var(--text);}
+.sb-dot{width:7px; height:7px; border-radius:50%; flex:none;}
+
+.sb-foot{
+  margin-top:26px; padding-top:16px; border-top:1px solid var(--border-soft);
+  font-size:11px; color:var(--text-faint); font-family:'DM Mono', monospace; line-height:1.6;
+}
+
+.menu-toggle{display:none;}
+
+/* ================= MAIN ================= */
+.main{margin-left:var(--sidebar-w); padding:0 0 80px;}
+
+/* ---- HERO ---- */
+.hero{
+  padding:68px 56px 46px;
+  background:
+    linear-gradient(135deg, rgba(34,211,238,.10), rgba(167,139,250,.06) 60%, transparent),
+    var(--bg-alt);
+  border-bottom:1px solid var(--border-soft);
+  position:relative; overflow:hidden;
+}
+.hero::before{
+  content:""; position:absolute; top:-40%; right:-10%; width:520px; height:520px;
+  background:radial-gradient(circle, rgba(34,211,238,.12), transparent 70%);
+  pointer-events:none;
+}
+.hero-cat{
+  display:inline-block; font-family:'DM Mono', monospace; font-size:11.5px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--cyan); background:var(--cyan-bg);
+  border:1px solid rgba(34,211,238,.3); padding:5px 12px; border-radius:100px; margin-bottom:20px;
+}
+.hero h1{
+  font-size:clamp(30px, 4vw, 46px); line-height:1.15; max-width:820px; color:#fff;
+  margin-bottom:16px;
+}
+.hero p{font-size:16px; color:var(--text-dim); max-width:680px; margin-bottom:22px;}
+.hero-tags{display:flex; flex-wrap:wrap; gap:8px;}
+.tag{
+  font-family:'DM Mono', monospace; font-size:11.5px; color:var(--text-dim);
+  border:1px solid var(--border); padding:6px 12px; border-radius:100px; background:var(--panel);
+}
+
+/* ---- SECTION ---- */
+.section{padding:56px 56px 8px; border-bottom:1px solid var(--border-soft); scroll-margin-top:20px;}
+.section-head{display:flex; gap:20px; align-items:flex-start; margin-bottom:28px;}
+.section-num{
+  font-family:'Merriweather', serif; font-size:52px; font-weight:900; line-height:1;
+  color:transparent; -webkit-text-stroke:1.4px var(--sec-color, var(--cyan)); opacity:.55; flex:none;
+}
+.section-title-wrap{padding-top:6px;}
+.section-title{font-size:26px; color:#fff; margin-bottom:6px;}
+.section-sub{font-size:14.5px; color:var(--text-dim); max-width:720px;}
+.section-rule{height:1px; background:linear-gradient(90deg, var(--sec-color, var(--cyan)), transparent); margin:22px 0 34px; opacity:.5;}
+
+.section-body{display:flex; flex-direction:column; gap:22px; padding-bottom:20px;}
+
+/* ---- CARDS ---- */
+.grid{display:grid; gap:16px;}
+.grid-2{grid-template-columns:1fr 1fr;}
+.grid-3{grid-template-columns:1fr 1fr 1fr;}
+
+.card{
+  background:var(--panel); border:1px solid var(--border-soft);
+  border-top:3px solid var(--card-color, var(--cyan));
+  border-radius:var(--radius); padding:20px 22px;
+}
+.card h4{font-size:15.5px; color:#fff; margin-bottom:10px; font-family:'DM Sans',sans-serif; font-weight:700;}
+.card p{font-size:14.5px; color:var(--text-dim); margin-bottom:8px;}
+.card p:last-child{margin-bottom:0;}
+.card ul{padding-left:18px; color:var(--text-dim); font-size:14.5px;}
+.card ul li{margin-bottom:6px;}
+.card strong, .card b{color:var(--text);}
+.card em{color:var(--card-color, var(--cyan)); font-style:normal;}
+
+.card-label{
+  display:inline-block; font-family:'DM Mono', monospace; font-size:10.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--card-color, var(--cyan)); margin-bottom:10px;
+}
+
+/* ---- FLOWCHART ---- */
+.flow{display:flex; align-items:stretch; gap:0; flex-wrap:wrap; margin:6px 0 18px;}
+.flow-step{
+  flex:1; min-width:150px; background:var(--panel-2); border:1px solid var(--border);
+  border-radius:var(--radius-sm); padding:14px 16px; text-align:center;
+  display:flex; flex-direction:column; justify-content:center; gap:4px;
+}
+.flow-step .fs-label{font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.08em; color:var(--sec-color,var(--cyan)); text-transform:uppercase;}
+.flow-step .fs-text{font-size:13.5px; color:var(--text); font-weight:500;}
+.flow-arrow{
+  flex:none; display:flex; align-items:center; justify-content:center;
+  width:38px; color:var(--sec-color, var(--cyan)); font-size:20px; opacity:.7;
+}
+@media (max-width: 720px){
+  .flow{flex-direction:column;}
+  .flow-arrow{width:100%; height:24px; transform:rotate(90deg);}
+}
+
+/* ---- TABLE ---- */
+.table-wrap{overflow-x:auto; border:1px solid var(--border-soft); border-radius:var(--radius); background:var(--panel);}
+table{width:100%; border-collapse:collapse; min-width:640px;}
+thead th{
+  background:var(--panel-2); color:#fff; font-family:'DM Mono',monospace; font-size:11.5px;
+  letter-spacing:.06em; text-transform:uppercase; text-align:left; padding:13px 16px;
+  border-bottom:1px solid var(--border); white-space:nowrap;
+}
+tbody td{padding:13px 16px; font-size:13.8px; color:var(--text-dim); border-bottom:1px solid var(--border-soft); vertical-align:top;}
+tbody tr:last-child td{border-bottom:none;}
+tbody td:first-child{color:var(--text); font-weight:600;}
+tbody tr:hover{background:rgba(255,255,255,.015);}
+
+/* ---- ALERT BOXES ---- */
+.alert{
+  border-radius:var(--radius); border:1px solid; padding:16px 18px 17px;
+  background:transparent; display:flex; flex-direction:column; gap:6px;
+}
+.alert-tag{
+  font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+  display:flex; align-items:center; gap:8px;
+}
+.alert-tag::before{content:""; width:8px; height:8px; border-radius:2px; display:inline-block; transform:rotate(45deg);}
+.alert p{font-size:14px; color:var(--text-dim); margin:0;}
+.alert strong{color:var(--text);}
+
+.alert.atencao{border-color:rgba(251,191,36,.35); background:var(--amber-bg);}
+.alert.atencao .alert-tag{color:var(--amber);}
+.alert.atencao .alert-tag::before{background:var(--amber);}
+
+.alert.clinica{border-color:rgba(34,211,238,.35); background:var(--cyan-bg);}
+.alert.clinica .alert-tag{color:var(--cyan);}
+.alert.clinica .alert-tag::before{background:var(--cyan);}
+
+.alert.prova{border-color:rgba(167,139,250,.35); background:var(--violet-bg);}
+.alert.prova .alert-tag{color:var(--violet);}
+.alert.prova .alert-tag::before{background:var(--violet);}
+
+.alert.pegadinha{border-color:rgba(248,113,122,.35); background:var(--red-bg);}
+.alert.pegadinha .alert-tag{color:var(--red);}
+.alert.pegadinha .alert-tag::before{background:var(--red);}
+
+.alert.importante{border-color:rgba(74,222,128,.35); background:var(--green-bg);}
+.alert.importante .alert-tag{color:var(--green);}
+.alert.importante .alert-tag::before{background:var(--green);}
+
+/* ---- BADGES / TESTS ---- */
+.test-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+.test-card{background:var(--panel-2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px;}
+.test-name{font-family:'DM Mono',monospace; font-size:12px; color:var(--sec-color,var(--cyan)); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px;}
+.test-card p{font-size:13.5px; color:var(--text-dim);}
+
+/* ---- DRUG LIST ---- */
+.drug-row{display:flex; justify-content:space-between; gap:14px; padding:10px 0; border-bottom:1px solid var(--border-soft); font-size:14px;}
+.drug-row:last-child{border-bottom:none;}
+.drug-name{color:var(--text); font-weight:600;}
+.drug-dose{color:var(--text-dim); font-family:'DM Mono',monospace; font-size:12.5px; text-align:right;}
+
+/* ---- SUPER RESUMO ---- */
+.super{
+  margin:56px 56px 0; padding:40px 40px 44px; border-radius:20px;
+  background:linear-gradient(160deg, rgba(34,211,238,.08), rgba(167,139,250,.05) 55%, var(--panel));
+  border:1px solid rgba(34,211,238,.25);
+}
+.super h2{font-size:26px; color:#fff; margin-bottom:6px;}
+.super > p.super-lead{color:var(--text-dim); font-size:14.5px; margin-bottom:26px; max-width:680px;}
+.super-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.super-card{background:var(--panel); border:1px solid var(--border-soft); border-radius:var(--radius); padding:18px 20px;}
+.super-card h4{font-size:14px; color:var(--sec-color,var(--cyan)); margin-bottom:10px; font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:.06em;}
+.super-card ul{padding-left:18px; font-size:13.8px; color:var(--text-dim);}
+.super-card ul li{margin-bottom:7px;}
+.super-card strong{color:var(--text);}
+
+/* ---- REFERENCES ---- */
+.refs{padding:56px 56px 40px;}
+.refs h2{font-size:22px; color:#fff; margin-bottom:22px;}
+.ref-item{font-size:13.2px; color:var(--text-dim); padding:11px 0; border-bottom:1px solid var(--border-soft);}
+.ref-item:last-child{border-bottom:none;}
+
+.foot-note{padding:0 56px 60px; font-size:12px; color:var(--text-faint); font-family:'DM Mono',monospace;}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 980px){
+  .grid-3{grid-template-columns:1fr 1fr;}
+  .test-grid{grid-template-columns:1fr 1fr;}
+}
+
+@media (max-width: 860px){
+  :root{--sidebar-w:0px;}
+  .sidebar{
+    transform:translateX(-100%); transition:transform .25s ease; width:280px; z-index:200;
+    box-shadow:20px 0 60px rgba(0,0,0,.5);
+  }
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-left:0;}
+  .menu-toggle{
+    display:flex; align-items:center; gap:8px; position:fixed; top:16px; left:16px; z-index:150;
+    background:var(--panel); border:1px solid var(--border); color:var(--text);
+    font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    padding:9px 14px; border-radius:100px; cursor:pointer;
+  }
+  .hero{padding:90px 24px 36px;}
+  .section{padding:44px 22px 4px;}
+  .super{margin:44px 22px 0; padding:28px 22px 32px;}
+  .refs{padding:44px 22px 30px;}
+  .foot-note{padding:0 22px 50px;}
+  .grid-2, .grid-3{grid-template-columns:1fr;}
+  .test-grid{grid-template-columns:1fr;}
+  .super-grid{grid-template-columns:1fr;}
+  .section-num{font-size:38px;}
+}
+
+.overlay{display:none;}
+@media (max-width:860px){
+  .overlay{
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:150;
+  }
+  .overlay.show{display:block;}
+}
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open'); document.querySelector('.overlay').classList.toggle('show');">☰ Índice</button>
+<div class="overlay" onclick="document.querySelector('.sidebar').classList.remove('open'); this.classList.remove('show');"></div>
+
+<nav class="sidebar">
+  <div class="sb-brand">
+    <span class="sb-tag">UCXIII — Dor · TBL</span>
+    <span class="sb-title">LER / DORT — Terapêutica, Imagem e Manejo Clínico</span>
+    <span class="sb-sub">Aula 5 · Prof. Andrew</span>
+  </div>
+
+  <div class="sb-nav">
+    <div class="sb-group-title">Fundamentos</div>
+    <a href="#fisiopatologia"><span class="sb-dot" style="background:var(--cyan)"></span>01 · Fisiopatologia LER/DORT</a>
+
+    <div class="sb-group-title">Síndromes específicas</div>
+    <a href="#stc"><span class="sb-dot" style="background:var(--violet)"></span>02 · Síndrome do Túnel do Carpo</a>
+    <a href="#epicondilites"><span class="sb-dot" style="background:var(--orange)"></span>03 · Epicondilites</a>
+    <a href="#manguito"><span class="sb-dot" style="background:var(--amber)"></span>04 · Manguito Rotador</a>
+    <a href="#dequervain"><span class="sb-dot" style="background:var(--teal)"></span>05 · De Quervain</a>
+
+    <div class="sb-group-title">Propedêutica</div>
+    <a href="#imagem"><span class="sb-dot" style="background:var(--cyan)"></span>06 · Exames Complementares</a>
+
+    <div class="sb-group-title">Terapêutica</div>
+    <a href="#manejo"><span class="sb-dot" style="background:var(--green)"></span>07 · Manejo Não Farmacológico</a>
+    <a href="#medicamentoso"><span class="sb-dot" style="background:var(--green)"></span>08 · Tratamento Medicamentoso</a>
+    <a href="#aines"><span class="sb-dot" style="background:var(--red)"></span>09 · AINEs</a>
+
+    <div class="sb-group-title">Revisão</div>
+    <a href="#super-resumo"><span class="sb-dot" style="background:var(--lime)"></span>Super-Resumo</a>
+    <a href="#referencias"><span class="sb-dot" style="background:var(--text-faint)"></span>Referências</a>
+  </div>
+
+  <div class="sb-foot">
+    UCXIII — DOR<br>
+    5º semestre · Ciclo clínico<br>
+    Material de aprofundamento — não substitui o slide original.
+  </div>
+</nav>
+
+<main class="main">
+
+  <section class="hero">
+    <span class="hero-cat">UCXIII · Dor · TBL — Aula 5</span>
+    <h1>Terapêutica, Exames de Imagem e Manejo Clínico em LER e DORT</h1>
+    <p>Aprofundamento sobre a fisiopatologia dos distúrbios osteomusculares relacionados ao trabalho, suas principais síndromes clínicas, a propedêutica com exames de imagem e eletroneuromiografia, e a terapêutica farmacológica — com ênfase no mecanismo de ação, indicações e efeitos adversos dos anti-inflamatórios não esteroidais (AINEs).</p>
+    <div class="hero-tags">
+      <span class="tag">Túnel do Carpo</span>
+      <span class="tag">Epicondilite Lateral e Medial</span>
+      <span class="tag">Manguito Rotador</span>
+      <span class="tag">De Quervain</span>
+      <span class="tag">USG / RM / ENM</span>
+      <span class="tag">AINEs — COX-1 / COX-2</span>
+    </div>
+  </section>
+
+  <!-- ============ 01 FISIOPATOLOGIA ============ -->
+  <section class="section" id="fisiopatologia" style="--sec-color:var(--cyan)">
+    <div class="section-head">
+      <div class="section-num">01</div>
+      <div class="section-title-wrap">
+        <h2 class="section-title">Fisiopatologia das LER e DORT</h2>
+        <p class="section-sub">Por que o esforço repetitivo lesiona tendão, sinóvia e nervo — a cascata biomecânica que liga o gesto laboral à dor crônica.</p>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+
+    <div class="section-body">
+      <div class="card" style="--card-color:var(--cyan)">
+        <span class="card-label">Conceito</span>
+        <p>LER (Lesão por Esforço Repetitivo) e DORT (Distúrbio Osteomuscular Relacionado ao Trabalho) são termos que descrevem um espectro de afecções musculoesqueléticas — tendinopatias, tenossinovites, síndromes compressivas de nervo periférico e mialgias — que se desenvolvem de forma <em>cumulativa</em>, e não por um trauma único. O ponto-chave fisiopatológico é que o tecido tendíneo e sinovial não é lesado por uma força isolada, mas por <strong>microtraumas repetidos em frequência maior do que a capacidade de reparo tecidual</strong>. É esse desequilíbrio entre dano e reparo — e não a intensidade de um único episódio — que define a doença.</p>
+      </div>
+
+      <div class="flow">
+        <div class="flow-step"><span class="fs-label">Etapa 1</span><span class="fs-text">Atividade repetitiva / postura inadequada</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><span class="fs-label">Etapa 2</span><span class="fs-text">Microtraumas cumulativos</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><span class="fs-label">Etapa 3</span><span class="fs-text">Resposta inflamatória local</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><span class="fs-label">Etapa 4</span><span class="fs-text">Degeneração tendínea crônica</span></div>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card" style="--card-color:var(--cyan)">
+          <h4>Etapa 1 — Sobrecarga biomecânica</h4>
+          <p>Movimentos repetitivos (digitação, uso excessivo de mouse), ergonomia deficiente e forças de compressão, estiramento e atrito geram estresse mecânico sobre a unidade miotendínea. O tendão, estrutura pouco vascularizada e composta majoritariamente por colágeno tipo I organizado em fibras paralelas, tolera bem cargas axiais fisiológicas, mas sofre microrrupturas quando a carga é aplicada de forma repetitiva e sem tempo de recuperação entre os ciclos.</p>
+        </div>
+        <div class="card" style="--card-color:var(--cyan)">
+          <h4>Etapa 2 — Microtraumas repetitivos</h4>
+          <p>Cada ciclo de movimento gera lesões microscópicas nas fibrilas colágenas. Isoladamente, cada microlesão seria reparada sem consequência clínica. O problema surge quando a <strong>frequência de novas lesões supera a velocidade do reparo</strong> — o tendão nunca completa o ciclo de remodelação (síntese de colágeno tipo III de reparo → maturação para colágeno tipo I organizado), acumulando dano estrutural progressivo.</p>
+        </div>
+        <div class="card" style="--card-color:var(--cyan)">
+          <h4>Etapa 3 — Resposta inflamatória</h4>
+          <p>O dano tecidual recorrente ativa a liberação de mediadores inflamatórios — citocinas (IL-1, IL-6, TNF-α) e prostaglandinas derivadas da via da ciclo-oxigenase — que promovem vasodilatação local, edema e infiltração de células inflamatórias. Quando esse processo acomete a bainha sinovial que envolve o tendão (especialmente em tendões que cruzam retináculos, como no punho), configura-se a <strong>tenossinovite</strong>: inflamação da bainha com acúmulo de líquido sinovial, que espessa a bainha e pode comprimir estruturas adjacentes — mecanismo central tanto na tenossinovite de De Quervain quanto, indiretamente, na síndrome do túnel do carpo.</p>
+        </div>
+        <div class="card" style="--card-color:var(--cyan)">
+          <h4>Etapa 4 — Degeneração tendínea</h4>
+          <p>Com a cronificação, o quadro deixa de ser puramente inflamatório e passa a ser predominantemente <em>degenerativo</em> — por isso a literatura atual prefere o termo "tendinopatia" a "tendinite" para lesões crônicas. Há hipóxia tecidual (o tendão já é pouco vascularizado e a inflamação crônica piora a perfusão local), degeneração das fibras colágenas — mais evidente com o avançar da idade ou sob sobrecarga crônica — e, eventualmente, formação de tecido fibroso desorganizado ou calcificações distróficas, que tornam o tendão mecanicamente mais frágil e predispõem à ruptura.</p>
+        </div>
+      </div>
+
+      <div class="alert atencao">
+        <span class="alert-tag">Atenção</span>
+        <p>Note a diferença conceitual entre <strong>tendinite</strong> (processo agudo, predominantemente inflamatório, com neutrófilos e mediadores clássicos) e <strong>tendinose/tendinopatia degenerativa</strong> (processo crônico, com degeneração colágena, neovascularização desorganizada e pouca celularidade inflamatória clássica). Isso tem implicação terapêutica direta: quadros crônicos degenerativos respondem pior a anti-inflamatórios isolados, pois o substrato já não é predominantemente inflamatório.</p>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card" style="--card-color:var(--violet)">
+          <span class="card-label">Fatores de risco intrínsecos</span>
+          <ul>
+            <li>Idade avançada — menor capacidade regenerativa do colágeno e redução da vascularização tendínea.</li>
+            <li>Doenças sistêmicas: diabetes mellitus (glicosilação não enzimática do colágeno, piorando sua elasticidade) e artrite reumatoide (processo inflamatório sinovial crônico sobreposto).</li>
+            <li>Predisposição genética — polimorfismos relacionados à síntese e organização do colágeno.</li>
+          </ul>
+        </div>
+        <div class="card" style="--card-color:var(--orange)">
+          <span class="card-label">Fatores de risco extrínsecos</span>
+          <ul>
+            <li>Vibração de ferramentas — trauma mecânico repetitivo direto sobre tecidos moles e estruturas neurovasculares.</li>
+            <li>Frio excessivo no ambiente de trabalho — reduz a perfusão tecidual, prejudicando o reparo.</li>
+            <li>Falta de pausas durante a jornada laboral — impede o intervalo de recuperação necessário entre ciclos de microtrauma.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="--card-color:var(--orange)">
+        <span class="card-label">Manifestações clínicas comuns ao espectro LER/DORT</span>
+        <ul>
+          <li><strong>Dor localizada</strong>, tipicamente agravada por movimentos específicos que reproduzem o gesto lesivo — esse padrão de dor "mecânica" e relacionada à atividade é uma pista semiológica importante.</li>
+          <li><strong>Edema e calor</strong> na região afetada, refletindo o componente inflamatório ativo.</li>
+          <li><strong>Limitação funcional</strong>, com dificuldade progressiva para realizar atividades da vida diária que antes eram triviais.</li>
+          <li><strong>Parestesias</strong>, quando há compressão nervosa associada — sinal de alarme que direciona a investigação para síndromes compressivas, como a síndrome do túnel do carpo.</li>
+        </ul>
+      </div>
+
+      <div class="alert prova">
+        <span class="alert-tag">Prova</span>
+        <p>Se a questão trouxer um paciente com dor que piora com a atividade e melhora com repouso, associada a fator ocupacional identificável (digitação, trabalho manual repetitivo, uso de ferramentas vibratórias), pense primeiro no espectro LER/DORT antes de hipóteses reumatológicas sistêmicas — a história ocupacional é a chave diagnóstica inicial.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 STC ============ -->
+  <section class="section" id="stc" style="--sec-color:var(--violet)">
+    <div class="section-head">
+      <div class="section-num">02</div>
+      <div class="section-title-wrap">
+        <h2 class="section-title">Síndrome do Túnel do Carpo</h2>
+        <p class="section-sub">A neuropatia compressiva mais comum do membro superior — compressão do nervo mediano no canal do carpo.</p>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+
+    <div class="section-body">
+      <div class="card" style="--card-color:var(--violet)">
+        <span class="card-label">Anatomia funcional</span>
+        <p>O túnel do carpo é um espaço rígido e inextensível delimitado dorsalmente pelos ossos do carpo e ventralmente pelo retináculo flexor (ligamento carpal transverso). Por dentro dele passam os nove tendões flexores dos dedos (flexor superficial e profundo dos dedos, flexor longo do polegar) e o <strong>nervo mediano</strong> — este é o único nervo dentro do túnel, o que explica por que qualquer aumento de volume no compartimento comprime preferencialmente essa estrutura, já que ela não tem para onde "escapar" dentro de um continente ósseo-ligamentar inextensível.</p>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card" style="--card-color:var(--violet)">
+          <span class="card-label">Fisiopatologia — multifatorial</span>
+          <ul>
+            <li><strong>Aumento da pressão intracarpal</strong> por compressão anatômica direta, com inflamação e lesão mecânica do nervo.</li>
+            <li><strong>Fibrose do tecido conjuntivo subsinovial</strong> que envolve os tendões flexores, reduzindo o espaço disponível e gerando compressão neural crônica.</li>
+            <li>Compressão <strong>extrínseca</strong>: cisto sinovial, neoplasia local ou variante anatômica como artéria mediana persistente.</li>
+            <li>Edema por condições inflamatórias sistêmicas, como <strong>artrite reumatoide</strong>, que causa sinovite dos tendões flexores.</li>
+            <li><strong>Edema endoneural</strong> secundário a congestão venosa após lesão do sistema capilar intraneural, com fibrose sinovial e proliferação vascular reativa, levando a afinamento da bainha de mielina e degeneração progressiva das fibras nervosas.</li>
+          </ul>
+        </div>
+        <div class="card" style="--card-color:var(--violet)">
+          <span class="card-label">Por que isso gera os sintomas?</span>
+          <p>O nervo mediano é misto (sensitivo e motor). A compressão crônica primeiro afeta as fibras sensitivas de maior calibre (mais sensíveis à isquemia por compressão), gerando parestesia e formigamento antes de qualquer déficit motor perceptível. Com a progressão, ocorre desmielinização segmentar (lentificando a condução nervosa) e, em casos avançados, degeneração axonal — correlato fisiopatológico direto dos achados na eletroneuromiografia (ENM), que veremos adiante.</p>
+        </div>
+      </div>
+
+      <details style="background:var(--panel-2); border:1px solid var(--border); border-radius:12px; padding:16px 18px;">
+        <summary style="cursor:pointer; font-family:'DM Mono',monospace; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--violet);">Aprofunde-se — por que o punho piora à noite?</summary>
+        <p style="margin-top:10px; font-size:14px; color:var(--text-dim);">Durante o sono, a flexão espontânea do punho aumenta a pressão intracarpal (o canal se torna ainda mais estreito nessa posição), e a ausência de movimento ativo reduz a "bomba muscular" que normalmente favorece o retorno venoso, agravando o edema endoneural. Isso explica clinicamente por que os sintomas noturnos e o despertar com dormência das mãos são tão característicos e valorizados na anamnese da STC.</p>
+      </details>
+
+      <div class="card" style="--card-color:var(--cyan)">
+        <span class="card-label">Quadro clínico — gradação de gravidade</span>
+        <p>O quadro clássico é dor e parestesia nas mãos, na distribuição do nervo mediano (polegar, indicador, médio e face radial do anular), que piora com o sono ou com a manutenção prolongada da posição da mão.</p>
+        <div class="grid grid-3" style="margin-top:12px;">
+          <div class="test-card">
+            <div class="test-name">Sintomas leves</div>
+            <p>Formigamento ou desconforto na distribuição do mediano, sem dormência ou fraqueza persistentes. Não perturbam o sono nem interferem nas AVDs.</p>
+          </div>
+          <div class="test-card">
+            <div class="test-name">Sintomas moderados</div>
+            <p>Formigamento persistente ou sintomas noturnos leves, que podem atrapalhar o sono e interferem levemente na função da mão.</p>
+          </div>
+          <div class="test-card">
+            <div class="test-name">Sintomas graves</div>
+            <p>Fraqueza ou sintomas incapacitantes, comumente interrompem o sono e interferem nas atividades diárias — sinaliza dano axonal já estabelecido.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="--card-color:var(--violet)">
+        <span class="card-label">Diagnóstico — testes provocativos</span>
+        <div class="test-grid">
+          <div class="test-card">
+            <div class="test-name">Teste de Tinel</div>
+            <p>Percussão do nervo mediano no nível do punho proximal, com antebraço supinado. Positivo quando reproduz parestesia distal — reflete irritabilidade da fibra nervosa regenerante ou comprimida.</p>
+          </div>
+          <div class="test-card">
+            <div class="test-name">Teste de Phalen</div>
+            <p>Flexão do punho a 90° contra a resistência do examinador por até 60 segundos. Positivo se houver dor ou formigamento no trajeto do mediano — reproduz o aumento de pressão intracarpal.</p>
+          </div>
+          <div class="test-card">
+            <div class="test-name">Teste de Durkan</div>
+            <p>Pressão direta sobre o túnel do carpo, na face volar do punho, comprimindo o nervo mediano. Positivo quando reproduz os sintomas — considerado o teste provocativo com melhor acurácia isolada.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="--card-color:var(--cyan)">
+        <span class="card-label">Diagnóstico complementar</span>
+        <p>O diagnóstico é primariamente <strong>clínico</strong>, sustentado por área de dor neuropática em mão e punho — formigamento, queimação, agulhadas, choque, hipo ou hiperestesia — na distribuição do mediano.</p>
+        <p><strong>Ultrassonografia de punho:</strong> identifica espessamento do nervo mediano, com área transversal ≥ 10 mm². Pode haver sinal ao Doppler em casos de artrite de punho que evoluam com STC secundária.</p>
+        <p><strong>Eletroneuromiografia (ENM):</strong> confirma o diagnóstico e estadia objetivamente o grau de comprometimento — ferramenta essencial para decidir entre tratamento conservador e cirúrgico.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Grau ENM</th><th>Achado eletrofisiológico</th><th>Correlato fisiopatológico</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Leve</td><td>Latências sensoriais prolongadas (relativas ou absolutas); estudos motores normais</td><td>Desmielinização segmentar inicial, sem perda axonal</td></tr>
+            <tr><td>Moderado</td><td>Latências sensoriais <em>e</em> motoras prolongadas</td><td>Desmielinização mais extensa, ainda sem evidência de perda axônica</td></tr>
+            <tr><td>Grave</td><td>Perda de axônio: potencial de ação sensorial ou muscular alterado/ausente; pode haver alteração motora e sensitiva franca</td><td>Desnervação estabelecida — indicação cirúrgica</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card" style="--card-color:var(--green)">
+        <span class="card-label">Tratamento — casos leves a moderados</span>
+        <p><strong>Infiltração perinervosa</strong> (corticoide + anestésico local sem vasoconstritor):</p>
+        <ul>
+          <li>Dipropionato de betametasona + fosfato dissódico de betametasona (5 mg/mL + 2 mg/mL) 1 mL + cloridrato de lidocaína sem vasoconstritor 1 mL; <em>ou</em></li>
+          <li>Acetato de metilprednisolona (40 mg/mL) 1 mL + cloridrato de lidocaína sem vasoconstritor 1 mL.</li>
+        </ul>
+        <p><strong>Alternativa oral:</strong> prednisona 20 mg VO 24/24h por 10-14 dias, depois suspender.</p>
+        <p><strong>Talas noturnas</strong> em posição neutra do punho — tão eficazes quanto o uso contínuo. A infiltração é ligeiramente superior à tala em 6 semanas, com resultados semelhantes em 6 meses.</p>
+      </div>
+
+      <div class="alert pegadinha">
+        <span class="alert-tag">Pegadinha</span>
+        <p>Não há evidência de benefício para o uso de AINEs ou analgésicos orais isolados no controle dos sintomas da STC (Wipperman, 2024). É comum a banca cobrar essa exceção justamente porque, intuitivamente, o aluno tende a prescrever AINE para qualquer quadro "inflamatório" — mas a fisiopatologia aqui é predominantemente compressiva/mecânica, não inflamatória sistêmica, o que explica a ineficácia desses fármacos.</p>
+      </div>
+
+      <div class="card" style="--card-color:var(--red)">
+        <span class="card-label">Tratamento — casos graves ou refratários</span>
+        <p>Indicado para atrofia tenar, fraqueza objetiva, déficit sensitivo, ou refratariedade após 4-6 meses de tratamento conservador: <strong>descompressão cirúrgica</strong> (liberação do túnel do carpo). As técnicas endoscópica e aberta são igualmente eficazes em resultado final, mas o retorno ao trabalho é cerca de 1 semana mais rápido com a técnica endoscópica.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 EPICONDILITES ============ -->
+  <section class="section" id="epicondilites" style="--sec-color:var(--orange)">
+    <div class="section-head">
+      <div class="section-num">03</div>
+      <div class="section-title-wrap">
+        <h2 class="section-title">Epicondilite Lateral e Medial</h2>
+        <p class="section-sub">Tendinopatias de inserção no cotovelo — "cotovelo do tenista" e "cotovelo do golfista".</p>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+
+    <div class="section-body">
+      <div class="grid grid-2">
+        <div class="card" style="--card-color:var(--orange)">
+          <span class="card-label">Epicondilite lateral ("cotovelo do tenista")</span>
+          <p><strong>Estrutura acometida:</strong> tendões extensores do antebraço que se originam no epicôndilo lateral do úmero, sobretudo o <em>extensor radial curto do carpo</em> — o mais frequentemente envolvido porque sua origem tendínea sofre maior estresse tênsil durante a extensão ativa do punho contra resistência.</p>
+          <p><strong>Fatores predisponentes:</strong> tenistas (movimento de <em>backhand</em>), profissões com movimentos repetitivos de virar, torcer ou apertar em extensão e supinação (carpinteiro, jardineiro, dentista) e uso de fluoroquinolonas — classe de antibióticos associada a tendinopatia por toxicidade direta sobre o colágeno tendíneo.</p>
+          <p><strong>Sinais e sintomas:</strong> dor no epicôndilo lateral, podendo irradiar para a face dorsolateral do antebraço, piorando com a extensão e o desvio radial do punho e com o ato de segurar objetos firmemente — porque esse gesto exige contração isométrica sustentada do extensor radial curto do carpo, tensionando diretamente sua origem lesada.</p>
+        </div>
+        <div class="card" style="--card-color:var(--orange)">
+          <span class="card-label">Epicondilite medial ("cotovelo do golfista")</span>
+          <p><strong>Estrutura acometida:</strong> tendões flexores do antebraço que se originam no epicôndilo medial, como o <em>pronador redondo</em> e o <em>flexor radial do carpo</em>.</p>
+          <p>Fisiopatologicamente segue o mesmo modelo de microtrauma-degeneração já descrito na Seção 01, mas na inserção proximal do compartimento flexor, sendo tipicamente desencadeada por atividades de flexão e pronação repetitiva do punho contra resistência (golfe, arremesso, digitação prolongada).</p>
+        </div>
+      </div>
+
+      <div class="card" style="--card-color:var(--violet)">
+        <span class="card-label">Diagnóstico — testes provocativos</span>
+        <div class="test-grid">
+          <div class="test-card">
+            <div class="test-name">Teste de Cozen</div>
+            <p>Cotovelo em semiflexão, mão pronada; solicita-se ao paciente que realize extensão do punho enquanto o examinador oferece resistência. Positivo quando há dor na origem dos extensores (epicôndilo lateral).</p>
+          </div>
+          <div class="test-card">
+            <div class="test-name">Teste de Mill</div>
+            <p>Cotovelo em extensão e antebraço pronado; o examinador realiza flexão passiva do punho (palmoflexão), tensionando os extensores que se originam no epicôndilo lateral. Reproduz a dor característica.</p>
+          </div>
+          <div class="test-card">
+            <div class="test-name">Digitopressão dolorosa</div>
+            <p>Palpação direta do epicôndilo lateral (ou medial, na forma medial) reproduzindo dor localizada — achado simples, mas de alto valor semiológico quando associado à história ocupacional.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert clinica">
+        <span class="alert-tag">Clínica</span>
+        <p>O diagnóstico das epicondilites é <strong>clínico</strong> e não necessita de exames adicionais na maioria dos casos. A ultrassonografia (USG) e a ressonância magnética (RM) ficam reservadas para casos duvidosos ou em programação cirúrgica.</p>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card" style="--card-color:var(--cyan)">
+          <h4>USG</h4>
+          <p>Identifica espessamento tendíneo, calcificação intratendínea, irregularidade óssea na inserção dos tendões (áreas de êntese), hipoecogenicidade focal e heterogeneidade difusa — achados que traduzem a degeneração colágena crônica descrita na fisiopatologia.</p>
+        </div>
+        <div class="card" style="--card-color:var(--cyan)">
+          <h4>RM</h4>
+          <p>Constata espessamento tendíneo com aumento de sinal (hipersinal em T2 — reflete edema/degeneração mixoide), rupturas totais ou parciais, edema peritendíneo com reforço após gadolínio (sinal de atividade inflamatória) e alterações ligamentares associadas.</p>
+        </div>
+      </div>
+
+      <div class="card" style="--card-color:var(--green)">
+        <span class="card-label">Manejo clínico</span>
+        <p><strong>Tratamento de base:</strong> crioterapia + AINE + repouso relativo do punho + alongamento + exercícios isométricos e isotônicos, introduzidos progressivamente a partir de 2-3 semanas — o retardo na introdução dos exercícios permite que a fase inflamatória aguda ceda antes de se impor carga tênsil ao tendão em reparo.</p>
+        <p><strong>RICE:</strong> repouso, gelo (ice), compressão e elevação — medidas de suporte na fase aguda para reduzir edema e dor.</p>
+        <p><strong>Sintomas persistentes:</strong> imobilização do punho com tala do antebraço em velcro, permitindo repouso funcional da unidade miotendínea lesada sem imobilização articular completa.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 MANGUITO ROTADOR ============ -->
+  <section class="section" id="manguito" style="--sec-color:var(--amber)">
+    <div class="section-head">
+      <div class="section-num">04</div>
+      <div class="section-title-wrap">
+        <h2 class="section-title">Tendinite do Manguito Rotador — "Síndrome do Impacto"</h2>
+        <p class="section-sub">O ombro doloroso mais comum na prática clínica: convergência entre compressão extrínseca e degeneração intrínseca.</p>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+
+    <div class="section-body">
+      <div class="card" style="--card-color:var(--amber)">
+        <span class="card-label">Estruturas acometidas</span>
+        <p>O manguito rotador é formado por quatro músculos-tendões que estabilizam dinamicamente a cabeça do úmero na cavidade glenoide: <strong>supraespinhal, infraespinhal, redondo menor</strong> (rotadores externos, inervados pelo nervo supraescapular e axilar) e <strong>subescapular</strong> (rotador interno, inervado pelos nervos subescapulares). O tendão do supraespinhal é o mais frequentemente lesado, por passar sob o arco coracoacromial — um espaço anatomicamente estreito onde ocorre o fenômeno de impacto.</p>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card" style="--card-color:var(--orange)">
+          <span class="card-label">Fatores extrínsecos — compressão mecânica</span>
+          <ul>
+            <li>Acrômio curvo ou ganchoso (variante anatômica que reduz o espaço subacromial).</li>
+            <li>Esporão acromial e osteoartrose glenoumeral.</li>
+            <li>Esporão acromioclavicular e extensão lateral do acrômio.</li>
+            <li>Trauma direto sobre a região.</li>
+          </ul>
+          <p style="margin-top:8px;">Esses fatores reduzem o espaço subacromial, comprimindo mecanicamente o tendão do supraespinhal contra o arco coracoacromial durante a elevação do braço — daí o nome "síndrome do impacto".</p>
+        </div>
+        <div class="card" style="--card-color:var(--violet)">
+          <span class="card-label">Fatores intrínsecos — modelo microtrauma-degeneração</span>
+          <p>Paralelamente à compressão extrínseca, há um processo degenerativo intrínseco: o <strong>estresse oxidativo</strong> aumenta espécies reativas de oxigênio (ROS), que promovem <strong>apoptose</strong> celular e aumento de metaloproteinases de matriz (MMP), levando à degradação da matriz extracelular. O resultado é redução da função celular tendínea e degeneração tendínea progressiva — que se soma à compressão extrínseca para culminar em <strong>rotura degenerativa do manguito</strong>.</p>
+        </div>
+      </div>
+
+      <div class="flow">
+        <div class="flow-step"><span class="fs-label">Extrínseco</span><span class="fs-text">Compressão subacromial</span></div>
+        <div class="flow-arrow">+</div>
+        <div class="flow-step"><span class="fs-label">Intrínseco</span><span class="fs-text">Estresse oxidativo → apoptose → degradação da matriz</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><span class="fs-label">Resultado</span><span class="fs-text">Rotura degenerativa do manguito</span></div>
+      </div>
+
+      <div class="card" style="--card-color:var(--amber)">
+        <span class="card-label">Fatores predisponentes e quadro clínico</span>
+        <p><strong>Predisponentes:</strong> idade acima de 30 anos (o processo é cumulativo e progressivo), acrômio curvo ou ganchoso, e atividades ou esportes com os braços acima do ombro, como voleibol e natação.</p>
+        <p><strong>Sinais e sintomas:</strong> dor na face lateral (deltoide) do ombro, exacerbada por movimentos acima da cabeça ou ao alcançar, levantar, puxar ou empurrar objetos — todos gestos que estreitam ainda mais o espaço subacromial durante a elevação do braço.</p>
+      </div>
+
+      <div class="card" style="--card-color:var(--violet)">
+        <span class="card-label">Diagnóstico — testes de impacto subacromial</span>
+        <div class="grid grid-2">
+          <div class="test-card">
+            <div class="test-name">Teste de Hawkins</div>
+            <p>Membro elevado/flexionado a 90° à frente do corpo e cotovelo fletido a 90°; o examinador promove rotação interna do ombro estabilizando o cotovelo do paciente. Esse movimento direciona a grande tuberosidade do úmero contra o ligamento coracoacromial, reproduzindo a dor do impacto.</p>
+          </div>
+          <div class="test-card">
+            <div class="test-name">Teste de Neer</div>
+            <p>Braço no plano da escápula (30° no plano coronal); realiza-se abdução passiva até 120° enquanto se estabiliza a escápula. Comprime o tendão supraespinhal contra o acrômio anteroinferior, reproduzindo a dor.</p>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Complementam a avaliação: digitopressão subacromial positiva e o <strong>teste da lidocaína</strong> — infiltração de anestésico local no espaço subacromial que, ao aliviar a dor, confirma a origem subacromial do quadro (diagnóstico de exclusão clínico funcional).</p>
+      </div>
+
+      <div class="card" style="--card-color:var(--green)">
+        <span class="card-label">Tratamento — escalonamento terapêutico</span>
+        <ol style="padding-left:18px; color:var(--text-dim); font-size:14.5px; display:flex; flex-direction:column; gap:10px;">
+          <li><strong>Primeira linha:</strong> crioterapia + AINE + repouso relativo da articulação afetada + alongamento pendular (movimento passivo em circundação, sem contração ativa, que mobiliza a articulação sem comprimir o espaço subacromial) + exercícios isométricos e isotônicos a partir de 2-3 semanas.</li>
+          <li><strong>Sintomas persistentes:</strong> investigar rotura (USG ou RM). Se ausente rotura: indicar infiltração subacromial de corticoide, limitada a até duas infiltrações — o corticoide reduz a inflamação local, mas seu uso repetido é limitado pelo risco de enfraquecimento tendíneo iatrogênico.</li>
+          <li><strong>Sintomas persistentes ou rotura confirmada:</strong> cirurgia artroscópica com descompressão subacromial (acromioplastia), eventualmente associada a reparo do manguito quando há rotura.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 DE QUERVAIN ============ -->
+  <section class="section" id="dequervain" style="--sec-color:var(--teal)">
+    <div class="section-head">
+      <div class="section-num">05</div>
+      <div class="section-title-wrap">
+        <h2 class="section-title">Tenossinovite de De Quervain</h2>
+        <p class="section-sub">Inflamação do primeiro compartimento extensor do punho — a tendinopatia clássica do "polegar em desvio".</p>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+
+    <div class="section-body">
+      <div class="card" style="--card-color:var(--teal)">
+        <span class="card-label">Estrutura acometida</span>
+        <p>Trata-se da inflamação dos tendões e da bainha sinovial dos músculos <strong>abdutor longo</strong> e <strong>extensor curto do polegar</strong>, que compartilham o primeiro compartimento dorsal do punho, na região do processo estiloide do rádio. Como esses dois tendões correm juntos dentro de uma bainha sinovial estreita e comum, movimentos combinados de desvio ulnar do punho com abdução/extensão do polegar geram atrito repetitivo entre os tendões e a parede do compartimento — mecanismo direto de tenossinovite por fricção.</p>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card" style="--card-color:var(--teal)">
+          <span class="card-label">Fatores predisponentes</span>
+          <p>Esforço repetitivo utilizando a mão em <strong>desvio ulnar</strong> — digitar em teclado de computador, passar roupa, e, classicamente, o cuidado de bebês pequenos (segurá-los sustentando o pescoço exige abdução repetida do polegar associada a desvio ulnar).</p>
+        </div>
+        <div class="card" style="--card-color:var(--orange)">
+          <span class="card-label">Sinais e sintomas</span>
+          <p>Dor na região radial do punho, agravada pelo movimento do polegar e pelo desvio ulnar do punho — reproduzindo o mecanismo de atrito descrito acima.</p>
+        </div>
+      </div>
+
+      <div class="card" style="--card-color:var(--violet)">
+        <span class="card-label">Diagnóstico — Teste de Finkelstein</span>
+        <p>O paciente fecha os dedos sobre o polegar flexionado (empunhadura com o polegar por dentro); em seguida, realiza-se desvio ulnar passivo do punho contra resistência. A manobra estira ativamente os tendões inflamados dentro da bainha estenosada, reproduzindo dor intensa na região radial do punho — teste de alta sensibilidade para o diagnóstico.</p>
+        <p>Complementam o diagnóstico: digitopressão dolorosa do processo estiloide do rádio e da tabaqueira anatômica (região delimitada pelos tendões do primeiro e terceiro compartimentos extensores).</p>
+      </div>
+
+      <div class="card" style="--card-color:var(--green)">
+        <span class="card-label">Tratamento</span>
+        <p><strong>Primeira linha:</strong> crioterapia + AINE + imobilização do punho e do polegar com órtese específica (tala tipo "spica" de polegar) + alongamento + exercícios isométricos e isotônicos a partir de 2-3 semanas.</p>
+        <p><strong>Sintomas persistentes:</strong> infiltração de corticoide no primeiro compartimento extensor. Nos casos graves e refratários, recomenda-se cirurgia descompressiva do primeiro compartimento extensor do punho, com liberação da bainha estenosada.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 EXAMES DE IMAGEM ============ -->
+  <section class="section" id="imagem" style="--sec-color:var(--cyan)">
+    <div class="section-head">
+      <div class="section-num">06</div>
+      <div class="section-title-wrap">
+        <h2 class="section-title">Exames Complementares</h2>
+        <p class="section-sub">O diagnóstico das síndromes LER/DORT é predominantemente clínico — a imagem entra para confirmar, estadiar ou planejar cirurgia.</p>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+
+    <div class="section-body">
+      <div class="alert clinica">
+        <span class="alert-tag">Princípio geral</span>
+        <p>Na grande maioria das tendinopatias de esforço repetitivo, o diagnóstico é feito pela clínica (história ocupacional + exame físico + testes provocativos específicos), e exames de imagem não são obrigatórios. Eles são reservados para <strong>casos duvidosos</strong> ou em <strong>programação cirúrgica</strong>, quando é necessário mapear com precisão a extensão do dano tecidual.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Exame</th><th>Achados principais</th><th>Melhor indicação</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Radiografia</td>
+              <td>Alterações ósseas indiretas: esporão acromial, esporão acromioclavicular, calcificações intratendíneas grosseiras, alterações degenerativas articulares</td>
+              <td>Triagem inicial e avaliação de fatores extrínsecos ósseos (ex.: morfologia do acrômio na síndrome do impacto)</td>
+            </tr>
+            <tr>
+              <td>Ultrassonografia (USG)</td>
+              <td>Espessamento tendíneo/nervoso, calcificação intratendínea, irregularidade óssea de êntese, hipoecogenicidade focal, heterogeneidade difusa; sinal Doppler em processos inflamatórios ativos</td>
+              <td>Exame dinâmico, de baixo custo e alta disponibilidade; excelente para tendões superficiais (punho, ombro) e para medir área do nervo mediano na STC</td>
+            </tr>
+            <tr>
+              <td>Ressonância Magnética (RM)</td>
+              <td>Espessamento tendíneo com hipersinal em T2, rupturas totais ou parciais, edema peritendíneo com reforço pós-gadolínio, alterações ligamentares associadas</td>
+              <td>Padrão-ouro para caracterização de partes moles, planejamento cirúrgico e diferenciação entre tendinopatia parcial e rotura completa</td>
+            </tr>
+            <tr>
+              <td>Eletroneuromiografia (ENM)</td>
+              <td>Latências sensitivas e motoras, velocidade de condução, amplitude dos potenciais de ação — estadiamento em leve, moderado e grave</td>
+              <td>Confirmação diagnóstica e estadiamento de síndromes compressivas de nervo periférico, como a STC — define indicação cirúrgica</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert prova">
+        <span class="alert-tag">Prova</span>
+        <p>Cuidado com a armadilha clássica: nenhuma tendinopatia mecânica descrita nesta aula tem indicação de imagem como primeira conduta diagnóstica. A pergunta "qual o próximo passo?" após um teste provocativo positivo (Tinel, Phalen, Cozen, Finkelstein, Neer/Hawkins) geralmente é <strong>tratamento clínico</strong>, e não "solicitar RM".</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 07 MANEJO NAO FARMACOLOGICO ============ -->
+  <section class="section" id="manejo" style="--sec-color:var(--green)">
+    <div class="section-head">
+      <div class="section-num">07</div>
+      <div class="section-title-wrap">
+        <h2 class="section-title">Manejo Clínico e Tratamento Não Farmacológico</h2>
+        <p class="section-sub">Princípios comuns a todas as síndromes de sobrecarga tendínea e o papel de terapias complementares baseadas em evidência.</p>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+
+    <div class="section-body">
+      <div class="card" style="--card-color:var(--green)">
+        <span class="card-label">RICE — princípio universal da fase aguda</span>
+        <p><strong>R</strong>epouso, <strong>I</strong>ce (gelo/crioterapia), <strong>C</strong>ompressão e <strong>E</strong>levação. O gelo promove vasoconstrição local, reduzindo o extravasamento de mediadores inflamatórios e o edema; a compressão e a elevação favorecem o retorno venoso e linfático, diminuindo o acúmulo de líquido intersticial. É a base de manejo na fase inflamatória aguda de qualquer uma das síndromes descritas nesta aula.</p>
+      </div>
+
+      <div class="card" style="--card-color:var(--green)">
+        <span class="card-label">Reabilitação progressiva</span>
+        <p>Após a fase aguda, a reintrodução de carga é feita de forma escalonada: alongamento → exercícios <strong>isométricos</strong> (contração sem movimento articular, gerando tensão tendínea controlada sem sobrecarregar a fibra em reparo) → exercícios <strong>isotônicos</strong> (contração com movimento, reintroduzindo a carga funcional). Esse escalonamento, iniciado tipicamente a partir de 2-3 semanas, é fundamental porque o tendão precisa de estímulo mecânico controlado para reorganizar seu colágeno na direção das forças de tração — sem esse estímulo, o reparo tende a formar tecido cicatricial desorganizado e mecanicamente inferior.</p>
+      </div>
+
+      <div class="card" style="--card-color:var(--lime)">
+        <span class="card-label">Acupuntura — evidência científica</span>
+        <p>Um ensaio clínico randomizado conduzido na atenção primária no Reino Unido, com 241 participantes, comparou acupuntura ao cuidado usual em quadros de dor musculoesquelética crônica. A acupuntura mostrou-se superior no alívio da dor, com tendência de superioridade em 12 meses que se tornou estatisticamente significante no seguimento de 24 meses (Thomas et al., 2005).</p>
+        <p>Com base nesse e em outros estudos, as diretrizes do <em>American College of Physicians</em> recomendam a seleção de terapias não farmacológicas — entre elas a acupuntura — como primeira opção para o tratamento de lombalgia aguda, subaguda e crônica, reservando a farmacoterapia para casos refratários ou de dor mais intensa.</p>
+      </div>
+
+      <div class="alert importante">
+        <span class="alert-tag">Importante</span>
+        <p>O manejo não farmacológico não é "tratamento de segunda linha" nem meramente complementar — em diversas diretrizes atuais de dor musculoesquelética crônica, ele é recomendado como <strong>primeira opção terapêutica</strong>, justamente por evitar os riscos cumulativos da farmacoterapia crônica (especialmente gastrintestinais e renais, discutidos na Seção 09).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 08 TRATAMENTO MEDICAMENTOSO ============ -->
+  <section class="section" id="medicamentoso" style="--sec-color:var(--green)">
+    <div class="section-head">
+      <div class="section-num">08</div>
+      <div class="section-title-wrap">
+        <h2 class="section-title">Tratamento Medicamentoso das Síndromes Dolorosas Musculoesqueléticas</h2>
+        <p class="section-sub">Analgésicos comuns, infiltrações periarticulares e relaxantes musculares — arsenal farmacológico de suporte.</p>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+
+    <div class="section-body">
+      <div class="card" style="--card-color:var(--green)">
+        <span class="card-label">Analgésicos comuns</span>
+        <div class="drug-row"><span class="drug-name">Dipirona</span><span class="drug-dose">500-1.000 mg VO até de 6/6h</span></div>
+        <div class="drug-row"><span class="drug-name">Dipirona (500 mg/mL)</span><span class="drug-dose">20-40 gotas VO até de 6/6h</span></div>
+        <div class="drug-row"><span class="drug-name">Paracetamol</span><span class="drug-dose">750 mg VO até de 6/6h</span></div>
+        <div class="drug-row"><span class="drug-name">Paracetamol (200 mg/mL)</span><span class="drug-dose">35-55 gotas VO até de 6/6h</span></div>
+        <p style="margin-top:10px;">Atuam primariamente por inibição central da síntese de prostaglandinas e modulação de vias descendentes de dor, com efeito anti-inflamatório periférico mínimo ou ausente — por isso são úteis para analgesia, mas não substituem o AINE quando o componente inflamatório é relevante.</p>
+      </div>
+
+      <div class="card" style="--card-color:var(--amber)">
+        <span class="card-label">Infiltração periarticular — casos refratários ou muito sintomáticos</span>
+        <p>Combinação de corticoide + anestésico local, injetada diretamente no sítio de inflamação, permitindo alta concentração local do fármaco com menor exposição sistêmica:</p>
+        <ul>
+          <li><strong>I. Corticoide</strong> (escolher uma opção) + <strong>II. Cloridrato de lidocaína sem vasoconstritor 1 mL</strong></li>
+          <li>Opções de corticoide: dipropionato de betametasona + fosfato dissódico de betametasona (5 mg/mL + 2 mg/mL) 1 mL — a combinação de um éster de ação rápida (fosfato) com um de depósito (dipropionato) garante alívio precoce e efeito prolongado; ou acetato de metilprednisolona (40 mg/mL) 1 mL.</li>
+        </ul>
+      </div>
+
+      <div class="card" style="--card-color:var(--violet)">
+        <span class="card-label">Relaxantes musculares</span>
+        <div class="table-wrap" style="margin-top:8px;">
+          <table>
+            <thead><tr><th>Fármaco</th><th>Posologia</th><th>Observação</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Carisoprodol (isolado ou em associação — ex.: paracetamol 300 mg + cafeína 30 mg + carisoprodol 125 mg + diclofenaco sódico 50 mg)</td>
+                <td>350 mg até de 6/6h</td>
+                <td>Cuidado com dependência e efeitos colaterais — metabólito ativo (meprobamato) tem potencial sedativo e de dependência</td>
+              </tr>
+              <tr>
+                <td>Tizanidina</td>
+                <td>2-4 mg até de 8/8h</td>
+                <td>Alternativa com menor risco de sedação intensa em relação ao carisoprodol</td>
+              </tr>
+              <tr>
+                <td>Ciclobenzaprina</td>
+                <td>10 mg até de 8/8h (ou 1 comprimido à noite)</td>
+                <td>Cuidado com risco de síndrome serotoninérgica, especialmente se associada a outros serotoninérgicos — sua estrutura é análoga aos tricíclicos</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 09 AINEs ============ -->
+  <section class="section" id="aines" style="--sec-color:var(--red)">
+    <div class="section-head">
+      <div class="section-num">09</div>
+      <div class="section-title-wrap">
+        <h2 class="section-title">Anti-inflamatórios Não Esteroidais (AINEs)</h2>
+        <p class="section-sub">Mecanismo de ação, classificação, indicações clínicas e o perfil de efeitos adversos que define a escolha terapêutica.</p>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+
+    <div class="section-body">
+      <div class="card" style="--card-color:var(--red)">
+        <span class="card-label">Introdução</span>
+        <p>Os AINEs constituem um grupo de fármacos com propriedades <strong>analgésicas, anti-inflamatórias, antipiréticas e antitrombóticas</strong> (esta última variável conforme o fármaco). São quimicamente heterogêneos, mas compartilham a natureza de <em>ácidos orgânicos fracos</em> — propriedade que explica sua boa absorção gástrica (em meio ácido, permanecem não ionizados) e sua tendência à irritação da mucosa gástrica por acúmulo local.</p>
+        <p>O protótipo da classe é o <strong>ácido acetilsalicílico</strong> (Aspirina), introduzido pela Bayer em 1899, ainda hoje usado como fármaco-padrão de comparação farmacológica com os demais AINEs.</p>
+      </div>
+
+      <div class="card" style="--card-color:var(--red)">
+        <span class="card-label">Mecanismo de ação — inibição das ciclo-oxigenases (COX)</span>
+        <p>O efeito farmacológico central dos AINEs é a <strong>inibição da enzima ciclo-oxigenase (COX)</strong>, responsável por converter o ácido araquidônico em prostaglandinas e tromboxanos. Existem duas isoformas principais, com papéis fisiológicos distintos:</p>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card" style="--card-color:var(--cyan)">
+          <h4>COX-1 — enzima constitutiva</h4>
+          <p>Expressa de forma basal na maioria dos tecidos. Produz prostaglandinas envolvidas na <strong>proteção da mucosa gástrica</strong> (estímulo à secreção de muco e bicarbonato, manutenção do fluxo sanguíneo mucoso) e na <strong>função renal</strong> (manutenção da perfusão glomerular em estados de hipovolemia relativa, via vasodilatação da arteríola aferente). É a inibição dessa isoforma que explica a maior parte dos efeitos adversos gastrintestinais e renais dos AINEs.</p>
+        </div>
+        <div class="card" style="--card-color:var(--red)">
+          <h4>COX-2 — enzima induzida</h4>
+          <p>Normalmente presente em baixas concentrações, mas fortemente <strong>induzida no processo inflamatório</strong> por citocinas e mediadores inflamatórios. É a principal responsável pela síntese de prostaglandinas envolvidas em dor, febre e inflamação — por isso, sua inibição é o alvo terapêutico desejado dos AINEs.</p>
+        </div>
+      </div>
+
+      <div class="alert atencao">
+        <span class="alert-tag">Atenção</span>
+        <p>Essa dicotomia COX-1 "proteção" versus COX-2 "inflamação" é a base racional para o desenvolvimento dos <strong>inibidores seletivos de COX-2</strong>: a ideia é bloquear a inflamação preservando a proteção gástrica mediada por COX-1. Isso funciona em parte — os coxibes têm menor toxicidade gástrica — mas a COX-2 também tem papel fisiológico vascular (produção de prostaciclina, um vasodilatador e antiagregante), e sua inibição seletiva desloca o equilíbrio para o tromboxano A2 (pró-trombótico, dependente de COX-1 plaquetária), o que explica o <strong>maior risco cardiovascular</strong> associado aos coxibes.</p>
+      </div>
+
+      <div class="card" style="--card-color:var(--violet)">
+        <span class="card-label">Classificação farmacológica</span>
+        <ul>
+          <li><strong>Inibidores não seletivos da COX</strong> (bloqueiam COX-1 e COX-2 de forma semelhante): diclofenaco, ibuprofeno, naproxeno, cetoprofeno, indometacina, ácido acetilsalicílico, nimesulida (esta com certo grau de seletividade preferencial por COX-2, mas não completa).</li>
+          <li><strong>Inibidores seletivos da COX-2 ("coxibes")</strong>: celecoxibe — desenvolvidos para reduzir toxicidade gastrintestinal às custas de maior risco cardiovascular.</li>
+        </ul>
+      </div>
+
+      <div class="card" style="--card-color:var(--teal)">
+        <span class="card-label">Outros mecanismos além da inibição de COX</span>
+        <p>Os AINEs também exercem efeitos anti-inflamatórios independentes da síntese de prostaglandinas: <strong>inibição da adesão de leucócitos à parede capilar</strong> e <strong>interferência na expressão de moléculas de adesão</strong> endotelial, reduzindo o recrutamento de células inflamatórias para o sítio de lesão — mecanismo complementar que contribui para o efeito anti-inflamatório global, especialmente relevante em doses mais altas.</p>
+      </div>
+
+      <div class="card" style="--card-color:var(--orange)">
+        <span class="card-label">Indicações clínicas</span>
+        <div class="grid grid-2">
+          <div>
+            <p><strong>Doenças musculoesqueléticas:</strong></p>
+            <ul>
+              <li>Osteoartrite, artrite reumatoide, gota, espondilite anquilosante.</li>
+            </ul>
+          </div>
+          <div>
+            <p><strong>Outras indicações:</strong></p>
+            <ul>
+              <li>Dismenorreia primária — naproxeno e ibuprofeno mostram-se superiores, por inibirem diretamente a síntese de prostaglandinas uterinas responsáveis pela hipercontratilidade e isquemia miometrial.</li>
+              <li>Lombalgia, dor ciática, dor pós-operatória.</li>
+              <li><strong>Cardiopatia isquêmica</strong> — ácido acetilsalicílico em baixas doses, pelo efeito antiagregante irreversível sobre a COX-1 plaquetária (inibição permanente do tromboxano A2 durante toda a vida útil da plaqueta, cerca de 7-10 dias).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="--card-color:var(--red)">
+        <span class="card-label">Doses de referência — AINEs de primeira linha</span>
+        <div class="drug-row"><span class="drug-name">Diclofenaco</span><span class="drug-dose">25-50 mg VO 8/8h, por 5-7 dias</span></div>
+        <div class="drug-row"><span class="drug-name">Cetoprofeno</span><span class="drug-dose">25-50 mg VO 8/8h ou 6/6h, por 5-7 dias</span></div>
+        <div class="drug-row"><span class="drug-name">Meloxicam</span><span class="drug-dose">7,5-15 mg VO 24/24h, por 5-7 dias</span></div>
+        <div class="drug-row"><span class="drug-name">Naproxeno</span><span class="drug-dose">500 mg VO 12/12h, por 5-7 dias</span></div>
+        <div class="drug-row"><span class="drug-name">Ibuprofeno</span><span class="drug-dose">600 mg VO 8/8h, por 5-7 dias</span></div>
+        <div class="drug-row"><span class="drug-name">Indometacina</span><span class="drug-dose">50 mg VO 8/8h, por 5-7 dias</span></div>
+        <div class="drug-row"><span class="drug-name">Celecoxibe</span><span class="drug-dose">200 mg VO 12/12h ou 24/24h, por 5-7 dias</span></div>
+        <div class="drug-row"><span class="drug-name">Nimesulida</span><span class="drug-dose">100 mg VO 12/12h, por 5 dias</span></div>
+      </div>
+
+      <div class="card" style="--card-color:var(--lime)">
+        <span class="card-label">Eficácia e critérios de escolha</span>
+        <p>Todos os AINEs têm <strong>eficácia anti-inflamatória comparável</strong> quando usados em doses equipotentes — não há um AINE farmacologicamente "mais forte" que outro na prática clínica habitual. A escolha entre eles deve considerar: tolerância individual aos efeitos adversos, comodidade posológica (número de tomadas diárias, favorecendo adesão), e experiência de uso e custo.</p>
+        <p>Um conceito farmacodinâmico importante é o <strong>efeito teto</strong>: aumentar a dose além de determinado limite não melhora a eficácia analgésica/anti-inflamatória, mas aumenta proporcionalmente os efeitos adversos — por isso a recomendação universal é usar a menor dose eficaz, pelo menor tempo possível.</p>
+      </div>
+
+      <div class="card" style="--card-color:var(--red)">
+        <span class="card-label">Efeitos adversos</span>
+        <p><strong>Gastrintestinais</strong> — os mais frequentes e clinicamente relevantes: irritação digestiva em até 50% dos pacientes; úlcera identificada em 15-30% dos exames endoscópicos de uso crônico. Ocorrem por duplo mecanismo — irritação direta da mucosa (efeito tópico do ácido orgânico) e inibição de COX-1, que reduz a produção protetora de prostaglandinas gástricas (muco, bicarbonato, fluxo sanguíneo mucoso). Medidas preventivas: uso com alimentos, menor dose efetiva pelo menor tempo possível; em pacientes de alto risco (idosos, história de úlcera péptica, uso concomitante de corticoide ou anticoagulante), associar <strong>inibidor de bomba de prótons</strong>.</p>
+        <p><strong>Renais</strong> — risco especialmente relevante em pacientes com disfunção renal pré-existente, desidratação, hipotensão, insuficiência cardíaca ou cirrose — situações em que a perfusão renal já depende, de forma crítica, da vasodilatação compensatória mediada por prostaglandinas COX-1-dependentes. Ao bloquear essa via, o AINE remove esse mecanismo compensatório, podendo precipitar lesão renal aguda pré-renal.</p>
+        <p><strong>Outros</strong> — reações anafiláticas/anafilactoides em pacientes com intolerância ao ácido acetilsalicílico, por reatividade cruzada relacionada ao desvio do metabolismo do ácido araquidônico para a via da lipo-oxigenase (produção de leucotrienos broncoconstritores) quando a via COX é bloqueada.</p>
+      </div>
+
+      <div class="card" style="--card-color:var(--amber)">
+        <span class="card-label">Contraindicações e precauções especiais</span>
+        <div class="grid grid-3">
+          <div class="test-card">
+            <div class="test-name">Gestação</div>
+            <p>Associados a efeitos teratogênicos (dependendo do trimestre) e ao fechamento precoce do ducto arterioso fetal (por inibição da síntese de prostaglandinas que mantêm o ducto patente). Se necessário o uso, o ácido acetilsalicílico em baixa dose é considerado o mais seguro.</p>
+          </div>
+          <div class="test-card">
+            <div class="test-name">Idosos</div>
+            <p>Maior predisposição a efeitos adversos gastrintestinais, renais e cardiovasculares — função renal basal reduzida e maior prevalência de comorbidades exigem uso com cautela redobrada.</p>
+          </div>
+          <div class="test-card">
+            <div class="test-name">Intolerância ao AAS</div>
+            <p>Contraindicação ao uso de outros AINEs, devido a reações cruzadas mediadas pelo mesmo mecanismo de desvio metabólico do ácido araquidônico descrito acima.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert prova">
+        <span class="alert-tag">Prova</span>
+        <p>Questões costumam cobrar a lógica COX-1 (proteção gástrica/renal) versus COX-2 (inflamação) para justificar por que os coxibes têm menos efeito gástrico, mas mais risco cardiovascular. Memorize a associação: <strong>COX-1 = proteção → efeito adverso gástrico/renal</strong>; <strong>COX-2 = inflamação → alvo terapêutico, mas seletividade excessiva desequilibra a hemostasia vascular</strong>.</p>
+      </div>
+
+      <div class="alert pegadinha">
+        <span class="alert-tag">Pegadinha</span>
+        <p>Não confunda "maior dose = maior eficácia". O efeito teto dos AINEs é frequentemente cobrado: aumentar a dose acima do limite terapêutico não potencializa o efeito anti-inflamatório, apenas eleva a toxicidade — diferente de analgésicos opioides, que não têm efeito teto analgésico (embora tenham teto para efeitos adversos como depressão respiratória em contextos específicos).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SUPER RESUMO ============ -->
+  <section class="super" id="super-resumo">
+    <h2>Super-Resumo — Revisão Rápida</h2>
+    <p class="super-lead">Condensado de alta relevância para revisão de véspera de prova, iRAT e discussão em tRAT.</p>
+
+    <div class="super-grid">
+      <div class="super-card" style="--sec-color:var(--violet)">
+        <h4>Síndromes — estrutura e teste-chave</h4>
+        <ul>
+          <li><strong>Túnel do Carpo:</strong> nervo mediano · Tinel / Phalen / Durkan · ENM estadia gravidade.</li>
+          <li><strong>Epicondilite lateral:</strong> extensor radial curto do carpo · teste de Cozen / Mill.</li>
+          <li><strong>Epicondilite medial:</strong> pronador redondo, flexor radial do carpo.</li>
+          <li><strong>Manguito rotador:</strong> supraespinhal (mais comum) · Neer / Hawkins.</li>
+          <li><strong>De Quervain:</strong> abdutor longo + extensor curto do polegar · teste de Finkelstein.</li>
+        </ul>
+      </div>
+
+      <div class="super-card" style="--sec-color:var(--cyan)">
+        <h4>Fisiopatologia — a sequência que explica tudo</h4>
+        <ul>
+          <li>Sobrecarga biomecânica → microtraumas → resposta inflamatória → degeneração tendínea.</li>
+          <li>O tendão é lesado pelo <strong>desequilíbrio entre dano cumulativo e capacidade de reparo</strong>, não por trauma único.</li>
+          <li>Tenossinovite = inflamação da bainha sinovial que envolve o tendão — mecanismo central na STC e De Quervain.</li>
+        </ul>
+      </div>
+
+      <div class="super-card" style="--sec-color:var(--green)">
+        <h4>Tratamento — princípio comum</h4>
+        <ul>
+          <li>RICE na fase aguda + AINE + repouso relativo.</li>
+          <li>Exercícios isométricos/isotônicos a partir de 2-3 semanas.</li>
+          <li>Refratário → infiltração de corticoide (1-2 aplicações).</li>
+          <li>Refratário à infiltração → cirurgia descompressiva específica.</li>
+          <li><strong>Exceção:</strong> STC não responde a AINE/analgésico oral isolado — base é mecânica/compressiva.</li>
+        </ul>
+      </div>
+
+      <div class="super-card" style="--sec-color:var(--red)">
+        <h4>AINEs — o que não pode faltar</h4>
+        <ul>
+          <li>COX-1 = constitutiva, proteção gástrica/renal.</li>
+          <li>COX-2 = induzida, alvo da inflamação.</li>
+          <li>Coxibes: menos toxicidade GI, mais risco cardiovascular.</li>
+          <li>Eficácia semelhante entre AINEs — escolha por tolerância, posologia e custo.</li>
+          <li>Efeito teto: mais dose ≠ mais eficácia, apenas mais toxicidade.</li>
+          <li>Contraindicado: gestação (3º trimestre), intolerância ao AAS, disfunção renal/hipovolemia.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REFERENCIAS ============ -->
+  <section class="refs" id="referencias">
+    <h2>Referências</h2>
+    <div class="ref-item">ARGOFF, Charles E.; DUBIN, Andrew; PILITSIS, Julie G. <em>Tratamento da Dor</em> (Secrets). 4. ed. Rio de Janeiro: Thieme Revinter, 2019.</div>
+    <div class="ref-item">AVILA, Mariana A.; GOMES, Cid André Fidelis de P.; FILHO, Almir Vieira D. <em>Métodos e técnicas de avaliação da dor crônica: abordagem prática</em>. Barueri: Manole, 2023.</div>
+    <div class="ref-item">BARROS, Elvino; BARROS, Helena M. T. <em>Medicamentos na prática clínica</em>. Porto Alegre: ArtMed, 2010.</div>
+    <div class="ref-item">BERTOLUCCI, Paulo H. F.; FERRAZ, Henrique B.; FÉLIX, Evandro Penteado V.; PEDROSO, José L. <em>Guia de Neurologia</em>. Barueri: Manole, 2011.</div>
+    <div class="ref-item">CURRIE, K. B.; TADISINA, K. K.; MACKINNON, S. E. Common hand conditions. <em>JAMA</em>, v. 327, n. 24, p. 2434-2445, 2022. DOI: 10.1001/jama.2022.8481.</div>
+    <div class="ref-item">GREENBERG, David A.; AMINOFF, Michael J.; SIMON, Roger P. <em>Neurologia clínica</em>. 8. ed. Porto Alegre: ArtMed, 2014.</div>
+    <div class="ref-item">HEBERT, Sizínio; FILHO, Tarcísio E. P. B.; XAVIER, Renato; et al. <em>Ortopedia e Traumatologia</em>. 5. ed. Porto Alegre: ArtMed, 2017. E-book. p. 227. ISBN 9788582713778.</div>
+    <div class="ref-item">MINSON, Fabiola P.; MORETE, Marcia C.; MARANGONI, Marco A. <em>Dor</em>. Barueri: Manole, 2015.</div>
+    <div class="ref-item">NETO, Olympio de Hollanda C. <em>Dor e cuidados paliativos</em> (Série Saesp). Barueri: Manole, 2024.</div>
+    <div class="ref-item">RAYMUNDO, José Luiz P.; MIRANDA, Isabel H. <em>Ortopedia para clínicos: exame e diagnóstico</em>. Barueri: Manole, 2021. E-book. p. 71. ISBN 9788520462768.</div>
+    <div class="ref-item">ROENN, Jaime H. V.; PAICE, Judith A.; PREODOR, Michael E. <em>CURRENT Dor</em>. Porto Alegre: ArtMed, 2010.</div>
+    <div class="ref-item">SILVA, Penildon. <em>Farmacologia</em>. 8. ed. Rio de Janeiro: Guanabara Koogan, 2010.</div>
+    <div class="ref-item">THOMAS, K. J.; MACPHERSON, H.; RATCLIFFE, J.; THORPE, L.; BRAZIER, J.; CAMPBELL, M.; et al. Longer term clinical and economic benefits of offering acupuncture care to patients with chronic low back pain. <em>Health Technology Assessment</em>, v. 9, n. 32, p. iii-iv, ix-x, 1-109, ago. 2005. DOI: 10.3310/hta9320.</div>
+    <div class="ref-item">WIPPERMAN, J.; PENNY, M. L. Carpal tunnel syndrome: rapid evidence review. <em>American Family Physician</em>, v. 110, n. 1, p. 52-57, 2024.</div>
+  </section>
+
+  <div class="foot-note">UCXIII — Dor · Aula 5 · Material de aprofundamento produzido a partir dos slides do Prof. Andrew (18/08/2026) — TBL, 5º semestre.</div>
+
+</main>
+
+<script>
+  // fecha o menu mobile ao clicar em um link do índice
+  document.querySelectorAll('.sb-nav a').forEach(function(el){
+    el.addEventListener('click', function(){
+      document.querySelector('.sidebar').classList.remove('open');
+      document.querySelector('.overlay').classList.remove('show');
+    });
+  });
+</script>
+
+</body>
+</html>

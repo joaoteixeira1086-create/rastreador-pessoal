@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corticoterapia — Guia de Aprofundamento | Uniarp-SC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a1117;
+    --bg-alt:#0d151c;
+    --card:#101a22;
+    --card-2:#0d1720;
+    --text:#e7edf2;
+    --text-muted:#8fa2ae;
+    --text-dim:#5f727d;
+    --border:#1c2830;
+    --border-soft:#182229;
+
+    --c-fisio:#c9a15a;
+    --c-eixo:#5b93d6;
+    --c-receptor:#9b7fd9;
+    --c-metab:#45b8a6;
+    --c-imune:#6fbf73;
+    --c-quimica:#dd9a4e;
+    --c-farmaco:#4fc0d6;
+    --c-clinica:#7d90d9;
+    --c-adverso:#d1596b;
+    --c-retirada:#c46bb0;
+    --c-interacao:#8177d6;
+    --c-topico:#4fd1a0;
+
+    --alert-clinical:#3fb6a0;
+    --alert-attention:#d1596b;
+    --alert-note:#dd9a4e;
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(91,147,214,0.07), transparent 60%),
+      radial-gradient(ellipse 800px 600px at 100% 10%, rgba(201,161,90,0.06), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Source Serif 4', Georgia, serif;
+    font-size:17px;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    letter-spacing:0.01em;
+    color:var(--text);
+    margin:0 0 0.5em 0;
+  }
+
+  .mono{ font-family:'JetBrains Mono', monospace; }
+
+  p{ margin:0 0 1.05em 0; }
+  ul,ol{ margin:0 0 1.05em 0; padding-left:1.3em; }
+  li{ margin-bottom:0.45em; }
+
+  em{ color:inherit; font-style:italic; }
+
+  .term{
+    font-style:italic;
+    color:var(--accent, var(--c-fisio));
+    border-bottom:1px dotted currentColor;
+  }
+
+  a{ color:var(--c-eixo); text-decoration:none; border-bottom:1px solid rgba(91,147,214,0.35); }
+  a:hover{ border-bottom-color:var(--c-eixo); }
+
+  /* ---------- LAYOUT ---------- */
+  .wrap{
+    max-width:840px;
+    margin:0 auto;
+    padding:0 28px 140px 28px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:76px 28px 54px 28px;
+    text-align:center;
+    overflow:hidden;
+    border-bottom:1px solid var(--border-soft);
+    margin-bottom:56px;
+  }
+  .hero-motif{
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:640px; height:640px;
+    opacity:0.55;
+    pointer-events:none;
+  }
+  .hero-inner{ position:relative; z-index:1; }
+  .hero-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    margin-bottom:22px;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 4.1rem);
+    font-weight:500;
+    line-height:1.05;
+    margin-bottom:18px;
+    background:linear-gradient(120deg, #f1ead9 0%, var(--c-fisio) 45%, var(--c-eixo) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .hero-sub{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1.3rem;
+    color:var(--text-muted);
+    max-width:560px;
+    margin:0 auto 26px auto;
+  }
+  .hero-meta{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.08em;
+    color:var(--text-dim);
+    text-transform:uppercase;
+  }
+  .hero-meta span{ color:var(--text-muted); }
+
+  /* ---------- SECTION HEADER (tag + line) ---------- */
+  .section{
+    margin-bottom:72px;
+    --accent: var(--c-fisio);
+  }
+  .section-header{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:22px;
+  }
+  .section-header .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--accent);
+    white-space:nowrap;
+  }
+  .section-header .line{
+    flex:1;
+    height:1px;
+    background:linear-gradient(90deg, var(--accent) 0%, transparent 92%);
+    opacity:0.55;
+  }
+  .section h2{
+    font-size:2.05rem;
+    font-style:italic;
+    color:var(--text);
+    margin-bottom:6px;
+  }
+  .section h2 .accent-word{ color:var(--accent); font-style:normal; }
+  .section .kicker{
+    color:var(--text-muted);
+    font-size:0.98rem;
+    margin-bottom:28px;
+    max-width:640px;
+  }
+  .section h3{
+    font-size:1.38rem;
+    font-style:italic;
+    color:var(--accent);
+    margin-top:38px;
+    margin-bottom:12px;
+  }
+  .section h4{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    font-weight:500;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    margin-top:22px;
+    margin-bottom:10px;
+  }
+
+  /* ---------- CARDS ---------- */
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-top:3px solid var(--accent);
+    border-radius:6px;
+    padding:20px 22px;
+    margin-bottom:18px;
+  }
+  .card h4{ margin-top:0; color:var(--accent); }
+  .card p:last-child{ margin-bottom:0; }
+
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
+    gap:14px;
+    margin:22px 0 26px 0;
+  }
+  .card-grid .card{ margin-bottom:0; }
+  .card-grid .card .mini-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- ALERT / HIGHLIGHT BOXES (outline style) ---------- */
+  .box{
+    border:1px solid;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:22px 0;
+    background:transparent;
+  }
+  .box .box-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:8px;
+  }
+  .box p:last-child{ margin-bottom:0; }
+  .box.clinical{ border-color:var(--alert-clinical); }
+  .box.clinical .box-label{ color:var(--alert-clinical); }
+  .box.attention{ border-color:var(--alert-attention); }
+  .box.attention .box-label{ color:var(--alert-attention); }
+  .box.note{ border-color:var(--alert-note); }
+  .box.note .box-label{ color:var(--alert-note); }
+
+  /* ---------- DETAILS / SUMMARY (Aprofunde-se) ---------- */
+  details.deepen{
+    border:1px dashed var(--border);
+    border-left:2px solid var(--accent);
+    border-radius:4px;
+    padding:2px 18px;
+    margin:18px 0;
+    background:var(--card-2);
+  }
+  details.deepen > summary{
+    cursor:pointer;
+    list-style:none;
+    padding:13px 0;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  details.deepen > summary::-webkit-details-marker{ display:none; }
+  details.deepen > summary::before{
+    content:"▸";
+    font-family:sans-serif;
+    display:inline-block;
+    transition:transform 0.18s ease;
+  }
+  details.deepen[open] > summary::before{ transform:rotate(90deg); }
+  .deepen-body{
+    padding-bottom:16px;
+    font-size:0.99rem;
+  }
+  .deepen-body p:first-of-type{ margin-top:0; }
+
+  details.deepen-lvl2{
+    border:1px dashed var(--border-soft);
+    border-left:2px solid var(--text-dim);
+    border-radius:4px;
+    padding:2px 16px;
+    margin:14px 0 6px 0;
+    background:var(--bg-alt);
+  }
+  details.deepen-lvl2 > summary{
+    color:var(--text-muted);
+    font-size:11.5px;
+  }
+
+  /* ---------- POTENCY BARS ---------- */
+  .barset{ margin:22px 0 28px 0; }
+  .bargroup{ margin-bottom:22px; }
+  .bargroup-title{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    margin-bottom:10px;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .bar-row{
+    display:grid;
+    grid-template-columns:140px 1fr 56px;
+    align-items:center;
+    gap:12px;
+    margin-bottom:9px;
+    font-size:0.92rem;
+  }
+  .bar-row .bar-label{ font-style:italic; color:var(--text-muted); }
+  .bar-track{
+    height:9px;
+    background:var(--bg-alt);
+    border:1px solid var(--border-soft);
+    border-radius:3px;
+    overflow:hidden;
+  }
+  .bar-fill{
+    height:100%;
+    border-radius:2px;
+  }
+  .bar-row .bar-value{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--text-dim);
+    text-align:right;
+  }
+
+  /* ---------- SVG DIAGRAM ---------- */
+  .diagram-wrap{
+    background:var(--card-2);
+    border:1px solid var(--border);
+    border-top:3px solid var(--accent);
+    border-radius:6px;
+    padding:22px;
+    margin:24px 0 28px 0;
+  }
+  .diagram-caption{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    color:var(--text-dim);
+    text-align:center;
+    margin-top:10px;
+  }
+
+  /* ---------- REFERENCES ---------- */
+  .references{ margin-top:80px; }
+  .references ol{ list-style:none; padding-left:0; counter-reset:ref; }
+  .references li{
+    counter-increment:ref;
+    padding-left:2.2em;
+    position:relative;
+    font-size:0.94rem;
+    color:var(--text-muted);
+    margin-bottom:14px;
+  }
+  .references li::before{
+    content:counter(ref);
+    position:absolute; left:0; top:0;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--c-eixo);
+    border:1px solid var(--border);
+    width:1.6em; height:1.6em;
+    border-radius:3px;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .doc-footer{
+    text-align:center;
+    color:var(--text-dim);
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    margin-top:70px;
+    padding-top:26px;
+    border-top:1px solid var(--border-soft);
+  }
+
+  /* ---------- EDIT MODE ---------- */
+  [contenteditable="true"]{
+    outline:1px dashed transparent;
+    border-radius:3px;
+    transition:background 0.15s ease;
+  }
+  body.editing-mode [contenteditable="true"]{
+    outline:1px dashed rgba(91,147,214,0.4);
+  }
+  body.editing-mode [contenteditable="true"]:hover{
+    background:rgba(91,147,214,0.06);
+  }
+  body.editing-mode [contenteditable="true"]:focus{
+    outline:1px solid var(--c-eixo);
+    background:rgba(91,147,214,0.09);
+  }
+
+  /* ---------- TOOLBAR ---------- */
+  #toolbar{
+    position:fixed;
+    right:22px; bottom:22px;
+    z-index:999;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(13,21,28,0.92);
+    backdrop-filter:blur(8px);
+    border:1px solid var(--border);
+    border-radius:30px;
+    padding:8px;
+    box-shadow:0 8px 28px rgba(0,0,0,0.45);
+  }
+  #toolbar button{
+    width:38px; height:38px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text-muted);
+    font-size:16px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:all 0.15s ease;
+  }
+  #toolbar button:hover{
+    color:var(--text);
+    border-color:var(--c-eixo);
+  }
+  #toolbar button.active{
+    background:var(--c-eixo);
+    color:#0a1117;
+    border-color:var(--c-eixo);
+  }
+  #storage-status{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    color:var(--text-dim);
+    max-width:220px;
+    padding-right:6px;
+    line-height:1.4;
+    display:none;
+  }
+  #storage-status.show{ display:block; }
+
+  @media (max-width:640px){
+    .hero{ padding:56px 18px 40px 18px; }
+    .wrap{ padding:0 18px 160px 18px; }
+    .bar-row{ grid-template-columns:96px 1fr 44px; }
+    #storage-status{ display:none !important; }
+  }
+
+  :focus-visible{ outline:2px solid var(--c-eixo); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <span id="storage-status"></span>
+  <button id="btn-edit" title="Ativar edição" aria-label="Ativar edição">✎</button>
+  <button id="btn-download" title="Baixar cópia editada" aria-label="Baixar cópia editada">⬇</button>
+  <button id="btn-restore" title="Restaurar original" aria-label="Restaurar original">⟲</button>
+</div>
+
+<header class="hero">
+  <svg class="hero-motif" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="200" cy="200" r="180" fill="none" stroke="#c9a15a" stroke-width="0.6" opacity="0.35"/>
+    <circle cx="200" cy="200" r="145" fill="none" stroke="#5b93d6" stroke-width="0.6" opacity="0.3"/>
+    <circle cx="200" cy="200" r="110" fill="none" stroke="#9b7fd9" stroke-width="0.6" opacity="0.28"/>
+    <circle cx="200" cy="200" r="75" fill="none" stroke="#45b8a6" stroke-width="0.6" opacity="0.25"/>
+    <path d="M200 20 A180 180 0 0 1 380 200" fill="none" stroke="#c9a15a" stroke-width="1.4" opacity="0.55"/>
+    <path d="M380 200 A180 180 0 0 1 200 380" fill="none" stroke="#5b93d6" stroke-width="1.4" opacity="0.5"/>
+  </svg>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Farmacologia · Endocrinologia · UCXIII</div>
+    <h1>Corticoterapia</h1>
+    <p class="hero-sub">Da biossíntese suprarrenal ao manejo clínico: fisiologia, mecanismo molecular, farmacologia comparada e segurança do uso de glicocorticoides e mineralocorticoides.</p>
+    <div class="hero-meta">Material de aprofundamento &nbsp;·&nbsp; <span>Prof. Felipe Vanz</span> &nbsp;·&nbsp; Uniarp-SC, 2026</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<main id="content">
+
+<p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:56px;">Este material parte dos slides da aula de <em>Corticoterapia</em> e vai além deles: cada tópico apresentado em uma linha ou em uma sigla no slide é desenvolvido aqui com o mecanismo fisiológico ou farmacológico completo por trás, no nível de referências como Goodman &amp; Gilman, Rang &amp; Dale, Katzung e Guyton &amp; Hall. Os blocos <span class="term" style="color:var(--c-eixo);">Aprofunde-se</span> levam a um segundo nível de detalhe — abra-os quando quiser ir além do essencial para a prova.</p>
+
+<!-- ======================================================= -->
+<!-- SECTION 1 — FUNDAMENTOS: ESTEROIDOGÊNESE ADRENAL -->
+<!-- ======================================================= -->
+<section class="section" style="--accent:var(--c-fisio);">
+  <div class="section-header"><span class="tag">Fisio · 01</span><span class="line"></span></div>
+  <h2>Fundamentos: a <span class="accent-word">esteroidogênese</span> adrenal</h2>
+  <p class="kicker">O que é um corticosteroide, de onde ele vem e por que a mesma glândula produz hormônios com funções tão diferentes.</p>
+
+  <p>Pense no córtex da suprarrenal como uma fábrica de hormônios lipofílicos organizada em três linhas de produção concêntricas, cada uma com sua própria maquinaria enzimática e seu próprio "chefe" regulatório. Todos os produtos dessa fábrica — <em>corticosteroides</em> ou <em>adrenocorticosteroides</em>, os dois termos são sinônimos — compartilham a mesma matéria-prima, o colesterol, e o mesmo esqueleto químico de base, o núcleo esteroidal de dezessete carbonos organizados em quatro anéis fundidos (A, B, C, D). O que diferencia um produto final do outro não é a origem, mas a zona da glândula onde ele é fabricado e o receptor que ele vai ativar depois de secretado.</p>
+
+  <p>A zona mais externa, a <span class="term">zona glomerulosa</span>, produz <em>mineralocorticoides</em> — na prática, quase exclusivamente aldosterona — cuja função central é regular o equilíbrio de sódio, potássio e água. A camada intermediária, a <span class="term">zona fasciculada</span>, é a maior das três e produz <em>glicocorticoides</em>, com o cortisol como representante principal, responsável por um espectro amplo de ações metabólicas e imunológicas. A camada mais interna, a <span class="term">zona reticular</span>, produz precursores de andrógenos (como a desidroepiandrosterona). A medula, no centro da glândula, não é tecido cortical: é tecido de origem neuroendócrina que produz catecolaminas e não deve ser confundida com as três zonas corticais.</p>
+
+  <div class="box clinical">
+    <div class="box-label">🩺 Correlação clínica</div>
+    <p>Essa separação anatômica e funcional é a base racional da terapia de reposição hormonal: um paciente com insuficiência adrenal primária (doença de Addison) precisa repor tanto a função glicocorticoide quanto a mineralocorticoide, porque as duas zonas corticais estão comprometidas. Já um paciente em uso crônico de glicocorticoide exógeno tem principalmente o eixo glicocorticoide suprimido, não necessariamente o eixo mineralocorticoide — um ponto que retomaremos na seção sobre suspensão da corticoterapia.</p>
+  </div>
+
+  <details class="deepen">
+    <summary>Aprofunde-se: a maquinaria enzimática por trás da zonação funcional</summary>
+    <div class="deepen-body">
+      <p>A pergunta que todo estudante curioso deveria fazer aqui é: se as três zonas partem do mesmo precursor (colesterol), por que cada uma produz um hormônio diferente? A resposta está na expressão diferencial de enzimas do citocromo P450 ao longo do córtex.</p>
+      <p>O colesterol entra na mitocôndria através da proteína StAR (<em>steroidogenic acute regulatory protein</em>) e é convertido em pregnenolona pela enzima de clivagem da cadeia lateral (CYP11A1) — esse é o passo limitante e comum a todas as três vias. A partir daí, o destino da molécula depende de qual enzima está disponível naquela célula específica:</p>
+      <ul>
+        <li>A <span class="term">zona glomerulosa</span> expressa a aldosterona-sintase (CYP11B2), exclusiva dela, mas não expressa a 17α-hidroxilase (CYP17A1) — por isso só consegue produzir mineralocorticoide, nunca cortisol ou andrógenos.</li>
+        <li>A <span class="term">zona fasciculada</span> expressa 17α-hidroxilase, 21-hidroxilase (CYP21A2) e 11β-hidroxilase (CYP11B1) em sequência, o caminho que leva ao cortisol, mas não expressa aldosterona-sintase.</li>
+        <li>A <span class="term">zona reticular</span> compartilha parte da maquinaria da fasciculada, mas com maior atividade de enzimas que desviam o fluxo para andrógenos fracos (DHEA, androstenediona).</li>
+      </ul>
+      <details class="deepen-lvl2">
+        <summary>Detalhamento avançado: relevância da 21-hidroxilase na prática clínica</summary>
+        <div class="deepen-body">
+          <p>A 21-hidroxilase (CYP21A2), compartilhada pelas vias do cortisol e da aldosterona, é a enzima mais frequentemente deficiente na hiperplasia adrenal congênita. Sua deficiência bloqueia a síntese de cortisol e aldosterona, desviando o substrato acumulado para a via dos andrógenos — daí a virilização característica dessa condição. Esse é um exemplo clássico de como entender a bioquímica da esteroidogênese explica diretamente um fenótipo clínico, e é um raciocínio recorrente em provas de endocrinologia.</p>
+        </div>
+      </details>
+    </div>
+  </details>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 2 — RITMO CIRCADIANO E EIXO HHA -->
+<!-- ======================================================= -->
+<section class="section" style="--accent:var(--c-eixo);">
+  <div class="section-header"><span class="tag">Eixo HHA · 02</span><span class="line"></span></div>
+  <h2>Regulação neuroendócrina: <span class="accent-word">ritmo</span> e <span class="accent-word">retroalimentação</span></h2>
+  <p class="kicker">Por que o cortisol tem hora certa para subir e descer — e por que isso importa na hora de prescrever.</p>
+
+  <h3>O ritmo circadiano do cortisol</h3>
+  <p>O cortisol não é secretado em um fluxo constante ao longo do dia: ele segue um ritmo circadiano robusto, com pico plasmático nas primeiras horas da manhã (tipicamente entre 6h e 8h) e nadir por volta da meia-noite. Esse padrão é sincronizado pelo núcleo supraquiasmático do hipotálamo, o "relógio mestre" do organismo, que ajusta a liberação pulsátil de CRH de acordo com o ciclo claro-escuro e com as fases do ciclo sono-vigília. O mesmo tipo de ritmicidade aparece em outras variáveis fisiológicas — pressão arterial, temperatura corporal, processos metabólicos — porque todas compartilham, em algum grau, essa mesma coordenação central.</p>
+
+  <div class="box note">
+    <div class="box-label">🔎 Por que isso importa na prática</div>
+    <p>Esse ritmo não é curiosidade fisiológica: ele é a justificativa racional para prescrever glicocorticoides de reposição em doses divididas, com a maior parte pela manhã, e para preferir dose única matinal (em vez de doses noturnas ou fracionadas) sempre que a terapia permitir — estratégias que retomaremos na seção sobre supressão do eixo hipotálamo-hipófise-adrenal.</p>
+  </div>
+
+  <h3>O eixo hipotálamo-hipófise-adrenal (HHA)</h3>
+  <p>A cascata regulatória clássica funciona em três elos: o hipotálamo libera o <span class="term">CRF/CRH</span> (fator/hormônio liberador de corticotrofina), que estimula a adeno-hipófise a secretar <span class="term">ACTH</span> (hormônio adrenocorticotrófico, também chamado corticotrofina), que por sua vez estimula o córtex da suprarrenal a sintetizar e liberar cortisol. O próprio cortisol, uma vez em circulação, fecha o circuito inibindo tanto o hipotálamo quanto a hipófise — a chamada <em>alça longa de retroalimentação negativa</em>. Existe também uma alça curta, em que o ACTH inibe diretamente o hipotálamo, mas ela é fisiologicamente menos relevante que a alça longa.</p>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; font-family:'JetBrains Mono', monospace;">
+      <defs>
+        <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#5b93d6"/></marker>
+        <marker id="arrow-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#d1596b"/></marker>
+      </defs>
+      <rect x="30" y="20" width="130" height="46" rx="6" fill="#101a22" stroke="#5b93d6" stroke-width="1.4"/>
+      <text x="95" y="48" fill="#e7edf2" font-size="13" text-anchor="middle">Hipotálamo</text>
+
+      <rect x="30" y="127" width="130" height="46" rx="6" fill="#101a22" stroke="#5b93d6" stroke-width="1.4"/>
+      <text x="95" y="150" fill="#e7edf2" font-size="13" text-anchor="middle">Adeno-</text>
+      <text x="95" y="164" fill="#e7edf2" font-size="13" text-anchor="middle">hipófise</text>
+
+      <rect x="30" y="234" width="130" height="46" rx="6" fill="#101a22" stroke="#c9a15a" stroke-width="1.4"/>
+      <text x="95" y="262" fill="#e7edf2" font-size="13" text-anchor="middle">Córtex adrenal</text>
+
+      <line x1="95" y1="66" x2="95" y2="127" stroke="#5b93d6" stroke-width="1.6" marker-end="url(#arrow-blue)"/>
+      <text x="108" y="100" fill="#8fa2ae" font-size="11">CRH</text>
+
+      <line x1="95" y1="173" x2="95" y2="234" stroke="#5b93d6" stroke-width="1.6" marker-end="url(#arrow-blue)"/>
+      <text x="108" y="207" fill="#8fa2ae" font-size="11">ACTH</text>
+
+      <path d="M 200 257 C 400 257, 480 100, 300 43" fill="none" stroke="#d1596b" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arrow-red)"/>
+      <text x="330" y="70" fill="#d1596b" font-size="11">retroalimentação negativa (cortisol)</text>
+
+      <rect x="360" y="234" width="230" height="46" rx="6" fill="none" stroke="#dd9a4e" stroke-width="1.2" stroke-dasharray="3 3"/>
+      <text x="475" y="256" fill="#dd9a4e" font-size="11.5" text-anchor="middle">Glicocorticoide exógeno</text>
+      <text x="475" y="270" fill="#dd9a4e" font-size="10" text-anchor="middle">(ex.: prednisolona)</text>
+      <line x1="360" y1="257" x2="165" y2="257" stroke="#dd9a4e" stroke-width="1.4" marker-end="url(#arrow-red)"/>
+
+      <rect x="360" y="20" width="230" height="46" rx="6" fill="none" stroke="#45b8a6" stroke-width="1.2" stroke-dasharray="3 3"/>
+      <text x="475" y="42" fill="#45b8a6" font-size="11.5" text-anchor="middle">Sistema renina-angiotensina</text>
+      <text x="475" y="56" fill="#45b8a6" font-size="10" text-anchor="middle">(Angiotensina II → aldosterona)</text>
+    </svg>
+    <div class="diagram-caption">Eixo HHA — a alça longa de retroalimentação (cortisol endógeno ou exógeno) é a mais relevante fisiologicamente; a aldosterona depende sobretudo do sistema renina-angiotensina, não do ACTH.</div>
+  </div>
+
+  <p>Um detalhe frequentemente negligenciado, mas de alto rendimento em prova: o ACTH tem efeito apenas mínimo sobre a produção de mineralocorticoide. Quem realmente comanda a secreção de aldosterona é o <span class="term">sistema renina-angiotensina</span>, através da angiotensina II, além da concentração plasmática de potássio agindo diretamente sobre a zona glomerulosa. Isso explica por que a supressão do eixo por glicocorticoide exógeno prolongado compromete predominantemente a função glicocorticoide da suprarrenal, e não necessariamente a mineralocorticoide.</p>
+
+  <p>A secreção de CRH no hipotálamo, por sua vez, sofre modulação por diversos neurotransmissores: acetilcolina, serotonina (5-HT) e — de forma mista — noradrenalina atuam como reguladores positivos, enquanto o GABA atua como regulador negativo. O ADH (vasopressina) potencializa a ação do CRH sobre a hipófise, funcionando como um cossecretagogo do ACTH.</p>
+
+  <details class="deepen">
+    <summary>Aprofunde-se: por que o glicocorticoide exógeno "engana" o eixo</summary>
+    <div class="deepen-body">
+      <p>Do ponto de vista do hipotálamo e da hipófise, não existe diferença bioquímica relevante entre o cortisol endógeno e um glicocorticoide sintético circulando no sangue — ambos ativam o receptor glicocorticoide (GR) nessas estruturas e disparam o mesmo mecanismo de retroalimentação negativa. Isso significa que, quanto maior a dose e mais prolongado o uso do fármaco exógeno, maior a supressão da secreção endógena de CRH e ACTH, e, com o tempo, maior o grau de atrofia funcional do córtex da suprarrenal por falta de estímulo trófico do ACTH. Esse raciocínio é a base fisiopatológica de toda a discussão sobre insuficiência adrenal iatrogênica e desmame de corticoide, que será detalhada mais adiante neste material.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 3 — RECEPTORES E MECANISMO DE AÇÃO -->
+<!-- ======================================================= -->
+<section class="section" style="--accent:var(--c-receptor);">
+  <div class="section-header"><span class="tag">Receptores · 03</span><span class="line"></span></div>
+  <h2>Receptores e o <span class="accent-word">mecanismo molecular</span> de ação</h2>
+  <p class="kicker">Como uma molécula de esteroide, sem nenhum receptor de membrana, consegue mudar o comportamento inteiro de uma célula.</p>
+
+  <p>Existem dois receptores intracelulares para os corticosteroides: o <span class="term">GR</span> (receptor glicocorticoide) e o <span class="term">MR</span> (receptor mineralocorticoide). Ambos são membros da superfamília de receptores nucleares — fatores de transcrição ativados por ligante — e residem predominantemente no citoplasma, não na membrana celular nem no núcleo, à espera de um esteroide lipofílico que atravesse a bicamada lipídica livremente.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="mini-label">Via GR</span>
+      <p>Ações metabólicas (carboidratos, lipídeos, proteínas), ações anti-inflamatórias e ações imunossupressoras.</p>
+    </div>
+    <div class="card">
+      <span class="mini-label">Via MR</span>
+      <p>Equilíbrio de eletrólitos e água — sobretudo reabsorção de sódio e excreção de potássio no néfron distal.</p>
+    </div>
+  </div>
+
+  <p>O cortisol consegue ativar os dois receptores, GR e MR, com afinidade comparável — o que é um problema em potencial, porque em situações de cortisol muito elevado (estresse extremo, síndrome de Cushing) ele poderia teoricamente inundar também os receptores mineralocorticoides e causar retenção de sódio e hipertensão mesmo sem nenhum aumento de aldosterona. Já a aldosterona tem pouquíssima afinidade pelo GR.</p>
+
+  <details class="deepen">
+    <summary>Aprofunde-se: o mecanismo que impede o cortisol de ativar o MR o tempo todo</summary>
+    <div class="deepen-body">
+      <p>Isso não acontece na maioria das células-alvo do MR (como o néfron distal) porque essas células expressam uma enzima "porteira", a <span class="term">11β-hidroxiesteroide desidrogenase tipo 2</span> (11β-HSD2), que converte rapidamente o cortisol na sua forma inativa, a cortisona, antes que ele consiga se ligar ao MR. Como a aldosterona não é substrato dessa enzima, ela permanece intacta e consegue ativar o MR livremente, apesar de sua concentração plasmática ser ordens de grandeza menor que a do cortisol. Esse mecanismo explica por que, fisiologicamente, o MR "escuta" preferencialmente a aldosterona apesar da enorme vantagem numérica do cortisol.</p>
+      <details class="deepen-lvl2">
+        <summary>Detalhamento avançado: quando esse mecanismo falha</summary>
+        <div class="deepen-body">
+          <p>Quando a 11β-HSD2 é inibida ou geneticamente deficiente (síndrome do excesso aparente de mineralocorticoide) ou quando a quantidade de cortisol circulante é tão alta que satura a capacidade da enzima (como em doses farmacológicas muito altas de hidrocortisona, ou em certos tumores produtores de ACTH ectópico), o cortisol passa a ativar o MR de forma relevante — produzindo hipertensão e hipocalemia por um mecanismo mineralocorticoide mesmo sem elevação de aldosterona. Esse é o motivo fisiológico por trás da observação, retomada mais adiante, de que a cortisona e a hidrocortisona têm efeito de retenção de sódio mais evidente que a prednisona ou a dexametasona em doses equivalentes.</p>
+        </div>
+      </details>
+    </div>
+  </details>
+
+  <h3>Do citoplasma ao DNA: o mecanismo genômico</h3>
+  <p>O mecanismo de ação clássico dos corticosteroides é chamado de <span class="term">ação genômica</span>: uma ação em nível de DNA que altera a expressão de genes específicos. Ela ocorre em qualquer dose terapeuticamente relevante e segue uma sequência lógica de cinco passos:</p>
+  <ol>
+    <li>No sangue, a maior parte do esteroide circula ligada a proteínas carreadoras plasmáticas (como a globulina ligadora de corticosteroide, CBG); apenas a fração livre consegue se difundir para dentro da célula-alvo.</li>
+    <li>O hormônio livre atravessa a membrana celular e encontra seu receptor — GR ou MR — no citoplasma.</li>
+    <li>O complexo hormônio-receptor sofre uma mudança conformacional, se dissocia de proteínas chaperonas (como a HSP90) e transloca-se para o núcleo.</li>
+    <li>Dentro do núcleo, o complexo se liga a sequências específicas de DNA — os elementos responsivos a glicocorticoide (GRE) — e ativa ou reprime a transcrição de um ou mais genes.</li>
+    <li>Os genes ativados geram novo RNA mensageiro, que é traduzido em novas proteínas responsáveis pelos efeitos celulares observados.</li>
+  </ol>
+
+  <div class="box note">
+    <div class="box-label">🔎 Um detalhe que costuma cair em prova</div>
+    <p>Esse mecanismo não é instantâneo: depois da ligação ao receptor, são necessários mais de trinta minutos para que as primeiras proteínas sejam sintetizadas, e muitas horas — às vezes dias — para que alguns efeitos se desenvolvam plenamente. É por isso que a resposta clínica a um glicocorticoide, mesmo em dose adequada, costuma ter uma latência real e não é imediata como a de um broncodilatador de ação rápida, por exemplo.</p>
+  </div>
+
+  <details class="deepen">
+    <summary>Aprofunde-se: transativação versus transrepressão</summary>
+    <div class="deepen-body">
+      <p>A ação genômica dos corticosteroides não é uma via única — ela se desdobra em dois mecanismos moleculares distintos, e essa distinção é a chave para entender por que os corticosteroides são anti-inflamatórios tão potentes:</p>
+      <ul>
+        <li><span class="term">Transativação:</span> o receptor GR forma um homodímero, liga-se diretamente ao GRE no DNA e induz a transcrição de genes anti-inflamatórios — o exemplo clássico é a anexina-1 (também chamada lipocortina-1), que inibe a fosfolipase A2 e reduz a liberação de ácido araquidônico da membrana celular (voltaremos a esse ponto na seção sobre efeitos anti-inflamatórios). A transativação também é responsável por boa parte dos efeitos metabólicos adversos, como a indução de enzimas da gliconeogênese hepática.</li>
+        <li><span class="term">Transrepressão:</span> o receptor GR, sem necessariamente se ligar ao DNA, interage diretamente com fatores de transcrição pró-inflamatórios já ativados — sobretudo o NF-κB e o AP-1 — impedindo que eles se liguem a seus próprios elementos responsivos no DNA. O resultado é a queda na transcrição de genes de citocinas inflamatórias (IL-1, IL-2, IL-6, TNF-α) e da enzima COX-2. A maior parte do efeito anti-inflamatório terapêutico dos corticosteroides vem da transrepressão.</li>
+      </ul>
+      <details class="deepen-lvl2">
+        <summary>Detalhamento avançado: por que essa distinção interessa à pesquisa farmacológica</summary>
+        <div class="deepen-body">
+          <p>Como muitos dos efeitos adversos metabólicos e ósseos dos glicocorticoides parecem estar mais ligados à transativação, enquanto o benefício anti-inflamatório está mais ligado à transrepressão, uma linha de pesquisa farmacológica busca desenvolver os chamados glicocorticoides dissociados — moléculas desenhadas para favorecer seletivamente a transrepressão sobre a transativação, na tentativa de preservar a eficácia anti-inflamatória reduzindo os efeitos colaterais metabólicos e ósseos. Até o momento, nenhum composto dissociado atingiu uso clínico amplo com essa vantagem comprovada de forma consistente, e esse continua sendo um tópico de pesquisa em aberto — vale mencionar em discussão de PBL como uma fronteira ainda não resolvida da farmacologia dos corticosteroides.</p>
+        </div>
+      </details>
+    </div>
+  </details>
+
+  <h3>Efeitos rápidos não genômicos</h3>
+  <p>Em concentrações altas, os glicocorticoides também produzem efeitos rápidos — de minutos, não de horas — que não dependem de síntese proteica. Esses efeitos não genômicos parecem ocorrer por dois mecanismos possíveis: interações inespecíficas diretas com as membranas biológicas (alterando sua fluidez e a função de proteínas de membrana) ou interações específicas com receptores GR citosólicos ou com receptores GR ligados à própria membrana celular. Esses efeitos rápidos parecem contribuir para a eficácia terapêutica em situações que exigem resposta imediata — como o efeito anti-inflamatório e imunossupressor observado em minutos após pulsoterapia com doses muito altas de metilprednisolona.</p>
+
+  <h3>A ação da aldosterona na célula tubular renal</h3>
+  <p>Vale a pena isolar o mecanismo do MR no néfron, porque ele é a base racional de várias classes de diuréticos. No túbulo coletor, a aldosterona atua em seu receptor intracelular (MR) das células principais e induz, por ação genômica, dois efeitos coordenados: primeiro, aumenta a expressão de canais de sódio na membrana apical (os canais ENaC); em seguida, aumenta a expressão de moléculas de Na⁺/K⁺-ATPase na membrana basolateral. O resultado é um gradiente que empurra sódio para dentro da célula pelo lado apical e o bombeia para o sangue pelo lado basolateral, ao mesmo tempo em que secreta potássio para a urina — reabsorção efetiva de sódio, secreção de potássio, e reabsorção secundária de água (auxiliada pela ação do ADH sobre as aquaporinas no mesmo segmento).</p>
+
+  <div class="box clinical">
+    <div class="box-label">🩺 Correlação farmacológica</div>
+    <p>Esse mecanismo explica a ação de dois diuréticos poupadores de potássio, amilorida e triantereno, que bloqueiam diretamente o canal ENaC — ou seja, atuam a jusante do receptor, inibindo o próprio efetor final que a aldosterona induziria, sem bloquear o MR. Isso os diferencia farmacologicamente da espironolactona e da eplerenona, que são antagonistas competitivos do MR propriamente dito. Na prática clínica, ambas as estratégias produzem o mesmo resultado final — retenção de potássio — mas por pontos distintos da via.</p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 4 — AÇÕES METABÓLICAS -->
+<!-- ======================================================= -->
+<section class="section" style="--accent:var(--c-metab);">
+  <div class="section-header"><span class="tag">Metabolismo · 04</span><span class="line"></span></div>
+  <h2>As <span class="accent-word">ações metabólicas</span> do cortisol</h2>
+  <p class="kicker">O cortisol é, em essência, o hormônio do "modo de escassez": ele mobiliza reservas para garantir glicose disponível ao sistema nervoso central em situações de estresse.</p>
+
+  <p>Se você entender o cortisol como um hormônio evolutivamente desenhado para manter a glicemia durante jejum prolongado ou estresse físico agudo, quase todas as suas ações metabólicas passam a fazer sentido de forma unificada: ele reduz a captação de glicose pelos tecidos periféricos, aumenta a produção hepática de glicose e mobiliza substratos (aminoácidos e ácidos graxos) de outros tecidos para alimentar essa produção. Vamos por tecido.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="mini-label">Carboidratos</span>
+      <p>Reduz a translocação do transportador GLUT4 para a membrana celular no músculo e no tecido adiposo, diminuindo a captação e utilização periférica de glicose. No fígado, estimula a síntese de glicogênio. O resultado líquido é tendência à hiperglicemia.</p>
+    </div>
+    <div class="card">
+      <span class="mini-label">Proteínas</span>
+      <p>Na periferia — sobretudo no músculo — reduz a síntese e aumenta o catabolismo proteico, podendo levar a atrofia tecidual em doses suprafisiológicas. Os aminoácidos liberados alimentam a gliconeogênese hepática.</p>
+    </div>
+    <div class="card">
+      <span class="mini-label">Lipídeos</span>
+      <p>Aumenta a lipólise no tecido adiposo ao potencializar a atividade da lipase hormônio-sensível (LHS), liberando ácidos graxos e glicerol; o glicerol também alimenta a gliconeogênese. O resultado inclui resistência à insulina e hipertrigliceridemia/hipercolesterolemia.</p>
+    </div>
+    <div class="card">
+      <span class="mini-label">Cálcio e osso</span>
+      <p>Reduz a absorção intestinal de cálcio e aumenta sua excreção renal; no osso, aumenta a atividade osteoclástica (catabolismo) e reduz a formação óssea, degradando a matriz óssea calcificada.</p>
+    </div>
+  </div>
+
+  <details class="deepen">
+    <summary>Aprofunde-se: o "efeito permissivo" e a gliconeogênese em detalhe</summary>
+    <div class="deepen-body">
+      <p>Um conceito fisiológico clássico que ajuda a amarrar as três vias metabólicas é o <span class="term">efeito permissivo</span> dos glicocorticoides: em muitos tecidos, o cortisol por si só produz um efeito discreto, mas potencializa dramaticamente a ação de outros hormônios — sobretudo as catecolaminas. É por isso que, na ausência de cortisol (como na insuficiência adrenal), a resposta lipolítica e glicogenolítica à adrenalina fica prejudicada, mesmo que a adrenalina em si esteja normal. Esse efeito permissivo é parte do motivo pelo qual pacientes addisonianos descompensados apresentam hipoglicemia e intolerância grave ao estresse.</p>
+      <p>Já a gliconeogênese hepática depende da indução transcricional de enzimas-chave como a fosfoenolpiruvato carboxiquinase (PEPCK) e a glicose-6-fosfatase — outro exemplo direto de ação genômica por transativação (retome a seção anterior se precisar revisar o conceito).</p>
+      <details class="deepen-lvl2">
+        <summary>Detalhamento avançado: por que a perda óssea é maior nos primeiros meses de tratamento</summary>
+        <div class="deepen-body">
+          <p>O efeito ósseo do glicocorticoide não é uniforme ao longo do tempo: a perda óssea associada à corticoterapia é mais acentuada nos primeiros seis meses de tratamento, porque combina dois mecanismos que agem em velocidades diferentes — a supressão rápida da formação óssea (efeito direto sobre osteoblastos, que reduz sua atividade e promove sua apoptose, praticamente desde o início do tratamento) somada ao aumento mais lento, porém sustentado, da reabsorção óssea via ativação osteoclástica. Além disso, a redução da absorção intestinal de cálcio e o aumento da excreção renal favorecem hiperparatireoidismo secundário, que amplifica ainda mais a reabsorção óssea. Esse é o racional por trás da recomendação de avaliação densitométrica precoce (discutida na seção de efeitos adversos).</p>
+        </div>
+      </details>
+    </div>
+  </details>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 5 — SISTEMA IMUNE -->
+<!-- ======================================================= -->
+<section class="section" style="--accent:var(--c-imune);">
+  <div class="section-header"><span class="tag">Imunidade · 05</span><span class="line"></span></div>
+  <h2>Efeitos sobre o <span class="accent-word">sistema imune</span> e a inflamação</h2>
+  <p class="kicker">A propriedade que faz dos corticosteroides uma das classes de fármacos mais versáteis — e mais perigosas quando mal geridas — da farmacologia clínica.</p>
+
+  <h3>Efeitos sobre a distribuição e a função dos leucócitos</h3>
+  <p>Depois de uma dose única de glicocorticoide de ação curta, o hemograma muda de forma previsível e transitória: a concentração de neutrófilos circulantes aumenta (neutrofilia), enquanto linfócitos T e B, monócitos, eosinófilos e basófilos diminuem. A mudança é máxima em torno de seis horas e se dissipa em vinte e quatro horas.</p>
+
+  <div class="box note">
+    <div class="box-label">🔎 Cuidado com uma armadilha conceitual</div>
+    <p>A neutrofilia induzida por corticosteroide não significa mais neutrófilos sendo produzidos nem ativação imune — é redistribuição, não proliferação. O aumento de neutrófilos circulantes decorre do maior influxo de células da medula óssea para o sangue somado à menor migração de neutrófilos para os vasos e tecidos periféricos, ou seja, menos neutrófilos saindo da circulação para o local da inflamação. Já a queda de linfócitos, monócitos e eosinófilos reflete principalmente sua redistribuição para tecido linfoide (linfonodos, baço, medula óssea), não destruição celular maciça em doses terapêuticas habituais. Um paciente em corticoterapia sistêmica pode, portanto, ter um hemograma com neutrofilia e linfopenia relativa sem qualquer infecção subjacente — um achado que confunde estudantes com frequência.</p>
+  </div>
+
+  <p>Além da redistribuição, os glicocorticoides reduzem a ativação geral de linfócitos T auxiliares e a expansão clonal de linfócitos T, inibem as funções de macrófagos teciduais, células dendríticas e outras células apresentadoras de antígenos — prejudicando a apresentação de antígenos e, por consequência, toda a cascata de resposta imune adaptativa subsequente.</p>
+
+  <h3>Ações sobre os mediadores químicos da inflamação</h3>
+  <p>No nível bioquímico, três frentes resumem o efeito anti-inflamatório e imunossupressor dos glicocorticoides:</p>
+  <ul>
+    <li>Produção diminuída de prostanoides, por expressão reduzida da COX-2 (transrepressão) e por inibição da fosfolipase A2.</li>
+    <li>Produção reduzida de diversas citocinas — IL-1, IL-2, IL-3, IL-4, IL-5, IL-6, IL-8, TNF-α — e de fatores de adesão celular, em grande parte por inibição da transcrição gênica (transrepressão).</li>
+    <li>Redução da liberação de histamina e de outros mediadores por basófilos e mastócitos.</li>
+  </ul>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; font-family:'JetBrains Mono', monospace;">
+      <rect x="200" y="20" width="240" height="34" rx="5" fill="#101a22" stroke="#6fbf73" stroke-width="1.3"/>
+      <text x="320" y="42" fill="#e7edf2" font-size="12" text-anchor="middle">Fosfolipídeos de membrana</text>
+
+      <rect x="10" y="100" width="150" height="34" rx="5" fill="#101a22" stroke="#dd9a4e" stroke-width="1.3"/>
+      <text x="85" y="122" fill="#e7edf2" font-size="12" text-anchor="middle">Anexina-1 ↑</text>
+
+      <rect x="245" y="100" width="150" height="34" rx="5" fill="#101a22" stroke="#8fa2ae" stroke-width="1.3"/>
+      <text x="320" y="122" fill="#e7edf2" font-size="12" text-anchor="middle">Ácido araquidônico</text>
+
+      <rect x="60" y="185" width="130" height="34" rx="5" fill="#101a22" stroke="#d1596b" stroke-width="1.3"/>
+      <text x="125" y="207" fill="#e7edf2" font-size="12" text-anchor="middle">COX 1/2</text>
+
+      <rect x="270" y="185" width="130" height="34" rx="5" fill="#101a22" stroke="#d1596b" stroke-width="1.3"/>
+      <text x="335" y="207" fill="#e7edf2" font-size="12" text-anchor="middle">5-LOX</text>
+
+      <rect x="60" y="255" width="130" height="34" rx="5" fill="none" stroke="#8fa2ae" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="125" y="277" fill="#8fa2ae" font-size="11" text-anchor="middle">Prostanoides ↓</text>
+
+      <rect x="270" y="255" width="130" height="34" rx="5" fill="none" stroke="#8fa2ae" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="335" y="277" fill="#8fa2ae" font-size="11" text-anchor="middle">Leucotrienos ↓</text>
+
+      <text x="470" y="45" fill="#dd9a4e" font-size="11">⊣ Corticoide inibe</text>
+      <text x="470" y="65" fill="#dd9a4e" font-size="11">fosfolipase A2</text>
+      <line x1="320" y1="54" x2="320" y2="100" stroke="#8fa2ae" stroke-width="1.2"/>
+      <line x1="160" y1="117" x2="245" y2="117" stroke="#dd9a4e" stroke-width="1.4"/>
+      <text x="200" y="112" fill="#dd9a4e" font-size="10">inibe</text>
+
+      <text x="470" y="150" fill="#d1596b" font-size="11">⊣ Corticoide reprime</text>
+      <text x="470" y="170" fill="#d1596b" font-size="11">a transcrição da COX-2</text>
+
+      <line x1="320" y1="134" x2="125" y2="185" stroke="#8fa2ae" stroke-width="1.2"/>
+      <line x1="320" y1="134" x2="335" y2="185" stroke="#8fa2ae" stroke-width="1.2"/>
+      <line x1="125" y1="219" x2="125" y2="255" stroke="#8fa2ae" stroke-width="1.2"/>
+      <line x1="335" y1="219" x2="335" y2="255" stroke="#8fa2ae" stroke-width="1.2"/>
+    </svg>
+    <div class="diagram-caption">Via do ácido araquidônico: o corticosteroide age em dois pontos — reduz o substrato disponível (via anexina-1) e reprime diretamente a COX-2 — bloqueando tanto prostanoides quanto leucotrienos.</div>
+  </div>
+
+  <div class="box clinical">
+    <div class="box-label">🩺 Correlação clínica: por que corticoide é "mais forte" que AINE</div>
+    <p>Um anti-inflamatório não esteroidal age em um único ponto da via — inibindo a ciclo-oxigenase — e por isso bloqueia apenas a produção de prostanoides (prostaglandinas, prostaciclina, tromboxano). O corticosteroide age antes, na fosfolipase A2, reduzindo a disponibilidade de ácido araquidônico para as duas vias enzimáticas a jusante — ciclo-oxigenase e 5-lipoxigenase — bloqueando também a produção de leucotrienos. É essa ação em dois pontos, somada à supressão de citocinas e à ação sobre a distribuição celular, que explica por que os glicocorticoides costumam ser anti-inflamatórios mais amplos e potentes que os AINEs — ao custo de um perfil de efeitos adversos sistêmicos bem maior.</p>
+  </div>
+
+  <h3>Doses e o limiar de imunossupressão clinicamente relevante</h3>
+  <p>O efeito imunossupressor propriamente dito — aquele que aumenta de forma clinicamente relevante o risco de infecção — é mais proeminente em doses maiores, não em qualquer dose anti-inflamatória. A literatura propõe faixas de referência para padronizar a linguagem entre prescritores:</p>
+
+  <div class="card-grid">
+    <div class="card"><span class="mini-label">Dose baixa</span><p>≤ 7,5 mg/dia de prednisona-equivalente.</p></div>
+    <div class="card"><span class="mini-label">Dose média</span><p>&gt; 7,5 mg até 30 mg/dia de prednisona-equivalente.</p></div>
+    <div class="card"><span class="mini-label">Dose alta</span><p>&gt; 30 mg até 100 mg/dia de prednisona-equivalente.</p></div>
+    <div class="card"><span class="mini-label">Dose muito alta</span><p>&gt; 100 mg/dia de prednisona-equivalente.</p></div>
+    <div class="card"><span class="mini-label">Pulsoterapia</span><p>≥ 250 mg/dia de prednisona-equivalente, por um ou poucos dias.</p></div>
+  </div>
+  <p style="color:var(--text-dim); font-size:0.87rem;">Nomenclatura padronizada proposta por Buttgereit et al. (2002). Para fins práticos de imunossupressão, o UpToDate simplifica considerando doses de até 40 mg/dia de prednisona no adulto (ou 1 mg/kg/dia na criança) como baixas a moderadas, e valores acima disso como doses mais altas para efeito imune.</p>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 6 — QUÍMICA E FARMACOCINÉTICA COMPARADA -->
+<!-- ======================================================= -->
+<section class="section" style="--accent:var(--c-quimica);">
+  <div class="section-header"><span class="tag">Química · 06</span><span class="line"></span></div>
+  <h2>Estrutura química e <span class="accent-word">potência comparada</span></h2>
+  <p class="kicker">Pequenas mudanças na molécula do cortisol — um flúor aqui, uma hidroxila ali — produzem diferenças enormes de potência, seletividade e duração de ação.</p>
+
+  <h3>A hidroxila no carbono 11: ativo ou pró-fármaco?</h3>
+  <p>Todos os corticosteroides sintéticos compartilham o núcleo esteroidal de quatro anéis, mas diferem em substituições específicas. Uma das mais importantes clinicamente é o que existe na posição C11: quando há uma hidroxila nesse carbono, a molécula já está na forma farmacologicamente ativa; quando há um oxigênio (carbonila, formando uma cetona), a molécula é um pró-fármaco inativo que precisa ser bioativado — reação que ocorre sobretudo no fígado, pela enzima 11β-hidroxiesteroide desidrogenase tipo 1 (a via oposta e complementar à 11β-HSD2 discutida na seção de receptores).</p>
+
+  <div class="box attention">
+    <div class="box-label">⚠ Implicação clínica direta</div>
+    <p>A cortisona e a prednisona são pró-fármacos (precisam de conversão hepática em hidrocortisona e prednisolona, respectivamente, para se tornarem ativos). Em um paciente com insuficiência hepática significativa, essa conversão pode estar prejudicada, reduzindo a eficácia do fármaco administrado. Por isso, em hepatopatas, a preferência recai sobre formas já ativas — hidrocortisona (em vez de cortisona) e prednisolona (em vez de prednisona).</p>
+  </div>
+
+  <p>Outras modificações estruturais recorrentes: a fluoração no carbono 9 (presente na fludrocortisona, triancinolona, dexametasona e betametasona) aumenta a afinidade pelo receptor e a potência; a metilação (metilprednisolona) e outras substituições nos anéis A e B também alteram a lipofilicidade, a meia-vida biológica e o perfil de atividade mineralocorticoide.</p>
+
+  <h3>Classes de duração de ação</h3>
+  <div class="card-grid">
+    <div class="card"><span class="mini-label">Ação curta (8–12 h)</span><p>Hidrocortisona (cortisol), cortisona.</p></div>
+    <div class="card"><span class="mini-label">Ação intermediária (12–36 h)</span><p>Prednisona, prednisolona, metilprednisolona, triancinolona.</p></div>
+    <div class="card"><span class="mini-label">Ação longa (36–72 h)</span><p>Dexametasona, betametasona.</p></div>
+  </div>
+
+  <h3>Potência comparada: efeito anti-inflamatório e retenção de sódio</h3>
+  <p>A tabela clássica de referência compara todos os glicocorticoides sintéticos à hidrocortisona, cuja potência é definida como 1 em ambos os eixos — anti-inflamatório e retentor de sódio.</p>
+
+  <div class="barset">
+    <div class="bargroup">
+      <div class="bargroup-title">Potência anti-inflamatória (relativa à hidrocortisona = 1)</div>
+      <div class="bar-row"><span class="bar-label">Hidrocortisona</span><div class="bar-track"><div class="bar-fill" style="width:3%; background:var(--c-quimica);"></div></div><span class="bar-value">1</span></div>
+      <div class="bar-row"><span class="bar-label">Cortisona</span><div class="bar-track"><div class="bar-fill" style="width:2.5%; background:var(--c-quimica);"></div></div><span class="bar-value">0,8</span></div>
+      <div class="bar-row"><span class="bar-label">Prednisona</span><div class="bar-track"><div class="bar-fill" style="width:13%; background:var(--c-quimica);"></div></div><span class="bar-value">4</span></div>
+      <div class="bar-row"><span class="bar-label">Prednisolona</span><div class="bar-track"><div class="bar-fill" style="width:13%; background:var(--c-quimica);"></div></div><span class="bar-value">4</span></div>
+      <div class="bar-row"><span class="bar-label">Metilprednisolona</span><div class="bar-track"><div class="bar-fill" style="width:16.5%; background:var(--c-quimica);"></div></div><span class="bar-value">5</span></div>
+      <div class="bar-row"><span class="bar-label">Triancinolona</span><div class="bar-track"><div class="bar-fill" style="width:16.5%; background:var(--c-quimica);"></div></div><span class="bar-value">5</span></div>
+      <div class="bar-row"><span class="bar-label">Betametasona</span><div class="bar-track"><div class="bar-fill" style="width:83%; background:var(--c-quimica);"></div></div><span class="bar-value">25–30</span></div>
+      <div class="bar-row"><span class="bar-label">Dexametasona</span><div class="bar-track"><div class="bar-fill" style="width:100%; background:var(--c-quimica);"></div></div><span class="bar-value">30</span></div>
+      <div class="bar-row"><span class="bar-label">Fludrocortisona</span><div class="bar-track"><div class="bar-fill" style="width:33%; background:var(--c-quimica);"></div></div><span class="bar-value">10</span></div>
+    </div>
+    <div class="bargroup">
+      <div class="bargroup-title">Atividade retentora de sódio / mineralocorticoide (relativa à hidrocortisona = 1)</div>
+      <div class="bar-row"><span class="bar-label">Hidrocortisona</span><div class="bar-track"><div class="bar-fill" style="width:0.8%; background:var(--c-eixo);"></div></div><span class="bar-value">1</span></div>
+      <div class="bar-row"><span class="bar-label">Cortisona</span><div class="bar-track"><div class="bar-fill" style="width:0.65%; background:var(--c-eixo);"></div></div><span class="bar-value">0,8</span></div>
+      <div class="bar-row"><span class="bar-label">Prednisona/Prednisolona</span><div class="bar-track"><div class="bar-fill" style="width:0.65%; background:var(--c-eixo);"></div></div><span class="bar-value">≈0,3–0,8</span></div>
+      <div class="bar-row"><span class="bar-label">Metilprednisolona</span><div class="bar-track"><div class="bar-fill" style="width:0.4%; background:var(--c-eixo);"></div></div><span class="bar-value">≈0,5</span></div>
+      <div class="bar-row"><span class="bar-label">Dexametasona / Betametasona</span><div class="bar-track"><div class="bar-fill" style="width:0.15%; background:var(--c-eixo);"></div></div><span class="bar-value">≈0</span></div>
+      <div class="bar-row"><span class="bar-label">Fludrocortisona</span><div class="bar-track"><div class="bar-fill" style="width:100%; background:var(--c-eixo);"></div></div><span class="bar-value">125–250</span></div>
+    </div>
+  </div>
+
+  <div class="box note">
+    <div class="box-label">🔎 Sobre as pequenas divergências entre fontes</div>
+    <p>Os slides trazem duas tabelas de referência (Whalen e uma revisão de 2017 publicada no <em>International Journal of Molecular Sciences</em>) com valores levemente diferentes para a atividade mineralocorticoide da prednisona/prednisolona e da metilprednisolona. Isso é esperado: são estimativas relativas obtidas por métodos e desenhos experimentais distintos, não constantes físicas exatas. O que realmente importa reter para a prática — e para a prova — é a ordem de grandeza e o padrão qualitativo: hidrocortisona e cortisona têm atividade mineralocorticoide proporcionalmente relevante; dexametasona e betametasona, praticamente nenhuma; e a fludrocortisona é, disparadamente, o composto mais retentor de sódio, o que a torna inadequada para uso anti-inflamatório sistêmico apesar de ter alguma potência anti-inflamatória nominal.</p>
+  </div>
+
+  <h3>Equivalência de doses na prática</h3>
+  <p>Como consequência direta dessas potências relativas, é possível calcular doses equivalentes entre diferentes glicocorticoides — uma habilidade essencial para trocar um paciente de fármaco sem alterar a exposição terapêutica real:</p>
+  <div class="card">
+    <p>100 mg de hidrocortisona ≈ 25 mg de prednisona (ou prednisolona) ≈ 3,75–4 mg de dexametasona.</p>
+    <p>250 mg de hidrocortisona ≈ 60–62,5 mg de prednisona.</p>
+  </div>
+  <p>Calculadoras de conversão de esteroides (como a disponível no MDCalc) automatizam essa razão, mas vêm com um aviso importante: essas equivalências valem apenas para administração oral ou intravenosa — a potência glicocorticoide após administração intramuscular ou intra-articular pode variar consideravelmente e não segue a mesma proporção.</p>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 7 — FÁRMACOS DISPONÍVEIS -->
+<!-- ======================================================= -->
+<section class="section" style="--accent:var(--c-farmaco);">
+  <div class="section-header"><span class="tag">Fármacos · 07</span><span class="line"></span></div>
+  <h2>O que está disponível na <span class="accent-word">farmácia</span></h2>
+  <p class="kicker">Da molécula à apresentação comercial: como a mesma classe farmacológica aparece em comprimidos, soluções injetáveis, colírios e cremes.</p>
+
+  <h3>Uso sistêmico — oral e injetável</h3>
+  <div class="card-grid">
+    <div class="card"><span class="mini-label">Succinato sódico de hidrocortisona</span><p>Solução injetável (Cortisonal®) — sal solúvel de ação rápida, uso em urgência (insuficiência adrenal aguda).</p></div>
+    <div class="card"><span class="mini-label">Prednisona</span><p>Comprimidos (Meticorten®) — pró-fármaco, ação intermediária, primeira linha para imunossupressão crônica.</p></div>
+    <div class="card"><span class="mini-label">Prednisolona</span><p>Solução oral e comprimidos (Predsim®) — já ativa, alternativa em hepatopatas ou para desmame fino em solução.</p></div>
+    <div class="card"><span class="mini-label">Metilprednisolona</span><p>Acetato injetável (Depo-Medrol®, depósito de liberação lenta) — usada também em pulsoterapia intravenosa.</p></div>
+    <div class="card"><span class="mini-label">Dexametasona</span><p>Comprimidos (Decadron®) e fosfato dissódico injetável (Decadron Injetável®) — ação longa, mínima atividade mineralocorticoide.</p></div>
+    <div class="card"><span class="mini-label">Betametasona</span><p>Comprimidos (Celestone®) e fosfato dissódico injetável (Celestone Injetável®) — ação longa, uso obstétrico (maturação pulmonar fetal).</p></div>
+  </div>
+
+  <div class="box clinical">
+    <div class="box-label">🩺 Correlação farmacotécnica: por que existem tantos "sais" diferentes do mesmo fármaco</div>
+    <p>Repare que os nomes comerciais frequentemente trazem um sal ou éster específico — fosfato dissódico, acetato, succinato, valerato, dipropionato. Isso não muda a potência intrínseca da molécula no receptor, mas muda sua solubilidade e, portanto, a velocidade de absorção. Ésteres de fosfato e succinato são hidrossolúveis e absorvidos rapidamente — por isso usados em injeção intravenosa de urgência. Ésteres de acetato, valerato e dipropionato são mais lipofílicos, formam um depósito no local da injeção ou na pele e liberam o fármaco lentamente ao longo de dias a semanas — por isso usados em preparações injetáveis intramusculares de depósito ou em cremes tópicos de ação prolongada. Um exemplo elegante dessa lógica é o produto combinado BetaTrinta®, que associa fosfato dissódico de betametasona (ação rápida, absorção imediata) a dipropionato de betametasona (ação prolongada, absorção lenta) na mesma seringa — início de ação rápido somado a controle de sintomas por período estendido.</p>
+  </div>
+
+  <h3>Uso tópico — oftálmico e dermatológico</h3>
+  <p>As mesmas moléculas, ou moléculas correlatas, aparecem em apresentações tópicas: acetato de prednisolona em suspensão oftálmica (Pred Fort®), dexametasona em suspensão e pomada oftálmica (Maxidex®), aceponato de metilprednisolona em creme dermatológico (Advantan®), dipropionato de betametasona em pomada dermatológica (Diprosone®), valerato de betametasona em creme (Betnovate®) e propionato de clobetasol em creme e pomada (Psorex®) — este último, um dos corticosteroides tópicos de potência mais alta disponíveis. A classificação completa de potências tópicas é retomada na última seção deste material.</p>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 8 — USO CLÍNICO -->
+<!-- ======================================================= -->
+<section class="section" style="--accent:var(--c-clinica);">
+  <div class="section-header"><span class="tag">Clínica · 08</span><span class="line"></span></div>
+  <h2>Uso clínico dos <span class="accent-word">glicocorticoides</span></h2>
+  <p class="kicker">Da reposição hormonal à quimioterapia adjuvante: o mesmo grupo de fármacos atravessa quase todas as especialidades médicas.</p>
+
+  <h3>Terapia de reposição</h3>
+  <p>Em pacientes com insuficiência adrenal — a doença de Addison sendo o exemplo clássico — a hidrocortisona é o fármaco de escolha, justamente por ser idêntica ao cortisol endógeno e já estar na forma ativa. A estratégia posológica tenta mimetizar o ritmo circadiano fisiológico (revisitando a seção 2): a dose diária é fracionada, com a maior parte administrada pela manhã e uma fração menor à tarde, reproduzindo o pico e o declínio naturais do cortisol.</p>
+
+  <h3>Tratamento anti-inflamatório e imunossupressor</h3>
+  <p>Esse é o uso mais amplo e diversificado da classe. Entre as principais indicações:</p>
+  <ul>
+    <li>Asma e outras doenças respiratórias obstrutivas, sobretudo por via inalatória.</li>
+    <li>Condições inflamatórias tópicas de pele, olhos, orelha ou nariz — eczema, conjuntivite alérgica, rinite.</li>
+    <li>Estados de hipersensibilidade, incluindo reações alérgicas graves.</li>
+    <li>Doenças autoimunes e inflamatórias do tecido conjuntivo — artrite reumatoide, doenças inflamatórias intestinais, algumas formas de anemia hemolítica, púrpura trombocitopênica idiopática.</li>
+    <li>Prevenção da doença do enxerto contra hospedeiro após transplante de órgãos ou medula óssea.</li>
+    <li>Doenças neoplásicas: em combinação com agentes citotóxicos no tratamento de neoplasias malignas específicas, como doença de Hodgkin e leucemia linfocítica aguda.</li>
+  </ul>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="mini-label">Edema cerebral peritumoral</span>
+      <p>A dexametasona é o fármaco de escolha para reduzir edema associado a tumores cerebrais primários ou metastáticos. O mecanismo proposto envolve redução da permeabilidade vascular — provavelmente por restauração parcial da integridade das junções da barreira hematoencefálica e por diminuição da expressão de fatores pró-permeabilidade vascular no tecido peritumoral, embora o mecanismo molecular completo ainda não seja totalmente elucidado.</p>
+    </div>
+    <div class="card">
+      <span class="mini-label">Maturação pulmonar fetal</span>
+      <p>A betametasona antenatal, administrada à gestante em risco de parto prematuro, estimula a maturação pulmonar do feto e reduz a incidência de síndrome do desconforto respiratório do recém-nascido. O mecanismo é a indução da síntese de proteínas do surfactante pelos pneumócitos tipo II e a aceleração da maturação estrutural do parênquima pulmonar fetal.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 9 — EFEITOS ADVERSOS -->
+<!-- ======================================================= -->
+<section class="section" style="--accent:var(--c-adverso);">
+  <div class="section-header"><span class="tag">Adversos · 09</span><span class="line"></span></div>
+  <h2>Efeitos adversos da <span class="accent-word">corticoterapia sistêmica</span></h2>
+  <p class="kicker">O preço farmacológico de imitar, de forma sustentada e em dose suprafisiológica, um hormônio que o corpo produz naturalmente apenas em pulsos e em concentração muito mais baixa.</p>
+
+  <p>Praticamente todos os efeitos adversos sistêmicos são extensões previsíveis das próprias ações fisiológicas do cortisol descritas nas seções anteriores — não são "toxicidades" no sentido farmacológico clássico, mas sim as mesmas vias metabólicas, ósseas, imunes e hemodinâmicas levadas a um grau suprafisiológico e sustentado. Os efeitos são tempo- e dose-dependentes.</p>
+
+  <h3>Sistema músculo-esquelético</h3>
+  <p>A osteoporose é uma das complicações mais temidas, com risco consequente de fraturas — estima-se que entre 30% e 50% de todos os pacientes submetidos a terapia crônica com glicocorticoides sofram fraturas osteoporóticas ao longo do tratamento. A instituição de corticoterapia com 5 mg/dia ou mais de prednisona (ou equivalente), por três meses ou mais, já é considerada indicação para densitometria óssea, buscando detectar anormalidades precoces no osso trabecular, especialmente na coluna lombar e no quadril. Como a perda óssea é mais intensa nos primeiros seis meses de tratamento, a avaliação deve começar cedo. Medidas profiláticas recomendadas incluem ingestão dietética de cálcio de cerca de 1500 mg/dia, associada a suplementação de cálcio e ingestão de vitamina D de aproximadamente 800 UI/dia — desde que essas medidas não elevem a excreção urinária de cálcio acima da faixa normal. Miopatia e sarcopenia (perda de massa muscular) também são achados frequentes, coerentes com o catabolismo proteico muscular discutido na seção metabólica.</p>
+
+  <h3>Sistema cardiovascular e renal</h3>
+  <p>Os efeitos cardiovasculares mais notáveis resultam de alterações induzidas pela atividade mineralocorticoide sobre a excreção renal de sódio, levando a hipertensão arterial e a maior reatividade vascular a agentes vasoconstritores — com infarto do miocárdio e acidente vascular cerebral como desfechos raros, porém descritos. A retenção de sódio e fluidos é mais evidente com cortisona e hidrocortisona, que apresentam efeito mineralocorticoide mais intenso (retome a seção de química: dexametasona e betametasona praticamente não têm esse efeito). Os glicocorticoides também intensificam a reatividade vascular a outras substâncias vasoativas, como noradrenalina e angiotensina II — outro exemplo do efeito permissivo discutido anteriormente, aqui aplicado ao tônus vascular. Adicionalmente, os corticoides podem reduzir a taxa de filtração glomerular, em parte por reduzirem a produção renal de prostaglandinas vasodilatadoras, contribuindo ainda mais para retenção hídrica e elevação pressórica.</p>
+
+  <h3>Redistribuição de gordura corporal e pele</h3>
+  <p>A obesidade centrípeta (ou central), a face em "lua cheia" e a "corcunda de búfalo" (acúmulo de gordura dorsocervical) são manifestações clássicas do hipercortisolismo — mais comuns com terapia sistêmica prolongada. Na pele, o efeito mais comum é o adelgaçamento (atrofia epidérmica), com estrias, hematomas fáceis, hiperpigmentação ou hipopigmentação e hirsutismo ou hipertricose — achados que aparecem tanto na terapia sistêmica quanto, mais frequentemente ainda, na terapia tópica.</p>
+
+  <h3>Eixo hipofisário, glicemia e comportamento</h3>
+  <div class="card-grid">
+    <div class="card"><span class="mini-label">Disfunção hipofisária</span><p>Alterações menstruais, diminuição da libido, impotência sexual, alterações semelhantes ao hipotireoidismo e prejuízo do crescimento em crianças.</p></div>
+    <div class="card"><span class="mini-label">Hiperglicemia</span><p>Quando surge diabetes induzida por corticoide, o tratamento é feito com dieta e insulina; pacientes diabéticos prévios precisam de monitorização de glicemia e ajuste posológico dos hipoglicemiantes durante o uso concomitante.</p></div>
+    <div class="card"><span class="mini-label">Alterações de comportamento</span><p>Ansiedade, insônia, alterações de humor e psicose aguda; ideação suicida não é rara e deve ser ativamente investigada em pacientes sob corticoterapia prolongada em dose alta.</p></div>
+    <div class="card"><span class="mini-label">Olhos</span><p>Catarata (subcapsular posterior, que pode progredir mesmo com redução ou interrupção da terapia) e aumento da pressão intraocular (glaucoma).</p></div>
+    <div class="card"><span class="mini-label">Sistema imune</span><p>Diminuição da atividade imunológica e das respostas inflamatórias, aumentando a suscetibilidade a infecções — efeito que, em outro contexto, é justamente o objetivo terapêutico buscado.</p></div>
+    <div class="card"><span class="mini-label">Gastrointestinal</span><p>Gastrite e úlceras, com risco potencializado pelo uso concomitante de anti-inflamatórios não esteroidais (retomado na seção de interações).</p></div>
+  </div>
+
+  <h3>Cushing iatrogênico</h3>
+  <p>A síndrome de Cushing é a manifestação clínica do hipercortisolismo patológico, e pode ter duas origens completamente diferentes: um tumor hipofisário hipersecretor de ACTH — nesse caso chamada especificamente de <em>doença de Cushing</em> — ou a administração prolongada de fármacos glicocorticoides, o chamado <em>Cushing iatrogênico</em>, causa mais comum de síndrome de Cushing na prática clínica geral. A maioria dos pacientes que recebe 100 mg/dia ou mais de hidrocortisona (ou dose equivalente de esteroide sintético) por mais de duas semanas desenvolve síndrome de Cushing iatrogênica.</p>
+
+  <p>O quadro combina achados de face e tronco (face em lua cheia com bochechas pletóricas, corcova de búfalo, aumento da gordura abdominal), achados cutâneos (adelgaçamento da pele, estrias, equimoses frequentes, cicatrização deficiente de feridas), achados músculo-esqueléticos (braços e pernas finos por atrofia muscular, osteoporose), achados metabólicos (tendência à hiperglicemia, balanço nitrogenado negativo, aumento do apetite) e achados adicionais como hipertensão, hipertensão intracraniana benigna, catarata e aumento da suscetibilidade a infecções.</p>
+
+  <div class="box note">
+    <div class="box-label">🔎 Como diferenciar Cushing endógeno de iatrogênico à beira do leito</div>
+    <p>A pergunta mais valiosa a se fazer diante de um fenótipo cushingoide é: este paciente está em uso de corticoide exógeno? Uma anamnese farmacológica cuidadosa — incluindo cremes tópicos potentes e infiltrações intra-articulares repetidas, não apenas comprimidos — resolve a maioria dos casos. Outro sinal útil é a presença de hiperandrogenismo (hirsutismo intenso, acne, virilização): como os glicocorticoides sintéticos de uso terapêutico não têm atividade androgênica relevante, sinais de excesso de andrógeno apontam mais para uma fonte endógena adrenal ou hipofisária do que para causa iatrogênica pura.</p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 10 — SUSPENSÃO E DESMAME -->
+<!-- ======================================================= -->
+<section class="section" style="--accent:var(--c-retirada);">
+  <div class="section-header"><span class="tag">Retirada · 10</span><span class="line"></span></div>
+  <h2>Suspensão e <span class="accent-word">desmame</span> da corticoterapia</h2>
+  <p class="kicker">Parar um glicocorticoide de forma abrupta pode ser tão perigoso quanto começar de forma descuidada — e por três razões distintas, que muitos estudantes confundem entre si.</p>
+
+  <p>A terapia de curto prazo com glicocorticoides — convencionalmente definida como até duas semanas — pode simplesmente ser interrompida, sem necessidade de redução gradual. Já a suspensão abrupta de tratamento prolongado (mais de duas semanas) e/ou em altas doses pode desencadear três quadros clínicos distintos, que costumam ser confundidos entre si mas têm mecanismos e apresentações diferentes:</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="mini-label">1 · Insuficiência adrenal aguda</span>
+      <p>Decorre da supressão total ou parcial do eixo HHA. Manifesta-se com hipotensão, desidratação, hiponatremia, hipercalemia, fraqueza, confusão mental, hipertermia e hipoglicemia.</p>
+    </div>
+    <div class="card">
+      <span class="mini-label">2 · Síndrome de retirada</span>
+      <p>Ocorre mesmo com níveis de cortisol normais ou em recuperação: mal-estar, letargia, mialgia, artralgia, cefaleia e labilidade emocional, de mecanismo ainda não totalmente esclarecido.</p>
+    </div>
+    <div class="card">
+      <span class="mini-label">3 · Reativação da doença de base</span>
+      <p>A doença inflamatória ou autoimune originalmente tratada volta a se manifestar quando o efeito supressor do fármaco é removido antes do controle definitivo.</p>
+    </div>
+  </div>
+
+  <details class="deepen">
+    <summary>Aprofunde-se: por que a insuficiência adrenal iatrogênica costuma poupar o eixo mineralocorticoide</summary>
+    <div class="deepen-body">
+      <p>Vale retomar aqui um ponto já semeado na seção 2: a supressão crônica pelo glicocorticoide exógeno atua fechando o eixo hipotálamo-hipófise-adrenal — reduzindo CRH e ACTH — e, por consequência, reduz especificamente a síntese endógena de cortisol. Como a aldosterona depende primariamente do sistema renina-angiotensina e da calemia, e apenas minimamente do ACTH, a insuficiência adrenal <em>secundária</em> (por supressão do eixo, como na retirada de corticoide exógeno) tende a preservar parcialmente a função mineralocorticoide — diferente da insuficiência adrenal <em>primária</em> (destruição direta da glândula, como na doença de Addison autoimune), em que tanto glico quanto mineralocorticoides faltam. Na prática, isso significa que a hipercalemia costuma ser menos proeminente na crise adrenal por retirada de corticoide exógeno do que na crise addisoniana primária clássica — embora hiponatremia e hipotensão por outros mecanismos (perda do efeito permissivo vascular, hipoglicemia, colapso circulatório) ainda ocorram.</p>
+    </div>
+  </details>
+
+  <h3>Manejo da insuficiência adrenal aguda</h3>
+  <p>O protocolo clássico começa com uma injeção intravenosa inicial de 100 mg de hidrocortisona, seguida de infusão contínua na faixa de 50 a 100 mg a cada oito horas — dose que se aproxima da taxa diária máxima de secreção de cortisol em resposta ao estresse. Nessa dose, a hidrocortisona isoladamente já costuma ter atividade mineralocorticoide suficiente para suprir as necessidades (lembrando da seção de química: ela tem atividade mineralocorticoide proporcionalmente maior que dexametasona ou prednisolona); quando isso não é suficiente, associa-se fludrocortisona. Com a estabilização do paciente, a dose de hidrocortisona é reduzida para 25 mg a cada seis a oito horas. Posteriormente, o paciente passa a receber o mesmo esquema de reposição crônica usado na insuficiência suprarrenal estável: hidrocortisona 20–30 mg/dia, em doses fracionadas mimetizando o ritmo circadiano — dois terços pela manhã, um terço à tarde.</p>
+
+  <h3>Quando e como reduzir a dose gradualmente</h3>
+  <p>Um protocolo sugerido de desmame reduz a dose do glicocorticoide em 10% a 20% a cada sete a catorze dias, sempre acompanhado de avaliação clínica: é preciso investigar ativamente, logo após cada redução, sinais de mal-estar, letargia, tontura postural, fraqueza generalizada, artralgia, cefaleia ou labilidade emocional — sinais de síndrome de retirada mesmo com eixo tecnicamente recuperado. A solução oral de prednisolona é uma alternativa útil quando é necessário um desmame ainda mais gradual e fracionado do que os comprimidos permitem.</p>
+
+  <div class="box note">
+    <div class="box-label">🔎 Uma atualização recente que vale registrar</div>
+    <p>A diretriz conjunta de 2024 da European Society of Endocrinology e da Endocrine Society trouxe uma recomendação mais permissiva do que o ensino tradicional: sugere não realizar desmame de glicocorticoides sistêmicos em pacientes submetidos a terapia de curta duração (menos de três a quatro semanas), independentemente da dose utilizada — nesses casos, os glicocorticoides podem ser suspensos sem necessidade de testes laboratoriais, devido à baixa preocupação com supressão relevante do eixo HHA nesse intervalo de tempo. Isso amplia discretamente a antiga regra de corte de duas semanas mencionada por fontes mais clássicas como o Katzung, e é um bom exemplo de como diretrizes de sociedades médicas evoluem — vale mencionar essa nuance temporal em discussões de caso clínico.</p>
+  </div>
+
+  <h3>Fatores de risco para supressão do eixo HHA</h3>
+  <div class="card-grid">
+    <div class="card">
+      <span class="mini-label">Maior risco de supressão</span>
+      <p>Dose terapêutica (não de manutenção); doses divididas; dose noturna; uso diário; corticoides de longa ação; uso sistêmico; uso prolongado.</p>
+    </div>
+    <div class="card">
+      <span class="mini-label">Menor risco de supressão</span>
+      <p>Dose de manutenção; dose única; dose matinal; dias alternados; corticoides de curta ação; uso tópico; uso curto.</p>
+    </div>
+  </div>
+
+  <h3>Linha do tempo da recuperação do eixo HHA</h3>
+  <p>Depois da suspensão de corticoterapia crônica, a recuperação funcional do eixo é gradual e pode ser acompanhada de forma aproximada pelo tempo decorrido:</p>
+  <div class="card-grid">
+    <div class="card"><span class="mini-label">0–1 mês</span><p>Cortisol matinal basal e ACTH basal ainda reduzidos; teste de estímulo do eixo HHA anormal.</p></div>
+    <div class="card"><span class="mini-label">2–5 meses</span><p>Cortisol basal ainda reduzido, mas ACTH já normal ou elevado (sinal de recuperação hipofisária antes da adrenal); teste de estímulo ainda anormal.</p></div>
+    <div class="card"><span class="mini-label">6–9 meses</span><p>Cortisol e ACTH basais normais, mas o teste de estímulo ainda pode ser anormal — a reserva funcional da glândula ainda não está plena.</p></div>
+    <div class="card"><span class="mini-label">Mais de 9 meses</span><p>Cortisol, ACTH e teste de estímulo normais — recuperação funcional completa do eixo.</p></div>
+  </div>
+  <p style="color:var(--text-dim); font-size:0.87rem;">Se o tratamento farmacológico foi muito prolongado, podem ser necessários muitos meses para o retorno completo à função normal após a suspensão dos fármacos — daí a importância de nunca subestimar um paciente com história de corticoterapia prolongada, mesmo anos depois, diante de um quadro de estresse fisiológico significativo (cirurgia, infecção grave, trauma).</p>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 11 — INTERAÇÕES FARMACOLÓGICAS -->
+<!-- ======================================================= -->
+<section class="section" style="--accent:var(--c-interacao);">
+  <div class="section-header"><span class="tag">Interações · 11</span><span class="line"></span></div>
+  <h2>Interações <span class="accent-word">farmacológicas</span> relevantes</h2>
+  <p class="kicker">A maioria das interações clinicamente importantes decorre de dois mecanismos: soma de efeitos farmacodinâmicos semelhantes, ou competição pela mesma via metabólica hepática.</p>
+
+  <div class="card">
+    <h4>Glicocorticoides + AINEs</h4>
+    <p>A associação (por exemplo, dexametasona ou prednisona com ibuprofeno) pode aumentar o potencial de toxicidade gastrointestinal grave — inflamação, sangramento, ulceração e perfuração. É provável que os dois grupos de fármacos sejam ulcerogênicos por vias diferentes e tenham efeito aditivo sobre a mucosa gástrica durante o uso concomitante; alguns dados sugerem que o efeito primário do corticosteroide nessa interação seja retardar a cicatrização de erosões já causadas pelo AINE, mais do que causar úlceras novas por conta própria. Recomenda-se cautela especial em idosos, em pacientes debilitados e naqueles com história prévia de úlcera péptica ou sangramento digestivo, com orientação para tomar os medicamentos junto às refeições e considerar profilaxia com antiácidos ou antagonistas H2 nos casos de maior risco.</p>
+  </div>
+
+  <div class="card">
+    <h4>Glicocorticoides + inibidores da CYP3A4</h4>
+    <p>Fármacos como cetoconazol, itraconazol, claritromicina e ritonavir inibem a isoenzima CYP3A4, principal via de metabolização hepática dos corticosteroides, elevando suas concentrações plasmáticas e seus efeitos farmacológicos. Essa interação já foi documentada mesmo com formulações inalatórias, nasais e oftálmicas, podendo produzir efeitos sistêmicos significativos — incluindo síndrome de Cushing e insuficiência adrenal — mesmo a partir de vias que normalmente têm absorção sistêmica mínima.</p>
+  </div>
+
+  <div class="card">
+    <h4>Glicocorticoides + indutores da CYP3A4</h4>
+    <p>Fenobarbital e fenitoína (e, por extensão farmacológica, outros indutores enzimáticos potentes como a rifampicina) aceleram o metabolismo hepático do corticosteroide, reduzindo sua concentração plasmática e sua eficácia terapêutica. Pacientes em uso concomitante podem precisar de doses mais altas de corticosteroide, com monitorização cuidadosa da resposta clínica sempre que o indutor for iniciado ou suspenso.</p>
+  </div>
+
+  <div class="card">
+    <h4>Glicocorticoides + antidiabéticos</h4>
+    <p>Insulina, metformina e outros hipoglicemiantes têm sua eficácia reduzida na presença de glicocorticoides, coerente com o efeito hiperglicemiante já discutido na seção metabólica. É necessário monitorar de perto o controle glicêmico ao iniciar ou suspender o corticosteroide, ajustando a dose do antidiabético conforme necessário.</p>
+  </div>
+
+  <div class="card">
+    <h4>Glicocorticoides + diuréticos depletores de potássio</h4>
+    <p>O uso concomitante com diuréticos que depletam potássio (como a furosemida) pode aumentar o risco de hipocalemia, já que os próprios corticosteroides podem induzir hipocalemia por seu efeito mineralocorticoide residual — efeito mais relevante com fludrocortisona, cortisona e hidrocortisona, e menos relevante com dexametasona ou betametasona (novamente, a mesma lógica de potência mineralocorticoide comparada da seção 6 se aplica aqui). A recomendação prática é monitorar sinais de hipocalemia — fraqueza, letargia, cãibras musculares — e considerar suplementação de potássio quando necessário.</p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 12 — CORTICOTERAPIA TÓPICA -->
+<!-- ======================================================= -->
+<section class="section" style="--accent:var(--c-topico);">
+  <div class="section-header"><span class="tag">Tópicos · 12</span><span class="line"></span></div>
+  <h2>Corticoterapia <span class="accent-word">tópica</span></h2>
+  <p class="kicker">Trocar a via sistêmica pela via tópica reduz — mas não elimina — os riscos discutidos até aqui.</p>
+
+  <h3>Classificação por potência</h3>
+  <div class="card-grid">
+    <div class="card">
+      <span class="mini-label">Altíssima potência</span>
+      <p>Propionato de clobetasol (Psorex®) — reservado para lesões refratárias e áreas de pele espessa, por curtos períodos.</p>
+    </div>
+    <div class="card">
+      <span class="mini-label">Alta potência</span>
+      <p>Aceponato de metilprednisolona (Advantan®), valerato de betametasona (Betnovate®), fludroxicortida (Drenison®).</p>
+    </div>
+    <div class="card">
+      <span class="mini-label">Alta potência + antimicrobiano/antifúngico</span>
+      <p>Associações de betametasona com gentamicina (Diprogenta®, Quadriderm®) ou com cetoconazol (Candicort®), usadas quando há suspeita de infecção secundária concomitante.</p>
+    </div>
+    <div class="card">
+      <span class="mini-label">Média potência</span>
+      <p>Furoato de mometasona; associações de triancinolona com neomicina, gramicidina e nistatina para lesões com componente infeccioso misto.</p>
+    </div>
+    <div class="card">
+      <span class="mini-label">Baixa potência</span>
+      <p>Acetato de hidrocortisona 1% (Berlison®) — preferida para face, área de fraldas, pele fina e uso pediátrico prolongado.</p>
+    </div>
+  </div>
+
+  <h3>Efeitos adversos específicos da via tópica</h3>
+  <p>Mesmo evitando a exposição sistêmica plena, a via tópica tem seu próprio perfil de efeitos adversos, concentrado no próprio sítio de aplicação:</p>
+  <ul>
+    <li>Estrias e atrofia cutânea, mais comuns após pelo menos três a quatro semanas de uso contínuo.</li>
+    <li>Acne, sobretudo em face e tronco.</li>
+    <li>Hipopigmentação da pele tratada.</li>
+    <li>Dermatite de contato, mais frequente com apresentações em creme (relacionada a conservantes e componentes do veículo, não necessariamente ao próprio esteroide).</li>
+    <li>Supressão do eixo hipófise-adrenal — incluindo retardo de crescimento em crianças e, raramente, síndrome de Cushing verdadeira mesmo com uso apenas tópico.</li>
+  </ul>
+
+  <div class="box attention">
+    <div class="box-label">⚠ Quando o "só tópico" deixa de ser tão seguro assim</div>
+    <p>A absorção percutânea de um corticosteroide tópico não é uniforme: aumenta muito em áreas de pele fina (face, pálpebras, região genital, dobras), em curativos oclusivos, em grandes superfícies corporais tratadas simultaneamente, com agentes de alta potência e com uso prolongado sem intervalo. É exatamente a combinação desses fatores — não o simples fato de ser "só uma pomada" — que explica os raros, porém reais, casos de supressão adrenal e Cushing iatrogênico por via tópica. Na prática, a estratégia mais segura é escolher a menor potência eficaz pelo menor tempo necessário, reservando as classes de alta e altíssima potência para áreas restritas e períodos curtos, com plano de retirada gradual em dermatoses crônicas para evitar efeito rebote.</p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- REFERÊNCIAS -->
+<!-- ======================================================= -->
+<section class="references">
+  <div class="section-header" style="--accent:var(--text-dim);"><span class="tag" style="color:var(--text-muted);">Referências</span><span class="line" style="background:var(--text-dim);"></span></div>
+  <h2 style="font-size:1.6rem;">Referências</h2>
+  <ol>
+    <li>ALVES, C. et al. Retirada dos glicocorticoides: por que, quando e como fazer. <em>Jornal de Pediatria</em>, Porto Alegre, v. 84, n. 3, p. 192-202, 2008.</li>
+    <li>BEUSCHLEIN, F. et al. European Society of Endocrinology and Endocrine Society joint clinical guideline: diagnosis and therapy of glucocorticoid-induced adrenal insufficiency. <em>The Journal of Clinical Endocrinology &amp; Metabolism</em>, Washington, DC, v. 109, 2024.</li>
+    <li>BUTTGEREIT, F. et al. Standardised nomenclature for glucocorticoid dosages and glucocorticoid treatment regimens: current questions and tentative answers in rheumatology. <em>Annals of the Rheumatic Diseases</em>, London, v. 61, n. 8, p. 718-722, 2002.</li>
+    <li>CORRADO, A. et al. Molecular basis of bone aging. <em>International Journal of Molecular Sciences</em>, Basel, v. 21, n. 10, p. 3679, 2020.</li>
+    <li>GOODMAN, L. S.; GILMAN, A. <em>As bases farmacológicas da terapêutica de Goodman &amp; Gilman</em>. 14. ed. Porto Alegre: AMGH, 2023.</li>
+    <li>GUYTON, A. C.; HALL, J. E. <em>Tratado de fisiologia médica</em>. 13. ed. Rio de Janeiro: Guanabara Koogan, 2017.</li>
+    <li>KATZUNG, B. G. <em>Farmacologia básica e clínica</em>. 15. ed. Porto Alegre: AMGH, 2023.</li>
+    <li>MAIDANA, P.; BRUNO, O.; MESCH, V. Sobre o cortisol salivar em pacientes cirróticos. <em>Medicina</em>, Buenos Aires, v. 74, p. 351, 2014.</li>
+    <li>MDCALC. <em>Steroid conversion calculator</em>. Nova Iorque: MDCalc, [2024]. Disponível em: https://www.mdcalc.com/calc/2040/steroid-conversion-calculator. Acesso em: 18 ago. 2026.</li>
+    <li>RANG, H. P.; DALE, M. M. <em>Farmacologia</em>. 9. ed. Rio de Janeiro: Elsevier, 2020.</li>
+    <li>SILVERTHORN, D. U. <em>Fisiologia humana: uma abordagem integrada</em>. 7. ed. Porto Alegre: Artmed, 2017.</li>
+    <li>TORT, L.; BALASCH, J.; MACKENZIE, S. A crossroads between innate and adaptive responses. <em>Inmunología</em>, Barcelona, v. 22, p. 277-286, 2003.</li>
+    <li>UPTODATE. <em>Glucocorticoid effects on the immune system</em>. Waltham, MA: Wolters Kluwer, 2023.</li>
+    <li>UPTODATE. <em>Glucocorticoid withdrawal</em>. Waltham, MA: Wolters Kluwer, 2023.</li>
+    <li>VAN DER GOES, M. C. et al. The value of glucocorticoid co-therapy in different rheumatic diseases: positive and adverse effects. <em>Arthritis Research &amp; Therapy</em>, London, v. 16, suppl. 2, p. S2, 2014.</li>
+    <li>VANZ, Felipe. <em>Corticoterapia</em>: slides de aula, UCXIII. Caçador: Universidade Alto Vale do Rio do Peixe (Uniarp), 2026.</li>
+    <li>WHALEN, K. <em>Farmacologia ilustrada</em>. 6. ed. Porto Alegre: Artmed, 2018.</li>
+  </ol>
+</section>
+
+</main>
+
+<div class="doc-footer">Corticoterapia · Guia de aprofundamento · Uniarp-SC · edite diretamente pelo ícone ✎ no canto inferior direito</div>
+
+</div>
+
+<script>
+(function(){
+  var STORAGE_KEY = 'uniarp_corticoterapia_luiz_v1';
+  var content = document.getElementById('content');
+  var btnEdit = document.getElementById('btn-edit');
+  var btnDownload = document.getElementById('btn-download');
+  var btnRestore = document.getElementById('btn-restore');
+  var statusEl = document.getElementById('storage-status');
+
+  var editing = false;
+  var autosaveTimer = null;
+  var memoryState = null;
+  var storageOK = false;
+
+  try {
+    localStorage.setItem('__probe__','1');
+    localStorage.removeItem('__probe__');
+    storageOK = true;
+  } catch (e) {
+    storageOK = false;
+  }
+
+  function setStatus(text){
+    if (!statusEl) return;
+    statusEl.textContent = text;
+    statusEl.classList.toggle('show', !!text);
+  }
+
+  function loadSaved(){
+    var saved = storageOK ? localStorage.getItem(STORAGE_KEY) : memoryState;
+    if (saved) {
+      content.innerHTML = saved;
+      setStatus(storageOK ? 'Edições salvas neste navegador.' : 'Sessão com edições (memória).');
+    } else if (!storageOK) {
+      setStatus('Preview do Claude.ai: edições ficam só nesta sessão. Baixe o arquivo para editar com autosave completo.');
+    }
+  }
+
+  function saveNow(){
+    var html = content.innerHTML;
+    if (storageOK) {
+      try {
+        localStorage.setItem(STORAGE_KEY, html);
+      } catch (e) {
+        storageOK = false;
+        memoryState = html;
+      }
+    } else {
+      memoryState = html;
+    }
+  }
+
+  var editableSelector = 'p, li, h1, h2, h3, h4, dd, dt, blockquote, figcaption';
+
+  function setEditable(state){
+    var els = content.querySelectorAll(editableSelector);
+    for (var i = 0; i < els.length; i++) {
+      els[i].setAttribute('contenteditable', state ? 'true' : 'false');
+    }
+  }
+
+  btnEdit.addEventListener('click', function(){
+    editing = !editing;
+    setEditable(editing);
+    document.body.classList.toggle('editing-mode', editing);
+    btnEdit.classList.toggle('active', editing);
+
+    if (editing) {
+      btnEdit.title = 'Salvar e sair da edição';
+      autosaveTimer = setInterval(function(){
+        saveNow();
+        var now = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+        setStatus('Salvo automaticamente às ' + now + (storageOK ? '' : ' — apenas nesta sessão'));
+      }, 15000);
+      setStatus('Modo de edição ativo.' + (storageOK ? ' Autosave a cada 15s.' : ' Autosave apenas na sessão atual (preview sem localStorage).'));
+    } else {
+      btnEdit.title = 'Ativar edição';
+      clearInterval(autosaveTimer);
+      saveNow();
+      setStatus(storageOK ? 'Edição salva neste navegador.' : 'Edição salva apenas nesta sessão — baixe uma cópia para guardar.');
+    }
+  });
+
+  btnDownload.addEventListener('click', function(){
+    saveNow();
+    var doctype = '<!DOCTYPE html>\n';
+    var htmlOpen = '<html lang="pt-BR">\n<head>\n' + document.head.innerHTML + '\n</head>\n';
+    var bodyClass = document.body.className ? ' class="' + document.body.className + '"' : '';
+    var bodyOpen = '<body' + bodyClass + '>\n';
+    var fullHtml = doctype + htmlOpen + bodyOpen + document.body.innerHTML + '\n</body>\n</html>';
+    var blob = new Blob([fullHtml], {type: 'text/html;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'corticoterapia-uniarp-editado.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  });
+
+  btnRestore.addEventListener('click', function(){
+    var ok = window.confirm('Restaurar o conteúdo original? As edições salvas neste navegador serão apagadas.');
+    if (!ok) return;
+    if (storageOK) {
+      try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    }
+    memoryState = null;
+    location.reload();
+  });
+
+  loadSaved();
+})();
+</script>
+
+</body>
+</html>

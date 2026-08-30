@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Esquema Técnico — Anestésicos Locais</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a1220;
+  --bg-panel:#0d1a2c;
+  --bg-card:#0e1e33;
+  --grid: rgba(110,168,214,0.06);
+  --border: rgba(130,175,214,0.16);
+  --border-strong: rgba(130,175,214,0.32);
+
+  --ink:#d9e6f2;
+  --ink-dim:#7f95ac;
+  --ink-faint:#4c5f76;
+
+  --cyan:#5cc4e8;
+  --copper:#e0a458;
+  --red:#e2707a;
+  --green:#6bd19d;
+  --violet:#a893e6;
+  --amber:#e8c15c;
+
+  --serif:'Source Serif 4', Georgia, serif;
+  --grot:'Space Grotesk', sans-serif;
+  --mono:'JetBrains Mono', monospace;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background-color:var(--bg);
+  background-image:
+    repeating-linear-gradient(0deg, var(--grid) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg, var(--grid) 0 1px, transparent 1px 32px),
+    radial-gradient(ellipse 900px 500px at 90% -10%, rgba(92,196,232,0.07), transparent 60%);
+  color:var(--ink);
+  font-family:var(--serif);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+p{margin:0;}
+p + p{margin-top:.9em;}
+em{color:var(--cyan); font-style:italic;}
+
+/* ===== TOP TITLE BLOCK (hero) ===== */
+.coversheet{
+  border-bottom:1px solid var(--border);
+  padding:0 6vw;
+}
+.coversheet-inner{
+  padding:3.4rem 0 2.2rem;
+  border-bottom:1px solid var(--border);
+}
+.cs-eyebrow{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--copper);
+  display:flex; align-items:center; gap:.6em; margin-bottom:1rem;
+}
+.cs-eyebrow::before{content:''; width:22px; height:1px; background:var(--copper);}
+.cs-title{
+  font-family:var(--grot); font-weight:700; font-size:clamp(2.2rem,5.4vw,3.8rem);
+  color:#eef5fb; line-height:1.06; max-width:18ch; margin-bottom:.9rem;
+}
+.cs-desc{
+  max-width:640px; color:var(--ink-dim); font-size:1.02rem; margin-bottom:1.6rem;
+}
+.cs-fields{
+  display:flex; flex-wrap:wrap; gap:0;
+  border:1px solid var(--border-strong); border-radius:2px; width:fit-content;
+}
+.cs-field{
+  padding:.6rem 1.1rem; border-right:1px solid var(--border-strong);
+  font-family:var(--mono); font-size:.68rem;
+}
+.cs-field:last-child{border-right:none;}
+.cs-field .fl{color:var(--ink-faint); text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:.2rem;}
+.cs-field .fv{color:var(--ink);}
+
+/* ===== NAV — folha de índice ===== */
+.nav{
+  position:sticky; top:0; z-index:30;
+  background:rgba(10,18,32,0.92); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border);
+  padding:.8rem 6vw; display:flex; gap:.45rem; overflow-x:auto;
+  scrollbar-width:none;
+}
+.nav::-webkit-scrollbar{display:none;}
+.nav a{
+  font-family:var(--mono); font-size:.7rem; letter-spacing:.03em;
+  white-space:nowrap; text-decoration:none; color:var(--ink-dim);
+  border:1px solid var(--border); padding:.4rem .8rem; border-radius:3px;
+  transition:all .15s;
+}
+.nav a:hover{ color:var(--ink); border-color:var(--cyan); background:rgba(92,196,232,0.08);}
+
+/* ===== SECTIONS as "pranchas" ===== */
+.sheet{ padding:0 6vw; border-bottom:1px solid var(--border);}
+.sheet-inner{ padding:3.2rem 0 2.6rem; max-width:980px;}
+
+.plate{
+  display:flex; flex-wrap:wrap; align-items:stretch; gap:0;
+  border:1px solid var(--border-strong); border-radius:2px;
+  margin-bottom:1.8rem; width:fit-content; max-width:100%;
+}
+.plate > div{ padding:.55rem 1rem; border-right:1px solid var(--border-strong);}
+.plate > div:last-child{border-right:none;}
+.plate .pnum{ font-family:var(--mono); font-size:.85rem; color:var(--pc, var(--cyan)); display:flex; align-items:center;}
+.plate .ptitle{ min-width:180px;}
+.plate .ptitle .l{ font-family:var(--mono); font-size:.6rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.1em; display:block;}
+.plate .ptitle .v{ font-family:var(--grot); font-weight:600; font-size:1.02rem; color:#eef5fb; margin-top:.1rem;}
+.plate .pmeta{ font-family:var(--mono); font-size:.68rem; color:var(--ink-dim); display:flex; align-items:center;}
+
+.sub{ color:var(--ink-dim); font-size:.94rem; max-width:64ch; margin-bottom:1.8rem; font-style:italic;}
+
+/* label tag inline */
+.lab{
+  display:inline-flex; align-items:center; gap:.5em;
+  font-family:var(--mono); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--lc, var(--cyan)); margin:1.8rem 0 .7rem;
+}
+.lab::before{content:'▸'; opacity:.7;}
+
+/* ===== spec cards (replace tables) ===== */
+.specgrid{ display:grid; gap:1rem; margin:1rem 0 1.4rem;}
+.specgrid.g2{ grid-template-columns:1fr 1fr;}
+.specgrid.g3{ grid-template-columns:1fr 1fr 1fr;}
+.specgrid.g4{ grid-template-columns:repeat(4,1fr);}
+
+.spec{
+  border:1px solid var(--border); border-radius:2px;
+  background:var(--bg-card);
+  padding:1rem 1.1rem;
+  position:relative;
+}
+.spec::before{
+  content:''; position:absolute; top:-1px; left:-1px; width:9px; height:9px;
+  border-top:1px solid var(--sc,var(--cyan)); border-left:1px solid var(--sc,var(--cyan));
+}
+.spec::after{
+  content:''; position:absolute; bottom:-1px; right:-1px; width:9px; height:9px;
+  border-bottom:1px solid var(--sc,var(--cyan)); border-right:1px solid var(--sc,var(--cyan));
+}
+.spec .sk{ font-family:var(--mono); font-size:.62rem; letter-spacing:.09em; text-transform:uppercase; color:var(--sc,var(--cyan)); display:block; margin-bottom:.45rem;}
+.spec h4{ font-family:var(--grot); font-weight:600; font-size:1rem; color:#eef5fb; margin:0 0 .4rem;}
+.spec p{ font-size:.86rem; color:var(--ink-dim); }
+
+/* ===== flow / schematic line ===== */
+.circuit{
+  display:flex; flex-wrap:wrap; align-items:center; margin:1.6rem 0; row-gap:.7rem;
+}
+.circuit .node{
+  font-family:var(--mono); font-size:.76rem; color:var(--ink);
+  background:var(--bg-card); border:1px solid var(--cc,var(--violet));
+  padding:.55rem .9rem; border-radius:2px;
+}
+.circuit .wire{
+  color:var(--cc,var(--violet)); font-size:.9rem; padding:0 .5rem; opacity:.7; font-family:var(--mono);
+}
+
+/* ===== alerts (outline, spec-note style) ===== */
+.note{
+  border:1px solid var(--nc, var(--amber));
+  border-left:3px solid var(--nc, var(--amber));
+  padding:.9rem 1.1rem; margin:1.4rem 0;
+  display:flex; gap:1rem;
+}
+.note .nl{ font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--nc,var(--amber)); flex:none; width:100px; padding-top:.1rem;}
+.note p{ font-size:.9rem;}
+.note.red{--nc:var(--red);} .note.green{--nc:var(--green);} .note.cyan{--nc:var(--cyan);} .note.violet{--nc:var(--violet);}
+
+/* ===== details / anexo técnico ===== */
+details.anexo{
+  border:1px solid var(--border); border-radius:2px;
+  margin:1.1rem 0 .3rem; background:rgba(255,255,255,.012);
+}
+details.anexo > summary{
+  cursor:pointer; list-style:none; padding:.8rem 1.1rem;
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.03em; color:var(--dc,var(--violet));
+  display:flex; align-items:center; gap:.6em; user-select:none;
+}
+details.anexo > summary::-webkit-details-marker{display:none;}
+details.anexo > summary::before{ content:'+'; font-size:.9rem;}
+details.anexo[open] > summary::before{ content:'−';}
+details.anexo .abody{ padding:0 1.1rem 1.2rem; border-top:1px solid var(--border);}
+details.anexo .abody p{ font-size:.88rem; color:var(--ink-dim); margin-top:.9rem;}
+details.anexo2{ margin:.9rem 0 0; border-left:2px solid var(--dc,var(--violet)); padding-left:.9rem;}
+details.anexo2 > summary{ cursor:pointer; list-style:none; font-family:var(--mono); font-size:.66rem; color:var(--ink-faint); padding:.4rem 0;}
+details.anexo2 > summary::-webkit-details-marker{display:none;}
+details.anexo2 > summary::before{content:'› ';}
+details.anexo2 p{ font-size:.82rem; color:var(--ink-faint); margin-top:.5rem;}
+
+/* ===== interactive channel demo — signature piece ===== */
+.demo{
+  border:1px solid var(--border-strong); border-radius:3px;
+  background:var(--bg-panel); padding:1.6rem; margin:1.8rem 0;
+}
+.demo-head{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:.8rem; margin-bottom:1.2rem;}
+.demo-head .dt{ font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--copper);}
+.demo-tabs{ display:flex; gap:.4rem; flex-wrap:wrap;}
+.demo-tabs button{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.02em;
+  background:transparent; color:var(--ink-dim); border:1px solid var(--border-strong);
+  border-radius:2px; padding:.5rem .9rem; cursor:pointer; transition:all .15s;
+}
+.demo-tabs button:hover{ color:var(--ink); border-color:var(--cyan);}
+.demo-tabs button.active{ color:var(--bg); background:var(--cyan); border-color:var(--cyan);}
+.demo-al-toggle{
+  display:flex; align-items:center; gap:.55rem; margin-top:.9rem;
+  font-family:var(--mono); font-size:.72rem; color:var(--ink-dim);
+}
+.demo-al-toggle input{ accent-color:var(--copper); width:15px; height:15px;}
+
+.membrane-wrap{
+  display:flex; justify-content:center; padding:1.6rem 0 1.2rem;
+}
+.membrane{
+  position:relative; width:100%; max-width:480px; height:140px;
+  border-top:1px solid var(--border-strong); border-bottom:1px solid var(--border-strong);
+}
+.membrane .lipid-row{
+  display:flex; justify-content:space-between; width:100%;
+}
+.membrane .lipid-row.top{ position:absolute; top:0; left:0;}
+.membrane .lipid-row.bottom{ position:absolute; bottom:0; left:0;}
+.membrane .lipid{ width:8px; height:8px; border-radius:50%; background:var(--ink-faint); opacity:.55;}
+
+.gate{
+  position:absolute; left:50%; top:0; bottom:0; transform:translateX(-50%);
+  width:52px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+.gate-body{
+  width:34px; height:100%; border:1px solid var(--gc,var(--cyan));
+  background:rgba(92,196,232,0.05);
+  display:flex; align-items:center; justify-content:center;
+  transition:all .25s;
+}
+.gate-flap{
+  width:26px; height:6px; background:var(--gc,var(--cyan));
+  transition:all .25s; border-radius:2px;
+}
+.gate-label{
+  position:absolute; bottom:-26px; font-family:var(--mono); font-size:.6rem;
+  color:var(--gc,var(--cyan)); letter-spacing:.05em; white-space:nowrap;
+}
+
+.ion{
+  position:absolute; font-family:var(--mono); font-size:.62rem; font-weight:600;
+  color:var(--copper); background:rgba(224,164,88,0.14); border:1px solid var(--copper);
+  border-radius:50%; width:26px; height:26px; display:flex; align-items:center; justify-content:center;
+  transition:all .5s ease;
+}
+.al-molecule{
+  position:absolute; font-family:var(--mono); font-size:.58rem; font-weight:600;
+  color:var(--violet); background:rgba(168,147,230,0.16); border:1px solid var(--violet);
+  border-radius:3px; width:30px; height:20px; display:flex; align-items:center; justify-content:center;
+  transition:all .5s ease; opacity:0;
+}
+
+.readout{
+  display:grid; grid-template-columns:1fr 1fr 1fr; gap:0;
+  border:1px solid var(--border-strong); margin-top:1.4rem;
+}
+.readout .rcell{ padding:.8rem 1rem; border-right:1px solid var(--border-strong);}
+.readout .rcell:last-child{border-right:none;}
+.readout .rl{ font-family:var(--mono); font-size:.6rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); display:block; margin-bottom:.3rem;}
+.readout .rv{ font-family:var(--grot); font-weight:600; font-size:.92rem; color:var(--rvc,#eef5fb);}
+
+@media (max-width:760px){
+  .readout{ grid-template-columns:1fr;}
+  .readout .rcell{ border-right:none; border-bottom:1px solid var(--border-strong);}
+  .specgrid.g2, .specgrid.g3, .specgrid.g4{ grid-template-columns:1fr;}
+}
+
+/* ===== super resumo ===== */
+.summary-sheet{
+  border:1px solid var(--border-strong); border-radius:2px;
+}
+.summary-sheet .srow{ display:flex; border-bottom:1px solid var(--border);}
+.summary-sheet .srow:last-child{border-bottom:none;}
+.summary-sheet .srow .stag{
+  font-family:var(--mono); font-size:.66rem; letter-spacing:.05em; color:var(--cyan);
+  width:220px; flex:none; padding:.9rem 1rem; border-right:1px solid var(--border);
+  text-transform:uppercase;
+}
+.summary-sheet .srow p{ padding:.9rem 1.1rem; font-size:.86rem; color:var(--ink-dim);}
+
+/* ===== footer ===== */
+.footer{ padding:2.4rem 6vw 4rem; font-family:var(--mono); font-size:.72rem; color:var(--ink-faint); line-height:1.8;}
+.footer b{ color:var(--ink-dim); font-weight:500;}
+
+@media (max-width:760px){
+  .cs-fields{ width:100%;}
+  .plate{ width:100%;}
+}
+</style>
+</head>
+<body>
+
+<div class="coversheet">
+  <div class="coversheet-inner">
+    <div class="cs-eyebrow">Esquema técnico · Farmacologia</div>
+    <h1 class="cs-title">Anestésicos Locais</h1>
+    <p class="cs-desc">Um sistema de transmissão de impulso nervoso é, em essência, um circuito elétrico biológico. Este documento trata da classe de fármacos capaz de interromper esse circuito de forma pontual, controlada e reversível — e do que acontece quando esse interruptor falha.</p>
+    <div class="cs-fields">
+      <div class="cs-field"><span class="fl">Sistema</span><span class="fv">Nervo periférico</span></div>
+      <div class="cs-field"><span class="fl">Componente-alvo</span><span class="fv">Canal de Na⁺ voltagem-dependente</span></div>
+      <div class="cs-field"><span class="fl">Classe</span><span class="fv">Éster / Amida</span></div>
+      <div class="cs-field"><span class="fl">Rev.</span><span class="fv">UC XIII — LPF</span></div>
+    </div>
+  </div>
+</div>
+
+<nav class="nav">
+  <a href="#historico">01 · Antes do interruptor</a>
+  <a href="#definicao">02 · O circuito nervoso</a>
+  <a href="#componente">03 · Anatomia da peça</a>
+  <a href="#mecanismo">04 · O interruptor</a>
+  <a href="#catalogo">05 · Catálogo de componentes</a>
+  <a href="#compativeis">06 · Outros circuitos</a>
+  <a href="#falha">07 · Falha do sistema</a>
+  <a href="#reset">08 · Protocolo de reset</a>
+  <a href="#especificacao">09 · Peça ideal</a>
+  <a href="#contraponto">10 · Peça incompatível</a>
+  <a href="#resumo">Ficha-resumo</a>
+</nav>
+
+<!-- 01 -->
+<section class="sheet" id="historico">
+  <div class="sheet-inner">
+    <div class="plate" style="--pc:var(--copper)">
+      <div class="pnum">01</div>
+      <div class="ptitle"><span class="l">Prancha</span><span class="v">Antes do interruptor existir</span></div>
+      <div class="pmeta">Contexto histórico</div>
+    </div>
+    <p class="sub">Todo sistema tem uma versão anterior à sua solução técnica. Antes do bloqueio de canal, a única forma de operar era desligar o sistema inteiro — ou não desligar nada.</p>
+
+    <p>Durante praticamente toda a história da cirurgia, não havia forma de interromper localmente a transmissão de dor. O "controle" disponível era rudimentar: velocidade do cirurgião, contenção física do paciente e, quando muito, analgesia sistêmica com soluções parecidas com morfina — que deprimem a percepção central da dor, mas não tocam no circuito nervoso periférico em si. É uma distinção que vale registrar: analgesia sistêmica silencia o alarme; bloqueio local desliga o sensor.</p>
+    <p>Curiosidade de arquitetura hospitalar do período: cirurgias eram feitas de propósito nos andares mais altos dos hospitais — não por vista, mas por acústica. Gritos de pacientes conscientes sendo operados precisavam ficar o mais distante possível do restante do prédio.</p>
+
+    <div class="lab" style="--lc:var(--copper)">o acaso que virou peça de catálogo</div>
+    <p>Povos indígenas sul-americanos já usavam folha de coca havia séculos pelo efeito entorpecente na boca — sem saber que estavam, na prática, testando o primeiro anestésico local da história sobre suas próprias terminações nervosas. A cocaína foi isolada em 1860, mas o uso clínico como bloqueador nasceu de um desvio de rota: Freud tentou usá-la como estimulante psíquico, sem sucesso relevante, e repassou um pouco a um colega oftalmologista — <em>Carl Koller</em> — que em 1884 demonstrou seu efeito anestésico reversível na córnea. Dessa observação isolada nasceu toda uma classe farmacológica.</p>
+
+    <div class="note copper" style="--nc:var(--copper)">
+      <div class="nl">Ponto de prova</div>
+      <p>A cocaína é o único anestésico local clínico com ação simpaticomimética indireta relevante — bloqueia a recaptação de noradrenalina, o que explica sua vasoconstrição intrínseca e seu potencial de abuso e cardiotoxicidade, diferente de toda a geração sintética que veio depois (procaína, 1905, em diante).</p>
+    </div>
+
+    <details class="anexo" style="--dc:var(--copper)">
+      <summary>Anexo técnico — a bomba que apareceu sem ser procurada</summary>
+      <div class="abody">
+        <p>Em 1957, o bioquímico dinamarquês <em>Jens Christian Skou</em> estudava o efeito de um anestésico local sobre nervos de caranguejo quando esbarrou em uma proteína completamente diferente: uma ATPase capaz de trocar ativamente Na⁺ por K⁺ através da membrana, às custas de ATP — a bomba Na⁺/K⁺-ATPase, responsável por manter o gradiente iônico que torna a célula nervosa excitável em primeiro lugar.</p>
+        <p>É um bom exercício mental separar as duas peças: a bomba (transporte ativo, gasta energia, cria o gradiente) e o canal (transporte passivo, usa o gradiente já pronto, opera em milissegundos). Skou ganhou o Nobel de Química em 1997 por descrever a peça que ele nem estava procurando.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="sheet" id="definicao">
+  <div class="sheet-inner">
+    <div class="plate" style="--pc:var(--cyan)">
+      <div class="pnum">02</div>
+      <div class="ptitle"><span class="l">Prancha</span><span class="v">O circuito nervoso</span></div>
+      <div class="pmeta">Definição e função</div>
+    </div>
+    <p class="sub">Antes de falar do interruptor, é preciso entender exatamente o que ele interrompe.</p>
+
+    <p>Anestésicos locais são substâncias capazes de bloquear, de forma <em>totalmente reversível</em>, a geração e a propagação do potencial de ação em tecidos eletricamente excitáveis. Cada termo dessa definição é uma especificação técnica com consequência clínica direta:</p>
+
+    <div class="specgrid g2">
+      <div class="spec" style="--sc:var(--cyan)">
+        <span class="sk">reversível</span>
+        <h4>Sem dano estrutural à peça</h4>
+        <p>Diferente de uma lesão nervosa (secção, esmagamento, isquemia prolongada), o bloqueio se desfaz sozinho conforme a droga se difunde e é metabolizada — o circuito volta a funcionar exatamente como antes.</p>
+      </div>
+      <div class="spec" style="--sc:var(--cyan)">
+        <span class="sk">tecido eletricamente excitável</span>
+        <h4>O componente não é exclusivo do nervo</h4>
+        <p>O mesmo canal de sódio existe no músculo esquelético e no miocárdio. É por isso que a toxicidade sistêmica de um anestésico local ameaça diretamente o coração: o mesmo interruptor que bloqueia dor no local da injeção, em concentração plasmática alta, bloqueia também a condução elétrica cardíaca.</p>
+      </div>
+    </div>
+
+    <div class="lab">função clínica além do bloqueio óbvio</div>
+    <p>O uso mais evidente é bloqueio regional — infiltração, bloqueio de nervo periférico, peridural, raquianestesia, anestesia tópica de mucosa. Mas existe uma aplicação menos óbvia: em concentração baixa, subanestésica, alguns anestésicos locais (lidocaína é o exemplo clássico, por via sistêmica em contexto especializado) suprimem a descarga ectópica espontânea de neurônios sensitivos lesados — mecanismo por trás de boa parte da dor neuropática. É por isso que a lidocaína aparece tanto como "anestésico de dentista" quanto como adjuvante em dor neuropática crônica e como antiarrítmico classe IB — três aplicações do mesmo componente, em três circuitos diferentes.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="sheet" id="componente">
+  <div class="sheet-inner">
+    <div class="plate" style="--pc:var(--violet)">
+      <div class="pnum">03</div>
+      <div class="ptitle"><span class="l">Prancha</span><span class="v">Anatomia da peça</span></div>
+      <div class="pmeta">Estrutura química</div>
+    </div>
+    <p class="sub">Toda molécula da classe segue o mesmo desenho de fábrica: uma parte lipofílica, uma parte hidrofílica, e uma junção que determina praticamente tudo.</p>
+
+    <p>Toda molécula de anestésico local tem a mesma arquitetura de base: uma <em>porção aromática lipofílica</em> ligada, por uma cadeia intermediária do tipo <em>éster</em> ou <em>amida</em>, a uma <em>cadeia lateral básica</em> (amina terciária, hidrofílica). É essa dualidade — uma parte que "atravessa gordura", outra que "se dissolve em água" — que torna a molécula anfifílica.</p>
+
+    <div class="note violet">
+      <div class="nl">Por quê</div>
+      <p>São bases fracas, pKa tipicamente entre 8 e 9. Em pH fisiológico (≈7,4, mais ácido que o pKa), a maior parte está protonada (carregada), mas uma fração relevante permanece neutra — e é essa fração neutra que atravessa a bicamada lipídica. Do lado de dentro do axônio, uma nova fração se reprotona; é essa forma carregada, agora no citoplasma, que efetivamente encaixa e bloqueia o canal por dentro.</p>
+    </div>
+
+    <details class="anexo" style="--dc:var(--violet)">
+      <summary>Anexo técnico — por que o anestésico "não pega" em tecido infectado</summary>
+      <div class="abody">
+        <p>Esse não é um detalhe dos slides, mas decorre diretamente do que já vimos e vale registrar — cai bastante na prática. Em tecido inflamado ou infeccionado, o pH local cai (pode chegar a 5,5–6,5). Como o pKa da droga não muda, um meio mais ácido empurra o equilíbrio para mais moléculas protonadas (carregadas) em relação às neutras.</p>
+        <p>Resultado: menos moléculas na forma lipofílica disponíveis para atravessar a membrana, logo, menor eficácia — daí a sensação clínica de "não anestesiar direito" ao tentar drenar um abscesso, mesmo com dose habitualmente eficaz. É o chamado <em>ion trapping</em> invertido: a droga fica presa no compartimento ácido, incapaz de penetrar em quantidade suficiente.</p>
+        <details class="anexo2">
+          <summary>ainda mais fundo — implicação prática</summary>
+          <p>É uma das razões pelas quais se prefere, quando possível, anestesiar o tecido sadio ao redor de um foco infeccioso (bloqueio de campo) em vez de infiltrar diretamente dentro dele.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="lab" style="--lc:var(--amber)">peças fora do padrão</div>
+    <div class="specgrid g2">
+      <div class="spec" style="--sc:var(--red)">
+        <span class="sk">derivados quaternários — ex: QX-314</span>
+        <h4>Sempre carregados, sem função no sistema</h4>
+        <p>Nitrogênio quaternário permanentemente ionizado não atravessa a membrana pela via clássica — não funciona como anestésico injetável. Restrito à pesquisa pré-clínica.</p>
+      </div>
+      <div class="spec" style="--sc:var(--amber)">
+        <span class="sk">benzocaína — peça atípica</span>
+        <h4>Sem grupo básico ionizável</h4>
+        <p>Sem a amina terciária clássica — sem equilíbrio ácido-base relevante em pH fisiológico. Por isso, praticamente insolúvel em água e de uso exclusivamente tópico.</p>
+      </div>
+    </div>
+
+    <div class="lab">éster × amida — a junção que define o destino metabólico</div>
+    <div class="specgrid g2">
+      <div class="spec" style="--sc:var(--orange, var(--copper))">
+        <span class="sk">ligação éster</span>
+        <h4>Procaína, cocaína, tetracaína, benzocaína</h4>
+        <p>Hidrolisadas rapidamente no plasma por colinesterases — meia-vida curta, geralmente &lt;1h. Um subproduto, o ácido para-aminobenzoico (PABA), está associado a reações alérgicas verdadeiras.</p>
+      </div>
+      <div class="spec" style="--sc:var(--cyan)">
+        <span class="sk">ligação amida</span>
+        <h4>Lidocaína, bupivacaína, mepivacaína, prilocaína, articaína</h4>
+        <p>Metabolizadas no fígado, sobretudo por N-desalquilação — meia-vida mais longa e estável. Muitos metabólitos seguem ativos, relevante em insuficiência hepática.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 MECANISMO — INTERATIVO -->
+<section class="sheet" id="mecanismo">
+  <div class="sheet-inner">
+    <div class="plate" style="--pc:var(--violet)">
+      <div class="pnum">04</div>
+      <div class="ptitle"><span class="l">Prancha</span><span class="v">O interruptor</span></div>
+      <div class="pmeta">Mecanismo de ação</div>
+    </div>
+    <p class="sub">O canal de sódio voltagem-dependente não é uma porta simples de aberto/fechado — ele tem três estados, e entender essa engenharia é entender toda a farmacologia da classe.</p>
+
+    <p>O anestésico local age diretamente sobre a célula nervosa, ligando-se seletivamente à face interna (citoplasmática) do canal de sódio voltagem-dependente. Ao ocupar esse sítio, impede fisicamente a abertura do canal — sem abertura, não há influxo de Na⁺, não há despolarização suficiente para atingir o limiar, e portanto não há propagação do potencial de ação. É bloqueio, não destruição: a peça continua íntegra, só impedida de operar.</p>
+
+    <div class="circuit" style="--cc:var(--violet)">
+      <div class="node">Molécula neutra atravessa a membrana</div><div class="wire">→</div>
+      <div class="node">Reprotonação no axoplasma</div><div class="wire">→</div>
+      <div class="node">Ligação ao sítio interno do canal</div><div class="wire">→</div>
+      <div class="node">Canal impedido de abrir</div><div class="wire">→</div>
+      <div class="node">Sem potencial de ação</div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-head">
+        <span class="dt">Simulador · Estado do canal de sódio</span>
+        <div class="demo-tabs" id="stateTabs">
+          <button data-state="repouso" class="active">Repouso</button>
+          <button data-state="aberto">Aberto</button>
+          <button data-state="inativo">Inativo</button>
+        </div>
+      </div>
+
+      <label class="demo-al-toggle">
+        <input type="checkbox" id="alToggle">
+        Simular presença de anestésico local no meio intracelular
+      </label>
+
+      <div class="membrane-wrap">
+        <div class="membrane" id="membrane">
+          <div class="lipid-row top" id="lipidTop"></div>
+          <div class="lipid-row bottom" id="lipidBottom"></div>
+          <div class="gate" id="gate">
+            <div class="gate-body" id="gateBody">
+              <div class="gate-flap" id="gateFlap"></div>
+            </div>
+            <span class="gate-label" id="gateLabel">FECHADO</span>
+          </div>
+          <div class="ion" id="ion1" style="top:8px; left:32%;">Na⁺</div>
+          <div class="ion" id="ion2" style="top:8px; left:60%;">Na⁺</div>
+          <div class="al-molecule" id="alMol" style="bottom:8px; left:calc(50% - 15px);">AL</div>
+        </div>
+      </div>
+
+      <div class="readout">
+        <div class="rcell"><span class="rl">Fluxo de Na⁺</span><span class="rv" id="flowVal">Bloqueado</span></div>
+        <div class="rcell"><span class="rl">Afinidade ao anestésico</span><span class="rv" id="affVal">Baixa</span></div>
+        <div class="rcell"><span class="rl">Consequência</span><span class="rv" id="consVal" style="font-size:.78rem; font-weight:400; font-family:var(--serif);">Sensível a novo estímulo</span></div>
+      </div>
+    </div>
+
+    <div class="note violet">
+      <div class="nl">Conceito-chave</div>
+      <p>Marque as três abas e depois ative o anestésico em cada uma. Você vai notar que ele "gruda" nos estados aberto e inativo, mas quase não afeta o repouso — isso é <em>bloqueio uso-dependente</em>: fibras que disparam com mais frequência (como as nociceptivas transmitindo dor contínua) acumulam bloqueio mais rápido. É uma das razões pelas quais a dor costuma sumir antes da força motora, mesmo na mesma concentração de droga.</p>
+    </div>
+
+    <details class="anexo" style="--dc:var(--violet)">
+      <summary>Anexo técnico — a hipótese do receptor modulado e a sensibilidade diferencial das fibras</summary>
+      <div class="abody">
+        <p>O modelo que explica o que você acabou de simular chama-se hipótese do receptor modulado: a afinidade do sítio de ligação muda conforme a conformação do canal. No repouso, afinidade baixa; nos estados aberto e, principalmente, inativo, afinidade alta — a proteína expõe melhor o sítio ao fármaco. Cada ciclo de despolarização "convida" mais moléculas a se ligarem, e como a dissociação é lenta, o bloqueio se acumula disparo a disparo.</p>
+        <p>Isso também explica a sensibilidade diferencial entre tipos de fibra. Fibras finas, pouco mielinizadas, de alta frequência (fibras C — dor em queimação; fibras Aδ — dor aguda e temperatura) bloqueiam antes de fibras grossas muito mielinizadas, de baixa frequência (Aα e Aβ — propriocepção e força motora). Daí a sequência clássica sentida pelo paciente: primeiro some a dor, depois a temperatura, depois o tato, e só por último — se a concentração for suficiente — a força motora.</p>
+        <details class="anexo2">
+          <summary>ainda mais fundo — por que fibra mielinizada depende dos nódulos de Ranvier</summary>
+          <p>Em fibra mielinizada, a condução é saltatória — o potencial de ação "pula" de nódulo em nódulo, onde os canais de Na⁺ estão concentrados. Bloquear um único nódulo não impede a condução, porque o impulso salta o nódulo bloqueado a partir do anterior. É preciso bloquear pelo menos dois ou três nódulos consecutivos — por isso a extensão do segmento nervoso exposto à droga, não só a concentração, também importa.</p>
+        </details>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 05 CATÁLOGO -->
+<section class="sheet" id="catalogo">
+  <div class="sheet-inner">
+    <div class="plate" style="--pc:var(--copper)">
+      <div class="pnum">05</div>
+      <div class="ptitle"><span class="l">Prancha</span><span class="v">Catálogo de componentes</span></div>
+      <div class="pmeta">Farmacocinética comparada</div>
+    </div>
+    <p class="sub">Início, duração e penetração tecidual variam de peça para peça — e é essa variação que orienta a escolha clínica, não preferência pessoal.</p>
+
+    <p>A velocidade com que cada anestésico penetra no tecido determina três parâmetros decisivos: início do bloqueio, duração do efeito e tempo de recuperação. Isso decorre sobretudo da lipossolubilidade (mais lipofílica → penetração mais rápida) e da ligação a proteínas plasmáticas (mais ligada → geralmente mais duradoura, porque fica "reservada" no tecido em vez de redistribuir rápido).</p>
+
+    <div class="specgrid g3">
+      <div class="spec" style="--sc:var(--copper)"><span class="sk">Cocaína</span><h4>Início médio · duração média</h4><p>Boa penetração. Meia-vida ≈1h. Efeitos cardiovasculares e centrais próprios, via bloqueio da recaptação de aminas.</p></div>
+      <div class="spec" style="--sc:var(--copper)"><span class="sk">Procaína (éster)</span><h4>Início médio · duração curta</h4><p>Penetração pequena, meia-vida &lt;1h. Protótipo histórico, hoje pouco usada por perfil curto e potencial alergênico.</p></div>
+      <div class="spec" style="--sc:var(--copper)"><span class="sk">Lidocaína (amida)</span><h4>Início rápido · duração média</h4><p>Boa penetração, meia-vida ≈2h. A peça mais versátil da linha — infiltração, bloqueio, tópico e antiarrítmico.</p></div>
+      <div class="spec" style="--sc:var(--copper)"><span class="sk">Mepivacaína (amida)</span><h4>Início rápido · duração média</h4><p>Perfil semelhante à lidocaína, com menor vasodilatação intrínseca.</p></div>
+      <div class="spec" style="--sc:var(--copper)"><span class="sk">Tetracaína (éster)</span><h4>Início muito lento · duração longa</h4><p>Penetração moderada, meia-vida ≈1h apesar da longa ação local — reflexo da alta afinidade tecidual.</p></div>
+      <div class="spec" style="--sc:var(--copper)"><span class="sk">Bupivacaína (amida)</span><h4>Início lento · duração longa</h4><p>Penetração moderada, meia-vida ≈2h. Alta lipossolubilidade explica a duração — e também o maior risco de cardiotoxicidade grave.</p></div>
+      <div class="spec" style="--sc:var(--copper)"><span class="sk">Prilocaína (amida)</span><h4>Início médio · duração média</h4><p>Sem atividade vasodilatadora relevante. Metabólito pode causar metemoglobinemia dose-dependente.</p></div>
+      <div class="spec" style="--sc:var(--copper)"><span class="sk">Articaína (amida)</span><h4>Início rápido · duração curta</h4><p>Boa penetração, meia-vida muito curta (≈0,5h) — anel tiofeno extra sofre hidrólise por esterases plasmáticas.</p></div>
+    </div>
+
+    <div class="note" style="--nc:var(--amber)">
+      <div class="nl">Ponto de prova</div>
+      <p>Início e duração não caminham juntos: tetracaína tem início muito lento mas duração longa; articaína tem início rápido e duração curta. Cada perfil depende da combinação específica de lipossolubilidade, pKa e ligação proteica — por isso a escolha clínica é sempre "qual peça serve para este procedimento", não "qual é a melhor em geral".</p>
+    </div>
+
+    <details class="anexo" style="--dc:var(--copper)">
+      <summary>Anexo técnico — por que se adiciona vasoconstritor à solução</summary>
+      <div class="abody">
+        <p>Não está nos slides, mas é peça-chave da farmacocinética aplicada. A maioria dos anestésicos locais (exceto a cocaína, já vasoconstritora por si só) causa vasodilatação — o que acelera a absorção sistêmica, reduz a concentração no local e encurta o bloqueio, além de aumentar risco de toxicidade sistêmica.</p>
+        <p>Adicionar epinefrina em baixa concentração contrai os vasos locais e retarda a absorção: prolonga o bloqueio, reduz o pico plasmático e diminui sangramento no campo cirúrgico. Exceção notável: a prilocaína, sem atividade vasodilatadora relevante por si só, é frequentemente usada sem vasoconstritor associado.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 06 OUTROS CIRCUITOS -->
+<section class="sheet" id="compativeis">
+  <div class="sheet-inner">
+    <div class="plate" style="--pc:var(--teal, var(--green))">
+      <div class="pnum">06</div>
+      <div class="ptitle"><span class="l">Prancha</span><span class="v">Outros circuitos que usam a mesma peça</span></div>
+      <div class="pmeta">Fármacos correlatos</div>
+    </div>
+    <p class="sub">O canal de sódio voltagem-dependente não é peça exclusiva dos anestésicos — várias classes terapêuticas dependem do mesmo componente, para finalidades bem diferentes.</p>
+
+    <div class="specgrid g3">
+      <div class="spec" style="--sc:var(--red)">
+        <span class="sk">circuito cardiovascular</span>
+        <h4>Antiarrítmicos e diuréticos</h4>
+        <p><em>Amilorida</em> bloqueia canal epitelial de Na⁺ no túbulo distal (diurético poupador de K⁺, mecanismo diferente do canal neuronal). <em>Digoxina</em>, na fibrilação atrial. <em>Mexiletina</em> e <em>propafenona</em>, antiarrítmicos que bloqueiam canais de sódio cardíacos como a própria lidocaína.</p>
+      </div>
+      <div class="spec" style="--sc:var(--violet)">
+        <span class="sk">circuito neurológico</span>
+        <h4>Anticonvulsivantes</h4>
+        <p><em>Fenitoína</em>, <em>oxcarbazepina</em> e <em>primidona</em> estabilizam a membrana neuronal bloqueando canais de Na⁺ de forma uso-dependente — mesmo princípio farmacodinâmico dos anestésicos locais, aplicado à prevenção de descargas epilépticas em vez de bloqueio de dor.</p>
+      </div>
+      <div class="spec" style="--sc:var(--cyan)">
+        <span class="sk">outros circuitos</span>
+        <h4>Do respiratório à neurodegeneração</h4>
+        <p><em>Ambroxol</em> (expectorante, com efeito adicional em Nav1.8 relevante em dor). <em>Riluzol</em>, na esclerose lateral amiotrófica. <em>Vimpocetina</em>, em demência vascular. <em>A-803467</em>, bloqueador experimental seletivo Nav1.2/1.3/1.5/1.7.</p>
+      </div>
+    </div>
+
+    <div class="note red">
+      <div class="nl">Atenção</div>
+      <p>Duas peças do catálogo original merecem correção. O <em>nefopam</em> é listado como "analgésico opioide" — impreciso: é um analgésico não opioide de ação central, que inibe recaptação de serotonina, noradrenalina e dopamina, sem atividade relevante em receptores opioides. O <em>camostat</em> é listado como "inibidor de proteína quinase" — na realidade é um inibidor de serina protease (usado em pancreatite crônica e hepatopatias, e estudado por inibir a protease TMPRSS2). Não há base farmacológica reconhecida para essas classificações do material original — vale registrar o mecanismo correto em vez de repeti-las.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 FALHA -->
+<section class="sheet" id="falha">
+  <div class="sheet-inner">
+    <div class="plate" style="--pc:var(--red)">
+      <div class="pnum">07</div>
+      <div class="ptitle"><span class="l">Prancha</span><span class="v">Falha do sistema</span></div>
+      <div class="pmeta">Efeitos adversos e toxicidade sistêmica (LAST)</div>
+    </div>
+    <p class="sub">O mesmo interruptor que bloqueia a dor, fora do local pretendido, ameaça o próprio sistema que mantém o corpo vivo.</p>
+
+    <p>Anestésicos locais são desenhados para ficar no local da injeção, mas nenhuma barreira anatômica é perfeita — sempre existe alguma absorção sistêmica, que se torna perigosa em injeção intravascular acidental, dose excessiva ou absorção anormalmente rápida em sítio muito vascularizado. É a chamada toxicidade sistêmica por anestésico local — <em>LAST</em> (Local Anesthetic Systemic Toxicity). Os dois sistemas mais afetados, sistema nervoso central e cardiovascular, não são coincidência: são os dois sistemas mais dependentes de condução elétrica rápida via canal de sódio voltagem-dependente.</p>
+
+    <div class="lab" style="--lc:var(--red)">progressão dose-dependente — leitura de sobrecarga</div>
+    <div class="circuit" style="--cc:var(--red)">
+      <div class="node">Gosto metálico · zumbido</div><div class="wire">→</div>
+      <div class="node">Distúrbio visual · contração muscular</div><div class="wire">→</div>
+      <div class="node">Convulsão</div><div class="wire">→</div>
+      <div class="node">Inconsciência · coma</div><div class="wire">→</div>
+      <div class="node">Depressão respiratória e cardiovascular</div>
+    </div>
+
+    <p>Note que a sequência começa com sinais de excitação antes de evoluir para depressão. A explicação: em baixa concentração, o anestésico bloqueia preferencialmente interneurônios inibitórios do córtex — em geral, neurônios de disparo rápido e alta frequência, portanto mais sensíveis pelo mesmo princípio uso-dependente da prancha 04 — resultando em desinibição relativa dos circuitos excitatórios. Só quando a concentração sobe mais é que o bloqueio se generaliza também aos neurônios excitatórios, aí sim produzindo depressão profunda — que em dose muito alta evolui para parada respiratória.</p>
+
+    <div class="note red">
+      <div class="nl">Correlação clínica</div>
+      <p>A convulsão costuma preceder o colapso cardiovascular — um sinal de alerta precoce valioso. É por isso que se aspira antes de injetar (confirmar que a agulha não está intravascular) em qualquer bloqueio regional com grande volume de anestésico.</p>
+    </div>
+
+    <details class="anexo" style="--dc:var(--red)">
+      <summary>Anexo técnico — por que a bupivacaína é desproporcionalmente cardiotóxica</summary>
+      <div class="abody">
+        <p>Não é coincidência que a bupivacaína seja historicamente associada aos casos mais graves de colapso cardiovascular por LAST, o que motivou o desenvolvimento de alternativas mais seguras como ropivacaína e levobupivacaína. A explicação está na cinética de ligação: a bupivacaína se liga rápido ao canal cardíaco durante a sístole, mas se dissocia muito devagar durante a diástole — bloqueio "fast-in, slow-out". O resultado é acúmulo progressivo de bloqueio a cada batimento, sem tempo suficiente para dissociação entre um ciclo e outro.</p>
+        <p>Ropivacaína e levobupivacaína (formulações enantiomericamente puras, ao contrário da bupivacaína racêmica) dissociam mais rápido do canal cardíaco, reduzindo — sem eliminar — esse risco. Um bom lembrete de que estereoquímica pode mudar drasticamente o perfil de segurança de uma molécula, mesmo com eficácia anestésica equivalente.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 08 RESET -->
+<section class="sheet" id="reset">
+  <div class="sheet-inner">
+    <div class="plate" style="--pc:var(--green)">
+      <div class="pnum">08</div>
+      <div class="ptitle"><span class="l">Prancha</span><span class="v">Protocolo de reset de emergência</span></div>
+      <div class="pmeta">Lipid Rescue Therapy</div>
+    </div>
+    <p class="sub">Quando o próprio bloqueio de canal ameaça o coração, a solução vem — literalmente — de uma emulsão de gordura intravenosa.</p>
+
+    <p>Embora rara, a intoxicação sistêmica grave pode ocorrer. Havendo <em>certeza</em> de que o anestésico local é o agente causador de uma parada cardíaca refratária à reanimação padrão, o protocolo indica emulsão lipídica intravenosa a 20% — o <em>Lipid Rescue</em> ou Intralipid Therapy.</p>
+
+    <div class="note green">
+      <div class="nl">Como funciona</div>
+      <p>O mecanismo proposto, "lipid sink" (sumidouro lipídico), usa contra o anestésico a mesma propriedade que o torna eficaz: a emulsão intravenosa cria um compartimento plasmático rico em gordura que sequestra moléculas livres de anestésico, reduzindo sua concentração livre disponível para bloquear canais cardíacos. Mecanismos adicionais em investigação incluem melhora do metabolismo mitocondrial do cardiomiócito e efeito inotrópico direto da própria emulsão.</p>
+    </div>
+
+    <p>Na prática, para um adulto de ≈70 kg, o protocolo típico envolve bolus inicial de emulsão a 20% seguido de infusão contínua, com repetição do bolus se a circulação espontânea não retornar — mantendo-se compressões torácicas continuamente, porque é a circulação que leva a emulsão até o plasma onde o anestésico está livre. Reforço importante: reservado a paradas refratárias à ressuscitação padrão e vasopressores, com certeza da etiologia — não substitui as manobras básicas de suporte avançado de vida.</p>
+  </div>
+</section>
+
+<!-- 09 ESPECIFICAÇÃO -->
+<section class="sheet" id="especificacao">
+  <div class="sheet-inner">
+    <div class="plate" style="--pc:var(--cyan)">
+      <div class="pnum">09</div>
+      <div class="ptitle"><span class="l">Prancha</span><span class="v">Especificação da peça ideal</span></div>
+      <div class="pmeta">Qualidades esperadas</div>
+    </div>
+    <p class="sub">Nenhum fármaco real cumpre a lista inteira — é justamente esse compromisso entre especificações que orienta a escolha clínica de qual peça usar.</p>
+
+    <div class="specgrid g3">
+      <div class="spec" style="--sc:var(--cyan)"><span class="sk">01</span><h4>Ação reversível</h4><p>Bloqueio completo, sem lesão residual do tecido nervoso.</p></div>
+      <div class="spec" style="--sc:var(--cyan)"><span class="sk">02</span><h4>Não irritante</h4><p>Sem dano local ao tecido onde é depositado.</p></div>
+      <div class="spec" style="--sc:var(--cyan)"><span class="sk">03</span><h4>Início rápido, duração suficiente</h4><p>Adequado ao tempo do procedimento planejado.</p></div>
+      <div class="spec" style="--sc:var(--cyan)"><span class="sk">04</span><h4>Baixa toxicidade sistêmica</h4><p>Margem de segurança ampla entre dose eficaz e dose tóxica.</p></div>
+      <div class="spec" style="--sc:var(--cyan)"><span class="sk">05</span><h4>Potência suficiente</h4><p>Bloqueio eficaz em concentrações clinicamente viáveis.</p></div>
+      <div class="spec" style="--sc:var(--cyan)"><span class="sk">06</span><h4>Boa penetração tecidual</h4><p>Eficácia também em uso tópico.</p></div>
+      <div class="spec" style="--sc:var(--cyan)"><span class="sk">07</span><h4>Sem alergenicidade</h4><p>Baixo potencial de hipersensibilidade.</p></div>
+      <div class="spec" style="--sc:var(--cyan)"><span class="sk">08</span><h4>Estável, biotransformação rápida</h4><p>Estável em solução, mas inativada rapidamente no organismo.</p></div>
+      <div class="spec" style="--sc:var(--cyan)"><span class="sk">09</span><h4>Esterilizável sem deterioração</h4><p>Compatível com preparo e conservação farmacêutica.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 CONTRAPONTO -->
+<section class="sheet" id="contraponto">
+  <div class="sheet-inner">
+    <div class="plate" style="--pc:var(--amber)">
+      <div class="pnum">10</div>
+      <div class="ptitle"><span class="l">Prancha</span><span class="v">Peça incompatível — mesma trava, mecanismo oposto</span></div>
+      <div class="pmeta">Tetrodotoxina (TTX)</div>
+    </div>
+    <p class="sub">"E o baiacu?" não é só piada de aula — é o melhor exercício de comparação desse esquema inteiro.</p>
+
+    <p>A tetrodotoxina, presente no peixe-baiacu (e em outros organismos, como certas salamandras e polvos-de-anéis-azuis), bloqueia o mesmo canal de sódio voltagem-dependente — mas ataca a trava pelo lado oposto da membrana.</p>
+
+    <div class="specgrid g2">
+      <div class="spec" style="--sc:var(--violet)">
+        <span class="sk">anestésicos locais</span>
+        <h4>Bloqueio pela face interna</h4>
+        <p>Precisam atravessar a membrana na forma neutra, reprotonar no axoplasma e bloquear o canal por dentro. Ação depende de atravessar a bicamada lipídica.</p>
+      </div>
+      <div class="spec" style="--sc:var(--amber)">
+        <span class="sk">tetrodotoxina</span>
+        <h4>Bloqueio pela face externa</h4>
+        <p>Atua exclusivamente do lado extracelular. Sua molécula complexa expõe uma porção guanidínio com carga positiva permanente, que se encaixa na boca externa do canal — tampando a abertura sem nunca atravessar a membrana. É o "efeito rolha de champanhe": tampa por fora, sem reação ácido-base nem penetração lipídica.</p>
+      </div>
+    </div>
+
+    <div class="note" style="--nc:var(--amber)">
+      <div class="nl">Por que importa</div>
+      <p>Justamente por não depender de atravessar a membrana nem de metabolismo local, a TTX é extraordinariamente potente e praticamente irreversível em concentração tóxica — ao contrário do bloqueio controlado e reversível dos anestésicos clínicos. Não existe antídoto específico; o tratamento é suporte ventilatório até a eliminação da toxina. Por contraste, isso mostra o quanto o design farmacológico dos anestésicos locais prioriza justamente a reversibilidade — a primeira especificação da prancha anterior.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESUMO -->
+<section class="sheet" id="resumo">
+  <div class="sheet-inner">
+    <div class="plate" style="--pc:var(--cyan)">
+      <div class="pnum">✦</div>
+      <div class="ptitle"><span class="l">Prancha</span><span class="v">Ficha-resumo</span></div>
+      <div class="pmeta">Revisão rápida</div>
+    </div>
+
+    <div class="summary-sheet">
+      <div class="srow"><div class="stag">Definição</div><p>Bloqueio totalmente reversível da geração e propagação do potencial de ação em tecido eletricamente excitável.</p></div>
+      <div class="srow"><div class="stag">Estrutura</div><p>Porção aromática lipofílica + ligação éster ou amida + cadeia lateral básica. Molécula anfifílica, base fraca, pKa 8–9.</p></div>
+      <div class="srow"><div class="stag">Éster × amida</div><p>Éster: hidrólise plasmática rápida, meia-vida curta, mais alergênico (PABA). Amida: metabolismo hepático por N-desalquilação, meia-vida mais longa.</p></div>
+      <div class="srow"><div class="stag">Exceções</div><p>Benzocaína: sem grupo básico, uso só tópico. QX-314: sempre ionizado, sem efeito clínico.</p></div>
+      <div class="srow"><div class="stag">Alvo molecular</div><p>Sítio interno do canal de Na⁺ voltagem-dependente. Maior afinidade nos estados aberto e inativo → bloqueio uso-dependente.</p></div>
+      <div class="srow"><div class="stag">Sensibilidade diferencial</div><p>Fibras finas e de alta frequência (dor, temperatura) bloqueiam antes das grossas mielinizadas (motoras, proprioceptivas).</p></div>
+      <div class="srow"><div class="stag">Toxicidade (LAST)</div><p>Progressão SNC (excitação → convulsão → coma) seguida de depressão cardiovascular. Bupivacaína: cardiotoxicidade desproporcional (fast-in, slow-out).</p></div>
+      <div class="srow"><div class="stag">Reset de emergência</div><p>Emulsão lipídica IV 20% (Lipid Rescue) — "lipid sink" — associada a compressões torácicas contínuas.</p></div>
+      <div class="srow"><div class="stag">Contraponto — TTX</div><p>Mesmo canal, bloqueio pela face externa, sem depender de pKa. Praticamente irreversível, sem antídoto.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="footer">
+  <p><b>Fontes:</b> Katzung — Farmacologia básica e clínica · Rang &amp; Dale — Farmacologia · Goodman &amp; Gilman — As bases farmacológicas da terapêutica · slides da disciplina, UC XIII, LPF.</p>
+  <p>Documento de estudo pessoal — modo livre, conceito visual próprio para este conteúdo.</p>
+</div>
+
+<script>
+(function(){
+  var states = {
+    repouso: {
+      gate:'closed', gateLabel:'FECHADO — REPOUSO', gateColor:'var(--cyan)',
+      ionsVisible:false,
+      base:{ flow:'Bloqueado', flowColor:'var(--ink)', aff:'Baixa', affColor:'var(--green)', cons:'Sensível a novo estímulo — pronto para abrir' }
+    },
+    aberto: {
+      gate:'open', gateLabel:'ABERTO — CONDUZINDO', gateColor:'var(--green)',
+      ionsVisible:true,
+      base:{ flow:'Ativo — influxo de Na⁺', flowColor:'var(--green)', aff:'Alta', affColor:'var(--copper)', cons:'Fase ascendente do potencial de ação' }
+    },
+    inativo: {
+      gate:'inativo', gateLabel:'INATIVO — REFRATÁRIO', gateColor:'var(--red)',
+      ionsVisible:false,
+      base:{ flow:'Bloqueado', flowColor:'var(--ink)', aff:'Alta', affColor:'var(--copper)', cons:'Não reabre nem com nova despolarização' }
+    }
+  };
+
+  var withAL = {
+    repouso: { flow:'Bloqueado (já estava)', flowColor:'var(--ink)', aff:'Baixa afinidade — molécula não se liga bem', affColor:'var(--ink-dim)', cons:'AL pouco eficaz neste estado' },
+    aberto: { flow:'Bloqueado pelo anestésico', flowColor:'var(--red)', aff:'Alta — ligação eficaz', affColor:'var(--violet)', cons:'Canal travado enquanto a molécula estiver ligada' },
+    inativo: { flow:'Bloqueado pelo anestésico', flowColor:'var(--red)', aff:'Alta — ligação eficaz', affColor:'var(--violet)', cons:'Bloqueio se acumula a cada ciclo (uso-dependente)' }
+  };
+
+  var currentState = 'repouso';
+  var alOn = false;
+
+  var gateBody = document.getElementById('gateBody');
+  var gateFlap = document.getElementById('gateFlap');
+  var gateLabel = document.getElementById('gateLabel');
+  var ion1 = document.getElementById('ion1');
+  var ion2 = document.getElementById('ion2');
+  var alMol = document.getElementById('alMol');
+  var flowVal = document.getElementById('flowVal');
+  var affVal = document.getElementById('affVal');
+  var consVal = document.getElementById('consVal');
+
+  function buildLipids(){
+    ['lipidTop','lipidBottom'].forEach(function(id){
+      var row = document.getElementById(id);
+      row.innerHTML = '';
+      for(var i=0;i<14;i++){
+        var d = document.createElement('div');
+        d.className = 'lipid';
+        row.appendChild(d);
+      }
+    });
+  }
+  buildLipids();
+
+  function render(){
+    var s = states[currentState];
+    gateBody.style.borderColor = s.gateColor;
+    gateFlap.style.background = s.gateColor;
+    gateLabel.style.color = s.gateColor;
+    gateLabel.textContent = s.gateLabel;
+
+    if(s.gate === 'closed'){
+      gateFlap.style.width = '26px';
+      gateFlap.style.height = '6px';
+    } else if(s.gate === 'open'){
+      gateFlap.style.width = '8px';
+      gateFlap.style.height = '30px';
+    } else {
+      gateFlap.style.width = '26px';
+      gateFlap.style.height = '6px';
+      gateBody.style.background = 'rgba(226,112,122,0.1)';
+    }
+    if(s.gate !== 'inativo'){ gateBody.style.background = 'rgba(92,196,232,0.05)'; }
+
+    if(s.ionsVisible){
+      ion1.style.opacity = 1; ion2.style.opacity = 1;
+      ion1.style.top = '58px'; ion2.style.top = '58px';
+    } else {
+      ion1.style.opacity = 0.35; ion2.style.opacity = 0.35;
+      ion1.style.top = '8px'; ion2.style.top = '8px';
+    }
+
+    var data = alOn ? withAL[currentState] : s.base;
+    flowVal.textContent = data.flow;
+    flowVal.style.setProperty('--rvc', data.flowColor);
+    flowVal.style.color = data.flowColor;
+    affVal.textContent = data.aff;
+    affVal.style.color = data.affColor;
+    consVal.textContent = data.cons;
+    consVal.style.color = 'var(--ink-dim)';
+
+    if(alOn){
+      alMol.style.opacity = 1;
+      if(currentState === 'repouso'){
+        alMol.style.bottom = '-6px';
+        alMol.style.borderColor = 'var(--ink-faint)';
+        alMol.style.color = 'var(--ink-faint)';
+      } else {
+        alMol.style.bottom = '8px';
+        alMol.style.borderColor = 'var(--violet)';
+        alMol.style.color = 'var(--violet)';
+      }
+    } else {
+      alMol.style.opacity = 0;
+    }
+  }
+
+  document.querySelectorAll('#stateTabs button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('#stateTabs button').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentState = btn.getAttribute('data-state');
+      render();
+    });
+  });
+
+  document.getElementById('alToggle').addEventListener('change', function(e){
+    alOn = e.target.checked;
+    render();
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>

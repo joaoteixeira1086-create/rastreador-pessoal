@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>LMF – Sistema Somatossensorial</title>
+<style>
+  :root{
+    --bg: #0b0f14;
+    --bg-card: #121821;
+    --bg-card-2: #0f141c;
+    --text: #e8edf2;
+    --text-dim: #a8b4c0;
+    --line: #223140;
+
+    --c-anatomia: #4fb0ff;   /* azul */
+    --c-fisio: #ff9f43;      /* laranja */
+    --c-patologia: #ff5c7a;  /* rosa/vermelho */
+    --c-clinica: #38d39f;    /* verde-água */
+    --c-embrio: #b18cff;     /* roxo */
+    --c-semio: #ffd166;      /* amarelo */
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height:1.6;
+    padding:40px 20px 120px;
+  }
+
+  h1,h2,h3,h4{
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight:700;
+    letter-spacing:.02em;
+    color:#f4f7fa;
+    margin:0;
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+  body{ font-family:"Inter", -apple-system, sans-serif; }
+  h1,h2,h3,h4{ font-family:"Cormorant Garamond", Georgia, serif; }
+
+  .wrap{max-width:980px;margin:0 auto;}
+
+  .masthead{
+    text-align:center;
+    padding:50px 20px 40px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:50px;
+  }
+  .masthead .kicker{
+    text-transform:uppercase;
+    letter-spacing:.25em;
+    font-size:12px;
+    color:var(--text-dim);
+    margin-bottom:14px;
+  }
+  .masthead h1{
+    font-size:52px;
+    line-height:1.1;
+  }
+  .masthead .sub{
+    margin-top:16px;
+    color:var(--text-dim);
+    font-size:16px;
+  }
+
+  /* Section header: tag + linha horizontal */
+  .section-head{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin:56px 0 24px;
+  }
+  .section-head .tag{
+    font-family:"Cormorant Garamond", serif;
+    font-weight:700;
+    font-size:22px;
+    padding:6px 18px;
+    border-radius:4px;
+    white-space:nowrap;
+  }
+  .section-head .rule{
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  .tag.anatomia{ background:rgba(79,176,255,.12); color:var(--c-anatomia); border:1px solid rgba(79,176,255,.35);}
+  .tag.fisio{ background:rgba(255,159,67,.12); color:var(--c-fisio); border:1px solid rgba(255,159,67,.35);}
+  .tag.patologia{ background:rgba(255,92,122,.12); color:var(--c-patologia); border:1px solid rgba(255,92,122,.35);}
+  .tag.clinica{ background:rgba(56,211,159,.12); color:var(--c-clinica); border:1px solid rgba(56,211,159,.35);}
+  .tag.embrio{ background:rgba(177,140,255,.12); color:var(--c-embrio); border:1px solid rgba(177,140,255,.35);}
+  .tag.semio{ background:rgba(255,209,102,.12); color:var(--c-semio); border:1px solid rgba(255,209,102,.35);}
+
+  /* Cards */
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+  .card{
+    background:var(--bg-card);
+    border-top:3px solid var(--c-anatomia);
+    border-radius:8px;
+    padding:22px 24px;
+  }
+  .card h3{ font-size:22px; margin-bottom:10px; }
+  .card p, .card li{ color:var(--text-dim); font-size:15px; }
+  .card.full{ grid-column:1/-1; }
+
+  .card.anatomia{ border-top-color:var(--c-anatomia); }
+  .card.fisio{ border-top-color:var(--c-fisio); }
+  .card.patologia{ border-top-color:var(--c-patologia); }
+  .card.clinica{ border-top-color:var(--c-clinica); }
+  .card.embrio{ border-top-color:var(--c-embrio); }
+  .card.semio{ border-top-color:var(--c-semio); }
+
+  ul{ padding-left:20px; margin:8px 0; }
+  li{ margin-bottom:6px; }
+
+  strong{ color:var(--text); }
+
+  /* Alerts - outline style */
+  .alert{
+    border:1px solid var(--c-fisio);
+    background:transparent;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:18px 0;
+    color:var(--text);
+    font-size:15px;
+  }
+  .alert.blue{ border-color:var(--c-anatomia); }
+  .alert.pink{ border-color:var(--c-patologia); }
+  .alert.green{ border-color:var(--c-clinica); }
+  .alert.purple{ border-color:var(--c-embrio); }
+  .alert .alert-title{
+    font-family:"Cormorant Garamond", serif;
+    font-weight:700;
+    font-size:18px;
+    margin-bottom:6px;
+    display:block;
+  }
+
+  table{ width:100%; border-collapse:collapse; margin:12px 0; font-size:14px; }
+  th,td{ padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; }
+  th{ color:var(--text-dim); font-weight:600; text-transform:uppercase; font-size:12px; letter-spacing:.05em; }
+
+  .flow{
+    display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:14px 0;
+  }
+  .flow .step{
+    background:var(--bg-card-2);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:8px 14px;
+    font-size:14px;
+    color:var(--text);
+  }
+  .flow .arrow{ color:var(--text-dim); }
+
+  footer{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:13px;
+    margin-top:70px;
+    padding-top:24px;
+    border-top:1px solid var(--line);
+  }
+
+  /* Editable mode */
+  [data-editable="true"][contenteditable="true"]{
+    outline: 1px dashed var(--c-clinica);
+    outline-offset: 3px;
+    border-radius:3px;
+    cursor:text;
+  }
+
+  /* Toolbar */
+  #lmf-toolbar{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    display:flex;
+    gap:8px;
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,.4);
+    z-index:9999;
+    font-family:"Inter", sans-serif;
+  }
+  #lmf-toolbar button{
+    background:var(--bg-card-2);
+    color:var(--text);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:8px 12px;
+    font-size:13px;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  #lmf-toolbar button:hover{ border-color:var(--c-clinica); color:var(--c-clinica); }
+  #lmf-toolbar button.active{ background:var(--c-clinica); color:#0b0f14; border-color:var(--c-clinica); font-weight:600; }
+
+  #lmf-status{
+    position:fixed;
+    bottom:70px;
+    right:20px;
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:8px 14px;
+    font-size:12px;
+    color:var(--text-dim);
+    z-index:9999;
+    display:none;
+    max-width:280px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="kicker">Laboratório Morfofuncional · UCXIII</div>
+    <h1 data-editable="true">Sistema Somatossensorial</h1>
+    <div class="sub" data-editable="true">Neuroanatomia · Córtex Somatossensorial · Homúnculo Sensitivo — Prof.ª Elizama de Gregório</div>
+  </div>
+
+  <!-- 1. IDENTIFICAÇÃO DA ESTRUTURA -->
+  <div class="section-head">
+    <span class="tag anatomia">01 · Identificação</span>
+    <div class="rule"></div>
+  </div>
+
+  <div class="grid">
+    <div class="card anatomia">
+      <h3 data-editable="true">Encéfalo — divisões gerais</h3>
+      <ul data-editable="true">
+        <li><strong>Telencéfalo:</strong> dois hemisférios cerebrais, unidos pelo corpo caloso (fibras comissurais). Cada hemisfério divide-se em lobos frontal, parietal, temporal e occipital.</li>
+        <li><strong>Diencéfalo:</strong> epitálamo, tálamo, hipotálamo e subtálamo — núcleo central do encéfalo, em relação com o terceiro ventrículo.</li>
+        <li><strong>Tronco encefálico:</strong> mesencéfalo, ponte e bulbo.</li>
+        <li><strong>Cerebelo:</strong> posterior ao tronco, separado pela fissura transversa.</li>
+      </ul>
+    </div>
+
+    <div class="card anatomia">
+      <h3 data-editable="true">Localização do córtex somatossensorial</h3>
+      <p data-editable="true">
+        A maior parte do processamento cortical somatossensorial ocorre no <strong>lobo parietal</strong>,
+        mais especificamente no <strong>giro pós-central</strong>, imediatamente posterior ao sulco central
+        (que o separa do giro pré-central, motor, no lobo frontal).
+      </p>
+    </div>
+  </div>
+
+  <!-- 2. CARACTERIZAÇÃO MORFOLÓGICA -->
+  <div class="section-head">
+    <span class="tag fisio">02 · Caracterização Morfológica</span>
+    <div class="rule"></div>
+  </div>
+
+  <div class="grid">
+    <div class="card fisio full">
+      <h3 data-editable="true">Áreas de Brodmann do córtex somatossensorial</h3>
+      <table data-editable="true">
+        <tr><th>Região</th><th>Áreas de Brodmann</th><th>Denominação</th><th>Localização</th></tr>
+        <tr><td>Córtex somatossensorial primário (S1)</td><td>3a, 3b, 1, 2</td><td>Área somestésica primária</td><td>Giro pós-central</td></tr>
+        <tr><td>Córtex parietal superior (S2)</td><td>5, 7</td><td>Área somestésica secundária</td><td>Lóbulo parietal posterior</td></tr>
+      </table>
+      <p data-editable="true">
+        A área 3 localiza-se no fundo do sulco central, enquanto as áreas 1 e 2 aparecem na superfície do
+        giro pós-central. A maior parte das fibras talâmicas termina nas áreas 3a e 3b; a partir delas,
+        os axônios projetam para as áreas 1 e 2, e também para S2. Por isso, alguns autores reservam o
+        termo "S1" estritamente para 3a+3b, embora seja comum usá-lo para todo o giro pós-central.
+      </p>
+    </div>
+
+    <div class="card fisio">
+      <h3 data-editable="true">Organização em faixas (bandas)</h3>
+      <p data-editable="true">
+        Cada uma das quatro áreas (3a, 3b, 1, 2) contém um mapa somatotópico completo e independente
+        do corpo contralateral, organizado em faixas paralelas ao sulco central.
+      </p>
+    </div>
+
+    <div class="card fisio">
+      <h3 data-editable="true">Aferências talâmicas</h3>
+      <p data-editable="true">
+        Originam-se nos núcleos <strong>ventral posterolateral (VPL)</strong> e <strong>ventral posteromedial (VPM)</strong>
+        do tálamo, conduzindo impulsos de temperatura, dor, pressão, tato e propriocepção consciente
+        da metade oposta do corpo.
+      </p>
+    </div>
+  </div>
+
+  <!-- 3. FUNÇÃO -->
+  <div class="section-head">
+    <span class="tag clinica">03 · Função</span>
+    <div class="rule"></div>
+  </div>
+
+  <div class="grid">
+    <div class="card clinica full">
+      <h3 data-editable="true">Vias ascendentes — do estímulo ao córtex</h3>
+      <div class="flow" data-editable="true">
+        <span class="step">Receptor cutâneo/profundo</span><span class="arrow">→</span>
+        <span class="step">Raiz dorsal (axônios de pequeno/grande calibre)</span><span class="arrow">→</span>
+        <span class="step">Coluna dorsal (tato/propriocepção) ou Trato espinotalâmico (dor/temperatura)</span><span class="arrow">→</span>
+        <span class="step">Decussação (bulbo ou medula)</span><span class="arrow">→</span>
+        <span class="step">Lemnisco medial</span><span class="arrow">→</span>
+        <span class="step">Núcleos VPL/VPM do tálamo</span><span class="arrow">→</span>
+        <span class="step">Córtex somatossensorial primário (S1)</span>
+      </div>
+      <p data-editable="true">
+        A via da coluna dorsal–lemnisco medial conduz tato discriminativo, vibração e propriocepção
+        consciente; a via espinotalâmica conduz dor e temperatura. Ambas decussam e projetam para os
+        núcleos ventroposteriores do tálamo antes de alcançar S1 — daí a representação sempre contralateral.
+      </p>
+    </div>
+
+    <div class="card clinica">
+      <h3 data-editable="true">Áreas primárias × secundárias</h3>
+      <p data-editable="true">
+        As áreas sensitivas dividem-se em <strong>primárias (de projeção)</strong>, relacionadas à
+        sensação do estímulo recebido, e <strong>secundárias (de associação)</strong>, relacionadas à
+        percepção de características específicas desse estímulo (discriminação, textura, forma).
+      </p>
+    </div>
+
+    <div class="card clinica">
+      <h3 data-editable="true">Somatotopia e o Homúnculo Sensitivo</h3>
+      <p data-editable="true">
+        O mapeamento das sensações da superfície corporal sobre uma área do encéfalo é chamado
+        <strong>somatotopia</strong>. A estimulação elétrica sistemática de S1 evoca sensações em partes
+        específicas do corpo, deslocando-se ao longo do giro pós-central conforme o ponto estimulado.
+        O <strong>homúnculo sensitivo</strong> representa essa distribuição desproporcional: lábios, língua,
+        face e mãos (especialmente polegar e dedos) ocupam área cortical muito maior que tronco ou pernas,
+        refletindo a densidade de receptores sensoriais dessas regiões — não seu tamanho anatômico.
+      </p>
+    </div>
+  </div>
+
+  <div class="alert green" data-editable="true">
+    <span class="alert-title">Plasticidade dos mapas corticais</span>
+    Os mapas somatotópicos não são fixos: são dinâmicos e seu ajuste depende da quantidade de experiência
+    sensorial. Após remoção cirúrgica de um dígito, por exemplo, a área cortical correspondente é
+    progressivamente ocupada pelas representações dos dígitos vizinhos. Da mesma forma, treino de
+    discriminação sensorial (como discriminar duas pontas em um dedo) expande a representação cortical
+    correspondente.
+  </div>
+
+  <!-- 4. CORRELAÇÃO ANATOMOPATOLÓGICA -->
+  <div class="section-head">
+    <span class="tag patologia">04 · Correlação Anatomopatológica</span>
+    <div class="rule"></div>
+  </div>
+
+  <div class="grid">
+    <div class="card patologia">
+      <h3 data-editable="true">Lesões do giro pós-central</h3>
+      <p data-editable="true">
+        Lesões vasculares (AVC isquêmico/hemorrágico na artéria cerebral média, ramos parietais), tumores
+        ou traumas envolvendo o giro pós-central comprometem a sensibilidade discriminativa contralateral,
+        preservando frequentemente as sensações protopáticas grosseiras (dor e temperatura), que dependem
+        de vias e núcleos talâmicos mais difusos.
+      </p>
+    </div>
+
+    <div class="card patologia">
+      <h3 data-editable="true">Reorganização cortical patológica</h3>
+      <p data-editable="true">
+        Após amputação de um membro ou perda de aferência sensorial de uma região, o território cortical
+        correspondente pode ser invadido por representações vizinhas (plasticidade). Esse fenômeno é
+        implicado na fisiopatologia da <strong>dor do membro fantasma</strong>, em que estímulos de
+        regiões corticalmente adjacentes (ex.: face, próxima à representação da mão) são percebidos como
+        originários do membro ausente.
+      </p>
+    </div>
+
+    <div class="card patologia full">
+      <h3 data-editable="true">Lesões nos núcleos talâmicos e vias ascendentes</h3>
+      <p data-editable="true">
+        Lesão do núcleo VPL/VPM (síndrome talâmica) pode causar perda sensorial contralateral seguida de
+        dor central intensa e desproporcional (dor talâmica). Lesões da coluna dorsal (ex.: neurossífilis,
+        deficiência de B12) comprometem propriocepção e tato discriminativo, gerando ataxia sensorial;
+        lesões do trato espinotalâmico comprometem dor e temperatura contralaterais abaixo do nível da lesão.
+      </p>
+    </div>
+  </div>
+
+  <!-- 5. CORRELAÇÃO CLÍNICA -->
+  <div class="section-head">
+    <span class="tag semio">05 · Correlação Clínica</span>
+    <div class="rule"></div>
+  </div>
+
+  <div class="grid">
+    <div class="card semio">
+      <h3 data-editable="true">Exame da sensibilidade</h3>
+      <ul data-editable="true">
+        <li>Tato superficial (algodão), dor (agulha), temperatura (tubos quente/frio)</li>
+        <li>Propriocepção e sensibilidade vibratória (diapasão)</li>
+        <li>Estereognosia (reconhecer objetos pelo tato) e grafestesia (reconhecer números traçados na pele)</li>
+        <li>Discriminação de dois pontos — depende da densidade de representação cortical (mais fina em dedos e lábios)</li>
+      </ul>
+    </div>
+
+    <div class="card semio">
+      <h3 data-editable="true">Síndrome do lobo parietal</h3>
+      <p data-editable="true">
+        Lesões parietais (especialmente hemisfério não-dominante) podem causar <strong>astereognosia</strong>,
+        <strong>agrafestesia</strong>, <strong>extinção sensorial</strong> (não perceber estímulo simultâneo
+        bilateral) e, em casos mais extensos, <strong>heminegligência</strong> do hemicorpo contralateral.
+      </p>
+    </div>
+
+    <div class="card semio full">
+      <h3 data-editable="true">Aplicação prática — por que o homúnculo importa na clínica</h3>
+      <p data-editable="true">
+        A desproporção do homúnculo explica achados semiológicos comuns: perda sensitiva discreta em uma
+        pequena área da mão pode já indicar lesão cortical significativa, dado o grande território que a
+        mão ocupa em S1; já lesões extensas no tronco cortical produzem déficits sensoriais relativamente
+        sutis no exame, pela pequena representação dessa região. Esse raciocínio orienta a localização
+        topográfica de lesões no exame neurológico.
+      </p>
+    </div>
+  </div>
+
+  <div class="alert pink" data-editable="true">
+    <span class="alert-title">Pergunta para reflexão (discutida em aula)</span>
+    O que acontece ao mapa somatotópico no córtex quando uma aferência é removida (ex.: amputação de um
+    dedo)? A "área do dedo" fica sem utilidade e atrofia, ou é ocupada pelas aferências de fontes
+    vizinhas? A resposta — demonstrada experimentalmente em macacos — é a reorganização progressiva do
+    mapa, com expansão das representações adjacentes.
+  </div>
+
+  <footer data-editable="true">
+    LMF — UCXIII · Material de apoio baseado na aula "Homúnculo Sensorial" (Prof.ª Elizama de Gregório) ·
+    Bibliografia: Guyton &amp; Hall, Aires — Fisiologia
+  </footer>
+
+</div>
+
+<div id="lmf-status"></div>
+<div id="lmf-toolbar">
+  <button id="btn-edit">✏️ Ativar edição</button>
+  <button id="btn-download">⬇️ Baixar cópia editada</button>
+  <button id="btn-reset">↺ Restaurar original</button>
+</div>
+
+<script>
+(function(){
+  var STORAGE_KEY = "lmf_somatossensorial_v1";
+  var editing = false;
+  var autosaveTimer = null;
+  var editableEls = document.querySelectorAll('[data-editable="true"]');
+
+  var isArtifactPreview = (function(){
+    try{
+      return window.self !== window.top;
+    }catch(e){ return true; }
+  })();
+
+  var statusBox = document.getElementById('lmf-status');
+  function showStatus(msg, ms){
+    statusBox.textContent = msg;
+    statusBox.style.display = 'block';
+    clearTimeout(showStatus._t);
+    showStatus._t = setTimeout(function(){ statusBox.style.display = 'none'; }, ms || 4000);
+  }
+
+  function collectContent(){
+    var data = {};
+    editableEls.forEach(function(el, i){
+      el.setAttribute('data-lmf-id', el.getAttribute('data-lmf-id') || ('el-' + i));
+      data[el.getAttribute('data-lmf-id')] = el.innerHTML;
+    });
+    return data;
+  }
+
+  function applyContent(data){
+    if(!data) return;
+    editableEls.forEach(function(el){
+      var id = el.getAttribute('data-lmf-id');
+      if(id && data[id] !== undefined){
+        el.innerHTML = data[id];
+      }
+    });
+  }
+
+  function saveLocal(){
+    if(isArtifactPreview) return;
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(collectContent()));
+      showStatus('Alterações salvas neste navegador.', 2500);
+    }catch(e){
+      showStatus('Não foi possível salvar automaticamente.', 3000);
+    }
+  }
+
+  function loadLocal(){
+    if(isArtifactPreview) return;
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if(raw) applyContent(JSON.parse(raw));
+    }catch(e){}
+  }
+
+  // Load saved edits on open (if any)
+  loadLocal();
+
+  if(isArtifactPreview){
+    showStatus('Aviso: dentro da pré-visualização do Claude.ai o salvamento automático não funciona (localStorage exige o arquivo aberto direto no navegador). Baixe o arquivo para ter autosave.', 9000);
+  }
+
+  document.getElementById('btn-edit').addEventListener('click', function(){
+    editing = !editing;
+    editableEls.forEach(function(el){
+      el.setAttribute('contenteditable', editing ? 'true' : 'false');
+    });
+    this.classList.toggle('active', editing);
+    this.textContent = editing ? '💾 Salvar e sair' : '✏️ Ativar edição';
+
+    if(editing){
+      autosaveTimer = setInterval(saveLocal, 15000);
+      showStatus('Modo de edição ativado. Clique nos textos para editar.', 3000);
+    } else {
+      clearInterval(autosaveTimer);
+      saveLocal();
+      showStatus('Edição salva.', 2500);
+    }
+  });
+
+  document.getElementById('btn-download').addEventListener('click', function(){
+    // Build a full standalone copy with current content baked in
+    var clone = document.documentElement.cloneNode(true);
+    var cloneEditables = clone.querySelectorAll('[data-editable="true"]');
+    var current = collectContent();
+    cloneEditables.forEach(function(el){
+      var id = el.getAttribute('data-lmf-id');
+      if(id && current[id] !== undefined){
+        el.innerHTML = current[id];
+      }
+    });
+    // Remove contenteditable/outline state from the exported copy
+    cloneEditables.forEach(function(el){ el.removeAttribute('contenteditable'); });
+
+    var htmlStr = "<!DOCTYPE html>\n" + clone.outerHTML;
+    var blob = new Blob([htmlStr], {type: 'text/html'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'LMF_Somatossensorial_editado.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showStatus('Cópia editada baixada.', 3000);
+  });
+
+  document.getElementById('btn-reset').addEventListener('click', function(){
+    if(!confirm('Isso apaga as edições salvas neste navegador e restaura o texto original. Continuar?')) return;
+    try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+    location.reload();
+  });
+
+})();
+</script>
+
+</body>
+</html>

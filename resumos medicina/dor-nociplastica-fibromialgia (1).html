@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dor Nociplástica e Fibromialgia — Guia de Estudo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-primary:#0a0e14; --bg-secondary:#12161f; --bg-tertiary:#1a202c; --bg-quaternary:#1e2530;
+  --text-primary:#e6eaf0; --text-secondary:#a3adc2; --text-muted:#6b7688;
+  --border-subtle:#232a38; --border-subtle-2:#2a3140;
+  --c1:#2dd4bf; --c2:#60a5fa; --c3:#a78bfa; --c4:#f472b6; --c5:#fb923c; --c6:#34d399;
+  --c7:#ef4444; --c8:#22d3ee; --c9:#eab308; --c10:#84cc16; --c11:#fb7185; --c12:#4ade80;
+  --c13:#0ea5e9; --c14:#818cf8; --c15:#f59e0b; --c16:#e879f9; --c17:#2dd4bf; --c18:#fbbf24; --c19:#94a3b8;
+  --alert-key:#fbbf24; --alert-warn:#f87171; --alert-clin:#34d399; --alert-contro:#a78bfa;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',-apple-system,sans-serif;font-weight:400;line-height:1.75;margin:0;padding:0;font-size:17px;}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.25;color:var(--text-primary);margin:0;}
+p{margin:0 0 1.1em;color:var(--text-primary);}
+p:last-child{margin-bottom:0;}
+em{color:var(--text-primary);font-style:italic;}
+.destaque{color:var(--accent,var(--c1));font-style:normal;}
+i.destaque{font-style:italic;}
+a{color:var(--c2);text-decoration:none;border-bottom:1px solid rgba(96,165,250,0.35);}
+a:hover{border-bottom-color:var(--c2);}
+ul,ol{padding-left:1.4em;margin:0 0 1.1em;}
+li{margin-bottom:0.5em;color:var(--text-primary);}
+li:last-child{margin-bottom:0;}
+.page-wrap{max-width:900px;margin:0 auto;padding:0 1.75rem 6rem;}
+.hero{padding:5rem 1.75rem 3.5rem;text-align:center;border-bottom:1px solid var(--border-subtle);margin-bottom:3rem;}
+.hero .kicker{font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:0.15em;font-size:0.78rem;color:var(--text-muted);margin-bottom:1.25rem;}
+.hero h1{font-size:clamp(2rem,5vw,3.3rem);font-style:italic;font-weight:500;background:linear-gradient(120deg,#f472b6,#a78bfa 50%,#60a5fa);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:1rem;}
+.hero .subtitle{font-size:1.08rem;color:var(--text-secondary);max-width:640px;margin:0 auto;font-weight:300;}
+.hero .badges{display:flex;gap:0.6rem;justify-content:center;margin-top:1.75rem;flex-wrap:wrap;}
+.badge{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;padding:0.35rem 0.85rem;border:1px solid var(--border-subtle-2);border-radius:100px;color:var(--text-secondary);}
+.toc{margin:0 0 4rem;}
+.toc-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;color:var(--text-secondary);margin-bottom:1rem;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0.6rem;}
+.toc-grid a{display:block;border:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle);border-radius:6px;padding:0.65rem 0.9rem;font-size:0.84rem;color:var(--text-secondary);}
+.toc-grid a:hover{border-color:var(--tc,var(--c2));color:var(--text-primary);}
+.pergunta-group{margin-bottom:1rem;}
+.pergunta-banner{margin:5rem 0 2.6rem;padding:2.1rem 2.3rem;border:1px solid var(--pcolor);border-radius:12px;background:color-mix(in srgb, var(--pcolor) 7%, transparent);}
+.pergunta-group:first-child .pergunta-banner{margin-top:0;}
+.pergunta-num{font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:0.16em;font-size:0.78rem;color:var(--pcolor);margin-bottom:0.7rem;}
+.pergunta-titulo{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;color:var(--text-primary);font-size:clamp(1.5rem,3.5vw,2.05rem);margin-bottom:0.8rem;line-height:1.2;}
+.pergunta-enunciado{color:var(--text-secondary);font-size:0.98rem;margin:0;}
+.toc-pergunta{border:1px solid var(--border-subtle);border-radius:10px;padding:1.1rem 1.3rem;margin-bottom:0.8rem;}
+.toc-p-link{display:block;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--text-primary);border:none;margin-bottom:0.7rem;}
+.toc-p-link:hover{color:var(--tc,var(--c2));}
+.toc-sub{display:flex;flex-wrap:wrap;gap:0.4rem;}
+.toc-sub a{font-size:0.76rem;border:1px solid var(--border-subtle);border-radius:100px;padding:0.3rem 0.7rem;color:var(--text-muted);}
+.toc-sub a:hover{color:var(--text-primary);border-color:var(--tc,var(--c2));}
+.topic-section{margin:0 0 3.2rem;scroll-margin-top:1.5rem;}
+
+.section-header{display:flex;align-items:center;margin:0 0 1.75rem;gap:1.1rem;flex-wrap:wrap;}
+.section-header .tag{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:500;font-style:italic;color:var(--accent);border:1px solid var(--accent);background:color-mix(in srgb, var(--accent) 8%, transparent);padding:0.45rem 1.1rem;border-radius:5px;line-height:1.3;}
+.section-header .line{flex:1;height:1px;background:linear-gradient(to right,var(--accent),transparent 85%);opacity:0.6;min-width:2rem;}
+.section-body h3{font-size:1.5rem;font-style:italic;color:var(--accent);margin:2.25rem 0 0.9rem;font-weight:500;}
+.section-body h3:first-child{margin-top:0;}
+.section-body h4{font-family:'Inter',sans-serif;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-secondary);margin:1.5rem 0 0.75rem;font-weight:500;}
+.card{background:var(--bg-secondary);border:1px solid var(--border-subtle);border-top:3px solid var(--accent);border-radius:8px;padding:1.4rem 1.6rem;margin:1.25rem 0;}
+.card h4{margin-top:0;color:var(--accent);font-family:'Cormorant Garamond',serif;font-size:1.2rem;text-transform:none;letter-spacing:0;font-style:italic;}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.1rem;margin:1.5rem 0;}
+.alert{border-radius:8px;border:1px solid;background:transparent;padding:1.1rem 1.3rem;margin:1.5rem 0;}
+.alert .alert-label{display:block;text-transform:uppercase;letter-spacing:0.08em;font-size:0.72rem;margin-bottom:0.5rem;font-family:'Inter',sans-serif;}
+.alert-chave{border-color:var(--alert-key);} .alert-chave .alert-label{color:var(--alert-key);}
+.alert-atencao{border-color:var(--alert-warn);} .alert-atencao .alert-label{color:var(--alert-warn);}
+.alert-clinico{border-color:var(--alert-clin);} .alert-clinico .alert-label{color:var(--alert-clin);}
+.alert-controversia{border-color:var(--alert-contro);} .alert-controversia .alert-label{color:var(--alert-contro);}
+details.deepen{background:var(--bg-tertiary);border:1px solid var(--border-subtle-2);border-top:2px solid var(--accent);border-radius:8px;margin:1.4rem 0;}
+details.deepen summary{padding:0.9rem 1.3rem;cursor:pointer;list-style:none;color:var(--accent);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.08rem;display:flex;align-items:center;gap:0.6rem;}
+details.deepen summary::-webkit-details-marker{display:none;}
+details.deepen summary::before{content:'+';font-family:'Inter',sans-serif;font-style:normal;font-size:1rem;border:1px solid var(--accent);border-radius:50%;width:1.3rem;height:1.3rem;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+details.deepen[open] summary::before{content:'–';}
+details.deepen .deepen-content{padding:0 1.3rem 1.3rem;color:var(--text-secondary);}
+details.deepen .deepen-content p{color:var(--text-secondary);}
+details.deepen-2{background:var(--bg-quaternary);border-top:1px dashed var(--accent);}
+details.deepen-2 summary{font-size:1rem;opacity:0.9;}
+.compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.5rem 0;}
+.compare-card{background:var(--bg-secondary);border:1px solid var(--border-subtle);border-top:3px solid var(--accent);border-radius:8px;padding:1.2rem 1.35rem;}
+.compare-card .ccard-title{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--accent);font-size:1.15rem;margin-bottom:0.6rem;}
+.compare-card dl{margin:0;}
+.compare-card dt{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-top:0.7rem;}
+.compare-card dt:first-child{margin-top:0;}
+.compare-card dd{margin:0.15rem 0 0;font-size:0.92rem;color:var(--text-secondary);}
+.integracao-box{border:1px solid var(--accent);border-top:3px solid var(--accent);border-radius:8px;padding:1.6rem 1.8rem;background:color-mix(in srgb, var(--accent) 5%, transparent);margin:1.5rem 0;}
+.ref-list{list-style:none;padding:0;}
+.ref-list li{padding:0.9rem 0;border-bottom:1px solid var(--border-subtle);font-size:0.92rem;color:var(--text-secondary);}
+.ref-list li:last-child{border-bottom:none;}
+.ref-list .ref-cat{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-primary);font-size:1.3rem;margin:2rem 0 0.5rem;}
+.ref-list .ref-cat:first-child{margin-top:0;}
+.fluxo{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:1.5rem 0;font-size:0.9rem;}
+.fluxo span.passo{border:1px solid var(--border-subtle-2);background:var(--bg-secondary);border-radius:100px;padding:0.4rem 0.9rem;color:var(--text-secondary);}
+.fluxo span.seta{color:var(--accent);opacity:0.7;}
+[contenteditable="true"]{outline:1px dashed rgba(255,255,255,0.25);outline-offset:3px;border-radius:3px;}
+[contenteditable="true"]:focus{outline:1px dashed var(--c2);background:rgba(96,165,250,0.05);}
+.editor-toolbar{position:fixed;bottom:1.4rem;right:1.4rem;z-index:2000;background:var(--bg-secondary);border:1px solid var(--border-subtle-2);border-radius:12px;padding:0.85rem;box-shadow:0 15px 40px rgba(0,0,0,0.55);display:flex;flex-direction:column;gap:0.5rem;width:212px;font-family:'Inter',sans-serif;}
+.editor-toolbar .tb-title{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:0.2rem;}
+.editor-toolbar button{background:var(--bg-tertiary);color:var(--text-primary);border:1px solid var(--border-subtle-2);border-radius:6px;padding:0.55rem 0.7rem;font-size:0.8rem;cursor:pointer;text-align:left;font-family:'Inter',sans-serif;}
+.editor-toolbar button:hover{border-color:var(--c2);color:#fff;}
+.editor-toolbar button.active{border-color:var(--c6);color:var(--c6);}
+.editor-toolbar .status{font-size:0.68rem;color:var(--text-muted);padding:0.1rem 0.2rem;min-height:2.2em;line-height:1.3;}
+@media (max-width:640px){
+  .hero{padding:3.5rem 1.25rem 2.5rem;}
+  .section-header .tag{font-size:1.2rem;}
+  .editor-toolbar{width:168px;bottom:1rem;right:1rem;padding:0.65rem;}
+  .editor-toolbar button{font-size:0.72rem;padding:0.5rem;}
+  body{font-size:16px;}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="kicker">UC XIII · Dor — 5º Semestre de Medicina · PBL</div>
+  <h1>Dor Nociplástica e Fibromialgia</h1>
+  <p class="subtitle">Do terceiro mecanismo da dor à postura clínica frente ao sofrimento crônico: fisiopatologia da sensibilização central, critérios diagnósticos, farmacologia comparada e a intersecção entre corpo e emoção.</p>
+  <div class="badges">
+    <span class="badge">Fisiopatologia</span>
+    <span class="badge">Semiologia</span>
+    <span class="badge">Farmacologia</span>
+    <span class="badge">Medicina Baseada em Evidências</span>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+<div class="toc">
+  <div class="toc-title">Roteiro de estudo — as 4 perguntas do PBL</div>
+
+  <div class="toc-pergunta" style="--tc:var(--c1)">
+    <a class="toc-p-link" href="#pergunta1">Pergunta 1 · Fisiopatologia da dor nociplástica e da fibromialgia</a>
+    <div class="toc-sub">
+      <a href="#conceito">Conceito</a><a href="#fisiologia-base">Fisiologia de base</a><a href="#fisiopatologia">Sensibilização central</a>
+      <a href="#fibromialgia">Fibromialgia</a><a href="#quadro-clinico">Sinais e sintomas</a><a href="#diagnostico">Diagnóstico</a>
+      <a href="#diferencial">Diagnóstico diferencial</a><a href="#exames">Exames</a><a href="#tratamento-geral">Tratamento geral</a><a href="#nao-farmaco">Não farmacológico</a>
+    </div>
+  </div>
+
+  <div class="toc-pergunta" style="--tc:var(--c5)">
+    <a class="toc-p-link" href="#pergunta2">Pergunta 2 · Mecanismo de ação dos fármacos na dor nociplástica</a>
+    <div class="toc-sub">
+      <a href="#farmaco-tca">a. Tricíclicos</a><a href="#farmaco-canabinoides">b. Canabinoides</a>
+      <a href="#farmaco-isrs">c. ISRS</a><a href="#farmaco-irsn">d. IRSN</a><a href="#comparacao">Comparação</a>
+    </div>
+  </div>
+
+  <div class="toc-pergunta" style="--tc:var(--c16)">
+    <a class="toc-p-link" href="#pergunta3">Pergunta 3 · A relação causal entre dor e aspectos emocionais</a>
+  </div>
+
+  <div class="toc-pergunta" style="--tc:var(--c18)">
+    <a class="toc-p-link" href="#pergunta4">Pergunta 4 · A postura do médico frente às dores crônicas</a>
+  </div>
+
+  <div class="toc-sub" style="margin-top:0.4rem;">
+    <a href="#integracao">Integração clínica</a><a href="#referencias">Referências</a>
+  </div>
+</div>
+
+<main id="main-content">
+
+<div class="pergunta-group" id="pergunta1">
+<div class="pergunta-banner" style="--pcolor:var(--c1)">
+  <div class="pergunta-num">Pergunta 1 do PBL</div>
+  <h2 class="pergunta-titulo">Fisiopatologia da Dor Nociplástica e da Fibromialgia</h2>
+  <p class="pergunta-enunciado">Qual a fisiopatologia da dor nociplástica e fibromialgia? Inclui diagnóstico diferencial, sinais e sintomas, diagnóstico, tratamento farmacológico e não farmacológico.</p>
+</div>
+
+<section id="conceito" class="topic-section" style="--accent:var(--c1)">
+  <div class="section-header"><h2 class="tag">1.1 — O Terceiro Mecanismo: Definindo a Dor Nociplástica</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Vamos começar com uma pergunta que parece simples, mas que vai te acompanhar por toda essa discussão: <i class="destaque">de onde vem a dor de um paciente que dói o corpo inteiro, há anos, e cujos exames voltam impecavelmente normais?</i> Durante décadas, a resposta médica para essa pergunta oscilou entre dois extremos pouco satisfatórios — ou se caçava incansavelmente uma lesão estrutural que "explicasse" o quadro, ou se relegava o paciente ao rótulo vago de "psicossomático", quase como sinônimo de "não encontrei nada, então deve ser da sua cabeça". Nenhuma das duas posturas é correta, e entender por quê é o objetivo desta primeira seção.</p>
+
+<p>Em 2016, Eva Kosek e colaboradores propuseram, num artigo de referência publicado no periódico <em>Pain</em>, que a Medicina precisava de um <i class="destaque">terceiro descritor mecanístico</i> para classificar a dor crônica — proposta que a International Association for the Study of Pain (IASP) formalizou em 2017. Até então, você já conhecia dois mecanismos, que revisamos brevemente aqui para servir de contraste:</p>
+
+<div class="card-grid">
+  <div class="card">
+    <h4>Dor nociceptiva</h4>
+    <p>Surge da ativação de nociceptores por dano tecidual real ou iminente — um corte, uma queimadura, uma artrite inflamada. O sistema nervoso está anatômica e funcionalmente íntegro; ele está apenas fazendo exatamente o que deveria fazer diante de um estímulo lesivo genuíno.</p>
+  </div>
+  <div class="card">
+    <h4>Dor neuropática</h4>
+    <p>Surge de uma lesão ou doença que acomete diretamente o sistema somatossensorial — uma neuropatia diabética, uma nevralgia pós-herpética, uma compressão radicular. Aqui o "hardware" da via da dor está estruturalmente danificado.</p>
+  </div>
+  <div class="card">
+    <h4>Dor nociplástica</h4>
+    <p>Surge de uma <em>nocicepção alterada</em>, apesar de não haver evidência clara de dano tecidual real ou ameaçado que ative nociceptores periféricos, e apesar de não haver evidência de doença ou lesão do sistema somatossensorial que explique a dor.</p>
+  </div>
+</div>
+
+<p>Repare bem na definição da IASP para dor nociplástica, porque ela é construída propositalmente por exclusão dos outros dois mecanismos, e cada palavra importa: não há dano tecidual evidente (então não é nociceptiva) e não há lesão ou doença do sistema somatossensorial (então não é neuropática). O que sobra, então? Sobra um sistema nervoso <i class="destaque">anatomicamente íntegro</i>, mas <i class="destaque">funcionalmente alterado</i> — um sistema de alarme que passou a disparar com hipersensibilidade, amplificando, distorcendo e até gerando sinais dolorosos na ausência do estímulo periférico que tradicionalmente os justificaria.</p>
+
+<div class="alert alert-chave">
+  <span class="alert-label">Ponto-chave</span>
+  <p>A dor nociplástica não é "dor sem causa". Ela tem uma causa muito bem definida: uma disfunção do processamento central da dor, envolvendo sensibilização central, falência da modulação descendente inibitória e alterações neuroquímicas mensuráveis. O que não existe é uma lesão periférica ou estrutural proporcional à intensidade da dor relatada — e essa distinção muda completamente a lógica diagnóstica e terapêutica.</p>
+</div>
+
+<h3>Por que essa classificação importa clinicamente?</h3>
+<p>Porque cada mecanismo pede uma abordagem diferente. Diante de uma dor nociceptiva, você trata a causa (a inflamação, a fratura, a infecção) e a dor tende a resolver junto. Diante de uma dor neuropática, você mira nos canais iônicos e nas vias lesadas com anticonvulsivantes e antidepressivos específicos. Já diante de uma dor nociplástica, insistir em procurar — e "consertar" — uma lesão periférica que não existe é, na melhor das hipóteses, ineficaz, e na pior, iatrogênico: gera exames repetidos, ansiedade, rótulos diagnósticos incorretos e, não raro, cirurgias desnecessárias. O tratamento eficaz mira o próprio sistema de processamento da dor — e é exatamente esse racional que vai justificar, mais adiante, por que antidepressivos (que atuam no encéfalo, não na periferia) são pilares terapêuticos desta condição.</p>
+
+<details class="deepen">
+  <summary>Aprofunde-se: a dor nociplástica também pode coexistir com outros mecanismos</summary>
+  <div class="deepen-content">
+  <p>Um erro conceitual comum é tratar essas três categorias como compartimentos estanques. Na prática clínica, elas coexistem com frequência. Um paciente com osteoartrite de joelho (nociceptiva) pode desenvolver, ao longo dos anos, sensibilização central sobreposta (nociplástica) — e é por isso que a intensidade da dor relatada muitas vezes não se correlaciona bem com o grau radiográfico de degeneração articular. Da mesma forma, uma parcela de pacientes com diagnóstico de fibromialgia apresenta evidências objetivas de neuropatia de pequenas fibras à biópsia de pele (veja a seção de fisiopatologia), borrando a fronteira entre nociplástico e neuropático. A IASP reconhece explicitamente essa possibilidade de <i class="destaque">dor mista</i>, e um bom raciocínio clínico deve sempre perguntar: "quanto dessa dor é explicado por cada mecanismo, e o tratamento reflete essa proporção?"</p>
+  </div>
+</details>
+
+</div>
+</section>
+
+<section id="fisiologia-base" class="topic-section" style="--accent:var(--c2)">
+  <div class="section-header"><h2 class="tag">1.2 — Revisão Fisiológica: Como a Dor é Normalmente Processada</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Antes de entender o que está <i class="destaque">alterado</i> na dor nociplástica, precisamos relembrar, ainda que brevemente, como a dor funciona quando está tudo nos eixos — esse é o Guyton & Hall falando antes do Robbins entrar em cena. Pense na via nociceptiva como uma linha de produção com quatro estações sucessivas: transdução, transmissão, modulação e percepção.</p>
+
+<div class="fluxo">
+  <span class="passo">Estímulo nocivo</span><span class="seta">→</span>
+  <span class="passo">Transdução (nociceptor)</span><span class="seta">→</span>
+  <span class="passo">Transmissão (fibras Aδ e C → corno dorsal → trato espinotalâmico)</span><span class="seta">→</span>
+  <span class="passo">Modulação (segmentar e descendente)</span><span class="seta">→</span>
+  <span class="passo">Percepção (tálamo → córtex)</span>
+</div>
+
+<p>Na <i class="destaque">transdução</i>, terminações nervosas livres de fibras Aδ (mielinizadas finas, condução rápida, responsáveis pela dor "em pontada", bem localizada) e fibras C (amielínicas, condução lenta, responsáveis pela dor em queimação, difusa e mal localizada) expressam nociceptores capazes de converter estímulos térmicos, mecânicos ou químicos em potencial de ação — pense nos canais TRPV1 (capsaicina, calor nocivo), TRPA1 (frio nocivo, irritantes) e nos canais de sódio sensíveis à voltagem, especialmente o Nav1.7, Nav1.8 e Nav1.9, praticamente exclusivos de neurônios nociceptivos.</p>
+
+<p>Na <i class="destaque">transmissão</i>, o potencial de ação percorre o axônio até o corno dorsal da medula espinal, onde o neurônio de primeira ordem faz sinapse glutamatérgica com o neurônio de segunda ordem, geralmente nas lâminas I e II de Rexed. Esse neurônio de segunda ordem cruza a linha média e ascende pelo trato espinotalâmico até o tálamo, de onde neurônios de terceira ordem projetam para o córtex somatossensorial primário (localização e intensidade — dimensão sensitivo-discriminativa) e para estruturas límbicas como a ínsula e o córtex cingulado anterior (sofrimento, desagrado — dimensão afetivo-motivacional). Guarde essa bifurcação de destinos corticais: ela será a chave para entender a seção 16, sobre dor e emoção.</p>
+
+<p>A <i class="destaque">modulação</i> é o ponto mais relevante para entendermos a dor nociplástica, porque é justamente aqui que a disfunção se instala. Existem dois níveis de modulação:</p>
+
+<div class="card-grid">
+  <div class="card">
+    <h4>Modulação segmentar (teoria da comporta)</h4>
+    <p>Proposta por Melzack e Wall em 1965: fibras grossas e mielinizadas (Aβ, tato) ativam interneurônios inibitórios na substância gelatinosa que "fecham a comporta" para a transmissão nociceptiva das fibras Aδ e C no mesmo segmento medular. É por isso que esfregar uma região que dói alivia a dor momentaneamente.</p>
+  </div>
+  <div class="card">
+    <h4>Modulação descendente</h4>
+    <p>Vias que partem da substância cinzenta periaquedutal (PAG) mesencefálica, retransmitem na medula rostroventral (RVM — núcleo magno da rafe, serotoninérgico) e no locus coeruleus (noradrenérgico), e descem pelo funículo dorsolateral até o corno dorsal, onde podem inibir ou facilitar a transmissão nociceptiva.</p>
+  </div>
+</div>
+
+<p>Esse sistema descendente não é uma via de mão única sempre inibitória — e esse é um detalhe que a maioria dos alunos esquece. A RVM contém dois tipos de neurônios com funções opostas: as <i class="destaque">células ON</i>, que facilitam a nocicepção, e as <i class="destaque">células OFF</i>, que a inibem (e que são ativadas por opioides endógenos e exógenos). O equilíbrio entre a atividade ON e OFF determina se o "volume" da dor, naquele momento, será amplificado ou atenuado. Guarde esse conceito de balanço — ele é exatamente o que se rompe na sensibilização central.</p>
+
+<div class="alert alert-clinico">
+  <span class="alert-label">Correlação clínica</span>
+  <p>Esse sistema descendente explica fenômenos cotidianos: por que o estresse agudo pode suprimir temporariamente a dor (analgesia induzida por estresse, mediada por opioides endógenos e pela ativação da PAG), por que a atenção e a expectativa modulam a intensidade da dor percebida, e — o que é central para esta unidade — por que fármacos que aumentam serotonina e noradrenalina no sistema nervoso central têm efeito analgésico direto, independente de qualquer ação periférica.</p>
+</div>
+
+</div>
+</section>
+
+<section id="fisiopatologia" class="topic-section" style="--accent:var(--c3)">
+  <div class="section-header"><h2 class="tag">1.3 — Fisiopatologia da Sensibilização Central</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Chegamos ao núcleo fisiopatológico desta unidade. Se você entender profundamente esta seção, as demais — quadro clínico, diagnóstico e, principalmente, farmacologia — vão parecer consequências lógicas, quase óbvias, em vez de fatos soltos para decorar. Seguindo a lógica causal de Robbins, vamos percorrer: etiologia/gatilho → alteração molecular → resposta celular → alteração funcional → manifestação clínica.</p>
+
+<h3>Sensibilização central: definição e o fenômeno de wind-up</h3>
+<p>A IASP define sensibilização central como o <i class="destaque">aumento da responsividade de neurônios nociceptivos no sistema nervoso central a um input aferente normal ou subliminar</i>. Em outras palavras: o mesmo estímulo de sempre passa a gerar uma resposta desproporcionalmente maior, porque o "amplificador" central teve seu ganho aumentado — não porque o "microfone" periférico ficou mais sensível.</p>
+
+<p>O fenômeno que melhor demonstra esse mecanismo em laboratório é o <i class="destaque">wind-up</i>, ou somação temporal da segunda dor. Se você estimular repetidamente uma fibra C a uma frequência de aproximadamente 0,5 a 1 Hz, cada estímulo isolado gera uma resposta idêntica no neurônio de segundo ordem — mas se a frequência ultrapassar esse limiar, as respostas começam a se somar progressivamente, e o neurônio passa a disparar cada vez mais, mesmo que a intensidade do estímulo periférico permaneça constante. Isso não é uma peculiaridade de laboratório: pacientes com fibromialgia demonstram wind-up exagerado e prolongado em testes de somação temporal, e esse achado é um dos marcadores psicofísicos mais replicados na literatura sobre dor nociplástica.</p>
+
+<details class="deepen">
+  <summary>Aprofunde-se: a base molecular do wind-up — o receptor NMDA</summary>
+  <div class="deepen-content">
+  <p>Em condições basais, o receptor NMDA pós-sináptico do corno dorsal está bloqueado por um íon Mg²⁺ que ocupa seu poro, mesmo na presença de glutamato ligado. Esse bloqueio é <i class="destaque">voltagem-dependente</i>: só é removido quando a membrana já está suficientemente despolarizada. Aqui está a beleza do mecanismo — a estimulação repetitiva de fibras C libera glutamato e o neuropeptídeo substância P, que atuam em receptores AMPA e NK1 (neurocinina-1), respectivamente, produzindo despolarizações pós-sinápticas lentas e somadas. Quando essa despolarização acumulada atinge o limiar necessário, o Mg²⁺ é expulso do canal NMDA, e o glutamato — que já estava ali, "batendo na porta" — finalmente consegue abrir o canal.</p>
+  <p>A entrada maciça de cálcio pelo NMDA ativa proteínocinases (PKC, PKA, CaMKII), que fosforilam receptores AMPA e NMDA já existentes na membrana (aumentando sua condutância) e promovem a inserção de novos receptores AMPA na membrana pós-sináptica — um mecanismo estrutural quase idêntico à potenciação de longa duração (LTP) hipocampal, só que aplicado à via nociceptiva. O resultado funcional é duplo: o neurônio central passa a responder de forma exagerada a estímulos nociceptivos (hiperalgesia) e passa a responder dolorosamente a estímulos que normalmente não doeriam, como o toque leve transmitido por fibras Aβ (alodinia).</p>
+  <details class="deepen deepen-2">
+    <summary>Ainda mais fundo: transcrição gênica e sensibilização de longo prazo</summary>
+    <div class="deepen-content">
+    <p>Se a estimulação nociceptiva for suficientemente intensa e repetida, a cascata de cálcio-cinases ativa fatores de transcrição como CREB, levando à expressão aumentada de genes como os da cicloxigenase-2 (COX-2, gerando prostaglandinas centrais) e da prodinorfina. Esse é o substrato molecular pelo qual a sensibilização deixa de ser um fenômeno de minutos e passa a durar horas, dias ou — no contexto de dor crônica estabelecida como a fibromialgia — indefinidamente, mesmo sem input nociceptivo periférico contínuo que a sustente.</p>
+    </div>
+  </details>
+  </div>
+</details>
+
+<h3>Falência da modulação descendente inibitória</h3>
+<p>Se a sensibilização central fosse apenas um problema de "excesso de sinal chegando", bastaria bloquear a entrada. Mas há um segundo componente, igualmente importante: o sistema de freios descendentes que revisamos na seção anterior está funcionando mal. Estudos que avaliam a <i class="destaque">modulação condicionada da dor</i> (CPM, do inglês <em>conditioned pain modulation</em> — o correlato clínico do fenômeno de controle inibitório difuso nocivo, DNIC) aplicam um estímulo doloroso condicionante em uma região do corpo enquanto medem o limiar de dor em outra região distante. Em indivíduos saudáveis, o estímulo condicionante ativa a modulação descendente e eleva o limiar de dor no segundo sítio — "dor inibe dor". Em pacientes com fibromialgia, essa inibição é sistematicamente reduzida ou ausente: o freio central não está respondendo como deveria.</p>
+
+<div class="alert alert-chave">
+  <span class="alert-label">Ponto-chave</span>
+  <p>A dor nociplástica pode ser entendida como o resultado de dois defeitos simultâneos e que se retroalimentam: o acelerador da nocicepção central está pisado a fundo (sensibilização, wind-up, NMDA) e o freio da modulação descendente está com a eficiência reduzida (falência serotoninérgica/noradrenérgica). É exatamente esse segundo defeito que a farmacologia antidepressiva — tricíclicos e IRSN — está desenhada para corrigir.</p>
+</div>
+
+<h3>Neuroimagem funcional: vendo a amplificação em tempo real</h3>
+<p>Estudos clássicos de ressonância magnética funcional (o mais citado sendo o de Gracely e colaboradores, publicado em <em>Arthritis & Rheumatism</em> em 2002) aplicaram pressão mecânica de intensidade equivalente em pacientes com fibromialgia e em controles saudáveis. Duas descobertas notáveis: primeiro, para gerar a mesma magnitude de ativação cerebral em áreas de processamento de dor (córtex somatossensorial primário e secundário, ínsula, córtex cingulado anterior), era necessária uma pressão muito menor nos pacientes com fibromialgia — ou seja, o cérebro deles amplifica o sinal. Segundo, quando se aplicava a mesma pressão objetiva em ambos os grupos, os pacientes com fibromialgia mostravam ativação significativamente maior dessas mesmas áreas. Estudos de espectroscopia por ressonância magnética complementam esse achado, demonstrando concentrações elevadas de glutamato na ínsula, correlacionando-se com a sensibilidade dolorosa individual.</p>
+
+<h3>Neuroquímica alterada</h3>
+<p>Diversos estudos, desde os anos 1990, documentaram alterações bioquímicas mensuráveis no líquido cefalorraquidiano e no plasma de pacientes com fibromialgia — achados que corroboram objetivamente o que antes era apenas inferido a partir do quadro clínico:</p>
+<div class="card-grid">
+  <div class="card">
+    <h4>Substância P elevada</h4>
+    <p>Concentração liquórica de substância P aumentada (classicamente descrito por Russell e colaboradores, 1994), reforçando a facilitação da transmissão nociceptiva no corno dorsal via receptores NK1.</p>
+  </div>
+  <div class="card">
+    <h4>Glutamato elevado</h4>
+    <p>Aumento de glutamato central, o principal neurotransmissor excitatório envolvido na sensibilização via NMDA/AMPA, correlacionando-se com a intensidade dos sintomas.</p>
+  </div>
+  <div class="card">
+    <h4>Serotonina e noradrenalina reduzidas</h4>
+    <p>Redução da disponibilidade central desses monoaminas, enfraquecendo justamente o braço inibitório descendente — o elo direto com a farmacologia que veremos adiante.</p>
+  </div>
+  <div class="card">
+    <h4>Redução do tônus GABAérgico</h4>
+    <p>Menor inibição via interneurônios GABAérgicos no corno dorsal e em circuitos corticais, contribuindo para o desequilíbrio excitação/inibição.</p>
+  </div>
+</div>
+
+<details class="deepen">
+  <summary>Aprofunde-se: neuroinflamação glial, eixo hipotálamo-hipófise-adrenal e sono</summary>
+  <div class="deepen-content">
+  <p><i class="destaque">Ativação glial.</i> Um campo de pesquisa crescente (impulsionado por trabalhos como os de Watkins e Maier) demonstra que a sensibilização central não é um fenômeno puramente neuronal. Micróglia e astrócitos no corno dorsal e em regiões supraspinhais podem ser ativados por sinalização purinérgica e por fragmentos de matriz extracelular liberados durante disparo neuronal intenso, passando a liberar citocinas pró-inflamatórias — IL-1β, IL-6 e TNF-α — que sensibilizam ainda mais os neurônios vizinhos, criando um ciclo de retroalimentação positiva entre glia e neurônio. Essa é a chamada hipótese da neuroinflamação central, ainda em consolidação, mas que já explica por que alguns pacientes com fibromialgia apresentam citocinas séricas discretamente elevadas mesmo sem doença inflamatória sistêmica.</p>
+  <p><i class="destaque">Disfunção neuroendócrina.</i> O eixo hipotálamo-hipófise-adrenal também está alterado: estudos mostram achatamento da variação diurna do cortisol e resposta anormal a testes de estimulação com CRH, sugerindo uma disfunção sutil, porém consistente, do sistema de resposta ao estresse — outro sistema que compartilha circuitaria com o processamento afetivo da dor (veja a seção 16).</p>
+  <p><i class="destaque">A anomalia do sono alfa-delta.</i> Em um estudo clássico de 1975, Harvey Moldofsky descreveu que pacientes com fibromialgia apresentam intrusão de ondas alfa (típicas de vigília relaxada) durante o sono de ondas lentas não-REM (estágios 3 e 4), fragmentando o sono profundo restaurador. Isso importa fisiologicamente porque é justamente durante o sono de ondas lentas que ocorre o pico de secreção pulsátil do hormônio do crescimento (GH), essencial para o reparo do microtrauma muscular cotidiano. Um sono não-restaurador crônico, portanto, pode contribuir mecanisticamente tanto para a fadiga quanto para a dor musculoesquelética difusa — e explica por que a queixa de "acordar cansado, como se não tivesse dormido" é praticamente universal nesses pacientes.</p>
+  </div>
+</details>
+
+<h3>Predisposição genética e gatilhos ambientais</h3>
+<p>A dor nociplástica não surge do nada em um sistema nervoso geneticamente neutro. Há agregação familiar bem documentada — parentes de primeiro grau de pacientes com fibromialgia têm risco várias vezes maior de desenvolver a condição — e polimorfismos genéticos específicos já foram implicados, com destaque para o gene da catecol-O-metiltransferase (COMT), enzima responsável pela degradação de catecolaminas (incluindo noradrenalina e dopamina) na fenda sináptica. O genótipo de baixa atividade enzimática (Met/Met, no polimorfismo Val158Met) resulta em maior disponibilidade sináptica de catecolaminas em determinados circuitos e está associado a maior sensibilidade dolorosa e maior risco de condições de dor crônica — um exemplo elegante de como uma variação genética discreta na farmacocinética de neurotransmissores endógenos pode traduzir-se em fenótipo clínico.</p>
+
+<p>Mas genética não é destino determinístico — ela define <i class="destaque">vulnerabilidade</i>, não certeza. Sobre esse terreno predisposto, atuam gatilhos: trauma físico (mesmo um acidente automobilístico ou uma cirurgia), infecções (algumas séries associam quadros pós-virais ao início dos sintomas), estresse psicológico agudo ou crônico, e — como veremos com mais profundidade na seção 16 — adversidade e trauma na infância. O modelo mais aceito atualmente é, portanto, um modelo de <i class="destaque">diátese-estresse</i>: predisposição genética e neurobiológica que se manifesta clinicamente quando exposta a um gatilho suficiente.</p>
+
+<div class="alert alert-controversia">
+  <span class="alert-label">Controvérsia / fronteira de pesquisa</span>
+  <p>Estudos de biópsia de pele (Üçeyler e colaboradores, 2013; Oaklander e colaboradores, 2013) encontraram redução da densidade de fibras nervosas intraepidérmicas em cerca de 40 a 50% dos pacientes com fibromialgia em algumas coortes, sugerindo neuropatia de pequenas fibras concomitante em um subgrupo. Isso não invalida o mecanismo nociplástico central — pelo contrário, sugere que, em parte dos pacientes, coexiste um componente neuropático periférico discreto, reforçando a ideia de que os três mecanismos de dor não são caixas fechadas, mas um espectro que pode se sobrepor no mesmo indivíduo.</p>
+</div>
+
+</div>
+</section>
+
+<section id="fibromialgia" class="topic-section" style="--accent:var(--c4)">
+  <div class="section-header"><h2 class="tag">1.4 — Fibromialgia: o Protótipo Clínico da Dor Nociplástica</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Se a dor nociplástica é o conceito mecanístico guarda-chuva, a fibromialgia é sua expressão clínica mais estudada e mais prevalente — o "protótipo" que a literatura usa para investigar o mecanismo, e que você usará para reconhecê-lo à beira do leito.</p>
+
+<h3>Epidemiologia</h3>
+<p>A fibromialgia acomete aproximadamente 2 a 4% da população geral, com predomínio histórico em mulheres — as séries mais antigas, que usavam os critérios tradicionais de 1990 baseados em pontos dolorosos, chegavam a relatar razões de até 9:1. Esse predomínio, no entanto, era em parte um artefato dos próprios critérios diagnósticos (mulheres tendem a ter maior sensibilidade à palpação em pontos específicos); com os critérios revisados de 2010/2016, que valorizam mais os sintomas somáticos e cognitivos do que a palpação, a razão entre sexos se tornou mais equilibrada, embora a predominância feminina permaneça real. O pico de incidência situa-se entre 30 e 50 anos, mas a condição pode acometer qualquer faixa etária, incluindo adolescentes.</p>
+
+<h3>Etiologia e fatores de risco</h3>
+<p>Retomando o modelo de diátese-estresse da seção anterior, os principais fatores de risco identificados incluem: predisposição genética/familiar; presença de outra condição de dor crônica periférica prévia (a chamada "fibromialgia secundária" ou sobreposta — por exemplo, um paciente com artrite reumatoide bem controlada clinicamente, mas que mantém dor difusa desproporcional à atividade inflamatória objetiva, provavelmente desenvolveu sensibilização central sobreposta); transtornos do sono; obesidade; sedentarismo; e comorbidade psiquiátrica, especialmente depressão, ansiedade e transtorno de estresse pós-traumático — sendo trauma físico ou emocional, incluindo adversidade na infância, um gatilho recorrentemente descrito.</p>
+
+<div class="alert alert-clinico">
+  <span class="alert-label">Correlação clínica</span>
+  <p>É extremamente comum encontrar fibromialgia coexistindo com outras síndromes classicamente "funcionais" ou de sensibilização central: síndrome do intestino irritável, cefaleia tensional e enxaqueca crônica, síndrome da bexiga dolorosa/cistite intersticial, disfunção temporomandibular e síndrome de fadiga crônica/encefalomielite miálgica. Essa sobreposição não é coincidência — é a expressão, em diferentes territórios corporais, de um mesmo processo central de amplificação da sensibilidade.</p>
+</div>
+
+</div>
+</section>
+
+<section id="quadro-clinico" class="topic-section" style="--accent:var(--c5)">
+  <div class="section-header"><h2 class="tag">1.5 — Sinais e Sintomas: Quadro Clínico e Semiologia</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>O quadro clínico da fibromialgia decorre diretamente de tudo o que vimos na fisiopatologia — não é uma lista arbitrária de sintomas, é a expressão sensorial, cognitiva e autonômica de um sistema de processamento central hipersensibilizado.</p>
+
+<h3>Dor difusa (o sintoma nuclear)</h3>
+<p>A dor é descrita como difusa, migratória, acometendo tipicamente os quatro quadrantes corporais e o esqueleto axial, com qualidade que os pacientes costumam descrever como "queimação", "peso" ou "moedura", flutuando em intensidade ao longo do dia e frequentemente piorando com frio, estresse emocional, esforço físico e privação de sono — todos eles gatilhos plausíveis de exacerbação da sensibilização central que já discutimos.</p>
+
+<h3>Alodinia e hiperalgesia</h3>
+<p>Dois termos semiológicos que você precisa dominar e diferenciar com precisão: <i class="destaque">alodinia</i> é a percepção de dor diante de um estímulo que normalmente não é doloroso (por exemplo, o simples toque de um lençol ou de roupas apertadas); <i class="destaque">hiperalgesia</i> é uma resposta dolorosa exagerada diante de um estímulo que já seria normalmente doloroso, porém de menor intensidade do que a resposta observada. Ambos os fenômenos são a tradução clínica direta, à beira do leito, dos mecanismos de sensibilização central e wind-up detalhados na seção 3.</p>
+
+<h3>Fadiga e sono não-restaurador</h3>
+<p>Praticamente universal, frequentemente tão ou mais incapacitante que a própria dor. Como vimos, relaciona-se à fragmentação do sono de ondas lentas (anomalia alfa-delta) e à consequente redução da secreção de GH e de outros processos restauradores noturnos.</p>
+
+<h3>Disfunção cognitiva ("fibro fog")</h3>
+<p>Queixas de dificuldade de concentração, lentificação do raciocínio, lapsos de memória de curto prazo e dificuldade em encontrar palavras. Esse sintoma tem correlato objetivo em testes neuropsicológicos e provavelmente reflete tanto a privação crônica de sono quanto a alocação competitiva de recursos atencionais do córtex pré-frontal, que está simultaneamente processando um sinal doloroso amplificado e constante.</p>
+
+<h3>Sintomas somáticos associados e sintomas do humor</h3>
+<p>Cefaleia (tensional e enxaqueca), sintomas do intestino irritável (dor abdominal, alternância de hábito intestinal), disfunção temporomandibular, parestesias sem correlato neuropático estrutural, síndrome das pernas inquietas, dismenorreia, sensação subjetiva de edema em mãos e pés (sem edema objetivo à inspeção), e sintomas ansiosos e depressivos comórbidos — cuja relação causal bidirecional com a dor será aprofundada na seção 16.</p>
+
+<div class="alert alert-atencao">
+  <span class="alert-label">Atenção — sinais de alarme (red flags)</span>
+  <p>A fibromialgia não cursa com sinovite objetiva, febre, perda ponderal significativa não intencional, linfonodomegalia, rigidez matinal prolongada com edema articular franco, ou alterações consistentes em exames inflamatórios/autoimunes. A presença de qualquer um desses achados deve interromper o raciocínio de fibromialgia como diagnóstico isolado e redirecionar a investigação para uma doença reumatológica inflamatória, infecciosa ou neoplásica subjacente — veja a seção 07.</p>
+</div>
+
+</div>
+</section>
+
+<section id="diagnostico" class="topic-section" style="--accent:var(--c6)">
+  <div class="section-header"><h2 class="tag">1.6 — Diagnóstico: Critérios da ACR</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>A fibromialgia é, e continua sendo, um <i class="destaque">diagnóstico clínico</i>. Não existe biomarcador sérico, achado de imagem ou teste laboratorial que a confirme — o diagnóstico se apoia inteiramente na história e no exame físico, interpretados à luz de critérios padronizados que evoluíram substancialmente ao longo das últimas três décadas. Entender essa evolução é importante porque ela reflete, na prática, a própria mudança de paradigma que discutimos na seção 01: de um modelo centrado em "achar pontos dolorosos periféricos" para um modelo que valoriza os sintomas centrais de amplificação sensorial.</p>
+
+<h3>1990 — Critérios do American College of Rheumatology (tender points)</h3>
+<p>O critério histórico exigia dor difusa há pelo menos três meses associada a dor à palpação digital (com pressão padronizada de aproximadamente 4 kg) em pelo menos 11 de 18 pontos anatômicos específicos (os "tender points"), distribuídos simetricamente. Embora historicamente importante — e ainda mencionado em provas por seu valor didático — esse critério caiu em desuso por depender de um exame físico pouco reprodutível entre examinadores e por ignorar completamente sintomas centrais como fadiga e disfunção cognitiva, hoje reconhecidos como igualmente nucleares.</p>
+
+<h3>2010/2011 e a revisão de 2016 — WPI e SSS</h3>
+<p>Os critérios atuais (Wolfe e colaboradores, com a revisão de 2016 sendo a mais utilizada na prática e em pesquisa) abandonaram a exigência do exame físico de pontos dolorosos e passaram a se basear em dois instrumentos:</p>
+
+<div class="card-grid">
+  <div class="card">
+    <h4>WPI — Índice de Dor Difusa</h4>
+    <p>O paciente indica em quais das 19 regiões corporais pré-definidas sentiu dor na última semana (ombros, braços, antebraços, quadris, coxas, pernas, mandíbula, tórax, abdome, coluna cervical, dorsal e lombar, de ambos os lados do corpo). A pontuação varia de 0 a 19, um ponto por região referida.</p>
+  </div>
+  <div class="card">
+    <h4>SSS — Escala de Gravidade de Sintomas</h4>
+    <p>Pontua de 0 a 3 a intensidade de três sintomas nucleares (fadiga, sono não-restaurador, sintomas cognitivos) somada a uma pontuação de 0 a 3 pela quantidade de sintomas somáticos associados (cefaleia, cólicas abdominais, depressão, entre outros). Pontuação total de 0 a 12.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Critério diagnóstico combinado (ACR 2016)</h4>
+  <p>Um paciente preenche critério para fibromialgia quando presentes, simultaneamente: (1) dor generalizada, definida como dor em pelo menos 4 de 5 regiões corporais; (2) sintomas presentes em nível similar de intensidade há pelo menos 3 meses; e (3) <i class="destaque">WPI ≥ 7 associado a SSS ≥ 5</i>, <i class="destaque">OU</i> <i class="destaque">WPI entre 4 e 6 associado a SSS ≥ 9</i>. Um detalhe conceitualmente importante da revisão de 2016: o diagnóstico de fibromialgia é válido independentemente de outros diagnósticos presentes — ou seja, não é mais um diagnóstico de exclusão, e não deixa de ser considerado apenas porque o paciente também tem, por exemplo, artrite reumatoide ou hipotireoidismo.</p>
+</div>
+
+<details class="deepen">
+  <summary>Aprofunde-se: por que abandonar os tender points foi uma mudança conceitual, não apenas metodológica</summary>
+  <div class="deepen-content">
+  <p>A transição dos tender points para o WPI/SSS não foi apenas uma busca por maior reprodutibilidade — foi o reflexo direto da mudança de entendimento fisiopatológico que você já domina. Se a fibromialgia fosse fundamentalmente um problema de hipersensibilidade em pontos musculares específicos, faria sentido mapeá-los. Mas como vimos, o problema é um sistema de processamento central globalmente amplificado — e por isso faz mais sentido clínico e fisiopatológico capturar a extensão da dor corporal (WPI) e os sintomas centrais associados de fadiga, sono e cognição (SSS), que são a verdadeira "impressão digital" clínica da sensibilização central, do que depender da técnica e da força de palpação de um examinador em 18 pontos arbitrários.</p>
+  </div>
+</details>
+
+</div>
+</section>
+
+<section id="diferencial" class="topic-section" style="--accent:var(--c7)">
+  <div class="section-header"><h2 class="tag">1.7 — Diagnóstico Diferencial</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Como todo diagnóstico clínico sem biomarcador confirmatório, a fibromialgia exige raciocínio ativo de exclusão de condições que podem mimetizá-la — mas, atenção, <i class="destaque">exclusão racional e dirigida pela clínica</i>, não uma bateria indiscriminada de exames (isso será discutido criticamente na próxima seção). Vamos construir as hipóteses em ordem de relevância clínica, sempre justificando o que sustenta ou afasta cada uma.</p>
+
+<div class="card-grid">
+  <div class="card">
+    <h4>Hipotireoidismo</h4>
+    <p>Fadiga, mialgia difusa, intolerância ao frio e ganho ponderal podem mimetizar fibromialgia quase perfeitamente. É rastreado com um único exame simples (TSH) e deve sempre ser excluído antes de fechar o diagnóstico, dado o baixo custo e a alta relevância — e porque, ao contrário da fibromialgia, tem tratamento etiológico direto e curativo dos sintomas.</p>
+  </div>
+  <div class="card">
+    <h4>Polimialgia reumática</h4>
+    <p>Tipicamente em pacientes acima de 50 anos, com dor e rigidez proximais (cíngulos escapular e pélvico), VHS/PCR classicamente muito elevados e resposta dramática e rápida a corticosteroides em baixa dose — resposta que a fibromialgia não apresenta, já que não é uma condição inflamatória.</p>
+  </div>
+  <div class="card">
+    <h4>Artrite reumatoide / lúpus / espondiloartrites</h4>
+    <p>Diferenciadas pela presença de sinovite objetiva (articulações quentes, edemaciadas, com derrame — achado ausente na fibromialgia), rigidez matinal prolongada com edema articular verdadeiro, e sorologia/marcadores inflamatórios compatíveis. Lembre-se, porém, que essas condições podem coexistir com fibromialgia secundária sobreposta — a presença de uma não exclui automaticamente a outra.</p>
+  </div>
+  <div class="card">
+    <h4>Síndrome miofascial</h4>
+    <p>Dor localizada (não difusa) associada a pontos-gatilho (trigger points) que, à palpação, reproduzem dor referida em um padrão característico e à distância — diferente dos antigos tender points, que apenas doíam localmente sem irradiação característica.</p>
+  </div>
+  <div class="card">
+    <h4>Síndrome de fadiga crônica / encefalomielite miálgica</h4>
+    <p>Sobreposição frequente e considerável. A distinção clássica é que, na síndrome de fadiga crônica, a fadiga profunda e a intolerância ao esforço (mal-estar pós-esforço) dominam o quadro, enquanto na fibromialgia a dor difusa é o sintoma nuclear — mas, na prática, muitos pacientes preenchem critérios para ambas simultaneamente.</p>
+  </div>
+  <div class="card">
+    <h4>Neuropatias periféricas / miopatias</h4>
+    <p>Considerar especialmente se houver déficits neurológicos focais, fraqueza muscular objetiva (não apenas subjetiva) ou elevação significativa de CK — achados que não são esperados na fibromialgia isolada.</p>
+  </div>
+  <div class="card">
+    <h4>Depressão maior / transtornos de ansiedade</h4>
+    <p>Podem cursar com fadiga, queixas somáticas difusas e disfunção cognitiva. A relação entre esses transtornos e a fibromialgia é discutida em profundidade na seção 16 — eles frequentemente coexistem, mais do que competem como diagnóstico único.</p>
+  </div>
+  <div class="card">
+    <h4>Neoplasias e doenças infecciosas crônicas</h4>
+    <p>Sempre devem ser consideradas quando há sinais de alarme (perda ponderal não intencional, febre, sudorese noturna, linfonodomegalia) — sintomas ausentes no perfil típico da fibromialgia e que nunca devem ser atribuídos a ela sem investigação adequada.</p>
+  </div>
+</div>
+
+</div>
+</section>
+
+<section id="exames" class="topic-section" style="--accent:var(--c8)">
+  <div class="section-header"><h2 class="tag">1.8 — Exames Complementares</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Aqui está um dos pontos de maior maturidade clínica exigidos nesta unidade: saber que, na fibromialgia, o papel dos exames complementares é <i class="destaque">estreito e claramente delimitado</i> — excluir diferenciais plausíveis, não "procurar a fibromialgia". Pedir exame sem essa clareza de propósito é, no mínimo, ineficiente, e no pior cenário, iatrogênico.</p>
+
+<h3>Exames laboratoriais básicos — por que pedir cada um</h3>
+<div class="card-grid">
+  <div class="card">
+    <h4>Hemograma completo</h4>
+    <p>Rastreia anemia (que causaria fadiga por mecanismo diferente) e sinais indiretos de processo inflamatório, infeccioso ou neoplásico oculto.</p>
+  </div>
+  <div class="card">
+    <h4>VHS e PCR</h4>
+    <p>Rastreiam atividade inflamatória sistêmica. Na fibromialgia isolada, esperam-se valores normais — sua elevação deve reorientar a investigação para uma causa inflamatória verdadeira, como polimialgia reumática ou uma conectivopatia.</p>
+  </div>
+  <div class="card">
+    <h4>TSH</h4>
+    <p>Exclui hipotireoidismo, diferencial de altíssima relevância e prevalência, com tratamento etiológico simples e eficaz.</p>
+  </div>
+  <div class="card">
+    <h4>CK (creatinoquinase)</h4>
+    <p>Exclui miopatia como causa da dor muscular e fadiga; espera-se normal na fibromialgia, já que não há lesão miocitária estrutural.</p>
+  </div>
+  <div class="card">
+    <h4>Vitamina D</h4>
+    <p>A deficiência pode causar mialgia difusa e fadiga, sendo um diferencial tratável relevante e prevalente, especialmente pertinente de ser rastreado e corrigido.</p>
+  </div>
+  <div class="card">
+    <h4>FAN, fator reumatoide — apenas se houver suspeita clínica</h4>
+    <p>Não devem ser solicitados de forma indiscriminada. Reservados para quando a história ou o exame físico sugerem especificamente uma conectivopatia (por exemplo, fotossensibilidade, úlceras orais, sinovite objetiva) — solicitá-los sem essa suspeita clínica gera falsos positivos frequentes (o FAN é positivo em título baixo em uma parcela significativa da população saudável), gerando ansiedade e investigações desnecessárias em cascata.</p>
+  </div>
+</div>
+
+<h3>Diagnóstico por imagem</h3>
+<p>Não há indicação rotineira de radiografia, ultrassonografia, tomografia ou ressonância magnética para o diagnóstico de fibromialgia em si. Esses exames só se justificam quando há suspeita clínica dirigida de uma condição estrutural específica concomitante (por exemplo, uma radiculopatia com déficit neurológico focal, ou artrite com sinovite objetiva à suspeita de doença articular inflamatória). Pedir ressonância de coluna "para ver se está tudo bem", na ausência de sinais de alarme, tem baixíssimo rendimento diagnóstico e alto risco de encontrar achados incidentais (como protrusões discais leves, extremamente comuns mesmo em assintomáticos) que podem ser interpretados equivocadamente como "a causa" da dor, reforçando crenças de dano estrutural que, paradoxalmente, pioram o prognóstico ao alimentar cinesiofobia e catastrofização.</p>
+
+<div class="alert alert-atencao">
+  <span class="alert-label">Atenção</span>
+  <p>O excesso de investigação não é neutro — ele tem custo clínico real. Reforça no paciente a crença (compreensível, mas contraproducente) de que "deve haver algo grave ainda não encontrado", atrasa o início do tratamento eficaz, consome recursos de saúde e pode gerar cascatas de investigação de achados incidentais irrelevantes. Solicitar exames de forma criteriosa e explicar objetivamente por que eles não são necessários é, em si, parte do tratamento — e será retomado na seção 17.</p>
+</div>
+
+</div>
+</section>
+
+<section id="tratamento-geral" class="topic-section" style="--accent:var(--c9)">
+  <div class="section-header"><h2 class="tag">1.9 — Tratamento Farmacológico: Princípios Gerais</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Antes de mergulharmos nos quatro grupos farmacológicos pedidos nos objetivos desta SP, vale estabelecer o panorama geral — porque um erro comum é tratar a farmacologia como protagonista isolada, quando as diretrizes internacionais são categóricas ao afirmar o oposto.</p>
+
+<p>A diretriz da <i class="destaque">European League Against Rheumatism</i> (EULAR), revisada em 2016/2017 e ainda referência central na área, recomenda um modelo de tratamento <i class="destaque">escalonado e centrado no paciente</i>: educação sobre a natureza da condição como primeiro passo obrigatório, seguida de intervenções não farmacológicas como pilar terapêutico principal (com recomendação forte para exercício físico), reservando-se a farmacologia para pacientes com resposta inadequada às medidas não farmacológicas ou com sintomas suficientemente graves para justificar intervenção combinada desde o início.</p>
+
+<div class="alert alert-chave">
+  <span class="alert-label">Ponto-chave sobre força de evidência</span>
+  <p>É importante que você saiba diferenciar, como um bom leitor crítico de diretrizes: a única recomendação classificada como <i class="destaque">forte</i> pela EULAR é o exercício físico. Todas as recomendações farmacológicas (amitriptilina, duloxetina, tramadol, pregabalina) são classificadas como <i class="destaque">fracas/condicionais</i> — refletindo evidência de qualidade moderada a baixa e efeito clínico geralmente modesto. Isso não significa que sejam inúteis; significa que devem ser usadas com expectativas realistas, como parte de uma estratégia multimodal, e nunca como solução isolada.</p>
+</div>
+
+<h3>Panorama farmacológico geral (antes de aprofundar nas quatro classes pedidas)</h3>
+<p>Além das quatro classes que serão detalhadas nas seções 11 a 14 (tricíclicos, canabinoides, ISRS e IRSN), vale citar brevemente outras ferramentas farmacológicas com respaldo em diretrizes, para que você tenha o quadro completo:</p>
+<div class="card-grid">
+  <div class="card">
+    <h4>Pregabalina e gabapentina (ligantes α2δ)</h4>
+    <p>Ligam-se à subunidade α2δ dos canais de cálcio voltagem-dependentes nos terminais pré-sinápticos, reduzindo o influxo de cálcio e, consequentemente, a liberação de glutamato e substância P no corno dorsal. A pregabalina foi o primeiro fármaco aprovado pelo FDA especificamente para fibromialgia (2007). No Brasil, é medicamento controlado (lista B1, notificação de receita), o que deve ser considerado no planejamento terapêutico.</p>
+  </div>
+  <div class="card">
+    <h4>Tramadol</h4>
+    <p>Opioide atípico com duplo mecanismo — agonismo fraco em receptores μ associado à inibição da recaptação de serotonina e noradrenalina. Essa segunda ação (compartilhada conceitualmente com os IRSN) provavelmente explica boa parte de seu efeito em dor nociplástica, mais do que o componente opioide puro. É considerado com recomendação fraca pela EULAR, reservado para casos refratários.</p>
+  </div>
+  <div class="card">
+    <h4>Ciclobenzaprina</h4>
+    <p>Relaxante muscular estruturalmente análogo aos tricíclicos, com mecanismo central (não periférico na junção neuromuscular) e algum efeito sobre a arquitetura do sono, sendo usado principalmente para a queixa de sono não-restaurador e tensão muscular associada.</p>
+  </div>
+</div>
+
+<div class="alert alert-atencao">
+  <span class="alert-label">Atenção — o que evitar</span>
+  <p>Opioides fortes (morfina, oxicodona) e corticosteroides não têm respaldo em evidência para fibromialgia — a condição não é inflamatória, e os opioides fortes carregam risco real de hiperalgesia induzida por opioides (um fenômeno paradoxal em que o uso crônico de opioides potentes pode, via neuroplasticidade central, piorar a sensibilização em vez de aliviá-la), além do risco conhecido de dependência. Esse ponto será retomado com mais profundidade na seção 17.</p>
+</div>
+
+</div>
+</section>
+
+<section id="nao-farmaco" class="topic-section" style="--accent:var(--c10)">
+  <div class="section-header"><h2 class="tag">1.10 — Tratamento Não Farmacológico</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Se você guardar apenas uma frase desta seção, que seja esta: no tratamento da dor nociplástica, as medidas não farmacológicas não são "complementares" no sentido de secundárias — são, pela própria evidência disponível, o pilar terapêutico com maior respaldo científico. Vamos entender o racional fisiopatológico de cada uma, e não apenas listá-las.</p>
+
+<h3>Exercício físico — a única recomendação forte</h3>
+<p>Por que exercício, especificamente, ajuda um sistema nervoso central hipersensibilizado? O racional fisiopatológico é multifatorial: o exercício aeróbico regular promove <i class="destaque">hipoalgesia induzida por exercício</i>, um fenômeno mediado por liberação de opioides endógenos e pela ativação do próprio sistema de modulação descendente que vimos estar deficiente na fibromialgia — ou seja, o exercício literalmente treina e fortalece o freio inibitório central que está falhando. Além disso, melhora a qualidade do sono, reduz a hipervigilância corporal (menos medo do movimento, menos cinesiofobia), promove neuroplasticidade adaptativa e reverte o descondicionamento físico que se instala pelo próprio ciclo de evitação da dor. A recomendação prática é iniciar com intensidade baixa e progressão muito gradual — começar "forte demais" pode desencadear um flare de dor e reforçar negativamente a crença de que "exercício piora", sabotando a adesão.</p>
+
+<h3>Terapia cognitivo-comportamental (TCC)</h3>
+<p>Atua diretamente sobre a catastrofização (o padrão cognitivo de ruminação, magnificação e desamparo diante da dor, que discutiremos com mais detalhe na seção 16) e sobre comportamentos de evitação relacionados ao medo da dor. Ao reestruturar esses padrões cognitivo-comportamentais, a TCC reduz a amplificação afetivo-cognitiva da experiência dolorosa — lembre-se de que o córtex pré-frontal e o sistema límbico participam ativamente da modulação descendente, então intervenções que atuam nesse nível "de cima para baixo" (top-down) têm racional neurobiológico legítimo, não são apenas "suporte psicológico" genérico.</p>
+
+<h3>Educação do paciente</h3>
+<p>Explicar ao paciente, em linguagem acessível, o próprio mecanismo da dor nociplástica — que seu sistema nervoso está "com o volume aumentado", e não que "não há nada de errado" — é, isoladamente, uma intervenção terapêutica com respaldo em ensaios clínicos (a chamada educação em neurociência da dor). Reduz o medo, reduz a catastrofização e reduz a busca por exames repetidos. Essa mesma lógica orienta toda a seção 17 desta unidade.</p>
+
+<h3>Higiene do sono e demais intervenções</h3>
+<p>Dado o papel central da anomalia alfa-delta na fisiopatologia, medidas de higiene do sono (regularidade de horários, redução de estimulantes à noite, ambiente adequado) têm racional direto. Outras intervenções com evidência de qualidade variável, mas mencionadas nas diretrizes, incluem acupuntura, hidroterapia/exercícios aquáticos e terapias de movimento meditativo como ioga, tai chi e qigong — que combinam componente de exercício físico gradual com componentes de atenção plena e redução do estresse.</p>
+
+<div class="alert alert-clinico">
+  <span class="alert-label">Correlação clínica</span>
+  <p>Na prática, a estratégia mais eficaz combina abordagem multidisciplinar desde o início: educação + exercício progressivo + suporte psicológico (TCC) + farmacologia adjuvante quando necessário — nunca farmacologia isolada como única intervenção.</p>
+</div>
+
+</div>
+</section>
+
+<!-- fecha pergunta1 --></div>
+
+<div class="pergunta-group" id="pergunta2">
+<div class="pergunta-banner" style="--pcolor:var(--c5)">
+  <div class="pergunta-num">Pergunta 2 do PBL</div>
+  <h2 class="pergunta-titulo">Mecanismo de Ação dos Fármacos na Dor Nociplástica</h2>
+  <p class="pergunta-enunciado">a. Antidepressivos tricíclicos · b. Canabinoides · c. Inibidores seletivos da recaptação de serotonina · d. Inibidores da recaptação de serotonina e noradrenalina.</p>
+</div>
+
+<section id="farmaco-tca" class="topic-section" style="--accent:var(--c11)">
+  <div class="section-header"><h2 class="tag">2a — Antidepressivos Tricíclicos</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Vamos usar a amitriptilina como protótipo desta classe, por ser o tricíclico mais estudado e mais utilizado em dor nociplástica — e também porque seu perfil farmacológico "promíscuo" (atuando em múltiplos receptores, não apenas um) é justamente o que torna essa classe tão didaticamente rica.</p>
+
+<h3>Classe e alvo farmacológico primário</h3>
+<p>Os antidepressivos tricíclicos bloqueiam, de forma não seletiva, os transportadores de recaptação de serotonina (SERT) e de noradrenalina (NET) nos terminais pré-sinápticos, aumentando a disponibilidade sináptica de ambos os neurotransmissores. Até aqui, o mecanismo lembra o dos IRSN (seção 14) — mas a amitriptilina não para por aí, e é essa "promiscuidade farmacológica" que explica tanto seu potencial terapêutico ampliado quanto seu perfil de efeitos adversos mais carregado.</p>
+
+<h3>Mecanismo molecular da analgesia — por que funciona na dor</h3>
+<p>O aumento de serotonina e noradrenalina na fenda sináptica reforça exatamente o sistema que vimos falhar na fisiopatologia: a modulação descendente inibitória originada na PAG e retransmitida pela RVM e pelo locus coeruleus. A noradrenalina liberada nos terminais que chegam ao corno dorsal atua em receptores α2-adrenérgicos pré e pós-sinápticos, inibindo diretamente a liberação de neurotransmissores excitatórios dos aferentes primários e hiperpolarizando o neurônio de segunda ordem. A serotonina, por sua vez, atua em interneurônios do corno dorsal que liberam encefalinas, reforçando a inibição opioide endógena local.</p>
+
+<details class="deepen">
+  <summary>Aprofunde-se: para além da recaptação de monoaminas — os outros alvos da amitriptilina</summary>
+  <div class="deepen-content">
+  <p>Três mecanismos adicionais, menos conhecidos, ajudam a explicar por que os tricíclicos têm efeito analgésico particularmente robusto:</p>
+  <p><i class="destaque">Bloqueio de canais de sódio voltagem-dependentes</i> — de forma análoga aos anestésicos locais, a amitriptilina reduz a excitabilidade de membrana e o disparo ectópico repetitivo de neurônios sensibilizados, tanto perifericamente quanto centralmente.</p>
+  <p><i class="destaque">Antagonismo fraco do receptor NMDA</i> — em concentrações clinicamente relevantes, a amitriptilina exerce um bloqueio adicional sobre o próprio receptor que você aprendeu ser o motor molecular do wind-up (seção 3), atenuando diretamente a sensibilização central em sua origem.</p>
+  <p><i class="destaque">Antagonismo H1 (anti-histamínico)</i> — responsável pela sedação pronunciada, propriedade que é terapeuticamente aproveitada ao prescrever o fármaco à noite, atacando simultaneamente a queixa de sono não-restaurador.</p>
+  <details class="deepen deepen-2">
+    <summary>Ainda mais fundo: por que a dose analgésica é tão menor que a dose antidepressiva?</summary>
+    <div class="deepen-content">
+    <p>Este é um dos achados mais didaticamente ricos da farmacologia da dor: doses de amitriptilina de apenas 10 a 25 mg à noite (ocasionalmente até 50 mg) já produzem efeito analgésico mensurável em fibromialgia e dor neuropática, enquanto o efeito antidepressivo clássico exige doses de 150 a 300 mg/dia. Além disso, o efeito analgésico costuma surgir em poucos dias, ao passo que o efeito antidepressivo demora classicamente de 2 a 6 semanas para se estabelecer. Essa dissociação de dose e de tempo de latência é um argumento farmacológico forte de que a analgesia não é simplesmente uma consequência secundária da melhora do humor — é um efeito direto e mecanisticamente distinto sobre a via nociceptiva central, provavelmente relacionado ao bloqueio de canais de sódio e ao antagonismo NMDA, que ocorrem em concentrações mais baixas do que as necessárias para a "reprogramação" adaptativa dos receptores monoaminérgicos que sustenta o efeito antidepressivo de longo prazo.</p>
+    </div>
+  </details>
+  </div>
+</details>
+
+<h3>Farmacocinética essencial</h3>
+<p>Metabolização hepática extensa via CYP2D6 e CYP1A2, com formação do metabólito ativo nortriptilina (que, por sua vez, é um tricíclico mais seletivo para NET). Meia-vida longa, compatível com dose única noturna. Polimorfismos do CYP2D6 (metabolizadores lentos versus ultrarrápidos) explicam parte da variabilidade individual de resposta e de efeitos adversos observada na prática.</p>
+
+<h3>Indicações</h3>
+<p>Fibromialgia (uso off-label, porém com respaldo consistente em diretrizes como a EULAR), dor neuropática de diversas etiologias, profilaxia de cefaleia tensional crônica e de enxaqueca, além da indicação clássica em depressão maior (em doses mais altas).</p>
+
+<h3>Contraindicações</h3>
+<p>Arritmias cardíacas e distúrbios de condução (o efeito quinidina-símile sobre canais de sódio cardíacos pode prolongar o intervalo QT e o complexo QRS), glaucoma de ângulo estreito (pelo efeito anticolinérgico), hipertrofia prostática com retenção urinária significativa, e uso concomitante com inibidores da monoaminoxidase (risco de síndrome serotoninérgica). Recomenda-se cautela e, em muitos serviços, avaliação eletrocardiográfica prévia em pacientes com fatores de risco cardiovascular ou idade avançada.</p>
+
+<h3>Efeitos adversos — organizados por mecanismo receptor</h3>
+<div class="card-grid">
+  <div class="card">
+    <h4>Antagonismo muscarínico (M1)</h4>
+    <p>Xerostomia, constipação, retenção urinária, visão turva e, em idosos, prejuízo cognitivo — a chamada carga anticolinérgica, motivo de cautela particular nessa população.</p>
+  </div>
+  <div class="card">
+    <h4>Antagonismo H1</h4>
+    <p>Sedação (aproveitada terapeuticamente à noite) e ganho de peso.</p>
+  </div>
+  <div class="card">
+    <h4>Antagonismo α1-adrenérgico</h4>
+    <p>Hipotensão ortostática, especialmente relevante em idosos pelo risco de quedas.</p>
+  </div>
+  <div class="card">
+    <h4>Cardiotoxicidade em superdosagem</h4>
+    <p>Janela terapêutica estreita — em superdosagem, o bloqueio de canais de sódio cardíacos pode causar arritmias ventriculares fatais. Ponto de segurança importante a considerar ao prescrever para pacientes com fibromialgia e depressão comórbida, dado o risco de uso em tentativa de autoextermínio.</p>
+  </div>
+</div>
+
+<h3>Posicionamento nas diretrizes</h3>
+<p>A EULAR classifica a amitriptilina como recomendação fraca/condicional, geralmente como primeira linha farmacológica pelo seu custo baixo e ampla disponibilidade, especialmente útil quando há sono não-restaurador proeminente — mas sempre pesando o perfil de efeitos adversos anticolinérgicos e cardíacos contra as alternativas mais seletivas (IRSN, seção 14).</p>
+
+</div>
+</section>
+
+<section id="farmaco-canabinoides" class="topic-section" style="--accent:var(--c12)">
+  <div class="section-header"><h2 class="tag">2b — Canabinoides</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Dos quatro grupos farmacológicos desta SP, os canabinoides são o mais recente na prática clínica e o que exige a leitura crítica mais cuidadosa da evidência disponível — vamos construir esse raciocínio com honestidade científica, sem exagerar nem descartar seu papel.</p>
+
+<h3>O sistema endocanabinoide — a base fisiológica necessária</h3>
+<p>Antes de falar do fármaco, é preciso entender o sistema que ele manipula. O sistema endocanabinoide é composto por dois receptores acoplados à proteína Gi/o — CB1 e CB2 —, por ligantes endógenos lipídicos (a anandamida e o 2-araquidonoilglicerol, o 2-AG) e pelas enzimas responsáveis por sua síntese e degradação (FAAH e MAGL, respectivamente).</p>
+<div class="card-grid">
+  <div class="card">
+    <h4>Receptor CB1</h4>
+    <p>Predominantemente pré-sináptico e concentrado no sistema nervoso central — especialmente hipocampo, cerebelo, gânglios da base e, criticamente para nós, na PAG, na RVM e no corno dorsal da medula. Sua ativação inibe a adenilato ciclase (reduzindo AMPc), inibe canais de cálcio voltagem-dependentes e ativa canais de potássio retificadores — o efeito final é a redução da liberação de neurotransmissores pré-sinápticos, tipicamente glutamato ou GABA, dependendo da sinapse.</p>
+  </div>
+  <div class="card">
+    <h4>Receptor CB2</h4>
+    <p>Predominantemente periférico, expresso em células do sistema imune (macrófagos, micróglia, mastócitos). Sua ativação tem efeito primariamente anti-inflamatório, com relevância direta para a hipótese de neuroinflamação glial discutida na seção 3.</p>
+  </div>
+</div>
+
+<p>Fisiologicamente, os endocanabinoides funcionam como mensageiros retrógrados: são sintetizados sob demanda no neurônio pós-sináptico e difundem-se "para trás" através da sinapse, ativando o CB1 pré-sináptico e suprimindo, de forma transitória, a liberação do neurotransmissor daquele terminal — um fenômeno chamado de supressão da excitação (ou da inibição) induzida por despolarização.</p>
+
+<h3>THC — mecanismo molecular</h3>
+<p>O delta-9-tetrahidrocanabinol é um <i class="destaque">agonista parcial</i> tanto de CB1 quanto de CB2. Sua ação em CB1 no sistema mesocorticolímbico é responsável pelos efeitos psicoativos (euforia, alteração de percepção temporal, prejuízo cognitivo), enquanto sua ação em CB1 na PAG, na RVM e no corno dorsal medular contribui para o efeito analgésico, reforçando indiretamente a modulação descendente ao suprimir a liberação de neurotransmissores inibitórios sobre as células ON facilitadoras — um mecanismo ainda mais elegantemente complexo do que parece à primeira vista, e ativo tema de pesquisa.</p>
+
+<h3>CBD — mecanismo molecular, mais complexo e menos intuitivo</h3>
+<p>Diferente do que a maioria assume, o canabidiol tem afinidade direta baixa pelos receptores CB1 e CB2 — seu mecanismo é multialvo e mais sutil:</p>
+<ul>
+  <li>Atua como modulador alostérico negativo do CB1, o que explica por que, quando coadministrado com THC, reduz alguns dos efeitos psicoativos deste último;</li>
+  <li>Agonista e dessensibilizador do receptor TRPV1 — o mesmo canal ativado pela capsaicina, envolvido na transdução nociceptiva periférica;</li>
+  <li>Agonista parcial do receptor serotoninérgico 5-HT1A, contribuindo para seu efeito ansiolítico e, potencialmente, para um componente analgésico central adicional;</li>
+  <li>Inibe a recaptação/hidrólise da anandamida, aumentando indiretamente o tônus endocanabinoide endógeno.</li>
+</ul>
+
+<div class="alert alert-controversia">
+  <span class="alert-label">Controvérsia — leitura crítica da evidência</span>
+  <p>É fundamental que você saiba posicionar esse grupo farmacológico com honestidade científica: revisões sistemáticas e a própria diretriz da EULAR consideram a evidência para canabinoides em fibromialgia de <i class="destaque">qualidade baixa e insuficiente</i> para uma recomendação robusta — alguns ensaios com nabilona (um análogo sintético do THC) mostraram benefício modesto em dor e sono, mas os estudos são pequenos, heterogêneos e com acompanhamento curto. Na prática, os canabinoides costumam ser considerados apenas em casos refratários às terapias de primeira e segunda linha, sempre com discussão compartilhada sobre efeitos adversos e expectativas realistas — nunca como primeira escolha.</p>
+</div>
+
+<h3>Farmacocinética, indicações e contexto regulatório brasileiro</h3>
+<p>THC e CBD têm metabolismo hepático via citocromo P450 (CYP3A4, CYP2C9), com potencial relevante de interações medicamentosas. No Brasil, produtos à base de canabidiol são regulamentados pela ANVISA, com vias de prescrição e importação específicas para uso medicinal, e a prescrição de produtos com maior teor de THC segue regras ainda mais restritivas — um ponto prático relevante para sua futura prática clínica.</p>
+
+<h3>Efeitos adversos</h3>
+<p>Tontura, sedação, prejuízo cognitivo (mais pronunciado com THC), boca seca, e, em predispostos, risco de sintomas psicóticos com formulações de alto teor de THC. Há também potencial de dependência com o uso crônico de THC, embora geralmente menor do que o observado com opioides.</p>
+
+</div>
+</section>
+
+<section id="farmaco-isrs" class="topic-section" style="--accent:var(--c13)">
+  <div class="section-header"><h2 class="tag">2c — Inibidores Seletivos da Recaptação de Serotonina (ISRS)</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Esta seção existe, em boa parte, para preparar o terreno conceitual da próxima — porque entender por que os ISRS são <i class="destaque">farmacologicamente mais fracos</i> para dor do que os IRSN é uma das perguntas mais elegantes (e mais cobradas) desta unidade.</p>
+
+<h3>Mecanismo molecular</h3>
+<p>Os inibidores seletivos da recaptação de serotonina — fluoxetina, sertralina, paroxetina, citalopram, escitalopram — bloqueiam seletivamente o transportador SERT, aumentando a disponibilidade sináptica de serotonina sem ação clinicamente relevante sobre o transportador de noradrenalina (NET), nem sobre os receptores histaminérgicos, muscarínicos ou α1-adrenérgicos que tornam os tricíclicos tão "carregados" de efeitos adversos. Essa seletividade é exatamente o motivo de sua excelente tolerabilidade — e, paradoxalmente, também é a razão de sua fraqueza analgésica relativa.</p>
+
+<h3>Por que a serotonina isolada não basta para uma boa analgesia central</h3>
+<p>Pergunta retórica que vale ouro em uma prova discursiva: se a serotonina reforça a modulação descendente, como vimos na seção 2, por que aumentar apenas serotonina não produz analgesia robusta e consistente? A resposta está na complexidade dos subtipos de receptores serotoninérgicos no corno dorsal e no tronco encefálico, que têm efeitos <i class="destaque">opostos</i> sobre a nocicepção, dependendo de qual subtipo é ativado:</p>
+
+<div class="card-grid">
+  <div class="card">
+    <h4>Receptores antinociceptivos</h4>
+    <p>5-HT1A e 5-HT1B/1D, localizados em vias descendentes inibitórias, contribuem para a analgesia quando ativados.</p>
+  </div>
+  <div class="card">
+    <h4>Receptores pró-nociceptivos</h4>
+    <p>5-HT2A e, especialmente, 5-HT3 (um receptor ionotrópico, não metabotrópico) presentes em aferentes primários e no corno dorsal, podem na verdade <i class="destaque">facilitar</i> a transmissão nociceptiva quando ativados por serotonina.</p>
+  </div>
+</div>
+
+<p>Como um ISRS aumenta a serotonina de forma inespecífica em toda a fenda sináptica, ele ativa simultaneamente receptores pró- e antinociceptivos, e o resultado final tende a ser um efeito líquido modesto, inconsistente e, em alguns contextos experimentais, até neutro sobre a dor — um contraste marcante com a noradrenalina, cujo efeito sobre o receptor α2-adrenérgico no corno dorsal é quase uniformemente inibitório. Essa é a explicação farmacológica central de por que a via noradrenérgica parece ser o componente mais crítico da analgesia via monoaminas — e é exatamente o componente que falta nos ISRS e que os IRSN adicionam.</p>
+
+<div class="alert alert-chave">
+  <span class="alert-label">Ponto-chave</span>
+  <p>Guarde esta equação conceitual para a prova: <i class="destaque">reforço serotoninérgico puro → efeito analgésico fraco e inconsistente</i>; <i class="destaque">reforço serotoninérgico + noradrenérgico combinado → efeito analgésico robusto e consistente</i>. É essa lógica farmacológica, e não mera coincidência histórica, que explica por que os IRSN — e não os ISRS — receberam aprovação regulatória específica para fibromialgia.</p>
+</div>
+
+<h3>Farmacocinética e papel clínico</h3>
+<p>Metabolismo hepático via diversas isoenzimas do citocromo P450 (variável conforme o fármaco), com meias-vidas que variam de curtas (paroxetina) a extremamente longas, no caso da fluoxetina, devido ao metabólito ativo norfluoxetina. Na prática da fibromialgia, os ISRS são reservados principalmente para o tratamento da depressão e ansiedade comórbidas — que discutiremos com profundidade na seção 16 — e não como estratégia analgésica de primeira linha. Vale mencionar um achado histórico interessante: um ensaio clínico clássico (Goldenberg e colaboradores, 1996) demonstrou que a combinação de fluoxetina com amitriptilina em baixas doses produzia melhor resposta analgésica do que qualquer um dos dois fármacos isoladamente — um resultado que, à luz do que acabamos de discutir, faz todo o sentido: a combinação reconstitui, por vias farmacológicas distintas, o reforço duplo serotoninérgico-noradrenérgico que cada fármaco isoladamente só entrega pela metade.</p>
+
+<h3>Efeitos adversos</h3>
+<p>Náusea e desconforto gastrointestinal inicial, disfunção sexual (efeito de classe relativamente comum e frequentemente subrelatado), ativação/inquietação inicial, hiponatremia por secreção inadequada de ADH — particularmente relevante em idosos —, risco de síndrome serotoninérgica em associações inadequadas, e síndrome de descontinuação ao suspender abruptamente (exceto com a fluoxetina, cuja meia-vida longa promove autodesmame gradual).</p>
+
+</div>
+</section>
+
+<section id="farmaco-irsn" class="topic-section" style="--accent:var(--c14)">
+  <div class="section-header"><h2 class="tag">2d — Inibidores da Recaptação de Serotonina e Noradrenalina (IRSN)</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Chegamos à classe farmacológica com o desenho racional mais direto para a dor nociplástica — e não por acaso, é a única, junto com a pregabalina, com aprovação regulatória específica para fibromialgia tanto pelo FDA quanto amplamente respaldada pelas principais diretrizes internacionais.</p>
+
+<h3>Mecanismo molecular</h3>
+<p>Os inibidores da recaptação de serotonina e noradrenalina — duloxetina e milnaciprano sendo os representantes com aprovação específica para fibromialgia, além da venlafaxina, usada de forma mais genérica em dor crônica — bloqueiam de forma dupla e mais equilibrada os transportadores SERT e NET, sem a ação relevante sobre receptores H1, muscarínicos ou α1-adrenérgicos que caracteriza os tricíclicos. Em outras palavras: eles entregam exatamente os dois braços do reforço monoaminérgico que identificamos como necessários na seção anterior — serotonina e noradrenalina — mas com a seletividade farmacológica que poupa o paciente da carga anticolinérgica, anti-histamínica e α-bloqueadora dos tricíclicos.</p>
+
+<div class="card-grid">
+  <div class="card">
+    <h4>Duloxetina</h4>
+    <p>Perfil de afinidade relativamente equilibrado entre SERT e NET, com discreta predominância serotoninérgica em doses baixas e contribuição noradrenérgica mais expressiva à medida que a dose aumenta. Aprovada pelo FDA para fibromialgia (2008), neuropatia diabética dolorosa, transtorno de ansiedade generalizada, depressão maior e dor musculoesquelética crônica (incluindo lombalgia crônica e osteoartrite).</p>
+  </div>
+  <div class="card">
+    <h4>Milnaciprano</h4>
+    <p>Curiosidade farmacológica genuína: tem afinidade relativamente maior pelo NET do que pelo SERT (proporção inversa à maioria dos antidepressivos), sendo, na prática, mais noradrenérgico que serotoninérgico. Foi aprovado pelo FDA especificamente para fibromialgia (2009) — e, ao contrário da duloxetina, não é aprovado nos Estados Unidos como antidepressivo, uma inversão histórica curiosa que ilustra bem como o eixo noradrenérgico é o componente crítico para a analgesia. Tem disponibilidade limitada no mercado brasileiro.</p>
+  </div>
+</div>
+
+<h3>Por que funciona — reforçando o freio descendente</h3>
+<p>O mecanismo analgésico é o mesmo já detalhado para os tricíclicos, porém sem os alvos "extras": aumento de noradrenalina disponível para os receptores α2-adrenérgicos no corno dorsal, potencializando a inibição pré e pós-sináptica da transmissão nociceptiva, associado ao reforço serotoninérgico via receptores 5-HT1 nas vias descendentes — o duplo reforço que, como vimos, é farmacologicamente superior ao reforço isolado de qualquer um dos dois sistemas.</p>
+
+<h3>Farmacocinética</h3>
+<p>A duloxetina é metabolizada no fígado principalmente pelas isoenzimas CYP1A2 e CYP2D6, formulada em cápsulas com revestimento entérico (a molécula é instável em meio ácido), com meia-vida de aproximadamente 12 horas, permitindo dose única diária. Existe alerta de hepatotoxicidade — deve ser evitada em hepatopatia significativa e em pacientes com consumo importante de álcool.</p>
+
+<h3>Indicações, contraindicações e interações</h3>
+<p>Além da fibromialgia, indicações consolidadas incluem neuropatia diabética periférica dolorosa, dor musculoesquelética crônica, transtorno depressivo maior e transtorno de ansiedade generalizada. Contraindicada em insuficiência hepática, uso concomitante de inibidores da MAO (risco de síndrome serotoninérgica) e deve ser usada com cautela em hipertensão não controlada, dado seu potencial efeito pressórico dose-dependente.</p>
+
+<h3>Efeitos adversos</h3>
+<p>Náusea é o mais frequente, especialmente no início do tratamento, tendendo a atenuar-se com a continuidade; xerostomia, constipação, sudorese excessiva, e elevação discreta e dose-dependente de pressão arterial e frequência cardíaca (mais pronunciada com venlafaxina e milnaciprano do que com duloxetina), refletindo o componente noradrenérgico. Disfunção sexual também ocorre, porém com frequência geralmente menor do que a observada com ISRS. Síndrome de descontinuação é possível com a suspensão abrupta.</p>
+
+<h3>Posicionamento nas diretrizes</h3>
+<p>Recomendação fraca/condicional pela EULAR, no mesmo patamar de evidência da amitriptilina e da pregabalina — mas com um perfil de tolerabilidade geralmente mais favorável, o que frequentemente as posiciona como alternativa de primeira linha em pacientes que não toleram os efeitos anticolinérgicos/sedativos dos tricíclicos, ou como segunda linha após falha destes.</p>
+
+</div>
+</section>
+
+<section id="comparacao" class="topic-section" style="--accent:var(--c15)">
+  <div class="section-header"><h2 class="tag">2e — Comparando as Quatro Classes</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Com as quatro classes já detalhadas, vale consolidar o raciocínio comparativo — o tipo de síntese que costuma aparecer em prova discursiva ou na discussão tutorial, pedindo para você "justificar a escolha" entre opções terapêuticas.</p>
+
+<div class="compare-grid">
+  <div class="compare-card">
+    <div class="ccard-title">Tricíclicos (amitriptilina)</div>
+    <dl>
+      <dt>Mecanismo central</dt><dd>SERT + NET + bloqueio de canal de sódio + antagonismo NMDA fraco</dd>
+      <dt>Força analgésica</dt><dd>Alta, multialvo</dd>
+      <dt>Tolerabilidade</dt><dd>Baixa — carga anticolinérgica, sedação, risco cardíaco em superdosagem</dd>
+      <dt>Melhor cenário de uso</dt><dd>Sono não-restaurador proeminente; paciente sem risco cardiovascular</dd>
+    </dl>
+  </div>
+  <div class="compare-card">
+    <div class="ccard-title">IRSN (duloxetina/milnaciprano)</div>
+    <dl>
+      <dt>Mecanismo central</dt><dd>SERT + NET, seletivo</dd>
+      <dt>Força analgésica</dt><dd>Boa — aprovação específica para fibromialgia</dd>
+      <dt>Tolerabilidade</dt><dd>Melhor que tricíclicos; náusea inicial e efeito pressórico dose-dependente</dd>
+      <dt>Melhor cenário de uso</dt><dd>Depressão/ansiedade comórbida; intolerância a tricíclicos</dd>
+    </dl>
+  </div>
+  <div class="compare-card">
+    <div class="ccard-title">ISRS</div>
+    <dl>
+      <dt>Mecanismo central</dt><dd>SERT isolado — ativa receptores serotoninérgicos pró- e antinociceptivos simultaneamente</dd>
+      <dt>Força analgésica</dt><dd>Fraca e inconsistente como monoterapia analgésica</dd>
+      <dt>Tolerabilidade</dt><dd>Boa</dd>
+      <dt>Melhor cenário de uso</dt><dd>Tratamento do transtorno depressivo/ansioso comórbido, não como analgésico primário</dd>
+    </dl>
+  </div>
+  <div class="compare-card">
+    <div class="ccard-title">Canabinoides</div>
+    <dl>
+      <dt>Mecanismo central</dt><dd>CB1/CB2, multialvo adicional para o CBD (TRPV1, 5-HT1A)</dd>
+      <dt>Força analgésica</dt><dd>Evidência ainda limitada e de baixa qualidade</dd>
+      <dt>Tolerabilidade</dt><dd>Variável — sedação, prejuízo cognitivo, risco psiquiátrico com THC</dd>
+      <dt>Melhor cenário de uso</dt><dd>Refratariedade às demais linhas, com discussão compartilhada de expectativas</dd>
+    </dl>
+  </div>
+</div>
+
+<div class="alert alert-chave">
+  <span class="alert-label">Ponto-chave para o PBL</span>
+  <p>Note o fio condutor: as três classes farmacológicas com melhor respaldo de evidência (tricíclicos, IRSN e, em menor grau, os ISRS combinados) atuam todas, em algum grau, reforçando o sistema descendente noradrenérgico/serotoninérgico que vimos falhar na fisiopatologia. A farmacologia da dor nociplástica não é uma coleção aleatória de fármacos "que funcionam por algum motivo" — é a aplicação lógica e direta do mecanismo fisiopatológico central que abre esta unidade.</p>
+</div>
+
+</div>
+</section>
+
+<!-- fecha pergunta2 --></div>
+
+<div class="pergunta-group" id="pergunta3">
+<div class="pergunta-banner" style="--pcolor:var(--c16)">
+  <div class="pergunta-num">Pergunta 3 do PBL</div>
+  <h2 class="pergunta-titulo">A Relação Causal entre Dor e Aspectos Emocionais</h2>
+  <p class="pergunta-enunciado">Qual a relação causal da dor com os aspectos emocionais?</p>
+</div>
+
+<section id="dor-emocao" class="topic-section" style="--accent:var(--c16)">
+  <div class="section-header"><h2 class="tag">Desenvolvimento — Dor e Emoção: Base Anatômica, Neuroquímica e Causalidade</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Chegamos a uma das perguntas mais ricas — e mais mal compreendidas na prática clínica — desta unidade. Muitos alunos, ao ouvir "relação entre dor e emoção", pensam automaticamente em causalidade unidirecional e simplista: "o paciente está deprimido, por isso sente dor" ou, pior, "a dor é psicológica". Ambas as formulações estão erradas. Vamos construir o raciocínio correto a partir da neuroanatomia que você já domina.</p>
+
+<h3>A dor nunca foi puramente sensorial — a base histórica: Melzack e a dimensão afetivo-motivacional</h3>
+<p>Desde a teoria da comporta de Melzack e Wall (1965) e, mais explicitamente, na proposta de Melzack e Casey (1968), a dor é conceituada como um fenômeno com três dimensões processadas em paralelo, não sequencialmente:</p>
+<div class="card-grid">
+  <div class="card">
+    <h4>Dimensão sensitivo-discriminativa</h4>
+    <p>Onde dói, quanto dói, que tipo de dor é — processada principalmente pelo trato espinotalâmico lateral, núcleos talâmicos laterais e córtex somatossensorial primário e secundário.</p>
+  </div>
+  <div class="card">
+    <h4>Dimensão afetivo-motivacional</h4>
+    <p>O quanto a dor é desagradável, o quanto gera sofrimento e urgência de escape — processada por vias espinorreticulares e espinomesencefálicas, núcleos talâmicos mediais, ínsula e córtex cingulado anterior.</p>
+  </div>
+  <div class="card">
+    <h4>Dimensão cognitivo-avaliativa</h4>
+    <p>O significado atribuído à dor, o contexto, as memórias e expectativas associadas — processada por regiões pré-frontais.</p>
+  </div>
+</div>
+<p>Repare que a dimensão afetivo-motivacional não é um "acréscimo emocional" à dor "de verdade" — ela é constitutivamente parte da experiência dolorosa, processada por estruturas cerebrais dedicadas desde a origem do sinal. A teoria mais recente do <i class="destaque">neuromatrix</i>, também de Melzack, radicaliza essa ideia ao propor que a dor é gerada por uma rede distribuída de estruturas cerebrais que integra essas três dimensões — e que essa rede pode, inclusive, gerar a experiência de dor mesmo na ausência completa de input nociceptivo periférico, como demonstra classicamente a dor do membro fantasma.</p>
+
+<h3>O substrato anatômico compartilhado entre dor e emoção</h3>
+<p>Aqui está o núcleo da resposta à pergunta 3: a ínsula e o córtex cingulado anterior (ACC) não são estruturas "emprestadas" ocasionalmente pelo sistema da dor para processar sofrimento — são hubs que processam, de forma constitutiva e sobreposta, tanto a dimensão afetiva da dor quanto emoções em geral (medo, nojo, ansiedade) e a interocepção (a percepção do estado interno do corpo). Estudos de neuroimagem mostram que a mesma região da ínsula anterior e do ACC se ativa tanto diante de dor física quanto diante de "dor social" (rejeição, luto) — uma sobreposição anatômica real, não metafórica.</p>
+
+<h3>O substrato neuroquímico compartilhado</h3>
+<p>Some a essa sobreposição anatômica uma sobreposição neuroquímica: serotonina e noradrenalina — os mesmos sistemas que vimos estar deficientes na modulação descendente da dor (seção 3) — são também os sistemas classicamente implicados na fisiopatologia dos transtornos do humor. Não é coincidência que a mesma classe farmacológica (antidepressivos) trate ambas as condições; é a consequência lógica de compartilharem um substrato neuroquímico final comum. O eixo hipotálamo-hipófise-adrenal, igualmente, é compartilhado: sua disfunção contribui tanto para quadros de ansiedade e depressão quanto para a manutenção da sensibilização central.</p>
+
+<div class="alert alert-chave">
+  <span class="alert-label">Ponto-chave</span>
+  <p>Isso explica um achado farmacológico que já discutimos e que agora ganha sentido mais profundo: o efeito analgésico dos tricíclicos e IRSN surge em dias, mais rápido que o efeito antidepressivo clássico (semanas). Isso sugere que a analgesia não depende de "primeiro melhorar o humor, depois a dor melhora por consequência" — os dois efeitos emergem de circuitos parcialmente distintos, ainda que compartilhem o mesmo substrato neuroquímico de origem.</p>
+</div>
+
+<h3>Causalidade bidirecional — os dois sentidos da seta</h3>
+<p>Com essa base, podemos finalmente responder à pergunta de forma precisa: a relação é genuinamente bidirecional, e ambos os sentidos têm mecanismo plausível.</p>
+
+<div class="card-grid">
+  <div class="card">
+    <h4>Dor → emoção</h4>
+    <p>Dor crônica gera sofrimento, incapacidade funcional, perda de papéis sociais e ocupacionais, isolamento social, privação de sono e, com frequência, desamparo aprendido — todos fatores de risco bem estabelecidos para depressão e ansiedade. A prevalência de depressão em populações com dor crônica é várias vezes maior que na população geral.</p>
+  </div>
+  <div class="card">
+    <h4>Emoção → dor</h4>
+    <p>Depressão, ansiedade, transtorno de estresse pós-traumático e, com peso particular, adversidade e trauma na infância são fatores de risco estabelecidos para o desenvolvimento de condições de dor nociplástica, incluindo fibromialgia — plausivelmente via reprogramação do eixo do estresse, hipervigilância corporal aumentada e eficiência reduzida da modulação descendente.</p>
+  </div>
+</div>
+
+<h3>Catastrofização — o elo cognitivo-afetivo mensurável</h3>
+<p>Um conceito específico merece destaque por sua relevância clínica direta: a <i class="destaque">catastrofização da dor</i> (formalizada por Sullivan e colaboradores por meio da Pain Catastrophizing Scale), caracterizada por três componentes — ruminação (foco repetitivo e involuntário na dor), magnificação (exagero da ameaça representada pela dor) e desamparo (sensação de incapacidade de lidar com ela). A catastrofização prediz, de forma independente e robusta, maior intensidade de dor relatada, maior incapacidade funcional e pior resposta a diversos tratamentos — e é justamente o alvo terapêutico central da terapia cognitivo-comportamental que discutimos na seção 10.</p>
+
+<div class="alert alert-atencao">
+  <span class="alert-label">Atenção — o que essa relação NÃO significa</span>
+  <p>Reconhecer essa relação bidirecional entre dor e emoção não equivale, de forma alguma, a dizer que a dor "é imaginária" ou "está na cabeça do paciente" em sentido pejorativo. O modelo biopsicossocial, formalizado por George Engel em 1977, integra as dimensões biológica, psicológica e social como componentes igualmente reais e mutuamente influentes de uma mesma experiência — nunca reduz o fenômeno a apenas uma delas. A dor nociplástica é sempre um evento neurofisiológico genuíno, com substrato biológico mensurável (como vimos exaustivamente na seção 3), cuja magnitude e qualidade são legitimamente moduladas pelo contexto emocional — assim como o contexto emocional é, por sua vez, legitimamente afetado pela dor. Essa distinção é o alicerce conceitual da próxima seção.</p>
+</div>
+
+</div>
+</section>
+
+<!-- fecha pergunta3 --></div>
+
+<div class="pergunta-group" id="pergunta4">
+<div class="pergunta-banner" style="--pcolor:var(--c18)">
+  <div class="pergunta-num">Pergunta 4 do PBL</div>
+  <h2 class="pergunta-titulo">A Postura do Médico Frente às Dores Crônicas</h2>
+  <p class="pergunta-enunciado">Qual deve ser a postura do médico frente às dores crônicas?</p>
+</div>
+
+<section id="postura-medica" class="topic-section" style="--accent:var(--c17)">
+  <div class="section-header"><h2 class="tag">Desenvolvimento — Pilares da Postura Clínica</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Esta última pergunta da SP não é retórica nem "soft skill" desconectada da ciência — é a aplicação prática direta de tudo o que construímos até aqui. Uma postura médica adequada frente à dor crônica nociplástica decorre logicamente da fisiopatologia, do diagnóstico e da relação dor-emoção que você acabou de estudar. Vamos organizar essa postura em pilares concretos e justificados, não como uma lista de bons modos.</p>
+
+<h3>Validar a realidade biológica da dor</h3>
+<p>Historicamente, pacientes com fibromialgia relatam, com frequência alarmante, terem sido descrentes por profissionais de saúde — ouvindo variações de "não há nada de errado com você" diante de exames normais. Você agora sabe, com profundidade mecanística, por que essa postura está cientificamente equivocada: exames normais refletem a ausência de dano tecidual periférico, exatamente como a própria definição de dor nociplástica prevê — eles não refletem ausência de disfunção biológica central mensurável (sensibilização, neuroquímica alterada, neuroimagem funcional alterada). Comunicar essa distinção ao paciente, de forma acessível, costuma ser em si terapêutico: reduz a sensação de descrença, reduz a catastrofização e frequentemente reduz a busca por investigações repetidas.</p>
+
+<h3>Investigar de forma criteriosa, não excessiva</h3>
+<p>Como discutido na seção 8, a solicitação indiscriminada de exames tem custo real: reforça a crença de doença estrutural não encontrada, atrasa o início do tratamento eficaz e pode gerar achados incidentais que alimentam ansiedade e comportamentos de evitação do movimento. A postura correta é investigar de forma dirigida pelos sinais de alarme e pela suspeita clínica específica — nem de menos (arriscando perder um diferencial grave), nem de mais.</p>
+
+<h3>Estabelecer expectativas realistas — de cura para função</h3>
+<p>Para muitos pacientes com dor nociplástica estabelecida, especialmente fibromialgia de longa data, "cura" não é um objetivo realista com as ferramentas terapêuticas atuais — e prometer isso implicitamente ao paciente tende a gerar frustração e sensação de fracasso terapêutico. A meta clinicamente honesta e alcançável é a melhora funcional e da qualidade de vida: dormir melhor, manter-se ativo, reduzir o impacto da dor nas atividades cotidianas, e desenvolver estratégias de autogerenciamento — um reposicionamento de expectativas que, paradoxalmente, costuma melhorar tanto a adesão quanto os desfechos percebidos pelo paciente.</p>
+
+<h3>Adotar abordagem biopsicossocial genuína, não sequencial</h3>
+<p>Abordar as dimensões biológica, psicológica e social de forma simultânea e integrada — não como "primeiro tentamos o biológico, se não der certo, aí encaminhamos para psicologia", uma sequência que o próprio paciente frequentemente interpreta como "então você acha que é coisa da minha cabeça". Rastrear e tratar ativamente comorbidades psiquiátricas (depressão, ansiedade, transtorno de estresse pós-traumático) desde a primeira consulta, com a mesma naturalidade com que se investiga hipotireoidismo.</p>
+
+<h3>Engajar equipe multidisciplinar</h3>
+<p>Fisioterapia e educação para exercício progressivo, psicologia/psiquiatria para terapia cognitivo-comportamental e manejo de comorbidades, e, quando necessário, reumatologia ou especialistas em dor — o manejo eficaz raramente é responsabilidade de um único profissional isolado.</p>
+
+<h3>Evitar opioides fortes como rotina</h3>
+<p>Como discutido na seção 9, opioides potentes carecem de evidência de benefício sustentado em fibromialgia e carregam risco real de hiperalgesia induzida por opioides, além do risco de dependência — uma diferença importante em relação ao manejo de dor aguda nociceptiva, onde os opioides mantêm papel bem estabelecido em contextos apropriados.</p>
+
+<h3>Sustentar continuidade e vínculo longitudinal</h3>
+<p>Condições crônicas se beneficiam de uma relação médico-paciente contínua e de confiança, em vez de atendimentos fragmentados e descontinuados — o vínculo terapêutico, por si, reduz a sensação de abandono tão frequentemente relatada por esses pacientes ao longo de sua trajetória diagnóstica, muitas vezes de anos, até o diagnóstico correto.</p>
+
+<div class="alert alert-clinico">
+  <span class="alert-label">Correlação clínica — resumindo a postura em uma frase</span>
+  <p>A postura ideal combina validação empática ("sua dor é real e tem explicação biológica") com honestidade sobre prognóstico ("não prometo cura, mas prometo trabalhar com você para melhorar sua função") e ação concreta multidisciplinar — nunca minimização ("é psicológico"), nunca medicalização excessiva ("vamos fazer mais exames e tentar mais um remédio forte"), e nunca abandono ("não encontrei nada, procure outro especialista").</p>
+</div>
+
+</div>
+</section>
+
+<!-- fecha pergunta4 --></div>
+
+<section id="integracao" class="topic-section" style="--accent:var(--c18)">
+  <div class="section-header"><h2 class="tag">Síntese Final — Integração Clínica</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<div class="integracao-box">
+<p>Vamos amarrar os fios que percorreram toda esta unidade. A dor nociplástica introduz um terceiro mecanismo de dor — nem lesão periférica (nociceptiva), nem lesão do sistema somatossensorial (neuropática), mas um sistema de processamento central anatomicamente íntegro, porém funcionalmente hipersensibilizado. A fibromialgia é sua expressão clínica mais bem caracterizada, e todo o seu quadro clínico — dor difusa, alodinia, hiperalgesia, fadiga, sono não-restaurador, disfunção cognitiva — decorre diretamente de dois defeitos fisiopatológicos centrais e simultâneos: um acelerador de sensibilização hiperativo (wind-up, hiperativação do NMDA, glutamato e substância P elevados) e um freio de modulação descendente hipoativo (deficiência serotoninérgica e noradrenérgica, falência da CPM).</p>
+
+<p>É exatamente esse segundo defeito — o freio insuficiente — que a farmacologia mira diretamente: tricíclicos e IRSN reforçam simultaneamente serotonina e noradrenalina, reconstituindo o braço inibitório descendente; os ISRS, ao aumentarem apenas serotonina, ativam receptores com efeitos opostos sobre a nocicepção e por isso entregam analgesia mais fraca e inconsistente; os canabinoides atuam por uma via distinta — o sistema endocanabinoide retrógrado — com evidência ainda em consolidação. Nenhuma dessas ferramentas farmacológicas, isoladamente, é curativa; todas têm recomendação fraca nas diretrizes, e é o exercício físico, a educação do paciente e a terapia cognitivo-comportamental que carregam o maior peso de evidência — porque atuam diretamente sobre o mesmo sistema de modulação descendente disfuncional, por vias comportamentais e neuroplásticas, em vez de farmacológicas.</p>
+
+<p>A dimensão emocional não é um apêndice dessa história — ela compartilha, literalmente, a mesma anatomia (ínsula, córtex cingulado anterior) e a mesma neuroquímica (serotonina, noradrenalina, eixo do estresse) do sistema de processamento da dor. Por isso a relação entre dor e emoção é bidirecional e biologicamente fundamentada, nunca uma forma velada de dizer que "a dor não é real". E é exatamente essa compreensão integrada — biológica, sem reducionismo psicológico, e psicológica, sem negação biológica — que deve orientar a postura do médico: validar, investigar com critério, tratar de forma multimodal e acompanhar com continuidade, substituindo a meta inatingível de "cura" pela meta realista e clinicamente honesta de função e qualidade de vida.</p>
+
+<p>Para a discussão tutorial, essa é a linha de raciocínio que deve estar pronta na ponta da língua: mecanismo → fisiopatologia → quadro clínico → critérios diagnósticos → exclusão racional de diferenciais → tratamento multimodal fundamentado no próprio mecanismo → postura clínica coerente com tudo isso. Cada elo se apoia logicamente no anterior — e é essa coerência interna, mais do que a memorização isolada de fatos, que vai sustentar sua resposta em qualquer cenário de prova ou de prática clínica futura.</p>
+</div>
+
+</div>
+</section>
+
+<section id="referencias" class="topic-section" style="--accent:var(--c19)">
+  <div class="section-header"><h2 class="tag">Referências</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p class="editable">Referências organizadas conforme a hierarquia bibliográfica da UC XIII, em formato ABNT. Edições e anos devem ser conferidos contra a bibliografia oficial vigente na sua instituição, já que novas edições são publicadas periodicamente.</p>
+
+<div class="ref-cat">Bibliografia oficial — fisiologia e fisiopatologia</div>
+<ul class="ref-list">
+  <li>GUYTON, Arthur C.; HALL, John E. <em>Tratado de Fisiologia Médica</em>. 14. ed. Rio de Janeiro: Guanabara Koogan, 2021.</li>
+  <li>KUMAR, Vinay; ABBAS, Abul K.; ASTER, Jon C. (Ed.). <em>Robbins & Cotran: Bases Patológicas das Doenças</em>. 10. ed. Rio de Janeiro: Elsevier, 2021.</li>
+  <li>AIRES, Margarida de Mello. <em>Fisiologia</em>. 5. ed. Rio de Janeiro: Guanabara Koogan, 2018.</li>
+</ul>
+
+<div class="ref-cat">Bibliografia oficial — farmacologia</div>
+<ul class="ref-list">
+  <li>KATZUNG, Bertram G.; TREVOR, Anthony J. <em>Farmacologia Básica e Clínica</em>. 14. ed. Porto Alegre: AMGH, 2023.</li>
+  <li>BRUNTON, Laurence L. (Ed.). <em>Goodman & Gilman: As Bases Farmacológicas da Terapêutica</em>. 13. ed. Porto Alegre: AMGH, 2019.</li>
+</ul>
+
+<div class="ref-cat">Bibliografia oficial — semiologia e clínica</div>
+<ul class="ref-list">
+  <li>PORTO, Celmo Celeno. <em>Semiologia Médica</em>. 8. ed. Rio de Janeiro: Guanabara Koogan, 2019.</li>
+  <li>BICKLEY, Lynn S. <em>Bates: Guia de Exame Físico e História Clínica</em>. 13. ed. Rio de Janeiro: Guanabara Koogan, 2021.</li>
+  <li>LOSCALZO, Joseph et al. (Ed.). <em>Harrison: Medicina Interna</em>. 20. ed. Porto Alegre: AMGH, 2020.</li>
+</ul>
+
+<div class="ref-cat">Diretrizes e consensos</div>
+<ul class="ref-list">
+  <li>MACFARLANE, G. J. et al. EULAR revised recommendations for the management of fibromyalgia. <em>Annals of the Rheumatic Diseases</em>, v. 76, n. 2, p. 318-328, 2017.</li>
+  <li>WOLFE, F. et al. 2016 Revisions to the 2010/2011 fibromyalgia diagnostic criteria. <em>Seminars in Arthritis and Rheumatism</em>, v. 46, n. 3, p. 319-329, 2016.</li>
+  <li>SOCIEDADE BRASILEIRA PARA O ESTUDO DA DOR (SBED). Consensos e posicionamentos sobre dor crônica e fibromialgia. Disponível em: sbed.org.br.</li>
+  <li>SOCIEDADE BRASILEIRA DE REUMATOLOGIA (SBR). Recomendações para o diagnóstico e tratamento da fibromialgia.</li>
+</ul>
+
+<div class="ref-cat">Literatura científica citada</div>
+<ul class="ref-list">
+  <li>KOSEK, E. et al. Do we need a third mechanistic descriptor for chronic pain states? <em>Pain</em>, v. 157, n. 7, p. 1382-1386, 2016.</li>
+  <li>GRACELY, R. H. et al. Functional magnetic resonance imaging evidence of augmented pain processing in fibromyalgia. <em>Arthritis & Rheumatism</em>, v. 46, n. 5, p. 1333-1343, 2002.</li>
+  <li>MOLDOFSKY, H. et al. Musculosketal symptoms and non-REM sleep disturbance in patients with "fibrositis syndrome" and healthy subjects. <em>Psychosomatic Medicine</em>, v. 37, n. 4, p. 341-351, 1975.</li>
+  <li>RUSSELL, I. J. et al. Elevated cerebrospinal fluid levels of substance P in patients with the fibromyalgia syndrome. <em>Arthritis & Rheumatism</em>, v. 37, n. 11, p. 1593-1601, 1994.</li>
+  <li>ÜÇEYLER, N. et al. Small fibre pathology in patients with fibromyalgia syndrome. <em>Brain</em>, v. 136, n. 6, p. 1857-1867, 2013.</li>
+  <li>GOLDENBERG, D. et al. A randomized, double-blind crossover trial of fluoxetine and amitriptyline in the treatment of fibromyalgia. <em>Arthritis & Rheumatism</em>, v. 39, n. 11, p. 1852-1859, 1996.</li>
+  <li>SULLIVAN, M. J. L.; BISHOP, S. R.; PIVIK, J. The Pain Catastrophizing Scale: development and validation. <em>Psychological Assessment</em>, v. 7, n. 4, p. 524-532, 1995.</li>
+  <li>ENGEL, G. L. The need for a new medical model: a challenge for biomedicine. <em>Science</em>, v. 196, n. 4286, p. 129-136, 1977.</li>
+  <li>MELZACK, R.; CASEY, K. L. Sensory, motivational, and central control determinants of pain: a new conceptual model. In: KENSHALO, D. R. (Ed.). <em>The Skin Senses</em>. Springfield: Charles C. Thomas, 1968.</li>
+</ul>
+
+</div>
+</section>
+
+</main>
+</div>
+
+<div class="editor-toolbar">
+  <div class="tb-title">Editor do documento</div>
+  <button id="btn-toggle-edit" type="button">Ativar edição</button>
+  <button id="btn-download" type="button">Baixar cópia editada</button>
+  <button id="btn-restore" type="button">Restaurar original</button>
+  <div class="status" id="toolbar-status">Pronto.</div>
+</div>
+
+<script>
+(function(){
+  var STORAGE_KEY = 'medstudy_dor_nociplastica_fibromialgia_uniarp_v1';
+  var mainContent = document.getElementById('main-content');
+  var originalHTML = mainContent.innerHTML;
+  var memoryFallback = null;
+  var storageAvailable = true;
+
+  function testStorage(){
+    try{ var k='__t__'; localStorage.setItem(k,'1'); localStorage.removeItem(k); return true; }
+    catch(e){ return false; }
+  }
+  storageAvailable = testStorage();
+
+  function loadSaved(){
+    if(storageAvailable){ try{ return localStorage.getItem(STORAGE_KEY); }catch(e){ return null; } }
+    return memoryFallback;
+  }
+
+  function nowTime(){
+    var d = new Date();
+    return (d.getHours()+'').padStart(2,'0')+':'+(d.getMinutes()+'').padStart(2,'0');
+  }
+
+  function updateStatus(msg){
+    var el = document.getElementById('toolbar-status');
+    if(el) el.textContent = msg;
+  }
+
+  function saveContent(){
+    var html = mainContent.innerHTML;
+    if(storageAvailable){
+      try{
+        localStorage.setItem(STORAGE_KEY, html);
+        updateStatus('Salvo automaticamente às '+nowTime()+'.');
+      }catch(e){
+        storageAvailable = false;
+        memoryFallback = html;
+        updateStatus('Armazenamento local indisponível nesta janela (ex.: pré-visualização do Claude.ai). Edições preservadas apenas na memória desta sessão — baixe a cópia editada para não perder o trabalho.');
+      }
+    } else {
+      memoryFallback = html;
+      updateStatus('Salvo na memória desta sessão (armazenamento local indisponível). Baixe a cópia editada para guardar definitivamente.');
+    }
+  }
+
+  var saved = loadSaved();
+  if(saved){ mainContent.innerHTML = saved; }
+  if(!storageAvailable){
+    updateStatus('Este ambiente não permite salvar automaticamente no navegador. Abra o arquivo baixado diretamente para que o autosave funcione.');
+  }
+
+  var editMode = false;
+  var autosaveTimer = null;
+  var btnEdit = document.getElementById('btn-toggle-edit');
+  var btnDownload = document.getElementById('btn-download');
+  var btnRestore = document.getElementById('btn-restore');
+
+  var EDITABLE_SELECTOR = 'p, li, h1, h2, h3, h4, dt, dd, .card-text, .editable, blockquote, .passo';
+
+  function enterEditMode(){
+    editMode = true;
+    mainContent.querySelectorAll(EDITABLE_SELECTOR).forEach(function(el){
+      el.setAttribute('contenteditable','true');
+    });
+    btnEdit.textContent = 'Salvar e sair da edição';
+    btnEdit.classList.add('active');
+    autosaveTimer = setInterval(saveContent, 15000);
+    updateStatus('Modo de edição ativo. Clique nos textos para editar.');
+  }
+
+  function exitEditMode(){
+    editMode = false;
+    mainContent.querySelectorAll(EDITABLE_SELECTOR).forEach(function(el){
+      el.setAttribute('contenteditable','false');
+    });
+    btnEdit.textContent = 'Ativar edição';
+    btnEdit.classList.remove('active');
+    clearInterval(autosaveTimer);
+    saveContent();
+  }
+
+  btnEdit.addEventListener('click', function(){
+    if(editMode) exitEditMode(); else enterEditMode();
+  });
+
+  btnRestore.addEventListener('click', function(){
+    if(!confirm('Restaurar o conteúdo original? As edições salvas neste navegador serão perdidas.')) return;
+    if(storageAvailable){ try{ localStorage.removeItem(STORAGE_KEY); }catch(e){} }
+    memoryFallback = null;
+    mainContent.innerHTML = originalHTML;
+    if(editMode) exitEditMode();
+    updateStatus('Conteúdo original restaurado.');
+  });
+
+  btnDownload.addEventListener('click', function(){
+    var wasEditing = editMode;
+    if(wasEditing) exitEditMode();
+    var docClone = document.documentElement.cloneNode(true);
+    var editableInClone = docClone.querySelectorAll('[contenteditable]');
+    editableInClone.forEach(function(el){ el.removeAttribute('contenteditable'); });
+    var htmlString = '<!DOCTYPE html>\n' + docClone.outerHTML;
+    var blob = new Blob([htmlString], {type:'text/html'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'dor-nociplastica-fibromialgia-editado.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    updateStatus('Arquivo baixado às '+nowTime()+'.');
+  });
+})();
+</script>
+</body>
+</html>

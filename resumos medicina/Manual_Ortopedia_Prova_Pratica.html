@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual Definitivo V2 — Prova Prática de Ortopedia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#eeeade;
+  --paper-raised:#f6f3e9;
+  --clip:#31404a;
+  --clip-2:#3d4f5b;
+  --ink:#232a26;
+  --ink-soft:#5a635c;
+  --line:#c9c2ab;
+  --line-soft:#dcd6c3;
+  --teal:#2f5d5a;
+  --teal-soft:#e2ece9;
+  --amber:#b9781f;
+  --amber-soft:#f6e9d2;
+  --red:#a13d2e;
+  --red-soft:#f3ddd6;
+  --slate:#5b6570;
+  --slate-soft:#e3e6e3;
+  --serif:'Fraunces',serif;
+  --sans:'Inter',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--amber-soft);}
+
+/* ---------- top clip bar ---------- */
+.clipbar{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:var(--clip);
+  border-bottom:3px solid #1c262c;
+}
+.clipbar-inner{
+  max-width:1180px;
+  margin:0 auto;
+  padding:10px 20px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+.clip-id{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.06em;
+  color:#cdd7d2;
+  white-space:nowrap;
+  border-right:1px solid #55636d;
+  padding-right:16px;
+}
+.clip-id b{font-weight:600;color:#e9e2c9;}
+.tabs{
+  display:flex;
+  gap:2px;
+  overflow-x:auto;
+  scrollbar-width:thin;
+  flex:1;
+}
+.tabs::-webkit-scrollbar{height:5px;}
+.tabs::-webkit-scrollbar-thumb{background:#55636d;border-radius:3px;}
+.tab{
+  flex:0 0 auto;
+  font-family:var(--mono);
+  font-size:11.5px;
+  color:#bcc6c1;
+  background:transparent;
+  border:none;
+  padding:8px 10px;
+  cursor:pointer;
+  white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:color .15s, border-color .15s, background .15s;
+  border-radius:3px 3px 0 0;
+}
+.tab:hover{color:#f3eedb;background:#3a4a55;}
+.tab.active{color:#f3eedb;border-color:#d8a94c;background:#3a4a55;}
+.quickbtn{
+  flex:0 0 auto;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.03em;
+  color:var(--clip);
+  background:#d8a94c;
+  border:none;
+  padding:9px 14px;
+  border-radius:4px;
+  cursor:pointer;
+  font-weight:600;
+  white-space:nowrap;
+  transition:background .15s, transform .1s;
+}
+.quickbtn:hover{background:#e8bd63;}
+.quickbtn.on{background:#a13d2e;color:#f6ece5;}
+
+/* ---------- hero ---------- */
+.hero{
+  max-width:1180px;
+  margin:0 auto;
+  padding:64px 24px 40px;
+}
+.hero-eyebrow{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--teal);
+  margin-bottom:18px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.hero-eyebrow::before{
+  content:"";
+  width:26px;height:1px;background:var(--teal);
+}
+h1.hero-title{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:clamp(2.2rem,5vw,3.6rem);
+  line-height:1.05;
+  margin:0 0 14px;
+  letter-spacing:-.01em;
+}
+h1.hero-title em{font-style:italic;color:var(--red);font-weight:500;}
+.hero-sub{
+  font-size:17px;
+  color:var(--ink-soft);
+  max-width:640px;
+  margin:0 0 6px;
+}
+.hero-source{
+  font-family:var(--mono);
+  font-size:12.5px;
+  color:var(--ink-soft);
+  font-style:italic;
+  margin:16px 0 34px;
+  border-left:2px solid var(--line);
+  padding-left:12px;
+}
+.legend{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+  margin-top:8px;
+}
+.legend-card{
+  background:var(--paper-raised);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:14px 16px;
+  display:flex;
+  gap:11px;
+  align-items:flex-start;
+}
+.legend-dot{
+  width:11px;height:11px;border-radius:50%;
+  margin-top:5px;flex:0 0 auto;
+}
+.legend-card b{
+  display:block;
+  font-family:var(--mono);
+  font-size:11.5px;
+  letter-spacing:.04em;
+  margin-bottom:3px;
+}
+.legend-card span{font-size:13px;color:var(--ink-soft);}
+
+/* ---------- how-to-use note ---------- */
+.howto{
+  max-width:1180px;margin:0 auto;padding:0 24px 40px;
+}
+.howto-box{
+  background:var(--paper-raised);
+  border:1px dashed var(--line);
+  border-radius:8px;
+  padding:18px 22px;
+  font-size:14.5px;
+  color:var(--ink-soft);
+}
+.howto-box b{color:var(--ink);font-weight:600;font-style:italic;}
+
+/* ---------- sections ---------- */
+main{max-width:1180px;margin:0 auto;padding:0 24px 100px;}
+.reg{
+  padding:56px 0 8px;
+  border-top:1px solid var(--line);
+  scroll-margin-top:70px;
+}
+.reg:first-child{border-top:none;}
+.reg-head{
+  display:flex;
+  gap:22px;
+  align-items:baseline;
+  margin-bottom:8px;
+}
+.reg-num{
+  font-family:var(--mono);
+  font-size:14px;
+  color:var(--r-accent,var(--teal));
+  border:1px solid var(--r-accent,var(--teal));
+  border-radius:5px;
+  padding:3px 9px;
+  flex:0 0 auto;
+}
+h2.reg-title{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:clamp(1.5rem,3vw,2rem);
+  margin:0;
+  letter-spacing:-.01em;
+}
+.reg-desc{
+  color:var(--ink-soft);
+  font-size:14.5px;
+  max-width:720px;
+  margin:6px 0 28px 0;
+  padding-left:56px;
+}
+.reg-body{padding-left:0;}
+h3.sub{
+  font-family:var(--serif);
+  font-size:1.2rem;
+  font-weight:600;
+  margin:34px 0 12px;
+  color:var(--ink);
+}
+h3.sub:first-child{margin-top:0;}
+h4.subsub{
+  font-family:var(--mono);
+  font-size:12.5px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  margin:22px 0 10px;
+}
+p{margin:0 0 12px;}
+.lead{font-size:15.5px;color:var(--ink-soft);}
+
+/* ---------- checklists / question lists ---------- */
+ol.checklist{
+  list-style:none;
+  counter-reset:cl;
+  margin:0 0 20px;
+  padding:0;
+  display:grid;
+  gap:7px;
+}
+ol.checklist li{
+  counter-increment:cl;
+  display:flex;
+  gap:10px;
+  font-size:14.5px;
+  align-items:baseline;
+}
+ol.checklist li::before{
+  content:counter(cl);
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--paper);
+  background:var(--r-accent,var(--teal));
+  min-width:19px;height:19px;
+  border-radius:4px;
+  display:inline-flex;
+  align-items:center;justify-content:center;
+  flex:0 0 auto;
+  transform:translateY(2px);
+}
+ul.qlist{
+  list-style:none;margin:0 0 20px;padding:0;
+  display:grid;gap:6px;
+}
+ul.qlist li{
+  font-size:14.5px;
+  padding-left:16px;
+  position:relative;
+  color:var(--ink);
+}
+ul.qlist li::before{
+  content:"—";
+  position:absolute;left:0;top:0;
+  color:var(--r-accent,var(--teal));
+}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+.opening-line{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:15.5px;
+  color:var(--ink);
+  background:var(--paper-raised);
+  border-left:3px solid var(--r-accent,var(--teal));
+  padding:14px 18px;
+  border-radius:0 8px 8px 0;
+  margin:18px 0;
+}
+
+/* ---------- callouts ---------- */
+.prof, .corr, .flag{
+  border-radius:8px;
+  padding:13px 16px;
+  font-size:14px;
+  margin:10px 0;
+  display:flex;
+  gap:11px;
+}
+.prof{background:var(--teal-soft);border:1px solid #bcd3cd;}
+.corr{background:var(--slate-soft);border:1px solid #cbd0cb;}
+.flag{background:var(--amber-soft);border:1px solid #e3c186;}
+.co-tag{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.04em;
+  font-weight:600;
+  flex:0 0 auto;
+  padding:3px 7px;
+  border-radius:4px;
+  height:fit-content;
+  white-space:nowrap;
+}
+.prof .co-tag{background:var(--teal);color:#eaf3ef;}
+.corr .co-tag{background:var(--slate);color:#f1f2f0;}
+.flag .co-tag{background:var(--amber);color:#2a1c05;}
+.prof p, .corr p, .flag p{margin:0;color:var(--ink);}
+.prof cite, .corr cite{
+  display:block;margin-top:5px;font-size:11.5px;color:var(--ink-soft);font-style:italic;
+}
+
+/* ---------- test cards ---------- */
+.test-card{
+  background:var(--paper-raised);
+  border:1px solid var(--line);
+  border-radius:9px;
+  margin:16px 0;
+  overflow:hidden;
+  position:relative;
+}
+.test-card::before{
+  content:"";
+  position:absolute;top:0;left:0;right:0;height:5px;
+  background:repeating-linear-gradient(90deg,var(--r-accent,var(--teal)) 0 9px, transparent 9px 15px);
+  opacity:.55;
+}
+.tc-head{
+  padding:16px 20px 12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.tc-name{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:1.08rem;
+  margin:0 0 4px;
+}
+.tc-evaluates{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--r-accent,var(--teal));
+}
+.tc-tag{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.05em;
+  color:var(--ink-soft);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:3px 10px;
+  white-space:nowrap;
+  align-self:flex-start;
+}
+.tc-positive{
+  padding:0 20px 14px;
+  font-size:14px;
+}
+.tc-positive b{font-weight:600;color:var(--teal);font-style:normal;}
+.tc-positive .neg{color:var(--red);}
+.tc-detail{
+  border-top:1px solid var(--line-soft);
+  padding:16px 20px 18px;
+  display:grid;
+  gap:14px;
+}
+body.quick-mode .tc-detail{display:none;}
+body.quick-mode .test-card::after{
+  content:"detalhes ocultos — modo revisão relâmpago";
+  display:block;
+  font-family:var(--mono);
+  font-size:10.5px;
+  color:var(--ink-soft);
+  padding:0 20px 12px;
+  font-style:italic;
+}
+.tc-block b.lbl{
+  display:block;
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  margin-bottom:4px;
+  font-weight:600;
+}
+.tc-block p, .tc-block ol{margin:0;font-size:14px;}
+.tc-block ol{padding-left:18px;}
+.tc-block ol li{margin-bottom:3px;}
+.tc-ask{
+  font-style:italic;
+  color:var(--ink-soft);
+}
+.tc-error{color:var(--red);}
+
+/* ---------- tables ---------- */
+.table-wrap{
+  overflow-x:auto;
+  margin:16px 0 24px;
+  border:1px solid var(--line);
+  border-radius:8px;
+}
+table{
+  border-collapse:collapse;
+  width:100%;
+  min-width:560px;
+  font-size:13.5px;
+  background:var(--paper-raised);
+}
+thead th{
+  background:var(--r-accent,var(--teal));
+  color:var(--paper-raised);
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  text-align:left;
+  padding:10px 14px;
+  font-weight:600;
+}
+tbody td{
+  padding:10px 14px;
+  border-top:1px solid var(--line-soft);
+  vertical-align:top;
+}
+tbody td:first-child{
+  font-weight:600;
+  color:var(--ink);
+  white-space:nowrap;
+  font-family:var(--mono);
+  font-size:12.5px;
+}
+tbody tr:nth-child(even) td{background:rgba(0,0,0,.015);}
+
+/* ---------- station cards (sec 17) ---------- */
+.station-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:14px;
+  margin:20px 0;
+}
+.station{
+  background:var(--paper-raised);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:15px 17px;
+  position:relative;
+}
+.station::before{
+  content:attr(data-n);
+  position:absolute;top:-9px;right:14px;
+  background:var(--r-accent,var(--teal));
+  color:var(--paper-raised);
+  font-family:var(--mono);
+  font-size:10px;
+  padding:2px 8px;
+  border-radius:10px;
+}
+.station h5{
+  font-family:var(--serif);
+  font-size:15px;
+  font-weight:600;
+  margin:0 0 8px;
+}
+.station .k{
+  font-family:var(--mono);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  color:var(--ink-soft);
+  display:block;
+  margin-bottom:2px;
+}
+.station p{font-size:13px;margin:0 0 10px;}
+.station p:last-child{margin-bottom:0;}
+
+/* ---------- priority index (sec 18) ---------- */
+.flagwall{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:10px;
+  margin:20px 0;
+}
+.flagwall .flag{margin:0;}
+
+.errorlist{
+  list-style:none;padding:0;margin:16px 0;
+  display:grid;gap:8px;
+}
+.errorlist li{
+  font-size:14px;
+  padding:10px 14px;
+  background:var(--red-soft);
+  border-left:3px solid var(--red);
+  border-radius:0 6px 6px 0;
+}
+
+.timebox{
+  background:var(--paper-raised);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:16px 18px;
+  margin:14px 0;
+}
+.timebox h5{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.04em;
+  color:var(--r-accent,var(--teal));
+  margin:0 0 10px;
+  text-transform:uppercase;
+}
+.timebox ul{margin:0;padding-left:18px;}
+.timebox li{font-size:13.5px;margin-bottom:5px;}
+.timebox.speech{font-family:var(--serif);font-style:italic;font-size:14.5px;line-height:1.65;}
+
+.phrase-grid{display:grid;gap:12px;margin:20px 0;}
+.phrase{
+  background:var(--paper-raised);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:14px 18px;
+  display:grid;
+  grid-template-columns:120px 1fr;
+  gap:14px;
+  align-items:baseline;
+}
+.phrase b{
+  font-family:var(--mono);
+  font-size:11px;
+  text-transform:uppercase;
+  color:var(--r-accent,var(--teal));
+  font-weight:600;
+}
+.phrase span{font-family:var(--serif);font-style:italic;font-size:14.5px;}
+
+/* ---------- footer ---------- */
+footer{
+  max-width:1180px;margin:0 auto;padding:40px 24px 70px;
+  border-top:1px solid var(--line);
+  font-family:var(--mono);
+  font-size:11.5px;
+  color:var(--ink-soft);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:760px){
+  .two-col{grid-template-columns:1fr;gap:0;}
+  .reg-desc{padding-left:0;}
+  .reg-head{flex-direction:column;gap:8px;}
+  .tc-detail{grid-template-columns:1fr!important;}
+  .phrase{grid-template-columns:1fr;gap:4px;}
+  .clip-id{display:none;}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *{transition:none!important;}
+}
+</style>
+</head>
+<body>
+
+<div class="clipbar">
+  <div class="clipbar-inner">
+    <div class="clip-id">MANUAL <b>V2</b> · ORTOPEDIA</div>
+    <nav class="tabs" id="tabs">
+      <button class="tab" data-target="s1">01 Formato</button>
+      <button class="tab" data-target="s2">02 Anamnese</button>
+      <button class="tab" data-target="s3">03 Neuro</button>
+      <button class="tab" data-target="s4">04 Cervical</button>
+      <button class="tab" data-target="s5">05 Escoliose</button>
+      <button class="tab" data-target="s6">06 Lombar</button>
+      <button class="tab" data-target="s7">07 Ombro</button>
+      <button class="tab" data-target="s8">08 Cotovelo</button>
+      <button class="tab" data-target="s9">09 Punho/Mão</button>
+      <button class="tab" data-target="s10">10 Quadril</button>
+      <button class="tab" data-target="s11">11 Joelho</button>
+      <button class="tab" data-target="s12">12 Tornozelo</button>
+      <button class="tab" data-target="s13">13 Exames</button>
+      <button class="tab" data-target="s14">14 Conduta</button>
+      <button class="tab" data-target="s15">15 Ferimentos</button>
+      <button class="tab" data-target="s16">16 Diferenciais</button>
+      <button class="tab" data-target="s17">17 Estações</button>
+      <button class="tab" data-target="s18">18 Tabelões</button>
+    </nav>
+    <button class="quickbtn" id="quickToggle">MODO REVISÃO RELÂMPAGO</button>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-eyebrow">Prova prática · Anamnese, exame físico, testes especiais</div>
+  <h1 class="hero-title">Manual Definitivo V2<br><em>Prova Prática de Ortopedia</em></h1>
+  <p class="hero-sub">Anamnese, exame físico, exame neurológico, testes especiais, imagem, conduta e estações simuladas — organizado como um roteiro de estação de prova, região por região.</p>
+  <p class="hero-source">Construído a partir da auditoria das 65 páginas da transcrição da revisão pré-prova do professor Lucas.</p>
+
+  <div class="legend">
+    <div class="legend-card">
+      <span class="legend-dot" style="background:var(--teal)"></span>
+      <div><b>PROFESSOR DISSE</b><span>Conteúdo preservado literalmente da aula — é a prioridade de estudo.</span></div>
+    </div>
+    <div class="legend-card">
+      <span class="legend-dot" style="background:var(--slate)"></span>
+      <div><b>CORREÇÃO TÉCNICA</b><span>Complemento ou correção do padrão clássico, sem substituir o foco da prova.</span></div>
+    </div>
+    <div class="legend-card">
+      <span class="legend-dot" style="background:var(--amber)"></span>
+      <div><b>AMARELO PISCANTE</b><span>Prioridade máxima citada pelo professor como certeza de cobrança.</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="howto">
+  <div class="howto-box">
+    <b>Como usar este manual —</b> este documento funciona como material único de revisão. A prioridade é o que o professor verbalizou como checklist, técnica, interpretação e conduta. Quando a transcrição contém um termo provavelmente errado, ele aparece corrigido sem apagar o que foi ensinado; quando há divergência entre a aula e o padrão técnico clássico, os dois aparecem separados. Use o botão <i>modo revisão relâmpago</i> no topo para esconder os detalhes de execução de cada teste e ver apenas nome, alvo e critério de positividade.
+  </div>
+</div>
+
+<main>
+
+<!-- ===================== 1 ===================== -->
+<section class="reg" id="s1" data-region="1" style="--r-accent:#5b6570">
+  <div class="reg-head">
+    <span class="reg-num">01</span>
+    <h2 class="reg-title">Formato real da prova e regras do checklist</h2>
+  </div>
+  <p class="reg-desc">O que o professor descreveu sobre a logística da estação, o que é penalizado e a sequência de entrada que abre qualquer atendimento.</p>
+
+  <div class="reg-body">
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Nome, idade e ocupação/profissão são três perguntas que "sempre estão no checklist".<cite>Transcrição, p. 1</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Na prova, não é necessário executar um exame ortopédico completo de rotina; faça aquilo que estiver solicitado no papel. Na vida real, ele faria inspeção global, mobilidade, palpação e depois testes especiais.<cite>Transcrição, p. 6</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Provavelmente serão duas salas com dois casos diferentes. Enquanto um aluno faz uma estação, outro pode ler o próximo caso — a fala menciona cerca de 10 minutos.<cite>Transcrição, p. 62</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>O caso e o que precisa ser feito estarão escritos na mesa; pode levar folha em branco, mas ele diz que não é necessário.<cite>Transcrição, p. 62</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>O checklist fica aberto: se você esqueceu uma pergunta na anamnese, pode lembrar e perguntar durante o exame físico.<cite>Transcrição, p. 63</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Se ele pedir para repetir uma manobra ou perguntar "tem certeza?", isso provavelmente sinaliza técnica incorreta.<cite>Transcrição, p. 61</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Se não souber um teste, não pare a estação inteira; siga fazendo o restante.<cite>Transcrição, p. 63</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>No final, diga ao paciente o que você acha que ele tem, qual exame será pedido e qual será a conduta.<cite>Transcrição, p. 61</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Os testes são apenas uma parte; "o resto" mais importante é conversar, fazer a anamnese e indicar o exame correto.<cite>Transcrição, p. 60</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Ir de jaleco.<cite>Transcrição, p. 64</cite></p></div>
+
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Higienize as mãos antes de tocar no paciente. É o erro mais explicitamente penalizado na aula. A única regra em que o professor se declara realmente "chato" é higiene das mãos: não toque no paciente antes de higienizar.<cite>Transcrição, p. 63–64</cite></p></div>
+
+    <h3 class="sub">Checklist universal de entrada</h3>
+    <ol class="checklist">
+      <li>Cumprimentar e apresentar-se.</li>
+      <li>Higienizar as mãos.</li>
+      <li>Confirmar nome completo.</li>
+      <li>Perguntar idade.</li>
+      <li>Perguntar ocupação/profissão.</li>
+      <li>Abrir a queixa: "O que me traz aqui hoje?"</li>
+      <li>Direcionar a história para dor/trauma/região.</li>
+      <li>Explicar antes de tocar ou realizar manobra.</li>
+      <li>Executar o que o papel solicita.</li>
+      <li>Dizer positivo/negativo e interpretar.</li>
+      <li>Apresentar hipótese.</li>
+      <li>Escolher exame complementar.</li>
+      <li>Dar tratamento/conduta.</li>
+      <li>Orientar retorno e/ou ortopedia.</li>
+    </ol>
+
+    <div class="opening-line">"Bom dia, meu nome é Rafaela, sou acadêmica de Medicina e vou realizar seu atendimento hoje. Antes de começarmos, vou higienizar minhas mãos. Qual seu nome completo? Quantos anos o senhor tem? Com o que o senhor trabalha?"</div>
+  </div>
+</section>
+
+<!-- ===================== 2 ===================== -->
+<section class="reg" id="s2" data-region="2" style="--r-accent:#2f5d5a">
+  <div class="reg-head">
+    <span class="reg-num">02</span>
+    <h2 class="reg-title">Roteiro universal de anamnese ortopédica</h2>
+  </div>
+  <p class="reg-desc">O bloco de perguntas que serve para qualquer queixa, mais o roteiro específico quando o caso envolve trauma.</p>
+
+  <div class="reg-body">
+    <div class="two-col">
+      <div>
+        <h4 class="subsub">Perguntas-base para qualquer caso</h4>
+        <ul class="qlist">
+          <li>Onde exatamente é a dor?</li>
+          <li>Há quanto tempo começou?</li>
+          <li>Começou de forma súbita ou progressiva?</li>
+          <li>Já teve algo parecido antes?</li>
+          <li>Houve queda, batida, torção ou qualquer trauma?</li>
+          <li>A dor fica no local ou irradia?</li>
+          <li>Se irradia: para onde, por qual trajeto, até qual dedo/pé?</li>
+          <li>Qual a intensidade?</li>
+          <li>O que piora? O que melhora?</li>
+          <li>Qual movimento está limitado?</li>
+          <li>Sente dormência, formigamento, queimação ou choque?</li>
+          <li>Percebe perda de força?</li>
+          <li>Consegue caminhar/usar o membro?</li>
+          <li>Já tomou medicamento ou recebeu injeção? Funcionou por quanto tempo?</li>
+          <li>Já fez exames? Tem alergia a medicamentos?</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="subsub">Se for trauma</h4>
+        <ul class="qlist">
+          <li>O que aconteceu exatamente?</li>
+          <li>Como estava o membro no momento?</li>
+          <li>O pé/mão ficou preso?</li>
+          <li>O corpo girou sobre o membro?</li>
+          <li>Foi inversão/eversão? Rotação para dentro/fora?</li>
+          <li>Ouviu estalo/barulho?</li>
+          <li>Conseguiu apoiar/caminhar logo depois?</li>
+          <li>Inchou? Quando?</li>
+          <li>Existe deformidade? Consegue movimentar?</li>
+          <li>Há parestesia ou perda de força?</li>
+        </ul>
+        <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>A anamnese fica mais curta no trauma porque você parte rapidamente para mecanismo, capacidade de apoio, edema/deformidade e imagem.<cite>Transcrição, p. 58–59</cite></p></div>
+      </div>
+    </div>
+
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Em qualquer queixa ortopédica, mesmo "dor no ombro", pergunte se caiu/bateu.<cite>Transcrição, p. 1</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Em membro superior, é bom perguntar se é destro ou canhoto, porque dominância pode influenciar tratamento.<cite>Transcrição, p. 1</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Caracterize a irradiação com precisão: não basta "vai para a perna"; pergunte se vai pela frente, por trás e onde amortece.<cite>Transcrição, p. 21</cite></p></div>
+  </div>
+</section>
+
+<!-- ===================== 3 ===================== -->
+<section class="reg" id="s3" data-region="3" style="--r-accent:#6a4f8f">
+  <div class="reg-head">
+    <span class="reg-num">03</span>
+    <h2 class="reg-title">Exame neurológico e força muscular</h2>
+  </div>
+  <p class="reg-desc">Graduação de força, forma de descrever reflexos e o mapa de raízes de membro superior e inferior segundo a aula, com a técnica dos seis reflexos.</p>
+
+  <div class="reg-body">
+    <h4 class="subsub">Força muscular 0–5</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Grau</th><th>O que significa</th><th>Como pensar na prova</th></tr></thead>
+      <tbody>
+        <tr><td>0</td><td>Sem contração visível/palpável.</td><td>Improvável no ator ambulante.</td></tr>
+        <tr><td>1</td><td>Contração muscular sem movimento articular.</td><td>Professor descreve como musculatura "tremendo".</td></tr>
+        <tr><td>2</td><td>Movimento com gravidade eliminada.</td><td>Move no plano horizontal.</td></tr>
+        <tr><td>3</td><td>Vence a gravidade, não vence resistência.</td><td>Pode aparecer.</td></tr>
+        <tr><td>4</td><td>Vence gravidade e alguma resistência, mas abaixo do normal.</td><td>Muito típico de paciente ortopédico segundo a aula.</td></tr>
+        <tr><td>5</td><td>Força normal.</td><td>Comparável ao lado normal/examinador.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Na prova, os atores provavelmente estarão de grau 3–4 para cima, não 0–2.<cite>Transcrição, p. 12</cite></p></div>
+
+    <h4 class="subsub">Reflexos — como descrever</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Achado</th><th>Termo</th></tr></thead>
+      <tbody>
+        <tr><td>Normal</td><td>Preservado / normorreflexia</td></tr>
+        <tr><td>Diminuído</td><td>Hiporreflexia</td></tr>
+        <tr><td>Ausente</td><td>Abolido / arreflexia</td></tr>
+        <tr><td>Exacerbado</td><td>Hiperreflexia</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3 class="sub">Membro superior — raízes enfatizadas</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Raiz</th><th>Motor segundo a aula</th><th>Sensibilidade segundo a aula</th><th>Reflexo</th></tr></thead>
+      <tbody>
+        <tr><td>C5</td><td>Flexão do cotovelo</td><td>Face lateral do braço</td><td>Bicipital</td></tr>
+        <tr><td>C6</td><td>Extensão do punho</td><td>Lateral do antebraço / polegar</td><td>Braquiorradial (estilorradial)</td></tr>
+        <tr><td>C7</td><td>Extensão do cotovelo</td><td>3º dedo</td><td>Tricipital</td></tr>
+        <tr><td>C8</td><td>Fechar dedos; adução/abdução mencionadas</td><td>Transcrição pouco clara — região medial da mão/5º dedo é o padrão clássico</td><td>—</td></tr>
+        <tr><td>T1</td><td>Abdução/adução dos dedos, especialmente 5º</td><td>Face medial do antebraço (padrão clássico)</td><td>—</td></tr>
+      </tbody>
+    </table></div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>C5/C6/C7 com reflexo, sensibilidade e motricidade: "com certeza está na prova".<cite>Transcrição, p. 3–5</cite> C6 é explicitamente um dos preferidos do professor para cobrar; treine o braquiorradial com punho neutro e membro relaxado.</p></div>
+
+    <h4 class="subsub">Os três reflexos do membro superior</h4>
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Reflexo bicipital</p><span class="tc-evaluates">Avalia C5 predominante na aula</span></div></div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Braço apoiado e relaxado.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Palpe o tendão do bíceps na fossa cubital.</li><li>Coloque seu polegar sobre o tendão.</li><li>Percuta o seu próprio polegar com o martelo.</li></ol></div>
+        <div class="tc-block"><b class="lbl">Positivo</b><p>Contração do bíceps/flexão do cotovelo.</p></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>O braço precisa estar solto; sem relaxamento o reflexo pode não aparecer.</p></div>
+        <div class="corr" style="margin:0"><span class="co-tag">CORREÇÃO TÉCNICA</span><p>Classicamente envolve principalmente C5–C6, com predomínio de C5.</p></div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Reflexo braquiorradial / estilorradial</p><span class="tc-evaluates">Avalia C6 predominante</span></div></div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Antebraço apoiado; punho neutro e relaxado.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Localize o estiloide radial.</li><li>Conte aproximadamente dois dedos proximalmente.</li><li>Percuta o tendão/região do braquiorradial.</li></ol></div>
+        <div class="tc-block"><b class="lbl">Positivo</b><p>Resposta de flexão do cotovelo e/ou discreta supinação.</p></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>O professor diz que este é fácil de ver e "gosta bastante".</p></div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Reflexo tricipital</p><span class="tc-evaluates">Avalia C7 predominante</span></div></div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Sustente o braço para deixá-lo relaxado.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Apoie o cotovelo.</li><li>Percuta o tendão do tríceps proximal ao olécrano.</li></ol></div>
+        <div class="tc-block"><b class="lbl">Positivo</b><p>Extensão do cotovelo.</p></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>A técnica importa mais que "fazer aparecer" no ator saudável.</p></div>
+      </div>
+    </div>
+
+    <h3 class="sub">Membro inferior — motor, sensibilidade e reflexos</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Raiz</th><th>Motor</th><th>Sensibilidade</th><th>Reflexo</th></tr></thead>
+      <tbody>
+        <tr><td>L2–L3</td><td>Flexão do quadril</td><td>Anterior da coxa (padrão clássico)</td><td>—</td></tr>
+        <tr><td>L3–L4</td><td>Extensão do joelho</td><td>Medial do joelho/perna</td><td>Patelar (L4 predominante)</td></tr>
+        <tr><td>L4</td><td>Dorsiflexão recebe contribuição</td><td>Maléolo medial</td><td>Patelar</td></tr>
+        <tr><td>L5</td><td>Dorsiflexão / caminhar no calcanhar</td><td>Dorso do pé / 1º espaço interdigital (clássico)</td><td>—</td></tr>
+        <tr><td>S1</td><td>Flexão plantar / ponta dos pés</td><td>Borda lateral do pé</td><td>Aquileu</td></tr>
+        <tr><td>S2</td><td>Flexão de joelho (clássico)</td><td>Posterior da coxa/fossa poplítea (clássico)</td><td>—</td></tr>
+      </tbody>
+    </table></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>A aula coloca L4 no maléolo medial, L5 no dorso do pé, S1 na borda lateral e chama o espaço entre 1º–2º dedos de S2.<cite>Transcrição, p. 13–14</cite></p></div>
+    <div class="corr"><span class="co-tag">CORREÇÃO TÉCNICA</span><p>O 1º espaço interdigital dorsal é classicamente L5 e território do nervo fibular profundo; S2 é mais posterior na coxa/fossa poplítea. Essa divergência deve ser lembrada porque a fala do professor difere do mapa clássico.</p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Na vida real, sensibilidade deve ser comparada bilateralmente e idealmente com olhos fechados; na prova ele permite testar apenas o lado sintomático e até por cima da meia.<cite>Transcrição, p. 6–7</cite></p></div>
+
+    <h4 class="subsub">Reflexos de membro inferior</h4>
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Reflexo patelar</p><span class="tc-evaluates">Avalia L4 predominante</span></div></div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Paciente sentado, pernas pendentes e relaxadas.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Posicione o paciente mais à frente para a perna ficar livre.</li><li>Percuta o tendão patelar, não a patela.</li></ol></div>
+        <div class="tc-block"><b class="lbl">Positivo</b><p>Extensão do joelho.</p></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Este "sempre dá certo" se a perna estiver realmente solta.</p></div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Reflexo aquileu</p><span class="tc-evaluates">Avalia S1 predominante</span></div></div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Pé e perna apoiados de maneira confortável.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Deixe a perna relaxada.</li><li>Percuta diretamente o tendão de Aquiles.</li></ol></div>
+        <div class="tc-block"><b class="lbl">Positivo</b><p>Flexão plantar do pé.</p></div>
+      </div>
+    </div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>L4 patelar e S1 aquileu são descritos como reflexos "sempre na prova".</p></div>
+  </div>
+</section>
+
+<!-- ===================== 4 ===================== -->
+<section class="reg" id="s4" data-region="4" style="--r-accent:#2b7f8c">
+  <div class="reg-head">
+    <span class="reg-num">04</span>
+    <h2 class="reg-title">Coluna cervical</h2>
+  </div>
+  <p class="reg-desc">Caso provável, roteiro de anamnese, os dois testes de compressão/descompressão radicular e como fechar a estação.</p>
+
+  <div class="reg-body">
+    <p class="lead">Cervicalgia com irradiação para membro superior, choque/formigamento/dormência e possível fraqueza. A estação pode misturar Spurling/distração com dermátomo, miótomo, reflexo e diagnóstico diferencial de túnel do carpo.</p>
+
+    <h4 class="subsub">Anamnese direcionada — fale assim</h4>
+    <ul class="qlist">
+      <li>A dor é só no pescoço ou corre para o braço? Qual braço?</li>
+      <li>Até onde ela vai? Chega à mão? A qual dedo?</li>
+      <li>Sente dormência, formigamento, queimação ou choque?</li>
+      <li>Percebe perda de força? Como está o movimento do braço?</li>
+      <li>Teve queda ou batida? Já teve antes? Com o que trabalha?</li>
+      <li>Já usou remédio ou fez exame? Tem alergias?</li>
+    </ul>
+
+    <div class="test-card">
+      <div class="tc-head">
+        <div><p class="tc-name">Spurling</p><span class="tc-evaluates">Avalia irritação/compressão radicular cervical</span></div>
+      </div>
+      <div class="tc-positive"><b>Positivo</b> — reprodução da dor radicular para o braço do lado testado. <span class="neg"><b>Negativo</b> — dor somente cervical, sem irradiação, não representa o padrão radicular buscado.</span></div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Paciente sentado; examinador atrás.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Incline a cabeça para o lado sintomático.</li><li>Realize compressão axial suave sobre a cabeça.</li><li>Pergunte onde a dor apareceu e se correu para o membro superior.</li></ol></div>
+        <div class="tc-block tc-ask"><b class="lbl">Pergunte durante o teste</b><p>"Está doendo onde? A dor vai para o braço? Até onde?"</p></div>
+        <div class="tc-block tc-error"><b class="lbl">Erro de prova</b><p>Rodar a cabeça aleatoriamente ou considerar qualquer dor local como positivo.</p></div>
+      </div>
+    </div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Spurling e distração: professor diz que "com certeza" estarão na prova.</p></div>
+
+    <div class="test-card">
+      <div class="tc-head">
+        <div><p class="tc-name">Distração cervical</p><span class="tc-evaluates">Avalia alívio de compressão radicular</span></div>
+      </div>
+      <div class="tc-positive"><b>Positivo</b> — alívio da dor radicular sugere componente compressivo. <span class="neg"><b>Negativo</b> — sem alteração dos sintomas.</span></div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Examinador ao lado.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Uma mão na protuberância occipital.</li><li>Outra mão no queixo.</li><li>Realize tração cranial suave.</li></ol></div>
+        <div class="tc-block tc-ask"><b class="lbl">Pergunte durante o teste</b><p>"Melhorou, piorou ou ficou igual?"</p></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>É descrito como "o oposto do Spurling".</p></div>
+      </div>
+    </div>
+
+    <h4 class="subsub">Como fechar a estação cervical</h4>
+    <div class="opening-line">"Os testes reproduziram um padrão compatível com comprometimento radicular cervical. A hipótese é uma radiculopatia, que pode estar relacionada a hérnia discal ou alteração degenerativa. Vou correlacionar com o território sensitivo, força e reflexo e solicitar exame de imagem quando indicado."</div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Na simulação, ele cita dipirona/paracetamol, amitriptilina à noite para dor crônica, crioterapia, exames e retorno.<cite>Transcrição, p. 58</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Se a mão amortece, considerar também túnel do carpo e investigar com US/eletroneuromiografia conforme o quadro.<cite>Transcrição, p. 58</cite></p></div>
+  </div>
+</section>
+
+<!-- ===================== 5 ===================== -->
+<section class="reg" id="s5" data-region="5" style="--r-accent:#6f8f2b">
+  <div class="reg-head">
+    <span class="reg-num">05</span>
+    <h2 class="reg-title">Escoliose e inspeção da coluna</h2>
+  </div>
+  <p class="reg-desc">Itens de inspeção citados na aula, a manobra de Adams e o teste de mobilidade lombar mencionado como "chuva/chover".</p>
+
+  <div class="reg-body">
+    <h4 class="subsub">Itens de inspeção citados</h4>
+    <ul class="qlist">
+      <li>Face sindrômica, implantação do cabelo e altura das orelhas.</li>
+      <li>Altura dos ombros.</li>
+      <li>Altura das escápulas.</li>
+      <li>Assimetria dos triângulos de talhe.</li>
+      <li>Nivelamento pélvico.</li>
+    </ul>
+
+    <div class="test-card">
+      <div class="tc-head">
+        <div><p class="tc-name">Manobra de Adams</p><span class="tc-evaluates">Avalia escoliose estrutural / gibosidade</span></div>
+      </div>
+      <div class="tc-positive"><b>Positivo</b> — presença de gibosidade assimétrica.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Paciente em pé; examinador atrás.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Peça flexão anterior do tronco.</li><li>Observe a coluna por trás procurando gibosidade/assimetria.</li></ol></div>
+      </div>
+    </div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Professor repete que Adams está na prova.</p></div>
+
+    <h4 class="subsub">Teste de mobilidade lombar transcrito como "chuva/chover"</h4>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>A transcrição descreve um teste em que se marca a coluna, mede-se com fita e repete-se após flexão para avaliar mobilidade lombar.<cite>Transcrição, p. 11</cite></p></div>
+    <div class="corr"><span class="co-tag">CORREÇÃO TÉCNICA</span><p>Pelo contexto, trata-se do teste de Schober. A fala diz que é bom saber que existe, mas que executá-lo na prova seria trabalhoso; a ideia central é reconhecer se a mobilidade lombar está preservada.</p></div>
+  </div>
+</section>
+
+<!-- ===================== 6 ===================== -->
+<section class="reg" id="s6" data-region="6" style="--r-accent:#b9691f">
+  <div class="reg-head">
+    <span class="reg-num">06</span>
+    <h2 class="reg-title">Coluna lombar</h2>
+  </div>
+  <p class="reg-desc">A anamnese que o professor literalmente simulou, as red flags citadas, Lasègue, Babinski e a imagem de escolha na lombalgia/radiculopatia.</p>
+
+  <div class="reg-body">
+    <h4 class="subsub">Anamnese que o professor literalmente simulou</h4>
+    <ul class="qlist">
+      <li>Houve queda/trauma? Mesmo remoto?</li>
+      <li>Qual sua profissão? Há esforço físico repetitivo?</li>
+      <li>Começou subitamente ou aos poucos? Há quanto tempo? Piorou recentemente?</li>
+      <li>Onde dói? Lombar, glúteo, perna?</li>
+      <li>A dor corre para uma ou duas pernas? Por onde? Chega até o pé? Qual dedo/região amortece?</li>
+      <li>Sente fraqueza? Arrasta a perna?</li>
+      <li>Consegue caminhar? Consegue flexionar a coluna/sentar?</li>
+      <li>Deitado melhora? Atrapalha o sono? Há dor noturna?</li>
+      <li>Idade? História pessoal/familiar de câncer?</li>
+      <li>Como está a urina? Disúria?</li>
+      <li>O que já tomou? Funcionou? Tem alergias?</li>
+    </ul>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Dor lombar com sintomas urinários pode exigir avaliação clínica e exame de urina; não assuma que tudo é coluna.<cite>Transcrição, p. 21</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Trauma antigo pode ser fator de confusão: pode apenas ter agudizado um quadro crônico prévio.<cite>Transcrição, p. 18–19</cite></p></div>
+
+    <h4 class="subsub">Red flags citadas na aula</h4>
+    <ul class="qlist">
+      <li>Paciente mais velho.</li>
+      <li>Dor noturna. Dor progressiva.</li>
+      <li>Não melhora com analgésicos comuns.</li>
+      <li>História de câncer.</li>
+      <li>Fraqueza/perda de força. Alteração de sensibilidade. Alteração da marcha.</li>
+      <li>Sintomas urinários/geniturinários.</li>
+    </ul>
+
+    <div class="test-card">
+      <div class="tc-head">
+        <div><p class="tc-name">Lasègue / Straight Leg Raise</p><span class="tc-evaluates">Avalia irritação radicular lombossacra / tensão do nervo ciático</span></div>
+      </div>
+      <div class="tc-positive"><b>Positivo</b> — reprodução de dor radicular que desce pela perna, tipicamente até abaixo do joelho. <span class="neg"><b>Negativo</b> — dor apenas na lombar não caracteriza Lasègue positivo para radiculalgia.</span></div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Paciente em decúbito dorsal; joelho estendido.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>O paciente deve permanecer relaxado; quem eleva é o examinador.</li><li>Eleve passivamente o membro com joelho estendido.</li><li>Pergunte onde dói e para onde a dor corre.</li><li>Se quiser aumentar a tensão neural, associe dorsiflexão do tornozelo.</li></ol></div>
+        <div class="tc-block tc-ask"><b class="lbl">Pergunte durante o teste</b><p>"A dor está onde? Vai por trás da perna? Chega até o pé?"</p></div>
+        <div class="tc-block tc-error"><b class="lbl">Erro de prova</b><p>Classificar qualquer lombalgia como Lasègue positivo.</p></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Ele quer que você diga a faixa angular; fala em 35–70 graus.</p></div>
+        <div class="corr" style="margin:0"><span class="co-tag">CORREÇÃO TÉCNICA</span><p>O intervalo clássico citado em muitos textos é aproximadamente 30–70 graus.</p></div>
+      </div>
+    </div>
+
+    <div class="test-card">
+      <div class="tc-head">
+        <div><p class="tc-name">Babinski</p><span class="tc-evaluates">Avalia sinal de liberação piramidal</span></div>
+      </div>
+      <div class="tc-positive"><b>Positivo</b> — extensão do hálux com abertura dos demais dedos em adulto. <span class="neg"><b>Negativo</b> — flexão plantar dos dedos.</span></div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Paciente relaxado.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Estimule a borda lateral da planta desde o calcâneo.</li><li>Siga anteriormente e depois medialmente em direção ao hálux.</li></ol></div>
+        <div class="tc-block tc-error"><b class="lbl">Erro de prova</b><p>Chamar a retirada por cócegas de "Babinski positivo".</p></div>
+        <div class="corr" style="margin:0"><span class="co-tag">CORREÇÃO TÉCNICA</span><p>Resposta extensora pode ser fisiológica em lactentes, classicamente por até cerca de 1–2 anos; a aula menciona 6 meses.</p></div>
+      </div>
+    </div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Professor diz que Babinski precisa saber para a prova. Lasègue + faixa angular + diferença dor lombar vs radicular também são prioridade.</p></div>
+
+    <h4 class="subsub">Imagem na lombalgia/radiculopatia</h4>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Para hérnia discal e processos degenerativos da coluna, ele aponta a ressonância magnética como melhor exame. RX pode ser feito primeiro por disponibilidade; ele diz que não vale a pena pedir TC apenas como intermediário se a RM é o exame necessário.<cite>Transcrição, p. 22</cite></p></div>
+  </div>
+</section>
+
+<!-- ===================== 7 ===================== -->
+<section class="reg" id="s7" data-region="7" style="--r-accent:#2a5f9e">
+  <div class="reg-head">
+    <span class="reg-num">07</span>
+    <h2 class="reg-title">Ombro</h2>
+  </div>
+  <p class="reg-desc">Manobras do manguito rotador, testes de impacto subacromial, e o quadro comparativo das luxações e da lesão acromioclavicular.</p>
+
+  <div class="reg-body">
+    <h4 class="subsub">Anamnese direcionada</h4>
+    <ul class="qlist">
+      <li>Como está o movimento do ombro? Consegue elevar o braço? Até onde? Dói ao elevar?</li>
+      <li>Consegue rodar o braço para fora? Consegue colocar a mão nas costas?</li>
+      <li>A dor fica no ombro ou vai para a mão? Há dormência ou perda de força?</li>
+      <li>Tem dor cervical? Caiu ou bateu? É o braço dominante?</li>
+    </ul>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Movimento é "fundamental": limitação ajuda a separar fratura, luxação, tendão/manguito, capsulite e tendinite calcária.<cite>Transcrição, p. 22–23</cite></p></div>
+
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Jobe</p><span class="tc-evaluates">Avalia supraespinhal</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — dor e/ou fraqueza lateral do ombro sugere comprometimento do supraespinhal.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Paciente em pé/sentado; examinador à frente.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Eleve os braços no plano escapular.</li><li>Polegares para baixo.</li><li>Aplique força para baixo enquanto o paciente resiste/eleva.</li></ol></div>
+        <div class="tc-block tc-ask"><b class="lbl">Pergunte durante o teste</b><p>"Dói onde? Consegue manter força?"</p></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Associa Jobe a tendinite/tendinopatia/lesão do supraespinhal e menciona bursite no contexto.</p></div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Rotação externa resistida</p><span class="tc-evaluates">Avalia infraespinhal</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — dor/fraqueza posterior no ombro.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Cotovelos junto ao corpo e flexionados.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Peça rotação externa do ombro.</li><li>Aplique resistência contra o movimento.</li></ol></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Movimento-chave do infraespinhal: rotação externa.</p></div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Gerber / Lift-off</p><span class="tc-evaluates">Avalia subescapular</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — dor, fraqueza ou incapacidade de afastar a mão.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Mão nas costas.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Peça ao paciente colocar o dorso da mão na lombar.</li><li>Solicite afastar a mão das costas.</li><li>Pode aplicar resistência.</li></ol></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Movimento-chave do subescapular: rotação interna. Perda de rotação interna também deve lembrar capsulite adesiva.</p></div>
+      </div>
+    </div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Jobe + infraespinhal + Gerber. Hawkins + Neer.</p></div>
+
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Hawkins-Kennedy</p><span class="tc-evaluates">Avalia síndrome do impacto subacromial</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — dor no ombro durante a rotação interna.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Ombro e cotovelo flexionados.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Eleve o braço à frente.</li><li>Com cotovelo flexionado, faça rotação interna passiva.</li></ol></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Relaciona à bursite/tendinite do manguito.</p></div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Neer <span style="font-weight:400;color:var(--ink-soft)">(transcrito "Mier/NIR")</span></p><span class="tc-evaluates">Avalia síndrome do impacto subacromial</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — reprodução de dor no ombro durante a elevação.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Paciente sentado/em pé.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Estabilize o ombro/escápula com uma mão.</li><li>Segure o antebraço com a outra.</li><li>Eleve passivamente o braço neutro no plano escapular.</li></ol></div>
+        <div class="tc-block tc-error"><b class="lbl">Erro de prova</b><p>Segurar em local que não permita controlar o antebraço/escápula.</p></div>
+      </div>
+    </div>
+
+    <h4 class="subsub">Luxações e lesão acromioclavicular</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Quadro</th><th>Pista clínica enfatizada</th><th>Imagem/achado</th><th>Conduta ensinada</th></tr></thead>
+      <tbody>
+        <tr><td>Luxação glenoumeral anterior</td><td>Deformidade; sinal da dragona; paciente segura o braço</td><td>Cabeça umeral "no suvaco"/anteroinferior na fala</td><td>Reduzir conforme cenário, imobilizar com tipoia e encaminhar.</td></tr>
+        <tr><td>Luxação glenoumeral posterior</td><td>Sem dragona típica; pode mexer parcialmente, mas não consegue rotação externa</td><td>Cabeça não está "no suvaco"; bloqueio de rotação externa</td><td>Redução conforme cenário, tipoia e ortopedia.</td></tr>
+        <tr><td>Lesão/luxação AC</td><td>Trauma direto no ombro; sinal da tecla/cabide</td><td>Deformidade AC</td><td>Tipoia simples + ortopedia; não é "colocar o ombro no lugar" como glenoumeral.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Luxação anterior/posterior/AC e deformidades.</p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>"Clínica é soberana": não force uma interpretação radiográfica de luxação se o paciente move bem e não apresenta a clínica compatível.<cite>Transcrição, p. 28</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Após trauma, RX exclui fratura/luxação. Se persiste dor e perda de movimento depois, investigar partes moles/manguito com US ou RM. Ele prefere US como primeira opção prática por ser rápida e barata.<cite>Transcrição, p. 29</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Não esqueça retorno e exame de imagem se o paciente não melhorar.<cite>Transcrição, p. 29–30</cite></p></div>
+  </div>
+</section>
+
+<!-- ===================== 8 ===================== -->
+<section class="reg" id="s8" data-region="8" style="--r-accent:#b9781f">
+  <div class="reg-head">
+    <span class="reg-num">08</span>
+    <h2 class="reg-title">Cotovelo</h2>
+  </div>
+  <p class="reg-desc">Epicondilite lateral, Cozen e Mill, o Hook test para o bíceps distal e o sinal de Popeye.</p>
+
+  <div class="reg-body">
+    <h4 class="subsub">Epicondilite lateral — quadro</h4>
+    <ul class="qlist">
+      <li>Dor lateral do cotovelo.</li>
+      <li>Dor ao apertar/segurar objetos. Dor ao supinar. Dor ao segurar com força.</li>
+      <li>Provocada por extensão resistida do punho.</li>
+    </ul>
+
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Cozen</p><span class="tc-evaluates">Avalia epicondilite lateral</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — dor no epicôndilo lateral.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Cotovelo flexionado; antebraço pronado.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Localize o epicôndilo lateral com o polegar.</li><li>Apoie o antebraço/punho.</li><li>Peça extensão do punho a partir do neutro contra resistência.</li></ol></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Demonstra "acelerar a moto"/força para cima.</p></div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Mill <span style="font-weight:400;color:var(--ink-soft)">(forma ensinada na aula)</span></p><span class="tc-evaluates">Avalia epicondilite lateral</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — dor no epicôndilo lateral.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Cotovelo estendido.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Localize o epicôndilo lateral.</li><li>Parta com o punho mais flexionado ("de baixo").</li><li>Peça extensão do punho contra resistência.</li></ol></div>
+        <div class="corr" style="margin:0"><span class="co-tag">CORREÇÃO TÉCNICA</span><p>O teste de Mill clássico é passivo: extensão do cotovelo + pronação do antebraço + flexão do punho, alongando os extensores. A aula simplifica de modo diferente; saiba as duas versões.</p></div>
+      </div>
+    </div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Cozen + Mill + Hook.</p></div>
+
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Hook test <span style="font-weight:400;color:var(--ink-soft)">(transcrito "Hulk")</span></p><span class="tc-evaluates">Avalia tendão distal do bíceps</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — não conseguir enganchar/palpar o tendão sugere ruptura distal. <span class="neg"><b>Negativo</b> — consegue enganchar o tendão = bíceps distal preservado.</span></div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Cotovelo flexionado, antebraço supinado.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Apoie o membro.</li><li>Tente passar o dedo em gancho por baixo do tendão distal do bíceps.</li></ol></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Achou o tendão → teste negativo.</p></div>
+      </div>
+    </div>
+
+    <h4 class="subsub">Sinal de Popeye</h4>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Ruptura proximal: músculo "cai" distalmente → Popeye. Ruptura distal: músculo sobe/retrai proximalmente → Popeye reverso. Distal tende mais a cirurgia; proximal pode ser conservador dependendo do paciente.<cite>Transcrição, p. 33</cite></p></div>
+
+    <h4 class="subsub">Conduta na epicondilite lateral segundo a aula</h4>
+    <ul class="qlist">
+      <li>Diagnóstico é principalmente clínico.</li>
+      <li>US do cotovelo pode avaliar êntese, laceração/fissura.</li>
+      <li>Retirar/reduzir estímulo desencadeante. Compressa morna.</li>
+      <li>Anti-inflamatório conforme avaliação. Fisioterapia. Fortalecimento posterior dos extensores.</li>
+      <li>Relaxante muscular e atestado são citados na fala.</li>
+      <li>Encaminhar ortopedista conforme necessidade.</li>
+    </ul>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Enfatiza que o tratamento é predominantemente conservador.<cite>Transcrição, p. 32–33</cite></p></div>
+    <div class="corr"><span class="co-tag">CORREÇÃO TÉCNICA</span><p>A duração e escolha de anti-inflamatório dependem do paciente e contraindicações; a transcrição não fornece um esquema seguro/padronizado de dose e duração.</p></div>
+  </div>
+</section>
+
+<!-- ===================== 9 ===================== -->
+<section class="reg" id="s9" data-region="9" style="--r-accent:#a13d67">
+  <div class="reg-head">
+    <span class="reg-num">09</span>
+    <h2 class="reg-title">Punho e mão</h2>
+  </div>
+  <p class="reg-desc">Dedo em martelo, síndrome do túnel do carpo com os três testes de Phalen/Durkan, teste dos flexores no corte e o mapa dos três nervos.</p>
+
+  <div class="reg-body">
+    <h4 class="subsub">Dedo em martelo</h4>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Falange distal "caída" por ruptura do tendão extensor terminal ou fratura na base da falange distal. Conduta: levar a ponta para extensão, colocar tala metálica e encaminhar ortopedia.<cite>Transcrição, p. 34</cite></p></div>
+    <div class="corr"><span class="co-tag">CORREÇÃO TÉCNICA</span><p>O princípio técnico é manter continuamente a articulação interfalângica distal em extensão; hiperextensão agressiva não é necessária.</p></div>
+
+    <h4 class="subsub">Síndrome do túnel do carpo</h4>
+    <ul class="qlist">
+      <li>Nervo mediano. Queimação. Formigamento. Choque. Dormência/amortecimento. Possível perda de força.</li>
+      <li>Território: polegar, indicador, médio e metade radial do anular.</li>
+    </ul>
+
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Phalen</p><span class="tc-evaluates">Avalia síndrome do túnel do carpo / nervo mediano</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — reprodução dos sintomas do nervo mediano. <span class="neg"><b>Negativo</b> — sem parestesia típica.</span></div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Punhos em flexão máxima.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Mantenha flexão dos punhos por aproximadamente 1 minuto.</li><li>Pergunte sobre parestesia/queimação/amortecimento.</li></ol></div>
+        <div class="tc-block tc-ask"><b class="lbl">Pergunte durante o teste</b><p>"Está sentindo o quê? Queimação, formigamento, choque, amortecimento?"</p></div>
+        <div class="tc-block tc-error"><b class="lbl">Erro de prova</b><p>Perguntar apenas "doeu?".</p></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Insiste: o paciente não precisa sentir dor; o que interessa é parestesia.</p></div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Phalen invertido</p><span class="tc-evaluates">Avalia síndrome do túnel do carpo</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — reprodução dos sintomas típicos.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Punhos em extensão.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Mantenha extensão dos punhos por aproximadamente 1 minuto.</li><li>Pergunte sobre parestesia mediana.</li></ol></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Diz que prefere guardar Phalen invertido "para a vida".</p></div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Durkan</p><span class="tc-evaluates">Avalia compressão do nervo mediano no túnel do carpo</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — reprodução de sintomas no território mediano.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Punho confortável.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Localize o túnel do carpo entre as eminências tenar e hipotenar.</li><li>Comprima diretamente a região do nervo mediano.</li><li>Pergunte sobre parestesia.</li></ol></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Chama Durkan de mais sensível/específico e diz que é importante para a prova/teórica.</p></div>
+        <div class="corr" style="margin:0"><span class="co-tag">CORREÇÃO TÉCNICA</span><p>A técnica clássica é compressão direta do túnel por cerca de 30 s; não exige flexão obrigatória do punho.</p></div>
+      </div>
+    </div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Phalen/invertido + Durkan.</p></div>
+
+    <h4 class="subsub">Corte na mão — tendões flexores</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Tendão</th><th>Como isolar</th><th>Preservado quando</th></tr></thead>
+      <tbody>
+        <tr><td>Flexor superficial (FDS)</td><td>Mantenha os outros dedos bloqueados em extensão e peça flexão do dedo testado na PIP.</td><td>Consegue flexionar a interfalângica proximal.</td></tr>
+        <tr><td>Flexor profundo (FDP)</td><td>Estabilize a falange média/PIP e peça flexão apenas da ponta do dedo.</td><td>Consegue flexionar a interfalângica distal.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Se o corte envolve mão/dedo, o professor quer que você teste os flexores; se o profundo não move, pense em ruptura e encaminhamento.<cite>Transcrição, p. 35</cite></p></div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>FDS/FDP.</p></div>
+
+    <h4 class="subsub">Nervos radial, mediano e ulnar — "com certeza" na prova</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Nervo</th><th>Motor ensinado</th><th>Sensibilidade ensinada</th><th>Aplicação</th></tr></thead>
+      <tbody>
+        <tr><td>Radial</td><td>Estender polegar, punho ou dedos; "joinha/acelerar a moto"</td><td>Tabaqueira anatômica</td><td>Fraturas/compressões; lesão pode causar queda do punho.</td></tr>
+        <tr><td>Mediano</td><td>"OK"/oposição na fala</td><td>Polpa do indicador</td><td>Túnel do carpo e outras lesões.</td></tr>
+        <tr><td>Ulnar</td><td>Abdução e adução dos dedos / 5º dedo</td><td>Polpa do 5º dedo</td><td>Túnel cubital/compressões.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="corr"><span class="co-tag">CORREÇÃO TÉCNICA</span><p>O sinal de "OK" testa de forma mais específica o nervo interósseo anterior (ramo motor do mediano). Para musculatura tenar, oposição do polegar é mais representativa.</p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Se exame periférico/ENMG/US não explica a alteração sensitiva da mão, investigar origem cervical.<cite>Transcrição, p. 36</cite></p></div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Radial/mediano/ulnar motor e sensitivo.</p></div>
+
+    <h4 class="subsub">Palpação e ossos do carpo</h4>
+    <ul class="qlist">
+      <li>Tabaqueira anatômica: palpação do escafoide após queda sobre a mão.</li>
+      <li>Estiloide radial. Estiloide ulnar.</li>
+      <li>Ossos do carpo no RX: escafoide, semilunar, piramidal, pisiforme, trapézio, trapezoide, capitato, hamato.</li>
+    </ul>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>US pode mostrar tamanho/espessamento do nervo; eletroneuromiografia avalia alteração na condução elétrica.<cite>Transcrição, p. 38</cite></p></div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Ossos do carpo.</p></div>
+  </div>
+</section>
+
+<!-- ===================== 10 ===================== -->
+<section class="reg" id="s10" data-region="10" style="--r-accent:#2e7d4f">
+  <div class="reg-head">
+    <span class="reg-num">10</span>
+    <h2 class="reg-title">Quadril e pelve</h2>
+  </div>
+  <p class="reg-desc">Anatomia do fêmur proximal no RX, a exceção da fratura do idoso, Trendelenburg, o trauma pélvico de alta energia e FABER/FADIR.</p>
+
+  <div class="reg-body">
+    <h4 class="subsub">Fêmur proximal — reconhecer no RX</h4>
+    <ul class="qlist">
+      <li>Cabeça femoral.</li>
+      <li>Colo femoral.</li>
+      <li>Região intertrocantérica/transtrocantérica: entre trocânter maior e menor.</li>
+      <li>Região subtrocantérica: do trocânter menor até cerca de 5 cm abaixo.</li>
+      <li>Depois disso: diáfise.</li>
+    </ul>
+
+    <h4 class="subsub">Fratura proximal do fêmur em idoso</h4>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Trauma de baixa energia/osteoporose; membro encurtado e rodado para fora tanto em colo quanto transtrocantérica. "Não faz teste"; faça RX e deixe confortável. Diz explicitamente: sem tração, sem imobilização.<cite>Transcrição, p. 39</cite></p></div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Exceção à regra "sempre imobilizar": na própria aula, para fratura proximal de fêmur ele orienta NÃO fazer tração nem imobilização, apenas conforto e RX. Fratura proximal de fêmur e posição da perna também são prioridade.</p></div>
+
+    <h4 class="subsub">Dor lateral do quadril</h4>
+    <ul class="qlist">
+      <li>Dor à palpação do trocânter maior → bursite/síndrome dolorosa trocantérica na fala.</li>
+      <li>Dor mais posterior, na inserção glútea → tendinopatia/insuficiência glútea.</li>
+      <li>Fraqueza abdutora → Trendelenburg.</li>
+    </ul>
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Trendelenburg</p><span class="tc-evaluates">Avalia insuficiência dos abdutores, especialmente glúteo médio</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — a pelve cai para o lado contralateral ao membro em apoio.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Paciente em pé.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Peça apoio em um membro.</li><li>Observe o alinhamento da pelve.</li></ol></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Diz que "precisam obrigatoriamente saber".</p></div>
+      </div>
+    </div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Trendelenburg + FABER + FADIR.</p></div>
+
+    <h4 class="subsub">Trauma pélvico de alta energia</h4>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Transcrição descreve "sinal de destor": escroto inchado/roxo ou grandes lábios edemaciados após trauma de grande energia; manda avaliar sínfise púbica e lembrar de pelve aberta/desjunção.<cite>Transcrição, p. 39–40</cite></p></div>
+    <div class="corr"><span class="co-tag">CORREÇÃO TÉCNICA</span><p>O termo provavelmente é sinal de Destot, associado a equimose/hematoma perineal em trauma pélvico. É um cenário potencialmente grave e exige abordagem de trauma, não manobras repetidas de compressão da pelve.</p></div>
+
+    <h4 class="subsub">Dor profunda / articular do quadril</h4>
+    <ul class="qlist">
+      <li>Consegue calçar o tênis? Consegue colocar a meia? Consegue subir escadas?</li>
+      <li>Como está para flexionar o quadril?</li>
+    </ul>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Dificuldade nessas atividades direciona para problema de quadril/articular em vez de lombar, porque todas exigem flexão do quadril.<cite>Transcrição, p. 40</cite></p></div>
+
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">FABER</p><span class="tc-evaluates">Avalia quadril e também sacroilíaca</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — dor no quadril pode sugerir processo articular/impacto/desgaste; dor posterior pode aparecer na sacroilíaca.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Paciente em decúbito dorsal.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Flexão do quadril.</li><li>Abdução.</li><li>Rotação externa, formando um "4".</li></ol></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>FABER = Flexão, ABdução, Rotação Externa.</p></div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">FADIR</p><span class="tc-evaluates">Avalia impacto femoroacetabular</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — reprodução da dor profunda do quadril.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Paciente em decúbito dorsal.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Flexão.</li><li>Adução.</li><li>Rotação interna.</li></ol></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Também tensiona piriforme e pode piorar sintomas tipo ciatalgia. Tipos de impacto citados: CAM, pincer e misto.<cite>Transcrição, p. 40–41</cite></p></div>
+        <div class="corr" style="margin:0"><span class="co-tag">CORREÇÃO TÉCNICA</span><p>FADIR é sobretudo um teste provocativo de patologia intra-articular/impacto; não é teste diagnóstico específico de síndrome do piriforme.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 11 ===================== -->
+<section class="reg" id="s11" data-region="11" style="--r-accent:#a13d2e">
+  <div class="reg-head">
+    <span class="reg-num">11</span>
+    <h2 class="reg-title">Joelho</h2>
+  </div>
+  <p class="reg-desc">Anamnese traumática, luxação de patela, gavetas anterior e posterior, o teste meniscal transcrito como "esmaio" e Thessaly.</p>
+
+  <div class="reg-body">
+    <h4 class="subsub">Anamnese traumática direcionada</h4>
+    <ul class="qlist">
+      <li>Torceu? Teve outro trauma?</li>
+      <li>Consegue pisar no chão? Consegue caminhar?</li>
+      <li>O joelho está inchado? Existe deformidade?</li>
+      <li>Como foi a torção? O pé ficou preso enquanto o corpo girou? Girou para dentro ou para fora?</li>
+      <li>Ouviu estalido?</li>
+    </ul>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Torção + estalido + edema + dificuldade de apoio → pensar fortemente em LCA.<cite>Transcrição, p. 44</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Na emergência, primeiro RX para excluir fratura/luxação; se história sugere LCA/menisco, depois RM.<cite>Transcrição, p. 44</cite></p></div>
+
+    <h4 class="subsub">Luxação de patela</h4>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>A patela luxa lateralmente. Para reduzir na demonstração: estender o joelho e empurrar/guiar a patela medialmente. RX AP e axial.<cite>Transcrição, p. 44</cite></p></div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Não diga "luxação do joelho" quando é patela. Ele repete que luxação femorotibial é muito mais grave e ameaça o membro.</p></div>
+
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Gaveta anterior do joelho</p><span class="tc-evaluates">Avalia LCA</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — translação anterior excessiva ou endpoint diferente do lado oposto.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Paciente em decúbito dorsal, joelho a 90°.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Estabilize o pé.</li><li>Segure a tíbia/panturrilha proximal.</li><li>Puxe a tíbia anteriormente.</li><li>Compare com o lado oposto.</li></ol></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Enfatiza comparação bilateral porque a percepção de "frouxo" depende muito do tato.</p></div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Gaveta posterior do joelho</p><span class="tc-evaluates">Avalia LCP</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — translação posterior excessiva.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Mesma posição da gaveta anterior.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Estabilize o membro.</li><li>Empurre a tíbia posteriormente.</li></ol></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Anterior = LCA; posterior = LCP.</p></div>
+      </div>
+    </div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Gaveta anterior/posterior do joelho.</p></div>
+
+    <h4 class="subsub">Teste meniscal transcrito como "esmaio/Smile"</h4>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>A técnica demonstrada envolve flexionar o joelho, rodar o pé para abrir a interlinha e palpar diretamente a interlinha medial; para lateral, flexão maior e palpação da interlinha lateral. Dor à palpação = suspeita meniscal; ele manda RM.<cite>Transcrição, p. 47–48</cite></p></div>
+    <div class="corr"><span class="co-tag">CORREÇÃO TÉCNICA</span><p>O nome na transcrição é incerto. O contexto lembra palpação da interlinha/variação de Steinmann, mas não é seguro afirmar que toda a técnica descrita corresponde exatamente ao Steinmann clássico. Para a prova, memorize a técnica demonstrada e a associação interlinha dolorosa ↔ menisco.</p></div>
+
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Thessaly <span style="font-weight:400;color:var(--ink-soft)">(transcrito "tessalho")</span></p><span class="tc-evaluates">Avalia meniscos</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — dor, clique ou sensação de travamento na interlinha.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Paciente em apoio unipodal, segurando nas mãos do examinador.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Flexione discretamente o joelho.</li><li>Peça rotações do corpo/fêmur sobre a tíbia.</li><li>Observe dor na interlinha medial/lateral.</li></ol></div>
+        <div class="tc-block tc-error"><b class="lbl">Erro de prova</b><p>Forçar a manobra em idoso muito doloroso/agudo.</p></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Chama este de "melhor para a prova".</p></div>
+      </div>
+    </div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Menisco + Thessaly. Luxação de patela.</p></div>
+
+    <h4 class="subsub">Conduta no trauma de joelho da simulação</h4>
+    <ul class="qlist">
+      <li>RX para excluir lesão óssea. RM se suspeita LCA/menisco.</li>
+      <li>Gelo. Sem apoio ou carga conforme tolerância — a fala traz as duas possibilidades conforme o caso.</li>
+      <li>Imobilização com tala gessada na simulação. Seguimento com ortopedista.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== 12 ===================== -->
+<section class="reg" id="s12" data-region="12" style="--r-accent:#4a4f9e">
+  <div class="reg-head">
+    <span class="reg-num">12</span>
+    <h2 class="reg-title">Tornozelo e pé</h2>
+  </div>
+  <p class="reg-desc">Mecanismo e estruturas da entorse, os pontos de palpação obrigatórios, Thompson e a gaveta anterior do tornozelo.</p>
+
+  <div class="reg-body">
+    <h4 class="subsub">Entorse — mecanismo e estruturas</h4>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Caracterize se foi inversão/eversão. Na inversão, lembrar especialmente ligamento talofibular anterior e calcaneofibular.<cite>Transcrição, p. 50–51</cite></p></div>
+
+    <h4 class="subsub">Pontos de palpação obrigatórios segundo a aula</h4>
+    <ul class="qlist">
+      <li>Ligamento talofibular anterior (região anterolateral).</li>
+      <li>Maléolo medial. Maléolo lateral.</li>
+      <li>Base do 5º metatarso.</li>
+      <li>Inserção/tendão de Aquiles e procurar gap.</li>
+      <li>Cabeça da fíbula proximal.</li>
+    </ul>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Se dor é no pé → RX de pé; dor maleolar → RX de tornozelo; dor proximal → RX de perna.<cite>Transcrição, p. 52</cite></p></div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Pontos de palpação do tornozelo. Não esquecer 5º metatarso e cabeça da fíbula na entorse.</p></div>
+
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Thompson</p><span class="tc-evaluates">Avalia ruptura do tendão de Aquiles</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — ausência de flexão plantar; suspeita de ruptura do Aquiles. <span class="neg"><b>Negativo</b> — flexão plantar presente = tendão funcionando.</span></div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Pode ser feito com pé pendente/posição confortável.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Palpe o Aquiles e procure gap se houver história sugestiva.</li><li>Comprima a panturrilha distal.</li><li>Observe o movimento do pé.</li></ol></div>
+        <div class="tc-block tc-ask"><b class="lbl">Pergunte durante o teste</b><p>"Houve dor súbita correndo/jogando bola? Sentiu estalo?"</p></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Diz que Thompson está "com certeza" na prova e pergunta se o resultado é positivo ou negativo.</p></div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="tc-head"><div><p class="tc-name">Gaveta anterior do tornozelo</p><span class="tc-evaluates">Avalia ligamento talofibular anterior (LTFA)</span></div></div>
+      <div class="tc-positive"><b>Positivo</b> — translação anterior/frouxidão aumentada.</div>
+      <div class="tc-detail">
+        <div class="tc-block"><b class="lbl">Posição</b><p>Paciente relaxado.</p></div>
+        <div class="tc-block"><b class="lbl">Como fazer</b><ol><li>Uma mão estabiliza a perna pela frente.</li><li>A outra abraça o calcâneo por trás.</li><li>Puxe o calcâneo para frente enquanto estabiliza/empurra a perna para trás.</li><li>Compare firmeza com o lado oposto quando apropriado.</li></ol></div>
+        <div class="prof" style="margin:0"><span class="co-tag">PROFESSOR DISSE</span><p>Guardar o nome LTFA é explicitamente solicitado.</p></div>
+      </div>
+    </div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Thompson + gaveta anterior do tornozelo.</p></div>
+
+    <h4 class="subsub">Trauma agudo muito inchado</h4>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Não faça gaveta e vários testes em um tornozelo enorme logo após trauma. Toque o necessário para localizar, peça RX, imobilize, eleve, faça gelo e trate dor/inflamação; depois, se persistir, avalie parte ligamentar e inicie fisioterapia precoce.<cite>Transcrição, p. 53–54</cite></p></div>
+  </div>
+</section>
+
+<!-- ===================== 13 ===================== -->
+<section class="reg" id="s13" data-region="13" style="--r-accent:#4f6a75">
+  <div class="reg-head">
+    <span class="reg-num">13</span>
+    <h2 class="reg-title">Exames complementares — qual pedir e por quê</h2>
+  </div>
+  <p class="reg-desc">O guia de imagem/eletrodiagnóstico por situação clínica e a frase padrão para descrever um RX sem laudo.</p>
+
+  <div class="reg-body">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Situação</th><th>Exame enfatizado</th><th>O que o professor quer excluir/ver</th></tr></thead>
+      <tbody>
+        <tr><td>Trauma agudo em geral</td><td>RX</td><td>Fratura e luxação.</td></tr>
+        <tr><td>Coluna cervical/lombar com suspeita estrutural</td><td>RM</td><td>Hérnia, degeneração, raízes/partes moles.</td></tr>
+        <tr><td>Ombro após trauma, RX normal e dor persistente</td><td>US ou RM</td><td>Manguito/tendões/ligamentos; US é preferido na prática pela rapidez/custo.</td></tr>
+        <tr><td>Epicondilite lateral</td><td>US pode complementar</td><td>Êntese, fissura/laceração tendínea.</td></tr>
+        <tr><td>Túnel do carpo / nervo periférico</td><td>ENMG e/ou US</td><td>Condução elétrica e espessamento/compressão do nervo.</td></tr>
+        <tr><td>Quadril fraturado</td><td>RX</td><td>Localização da fratura proximal.</td></tr>
+        <tr><td>Joelho com suspeita LCA/menisco</td><td>RX agudo → RM</td><td>Osso primeiro; ligamento/menisco depois.</td></tr>
+        <tr><td>Tornozelo/pé</td><td>RX conforme local da dor</td><td>Pé, tornozelo ou perna de acordo com palpação.</td></tr>
+        <tr><td>Lombalgia + disúria</td><td>Urina / avaliação clínica</td><td>Possível causa não ortopédica.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h4 class="subsub">Como escrever RX sem laudo</h4>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Dica de prontuário: se o RX não tem laudo, escrever "RX sem laudo: sem sinais aparentes de fraturas ou luxações", evitando afirmar como radiologista que não existe lesão.<cite>Transcrição, p. 50</cite></p></div>
+    <div class="opening-line">"Radiografia sem laudo: sem sinais aparentes de fratura ou luxação."</div>
+  </div>
+</section>
+
+<!-- ===================== 14 ===================== -->
+<section class="reg" id="s14" data-region="14" style="--r-accent:#3e7d4e">
+  <div class="reg-head">
+    <span class="reg-num">14</span>
+    <h2 class="reg-title">Conduta, analgesia, imobilização e retorno</h2>
+  </div>
+  <p class="reg-desc">A fórmula verbal para nunca travar no fechamento, a regra geral de imobilização e sua única exceção.</p>
+
+  <div class="reg-body">
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Ele quer que você fale o nome do medicamento, para que serve e por quanto tempo; a transcrição cita tramadol ("Dramadol"), amitriptilina e, na simulação, dipirona/paracetamol. Porém não fornece doses/durações padronizadas para todos.<cite>Transcrição, p. 2</cite></p></div>
+    <div class="corr"><span class="co-tag">CORREÇÃO TÉCNICA</span><p>Não invente dose ou duração se a estação não fornecer dados clínicos suficientes. AINEs, opioides e antidepressivos tricíclicos têm contraindicações e riscos; na prova, priorize indicação por classe/nome e necessidade de avaliar contraindicações.</p></div>
+
+    <h4 class="subsub">Fórmula para não travar</h4>
+    <div class="opening-line">"Minha principal hipótese é ____. Vou solicitar ____ para avaliar ____. Para controle dos sintomas, vou iniciar analgesia apropriada, considerando alergias e contraindicações. Como houve trauma/suspeita estrutural, vou proteger o membro conforme o caso. Depois, o paciente retorna com o exame e/ou segue para avaliação ortopédica."</div>
+
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Regra geral repetida: caiu/torceu/bateu → imobilizar o membro. Isso protege inclusive se uma fratura pequena passar despercebida.<cite>Transcrição, p. 49–50</cite></p></div>
+    <div class="flag"><span class="co-tag">AMARELO PISCANTE</span><p>Exceção explícita da própria aula: fratura proximal de fêmur no idoso → confortável, RX, sem tração e sem imobilização.<cite>Transcrição, p. 39</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Não diga ao paciente que "vai operar" só porque viu uma fratura; isso cabe à avaliação ortopédica e depende de vários fatores.<cite>Transcrição, p. 49</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Retorno é parte da consulta; se o paciente não melhora, precisa reavaliar e investigar melhor.<cite>Transcrição, p. 29–30</cite></p></div>
+  </div>
+</section>
+
+<!-- ===================== 15 ===================== -->
+<section class="reg" id="s15" data-region="15" style="--r-accent:#a13d2e">
+  <div class="reg-head">
+    <span class="reg-num">15</span>
+    <h2 class="reg-title">Ferimentos/cortes da mão</h2>
+  </div>
+  <p class="reg-desc">A estação escondida no final da aula: o checklist completo de um corte de mão, do jeito que o professor exige verbalizar.</p>
+
+  <div class="reg-body">
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Mesmo que o papel mande testes específicos, se há corte/ferimento você precisa verbalizar limpeza, avaliação do ferimento, anestesia, curativo/sutura e status do tétano.<cite>Transcrição, p. 59–60</cite></p></div>
+
+    <ol class="checklist">
+      <li>Higienizar/irrigar o ferimento.</li>
+      <li>Avaliar profundidade e estruturas acometidas.</li>
+      <li>Avaliar perfusão.</li>
+      <li>Avaliar sensibilidade e radial/mediano/ulnar quando pertinente.</li>
+      <li>Testar FDS/FDP antes de assumir que é superficial.</li>
+      <li>Anestesiar adequadamente para exame/procedimento.</li>
+      <li>Verificar vacinação antitetânica.</li>
+      <li>Curativo e sutura se apropriado.</li>
+      <li>Antibiótico: professor verbaliza deixar antibiótico; tecnicamente a indicação depende do tipo/contaminação/risco.</li>
+      <li>Se provável lesão de tendão flexor, encaminhar ortopedia.</li>
+    </ol>
+
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Se há ortopedista disponível imediatamente e lesão tendínea, pode discutir manter ferida aberta para reparo. Se não há, suturar pele, proteger, antibiótico conforme conduta local e encaminhar com carta "provável lesão de tendão flexor".<cite>Transcrição, p. 60</cite></p></div>
+    <div class="prof"><span class="co-tag">PROFESSOR DISSE</span><p>Dica de vida: anestesia troncular do dedo é sensitiva; depois de anestesiar, o paciente ainda consegue mexer e você pode testar o tendão sem dor.<cite>Transcrição, p. 60</cite></p></div>
+  </div>
+</section>
+
+<!-- ===================== 16 ===================== -->
+<section class="reg" id="s16" data-region="16" style="--r-accent:#6a4f8f">
+  <div class="reg-head">
+    <span class="reg-num">16</span>
+    <h2 class="reg-title">Raciocínios diferenciais que aparecem na aula</h2>
+  </div>
+  <p class="reg-desc">Os pares de diagnóstico diferencial que o professor cruza de propósito, e a pista clínica que separa um do outro.</p>
+
+  <div class="reg-body">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Apresentação</th><th>O que diferenciar</th><th>Pistas</th></tr></thead>
+      <tbody>
+        <tr><td>Cervical + mão amortecida</td><td>Radiculopatia cervical × túnel do carpo/periférico</td><td>Trajeto dermatomérico, reflexos/força, Spurling/distração vs Phalen/Durkan.</td></tr>
+        <tr><td>Lombar + pé amortecido</td><td>Radiculopatia × neuropatia periférica × vascular</td><td>Trajeto da dor, dermátomos, déficit motor/reflexo, contexto vascular/diabetes.</td></tr>
+        <tr><td>Lombar × quadril</td><td>Origem vertebral × intra-articular do quadril</td><td>Meia/sapato/escada e flexão do quadril; FABER/FADIR.</td></tr>
+        <tr><td>Ombro doloroso e travado</td><td>Fratura × luxação × manguito × capsulite × tendinite calcária</td><td>Trauma, deformidade, movimento ativo/passivo, testes do manguito/impacto.</td></tr>
+        <tr><td>Dor lateral do quadril</td><td>Síndrome trocantérica × tendinopatia glútea</td><td>Palpação trocânter vs inserção posterior; Trendelenburg.</td></tr>
+        <tr><td>Joelho pós-torção</td><td>LCA × menisco × fratura/luxação</td><td>Estalo/edema/apoio; gavetas; interlinha/Thessaly; RX/RM.</td></tr>
+        <tr><td>Entorse de tornozelo</td><td>Ligamentar × fratura × Aquiles</td><td>Mecanismo, palpação maléolos/5º meta/fíbula/Aquiles, Thompson, RX.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ===================== 17 ===================== -->
+<section class="reg" id="s17" data-region="17" style="--r-accent:#b9781f">
+  <div class="reg-head">
+    <span class="reg-num">17</span>
+    <h2 class="reg-title">Estações simuladas de alta probabilidade</h2>
+  </div>
+  <p class="reg-desc">Dezoito casos prováveis e o roteiro mental resumido de cada um — o que fazer assim que ler o papel na porta da sala.</p>
+
+  <div class="reg-body">
+    <div class="station-grid">
+      <div class="station" data-n="01"><h5>Cervicalgia com radiculopatia</h5><span class="k">Caso provável</span><p>Dor cervical irradiada para braço e mão, parestesia.</p><span class="k">Checklist mental</span><p>Nome/idade/profissão; trauma; trajeto; parestesia; força; Spurling + distração; raiz/reflexo; RM; diferenciar túnel do carpo.</p></div>
+      <div class="station" data-n="02"><h5>Lombociatalgia</h5><span class="k">Caso provável</span><p>Lombalgia com dor posterior de perna e pé.</p><span class="k">Checklist mental</span><p>Trauma/ocupação; trajeto; déficit; Lasègue; L4/L5/S1; patelar/aquileu; red flags; RM.</p></div>
+      <div class="station" data-n="03"><h5>Escoliose</h5><span class="k">Caso provável</span><p>Assimetria corporal percebida.</p><span class="k">Checklist mental</span><p>Inspeção ombros/escápulas/triângulo de talhe/pelve; Adams.</p></div>
+      <div class="station" data-n="04"><h5>Manguito rotador</h5><span class="k">Caso provável</span><p>Dor ao elevar braço sem grande trauma.</p><span class="k">Checklist mental</span><p>Movimento; Jobe, infraespinhal, Gerber; impacto; US/RM; tratamento conservador.</p></div>
+      <div class="station" data-n="05"><h5>Síndrome do impacto</h5><span class="k">Caso provável</span><p>Dor no arco de elevação.</p><span class="k">Checklist mental</span><p>Hawkins + Neer; interpretar; analgesia/fisio; imagem se persistente.</p></div>
+      <div class="station" data-n="06"><h5>Luxação glenoumeral</h5><span class="k">Caso provável</span><p>Trauma agudo de ombro.</p><span class="k">Checklist mental</span><p>Inspeção/deformidade; anterior vs posterior; RX; neurovascular; redução conforme cenário; tipoia; ortopedia.</p></div>
+      <div class="station" data-n="07"><h5>Lesão acromioclavicular</h5><span class="k">Caso provável</span><p>Queda direto sobre ombro.</p><span class="k">Checklist mental</span><p>Sinal tecla/cabide; RX; tipoia; ortopedia.</p></div>
+      <div class="station" data-n="08"><h5>Epicondilite lateral</h5><span class="k">Caso provável</span><p>Dor lateral ao segurar peso.</p><span class="k">Checklist mental</span><p>Cozen + Mill; US se necessário; retirar estímulo; AINE conforme avaliação; fisio; ortopedia.</p></div>
+      <div class="station" data-n="09"><h5>Ruptura distal do bíceps</h5><span class="k">Caso provável</span><p>Estalo após esforço e deformidade.</p><span class="k">Checklist mental</span><p>Hook; Popeye reverso; proteção; ortopedia.</p></div>
+      <div class="station" data-n="10"><h5>Túnel do carpo</h5><span class="k">Caso provável</span><p>Parestesia mediana.</p><span class="k">Checklist mental</span><p>Phalen/invertido/Durkan; mediano motor/sensitivo; ENMG/US.</p></div>
+      <div class="station" data-n="11"><h5>Corte de mão com flexor</h5><span class="k">Caso provável</span><p>Corte profundo de indicador.</p><span class="k">Checklist mental</span><p>Limpeza; anestesia; FDS/FDP; nervos; tétano; sutura/encaminhamento.</p></div>
+      <div class="station" data-n="12"><h5>Fratura proximal de fêmur</h5><span class="k">Caso provável</span><p>Idoso caiu, não apoia, perna encurtada/rodada para fora.</p><span class="k">Checklist mental</span><p>Não fazer testes; RX; conforto; sem tração/imobilização segundo a aula; ortopedia.</p></div>
+      <div class="station" data-n="13"><h5>Dor lateral de quadril</h5><span class="k">Caso provável</span><p>Claudicação e dor trocantérica.</p><span class="k">Checklist mental</span><p>Palpação; Trendelenburg; síndrome trocantérica/tendinopatia glútea.</p></div>
+      <div class="station" data-n="14"><h5>Impacto/artrose de quadril</h5><span class="k">Caso provável</span><p>Dor profunda, dificuldade para meia/sapato.</p><span class="k">Checklist mental</span><p>FABER/FADIR; funcionalidade; imagem/ortopedia.</p></div>
+      <div class="station" data-n="15"><h5>Trauma pélvico grave</h5><span class="k">Caso provável</span><p>Alta energia + equimose/edema perineal.</p><span class="k">Checklist mental</span><p>Reconhecer gravidade; sínfise/pelve; abordagem de trauma, evitar manipulação repetida.</p></div>
+      <div class="station" data-n="16"><h5>LCA</h5><span class="k">Caso provável</span><p>Torção, estalo, edema, não apoia.</p><span class="k">Checklist mental</span><p>RX; gaveta anterior; RM; gelo/proteção; ortopedia.</p></div>
+      <div class="station" data-n="17"><h5>Menisco</h5><span class="k">Caso provável</span><p>Dor de interlinha e travamento.</p><span class="k">Checklist mental</span><p>Palpação/interlinha; Thessaly; RM.</p></div>
+      <div class="station" data-n="18"><h5>Luxação de patela</h5><span class="k">Caso provável</span><p>Patela lateral e dor aguda.</p><span class="k">Checklist mental</span><p>Diferenciar de luxação de joelho; redução suave; RX AP/axial; proteção.</p></div>
+      <div class="station" data-n="19"><h5>Entorse de tornozelo</h5><span class="k">Caso provável</span><p>Inversão, edema lateral.</p><span class="k">Checklist mental</span><p>LTFA/calcaneofibular; maléolos; 5º meta; cabeça da fíbula; RX conforme local; imobilizar/gelo/elevar.</p></div>
+      <div class="station" data-n="20"><h5>Ruptura do Aquiles</h5><span class="k">Caso provável</span><p>Dor súbita em esporte, possível gap.</p><span class="k">Checklist mental</span><p>Palpação + Thompson; interpretar positivo/negativo; ortopedia.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 18 ===================== -->
+<section class="reg" id="s18" data-region="18" style="--r-accent:#31404a">
+  <div class="reg-head">
+    <span class="reg-num">18</span>
+    <h2 class="reg-title">Tabelões finais e revisão de véspera</h2>
+  </div>
+  <p class="reg-desc">Todos os testes citados em uma única tabela, a lista completa de prioridades amarelo piscante, os erros que derrubam a estação e três roteiros de véspera por tempo disponível.</p>
+
+  <div class="reg-body">
+    <h4 class="subsub">Todos os testes/manobras citados na revisão</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Região</th><th>Teste/manobra</th><th>Avalia</th><th>Positivo/achado</th></tr></thead>
+      <tbody>
+        <tr><td>Cervical</td><td>Spurling</td><td>Radiculopatia cervical</td><td>Reprodução da dor radicular</td></tr>
+        <tr><td>Cervical</td><td>Distração</td><td>Descompressão radicular</td><td>Alívio dos sintomas</td></tr>
+        <tr><td>Coluna</td><td>Adams</td><td>Escoliose</td><td>Gibosidade</td></tr>
+        <tr><td>Lombar</td><td>Schober — inferido do contexto</td><td>Mobilidade lombar</td><td>Aumento insuficiente da distância</td></tr>
+        <tr><td>Lombar</td><td>Lasègue</td><td>Irritação radicular</td><td>Dor radicular em elevação da perna</td></tr>
+        <tr><td>Neurológico</td><td>Babinski</td><td>Trato corticoespinal</td><td>Extensão do hálux em adulto</td></tr>
+        <tr><td>Ombro</td><td>Jobe</td><td>Supraespinhal</td><td>Dor/fraqueza</td></tr>
+        <tr><td>Ombro</td><td>Rotação ext. resistida</td><td>Infraespinhal</td><td>Dor/fraqueza</td></tr>
+        <tr><td>Ombro</td><td>Gerber</td><td>Subescapular</td><td>Dor/incapacidade</td></tr>
+        <tr><td>Ombro</td><td>Hawkins-Kennedy</td><td>Impacto</td><td>Dor</td></tr>
+        <tr><td>Ombro</td><td>Neer</td><td>Impacto</td><td>Dor</td></tr>
+        <tr><td>Cotovelo</td><td>Cozen</td><td>Epicondilite lateral</td><td>Dor epicondilar</td></tr>
+        <tr><td>Cotovelo</td><td>Mill — aula</td><td>Epicondilite lateral</td><td>Dor epicondilar</td></tr>
+        <tr><td>Bíceps</td><td>Hook</td><td>Bíceps distal</td><td>Não engancha tendão</td></tr>
+        <tr><td>Punho</td><td>Phalen</td><td>Mediano</td><td>Parestesia</td></tr>
+        <tr><td>Punho</td><td>Phalen invertido</td><td>Mediano</td><td>Parestesia</td></tr>
+        <tr><td>Punho</td><td>Durkan</td><td>Mediano</td><td>Parestesia</td></tr>
+        <tr><td>Mão</td><td>FDS</td><td>Flexor superficial</td><td>Falha de flexão PIP</td></tr>
+        <tr><td>Mão</td><td>FDP</td><td>Flexor profundo</td><td>Falha de flexão DIP</td></tr>
+        <tr><td>Quadril</td><td>Trendelenburg</td><td>Abdutores</td><td>Queda pélvica contralateral</td></tr>
+        <tr><td>Quadril</td><td>FABER</td><td>Quadril/SI</td><td>Dor</td></tr>
+        <tr><td>Quadril</td><td>FADIR</td><td>Impacto</td><td>Dor profunda</td></tr>
+        <tr><td>Joelho</td><td>Gaveta anterior</td><td>LCA</td><td>Translação anterior</td></tr>
+        <tr><td>Joelho</td><td>Gaveta posterior</td><td>LCP</td><td>Translação posterior</td></tr>
+        <tr><td>Joelho</td><td>Palpação/interlinha — nome incerto</td><td>Menisco</td><td>Dor na interlinha</td></tr>
+        <tr><td>Joelho</td><td>Thessaly</td><td>Menisco</td><td>Dor/click/travamento</td></tr>
+        <tr><td>Aquiles</td><td>Thompson</td><td>Aquiles</td><td>Sem flexão plantar</td></tr>
+        <tr><td>Tornozelo</td><td>Gaveta anterior</td><td>LTFA</td><td>Frouxidão/translação</td></tr>
+      </tbody>
+    </table></div>
+
+    <h4 class="subsub">Amarelo piscante — prioridade máxima para treinar em alguém</h4>
+    <div class="flagwall">
+      <div class="flag"><span class="co-tag">AP</span><p>Spurling + distração</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>C5/C6/C7 — motor, sensibilidade e reflexos</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Adams</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Lasègue + faixa angular + diferença dor lombar vs radicular</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>L4/L5/S1 — sensibilidade + patelar/aquileu</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Força 0–5</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Jobe + infraespinhal + Gerber</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Hawkins + Neer</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Luxação anterior/posterior/AC e deformidades</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Cozen + Mill + Hook</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Phalen/invertido + Durkan</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>FDS/FDP</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Radial/mediano/ulnar motor e sensitivo</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Ossos do carpo</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Trendelenburg + FABER + FADIR</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Fratura proximal de fêmur e posição da perna</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Gaveta anterior/posterior joelho</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Menisco + Thessaly</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Luxação de patela</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Pontos de palpação do tornozelo</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Thompson + gaveta anterior tornozelo</p></div>
+      <div class="flag"><span class="co-tag">AP</span><p>Higiene das mãos + explicação final + exame correto + retorno</p></div>
+    </div>
+
+    <h4 class="subsub">Erros que podem derrubar a estação</h4>
+    <ul class="errorlist">
+      <li>Tocar antes de higienizar as mãos.</li>
+      <li>Esquecer nome, idade ou profissão.</li>
+      <li>Não perguntar trauma.</li>
+      <li>Não caracterizar trajeto da dor/parestesia.</li>
+      <li>Chamar lombalgia isolada de Lasègue positivo.</li>
+      <li>Fazer reflexo com membro tenso.</li>
+      <li>Confundir C5/C6/C7.</li>
+      <li>Fazer teste do ombro em paciente que nem consegue posicionar o braço, sem reconhecer a limitação.</li>
+      <li>Confundir lesão AC com glenoumeral.</li>
+      <li>Confundir luxação de patela com luxação do joelho.</li>
+      <li>Forçar Thessaly em idoso doloroso.</li>
+      <li>Fazer gaveta de tornozelo em trauma hiperagudo muito inchado.</li>
+      <li>Esquecer 5º metatarso e cabeça da fíbula na entorse.</li>
+      <li>Esquecer imobilização/proteção no trauma quando indicada.</li>
+      <li>Aplicar a regra de imobilização à fratura proximal de fêmur apesar da exceção dada pelo professor.</li>
+      <li>Dizer "vai operar" sem avaliação ortopédica.</li>
+      <li>Esquecer retorno.</li>
+      <li>Esquecer exame de partes moles quando RX é normal e sintomas persistem.</li>
+      <li>No corte, esquecer limpar, anestesiar, tétano e testar tendão.</li>
+    </ul>
+
+    <h4 class="subsub">Roteiros de véspera por tempo disponível</h4>
+    <div class="timebox">
+      <h5>Se eu tiver só 1 hora</h5>
+      <ul>
+        <li>15 min: sequência universal + anamnese trauma/coluna.</li>
+        <li>10 min: C5–T1 + L4/L5/S1 + reflexos.</li>
+        <li>15 min: executar fisicamente Spurling/distração, Jobe/infra/Gerber/Hawkins/Neer, Lasègue.</li>
+        <li>10 min: joelho/quadril/tornozelo.</li>
+        <li>10 min: mão/nervos + condutas/imagem.</li>
+      </ul>
+    </div>
+    <div class="timebox">
+      <h5>Se eu tiver só 20 minutos</h5>
+      <p style="font-size:14px">Decore: mãos → nome/idade/profissão → trauma → trajeto → parestesia/força → teste pedido → positivo/negativo → hipótese → RX se trauma / RM partes moles-coluna / US manguito-nervo / ENMG nervo → imobilizar quando indicado → retorno/ortopedia.</p>
+    </div>
+    <div class="timebox speech">
+      <h5 style="font-family:var(--mono);font-style:normal">Se eu tiver só 5 minutos antes de entrar</h5>
+      "Lavo a mão. Nome, idade, profissão. Pergunto trauma. Caracterizo dor e irradiação. Pergunto dormência e força. Faço exatamente o teste pedido e digo se é positivo ou negativo. Trauma começa com RX. Partes moles persistentes → US/RM. Nervo → ENMG/US. Protejo/imobilizo quando indicado, exceto a exceção do fêmur proximal dada na aula. Explico e marco retorno/ortopedia."
+    </div>
+
+    <h4 class="subsub">Apêndice — frases prontas para a prova</h4>
+    <div class="phrase-grid">
+      <div class="phrase"><b>Abertura</b><span>"Bom dia, meu nome é Rafaela, sou acadêmica de Medicina e vou atendê-lo hoje. Antes de começarmos, vou higienizar minhas mãos."</span></div>
+      <div class="phrase"><b>Dor</b><span>"Essa dor fica somente nesse local ou corre para algum outro lugar? Por onde ela vai? Até onde chega?"</span></div>
+      <div class="phrase"><b>Neurológico</b><span>"O senhor sente formigamento, dormência, queimação ou choque? Percebeu perda de força?"</span></div>
+      <div class="phrase"><b>Trauma</b><span>"Como exatamente aconteceu? O membro ficou preso? Houve rotação? Escutou estalido? Conseguiu apoiar depois?"</span></div>
+      <div class="phrase"><b>Antes do teste</b><span>"Vou realizar uma manobra específica para avaliar essa estrutura. Avise se sentir dor ou formigamento e me diga exatamente onde."</span></div>
+      <div class="phrase"><b>Interpretação</b><span>"Esse teste foi positivo porque reproduziu o padrão de sintomas esperado, aumentando a suspeita de ____."</span></div>
+      <div class="phrase"><b>Imagem</b><span>"Como houve trauma, primeiro quero excluir fratura ou luxação com radiografia. Se persistir suspeita de partes moles, complementaremos com ____."</span></div>
+      <div class="phrase"><b>Fechamento</b><span>"Minha principal hipótese é ____. Vou solicitar ____, controlar os sintomas, proteger o membro conforme necessário e orientar retorno/avaliação ortopédica."</span></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  MANUAL DEFINITIVO V2 · PROVA PRÁTICA DE ORTOPEDIA — montado a partir da transcrição da revisão pré-prova do professor Lucas. Uso pessoal de estudo.
+</footer>
+
+<script>
+(function(){
+  var tabs = document.querySelectorAll('.tab');
+  var sections = document.querySelectorAll('.reg');
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){
+      var el = document.getElementById(t.dataset.target);
+      if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+  if('IntersectionObserver' in window){
+    var map = {};
+    tabs.forEach(function(t){ map[t.dataset.target]=t; });
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          tabs.forEach(function(t){t.classList.remove('active');});
+          var m = map[e.target.id];
+          if(m){
+            m.classList.add('active');
+            m.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+          }
+        }
+      });
+    },{rootMargin:'-45% 0px -50% 0px',threshold:0});
+    sections.forEach(function(s){obs.observe(s);});
+  }
+
+  var qb = document.getElementById('quickToggle');
+  qb.addEventListener('click',function(){
+    document.body.classList.toggle('quick-mode');
+    qb.classList.toggle('on');
+    qb.textContent = document.body.classList.contains('quick-mode')
+      ? 'VOLTAR AO MODO COMPLETO'
+      : 'MODO REVISÃO RELÂMPAGO';
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manejo da Dor Aguda, Herpes-Zoster e Nevralgia Pós-Herpética</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e14;
+  --bg-alt:#0d131c;
+  --card:#121926;
+  --card-hi:#161f2e;
+  --ink:#dbe2ec;
+  --ink-dim:#8b97a8;
+  --ink-faint:#5d6b7d;
+  --line:#232d3d;
+
+  --c1:#2dd4bf; /* fundamentos */
+  --c2:#fbbf24; /* taxonomia IASP */
+  --c3:#fb7185; /* mecanismos / vias */
+  --c4:#a78bfa; /* aguda x cronica */
+  --c5:#22d3ee; /* principios terapeuticos */
+  --c6:#34d399; /* paracetamol */
+  --c7:#fb923c; /* dipirona */
+  --c8:#38bdf8; /* virologia HZ */
+  --c9:#e879f9; /* clinica HZ */
+  --c10:#a3e635; /* tratamento HZ */
+  --c11:#f87171; /* fisiopatologia NPH */
+  --c12:#818cf8; /* tratamento NPH */
+  --c13:#facc15; /* vacinas */
+
+  --spine-w:58px;
+}
+
+*{box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(ellipse at top left, rgba(45,212,191,0.05), transparent 40%),
+    radial-gradient(ellipse at bottom right, rgba(129,140,248,0.06), transparent 45%),
+    var(--bg);
+  color:var(--ink);
+  font-family:'Source Sans 3', -apple-system, sans-serif;
+  font-weight:400;
+  line-height:1.7;
+  padding-bottom:120px;
+  position:relative;
+}
+
+/* textura decorativa fixa: linhas de dermátomos muito sutis, preenchendo
+   o espaço à direita da coluna de leitura em telas largas */
+.bg-art{
+  position:fixed;
+  top:0; right:0;
+  width:46vw;
+  height:100vh;
+  pointer-events:none;
+  opacity:0.05;
+  z-index:0;
+  mix-blend-mode:screen;
+}
+@media (max-width:1150px){.bg-art{display:none;}}
+
+h1,h2,h3,h4{
+  font-family:'Cormorant Garamond', serif;
+  font-weight:500;
+  letter-spacing:0.01em;
+  margin:0;
+}
+
+/* ===== coluna de navegação (spine) =====
+   Metáfora deliberada: um corte da medula espinhal, com nós = gânglios
+   segmentares e a linha vertical = o próprio cordão. Cada seção da aula
+   vira um "segmento", exatamente como os dermátomos estudados na seção 3. */
+.spine{
+  position:fixed;
+  left:0; top:0; bottom:0;
+  width:var(--spine-w);
+  z-index:80;
+  background:var(--bg-alt);
+  border-right:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.spine .spine-brand{
+  padding:20px 0 14px;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:0.95rem;
+  color:var(--ink-faint);
+  writing-mode:vertical-rl;
+  letter-spacing:0.05em;
+}
+.spine .cord{
+  position:relative;
+  flex:1;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  padding:6px 0 18px;
+}
+.spine .cord::before{
+  content:'';
+  position:absolute;
+  top:6px; bottom:18px; left:50%;
+  width:1px;
+  background:var(--line);
+  transform:translateX(-50%);
+}
+.spine .node{
+  position:relative;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  padding:5px 0;
+}
+.spine .node .dot{
+  width:7px;height:7px;
+  border-radius:50%;
+  background:var(--line);
+  border:1px solid var(--ink-faint);
+  z-index:2;
+  transition:all 0.25s ease;
+}
+.spine .node .root{
+  position:absolute;
+  left:50%; top:50%;
+  width:0;
+  height:1px;
+  background:var(--node-accent, var(--c1));
+  transform:translateY(-50%);
+  transition:width 0.25s ease;
+  opacity:0.8;
+}
+.spine .node .num{
+  position:absolute;
+  left:calc(50% + 14px);
+  top:50%;
+  transform:translateY(-50%);
+  font-family:'Source Sans 3',sans-serif;
+  font-size:0.62rem;
+  letter-spacing:0.08em;
+  color:var(--ink-faint);
+  white-space:nowrap;
+  opacity:0;
+  transition:opacity 0.2s ease;
+  background:var(--card);
+  border:1px solid var(--line);
+  padding:2px 7px;
+  border-radius:3px;
+  pointer-events:none;
+}
+.spine .node:hover .num{opacity:1;}
+.spine .node:hover .root{width:10px;}
+.spine .node.active .dot{
+  background:var(--node-accent, var(--c1));
+  border-color:var(--node-accent, var(--c1));
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--node-accent, var(--c1)) 25%, transparent);
+  transform:scale(1.25);
+}
+.spine .node.active .root{width:16px;}
+
+@media (max-width:900px){
+  .spine{
+    position:fixed;
+    left:0; right:0; top:0; bottom:auto;
+    width:auto; height:46px;
+    flex-direction:row;
+    border-right:none;
+    border-bottom:1px solid var(--line);
+  }
+  .spine .spine-brand{display:none;}
+  .spine .cord{
+    flex-direction:row;
+    padding:0 10px;
+    overflow-x:auto;
+    justify-content:flex-start;
+    gap:2px;
+  }
+  .spine .cord::before{
+    top:50%; bottom:auto; left:0; right:0; width:auto; height:1px;
+    transform:translateY(-50%);
+  }
+  .spine .node{width:auto;padding:0 9px;flex-shrink:0;}
+  .spine .node .root{display:none;}
+  .spine .node .num{position:static;transform:none;opacity:1;background:none;border:none;padding:0;font-size:0.66rem;}
+  .spine .node .dot{display:none;}
+  .spine .node.active .num{color:var(--node-accent, var(--c1));}
+}
+
+.stage{margin-left:var(--spine-w);position:relative;z-index:1;}
+@media (max-width:900px){.stage{margin-left:0;margin-top:46px;}}
+
+.cover{
+  padding:70px 7vw 50px 44px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg, rgba(45,212,191,0.06), transparent);
+}
+@media (max-width:900px){.cover{padding:44px 7vw 40px;}}
+.cover .kicker{
+  font-family:'Source Sans 3',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.25em;
+  font-size:0.72rem;
+  color:var(--c1);
+}
+.cover h1{
+  font-size:2.9rem;
+  color:#f2f5f9;
+  margin-top:10px;
+  max-width:800px;
+}
+.cover .sub{
+  font-style:italic;
+  color:var(--ink-dim);
+  font-size:1.15rem;
+  margin-top:14px;
+  max-width:640px;
+}
+.cover .meta{
+  margin-top:26px;
+  display:flex;
+  gap:22px;
+  flex-wrap:wrap;
+  font-size:0.85rem;
+  color:var(--ink-faint);
+}
+.cover .meta span{color:var(--c1);}
+
+.layout{
+  display:grid;
+  grid-template-columns: minmax(0,720px) minmax(260px,1fr);
+  gap:56px;
+  max-width:1500px;
+  padding:0 5vw 0 44px;
+  align-items:start;
+}
+@media (max-width:1180px){
+  .layout{grid-template-columns:1fr;max-width:760px;}
+  .aside-col{display:none;}
+}
+
+.wrap{max-width:none;margin:0;padding:0;}
+
+.aside-col{
+  position:sticky;
+  top:24px;
+  max-height:calc(100vh - 48px);
+  overflow-y:auto;
+  padding:2px 8px 40px 2px;
+}
+.aside-col::-webkit-scrollbar{width:5px;}
+.aside-col::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
+.aside-col .aside-eyebrow{
+  font-family:'Source Sans 3',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.2em;
+  font-size:0.68rem;
+  color:var(--ink-faint);
+  margin-bottom:14px;
+  padding-top:20px;
+}
+.ref-card{
+  background:var(--card);
+  border-top:2px solid var(--a-accent, var(--c1));
+  border-radius:2px 2px 6px 6px;
+  padding:14px 16px 15px;
+  margin-bottom:12px;
+}
+.ref-card h4{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-weight:500;
+  color:var(--a-accent, var(--c1));
+  font-size:1.05rem;
+  margin:0 0 8px;
+}
+.ref-card ul{margin:0;padding-left:16px;}
+.ref-card li{font-size:0.82rem;line-height:1.5;color:var(--ink-dim);margin:4px 0;}
+.ref-card .chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.ref-card .chip{
+  font-family:'Source Sans 3',sans-serif;
+  font-size:0.72rem;
+  color:var(--a-accent, var(--c1));
+  border:1px solid var(--a-accent, var(--c1));
+  padding:2px 8px;
+  border-radius:10px;
+}
+
+.section{padding-top:64px;scroll-margin-top:28px;}
+
+.section-header{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin-bottom:22px;
+}
+.section-header .tag{
+  font-family:'Source Sans 3',sans-serif;
+  font-size:0.72rem;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--bg);
+  background:var(--accent);
+  padding:5px 12px;
+  border-radius:3px;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.section-header .line{
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg, var(--accent), transparent 80%);
+  opacity:0.55;
+}
+.section h2{
+  font-size:2rem;
+  color:#f2f5f9;
+  margin-bottom:6px;
+}
+.section .lede{
+  color:var(--ink-dim);
+  font-style:italic;
+  font-size:1.02rem;
+  margin-bottom:26px;
+  max-width:70ch;
+}
+
+.card{
+  background:var(--card);
+  border-top:3px solid var(--accent);
+  border-radius:2px 2px 8px 8px;
+  padding:22px 26px;
+  margin:18px 0;
+  box-shadow:0 8px 20px -12px rgba(0,0,0,0.5);
+}
+.card h3{
+  color:var(--accent);
+  font-size:1.4rem;
+  margin-bottom:10px;
+}
+.card h4{
+  color:var(--ink);
+  font-size:1.1rem;
+  font-style:italic;
+  margin:14px 0 6px;
+}
+.card p{margin:8px 0;}
+.card ul, .card ol{margin:8px 0 8px 20px; padding:0;}
+.card li{margin:5px 0;}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media (max-width:720px){.grid2{grid-template-columns:1fr;}}
+
+.hl{color:var(--accent);font-style:normal;}
+em{color:var(--ink);font-style:italic;}
+.dim{color:var(--ink-dim);}
+
+.alert{
+  border:1.5px solid var(--accent);
+  background:transparent;
+  border-radius:6px;
+  padding:16px 20px;
+  margin:18px 0;
+  position:relative;
+}
+.alert .alert-tag{
+  font-family:'Source Sans 3',sans-serif;
+  text-transform:uppercase;
+  font-size:0.68rem;
+  letter-spacing:0.15em;
+  color:var(--accent);
+  display:block;
+  margin-bottom:6px;
+}
+
+details{
+  border:1px dashed var(--accent);
+  background:rgba(255,255,255,0.015);
+  border-radius:6px;
+  margin:16px 0;
+  padding:2px 18px;
+}
+details[open]{background:rgba(255,255,255,0.03);}
+details summary{
+  cursor:pointer;
+  color:var(--accent);
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;
+  font-style:italic;
+  padding:12px 0;
+  list-style:none;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+details summary::-webkit-details-marker{display:none;}
+details summary::before{
+  content:'◆';
+  font-size:0.55rem;
+  transform:rotate(0deg);
+  transition:transform 0.2s ease;
+  color:var(--accent);
+}
+details[open] summary::before{transform:rotate(90deg);}
+details .inner{padding:0 0 16px 0;}
+
+details details{
+  border-color:var(--ink-faint);
+  margin:10px 0;
+}
+details details summary{color:var(--ink-dim);font-size:1.02rem;}
+
+.dermatome-note{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  font-size:0.92rem;
+  color:var(--ink-dim);
+  border-left:none;
+}
+
+.cid-chip{
+  display:inline-block;
+  font-family:'Source Sans 3',sans-serif;
+  font-size:0.78rem;
+  color:var(--bg);
+  background:var(--accent);
+  padding:2px 9px;
+  border-radius:10px;
+  margin-right:6px;
+}
+
+.refs{padding:70px 7vw 40px 44px;border-top:1px solid var(--line);}
+@media (max-width:900px){.refs{padding:50px 7vw 40px;}}
+.refs h2{color:#f2f5f9;font-size:1.9rem;margin-bottom:24px;}
+.ref-item{
+  font-size:0.92rem;
+  color:var(--ink-dim);
+  padding:9px 0;
+  border-bottom:1px solid var(--line);
+}
+.ref-item .who{color:var(--ink);}
+
+/* toolbar */
+.toolbar{
+  position:fixed;
+  bottom:18px;
+  right:18px;
+  z-index:999;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:8px;
+}
+.toolbar .note{
+  max-width:220px;
+  font-size:0.68rem;
+  color:var(--ink-faint);
+  background:var(--card);
+  border:1px solid var(--line);
+  padding:8px 10px;
+  border-radius:6px;
+  display:none;
+}
+.toolbar .note.show{display:block;}
+.toolbar .btns{
+  display:flex;
+  gap:8px;
+  background:var(--card);
+  border:1px solid var(--line);
+  padding:8px;
+  border-radius:10px;
+  box-shadow:0 10px 30px -10px rgba(0,0,0,0.7);
+}
+.toolbar button{
+  font-family:'Source Sans 3',sans-serif;
+  font-size:0.78rem;
+  background:var(--bg-alt);
+  color:var(--ink);
+  border:1px solid var(--line);
+  padding:8px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  transition:border-color 0.15s ease;
+}
+.toolbar button:hover{border-color:var(--c1);color:var(--c1);}
+.toolbar button.active{border-color:var(--c1);color:var(--c1);background:rgba(45,212,191,0.08);}
+
+.editable[contenteditable="true"]{
+  outline:1px dashed rgba(45,212,191,0.4);
+  outline-offset:3px;
+  border-radius:3px;
+}
+.editable[contenteditable="true"]:focus{outline:1px solid var(--c1);}
+
+.saved-flash{
+  position:fixed;
+  bottom:80px;
+  right:18px;
+  font-size:0.72rem;
+  color:var(--c1);
+  opacity:0;
+  transition:opacity 0.4s ease;
+  background:var(--card);
+  border:1px solid var(--line);
+  padding:6px 10px;
+  border-radius:6px;
+}
+.saved-flash.show{opacity:1;}
+</style>
+</head>
+<body>
+
+<svg class="bg-art" viewBox="0 0 600 1000" preserveAspectRatio="xMaxYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g fill="none" stroke="#ffffff" stroke-width="1">
+    <path d="M40,20 C160,140 120,260 260,320 C400,380 360,500 480,560 C560,600 540,700 600,760"/>
+    <path d="M-20,120 C100,180 80,300 220,360 C360,420 320,540 460,600 C540,640 520,740 600,800"/>
+    <path d="M60,-20 C180,100 140,220 280,280 C420,340 380,460 500,520 C580,560 560,660 600,720"/>
+    <path d="M0,340 C120,400 100,520 240,580 C380,640 340,760 480,820 C560,860 540,940 600,980"/>
+    <path d="M20,540 C140,600 120,700 260,760 C400,820 380,900 500,940"/>
+    <circle cx="260" cy="320" r="4"/>
+    <circle cx="220" cy="360" r="4"/>
+    <circle cx="280" cy="280" r="4"/>
+    <circle cx="240" cy="580" r="4"/>
+    <circle cx="260" cy="760" r="4"/>
+  </g>
+</svg>
+
+<nav class="spine" id="spine" aria-label="Navegação entre seções">
+  <div class="spine-brand">UCXIII &middot; TBL</div>
+  <div class="cord">
+    <a href="#cover" class="node" data-target="cover" style="--node-accent:var(--c1)"><span class="root"></span><span class="dot"></span><span class="num">Capa</span></a>
+    <a href="#s01" class="node" data-target="s01" style="--node-accent:var(--c1)"><span class="root"></span><span class="dot"></span><span class="num">01 &middot; Fundamentos da dor</span></a>
+    <a href="#s02" class="node" data-target="s02" style="--node-accent:var(--c2)"><span class="root"></span><span class="dot"></span><span class="num">02 &middot; Taxonomia IASP</span></a>
+    <a href="#s03" class="node" data-target="s03" style="--node-accent:var(--c3)"><span class="root"></span><span class="dot"></span><span class="num">03 &middot; Mecanismos e vias</span></a>
+    <a href="#s04" class="node" data-target="s04" style="--node-accent:var(--c4)"><span class="root"></span><span class="dot"></span><span class="num">04 &middot; Aguda x crônica</span></a>
+    <a href="#s05" class="node" data-target="s05" style="--node-accent:var(--c5)"><span class="root"></span><span class="dot"></span><span class="num">05 &middot; Escada analgésica</span></a>
+    <a href="#s06" class="node" data-target="s06" style="--node-accent:var(--c6)"><span class="root"></span><span class="dot"></span><span class="num">06 &middot; Paracetamol</span></a>
+    <a href="#s07" class="node" data-target="s07" style="--node-accent:var(--c7)"><span class="root"></span><span class="dot"></span><span class="num">07 &middot; Dipirona</span></a>
+    <a href="#s08" class="node" data-target="s08" style="--node-accent:var(--c8)"><span class="root"></span><span class="dot"></span><span class="num">08 &middot; Herpes-zoster: o vírus</span></a>
+    <a href="#s09" class="node" data-target="s09" style="--node-accent:var(--c9)"><span class="root"></span><span class="dot"></span><span class="num">09 &middot; Tratamento do HZ</span></a>
+    <a href="#s10" class="node" data-target="s10" style="--node-accent:var(--c10)"><span class="root"></span><span class="dot"></span><span class="num">10 &middot; Nevralgia pós-herpética</span></a>
+    <a href="#s11" class="node" data-target="s11" style="--node-accent:var(--c11)"><span class="root"></span><span class="dot"></span><span class="num">11 &middot; Tratamento da NPH</span></a>
+    <a href="#s12" class="node" data-target="s12" style="--node-accent:var(--c13)"><span class="root"></span><span class="dot"></span><span class="num">12 &middot; Vacinas</span></a>
+    <a href="#refs" class="node" data-target="refs" style="--node-accent:var(--ink-dim)"><span class="root"></span><span class="dot"></span><span class="num">Referências</span></a>
+  </div>
+</nav>
+
+<div class="stage">
+
+<div class="cover" id="cover">
+  <span class="kicker">UCXIII &mdash; Dor · TBL Aula 2 · Aprofundamento</span>
+  <h1 class="editable" contenteditable="false">Manejo Terapêutico da Dor Aguda, Herpes-Zoster e Nevralgia Pós-Herpética</h1>
+  <p class="sub editable" contenteditable="false">Dos mecanismos moleculares da nocicepção à farmacologia clínica do zoster: por que uma erupção cutânea pode deixar uma cicatriz invisível no sistema nervoso central, e o que fazer para evitar isso.</p>
+  <div class="meta">
+    <span>Baseado na aula do Prof. Andrew Georg Wischneski</span>
+    <span>Guyton, Katzung, Bolognia, Rang &amp; Dale</span>
+  </div>
+</div>
+
+<div class="layout">
+<div class="wrap">
+
+<!-- ================= SECTION 1 ================= -->
+<div class="section" id="s01" style="--accent:var(--c1)">
+  <div class="section-header"><span class="tag">01</span><div class="line"></div></div>
+  <h2 class="editable" contenteditable="false">Dor: revisitando os fundamentos</h2>
+  <p class="lede editable" contenteditable="false">Antes de prescrever qualquer analgésico, você precisa saber exatamente o que está tratando &mdash; e dor não é sinônimo de lesão.</p>
+
+  <div class="card">
+    <h3 class="editable" contenteditable="false">Dor como fenômeno, não como número</h3>
+    <p class="editable" contenteditable="false">Os slides trazem uma frase que costuma passar despercebida, mas que é a pedra angular de toda a disciplina: a dor é uma experiência <span class="hl">subjetiva e multifatorial</span>. Isso não é retórica humanista &mdash; é uma definição operacional. Desde 2020, a <em>International Association for the Study of Pain</em> (IASP) revisou formalmente sua definição de dor para deixar isso explícito: <em>"uma experiência sensorial e emocional desagradável associada a, ou semelhante àquela associada a, um dano tecidual real ou potencial"</em>. Repare no "ou semelhante": isso abre espaço, dentro da própria taxonomia oficial, para dor que existe sem lesão nenhuma &mdash; o que veremos adiante como dor nociplástica.</p>
+    <p class="editable" contenteditable="false">Por isso a aula insiste que <span class="hl">dor e nocicepção são fenômenos diferentes</span>. Nocicepção é o processo neurofisiológico objetivo de detecção de estímulos potencialmente lesivos pelos nociceptores e sua condução até o sistema nervoso central. Dor é o produto final, processado e modulado, que emerge desse sinal somado a memória, atenção, expectativa, contexto cultural e estado emocional. Um paciente anestesiado tem nocicepção sem dor (por isso ainda liberamos hormônios de estresse em cirurgia sob anestesia geral insuficiente); um paciente com dor do membro fantasma tem dor sem nocicepção alguma, porque o membro nem existe mais.</p>
+
+    <details>
+      <summary>Aprofunde-se: por que essa distinção muda a sua conduta clínica</summary>
+      <div class="inner">
+        <p class="editable" contenteditable="false">Se você tratasse a dor como um simples reflexo de lesão tecidual, sua lógica terapêutica seria puramente periférica: reduza a lesão, reduza a dor. Só que isso falha sistematicamente em dor crônica, em fibromialgia, em nevralgia pós-herpética &mdash; justamente porque nesses quadros o processamento central da informação nociceptiva está alterado, mesmo quando a periferia já cicatrizou. É exatamente o que você vai encontrar mais à frente nesta aula: a nevralgia pós-herpética persiste depois que as vesículas somem, porque o dano ocorreu nos neurônios do gânglio da raiz dorsal e no corno dorsal da medula, não apenas na pele.</p>
+        <p class="editable" contenteditable="false">Do ponto de vista de exame clínico, essa distinção também justifica por que a anamnese da dor (que você vai estudar a seguir) pesa tanto quanto qualquer exame de imagem: a intensidade referida pelo paciente é o dado central, não um coadjuvante subjetivo a ser "confirmado" por exames complementares.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h3 class="editable" contenteditable="false">As escalas de mensuração</h3>
+    <p class="editable" contenteditable="false">Como avaliar algo que é, por definição, subjetivo? A resposta prática da medicina foi criar instrumentos padronizados e reprodutíveis, mesmo sabendo que nenhum deles mede a dor "em si" &mdash; eles medem o relato do paciente sobre a dor, o que é a melhor aproximação disponível.</p>
+    <h4 class="editable" contenteditable="false">Escala Visual Analógica (EVA)</h4>
+    <p class="editable" contenteditable="false">Uma linha de 10 centímetros sem marcações numéricas intermediárias, ancorada em "sem dor" de um lado e "pior dor possível" do outro. O paciente marca um ponto e você mede a distância em milímetros. A vantagem é a sensibilidade a pequenas variações (uma escala contínua, não discreta); a desvantagem é exigir coordenação motora e compreensão abstrata do conceito de proporção, o que a torna inadequada para crianças pequenas, idosos com déficit cognitivo ou pacientes sedados.</p>
+    <h4 class="editable" contenteditable="false">Escala Numérica</h4>
+    <p class="editable" contenteditable="false">A mais usada na prática diária por sua rapidez: "numa escala de 0 a 10, sendo 0 nenhuma dor e 10 a pior dor possível, que nota você dá para sua dor?" É essa a ferramenta que você usará à beira do leito, na urgência, no pós-operatório imediato &mdash; e é ela que orienta diretamente a escolha do degrau da escada analgésica que você verá na seção 5.</p>
+    <h4 class="editable" contenteditable="false">Escala de Faces</h4>
+    <p class="editable" contenteditable="false">Seis desenhos faciais, de uma expressão neutra até uma expressão de choro intenso, pontuados de 0 a 10 em incrementos de 2. Foi desenhada para crianças e idosos, com uma instrução metodológica importante que os slides destacam: você não deve usar palavras como "alegre" ou "triste" ao aplicá-la, porque o objetivo é capturar a intensidade da dor sentida internamente, não o quanto a criança parece feliz ou chateada por fora. Essa é uma armadilha comum de examinador de prova e de residência: confundir afeto com intensidade nociceptiva.</p>
+
+    <details>
+      <summary>Aprofunde-se: limitações e vieses das escalas unidimensionais</summary>
+      <div class="inner">
+        <p class="editable" contenteditable="false">Todas essas três escalas são unidimensionais: capturam apenas a intensidade. Elas não avaliam qualidade (queimação, choque, pressão), localização, irradiação ou impacto funcional &mdash; dimensões que instrumentos multidimensionais como o Questionário de McGill ou o Inventário Breve de Dor tentam capturar. Na prática do TBL e das provas de graduação, porém, a escala numérica de 0 a 10 é o instrumento-padrão citado em praticamente toda prescrição analgésica guiada por protocolo, exatamente como você verá na escada da OMS.</p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ================= SECTION 2 ================= -->
+<div class="section" id="s02" style="--accent:var(--c2)">
+  <div class="section-header"><span class="tag">02</span><div class="line"></div></div>
+  <h2 class="editable" contenteditable="false">A taxonomia da IASP: o vocabulário exato da dor</h2>
+  <p class="lede editable" contenteditable="false">Cada um desses termos aparece em provas, em prontuário e em discussão de caso clínico. Confundi-los troca o diagnóstico sindrômico inteiro.</p>
+
+  <div class="card">
+    <p class="editable" contenteditable="false">Esses oito termos não são sinônimos elegantes para "dor estranha". Eles descrevem fenômenos neurofisiológicos distintos, e a maioria deriva de dois processos-chave que você precisa internalizar antes de decorar a lista: <span class="hl">sensibilização periférica</span> e <span class="hl">sensibilização central</span>.</p>
+    <p class="editable" contenteditable="false">Sensibilização periférica é a redução do limiar de ativação dos próprios nociceptores, provocada por mediadores inflamatórios liberados no tecido lesado &mdash; prostaglandinas, bradicinina, histamina, íons hidrogênio, citocinas como TNF-α e IL-1β. Esses mediadores fosforilam canais iônicos na membrana do nociceptor (como os canais TRPV1 e os canais de sódio Nav1.7, Nav1.8), tornando-o mais excitável a um mesmo estímulo. Sensibilização central é o correspondente no corno dorsal da medula espinhal: a estimulação repetitiva e sustentada de fibras C ativa receptores NMDA em neurônios de segunda ordem, que sofrem um fenômeno chamado <em>wind-up</em> &mdash; um aumento progressivo da resposta a estímulos repetidos de mesma intensidade, culminando em hiperexcitabilidade sustentada mesmo após cessar o estímulo periférico.</p>
+
+    <div class="grid2">
+      <div>
+        <h4 class="editable" contenteditable="false">Alodinia</h4>
+        <p class="editable" contenteditable="false">Dor desencadeada por um estímulo que normalmente não provoca dor nenhuma &mdash; o roçar de um lençol, uma brisa leve, o toque de uma roupa. É o sintoma cardinal, por exemplo, da nevralgia pós-herpética, e reflete sensibilização central: fibras Aβ, que normalmente transmitem tato fino não-nóxico, passam a ativar circuitos centrais que o cérebro interpreta como dor.</p>
+        <h4 class="editable" contenteditable="false">Hiperalgesia</h4>
+        <p class="editable" contenteditable="false">Uma resposta dolorosa desproporcionalmente aumentada a um estímulo que já era doloroso, mas discretamente. Diferente da alodinia (estímulo não-nóxico vira doloroso), aqui o estímulo já é nóxico, só que a resposta está amplificada. Pode ser primária (no próprio local da lesão, por sensibilização periférica) ou secundária (na área ao redor da lesão, por sensibilização central).</p>
+        <h4 class="editable" contenteditable="false">Hiperestesia</h4>
+        <p class="editable" contenteditable="false">Termo mais amplo, que engloba tanto alodinia quanto hiperalgesia: aumento geral da sensibilidade a qualquer tipo de estímulo sensitivo.</p>
+        <h4 class="editable" contenteditable="false">Hiperpatia</h4>
+        <p class="editable" contenteditable="false">Uma síndrome dolorosa particular: o limiar para desencadear a dor está elevado (é preciso um estímulo mais forte, ou repetitivo, para provocar resposta), mas uma vez desencadeada, a dor é explosiva, desproporcional, e persiste muito além do estímulo original. É um padrão clássico de lesão de vias centrais da dor.</p>
+      </div>
+      <div>
+        <h4 class="editable" contenteditable="false">Disestesia</h4>
+        <p class="editable" contenteditable="false">Sensação anormal e desagradável, espontânea ou evocada, que não se encaixa perfeitamente na categoria "dor" mas tampouco é neutra &mdash; queimação, formigamento desconfortável, sensação de água escorrendo sobre a pele seca.</p>
+        <h4 class="editable" contenteditable="false">Hipoalgesia</h4>
+        <p class="editable" contenteditable="false">O espelho inverso da hiperalgesia: diminuição da dor frente a um estímulo que normalmente seria doloroso. Ocorre, por exemplo, sob efeito de opioides ou em neuropatias com perda de fibras nociceptivas.</p>
+        <h4 class="editable" contenteditable="false">Hipoestesia</h4>
+        <p class="editable" contenteditable="false">Diminuição da sensibilidade tátil, térmica ou proprioceptiva de forma geral &mdash; não especificamente dolorosa.</p>
+        <h4 class="editable" contenteditable="false">Parestesia</h4>
+        <p class="editable" contenteditable="false">Sensação anormal, espontânea ou evocada, mas que não é dolorosa nem desagradável por si só &mdash; o clássico formigamento ou dormência, o "pé dormindo". Se essa mesma sensação se tornar desagradável, ela deixa de ser parestesia e passa a ser classificada como disestesia.</p>
+      </div>
+    </div>
+
+    <div class="alert">
+      <span class="alert-tag">Correlação clínica</span>
+      <p class="editable" contenteditable="false">Na nevralgia pós-herpética você vai encontrar, no mesmo paciente, alodinia mecânica ao toque leve da roupa, hiperalgesia ao toque de pressão firme e parestesia constante na área acometida. Saber nomear cada componente separadamente no exame físico não é pedantismo semântico: cada um reflete um mecanismo fisiopatológico distinto e pode responder diferente a diferentes classes de fármacos &mdash; por isso a lidocaína tópica, que bloqueia canais de sódio periféricos, é particularmente eficaz contra a alodinia mecânica, enquanto os gabapentinoides atuam mais sobre a hiperexcitabilidade central.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SECTION 3 ================= -->
+<div class="section" id="s03" style="--accent:var(--c3)">
+  <div class="section-header"><span class="tag">03</span><div class="line"></div></div>
+  <h2 class="editable" contenteditable="false">Mecanismos da dor e as vias ascendentes</h2>
+  <p class="lede editable" contenteditable="false">O slide te deu três categorias em três frases curtas. Aqui está o porquê e o como de cada uma, incluindo a anatomia que sustenta o raciocínio.</p>
+
+  <div class="card">
+    <h3 class="editable" contenteditable="false">Dor nociceptiva</h3>
+    <p class="editable" contenteditable="false">É a dor "normal", no sentido evolutivo: existe um dano real ou potencial ao tecido não neural (pele, músculo, articulação, víscera), os nociceptores periféricos são ativados de forma proporcional a esse dano, e o sinal é conduzido fielmente até o córtex. É a dor de uma fratura, de uma queimadura, de uma apendicite. Pode ser subdividida em <em>somática</em> (bem localizada, originada em pele, músculo ou osso) e <em>visceral</em> (mal localizada, referida, frequentemente acompanhada de sintomas autonômicos como náusea e sudorese, por conta da convergência de aferências viscerais e somáticas no mesmo neurônio de segunda ordem na medula).</p>
+
+    <h3 class="editable" contenteditable="false">Dor neuropática</h3>
+    <p class="editable" contenteditable="false">Aqui o problema não está no tecido-alvo, está no próprio cabeamento: uma lesão ou doença do sistema somatossensorial (nervo periférico, gânglio da raiz dorsal, medula, tálamo ou córtex) gera dor mesmo sem estímulo nociceptivo externo correspondente. É exatamente essa a categoria em que se encaixa a nevralgia pós-herpética que você estudará em detalhe nas seções 11 e 12: o vírus varicela-zóster lesiona diretamente o gânglio da raiz dorsal e o corno dorsal da medula, e o sistema nervoso "aprende" a gerar dor de forma autônoma, mesmo depois que a pele já cicatrizou.</p>
+
+    <h3 class="editable" contenteditable="false">Dor nociplástica</h3>
+    <p class="editable" contenteditable="false">A categoria mais recente e conceitualmente mais desafiadora: existe nocicepção alterada, e portanto dor real, mas sem evidência clara de dano tecidual real ou de ameaça de dano que ativasse os nociceptores periféricos, e sem evidência de doença ou lesão estrutural no sistema somatossensorial que explicasse dor neuropática. É a categoria proposta pela IASP para descrever condições como a fibromialgia e a síndrome do intestino irritável: o processamento central da dor está desregulado (com facilitação da dor e inibição descendente deficiente), sem que se encontre uma lesão anatômica correspondente nos exames disponíveis atualmente.</p>
+
+    <details>
+      <summary>Aprofunde-se: a anatomia das duas vias somatossensoriais ascendentes</summary>
+      <div class="inner">
+        <p class="editable" contenteditable="false">O slide de anatomia comparada dois sistemas que sobem em paralelo pela medula espinhal, e entender por que eles são separados explica fenômenos clínicos importantes, como a dissociação sensitiva na síndrome de Brown-Séquard e nas lesões siringomiélicas.</p>
+        <h4 class="editable" contenteditable="false">Sistema da coluna dorsal &mdash; lemnisco medial</h4>
+        <p class="editable" contenteditable="false">Conduz tato fino discriminativo, pressão e propriocepção. O neurônio de primeira ordem entra na medula e, sem fazer sinapse, sobe ipsilateralmente pelos fascículos grácil (informação da metade inferior do corpo) e cuneiforme (metade superior do corpo) até o bulbo, onde finalmente faz sinapse nos núcleos grácil e cuneiforme (neurônio de segunda ordem). Só então a via decussa (cruza a linha média) como lemnisco medial, ascende até o tálamo (neurônio de terceira ordem) e projeta para o córtex somatossensorial (neurônio de quarta ordem). O ponto crucial: essa via cruza tardiamente, no bulbo.</p>
+        <h4 class="editable" contenteditable="false">Sistema anterolateral (espinotalâmico)</h4>
+        <p class="editable" contenteditable="false">Conduz dor, temperatura e tato grosseiro &mdash; exatamente a informação que nos interessa nesta aula. O neurônio de primeira ordem entra na medula e faz sinapse imediatamente no corno dorsal, ainda no mesmo segmento medular (neurônio de segunda ordem). A partir daí, a via decussa precocemente, ainda na medula espinhal, cruzando através da comissura branca anterior, e ascende contralateralmente pelo funículo anterolateral até o tálamo (terceira ordem) e o córtex (quarta ordem). O ponto crucial, espelhado ao anterior: essa via cruza precocemente, na própria medula.</p>
+        <p class="editable" contenteditable="false">Essa diferença de nível de decussação é o motivo pelo qual uma lesão medular unilateral (por exemplo, hemissecção medular) produz um padrão sensitivo dissociado clássico: perda de tato fino e propriocepção ipsilateral à lesão (porque a coluna dorsal ainda não havia cruzado), e perda de dor e temperatura contralateral à lesão, abaixo do nível acometido (porque o trato espinotalâmico já havia cruzado antes de subir).</p>
+      </div>
+    </details>
+
+    <div class="alert">
+      <span class="alert-tag">Ponto de atenção didático</span>
+      <p class="editable" contenteditable="false">O slide também menciona fibras Aβ conduzindo estímulos não-nóxicos em paralelo aos nociceptivos que ativam neurônios de segunda ordem. Essa é precisamente a base anatômica da <em>teoria da comporta</em> (Melzack e Wall, 1965): a ativação de fibras Aβ de grande diâmetro pode inibir, no corno dorsal, a transmissão de sinais nociceptivos conduzidos por fibras Aδ e C. É esse o princípio fisiológico por trás da eletroestimulação nervosa transcutânea (TENS) e, em parte, da eficácia de esfregar ou massagear uma área que dói.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SECTION 4 ================= -->
+<div class="section" id="s04" style="--accent:var(--c4)">
+  <div class="section-header"><span class="tag">04</span><div class="line"></div></div>
+  <h2 class="editable" contenteditable="false">Dor aguda versus dor crônica: não é só uma questão de tempo</h2>
+  <p class="lede editable" contenteditable="false">A tabela do slide compara cinco domínios. O critério temporal é o menos importante de todos eles.</p>
+
+  <div class="card">
+    <p class="editable" contenteditable="false">É tentador definir dor crônica simplesmente como "dor que dura mais de três a seis meses". Esse corte temporal existe e é clinicamente útil, mas ele é consequência, não causa, da verdadeira diferença fisiopatológica entre os dois quadros.</p>
+    <h4 class="editable" contenteditable="false">Início, duração e função de alerta</h4>
+    <p class="editable" contenteditable="false">A dor aguda tem início repentino, é proporcional (embora nem sempre) à lesão, e sua função biológica é justamente servir de alerta: ela nos impede de continuar apoiando um tornozelo torcido, nos faz retirar a mão do fogo, nos leva a procurar assistência médica diante de uma dor torácica nova. Ela desaparece quando o tecido se repara. A dor crônica, em contraste, tem instalação insidiosa e <span class="hl">persiste apesar da reparação tecidual completa</span> &mdash; ela perdeu sua função de sinalização e passou a ser, ela mesma, a doença.</p>
+    <h4 class="editable" contenteditable="false">O envolvimento do sistema nervoso central</h4>
+    <p class="editable" contenteditable="false">Esta é, na prática, a linha divisória mais importante clinicamente: na dor aguda, o SNC está intacto e funcionando corretamente &mdash; a dor é apenas um sintoma que ele está processando com fidelidade. Na dor crônica, o próprio SNC está disfuncional: houve sensibilização central persistente, reorganização de circuitos corticais e alterações neuroplásticas mensuráveis por neuroimagem funcional. A dor crônica não é mais um sintoma de outra doença; ela é, ela mesma, a afecção a ser tratada.</p>
+    <h4 class="editable" contenteditable="false">Repercussões psicológicas e funcionais</h4>
+    <p class="editable" contenteditable="false">Dor aguda gera ansiedade situacional e distúrbio transitório do sono, que se resolvem junto com a dor. Dor crônica está associada, de forma consistente na literatura, a quadros depressivos e ansiosos estabelecidos, além de prejuízo social e laboral mensurável &mdash; afastamento do trabalho, isolamento social, catastrofização da dor. Isso não é "frescura" do paciente: é neuroplasticidade mal-adaptativa envolvendo circuitos límbicos compartilhados entre processamento nociceptivo e regulação emocional.</p>
+
+    <details>
+      <summary>Aprofunde-se: por que essa distinção determina a escada analgésica</summary>
+      <div class="inner">
+        <p class="editable" contenteditable="false">É exatamente essa diferença fisiopatológica que explica a curva oposta de escalada terapêutica que você verá na próxima seção: na dor aguda, você começa forte e desce rapidamente a intensidade analgésica conforme o tecido cicatriza (descida rápida); na dor crônica, você sobe lentamente e com cautela, titulando doses, porque não existe um ponto final natural de cicatrização a esperar &mdash; e porque o risco de tolerância, dependência e efeitos adversos cumulativos de uma escalada rápida em tratamento prolongado é proporcionalmente maior.</p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ================= SECTION 5 ================= -->
+<div class="section" id="s05" style="--accent:var(--c5)">
+  <div class="section-header"><span class="tag">05</span><div class="line"></div></div>
+  <h2 class="editable" contenteditable="false">Princípios terapêuticos e a escada analgésica da OMS</h2>
+  <p class="lede editable" contenteditable="false">Cinco regras de prescrição e três degraus de intensidade &mdash; o esqueleto lógico de toda receita de analgesia que você vai escrever na vida.</p>
+
+  <div class="card">
+    <h3 class="editable" contenteditable="false">Os cinco princípios do tratamento da dor (OMS)</h3>
+    <ol>
+      <li class="editable" contenteditable="false"><em>Horário fixo</em>: analgésicos para dor persistente devem ser prescritos em horários regulares, não apenas "se necessário" (SOS). Manter um nível sérico estável do fármaco previne picos de dor, em vez de correr atrás deles depois que já surgiram &mdash; é sempre mais fácil prevenir a dor do que tratá-la depois de estabelecida, porque uma vez instalada a sensibilização central, doses maiores são necessárias para o mesmo efeito.</li>
+      <li class="editable" contenteditable="false"><em>Via menos invasiva possível</em>: a via oral é preferida sempre que viável; evita-se a via intramuscular, que tem absorção errática, é dolorosa e apresenta risco de lesão nervosa ou hematoma, sem vantagem farmacocinética real sobre a via oral ou intravenosa na maioria dos cenários.</li>
+      <li class="editable" contenteditable="false"><em>Escada analgésica conforme a intensidade</em>: a escolha do fármaco segue a intensidade relatada pelo próprio paciente na escala numérica, não a impressão do examinador sobre "quanto aquilo deveria doer".</li>
+      <li class="editable" contenteditable="false"><em>Tratamento individualizado</em>: idade, comorbidades, função renal e hepática, risco de sangramento, uso concomitante de outros fármacos e a resposta prévia do paciente a analgésicos moldam a escolha específica dentro de cada degrau.</li>
+      <li class="editable" contenteditable="false"><em>Efeitos adversos antecipados e tratados</em>: por exemplo, prescrever laxante profilático junto com opioide (que quase invariavelmets causa constipação por ação em receptores μ entéricos), ou protetor gástrico junto com anti-inflamatório não esteroidal em paciente de risco.</li>
+    </ol>
+
+    <h3 class="editable" contenteditable="false">A escada analgésica: subida lenta na dor crônica, descida rápida na dor aguda</h3>
+    <p class="editable" contenteditable="false">O esquema clássico da OMS, originalmente desenhado para dor oncológica, organiza os analgésicos em três degraus conforme a intensidade relatada na escala numérica:</p>
+    <div class="grid2">
+      <div>
+        <h4 class="editable" contenteditable="false">Degrau 1 &mdash; dor leve (ENV 1 a 3)</h4>
+        <p class="editable" contenteditable="false">Analgésicos anti-inflamatórios não esteroidais, dipirona e paracetamol, isolados.</p>
+        <h4 class="editable" contenteditable="false">Degrau 2 &mdash; dor moderada (ENV 4 a 6)</h4>
+        <p class="editable" contenteditable="false">Opioides fracos, como codeína e tramadol, geralmente associados aos analgésicos do degrau 1.</p>
+      </div>
+      <div>
+        <h4 class="editable" contenteditable="false">Degrau 3 &mdash; dor de forte intensidade (ENV 7 a 10)</h4>
+        <p class="editable" contenteditable="false">Opioides potentes: morfina, metadona, fentanil, entre outros.</p>
+        <h4 class="editable" contenteditable="false">Além do degrau 3 &mdash; dor muito intensa refratária</h4>
+        <p class="editable" contenteditable="false">Bloqueios analgésicos intervencionistas (bloqueios neuroaxiais, de nervo periférico, ou procedimentos ablativos), quando a farmacoterapia sistêmica não é suficiente.</p>
+      </div>
+    </div>
+    <p class="editable" contenteditable="false">O detalhe conceitual mais importante deste slide, e o que mais separa um aluno que apenas decorou a escada de um aluno que entendeu a lógica clínica, é a seta dupla à direita do esquema: na <span class="hl">dor aguda</span> você tipicamente inicia em um degrau mais alto (correspondente à intensidade real relatada) e desce rapidamente conforme a causa se resolve; na <span class="hl">dor crônica</span> você faz o caminho inverso, subindo lentamente, titulando, reavaliando a cada degrau, porque o objetivo não é apenas suprimir a dor agora, é construir um regime sustentável a longo prazo com o menor risco cumulativo possível.</p>
+  </div>
+</div>
+
+<!-- ================= SECTION 6 ================= -->
+<div class="section" id="s06" style="--accent:var(--c6)">
+  <div class="section-header"><span class="tag">06</span><div class="line"></div></div>
+  <h2 class="editable" contenteditable="false">Paracetamol: o analgésico mais prescrito do mundo, e o menos compreendido</h2>
+  <p class="lede editable" contenteditable="false">Todo mundo sabe a dose. Poucos sabem por que ele funciona, e menos ainda sabem exatamente o que fazer quando alguém toma demais.</p>
+
+  <div class="card">
+    <h3 class="editable" contenteditable="false">Mecanismo de ação: uma lacuna que a ciência ainda não fechou</h3>
+    <p class="editable" contenteditable="false">É desconfortável para um estudante de medicina ouvir isso, mas é a verdade que o próprio slide reconhece: o mecanismo de ação exato do paracetamol <em>ainda não é totalmente esclarecido</em>, mais de um século depois de sua síntese. O que sabemos com razoável segurança:</p>
+    <p class="editable" contenteditable="false">Diferente dos anti-inflamatórios não esteroidais clássicos, o paracetamol tem ação anti-inflamatória periférica fraca e praticamente irrelevante clinicamente &mdash; por isso ele não é classificado como AINE. Sua ação analgésica e antipirética parece ser predominantemente central, com pelo menos duas hipóteses mecanísticas propostas na literatura farmacológica atual:</p>
+    <ul>
+      <li class="editable" contenteditable="false">Inibição da isoforma <em>COX-3</em>, uma variante splice da ciclo-oxigenase 1 encontrada predominantemente no sistema nervoso central, reduzindo a síntese central de prostaglandinas envolvidas na sensibilização da via nociceptiva e na regulação hipotalâmica da temperatura.</li>
+      <li class="editable" contenteditable="false">Ativação indireta do sistema serotoninérgico descendente inibitório: o metabólito ativo AM404, formado pela conjugação de um metabólito do paracetamol com ácido araquidônico no sistema nervoso central, atua sobre receptores canabinoides CB1 e sobre canais TRPV1, modulando a via de inibição descendente da dor que parte da substância cinzenta periaquedutal.</li>
+    </ul>
+
+    <details>
+      <summary>Aprofunde-se: por que o paracetamol não serve para dor inflamatória franca</summary>
+      <div class="inner">
+        <p class="editable" contenteditable="false">Justamente por sua ação anti-inflamatória periférica ser desprezível, o paracetamol é uma escolha pobre isoladamente para quadros com componente inflamatório proeminente, como uma artrite gotosa em crise ou uma tendinite aguda &mdash; nesses casos, um AINE clássico (que inibe COX-1 e COX-2 perifericamente, reduzindo diretamente a síntese de prostaglandinas no foco inflamatório) tende a ser mais eficaz. Isso não invalida o paracetamol; apenas delimita seu nicho: dor de intensidade leve a moderada, sem grande componente inflamatório periférico, e febre.</p>
+      </div>
+    </details>
+
+    <h3 class="editable" contenteditable="false">Segurança: o limite de 4 gramas por dia não é arbitrário</h3>
+    <p class="editable" contenteditable="false">O paracetamol é metabolizado primariamente no fígado por conjugação (glicuronidação e sulfatação), vias que respondem por cerca de 90% do metabolismo em doses terapêuticas. Uma fração pequena, mas farmacologicamente crucial, é oxidada pela enzima CYP2E1 do citocromo P450, gerando um metabólito extremamente reativo e hepatotóxico chamado <em>N-acetil-p-benzoquinoneimina</em> (NAPQI). Em condições normais, o NAPQI é imediatamente neutralizado pela conjugação com glutationa hepática, formando um composto inócuo excretado na urina.</p>
+    <p class="editable" contenteditable="false">O problema surge quando a dose ingerida satura as vias de conjugação principais (glicuronidação e sulfatação), desviando proporcionalmente mais paracetamol para a via oxidativa do CYP2E1. Isso gera mais NAPQI do que os estoques hepáticos de glutationa conseguem neutralizar. O NAPQI livre se liga covalentemente a proteínas dos hepatócitos (formando adutos de proteína), causando estresse oxidativo, disfunção mitocondrial e necrose centrolobular &mdash; a lesão histopatológica clássica da hepatotoxicidade por paracetamol, concentrada na zona 3 do ácino hepático, justamente onde a atividade de CYP2E1 é maior.</p>
+    <p class="editable" contenteditable="false">É por isso que o slide recomenda cautela redobrada em pacientes com hepatite ativa, disfunção hepática prévia, alcoolismo crônico (que induz CYP2E1 e depleta os estoques basais de glutationa) ou icterícia: todos esses fatores reduzem a reserva funcional de glutationa disponível para neutralizar o NAPQI, tornando esses pacientes vulneráveis a doses que seriam seguras em um fígado saudável.</p>
+
+    <div class="alert">
+      <span class="alert-tag">Farmacologia da toxicidade e do antídoto</span>
+      <p class="editable" contenteditable="false">A dose considerada potencialmente tóxica é superior a 150 mg/kg (ou acima de 7,5 g em um adulto), não excedendo 1.000 mg por dose isolada de referência para o cálculo de risco. O antídoto específico é a <span class="hl">N-acetilcisteína</span>, e seu mecanismo de ação explica exatamente por que ela funciona: a acetilcisteína é um precursor da cisteína, aminoácido limitante na síntese hepática de glutationa. Ao repor os estoques de glutationa, ela restaura a capacidade do fígado de conjugar e neutralizar o NAPQI antes que ele acumule dano celular. Quanto mais precoce a administração em relação à ingestão tóxica, maior a proteção &mdash; por isso os protocolos (oral de 72 horas ou intravenoso de 21 horas descritos no slide) priorizam o início mais rápido possível do tratamento.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="editable" contenteditable="false">Apresentações e posologia na prática</h3>
+    <p class="editable" contenteditable="false">O paracetamol está disponível em praticamente todas as formas farmacêuticas orais: comprimido simples de 500 e 750 mg, comprimido revestido nas mesmas dosagens, comprimido efervescente de 500 mg, suspensão oral pediátrica (100 mg/mL e 32 mg/mL), solução oral em gotas de 200 mg/mL e, para uso hospitalar, solução para infusão intravenosa de 10 mg/mL.</p>
+    <p class="editable" contenteditable="false">Em adultos, a posologia padrão gira em torno de 500 a 750 mg por via oral, três a cinco vezes ao dia, respeitando intervalos de quatro a seis horas conforme a apresentação. Em pediatria, abaixo de 12 anos, a dose é calculada por peso: 10 a 15 mg/kg/dose para a suspensão oral, ou a regra prática de 1 gota por quilo para a solução oral em gotas, sempre respeitando o teto de 35 gotas por dose e com recomendação de avaliação médica prévia em crianças com menos de 11 kg ou menos de 2 anos, faixas em que a margem terapêutica é mais estreita e a maturação das vias de conjugação hepática ainda está em desenvolvimento.</p>
+  </div>
+</div>
+
+<!-- ================= SECTION 7 ================= -->
+<div class="section" id="s07" style="--accent:var(--c7)">
+  <div class="section-header"><span class="tag">07</span><div class="line"></div></div>
+  <h2 class="editable" contenteditable="false">Dipirona: a queridinha brasileira que o mundo baniu</h2>
+  <p class="lede editable" contenteditable="false">Entender por que a dipirona sumiu das prateleiras de meia dúzia de países ricos, e por que ela continua no Brasil, exige separar risco absoluto de risco relativo.</p>
+
+  <div class="card">
+    <h3 class="editable" contenteditable="false">Mecanismo de ação</h3>
+    <p class="editable" contenteditable="false">A dipirona (metamizol sódico) compartilha com o paracetamol uma característica farmacodinâmica central: inibição relativamente fraca da síntese periférica de prostaglandinas, associada a uma ação analgésica predominantemente central, aqui atribuída especificamente à ação direta sobre a substância cinzenta periaquedutal, um núcleo mesencefálico que é a origem da via serotoninérgica e noradrenérgica descendente inibitória da dor. Isso confere a ela, além do efeito analgésico e antipirético, uma propriedade que a diferencia do paracetamol e a torna particularmente útil em determinados quadros: ação <em>antiespasmódica</em>, relevante em dor tipo cólica (renal, biliar, intestinal).</p>
+
+    <h3 class="editable" contenteditable="false">O risco de agranulocitose: uma história de proibições internacionais</h3>
+    <p class="editable" contenteditable="false">A dipirona pode desencadear, por um mecanismo idiossincrático e imunomediado (não dose-dependente), uma reação de hipersensibilidade que destrói precursores granulocíticos na medula óssea, levando a agranulocitose &mdash; uma queda drástica dos neutrófilos circulantes que expõe o paciente a infecções bacterianas graves e potencialmente fatais. Foi justamente o receio dessa reação, rara mas grave, que motivou uma onda de proibições regulatórias ao redor do mundo ao longo do século XX: o Canadá restringiu seu uso já em 1963, o Reino Unido retirou o fármaco do mercado em 1965 pelo Comitê de Segurança de Medicamentos, e tanto os Estados Unidos quanto a Austrália baniram a dipirona em 1977, após relatos consistentes de agranulocitose associada ao seu uso.</p>
+    <p class="editable" contenteditable="false">O Brasil, a Alemanha, a Espanha, a Rússia e boa parte da América Latina mantiveram o fármaco disponível, e a razão para essa divergência regulatória é objeto de debate farmacoepidemiológico até hoje: estudos populacionais subsequentes, como o de Jick, Slone e Shapiro publicado no <em>British Medical Journal</em> em 1986, e relatórios posteriores da própria FDA, estimaram que o <span class="hl">risco absoluto de agranulocitose associada à dipirona é extremamente baixo</span>, da ordem de 0,2 a 2 casos por milhão de pessoas ao ano &mdash; uma magnitude de risco que muitos países optaram por considerar aceitável frente ao seu excelente perfil analgésico, antipirético e antiespasmódico, e frente ao baixo risco de hepatotoxicidade em comparação ao paracetamol e de sangramento digestivo em comparação aos AINEs clássicos.</p>
+
+    <details>
+      <summary>Aprofunde-se: o mecanismo imunológico proposto para a agranulocitose</summary>
+      <div class="inner">
+        <p class="editable" contenteditable="false">O mecanismo mais aceito para explicar a agranulocitose por dipirona é do tipo hapteno-dependente: metabólitos reativos da dipirona (particularmente o 4-metilaminoantipirina e seus derivados) ligam-se covalentemente a proteínas de superfície de neutrófilos e de seus precursores mieloides, formando neoantígenos que passam a ser reconhecidos como estranhos pelo sistema imune. Anticorpos específicos contra esse complexo hapteno-proteína, ou linfócitos T citotóxicos sensibilizados, promovem a destruição imunomediada dessas células. Por ser um mecanismo idiossincrático de hipersensibilidade e não uma toxicidade dose-dependente direta, ele não é previsível pela dose administrada nem pelo tempo de exposição prévia sem reação &mdash; o que explica por que a reação pode surgir mesmo após múltiplos usos anteriores sem intercorrências, e por que a vigilância clínica (sinais de infecção inexplicada, febre, faringite, úlceras orais em paciente em uso de dipirona) permanece a principal ferramenta de detecção precoce, mais do que a restrição categórica do fármaco.</p>
+      </div>
+    </details>
+
+    <h3 class="editable" contenteditable="false">Apresentações e posologia</h3>
+    <p class="editable" contenteditable="false">A dipirona está disponível em solução oral (50 mg/mL e 500 mg/mL), comprimidos de 500 mg e 1 g, comprimido efervescente de 1 g e solução injetável de 500 mg/mL. Em adultos, a dose oral usual é de 500 mg a 1 g, quatro vezes ao dia, e a via injetável (endovenosa lenta ou intramuscular) usa 2 a 5 mL ao dia, com dose máxima de 10 mL/dia, sempre diluída em soro fisiológico, soro glicosado a 5% ou Ringer lactato quando administrada por via endovenosa.</p>
+    <p class="editable" contenteditable="false">Em pediatria, a posologia é estratificada por faixa de peso corporal, tanto para a solução oral quanto para a via injetável, e o slide traz um alerta de segurança que costuma ser cobrado em prova: a via intramuscular é contraindicada em crianças com menos de 3 meses ou pesando menos de 5 kg, e a via endovenosa é contraindicada abaixo de 11 meses ou 9 kg &mdash; restrições que refletem tanto o volume muscular insuficiente para absorção segura por via IM em lactentes muito pequenos quanto o maior risco de reações hemodinâmicas abruptas pela via IV nessa faixa etária.</p>
+  </div>
+</div>
+
+<!-- ================= SECTION 8 ================= -->
+<div class="section" id="s08" style="--accent:var(--c8)">
+  <div class="section-header"><span class="tag">08</span><div class="line"></div></div>
+  <h2 class="editable" contenteditable="false">Herpes-zoster: a reativação de um vírus que nunca foi embora</h2>
+  <p class="lede editable" contenteditable="false">Toda pessoa que teve catapora carrega, para o resto da vida, um vírus adormecido dentro dos próprios gânglios nervosos. O zoster é o que acontece quando ele acorda.</p>
+
+  <div class="card">
+    <h3 class="editable" contenteditable="false">A família Herpesviridae e o lugar do VZV nela</h3>
+    <p class="editable" contenteditable="false">Os herpes-vírus humanos (HHVs) são oito espécies distribuídas em três subfamílias &mdash; alfa, beta e gama-herpesvirinae &mdash; classificação que não é apenas taxonômica, mas reflete diferenças biológicas relevantes de tropismo celular e padrão de latência. O vírus varicela-zóster (VZV, também chamado HHV-3) pertence à subfamília <em>Alphaherpesvirinae</em>, junto com os vírus herpes simples tipos 1 e 2. Essa subfamília compartilha uma característica biológica definidora: ciclo replicativo lítico relativamente curto em células epiteliais e estabelecimento de <span class="hl">latência em neurônios</span>, tipicamente nos gânglios sensitivos das raízes dorsais e dos nervos cranianos.</p>
+    <p class="editable" contenteditable="false">Em contraste, o Epstein-Barr (HHV-4) e o herpes-vírus humano tipo 8 pertencem à subfamília gama, com tropismo predominante por linfócitos, enquanto o citomegalovírus (HHV-5) e os herpes-vírus humanos tipos 6 e 7 pertencem à subfamília beta, com ciclos replicativos mais longos e latência preferencialmente em células mieloides e linfócitos. Saber posicionar corretamente cada HHV em sua subfamília ajuda a prever, por analogia, seu comportamento clínico &mdash; e é um ponto frequentemente cobrado em provas de graduação.</p>
+
+    <div class="alert">
+      <span class="alert-tag">CID-10 &mdash; Herpes-zoster</span>
+      <p class="editable" contenteditable="false"><span class="cid-chip">B02</span>categoria geral do herpes-zoster, desdobrada em <span class="cid-chip">B02.0</span>encefalite pelo vírus (associado a G05.1), <span class="cid-chip">B02.1</span>meningite pelo vírus (associado a G02.0), <span class="cid-chip">B02.2</span>zoster com outras manifestações neurológicas &mdash; categoria que inclui a nevralgia pós-herpética como veremos adiante &mdash;, <span class="cid-chip">B02.3</span>zoster oftálmico, <span class="cid-chip">B02.7</span>zoster disseminado, <span class="cid-chip">B02.8</span>zoster com outras complicações e <span class="cid-chip">B02.9</span>zoster sem complicação, a codificação mais usada no dia a dia ambulatorial.</p>
+    </div>
+
+    <h3 class="editable" contenteditable="false">Patogênese: da infecção primária à reativação</h3>
+    <p class="editable" contenteditable="false">A história natural do VZV começa muito antes do zoster propriamente dito, com a infecção primária (a catapora) na infância. O vírus entra pela conjuntiva ou mucosa respiratória superior, sofre uma primeira replicação local e nos tecidos linfoides regionais, gerando uma viremia primária discreta por volta do quinto dia de infecção. Segue-se um segundo ciclo de replicação viral no fígado, baço e outros órgãos, culminando em uma viremia secundária, mais intensa, que dissemina o vírus para a pele &mdash; é essa viremia secundária que corresponde ao surgimento do exantema vesicular característico da catapora, entre o décimo e o décimo quinto dia.</p>
+    <p class="editable" contenteditable="false">A resposta imune inata (interferons, células <em>natural killer</em>) e depois a resposta adaptativa (células T específicas contra o VZV e, por último, anticorpos anti-VZV) controlam progressivamente essa infecção, e é justamente durante essa fase virêmica que o vírus consegue alcançar os gânglios sensitivos das raízes dorsais e dos nervos cranianos, onde estabelece <span class="hl">latência</span> &mdash; um estado de infecção não produtiva, sem síntese de partículas virais infecciosas completas, mas com persistência do genoma viral dentro do núcleo dos neurônios ganglionares, sob vigilância contínua, porém incompleta, da imunidade celular específica contra o VZV.</p>
+
+    <details>
+      <summary>Aprofunde-se: o que desencadeia a reativação e por que ela poupa alguns e não outros</summary>
+      <div class="inner">
+        <p class="editable" contenteditable="false">A reativação do VZV latente, que produz o quadro clínico de herpes-zoster, ocorre quando a vigilância imunológica celular específica contra o vírus declina abaixo de um limiar crítico de contenção. Os dois grandes determinantes desse declínio, coerentes com a epidemiologia apresentada na próxima seção, são o envelhecimento imunológico (imunossenescência, com redução progressiva de células T específicas de memória contra o VZV ao longo da vida) e estados de imunossupressão adquirida (HIV, neoplasias hematológicas, quimioterapia, corticoterapia crônica, transplante de órgãos). Uma vez reativado, o vírus replica-se dentro do próprio gânglio sensitivo, causando ganglionite aguda com inflamação e, em casos mais graves, hemorragia intraganglionar &mdash; achado histopatológico que você verá retratado na seção sobre nevralgia pós-herpética &mdash; e migra de forma anterógrada pelo axônio sensitivo até a pele inervada por aquele dermátomo específico, onde produz a erupção vesicular característica do zoster.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h3 class="editable" contenteditable="false">Epidemiologia</h3>
+    <p class="editable" contenteditable="false">A incidência de herpes-zoster na população geral é estimada entre 1,3 e 4,8 casos por 1.000 pessoas ao ano, com concentração marcante em dois grupos de risco: idosos, refletindo a imunossenescência natural das células T contra o VZV, e indivíduos imunocomprometidos por qualquer causa. Essa distribuição etária tem uma consequência direta e clinicamente decisiva sobre o risco de cronificação para nevralgia pós-herpética: enquanto apenas 4,2% dos pacientes com 20 anos ou menos ainda apresentam dor persistente um ano após a erupção aguda, essa proporção salta para <span class="hl">47% em pacientes acima de 70 anos</span> &mdash; quase metade dos idosos que desenvolvem zoster carrega dor crônica um ano depois.</p>
+    <p class="editable" contenteditable="false">Cerca de 10% de todos os pacientes com herpes-zoster agudo, de qualquer idade, desenvolvem dor persistente por mais de um mês, definindo o início do espectro que evolui para nevralgia pós-herpética estabelecida. Os principais fatores de risco identificados para essa progressão são justamente a idade avançada e a gravidade tanto da erupção cutânea quanto da dor na fase aguda &mdash; um paciente com dor aguda intensa e erupção extensa tem risco proporcionalmente maior de cronificação, o que reforça, do ponto de vista prático, a importância de tratar agressivamente a dor aguda do zoster desde o primeiro atendimento, não apenas por conforto imediato, mas como estratégia preventiva.</p>
+  </div>
+
+  <div class="card">
+    <h3 class="editable" contenteditable="false">Apresentação clínica: seguindo o mapa dos dermátomos</h3>
+    <p class="editable" contenteditable="false">O achado clínico definidor do herpes-zoster, e o que o distingue à beira do leito de praticamente qualquer outra dermatose vesicular, é sua distribuição estritamente <span class="hl">unilateral e restrita a um único dermátomo</span> (ou, ocasionalmente, dois dermátomos contíguos) &mdash; uma faixa de pele inervada por uma única raiz nervosa sensitiva, seguindo o trajeto anatômico previsível ilustrado no mapa de dermátomos. As lesões evoluem de máculas eritematosas para pápulas, depois vesículas agrupadas sobre base eritematosa, que podem coalescer, tornar-se hemorrágicas ou necróticas em casos mais graves, e finalmente formam crostas ao longo de sete a dez dias.</p>
+    <div class="dermatome-note">
+      <p class="editable" contenteditable="false">A dor costuma preceder o exantema em um a três dias (a chamada fase pré-eruptiva, que pode ser confundida com outras causas de dor localizada, como cólica renal se o dermátomo acometido for lombar, ou dor cardíaca se for torácico esquerdo &mdash; uma armadilha diagnóstica real na urgência) e frequentemente é acompanhada de parestesia, disestesia e hiperestesia na área, precisamente os termos que você aprendeu na seção 2.</p>
+    </div>
+
+    <details>
+      <summary>Aprofunde-se: diagnósticos diferenciais e formas especiais de zoster</summary>
+      <div class="inner">
+        <p class="editable" contenteditable="false">O diagnóstico diferencial da fase vesicular do zoster inclui herpes simples com distribuição zosteriforme (mais difícil de distinguir clinicamente, geralmente esclarecido por recorrência em local fixo característico do HSV), dermatite de contato, fitofotodermatite, impetigo bolhoso e celulite &mdash; todos mencionados na tabela diagnóstica diferencial dos herpes-vírus. O zoster oftálmico (envolvimento do ramo oftálmico do trigêmeo, CID B02.3) merece atenção especial por seu risco de complicação ocular grave, incluindo ceratite e uveíte, sobretudo quando há acometimento da ponta do nariz (sinal de Hutchinson, que indica envolvimento do ramo nasociliar e prediz maior risco de complicação ocular). O zoster disseminado (CID B02.7), com lesões que ultrapassam dermátomos contíguos ou se generalizam, é praticamente restrito a pacientes gravemente imunossuprimidos e representa falha de contenção da replicação viral pela imunidade celular.</p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ================= SECTION 9 ================= -->
+<div class="section" id="s09" style="--accent:var(--c9)">
+  <div class="section-header"><span class="tag">09</span><div class="line"></div></div>
+  <h2 class="editable" contenteditable="false">Tratamento do herpes-zoster agudo</h2>
+  <p class="lede editable" contenteditable="false">Três classes de fármacos, cada uma perseguindo um objetivo diferente: conter o vírus, reduzir a inflamação neural, controlar a dor.</p>
+
+  <div class="card">
+    <h3 class="editable" contenteditable="false">Antivirais: a primeira linha, e o relógio que corre contra você</h3>
+    <p class="editable" contenteditable="false">O tratamento antiviral é a primeira linha terapêutica no herpes-zoster agudo, e o slide destaca um ponto que não é opcional: ele deve, idealmente, ser iniciado dentro das <span class="hl">primeiras 72 horas</span> do início da erupção. Essa janela terapêutica não é arbitrária &mdash; ela corresponde, na fisiopatologia, ao período em que a replicação viral ativa dentro do gânglio sensitivo e ao longo do axônio ainda está em curso; após esse período, boa parte do dano neural já ocorreu, e o antiviral perde grande parte de sua capacidade de alterar o curso clínico e, particularmente, de reduzir o risco de nevralgia pós-herpética subsequente.</p>
+    <p class="editable" contenteditable="false">O aciclovir, o valaciclovir e o fanciclovir são análogos nucleosídeos que dependem, para sua ativação, da enzima <em>timidina quinase viral</em> &mdash; presente no VZV, mas não nas células humanas não infectadas &mdash; que fosforila o fármaco a monofosfato; enzimas celulares completam a fosforilação até a forma trifosfato ativa, que é então incorporada preferencialmente pela DNA-polimerase viral na cadeia de DNA em replicação, causando terminação da cadeia e interrupção da replicação do vírus especificamente dentro das células infectadas. É esse mecanismo dependente de uma enzima exclusivamente viral que confere a esses fármacos seu excelente perfil de segurança seletiva.</p>
+    <p class="editable" contenteditable="false">Na prática posológica, o slide chama atenção para uma pegadinha clássica de prova e de prescrição: as doses de aciclovir e valaciclovir usadas para herpes-zoster são consideravelmente <span class="hl">maiores</span> do que as usadas para herpes simples, refletindo a menor sensibilidade relativa do VZV ao fármaco em comparação ao HSV. Para zoster, o aciclovir é usado a 800 mg por via oral cinco vezes ao dia por sete a dez dias, e o valaciclovir a 1 g três vezes ao dia por sete dias &mdash; o dobro e o triplo, respectivamente, das doses usadas para herpes simples oral. Em pacientes imunocomprometidos, a via passa a ser intravenosa (aciclovir 10 mg/kg a cada 8 horas), refletendo tanto a maior gravidade potencial quanto a necessidade de biodisponibilidade garantida nesse grupo de risco.</p>
+
+    <details>
+      <summary>Aprofunde-se: por que o zoster é menos transmissível que a catapora</summary>
+      <div class="inner">
+        <p class="editable" contenteditable="false">Um dado epidemiológico interessante mencionado no material é que a taxa de transmissão para contatos domiciliares suscetíveis é de aproximadamente 15% no herpes-zoster, contra mais de 70% na varicela primária. A explicação está na via de disseminação: na catapora, há viremia sistêmica com disseminação respiratória e lesões cutâneas generalizadas, altamente eficientes para transmissão por gotículas e contato. No zoster, a disseminação viral ocorre por via axonal, restrita a um único dermátomo, sem viremia relevante e sem envolvimento respiratório &mdash; a transmissão só ocorre por contato direto com o líquido das vesículas ativas, um mecanismo muito menos eficiente de disseminação comunitária, embora ainda capaz de causar catapora primária em um contato suscetível não imunizado.</p>
+      </div>
+    </details>
+
+    <h3 class="editable" contenteditable="false">Corticoide oral: reduzindo a inflamação, mas não a cronificação</h3>
+    <p class="editable" contenteditable="false">O corticoide oral é indicado principalmente em pacientes idosos ou em quadros de dor aguda muito intensa, e seu racional fisiopatológico é reduzir a inflamação e o edema dentro do gânglio sensitivo acometido, potencialmente aliviando a compressão e a dor neural aguda. Os esquemas apresentados usam prednisolona 40 mg/dia ou prednisona 40 a 60 mg/dia por cinco a sete dias, seguidos de desmame gradual.</p>
+    <p class="editable" contenteditable="false">É essencial que você retenha um ponto que a literatura mais recente deixa cada vez mais claro, e que a própria tabela de evidências do slide sintetiza: os corticoides <span class="hl">não reduzem o risco de nevralgia pós-herpética</span>. A revisão sistemática Cochrane de Han et al. (2023) não encontrou evidência clara de benefício analgésico agudo consistente nem redução da incidência de NPH com corticoide oral isolado; o estudo de Oliveira et al. (2020) chegou à mesma conclusão. A única modalidade que mostrou redução significativa e consistente da incidência de nevralgia pós-herpética foi o <em>bloqueio paravertebral</em> com metilprednisolona associada a anestésico local (Ji et al., 2009) &mdash; uma via de administração local, e não sistêmica, que concentra o efeito anti-inflamatório diretamente no gânglio acometido, evitando a exposição sistêmica ao corticoide.</p>
+
+    <div class="alert">
+      <span class="alert-tag">Ponto de segurança sobre corticoterapia de curto prazo</span>
+      <p class="editable" contenteditable="false">O desmame de corticoide geralmente não é necessário após uso por períodos curtos, inferiores a duas ou três semanas, porque a supressão do eixo hipotálamo-hipófise-adrenal é improvável nesse intervalo. Ainda assim, mesmo em cursos curtos, deve-se sempre considerar e monitorar os riscos de efeitos adversos metabólicos, gástricos e glicêmicos, principalmente no paciente idoso com comorbidades associadas, como diabetes ou hipertensão descompensada.</p>
+    </div>
+
+    <h3 class="editable" contenteditable="false">Analgesia sintomática da dor aguda</h3>
+    <p class="editable" contenteditable="false">Para o controle direto da dor aguda do zoster, o arsenal segue exatamente a lógica da escada analgésica estudada na seção 5: diclofenaco de potássio ou ibuprofeno como anti-inflamatórios de degrau 1, associados a dipirona ou paracetamol nos intervalos entre as tomadas para manter cobertura analgésica contínua; e, para dor de intensidade moderada a forte, opioides fracos como a associação paracetamol mais codeína, o tramadol isolado ou a associação tramadol mais paracetamol, que combina dois mecanismos de ação complementares (opioide fraco e inibição da recaptação de serotonina e noradrenalina pelo tramadol, somados à ação central do paracetamol).</p>
+  </div>
+</div>
+
+<!-- ================= SECTION 10 ================= -->
+<div class="section" id="s10" style="--accent:var(--c10)">
+  <div class="section-header"><span class="tag">10</span><div class="line"></div></div>
+  <h2 class="editable" contenteditable="false">Nevralgia pós-herpética: quando a ferida cicatriza, mas a dor fica</h2>
+  <p class="lede editable" contenteditable="false">O achado histopatológico mais eloquente desta aula inteira: uma medula espinhal que literalmente atrofiou onde o vírus passou.</p>
+
+  <div class="card">
+    <div class="alert">
+      <span class="alert-tag">CID-10 &mdash; Nevralgia pós-zoster</span>
+      <p class="editable" contenteditable="false"><span class="cid-chip">G53.0*</span>nevralgia pós-zoster, classificada como manifestação de uma doença primária codificada em outro capítulo &mdash; por isso aparece com asterisco, exigindo a codificação dupla com <span class="cid-chip">B02.2+</span>herpes-zoster acompanhado de outras manifestações neurológicas, o código-cruz que identifica a etiologia de base. Essa notação dupla (cruz e asterisco) do CID-10 é usada precisamente para síndromes que são manifestação neurológica de uma doença infecciosa de base, e costuma ser cobrada literalmente em prova.</p>
+    </div>
+
+    <h3 class="editable" contenteditable="false">Definição operacional</h3>
+    <p class="editable" contenteditable="false">A nevralgia pós-herpética é definida pela persistência de dor e alteração de sensibilidade na área previamente acometida pelo zoster por mais de quatro a nove semanas (alguns critérios adotam o corte de três meses) após a resolução da erupção cutânea aguda. É o protótipo clínico mais didático de dor neuropática que você vai encontrar na graduação, precisamente porque a sequência causal é rastreável do início ao fim: infecção viral documentada, lesão neural demonstrável histologicamente, e dor crônica que persiste independentemente da presença ou ausência de lesão cutânea residual.</p>
+
+    <h3 class="editable" contenteditable="false">A fisiopatologia: da ganglionite aguda à atrofia estrutural</h3>
+    <p class="editable" contenteditable="false">As imagens histopatológicas trazidas no material são extraordinariamente didáticas e merecem ser entendidas em sequência lógica, não apenas memorizadas como ilustrações soltas.</p>
+    <p class="editable" contenteditable="false">Na fase aguda do zoster, a replicação viral dentro do gânglio da raiz dorsal provoca uma <span class="hl">ganglionite hemorrágica</span>: inflamação intensa com extravasamento sanguíneo dentro e ao redor do gânglio sensitivo, visível histologicamente como áreas de hemorragia entremeadas ao tecido neural e conjuntivo do gânglio. Esse processo inflamatório agudo não é inócuo: ele destrói neurônios sensitivos de primeira ordem e suas fibras, de forma parcial e às vezes irreversível.</p>
+    <p class="editable" contenteditable="false">Meses ou anos depois, em pacientes que desenvolveram nevralgia pós-herpética estabelecida, o exame histopatológico da medula espinhal na altura do segmento correspondente ao dermátomo acometido revela <span class="hl">atrofia do corno dorsal</span> &mdash; perda estrutural mensurável de substância cinzenta exatamente na região onde os neurônios de segunda ordem da via da dor deveriam receber as aferências primárias daquele território. Essa atrofia reflete morte neuronal secundária à desaferentação (perda das aferências primárias vindas do gânglio lesado) e à neuroinflamação persistente no corno dorsal.</p>
+
+    <details>
+      <summary>Aprofunde-se: o diagrama neuroimunológico da dor persistente e a rede de mediadores pró e antinociceptivos</summary>
+      <div class="inner">
+        <p class="editable" contenteditable="false">O esquema apresentado no material ilustra, em três compartimentos anatômicos (periferia, gânglio da raiz dorsal e medula espinhal), uma rede complexa e bidirecional de mediadores imunológicos que modulam a dor, e que ajuda a entender por que a nevralgia pós-herpética é tão refratária a tratamentos puramente periféricos.</p>
+        <p class="editable" contenteditable="false">Na periferia, queratinócitos lesados liberam ATP, prostaglandina E2 (PGE2) e endotelina (ET), mediadores pró-nociceptivos que sensibilizam terminações nervosas livres, contrabalançados por opioides endógenos como as beta-endorfinas (β-END), de ação antinociceptiva. Macrófagos locais liberam TNF e IL-1β (pró-nociceptivos) mas também IL-10 e mediadores pró-resolutivos especializados (SPM, sigla em inglês para <em>specialized pro-resolving mediators</em>), que atuam encerrando a inflamação. As próprias células de Schwann, que normalmente mielinizam e sustentam metabolicamente o axônio, passam a secretar TNF e IL-1β quando danificadas, contribuindo ativamente para a sensibilização, ao lado de um contrapeso anti-inflamatório via IL-10.</p>
+        <p class="editable" contenteditable="false">No gânglio da raiz dorsal, onde o VZV estabeleceu latência e depois se reativou, macrófagos residentes e células gliais satélites (que envolvem intimamente o corpo celular dos neurônios sensitivos, de forma análoga funcional aos astrócitos no sistema nervoso central) liberam o mesmo conjunto de citocinas pró-inflamatórias, e células-tronco da medula óssea recrutadas para o local contribuem com TGF-β, um mediador com papel regulatório complexo. Células T infiltrantes adicionam elastase leucocitária (LE) e IL-17 ao ambiente pró-nociceptivo, equilibradas por IL-10 e IL-4 anti-inflamatórias.</p>
+        <p class="editable" contenteditable="false">Já na medula espinhal, o compartimento mais relevante para explicar a cronicidade da dor, oligodendrócitos liberam IL-33 (pró-nociceptiva), microglia ativada libera TNF, IL-1β e BDNF (fator neurotrófico derivado do encéfalo, que em contextos de dor crônica atua paradoxalmente facilitando a transmissão nociceptiva ao modular a excitabilidade de neurônios do corno dorsal), e astrócitos reativos liberam um arsenal amplo de quimiocinas e mediadores (CCL2, CXCL1, TSP4, MMP2, ATP, glutamato e interferon-alfa) que sensibilizam e amplificam continuamente a transmissão do sinal doloroso até o encéfalo. Células T no parênquima medular contribuem tanto com IFN-gama pró-nociceptivo quanto com IL-10 e IL-4 regulatórias.</p>
+        <p class="editable" contenteditable="false">O ponto conceitual mais importante deste diagrama inteiro é que a dor persistente na nevralgia pós-herpética não resulta de um único mediador ou de uma única célula defeituosa: é o resultado líquido de um equilíbrio dinâmico e cronicamente deslocado para o lado pró-nociceptivo, envolvendo simultaneamente neurônios, células gliais e o sistema imune inato e adaptativo, distribuídos em três compartimentos anatômicos distintos e comunicantes. É essa complexidade multicelular e multicompartimental que explica por que nenhuma classe farmacológica isolada resolve completamente o quadro, e por que a abordagem terapêutica combina, como você verá na próxima seção, agentes com mecanismos de ação complementares.</p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ================= SECTION 11 ================= -->
+<div class="section" id="s11" style="--accent:var(--c11)">
+  <div class="section-header"><span class="tag">11</span><div class="line"></div></div>
+  <h2 class="editable" contenteditable="false">Tratamento da nevralgia pós-herpética</h2>
+  <p class="lede editable" contenteditable="false">Cinco classes farmacológicas, cinco mecanismos de ação diferentes, todos convergindo para o mesmo alvo final: reduzir a hiperexcitabilidade de um sistema nervoso que aprendeu a doer sozinho.</p>
+
+  <div class="card">
+    <h3 class="editable" contenteditable="false">Tratamento tópico: agindo diretamente onde a pele ainda dói</h3>
+    <h4 class="editable" contenteditable="false">Capsaicina creme (0,025 a 0,075%)</h4>
+    <p class="editable" contenteditable="false">A capsaicina é o composto responsável pela sensação de ardência das pimentas, e seu mecanismo terapêutico explora exatamente essa propriedade: ela é um agonista potente do receptor <em>TRPV1</em>, um canal iônico não seletivo de cátions expresso predominantemente em fibras nociceptivas C e Aδ. A aplicação repetida de capsaicina provoca inicialmente ativação intensa desses receptores (daí a sensação de queimação que o slide alerta ser esperada e transitória), seguida de um fenômeno de <em>dessensibilização</em>: influxo maciço e sustentado de cálcio através do canal TRPV1 leva à disfunção mitocondrial local e à retração reversível das terminações nervosas nociceptivas superficiais da epiderme, reduzindo, ao longo de dias a semanas de uso contínuo, a densidade funcional de fibras nociceptivas na área tratada. Deve-se evitar o uso na face, pela proximidade de mucosas sensíveis e pelo risco de irritação ocular acidental.</p>
+    <h4 class="editable" contenteditable="false">Lidocaína emplastro a 5%</h4>
+    <p class="editable" contenteditable="false">A lidocaína é um anestésico local do grupo amida que bloqueia canais de sódio dependentes de voltagem na membrana axonal, impedindo a despolarização e, portanto, a geração e propagação de potenciais de ação ao longo das fibras nociceptivas periféricas sensibilizadas naquela área de pele. Por ser aplicada topicamente em emplastro, sua absorção sistêmica é mínima, o que a torna particularmente segura mesmo em pacientes idosos polimedicados &mdash; um perfil de segurança relevante, considerando que a maior parte dos pacientes com nevralgia pós-herpética estabelecida está exatamente nessa faixa etária de maior fragilidade farmacológica.</p>
+
+    <h3 class="editable" contenteditable="false">Gabapentinoides: silenciando a hiperexcitabilidade central</h3>
+    <p class="editable" contenteditable="false">Gabapentina e pregabalina, apesar do nome que sugere relação com o ácido gama-aminobutírico (GABA), não atuam sobre receptores GABAérgicos. Seu mecanismo real é a ligação à subunidade <em>alfa-2-delta</em> dos canais de cálcio dependentes de voltagem, predominantemente nos terminais pré-sinápticos de neurônios do corno dorsal da medula espinhal. Ao se ligar a essa subunidade, reduzem o tráfego desses canais para a membrana e diminuem o influxo de cálcio induzido por despolarização, reduzindo consequentemente a liberação de neurotransmissores excitatórios pró-nociceptivos (glutamato e substância P) na sinapse entre o neurônio de primeira e o de segunda ordem. É exatamente essa a hiperexcitabilidade central persistente, gerada pela lesão do gânglio e do corno dorsal descrita na seção anterior, que os gabapentinoides visam conter.</p>
+    <p class="editable" contenteditable="false">A gabapentina é titulada progressivamente (iniciando com 300 mg uma vez ao dia e aumentando em incrementos de 300 mg a cada um a sete dias, até 300 a 600 mg três vezes ao dia), estratégia que minimiza os efeitos adversos dose-dependentes de sonolência e tontura, comuns no início do tratamento. A pregabalina, com farmacocinética linear mais previsível e absorção não saturável (diferente da gabapentina, cuja absorção intestinal satura em doses altas por depender de um transportador ativo específico), permite titulação mais simples, geralmente entre 150 e 300 mg ao dia, divididos em uma ou duas tomadas.</p>
+
+    <h3 class="editable" contenteditable="false">Antidepressivos tricíclicos: um mecanismo de ação emprestado</h3>
+    <p class="editable" contenteditable="false">Amitriptilina e nortriptilina são classicamente antidepressivos, mas seu efeito analgésico em dor neuropática é independente do efeito antidepressivo, surge em doses mais baixas e com latência mais curta do que o efeito sobre o humor. O mecanismo relevante aqui é a inibição da recaptação de noradrenalina e serotonina na fenda sináptica dos neurônios da via inibitória descendente da dor, que se origina na substância cinzenta periaquedutal e no núcleo magno da rafe e projeta até o corno dorsal da medula. Ao aumentar a disponibilidade sináptica desses dois neurotransmissores nessa via especificamente inibitória, os tricíclicos reforçam o freio descendente natural sobre a transmissão nociceptiva no corno dorsal &mdash; um mecanismo complementar, e não sobreposto, ao dos gabapentinoides.</p>
+    <p class="editable" contenteditable="false">A nortriptilina costuma ser preferida à amitriptilina em pacientes idosos, justamente o perfil predominante da nevralgia pós-herpética, por ter perfil anticolinérgico e sedativo menos intenso, reduzindo o risco de efeitos adversos como boca seca, retenção urinária, constipação, confusão mental e hipotensão ortostática, particularmente relevantes e potencialmente perigosos (risco de queda) nessa faixa etária.</p>
+
+    <details>
+      <summary>Aprofunde-se: adjuvantes de segunda linha, opioides e a lacuna de evidências sobre canabinoides</summary>
+      <div class="inner">
+        <p class="editable" contenteditable="false">Opioides, outros anticonvulsivantes (carbamazepina, lamotrigina, ácido valproico) e derivados canabinoides podem ser considerados adjuvantes diante de falha terapêutica ou intolerância à dose terapêutica plena das classes de primeira linha descritas acima. O material chama atenção, corretamente, para dois pontos de cautela farmacológica importantes: primeiro, o risco de abuso e dependência associado a opioides deve ser especialmente ponderado na nevralgia pós-herpética justamente porque, sendo um quadro crônico, o tratamento frequentemente se estende por tempo indefinido, ao contrário de um uso pontual e limitado no tempo em dor aguda pós-operatória, por exemplo. Segundo, embora a carbamazepina, a lamotrigina e o ácido valproico sejam estudados e tenham papel estabelecido em outros tipos de dor neuropática (a carbamazepina é, aliás, primeira linha consagrada na nevralgia do trigêmeo), sua extrapolação para a nevralgia pós-herpética especificamente carece de evidências de alta qualidade. O mesmo se aplica, com ainda mais força, aos derivados canabinoides: ainda há carência de estudos clínicos específicos e robustos que sustentem seu uso rotineiro nessa indicação, apesar do interesse crescente na literatura sobre modulação canabinoide da dor neuropática de forma geral.</p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ================= SECTION 12 ================= -->
+<div class="section" id="s12" style="--accent:var(--c13)">
+  <div class="section-header"><span class="tag">12</span><div class="line"></div></div>
+  <h2 class="editable" contenteditable="false">Prevenção: as vacinas contra herpes-zoster</h2>
+  <p class="lede editable" contenteditable="false">Se a nevralgia pós-herpética nasce de uma falha da vigilância imune contra um vírus que já mora dentro de nós, a melhor estratégia terapêutica é, sempre que possível, nunca deixar essa vigilância cair.</p>
+
+  <div class="card">
+    <h3 class="editable" contenteditable="false">Zostavax: a vacina de vírus vivo atenuado</h3>
+    <p class="editable" contenteditable="false">A primeira geração de vacina específica contra o herpes-zoster, administrada em dose única, utiliza o vírus varicela-zóster vivo, porém atenuado &mdash; a mesma cepa vacinal usada na vacina infantil contra varicela, só que em concentração significativamente maior, suficiente para reforçar a imunidade celular específica contra o VZV em adultos que já tiveram contato prévio com o vírus selvagem décadas antes. É recomendada para indivíduos saudáveis a partir dos 50 anos, e, por conter vírus vivo, é contraindicada em pacientes imunossuprimidos, pelo risco teórico de replicação descontrolada da cepa vacinal.</p>
+
+    <h3 class="editable" contenteditable="false">Shingrix: a vacina recombinante de subunidade</h3>
+    <p class="editable" contenteditable="false">Representa um salto de geração tecnológica: em vez de vírus atenuado, utiliza uma glicoproteína de superfície recombinante do VZV (glicoproteína E) associada a um sistema adjuvante potente (AS01B), desenhado especificamente para induzir uma resposta imune celular e humoral robusta e duradoura, mesmo no contexto de imunossenescência relativa do idoso. Por não conter vírus vivo, pode ser administrada com segurança em pacientes imunossuprimidos, uma vantagem categórica sobre a Zostavax.</p>
+    <p class="editable" contenteditable="false">Recomendada desde 2017 nos Estados Unidos, é administrada em duas doses com intervalo de dois a seis meses entre elas, em pacientes a partir dos 50 anos, e demonstrou eficácia acima de 90% tanto na prevenção do herpes-zoster quanto especificamente na prevenção da nevralgia pós-herpética &mdash; uma eficácia substancialmente superior à da vacina de vírus atenuado. No Brasil, foi aprovada pela Anvisa em 2021 e está disponível em clínicas privadas desde junho de 2022, recomendada rotineiramente a partir dos 50 anos, com atenção especial a pacientes frágeis, idosos e imunossuprimidos &mdash; justamente os grupos de maior risco de zoster grave e de cronificação para nevralgia pós-herpética descritos na seção de epidemiologia. Pacientes previamente vacinados com Zostavax podem receber a Shingrix, desde que respeitado um intervalo mínimo de dois meses entre as doses.</p>
+
+    <details>
+      <summary>Aprofunde-se: por que uma vacina de subunidade supera uma de vírus vivo neste contexto específico</summary>
+      <div class="inner">
+        <p class="editable" contenteditable="false">A superioridade da Shingrix não é acidental: o sistema adjuvante AS01B combina dois componentes imunoestimulantes (MPL, um derivado de lipopolissacarídeo bacteriano, e QS-21, uma saponina de origem vegetal) que ativam potentemente células apresentadoras de antígeno através de receptores do tipo Toll, gerando uma resposta de células T CD4 auxiliares polifuncional e uma resposta humoral de alta afinidade, mesmo em indivíduos idosos cujo sistema imune inato e adaptativo já apresenta declínio funcional relacionado à idade. É precisamente esse reforço artificial e direcionado da resposta imune, superando a imunossenescência natural, que explica por que a eficácia da Shingrix se mantém elevada mesmo nas faixas etárias mais avançadas, onde a própria doença é mais grave e mais propensa a cronificar &mdash; fechando o raciocínio fisiopatológico com que esta aula inteira começou.</p>
+      </div>
+    </details>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<aside class="aside-col">
+  <div class="aside-eyebrow">Referência rápida</div>
+
+  <div class="ref-card" style="--a-accent:var(--c1)">
+    <h4 class="editable" contenteditable="false">Escalas de dor</h4>
+    <ul>
+      <li class="editable" contenteditable="false">EVA &mdash; linha de 10&nbsp;cm, sem números</li>
+      <li class="editable" contenteditable="false">Numérica &mdash; nota de 0 a 10</li>
+      <li class="editable" contenteditable="false">Faces &mdash; 0 a 10 em passos de 2, ideal em crianças e idosos</li>
+    </ul>
+  </div>
+
+  <div class="ref-card" style="--a-accent:var(--c2)">
+    <h4 class="editable" contenteditable="false">Termos IASP</h4>
+    <div class="chip-row">
+      <span class="chip editable" contenteditable="false">Alodinia</span>
+      <span class="chip editable" contenteditable="false">Disestesia</span>
+      <span class="chip editable" contenteditable="false">Hiperalgesia</span>
+      <span class="chip editable" contenteditable="false">Hiperestesia</span>
+      <span class="chip editable" contenteditable="false">Hiperpatia</span>
+      <span class="chip editable" contenteditable="false">Hipoalgesia</span>
+      <span class="chip editable" contenteditable="false">Hipoestesia</span>
+      <span class="chip editable" contenteditable="false">Parestesia</span>
+    </div>
+  </div>
+
+  <div class="ref-card" style="--a-accent:var(--c5)">
+    <h4 class="editable" contenteditable="false">Escada analgésica (OMS)</h4>
+    <ul>
+      <li class="editable" contenteditable="false">ENV 1&ndash;3 &mdash; AINE, dipirona, paracetamol</li>
+      <li class="editable" contenteditable="false">ENV 4&ndash;6 &mdash; opioide fraco (codeína, tramadol)</li>
+      <li class="editable" contenteditable="false">ENV 7&ndash;10 &mdash; opioide potente (morfina, fentanil)</li>
+    </ul>
+  </div>
+
+  <div class="ref-card" style="--a-accent:var(--c6)">
+    <h4 class="editable" contenteditable="false">Paracetamol</h4>
+    <ul>
+      <li class="editable" contenteditable="false">Adulto: 500&ndash;750&nbsp;mg VO 3&ndash;5x/dia</li>
+      <li class="editable" contenteditable="false">Teto: 4&nbsp;g/dia</li>
+      <li class="editable" contenteditable="false">Tóxico: &gt;150&nbsp;mg/kg (&gt;7,5&nbsp;g adulto)</li>
+      <li class="editable" contenteditable="false">Antídoto: N-acetilcisteína</li>
+    </ul>
+  </div>
+
+  <div class="ref-card" style="--a-accent:var(--c7)">
+    <h4 class="editable" contenteditable="false">Dipirona</h4>
+    <ul>
+      <li class="editable" contenteditable="false">Adulto: 500&nbsp;mg&ndash;1&nbsp;g VO 4x/dia</li>
+      <li class="editable" contenteditable="false">Agranulocitose: 0,2&ndash;2 casos/milhão/ano</li>
+      <li class="editable" contenteditable="false">Banida nos EUA, Canadá, RU e Austrália</li>
+    </ul>
+  </div>
+
+  <div class="ref-card" style="--a-accent:var(--c8)">
+    <h4 class="editable" contenteditable="false">Herpes-zoster &mdash; CID-10</h4>
+    <div class="chip-row">
+      <span class="chip editable" contenteditable="false">B02.2 neurológico</span>
+      <span class="chip editable" contenteditable="false">B02.3 oftálmico</span>
+      <span class="chip editable" contenteditable="false">B02.7 disseminado</span>
+      <span class="chip editable" contenteditable="false">B02.9 sem complicação</span>
+    </div>
+  </div>
+
+  <div class="ref-card" style="--a-accent:var(--c10)">
+    <h4 class="editable" contenteditable="false">Tratamento do HZ</h4>
+    <ul>
+      <li class="editable" contenteditable="false">Antiviral: iniciar em até 72h</li>
+      <li class="editable" contenteditable="false">Aciclovir 800&nbsp;mg VO 5x/dia, 7&ndash;10 dias</li>
+      <li class="editable" contenteditable="false">Valaciclovir 1&nbsp;g VO 3x/dia, 7 dias</li>
+      <li class="editable" contenteditable="false">Corticoide: não reduz risco de NPH</li>
+    </ul>
+  </div>
+
+  <div class="ref-card" style="--a-accent:var(--c11)">
+    <h4 class="editable" contenteditable="false">Nevralgia pós-herpética</h4>
+    <ul>
+      <li class="editable" contenteditable="false">CID G53.0* + B02.2+</li>
+      <li class="editable" contenteditable="false">Dor &gt; 4&ndash;9 semanas após a erupção</li>
+      <li class="editable" contenteditable="false">10% dos casos de HZ cronificam</li>
+      <li class="editable" contenteditable="false">47% em pacientes &gt;70 anos, 1 ano depois</li>
+    </ul>
+  </div>
+
+  <div class="ref-card" style="--a-accent:var(--c12)">
+    <h4 class="editable" contenteditable="false">1ª linha na NPH</h4>
+    <ul>
+      <li class="editable" contenteditable="false">Gabapentina até 3.600&nbsp;mg/dia</li>
+      <li class="editable" contenteditable="false">Pregabalina até 600&nbsp;mg/dia</li>
+      <li class="editable" contenteditable="false">Amitriptilina/nortriptilina até 150&nbsp;mg/dia</li>
+      <li class="editable" contenteditable="false">Tópicos: capsaicina, lidocaína 5%</li>
+    </ul>
+  </div>
+
+  <div class="ref-card" style="--a-accent:var(--c13)">
+    <h4 class="editable" contenteditable="false">Vacinas</h4>
+    <ul>
+      <li class="editable" contenteditable="false">Zostavax &mdash; vírus vivo atenuado, dose única</li>
+      <li class="editable" contenteditable="false">Shingrix &mdash; recombinante, 2 doses, eficácia &gt;90%</li>
+      <li class="editable" contenteditable="false">Ambas a partir dos 50 anos</li>
+    </ul>
+  </div>
+</aside>
+
+</div><!-- /layout -->
+
+<div class="refs" id="refs">
+  <div class="wrap" style="padding:0;max-width:700px;">
+    <h2 class="editable" contenteditable="false">Referências</h2>
+    <div class="ref-item editable" contenteditable="false"><span class="who">ADRIAANSEN, E. J. M.; JACOBS, J. G.; VERNOOIJ, L. M. et al.</span> Herpes zoster and post-herpetic neuralgia. <em>Pain Practice</em>, 2024. DOI: 10.1111/papr.13423.</div>
+    <div class="ref-item editable" contenteditable="false"><span class="who">ARGOFF, Charles E.; DUBIN, Andrew; PILITSIS, Julie G.</span> <em>Tratamento da dor (Secrets)</em>. 4. ed. Rio de Janeiro: Thieme Revinter, 2019.</div>
+    <div class="ref-item editable" contenteditable="false"><span class="who">AVILA, Mariana A.; GOMES, Cid André Fidelis de P.; FILHO, Almir Vieira D.</span> <em>Métodos e técnicas de avaliação da dor crônica: abordagem prática</em>. Barueri: Manole, 2023.</div>
+    <div class="ref-item editable" contenteditable="false"><span class="who">BARROS, Elvino; BARROS, Helena M. T.</span> <em>Medicamentos na prática clínica</em>. Porto Alegre: ArtMed, 2010.</div>
+    <div class="ref-item editable" contenteditable="false"><span class="who">BEUSCHLEIN, Felix; ELSE, Tobias; BANCOS, Irina et al.</span> European Society of Endocrinology and Endocrine Society joint clinical guideline: diagnosis and therapy of glucocorticoid-induced adrenal insufficiency. <em>The Journal of Clinical Endocrinology and Metabolism</em>, 2024.</div>
+    <div class="ref-item editable" contenteditable="false"><span class="who">BOLOGNIA, Jean.</span> <em>Dermatologia</em>. 3. ed. Rio de Janeiro: GEN Guanabara Koogan, 2015.</div>
+    <div class="ref-item editable" contenteditable="false"><span class="who">HAN, Y.; ZHANG, Z.; ZHANG, L.; LI, H.; CHEN, N.</span> Corticosteroids for preventing postherpetic neuralgia. <em>Cochrane Database of Systematic Reviews</em>, 2023, Issue 12. Art. n. CD005582. DOI: 10.1002/14651858.CD005582.pub4.</div>
+    <div class="ref-item editable" contenteditable="false"><span class="who">JI, Genlin et al.</span> The effectiveness of repetitive paravertebral injections with local anesthetics and steroids for the prevention of postherpetic neuralgia in patients with acute herpes zoster. <em>Anesthesia &amp; Analgesia</em>, v. 109, n. 5, p. 1651-1655, 2009. DOI: 10.1213/ANE.0b013e3181b79075.</div>
+    <div class="ref-item editable" contenteditable="false"><span class="who">LICHTENSTEIN, Gary R.; LOFTUS, Edward V.; AFZALI, Afshin et al.</span> ACG clinical guideline: management of Crohn's disease in adults. <em>The American Journal of Gastroenterology</em>, 2025.</div>
+    <div class="ref-item editable" contenteditable="false"><span class="who">MINSON, Fabiola P.; MORETE, Marcia C.; MARANGONI, Marco A.</span> <em>Dor</em>. Barueri: Manole, 2015.</div>
+    <div class="ref-item editable" contenteditable="false"><span class="who">NETO, Olympio de Hollanda C.</span> <em>Dor e cuidados paliativos</em>. (Série Saesp). Barueri: Manole, 2024.</div>
+    <div class="ref-item editable" contenteditable="false"><span class="who">OLIVEIRA, P. D.; NUNES, B. P.; MACHADO, D. et al.</span> Tratamento do herpes zoster e prevenção da nevralgia pós-herpética. <em>Revista Portuguesa de Medicina Geral e Familiar</em>, v. 36, n. 6, p. 394-402, 2020. DOI: 10.32385/rpmgf.v36i6.12960.</div>
+    <div class="ref-item editable" contenteditable="false"><span class="who">ROENN, Jaime H. V.; PAICE, Judith A.; PREODOR, Michael E.</span> <em>Current: dor</em>. Porto Alegre: ArtMed, 2010.</div>
+    <div class="ref-item editable" contenteditable="false"><span class="who">SAMPATHKUMAR, Priya; DRAGE, Lisa A.; MARTIN, David P.</span> Herpes zoster (shingles) and postherpetic neuralgia. <em>Mayo Clinic Proceedings</em>, v. 84, n. 3, p. 274-280, 2009.</div>
+    <div class="ref-item editable" contenteditable="false"><span class="who">SILVA, Penildon.</span> <em>Farmacologia</em>. 8. ed. Rio de Janeiro: Guanabara Koogan, 2010.</div>
+  </div>
+</div>
+
+</div><!-- /stage -->
+
+<div class="toolbar">
+  <div class="note" id="editNote">Nota: o autosave local só é confiável quando este arquivo é baixado e aberto diretamente no navegador (fora da pré-visualização de artefato do Claude.ai). Aqui na pré-visualização, as edições ficam salvas apenas em memória durante esta sessão.</div>
+  <div class="btns">
+    <button id="btnEdit">Ativar edição</button>
+    <button id="btnDownload">Baixar cópia editada</button>
+    <button id="btnReset">Restaurar original</button>
+  </div>
+</div>
+<div class="saved-flash" id="savedFlash">Alterações salvas</div>
+
+<script>
+(function(){
+  var STORAGE_KEY = 'pbl_html_study_dor_hz_nph_uc13_v1';
+  var editables = Array.prototype.slice.call(document.querySelectorAll('.editable'));
+  var originalHTML = document.documentElement.outerHTML;
+  var editing = false;
+  var autosaveTimer = null;
+  var localStorageWorks = true;
+
+  try {
+    var t = '__test__';
+    window.localStorage.setItem(t, '1');
+    window.localStorage.removeItem(t);
+  } catch(e) {
+    localStorageWorks = false;
+  }
+
+  var memoryStore = {};
+
+  function storageGet(key){
+    if (localStorageWorks) {
+      try { return window.localStorage.getItem(key); } catch(e){ return memoryStore[key] || null; }
+    }
+    return memoryStore[key] || null;
+  }
+  function storageSet(key, val){
+    if (localStorageWorks) {
+      try { window.localStorage.setItem(key, val); return; } catch(e){ /* fall through */ }
+    }
+    memoryStore[key] = val;
+  }
+
+  function collectContent(){
+    var data = {};
+    editables.forEach(function(el, i){
+      el.setAttribute('data-eid', i);
+      data[i] = el.innerHTML;
+    });
+    return data;
+  }
+  editables.forEach(function(el, i){ el.setAttribute('data-eid', i); });
+
+  function applyContent(data){
+    if(!data) return;
+    editables.forEach(function(el){
+      var id = el.getAttribute('data-eid');
+      if (data[id] !== undefined) el.innerHTML = data[id];
+    });
+  }
+
+  // load saved content on open, if present
+  (function loadSaved(){
+    var raw = storageGet(STORAGE_KEY);
+    if (raw) {
+      try { applyContent(JSON.parse(raw)); } catch(e){}
+    }
+  })();
+
+  function showFlash(){
+    var f = document.getElementById('savedFlash');
+    f.classList.add('show');
+    setTimeout(function(){ f.classList.remove('show'); }, 1600);
+  }
+
+  function saveNow(){
+    var data = collectContent();
+    storageSet(STORAGE_KEY, JSON.stringify(data));
+    showFlash();
+  }
+
+  var btnEdit = document.getElementById('btnEdit');
+  var btnDownload = document.getElementById('btnDownload');
+  var btnReset = document.getElementById('btnReset');
+  var editNote = document.getElementById('editNote');
+
+  btnEdit.addEventListener('click', function(){
+    editing = !editing;
+    editables.forEach(function(el){ el.setAttribute('contenteditable', editing ? 'true' : 'false'); });
+    btnEdit.textContent = editing ? 'Salvar e sair' : 'Ativar edição';
+    btnEdit.classList.toggle('active', editing);
+    editNote.classList.toggle('show', editing);
+    if (editing) {
+      autosaveTimer = setInterval(saveNow, 15000);
+    } else {
+      if (autosaveTimer) clearInterval(autosaveTimer);
+      saveNow();
+    }
+  });
+
+  btnDownload.addEventListener('click', function(){
+    var data = collectContent();
+    storageSet(STORAGE_KEY, JSON.stringify(data));
+    var clone = document.documentElement.cloneNode(true);
+    var cloneEditables = clone.querySelectorAll('.editable');
+    cloneEditables.forEach(function(el){ el.removeAttribute('contenteditable'); });
+    var toolbarEl = clone.querySelector('.toolbar');
+    if (toolbarEl) toolbarEl.parentNode.removeChild(toolbarEl);
+    var flashEl = clone.querySelector('.saved-flash');
+    if (flashEl) flashEl.parentNode.removeChild(flashEl);
+    var htmlOut = '<!DOCTYPE html>\n' + clone.outerHTML;
+    var blob = new Blob([htmlOut], {type:'text/html'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'estudo_dor_hz_nph_editado.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 3000);
+  });
+
+  btnReset.addEventListener('click', function(){
+    if (!confirm('Isso vai apagar as edições salvas neste navegador e restaurar o texto original. Continuar?')) return;
+    if (localStorageWorks) { try { window.localStorage.removeItem(STORAGE_KEY); } catch(e){} }
+    delete memoryStore[STORAGE_KEY];
+    location.reload();
+  });
+
+  // ---- scroll-spy da navegação lateral (spine) ----
+  var navNodes = Array.prototype.slice.call(document.querySelectorAll('.spine .node'));
+  var targets = navNodes.map(function(n){
+    return document.getElementById(n.getAttribute('data-target'));
+  });
+
+  function setActive(id){
+    navNodes.forEach(function(n){
+      n.classList.toggle('active', n.getAttribute('data-target') === id);
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      var best = null;
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
+        }
+      });
+      if (best) setActive(best.target.id);
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: [0, 0.1, 0.25, 0.5, 1] });
+    targets.forEach(function(t){ if (t) io.observe(t); });
+  }
+
+  navNodes.forEach(function(n){
+    n.addEventListener('click', function(){ setActive(n.getAttribute('data-target')); });
+  });
+  setActive('cover');
+})();
+</script>
+
+</body>
+</html>

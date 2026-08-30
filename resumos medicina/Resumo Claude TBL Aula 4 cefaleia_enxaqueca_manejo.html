@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manejo Terapêutico da Cefaleia e Enxaqueca — Estudo Aprofundado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#0a0d13;
+    --bg-1:#0f141d;
+    --bg-2:#161c28;
+    --bg-3:#1d2432;
+    --border-soft:#2a3244;
+    --text-0:#eef1f6;
+    --text-1:#c4cbd8;
+    --text-2:#8b93a5;
+    --text-3:#5c6577;
+
+    --c-fisio:#3fd0c1;
+    --c-classif:#e8b84f;
+    --c-tensional:#7bce7a;
+    --c-enxaqueca:#b892ef;
+    --c-salvas:#f28c4f;
+    --c-alarme:#f0616b;
+    --c-cid:#5fb0e6;
+
+    --font-display:'Cormorant Garamond', Georgia, serif;
+    --font-body:'Lora', Georgia, 'Times New Roman', serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% -10%, #131c2b 0%, transparent 45%),
+      radial-gradient(circle at 90% 10%, #101725 0%, transparent 40%),
+      var(--bg-0);
+    color:var(--text-1);
+    font-family:var(--font-body);
+    line-height:1.8;
+    font-size:17px;
+    padding:0 0 140px;
+  }
+
+  h1,h2,h3,h4{
+    font-family:var(--font-display);
+    color:var(--text-0);
+    font-weight:600;
+    letter-spacing:.01em;
+    line-height:1.25;
+  }
+
+  p{margin:0 0 16px;}
+  em{color:var(--text-0); font-style:italic;}
+  .hl{color:inherit; font-style:italic;}
+  ul, ol{margin:0 0 16px; padding-left:24px;}
+  li{margin-bottom:8px;}
+  a{color:var(--c-enxaqueca);}
+
+  /* ===== HERO ===== */
+  .hero{
+    max-width:920px;
+    margin:0 auto;
+    padding:64px 28px 40px;
+    text-align:center;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .hero .eyebrow{
+    font-family:var(--font-display);
+    font-style:italic;
+    color:var(--text-2);
+    font-size:1.05rem;
+    letter-spacing:.06em;
+    margin-bottom:10px;
+  }
+  .hero h1{
+    font-size:2.85rem;
+    margin:0 0 14px;
+    background:linear-gradient(120deg, var(--text-0), var(--c-enxaqueca));
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .hero .lede{
+    max-width:640px;
+    margin:0 auto;
+    color:var(--text-2);
+    font-size:1.05rem;
+  }
+  .hero .meta{
+    margin-top:22px;
+    font-size:.88rem;
+    color:var(--text-3);
+    letter-spacing:.04em;
+  }
+
+  /* ===== TOC ===== */
+  .toc{
+    max-width:920px;
+    margin:36px auto 0;
+    padding:0 28px;
+  }
+  .toc-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(210px,1fr));
+    gap:10px;
+  }
+  .toc-item{
+    display:block;
+    padding:12px 16px;
+    background:var(--bg-2);
+    border:1px solid var(--border-soft);
+    border-top:3px solid var(--toc-accent, var(--c-fisio));
+    border-radius:6px;
+    text-decoration:none;
+    color:var(--text-1);
+    font-size:.92rem;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .toc-item:hover{transform:translateY(-2px); background:var(--bg-3);}
+  .toc-item .toc-num{
+    font-family:var(--font-display);
+    color:var(--toc-accent, var(--c-fisio));
+    font-size:1rem;
+    margin-right:8px;
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  main{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  section{
+    margin-top:6px;
+    padding-top:58px;
+    scroll-margin-top:20px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    margin-bottom:26px;
+    flex-wrap:wrap;
+  }
+  .section-head .tag{
+    font-family:var(--font-display);
+    font-size:.95rem;
+    color:var(--bg-0);
+    background:var(--accent);
+    padding:3px 13px;
+    border-radius:3px;
+    font-weight:600;
+    letter-spacing:.05em;
+    white-space:nowrap;
+  }
+  .section-head h2{
+    margin:0;
+    font-size:2rem;
+    white-space:nowrap;
+  }
+  .section-head .line{
+    flex:1;
+    min-width:40px;
+    height:1px;
+    background:linear-gradient(90deg, var(--accent), transparent 85%);
+    opacity:.7;
+  }
+  .section-intro{
+    color:var(--text-1);
+    font-size:1.02rem;
+  }
+
+  h3{
+    font-size:1.5rem;
+    color:var(--accent);
+    margin:38px 0 14px;
+  }
+  h4{
+    font-size:1.18rem;
+    color:var(--text-0);
+    margin:22px 0 10px;
+  }
+
+  /* ===== CARDS ===== */
+  .card{
+    background:var(--bg-2);
+    border:1px solid var(--border-soft);
+    border-top:3px solid var(--accent);
+    border-radius:7px;
+    padding:20px 24px;
+    margin:18px 0;
+  }
+  .card h4{margin-top:0; color:var(--accent); font-size:1.2rem;}
+  .card p:last-child{margin-bottom:0;}
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+    gap:16px;
+    margin:18px 0;
+  }
+  .card-grid .card{margin:0;}
+
+  /* ===== ALERTS / OUTLINE HIGHLIGHTS ===== */
+  .alert{
+    border:1.5px solid var(--accent);
+    background:transparent;
+    border-radius:7px;
+    padding:16px 22px;
+    margin:20px 0;
+  }
+  .alert .alert-label{
+    font-family:var(--font-display);
+    font-style:italic;
+    color:var(--accent);
+    font-size:1.08rem;
+    display:block;
+    margin-bottom:6px;
+  }
+  .alert p:last-child{margin-bottom:0;}
+  .alert.red{border-color:var(--c-alarme);}
+  .alert.red .alert-label{color:var(--c-alarme);}
+
+  .clinical{
+    border:1.5px dashed var(--accent);
+    background:transparent;
+    border-radius:7px;
+    padding:16px 22px;
+    margin:20px 0;
+  }
+  .clinical .clinical-label{
+    font-family:var(--font-display);
+    font-style:italic;
+    color:var(--accent);
+    font-size:1.08rem;
+    display:block;
+    margin-bottom:6px;
+  }
+  .clinical p:last-child{margin-bottom:0;}
+
+  /* ===== DETAILS / APROFUNDE-SE ===== */
+  details.deepdive{
+    background:var(--bg-1);
+    border:1px solid var(--border-soft);
+    border-top:3px solid var(--accent);
+    border-radius:7px;
+    margin:22px 0;
+    overflow:hidden;
+  }
+  details.deepdive > summary{
+    cursor:pointer;
+    padding:15px 22px;
+    font-family:var(--font-display);
+    font-size:1.15rem;
+    font-style:italic;
+    color:var(--accent);
+    list-style:none;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    user-select:none;
+  }
+  details.deepdive > summary::-webkit-details-marker{display:none;}
+  details.deepdive > summary::before{
+    content:'+';
+    font-family:var(--font-body);
+    font-style:normal;
+    font-size:1.25rem;
+    line-height:1;
+    color:var(--accent);
+    flex-shrink:0;
+  }
+  details.deepdive[open] > summary::before{content:'−';}
+  details.deepdive .deepdive-body{
+    padding:2px 24px 22px;
+    border-top:1px solid var(--border-soft);
+  }
+  details.deepdive .deepdive-body p:first-child{margin-top:16px;}
+
+  details.deepdive2{
+    background:var(--bg-2);
+    border:1px solid var(--border-soft);
+    border-top:2px solid var(--accent);
+    border-radius:6px;
+    margin:16px 0;
+    opacity:.96;
+  }
+  details.deepdive2 > summary{
+    cursor:pointer;
+    padding:12px 18px;
+    font-family:var(--font-display);
+    font-size:1.02rem;
+    font-style:italic;
+    color:var(--text-1);
+    list-style:none;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    user-select:none;
+  }
+  details.deepdive2 > summary::-webkit-details-marker{display:none;}
+  details.deepdive2 > summary::before{
+    content:'›';
+    font-family:var(--font-body);
+    font-style:normal;
+    color:var(--accent);
+    transition:transform .15s ease;
+  }
+  details.deepdive2[open] > summary::before{transform:rotate(90deg);}
+  details.deepdive2 .deepdive-body{
+    padding:0 20px 18px;
+    font-size:.98rem;
+  }
+
+  /* ===== MISC ===== */
+  .divider-quote{
+    font-family:var(--font-display);
+    font-style:italic;
+    font-size:1.3rem;
+    color:var(--text-2);
+    text-align:center;
+    max-width:600px;
+    margin:44px auto;
+    line-height:1.5;
+  }
+  .divider-quote span{color:var(--accent);}
+
+  .figure-note{
+    font-size:.88rem;
+    color:var(--text-3);
+    text-align:center;
+    margin-top:-6px;
+  }
+
+  code, .code{
+    font-family:'Courier New', monospace;
+    background:var(--bg-3);
+    padding:1px 6px;
+    border-radius:3px;
+    color:var(--text-0);
+    font-size:.9em;
+  }
+
+  /* ===== REFERENCES ===== */
+  #referencias .ref-item{
+    margin-bottom:14px;
+    padding-left:26px;
+    text-indent:-26px;
+    color:var(--text-2);
+    font-size:.95rem;
+  }
+
+  footer.doc-footer{
+    max-width:920px;
+    margin:60px auto 0;
+    padding:24px 28px 0;
+    border-top:1px solid var(--border-soft);
+    text-align:center;
+    color:var(--text-3);
+    font-size:.85rem;
+  }
+
+  /* ===== TOOLBAR ===== */
+  .toolbar{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:999;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:8px;
+  }
+  .toolbar-buttons{
+    display:flex;
+    gap:8px;
+    background:var(--bg-2);
+    border:1px solid var(--border-soft);
+    border-radius:30px;
+    padding:6px;
+    box-shadow:0 8px 30px rgba(0,0,0,.45);
+  }
+  .toolbar button{
+    font-family:var(--font-body);
+    font-size:.82rem;
+    background:transparent;
+    color:var(--text-1);
+    border:1px solid transparent;
+    padding:9px 15px;
+    border-radius:24px;
+    cursor:pointer;
+    transition:all .15s ease;
+    white-space:nowrap;
+  }
+  .toolbar button:hover{background:var(--bg-3); color:var(--text-0);}
+  #btn-edit{color:var(--c-enxaqueca); border-color:var(--c-enxaqueca);}
+  #btn-edit.active{background:var(--c-enxaqueca); color:var(--bg-0);}
+  .toolbar-note{
+    max-width:260px;
+    font-size:.72rem;
+    color:var(--text-3);
+    text-align:right;
+    background:var(--bg-1);
+    border:1px solid var(--border-soft);
+    border-radius:8px;
+    padding:8px 12px;
+    display:none;
+  }
+  .toolbar-note.show{display:block;}
+
+  body.edit-mode [contenteditable="true"]{
+    outline:1px dashed var(--c-enxaqueca);
+    outline-offset:3px;
+    border-radius:3px;
+  }
+  body.edit-mode [contenteditable="true"]:hover{
+    background:rgba(184,146,239,.06);
+  }
+  .edit-banner{
+    display:none;
+    max-width:920px;
+    margin:0 auto;
+    padding:12px 28px;
+  }
+  .edit-banner.show{display:block;}
+  .edit-banner-inner{
+    border:1.5px solid var(--c-enxaqueca);
+    border-radius:7px;
+    padding:12px 18px;
+    font-size:.88rem;
+    color:var(--text-1);
+  }
+
+  @media (max-width:640px){
+    .hero h1{font-size:2.1rem;}
+    .section-head h2{font-size:1.5rem;}
+    .toolbar-note{max-width:190px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">UCXIII — Dor · Aula 4 · Uniarp-SC</div>
+  <h1>Manejo Terapêutico da Cefaleia e Enxaqueca</h1>
+  <p class="lede">Material de aprofundamento construído a partir dos slides do Prof. Andrew, levando cada tópico até o mecanismo — a fisiologia, a fisiopatologia e a farmacologia por trás do que foi apresentado em aula, sempre amarrado à prática clínica.</p>
+  <p class="meta">Baseado em: Aula 4 — Manejo Terapêutico da Cefaleia e Enxaqueca (11/08/2026) · Conteúdo de receituários e prescrição regulatória tratado à parte, fora deste material</p>
+</header>
+
+<nav class="toc">
+  <div class="toc-grid">
+    <a class="toc-item" href="#fisiopatologia" style="--toc-accent:var(--c-fisio)"><span class="toc-num">01</span>Bases fisiopatológicas</a>
+    <a class="toc-item" href="#classificacao" style="--toc-accent:var(--c-classif)"><span class="toc-num">02</span>Classificação das cefaleias</a>
+    <a class="toc-item" href="#tensional" style="--toc-accent:var(--c-tensional)"><span class="toc-num">03</span>Cefaleia tensional</a>
+    <a class="toc-item" href="#enxaqueca" style="--toc-accent:var(--c-enxaqueca)"><span class="toc-num">04</span>Enxaqueca / migrânea</a>
+    <a class="toc-item" href="#salvas" style="--toc-accent:var(--c-salvas)"><span class="toc-num">05</span>Cefaleia em salvas</a>
+    <a class="toc-item" href="#alarme" style="--toc-accent:var(--c-alarme)"><span class="toc-num">06</span>Sinais de alarme e neuroimagem</a>
+    <a class="toc-item" href="#cid" style="--toc-accent:var(--c-cid)"><span class="toc-num">07</span>Classificação CID</a>
+  </div>
+</nav>
+
+<main id="study-content">
+
+<!-- ============================================================ -->
+<!-- 1. FISIOPATOLOGIA -->
+<!-- ============================================================ -->
+<section id="fisiopatologia" style="--accent:var(--c-fisio)">
+  <div class="section-head">
+    <span class="tag">01</span>
+    <h2>Bases fisiopatológicas da cefaleia</h2>
+    <span class="line"></span>
+  </div>
+
+  <p class="section-intro">O slide resume a origem da dor de cabeça em uma frase curta: tração, deslocamento, inflamação, espasmo vascular ou distensão de estruturas sensíveis à dor na cabeça e no pescoço. É uma frase correta, mas incompleta se ficarmos só nela — porque o que realmente importa para entender (e diagnosticar) uma cefaleia é saber <em>quais</em> estruturas doem e <em>por qual via</em> essa dor chega ao encéfalo. Vamos começar por aí.</p>
+
+  <h3>O paradoxo da dor de cabeça: o cérebro não dói</h3>
+  <p>Aqui está o primeiro ponto que costuma surpreender o aluno: o parênquima encefálico propriamente dito — os neurônios, a glia, o próprio tecido cerebral — não possui nociceptores. Você poderia, teoricamente, tocar o córtex cerebral de um paciente acordado (como se faz em cirurgias de epilepsia com mapeamento cortical) sem gerar dor nenhuma. Isso significa que toda cefaleia é, por definição, dor referida ou dor gerada em estruturas extraparenquimatosas.</p>
+
+  <div class="card">
+    <h4>Estruturas sensíveis à dor (intracranianas)</h4>
+    <p>A dura-máter (principalmente ao redor dos seios venosos e na base do crânio), os grandes vasos na base do encéfalo e os segmentos proximais das artérias cerebrais, os seios venosos durais, a foice do cérebro e o tentório do cerebelo, e os próprios nervos cranianos sensitivos (trigêmeo, glossofaríngeo, vago) e as raízes cervicais superiores.</p>
+  </div>
+  <div class="card">
+    <h4>Estruturas insensíveis à dor</h4>
+    <p>O parênquima cerebral em si, o epêndima, o plexo corióideo e a maior parte da pia-aracnoide. É por isso que tumores, AVCs isquêmicos pequenos ou lesões desmielinizantes muitas vezes não doem — a dor só aparece quando a lesão cresce o suficiente para tracionar, comprimir ou inflamar uma das estruturas sensíveis listadas acima.</p>
+  </div>
+
+  <h3>O sistema trigeminovascular: por que a dor de cabeça "sabe" onde doer</h3>
+  <p>A imagem do slide mostra dois mapas lado a lado — um da inervação dos compartimentos intracranianos, outro dos locais extracranianos correspondentes à irradiação da dor. Essa dualidade não é decorativa: ela é a chave para entender por que a localização da cefaleia é uma pista diagnóstica tão valiosa.</p>
+
+  <p>A dura-máter supratentorial (fossas anterior e média, incluindo o tentório do cerebelo) é inervada pelas três divisões do nervo trigêmeo (V1 oftálmico, V2 maxilar, V3 mandibular), com predomínio de V1. Já a fossa posterior — cerebelo, tronco encefálico, porção inferior do tentório — é inervada principalmente pelas raízes cervicais superiores, C1, C2 e C3, através de ramos meníngeos recorrentes que sobem pelo forame magno.</p>
+
+  <details class="deepdive">
+    <summary>Aprofunde-se: o complexo trigeminocervical e a lógica da dor referida</summary>
+    <div class="deepdive-body">
+      <p>Isso por si só já explicaria por que lesões da fossa posterior costumam causar cefaleia occipital e cervical, enquanto lesões supratentoriais tendem a doer na região frontotemporal — mas a explicação fica ainda mais elegante quando olhamos para onde essas duas vias convergem centralmente.</p>
+      <p>As fibras aferentes do trigêmeo fazem sinapse no núcleo espinal do trigêmeo, cuja porção mais caudal (núcleo caudal, ou <em>pars caudalis</em>) se estende pelo bulbo até os primeiros segmentos da medula cervical (C1-C2). Nesse mesmo território, as raízes dorsais de C1 a C3 também fazem sinapse. O resultado é uma zona de convergência anatômica e funcional — o chamado complexo trigeminocervical — onde informação nociceptiva vinda da face, do couro cabeludo anterior, da dura-máter e da região occipital/cervical se mistura no mesmo pool de neurônios de segundo ordem.</p>
+      <p>É essa convergência que explica clinicamente por que uma cefaleia occipital pode ter origem em uma dura-máter supratentorial irritada (via reflexo de convergência com C1-C3), por que dor cervical alta pode desencadear cefaleia frontal (cefaleia cervicogênica) e por que enxaqueca e cefaleia em salvas — ambas com ativação trigeminal central — frequentemente causam dor que se estende até a região occipital ou cervical, mesmo sendo primariamente "supratentoriais" em sua origem molecular.</p>
+    </div>
+  </details>
+
+  <h3>Os quatro mecanismos geradores de dor</h3>
+  <p>Voltando à frase do slide — tração, deslocamento, inflamação, espasmo vascular e distensão — cada um desses mecanismos corresponde a uma fisiopatologia distinta, e reconhecê-los ajuda a prever, diante de um paciente, qual é a causa provável da dor.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>Tração e deslocamento</h4>
+      <p>Ocorrem quando uma massa (tumor, hematoma, abscesso) ou um aumento de volume liquórico (hidrocefalia) desloca estruturas vizinhas, estirando vasos e dura-máter sensíveis. É o mecanismo clássico das cefaleias de hipertensão intracraniana — tipicamente pior pela manhã (por retenção de CO2 durante o sono e vasodilatação secundária) e agravada por manobras que aumentam a pressão intracraniana, como tossir ou fazer Valsalva.</p>
+    </div>
+    <div class="card">
+      <h4>Inflamação</h4>
+      <p>A meningite é o exemplo mais direto — a inflamação das meninges ativa diretamente os nociceptores durais. Mas, como veremos adiante, a "inflamação estéril" (neurogênica, sem infecção) das meninges é também o mecanismo central da dor na enxaqueca, disparada não por um patógeno, mas pela liberação de neuropeptídeos pró-inflamatórios pelas próprias terminações trigeminais.</p>
+    </div>
+    <div class="card">
+      <h4>Espasmo e distensão vascular</h4>
+      <p>Vasoconstrição excessiva (como no vasoespasmo pós-hemorragia subaracnóidea) e vasodilatação excessiva (como se acreditava, de forma simplificada, ocorrer na enxaqueca) alteram a tensão na parede dos vasos, ativando mecanorreceptores perivasculares. A distensão de seios venosos, como na trombose venosa cerebral, é outro exemplo clássico — e uma causa secundária que não pode passar despercebida em cefaleia de início recente com fatores de risco pró-trombóticos.</p>
+    </div>
+  </div>
+
+  <div class="clinical">
+    <span class="clinical-label">Correlação clínica</span>
+    <p>Um paciente relata "dor atrás do olho direito, que desce para a mandíbula". Pensando no mapa de V1-V2-V3, essa distribuição sugere envolvimento do território trigeminal ipsilateral — compatível tanto com enxaqueca quanto com cefaleia em salvas (que classicamente acomete a região orbital/periorbital, território de V1). Já uma dor que "começa na nuca e sobe para a testa" levanta a suspeita de participação do complexo trigeminocervical, comum em cefaleia tensional, cervicogênica ou, quando de início súbito e intensa, um sinal de alerta para patologia de fossa posterior.</p>
+  </div>
+</section>
+
+<div class="divider-quote">"A cefaleia não é uma doença — é um <span>sintoma</span> com dezenas de causas possíveis, e a anatomia da inervação meníngea é o mapa que orienta o raciocínio diagnóstico."</div>
+
+<!-- ============================================================ -->
+<!-- 2. CLASSIFICAÇÃO -->
+<!-- ============================================================ -->
+<section id="classificacao" style="--accent:var(--c-classif)">
+  <div class="section-head">
+    <span class="tag">02</span>
+    <h2>Classificação das cefaleias</h2>
+    <span class="line"></span>
+  </div>
+
+  <p class="section-intro">A Classificação Internacional das Cefaleias (ICHD-3, da International Headache Society) organiza mais de 150 diagnósticos diferentes em três grandes partes. Entender essa arquitetura é mais útil do que decorar os números dos grupos — ela reflete uma lógica diagnóstica real que você vai usar à beira do leito.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>Parte 1 — Cefaleias primárias</h4>
+      <p>A cefaleia <em>é</em> a doença. Não existe uma lesão estrutural, metabólica ou infecciosa subjacente — o que existe é uma disfunção primária dos sistemas de modulação e geração da dor. Enxaqueca, cefaleia tensional, cefaleia em salvas e outras cefaleias trigêmino-autonômicas entram aqui.</p>
+    </div>
+    <div class="card">
+      <h4>Parte 2 — Cefaleias secundárias</h4>
+      <p>A cefaleia é um <em>sintoma</em> de outra doença — trauma, doença vascular, infecção, distúrbio metabólico, neoplasia, uso ou abstinência de substância. O tratamento aqui não é sintomático, é etiológico: trata-se a doença de base.</p>
+    </div>
+    <div class="card">
+      <h4>Parte 3 — Neuralgias cranianas</h4>
+      <p>Dor de padrão neuropático, geralmente paroxística e em choque, originada de um nervo craniano específico — o protótipo é a neuralgia do trigêmeo. Fisiopatologicamente distinta das cefaleias primárias (não é vascular nem miogênica, é neuropática, frequentemente por compressão vascular da raiz do nervo).</p>
+    </div>
+  </div>
+
+  <h3>Os três critérios que definem uma cefaleia como secundária</h3>
+  <p>O slide lista três critérios que, juntos, sustentam o diagnóstico de cefaleia secundária. Vale entender a lógica clínica por trás de cada um, porque é exatamente esse raciocínio que você vai aplicar na anamnese:</p>
+
+  <ol>
+    <li><em>Plausibilidade causal</em> — a doença encontrada precisa ser uma causa reconhecida de cefaleia. Achar uma sinusite leve incidental em um paciente com enxaqueca grave não torna a sinusite a causa da dor.</li>
+    <li><em>Relação temporal</em> — a cefaleia surgiu (ou piorou substancialmente) em proximidade temporal com o início ou a exacerbação da doença suspeita. Uma cefaleia crônica de dez anos que coincidentemente aparece junto com um resfriado não tem, necessariamente, relação causal.</li>
+    <li><em>Resposta ao tratamento</em> — a dor melhora ou desaparece dentro de aproximadamente três meses do tratamento eficaz da doença de base. Esse critério é retrospectivo e por isso, na prática clínica aguda, funciona mais como confirmação a posteriori do que como ferramenta diagnóstica imediata.</li>
+  </ol>
+
+  <details class="deepdive">
+    <summary>Aprofunde-se: por que esses critérios importam na prática (e onde falham)</summary>
+    <div class="deepdive-body">
+      <p>Esses três critérios foram desenhados para pesquisa e para padronização diagnóstica — mas, na emergência, você raramente tem tempo de esperar três meses para confirmar. Por isso, a estratégia clínica real é inversa: parte-se do princípio de que toda cefaleia nova, atípica ou com sinais de alarme é secundária até prova em contrário, e investiga-se ativamente antes de assumir uma causa primária benigna.</p>
+      <p>Vale notar também uma limitação importante: pacientes que já têm uma cefaleia primária (por exemplo, enxaqueca crônica) podem desenvolver uma cefaleia secundária sobreposta — e o critério de "relação temporal" fica mais difícil de aplicar quando o paciente já tinha dor de cabeça basal. Nesses casos, o que chama atenção não é a presença de dor, mas a <em>mudança de padrão</em>: uma enxaqueca que muda de característica, frequência ou intensidade sem explicação é, por si só, um sinal de alarme (mais sobre isso na seção 6).</p>
+    </div>
+  </details>
+
+  <h3>Epidemiologia: o "iceberg" das cefaleias primárias</h3>
+  <p>Os números do slide contam uma história importante sobre prática clínica: mais da metade da população mundial já teve uma cefaleia primária, e mais de 90% de todas as cefaleias primárias se distribuem entre apenas três categorias — tensional, enxaqueca e em salvas — porém em proporções muito desiguais.</p>
+
+  <div class="card">
+    <h4>Um padrão de prevalência inversamente proporcional à gravidade</h4>
+    <p>Repare no padrão: a cefaleia tensional é a mais prevalente (até 26% globalmente, segundo Robbins, 2021) e também a mais benigna em termos de incapacidade funcional. A enxaqueca é menos prevalente (14% globalmente; 15,2% no Brasil, segundo Neto, 2024) mas gera incapacidade desproporcionalmente maior — é a doença neurológica que mais causa anos vividos com incapacidade em pessoas jovens, segundo dados da Organização Mundial da Saúde. Já a cefaleia em salvas, com prevalência inferior a 1%, é rara, mas está entre as dores mais intensas descritas na medicina — pacientes a apelidam de "cefaleia suicida" pela intensidade do sofrimento durante a crise. Prevalência e gravidade, portanto, caminham em direções opostas — e é por isso que a cefaleia em salvas, apesar de rara, exige reconhecimento imediato: o sofrimento do paciente é desproporcional ao "tamanho" epidemiológico da doença.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 3. CEFALEIA TENSIONAL -->
+<!-- ============================================================ -->
+<section id="tensional" style="--accent:var(--c-tensional)">
+  <div class="section-head">
+    <span class="tag">03</span>
+    <h2>Cefaleia do tipo tensional</h2>
+    <span class="line"></span>
+  </div>
+
+  <p class="section-intro">É a cefaleia mais comum do mundo e, paradoxalmente, uma das menos compreendidas em termos de mecanismo — o próprio slide já adianta isso ao dizer que sua fisiopatologia é "complexa e menos elucidada que a da enxaqueca". Vamos entender por quê.</p>
+
+  <h3>Epidemiologia e classificação temporal</h3>
+  <p>Mais comum na população geral, com pico na quarta década de vida e discreto predomínio em mulheres. A ICHD-3 a subdivide por frequência — uma escolha que não é burocrática, mas reflete diferenças reais de fisiopatologia e de abordagem terapêutica, como veremos a seguir.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>Episódica infrequente</h4>
+      <p>Menos de 1 dia por mês (menos de 12 dias por ano). Praticamente universal na população — a "dor de cabeça de fim de expediente" que quase todo mundo já teve alguma vez.</p>
+    </div>
+    <div class="card">
+      <h4>Episódica frequente</h4>
+      <p>Entre 1 e 14 dias por mês (12 a 180 dias/ano). Já justifica atenção clínica e, dependendo do impacto funcional, considerar profilaxia.</p>
+    </div>
+    <div class="card">
+      <h4>Crônica</h4>
+      <p>Mais de 15 dias por mês, por mais de 3 meses (mais de 180 dias/ano). Aqui o mecanismo fisiopatológico muda de natureza — de periférico para predominantemente central, como veremos.</p>
+    </div>
+  </div>
+
+  <h3>Fisiopatologia: do músculo ao sistema nervoso central</h3>
+  <p>O nome "cefaleia tensional" é historicamente ligado à ideia de tensão muscular — e, de fato, contração da musculatura pericraniana, pontos-gatilho miofasciais (nos músculos temporal, masseter, trapézio, esplênio da cabeça e semiespinal da cabeça, exatamente como ilustrado no slide) desempenham um papel real, especialmente na forma episódica.</p>
+
+  <details class="deepdive">
+    <summary>Aprofunde-se: o modelo miogênico-supraespinal e a transição para a cronicidade</summary>
+    <div class="deepdive-body">
+      <p>O modelo atual, chamado miogênico-supraespinal-vascular, propõe uma divisão fisiopatológica que explica muito bem a diferença clínica entre as formas episódica e crônica:</p>
+      <details class="deepdive2">
+        <summary>Mecanismo periférico (predominante na forma episódica)</summary>
+        <div class="deepdive-body">
+          <p>Pontos-gatilho miofasciais nos músculos pericranianos liberam substâncias algogênicas locais (bradicinina, prostaglandinas, substância P, óxido nítrico) que sensibilizam nociceptores musculares periféricos. Isso explica a dor tipo pressão/aperto, a localização difusa e bilateral, e a associação com posturas prolongadas, bruxismo e estresse muscular.</p>
+        </div>
+      </details>
+      <details class="deepdive2">
+        <summary>Mecanismo central (predominante na forma crônica)</summary>
+        <div class="deepdive-body">
+          <p>Com a repetição do estímulo nociceptivo periférico ao longo do tempo, ocorre sensibilização central: os neurônios de segundo ordem no núcleo caudal do trigêmeo e os neurônios de terceiro ordem no tálamo tornam-se hiperexcitáveis, respondendo de forma exagerada a estímulos que normalmente não seriam dolorosos. Some-se a isso uma falha nos sistemas descendentes inibitórios de dor (originados na substância cinzenta periaquedutal e no núcleo magno da rafe) — o "freio" central da dor deixa de funcionar adequadamente. É por isso que, na CTT crônica, muitas vezes não há mais pontos-gatilho evidentes ou tensão muscular clara: a dor "se soltou" da periferia e passou a ser mantida por um sistema nervoso central hipersensibilizado. Esse mesmo fenômeno de sensibilização central é o que conecta, de forma mais ampla, a cefaleia tensional crônica a outras síndromes de dor central, como a fibromialgia — pacientes com CTT crônica frequentemente apresentam limiares de dor reduzidos até em regiões do corpo distantes da cabeça.</p>
+        </div>
+      </details>
+    </div>
+  </details>
+
+  <h3>Quadro clínico</h3>
+  <p>A tríade que define a cefaleia tensional no exame clínico é: dor bilateral, em pressão ou aperto (nunca latejante — isso é característico de mecanismo vascular pulsátil, ausente aqui), de intensidade leve a moderada, sem piora com atividade física de rotina. A ausência de náusea/vômito e a presença de, no máximo, um entre fotofobia OU fonofobia (nunca os dois juntos) são os critérios que a diferenciam da enxaqueca — que veremos ter exatamente o padrão oposto em cada um desses eixos.</p>
+
+  <h3>Fatores desencadeantes</h3>
+  <p>Álcool, cafeína (tanto o uso quanto a abstinência), desidratação, tensão muscular por má postura ou bruxismo, distúrbios do sono e flutuações do ciclo menstrual. Note que muitos desses fatores se sobrepõem aos gatilhos de enxaqueca — isso não é coincidência: ambas compartilham vias de sensibilização trigeminal, mesmo tendo fisiopatologias primárias distintas.</p>
+
+  <h3>Tratamento não farmacológico</h3>
+  <p>Antes de qualquer fármaco, a educação do paciente e a modificação de estilo de vida são a base do tratamento — higiene do sono, redução de álcool/cafeína/tabaco, atividade física regular, técnicas de relaxamento (ioga, meditação), hipnose e terapia cognitivo-comportamental têm evidência sólida, especialmente porque atuam diretamente sobre os fatores desencadeantes periféricos e sobre a modulação central do estresse.</p>
+
+  <div class="clinical">
+    <span class="clinical-label">Correlação clínica — acupuntura</span>
+    <p>O slide traz um dado interessante sobre a evolução da evidência científica ao longo do tempo: a revisão Cochrane de 2004 foi negativa para acupuntura na cefaleia tensional, mas revisões posteriores (2009, confirmada em 2016, ambas de Linde et al.) mostraram benefício positivo. Isso ilustra bem como a medicina baseada em evidências é dinâmica — uma conclusão "definitiva" de uma revisão sistemática pode mudar conforme mais estudos de melhor qualidade metodológica são publicados. É um bom lembrete para nunca tratar uma revisão antiga como palavra final.</p>
+  </div>
+
+  <h3>Tratamento farmacológico</h3>
+  <p>Para as crises, a primeira linha são analgésicos simples e anti-inflamatórios não esteroidais (AINEs) — paracetamol, dipirona, ibuprofeno, naproxeno. O mecanismo de ação dos AINEs aqui é duplo: inibição periférica da ciclo-oxigenase (COX-1/COX-2), reduzindo a síntese de prostaglandinas sensibilizadoras de nociceptores musculares, e um componente central de modulação da dor. O ácido mefenâmico, especificamente indicado quando há relação com o ciclo menstrual, tem a vantagem adicional de antagonizar receptores de prostaglandina, útil na dismenorreia concomitante.</p>
+
+  <div class="alert">
+    <span class="alert-label">Atenção — associações e uso crônico</span>
+    <p>Combinações como analgésico + cafeína aumentam a eficácia analgésica (a cafeína potencializa a ação de AINEs e analgésicos simples por mecanismos que envolvem antagonismo de receptores de adenosina, reduzindo a vasodilatação e modulando vias de dor), mas o uso frequente de qualquer analgésico para cefaleia — mais de 10 a 15 dias por mês, dependendo da classe — traz risco real de cefaleia por uso excessivo de medicação (cefaleia de rebote), um diagnóstico secundário que paradoxalmente piora o quadro que o paciente está tentando tratar.</p>
+  </div>
+
+  <p>Para a profilaxia — indicada principalmente na forma crônica — a amitriptilina é o protótipo, iniciada em doses baixas (12,5 a 25 mg à noite) com ajuste gradual. Vamos entender seu mecanismo em detalhe na seção de enxaqueca, onde ele é discutido de forma mais completa, já que o princípio farmacológico é o mesmo nas duas condições.</p>
+
+  <details class="deepdive">
+    <summary>Aprofunde-se: relaxantes musculares e os riscos que merecem atenção</summary>
+    <div class="deepdive-body">
+      <p>O carisoprodol e as associações que o contêm (como as combinações de paracetamol + cafeína + carisoprodol + diclofenaco, popularmente conhecidas por nomes comerciais) merecem um comentário à parte. O carisoprodol é metabolizado no fígado em meprobamato — um composto com propriedades ansiolíticas e sedativas, quimicamente relacionado aos antigos barbitúricos em seu perfil de ação sobre receptores GABA-A. Esse metabólito confere risco real de dependência física e psicológica, além de potencial de abuso, motivo pelo qual o uso prolongado dessas combinações deve ser evitado.</p>
+      <p>Já a ciclobenzaprina, estruturalmente muito semelhante aos antidepressivos tricíclicos (compartilha o núcleo tricíclico da amitriptilina), tem justamente por isso um risco de síndrome serotoninérgica quando associada a outros fármacos serotoninérgicos — incluindo, de forma nada trivial, os triptanos que veremos na seção de enxaqueca. Isso significa que um paciente que usa ciclobenzaprina para cefaleia tensional e recebe um triptano para uma crise de enxaqueca concomitante está em risco de uma interação medicamentosa clinicamente relevante — vale sempre revisar a lista de medicamentos em uso antes de prescrever.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ============================================================ -->
+<!-- 4. ENXAQUECA -->
+<!-- ============================================================ -->
+<section id="enxaqueca" style="--accent:var(--c-enxaqueca)">
+  <div class="section-head">
+    <span class="tag">04</span>
+    <h2>Enxaqueca / Migrânea</h2>
+    <span class="line"></span>
+  </div>
+
+  <p class="section-intro">Se a cefaleia tensional é a mais comum, a enxaqueca é a mais estudada — e, do ponto de vista fisiopatológico, a mais elegante de entender, porque cada elemento do quadro clínico (a aura, a dor pulsátil, a náusea, a foto e fonofobia, a piora com esforço) tem uma explicação mecanística direta. Vamos construir esse entendimento peça por peça.</p>
+
+  <h3>Definição e epidemiologia</h3>
+  <p>Síndrome de cefaleia recorrente, tipicamente unilateral e pulsátil, associada a náuseas, vômitos, fotofobia, fonofobia e mal-estar geral. É 2 a 3 vezes mais comum em mulheres — uma diferença que se acentua justamente após a menarca e se atenua após a menopausa, apontando para um papel hormonal relevante (as flutuações de estrogênio, particularmente sua <em>queda</em>, são um gatilho reconhecido, o que explica a enxaqueca menstrual). O pico etário é entre 30 e 50 anos, mas 25% dos casos começam já na primeira década de vida e mais de 90% antes dos 40 anos — reforçando que, embora seja uma condição frequentemente subdiagnosticada, seu início tardio (após os 50 anos) deve sempre levantar suspeita de causa secundária.</p>
+
+  <h3>Classificação: com aura versus sem aura</h3>
+  <p>A enxaqueca sem aura é a forma mais comum (80-85% dos casos); a enxaqueca com aura corresponde a 15-20%. Essa distinção não é apenas descritiva — ela tem implicações fisiopatológicas e de risco, como veremos adiante ao discutir o risco vascular associado à aura.</p>
+
+  <h3>Fisiopatologia: construindo o modelo passo a passo</h3>
+  <p>O slide cita hiperexcitabilidade neuronal no sistema trigeminovascular, tronco encefálico e córtex; diminuição de magnésio; aumento de glutamato/aspartato; alterações em canais de cálcio; e envolvimento dos sistemas serotoninérgico, noradrenérgico e opioide endógeno. São peças soltas de um quebra-cabeça — vamos montá-lo.</p>
+
+  <h4>Fase 1 — A aura e a depressão alastrante cortical</h4>
+  <p>A aura — sintomas neurológicos focais e totalmente reversíveis que precedem ou acompanham a dor — é hoje entendida como o correlato clínico de um fenômeno eletrofisiológico chamado depressão alastrante cortical (<em>cortical spreading depression</em>, CSD), descrito originalmente por Aristides Leão em 1944.</p>
+
+  <details class="deepdive">
+    <summary>Aprofunde-se: o que é, de fato, a depressão alastrante cortical</summary>
+    <div class="deepdive-body">
+      <p>A CSD é uma onda de despolarização neuronal e glial maciça e autopropagante, que se desloca pelo córtex a uma velocidade de aproximadamente 2 a 6 mm por minuto — lenta o suficiente para explicar clinicamente por que a aura visual "marcha" pelo campo visual ao longo de 5 a 60 minutos (um escotoma cintilante que começa como um ponto e se expande em forma de "C" ou de fortificação, avançando lentamente pela periferia do campo visual), em vez de aparecer instantaneamente como ocorreria em um evento vascular isquêmico agudo (AIT ou AVC).</p>
+      <p>O gráfico do slide 17 mostra exatamente essa dinâmica: durante a fase de aura, há uma queda transitória do fluxo sanguíneo cortical (oligemia), seguida por um aumento sustentado do fluxo durante a fase de cefaleia — uma curva bifásica que reflete a sequência de eventos: primeiro a onda de despolarização (com redução metabólica e vascular associada), depois a resposta inflamatória e vasodilatadora trigeminal.</p>
+      <p>Do ponto de vista iônico, a CSD envolve extrusão maciça de potássio (K+) e glutamato para o espaço extracelular, seguida de influxo de cálcio e sódio para dentro dos neurônios e células gliais — um estado de despolarização sustentada que temporariamente "desliga" a atividade elétrica normal daquela região cortical (daí os sintomas neurológicos negativos, como escotoma, e positivos, como as luzes cintilantes, que a aura pode produzir). É exatamente por esse mecanismo que a hipomagnesemia predispõe a crises: o magnésio bloqueia fisiologicamente o canal do receptor NMDA (que é ativado pelo glutamato liberado durante a CSD); com menos magnésio, o limiar para deflagrar e sustentar a onda de depressão alastrante cai.</p>
+    </div>
+  </details>
+
+  <h4>Fase 2 — Ativação trigeminovascular e inflamação neurogênica</h4>
+  <p>A CSD não fica restrita ao córtex — ela ativa as terminações nervosas trigeminais que envolvem os vasos meníngeos e a dura-máter. Os produtos liberados pelas células corticais despolarizadas (potássio, glutamato, íons hidrogênio, metabólitos do ácido araquidônico, ATP) atravessam a barreira e sensibilizam essas fibras aferentes trigeminais perivasculares.</p>
+
+  <details class="deepdive">
+    <summary>Aprofunde-se: inflamação neurogênica — a dor que o próprio nervo cria</summary>
+    <div class="deepdive-body">
+      <p>Uma vez ativadas, as fibras trigeminais fazem algo curioso: além de conduzir o sinal de dor centralmente (ortodromicamente, em direção ao núcleo caudal do trigêmeo), elas também liberam neuropeptídeos <em>localmente</em>, nas próprias terminações perivasculares — um fenômeno chamado transmissão antidrômica. Os principais neuropeptídeos liberados são o CGRP (peptídeo relacionado ao gene da calcitonina), a substância P e a neurocinina A.</p>
+      <p>Esses neuropeptídeos promovem vasodilatação dos vasos meníngeos, extravasamento de proteínas plasmáticas e degranulação de mastócitos locais — uma verdadeira inflamação estéril (sem qualquer patógeno envolvido) da dura-máter. Essa inflamação neurogênica sensibiliza ainda mais os próprios nociceptores meníngeos, criando um ciclo de retroalimentação positiva que amplifica e sustenta a dor. O CGRP, em particular, tornou-se nas últimas duas décadas o alvo farmacológico mais estudado em enxaqueca — sua importância central nesse mecanismo é hoje tão bem estabelecida que deu origem a uma classe terapêutica inteiramente nova (anticorpos monoclonais anti-CGRP e antagonistas de receptor de CGRP, os gepantes), que não constava do material do professor mas representa a fronteira atual do tratamento profilático e abortivo da enxaqueca — vale o registro como atualização, já que a farmacologia clássica apresentada nos slides (triptanos, betabloqueadores, tricíclicos) permanece a base do tratamento disponível na prática pública e complementar brasileira.</p>
+    </div>
+  </details>
+
+  <h4>Fase 3 — Sensibilização central e a origem da dor pulsátil e da alodinia</h4>
+  <p>As fibras trigeminais sensibilizadas projetam-se para o núcleo caudal do trigêmeo, daí para a substância cinzenta periaquedutal e os núcleos talâmicos sensitivos, e finalmente para o córtex somatossensorial primário — o trajeto exatamente ilustrado pelas setas pequenas do slide 17. Com a manutenção do estímulo doloroso ao longo da crise, esses neurônios de segunda e terceira ordem tornam-se hiperexcitáveis (sensibilização central), o que explica dois fenômenos clínicos característicos da enxaqueca:</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>Caráter pulsátil</h4>
+      <p>A vasodilatação meníngea, somada à sensibilização dos nociceptores perivasculares, faz com que cada pulso arterial (cada batimento cardíaco) seja percebido como um novo estímulo doloroso — daí a característica latejante, sincronizada com o pulso, tão típica da enxaqueca e ausente na cefaleia tensional.</p>
+    </div>
+    <div class="card">
+      <h4>Alodinia cutânea</h4>
+      <p>Muitos pacientes relatam que, durante a crise, dói até encostar o cabelo, usar óculos ou brincos — um fenômeno chamado alodinia, causado pela sensibilização central que faz com que estímulos táteis inócuos sejam interpretados como dolorosos. Clinicamente, a presença de alodinia é um marcador de que a sensibilização central já se instalou, o que tem implicação terapêutica direta: triptanos são mais eficazes quando administrados <em>antes</em> do estabelecimento da alodinia — daí a orientação de tratar a crise o mais precocemente possível.</p>
+    </div>
+  </div>
+
+  <h4>O sistema serotoninérgico e o "gerador" no tronco encefálico</h4>
+  <p>Os núcleos da rafe (serotoninérgicos) e o locus ceruleus (noradrenérgico) no tronco encefálico modulam a excitabilidade trigeminovascular e participam da regulação do limiar para deflagrar uma crise. Estudos de neuroimagem funcional mostram ativação da ponte dorsolateral durante crises de enxaqueca — uma região que passou a ser chamada, de forma um tanto informal, de "gerador da enxaqueca", embora o conceito ainda seja debatido (é gerador ou é apenas parte da resposta à dor já iniciada?). Esse mesmo sistema serotoninérgico é o alvo farmacológico dos triptanos, como veremos adiante.</p>
+
+  <details class="deepdive">
+    <summary>Aprofunde-se: a base genética — o que a enxaqueca hemiplégica familiar nos ensina</summary>
+    <div class="deepdive-body">
+      <p>A menção do slide a "alterações nos canais de cálcio" faz referência a um dos achados mais importantes da genética da enxaqueca. A enxaqueca hemiplégica familiar — uma forma rara de enxaqueca com aura motora (fraqueza) — é causada por mutações em genes que codificam canais iônicos: <span class="code">CACNA1A</span> (subunidade de canal de cálcio voltagem-dependente tipo P/Q), <span class="code">ATP1A2</span> (bomba Na+/K+-ATPase) e <span class="code">SCN1A</span> (canal de sódio voltagem-dependente). Essas mutações, em conjunto, tornam os neurônios corticais mais propensos a despolarizar e a propagar a onda de depressão alastrante — ou seja, fornecem uma base molecular direta e comprovada para o conceito de "hiperexcitabilidade cortical" que sustenta o modelo fisiopatológico de toda a enxaqueca, não apenas da forma hemiplégica.</p>
+    </div>
+  </details>
+
+  <h3>Fatores precipitantes</h3>
+  <p>Alimentos ricos em tiramina (queijos envelhecidos), nitritos (carnes processadas) e feniletilamina (chocolate), além de glutamato monossódico, são gatilhos alimentares clássicos — todos compartilham a capacidade de interferir em vias monoaminérgicas ou de causar vasodilatação direta. Jejum (hipoglicemia como estressor metabólico central), estresse emocional (e, paradoxalmente, também o alívio do estresse — a "enxaqueca de fim de semana"), menstruação (queda estrogênica), luzes brilhantes (estímulo direto de vias tálamo-corticais hiperexcitáveis) e fármacos vasodilatadores completam a lista.</p>
+
+  <h3>As quatro fases da crise de enxaqueca</h3>
+  <p>Vale entender a crise de enxaqueca como um processo com começo, meio e fim bem definidos — não apenas "a dor" — porque isso muda a abordagem terapêutica e ajuda o paciente a reconhecer o padrão da própria doença.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>Pródromo (até 60% dos casos)</h4>
+      <p>Horas a dias antes da dor: irritabilidade, alterações cognitivas, fadiga, desejos alimentares específicos, bocejos excessivos. Reflete ativação hipotalâmica precoce, antes mesmo do início da CSD — por isso alguns pacientes conseguem "prever" a crise.</p>
+    </div>
+    <div class="card">
+      <h4>Aura (20% dos casos)</h4>
+      <p>Sintomas visuais (escotoma cintilante, fortificação), sensitivos (parestesias em marcha), de fala/linguagem ou, mais raramente, motores — correlato clínico direto da CSD, como detalhado acima.</p>
+    </div>
+    <div class="card">
+      <h4>Cefaleia</h4>
+      <p>Dor unilateral, pulsátil, intensa, com náusea, fotofobia e fonofobia — a fase de ativação trigeminovascular plena e inflamação neurogênica.</p>
+    </div>
+    <div class="card">
+      <h4>Pósdromo</h4>
+      <p>Fadiga, exaustão cognitiva, sensação de "ressaca", necessidade de repouso — pode durar até 48 horas e é frequentemente subestimado pelo paciente e pelo médico, mas tem impacto funcional real.</p>
+    </div>
+  </div>
+
+  <h3>Critérios diagnósticos ICHD-3 — a lógica por trás das letras</h3>
+  <p>Os critérios formais (slide 19) parecem burocráticos à primeira vista, mas cada item tem uma razão de ser diagnóstica precisa.</p>
+
+  <h4>Enxaqueca sem aura</h4>
+  <p>Exige pelo menos 5 crises (repetição suficiente para excluir causas secundárias episódicas isoladas), duração de 4 a 72 horas sem tratamento (diferencia de cefaleias muito mais curtas, como a em salvas, ou muito mais longas, que sugerem causa secundária), pelo menos 2 de 4 características (unilateral, pulsátil, intensidade moderada/forte, piora com esforço físico — o conjunto que define o "padrão vascular-inflamatório"), pelo menos 1 sintoma associado (náusea/vômito OU foto+fonofobia) e exclusão de outro diagnóstico do ICHD-3.</p>
+
+  <h4>Enxaqueca com aura</h4>
+  <p>Exige apenas 2 crises (a especificidade da aura como fenômeno neurológico focal e reversível já reduz bastante a chance de confusão diagnóstica), pelo menos um sintoma de aura totalmente reversível (visual, sensitivo, de fala/linguagem, motor, de tronco encefálico ou retiniano), com características temporais específicas — instalação em 5 minutos ou mais (a lentidão da marcha, coerente com a velocidade de propagação da CSD, é o que a diferencia de um AIT, que tem instalação súbita), duração de até 1 hora por sintoma, lateralidade unilateral em pelo menos um sintoma, e cefaleia dentro de 1 hora do início ou fim da aura. A exclusão explícita de AIT no critério D não é um detalhe burocrático — é a diferença entre tranquilizar o paciente e deixar passar um evento cerebrovascular agudo.</p>
+
+  <div class="alert">
+    <span class="alert-label">Diagnóstico diferencial crítico — aura versus AIT</span>
+    <p>A marcha lenta e progressiva dos sintomas (minutos), a sequência típica (visual → sensitivo → de linguagem, "migrando" de um sintoma para o outro) e a reversibilidade completa favorecem aura enxaquecosa. Já o início súbito e simultâneo de todos os sintomas, sem marcha, e fatores de risco vascular importantes, devem levantar a suspeita de AIT ou AVC isquêmico — especialmente em uma primeira crise de aura, sem história prévia de enxaqueca, e especialmente em pacientes mais velhos ou com fatores de risco cardiovascular. É justamente por isso que o primeiro episódio de enxaqueca com aura é, por si só, indicação de neuroimagem (ver seção 6).</p>
+  </div>
+
+  <h3>Enxaqueca crônica</h3>
+  <p>Definida por cefaleia em pelo menos 15 dias por mês, por mais de 3 meses, com características de enxaqueca em pelo menos 8 desses dias. Os principais fatores de risco para a cronificação são obesidade, uso excessivo de analgésicos (cefaleia por uso excessivo de medicação, um ciclo vicioso em que o próprio tratamento agudo, usado com frequência excessiva, perpetua e piora a cefaleia) e consumo excessivo de cafeína.</p>
+
+  <h3>Tratamento abortivo (da crise)</h3>
+  <p>O princípio geral é tratar cedo — antes que a sensibilização central e a alodinia se estabeleçam, o que reduz a eficácia de qualquer fármaco, especialmente dos triptanos.</p>
+
+  <h4>Analgésicos simples e AINEs</h4>
+  <p>Primeira linha para crises leves a moderadas: dipirona, paracetamol, naproxeno, ibuprofeno. O mecanismo já foi discutido na seção de cefaleia tensional — inibição da síntese de prostaglandinas por bloqueio da ciclo-oxigenase, com ação tanto periférica (reduzindo a sensibilização de nociceptores meníngeos pela prostaglandina E2) quanto central.</p>
+
+  <h4>Triptanos — a primeira escolha para crises moderadas a graves</h4>
+  <p>Sumatriptano e zolmitriptano são agonistas seletivos dos receptores serotoninérgicos 5-HT1B e 5-HT1D (e, em menor grau, 5-HT1F). O efeito terapêutico decorre de três ações convergentes, todas mediadas por esses receptores:</p>
+
+  <details class="deepdive">
+    <summary>Aprofunde-se: o triplo mecanismo de ação dos triptanos</summary>
+    <div class="deepdive-body">
+      <p>Primeiro, vasoconstrição seletiva dos vasos meníngeos dilatados (via receptores 5-HT1B presentes no músculo liso vascular), revertendo diretamente a vasodilatação da fase de dor. Segundo, inibição pré-sináptica da liberação de neuropeptídeos (CGRP, substância P) pelas terminações trigeminais perivasculares (via receptores 5-HT1D nos próprios terminais nervosos), interrompendo a inflamação neurogênica na origem. Terceiro, inibição da transmissão nociceptiva no núcleo caudal do trigêmeo, um efeito central que reduz a sensibilização dos neurônios de segunda ordem.</p>
+      <p>É esse terceiro mecanismo — central — que explica por que os triptanos continuam funcionando mesmo quando administrados um pouco depois do início da dor, embora com eficácia reduzida em comparação ao uso precoce, antes da alodinia se instalar.</p>
+      <p>Do ponto de vista farmacocinético, a via de administração determina a velocidade de início: sumatriptano subcutâneo tem início de ação em cerca de 10 minutos (útil para crises muito intensas ou com vômito importante, que impede absorção oral), enquanto a via oral leva cerca de 30 a 60 minutos, e a intranasal fica numa posição intermediária.</p>
+    </div>
+  </details>
+
+  <div class="alert red">
+    <span class="alert-label">Contraindicações dos triptanos</span>
+    <p>Por causarem vasoconstrição (embora seletiva para vasos cranianos, o efeito não é absolutamente específico), os triptanos são contraindicados em doença arterial coronariana, hipertensão não controlada, doença cerebrovascular e enxaqueca hemiplégica ou de tronco encefálico (basilar) — nessas últimas duas, justamente porque já existe um componente de disfunção vascular/isquêmica que a vasoconstrição adicional poderia agravar. Também não devem ser usados em conjunto ou muito próximo no tempo de derivados do ergot, pelo risco de vasoconstrição prolongada e excessiva (ergotismo).</p>
+  </div>
+
+  <h4>Derivados do ergot — di-hidroergotamina (DHE)</h4>
+  <p>Agonista não seletivo de receptores serotoninérgicos, com atividade adicional em receptores alfa-adrenérgicos e dopaminérgicos. Essa falta de seletividade explica tanto sua eficácia em casos refratários (atua em múltiplos alvos) quanto seu perfil de efeitos adversos mais problemático — vasoconstrição periférica intensa e sustentada, com risco de ergotismo (isquemia de extremidades, podendo chegar à gangrena em casos extremos de uso excessivo ou superdosagem). Por isso, é reservada a casos refratários e formalmente contraindicada em doença cardiovascular e gravidez.</p>
+
+  <h3>Tratamento profilático</h3>
+  <p>Indicado para pacientes com 3 ou mais crises por mês, ou crises menos frequentes porém com grande incapacidade funcional. O objetivo não é abolir completamente as crises (raramente alcançável), mas reduzir sua frequência, intensidade e duração, e melhorar a resposta ao tratamento abortivo.</p>
+
+  <h4>Betabloqueadores</h4>
+  <p>Propranolol é a primeira linha. Curiosamente, o mecanismo exato pelo qual um betabloqueador previne enxaqueca não está totalmente esclarecido — as hipóteses incluem modulação serotoninérgica central, redução do tônus simpático central e inibição da vasodilatação mediada por óxido nítrico. Contraindicado em asma (broncoespasmo por bloqueio beta-2), bradicardia significativa e insuficiência cardíaca descompensada.</p>
+
+  <h4>Antidepressivos — um mecanismo que não é "antidepressivo"</h4>
+  <p>Este é um dos pontos mais ricos, e mais frequentemente mal compreendidos, de toda a farmacologia da cefaleia — o slide 22 traz a informação central, mas ela merece ser desdobrada com calma.</p>
+
+  <details class="deepdive">
+    <summary>Aprofunde-se: por que a amitriptilina funciona para enxaqueca sem ser, aqui, um "antidepressivo"</summary>
+    <div class="deepdive-body">
+      <p>A amitriptilina é classicamente descrita como inibidora não seletiva da recaptação de monoaminas (serotonina e noradrenalina) — esse é o mecanismo por trás do seu efeito antidepressivo. Mas o slide traz um dado crucial e contraintuitivo: seu efeito profilático na enxaqueca parece estar relacionado, não a essa inibição de recaptação, mas à indução de uma <em>redução gradual na densidade de receptores centrais 5-HT2 e beta-adrenérgicos</em> — um fenômeno de regulação para baixo (<em>downregulation</em>) de receptores que ocorre com o uso crônico e continuado do fármaco, ao longo de semanas.</p>
+      <p>Isso explica duas observações clínicas importantes: primeiro, por que o efeito profilático da amitriptilina demora semanas para aparecer (é preciso tempo para a downregulation de receptores se estabelecer — diferente do efeito analgésico agudo de um AINE); segundo, por que os inibidores seletivos da recaptação de serotonina (ISRS), como a fluoxetina, apesar de eficazes para depressão, são pouco efetivos na profilaxia da enxaqueca — eles atuam predominantemente sobre a recaptação de serotonina, sem o mesmo perfil de modulação de densidade de receptores 5-HT2 e beta-adrenérgicos que caracteriza os tricíclicos.</p>
+      <p>Já a venlafaxina e a duloxetina, inibidoras duais da recaptação de serotonina e noradrenalina (IRSN), são eficazes por um mecanismo diferente e complementar: ao aumentarem a disponibilidade de serotonina E noradrenalina nas vias descendentes de modulação da dor (originadas no núcleo magno da rafe e no locus ceruleus, respectivamente, e que terminam no corno dorsal da medula e no núcleo caudal do trigêmeo), fortalecem o sistema inibitório descendente de dor — o mesmo "freio" central cuja falha discutimos na cefaleia tensional crônica. É esse mecanismo dual que torna os IRSN eficazes em síndromes de dor crônica central de forma mais ampla, não apenas na enxaqueca.</p>
+    </div>
+  </details>
+
+  <div class="clinical">
+    <span class="clinical-label">Correlação clínica</span>
+    <p>Na prática, isso significa que trocar um paciente de fluoxetina para amitriptilina (ou para venlafaxina) pode ser uma decisão terapêutica racional quando o objetivo passa a ser controle de enxaqueca crônica associada a sintomas depressivos leves — mas a escolha entre tricíclico e IRSN também depende do perfil de efeitos colaterais que o paciente tolera (a amitriptilina tem efeitos anticolinérgicos como boca seca e ganho de peso, além de sedação — útil, inclusive, se o paciente também tem insônia associada; se a sonolência for excessiva, a nortriptilina, metabólito ativo com menor efeito sedativo, é uma alternativa).</p>
+  </div>
+
+  <h4>Bloqueadores de canal de cálcio — flunarizina</h4>
+  <p>Bloqueia preferencialmente canais de cálcio tipo T, mas também tem propriedades antagonistas de receptores de histamina e dopamina — o que explica por que pode causar sedação, ganho de peso e, com uso prolongado, sintomas extrapiramidais (parkinsonismo induzido por fármaco) e depressão. É uma alternativa útil quando há contraindicação a betabloqueadores.</p>
+
+  <h4>Anticonvulsivantes</h4>
+  <p>O ácido valproico e o divalproato de sódio modulam a hiperexcitabilidade neuronal por múltiplos mecanismos convergentes: aumentam a transmissão GABAérgica (inibitória) ao aumentar a síntese e reduzir a degradação de GABA, bloqueiam canais de sódio voltagem-dependentes (reduzindo disparos neuronais repetitivos) e, especificamente relevante para enxaqueca, suprimem a depressão alastrante cortical e bloqueiam o disparo de neurônios serotoninérgicos do núcleo da rafe dorsal — o mesmo núcleo envolvido na modulação central da dor discutida acima.</p>
+
+  <div class="alert">
+    <span class="alert-label">Efeitos adversos e manejo prático do valproato</span>
+    <p>Ganho de peso, queda de cabelo, toxicidade hepática (requer monitorização de enzimas hepáticas), tremor, sedação e teratogenicidade significativa (é formalmente contraindicado na gravidez, sobretudo pelo risco de defeitos do tubo neural). A reposição dietética de zinco é uma medida prática para atenuar a queda de cabelo associada ao uso do fármaco.</p>
+  </div>
+
+  <p>O topiramato atua bloqueando canais de sódio voltagem-dependentes, potencializando a atividade GABA-A, bloqueando receptores glutamatérgicos AMPA/cainato (reduzindo a transmissão excitatória — um mecanismo particularmente relevante para suprimir a hiperexcitabilidade cortical da CSD) e exercendo fraca inibição da anidrase carbônica. É justamente essa última propriedade que explica dois efeitos colaterais característicos: as parestesias (por leve acidose metabólica tubular renal) e a perda de peso/apetite (por efeito sobre o metabolismo e sobre centros hipotalâmicos de saciedade) — o que torna o topiramato uma opção preferencial em pacientes obesos, um dos fatores de risco para cronificação da enxaqueca. A reposição de potássio pela dieta (bananas, por exemplo) é uma medida prática para atenuar as parestesias.</p>
+
+  <h3>Situações especiais</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>Gravidez</h4>
+      <p>Triptanos, ergotamina e a maioria dos anticonvulsivantes devem ser evitados pelo risco vasoconstritor (triptanos/ergotamina) e teratogênico (anticonvulsivantes, especialmente valproato). Paracetamol é a opção mais segura para crises; opioides podem ser considerados com cautela e uso criterioso, evitando uso prolongado pelo risco de dependência materna e síndrome de abstinência neonatal.</p>
+    </div>
+    <div class="card">
+      <h4>Enxaqueca crônica</h4>
+      <p>O foco terapêutico inicial é romper o ciclo de uso excessivo de analgésicos (cefaleia por uso excessivo de medicação), muitas vezes o fator mais modificável na cronificação. A toxina botulínica (onabotulinumtoxinA) é considerada em casos refratários — seu mecanismo envolve o bloqueio da liberação de neuropeptídeos (CGRP, substância P) das terminações nociceptivas periféricas, pela inibição do complexo SNARE necessário para a fusão de vesículas sinápticas com a membrana pré-sináptica.</p>
+    </div>
+  </div>
+
+  <div class="alert red">
+    <span class="alert-label">Enxaqueca com aura e risco cerebrovascular</span>
+    <p>Estudos epidemiológicos mostram associação entre enxaqueca com aura e risco aumentado de AVC isquêmico, especialmente em mulheres jovens que fumam e/ou usam contraceptivos hormonais combinados — a combinação desses três fatores multiplica o risco de forma mais que aditiva. Os mecanismos propostos incluem a própria oligemia associada à CSD, disfunção endotelial e um estado de hipercoagulabilidade discreta associado às crises. Na prática, isso influencia diretamente a escolha de contracepção em mulheres com enxaqueca com aura — contraceptivos combinados costumam ser evitados nesse grupo, preferindo-se métodos apenas progestagênicos ou não hormonais.</p>
+  </div>
+
+  <h3>Indicações de neuroimagem específicas da enxaqueca</h3>
+  <p>O slide 27 lista situações que, no contexto específico de um paciente com diagnóstico presumido de enxaqueca, justificam investigação de imagem — vamos entender a lógica de cada uma:</p>
+  <ul>
+    <li><em>Primeiro episódio de enxaqueca com aura</em> — sem história prévia semelhante, a aura de estreia precisa excluir causa estrutural ou vascular antes de ser assumida como enxaqueca.</li>
+    <li><em>Crises com manifestações focais que não mudam de lateralidade ou de expressão clínica</em> — a enxaqueca típica tem aura que pode variar de crise para crise (ora à esquerda, ora à direita, ora visual, ora sensitiva); uma aura estereotipada, sempre idêntica e sempre do mesmo lado, levanta suspeita de lesão estrutural fixa (como uma malformação vascular) mimetizando aura.</li>
+    <li><em>Mudança inexplicada na frequência e intensidade das crises</em> — já discutido como sinal de alarme geral, aqui reforçado no contexto específico da enxaqueca.</li>
+    <li><em>Aura prolongada, além de 1 hora</em> — foge do critério diagnóstico padrão e aumenta a preocupação com evento isquêmico.</li>
+    <li><em>Enxaqueca associada a síncope</em> — associação atípica que merece exclusão de causa cardíaca ou de hipertensão intracraniana.</li>
+  </ul>
+</section>
+
+<!-- ============================================================ -->
+<!-- 5. CEFALEIA EM SALVAS -->
+<!-- ============================================================ -->
+<section id="salvas" style="--accent:var(--c-salvas)">
+  <div class="section-head">
+    <span class="tag">05</span>
+    <h2>Cefaleia em salvas</h2>
+    <span class="line"></span>
+  </div>
+
+  <p class="section-intro">Rara, mas talvez a mais dramática das cefaleias primárias — pertence, junto de outras condições, ao grupo das cefaleias trigêmino-autonômicas (TACs), cujo nome já entrega a lógica fisiopatológica central: ativação trigeminal associada a sintomas autonômicos craniais.</p>
+
+  <h3>Epidemiologia e características gerais</h3>
+  <p>Mais comum em homens, numa proporção de aproximadamente 3:1 em relação às mulheres, com início típico por volta dos 25 anos e raramente história familiar. A dor é sempre unilateral, e — este é um detalhe semiológico valioso — recorre tipicamente no mesmo lado em um mesmo paciente ao longo da vida (diferente da enxaqueca, cuja lateralidade pode alternar entre crises).</p>
+
+  <h3>O padrão temporal: a marca registrada da doença</h3>
+  <p>O nome "em salvas" vem justamente do padrão de ocorrência: crises agrupadas em períodos (as "salvas") de semanas a meses, com remissão completa entre esses períodos que pode durar meses a anos. Dentro de uma salva, a periodicidade é notavelmente circadiana — crises que despertam o paciente à noite, frequentemente no mesmo horário, e crises diurnas também recorrendo em horários semelhantes.</p>
+
+  <div class="clinical">
+    <span class="clinical-label">Correlação clínica — por que perguntar sobre o "relógio" da dor</span>
+    <p>Um paciente que descreve "dor que me acorda todas as noites, sempre por volta da 1h da manhã, há três semanas" está descrevendo, quase textualmente, o padrão clássico de cefaleia em salvas. Essa periodicidade tão estereotipada — rara em outras cefaleias primárias — é, por si só, um forte indício diagnóstico e reflete diretamente o envolvimento hipotalâmico, discutido a seguir.</p>
+  </div>
+
+  <h3>Fisiopatologia: o reflexo trigêmino-autonômico e o "marca-passo" hipotalâmico</h3>
+  <p>A dor intensa, em geral orbital, supraorbital e/ou temporal — território de V1 — resulta de ativação do sistema trigeminovascular, de forma análoga à enxaqueca. O que torna a cefaleia em salvas fisiopatologicamente distinta é a ativação concomitante e proeminente de um reflexo autonômico específico.</p>
+
+  <details class="deepdive">
+    <summary>Aprofunde-se: o reflexo trigêmino-autonômico explica cada sintoma associado</summary>
+    <div class="deepdive-body">
+      <p>A ativação de aferentes trigeminais nociceptivos (divisão oftálmica) dispara, por via reflexa através do núcleo salivatório superior na ponte, uma saída parassimpática craniana: fibras eferentes parassimpáticas trafegam pelo nervo facial (VII par) até o gânglio pterigopalatino (esfenopalatino), de onde partem fibras pós-ganglionares que inervam a glândula lacrimal e a mucosa nasal. É essa via que explica diretamente o lacrimejamento, a congestão nasal e a rinorreia ipsilaterais observados durante a crise — todos sintomas parassimpáticos.</p>
+      <p>Já a miose e a ptose (uma síndrome de Horner parcial, transitória durante a crise e por vezes persistente entre crises em casos de longa evolução) têm origem oposta: são sinais de disfunção simpática, não parassimpática. O mecanismo proposto é a compressão ou disfunção do plexo simpático pericarotídeo — as fibras simpáticas pós-ganglionares que acompanham a artéria carótida interna — por conta da vasodilatação e do processo inflamatório na parede do vaso durante a crise, próximo ao seio cavernoso. Ou seja: numa única crise de cefaleia em salvas, você tem simultaneamente hiperatividade parassimpática (lacrimejamento, rinorreia) e hipoatividade simpática (ptose, miose) do mesmo lado — uma combinação que, uma vez compreendida em termos anatômicos, se torna praticamente impossível de esquecer.</p>
+      <p>Por fim, a inquietude e a agitação motora — o paciente típico de cefaleia em salvas não consegue ficar parado, anda de um lado para o outro, bate a cabeça contra a parede — contrastam fortemente com o comportamento do paciente enxaquecoso, que busca imobilidade e escuridão. Essa diferença comportamental tem valor semiológico prático: é uma das perguntas mais úteis para diferenciar as duas condições à beira do leito.</p>
+    </div>
+  </details>
+
+  <h4>O papel central do hipotálamo</h4>
+  <p>A periodicidade circadiana (mesmo horário do dia) e circanual (mesma época do ano, tipicamente na virada de estações) tão características da cefaleia em salvas apontam fortemente para um "gerador" central hipotalâmico — mais especificamente, envolvendo a região hipotalâmica posterior e sua relação com o núcleo supraquiasmático, o marca-passo circadiano mestre do organismo. Estudos de neuroimagem funcional mostram ativação hipotalâmica ipsilateral durante as crises, sustentando essa hipótese. Esse "gerador" hipotalâmico central é o que distingue conceitualmente a cefaleia em salvas da enxaqueca (cujo gerador proposto está no tronco encefálico) — ambas, porém, convergem finalmente na mesma via efetora final: a ativação do sistema trigeminovascular.</p>
+
+  <h3>Critérios diagnósticos ICHD-3</h3>
+  <p>Ao menos 5 crises, dor forte a muito forte, unilateral, orbital/supraorbital/temporal, com duração de 15 a 180 minutos sem tratamento — um intervalo de duração muito mais curto e mais bem definido do que o da enxaqueca (4-72h), o que já é uma pista diagnóstica poderosa. Exige a presença de pelo menos um sintoma/sinal autonômico ipsilateral (dos já discutidos acima) OU sensação de inquietude/agitação, com frequência entre uma crise a cada dois dias e até oito crises por dia durante o período de salva.</p>
+
+  <h3>Tratamento agudo (abortivo)</h3>
+  <div class="card-grid">
+    <div class="card">
+      <h4>Oxigênio a 100%</h4>
+      <p>7 a 12 L/min por 15-20 minutos, via máscara não reinalante — é, junto do sumatriptano subcutâneo, tratamento de primeira linha, com a vantagem de não ter as contraindicações cardiovasculares dos triptanos. O mecanismo exato ainda é debatido, mas propõe-se que a hiperóxia module diretamente a atividade de neurônios trigeminais nociceptivos e/ou promova vasoconstrição craniana, além de possivelmente atuar sobre a via parassimpática craniana envolvida no reflexo trigêmino-autonômico.</p>
+    </div>
+    <div class="card">
+      <h4>Sumatriptano subcutâneo</h4>
+      <p>6 mg SC, repetível se necessário (máximo de duas injeções de 6 mg por dia) — a via subcutânea é preferida sobre a oral justamente pela necessidade de início de ação muito rápido, já que a crise dura, no máximo, 3 horas sem tratamento; uma via de absorção mais lenta simplesmente não alcançaria o pico de efeito a tempo de abortar a crise.</p>
+    </div>
+  </div>
+
+  <h3>Profilaxia transicional e de manutenção</h3>
+  <p>A cefaleia em salvas exige uma estratégia farmacológica em duas camadas, porque a profilaxia de manutenção (verapamil) demora a fazer efeito, enquanto o paciente precisa de alívio imediato assim que a salva começa.</p>
+
+  <div class="card">
+    <h4>Profilaxia transicional — corticoides</h4>
+    <p>Prednisona em dose de 40 a 80 mg/dia por uma semana, com redução gradual de 5 a 10 mg por semana. Funciona como "ponte" enquanto a profilaxia de manutenção (verapamil) ainda não atingiu dose terapêutica plena — o efeito anti-inflamatório potente e a ação sobre a inflamação neurogênica trigeminal justificam sua eficácia rápida, embora não sejam adequados para uso prolongado pelos efeitos adversos sistêmicos característicos dos corticoides.</p>
+  </div>
+
+  <div class="card">
+    <h4>Profilaxia de manutenção — verapamil e lítio</h4>
+    <p>O verapamil (360 mg/dia, podendo chegar a doses maiores sob monitorização) é a primeira escolha; seu mecanismo em cefaleia em salvas não está totalmente elucidado, mas propõe-se ação sobre o próprio "gerador" hipotalâmico via modulação de canais de cálcio. Exige eletrocardiograma antes e durante o tratamento, pois doses altas prolongam o intervalo PR e podem causar bloqueio atrioventricular. O lítio (300 mg, 1 a 3 vezes ao dia, com monitorização de níveis séricos abaixo de 1,2 mEq/L) é alternativa, com mecanismo proposto envolvendo modulação do ritmo circadiano via efeitos sobre a enzima GSK-3β e sobre a secreção de melatonina — coerente, mais uma vez, com a hipótese do gerador hipotalâmico circadiano.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 6. SINAIS DE ALARME -->
+<!-- ============================================================ -->
+<section id="alarme" style="--accent:var(--c-alarme)">
+  <div class="section-head">
+    <span class="tag">06</span>
+    <h2>Sinais de alarme e indicações de neuroimagem</h2>
+    <span class="line"></span>
+  </div>
+
+  <p class="section-intro">Depois de percorrer as três grandes cefaleias primárias, vale reunir e consolidar os sinais que, em qualquer paciente com cefaleia, devem interromper o raciocínio de "provavelmente é primária" e disparar investigação ativa. Esse é, na prática, um dos exercícios de raciocínio clínico mais importantes de toda a propedêutica neurológica.</p>
+
+  <h3>A lista de bandeiras vermelhas, e por que cada uma importa</h3>
+  <p>Reunindo os sinais já discutidos na seção de classificação (slide 6) com os critérios específicos de gravidade (slide 33), a lista de alerta pode ser organizada por mecanismo fisiopatológico subjacente — o que ajuda a memorizar não como uma lista arbitrária, mas como um raciocínio.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>Sugerem lesão estrutural com efeito de massa</h4>
+      <p>Início após os 50 anos, mudança inexplicada no padrão da cefaleia, cefaleia que desperta o paciente à noite e persiste, cefaleia associada a câncer (metástase), cefaleia relacionada a sinais neurológicos focais (rigidez de nuca, alterações de movimento, fala, audição, visão) e alteração do estado mental ou de consciência.</p>
+    </div>
+    <div class="card">
+      <h4>Sugerem evento vascular agudo</h4>
+      <p>Cefaleia nova, intensa e de início súbito ("thunderclap headache" — a pior dor de cabeça da vida do paciente, atingindo intensidade máxima em segundos a poucos minutos) — o protótipo aqui é a hemorragia subaracnóidea, mas também entram dissecção arterial cervical, trombose venosa cerebral e síndrome de vasoconstrição cerebral reversível.</p>
+    </div>
+    <div class="card">
+      <h4>Sugerem infecção ou processo sistêmico</h4>
+      <p>Início recente em paciente imunocomprometido (risco de infecções oportunistas do SNC), cefaleia refratária ao tratamento adequadamente instituído.</p>
+    </div>
+    <div class="card">
+      <h4>Padrões mecânicos específicos</h4>
+      <p>Cefaleia desencadeada por esforço físico, tosse ou atividade sexual — levanta suspeita de lesões de fossa posterior (malformação de Chiari, por exemplo) ou, particularmente na cefaleia relacionada à atividade sexual de início súbito, de hemorragia subaracnóidea.</p>
+    </div>
+  </div>
+
+  <div class="alert red">
+    <span class="alert-label">Emergência — quando internar</span>
+    <p>Quatro cenários exigem avaliação de urgência imediata, sempre com a hemorragia subaracnóidea como principal diagnóstico a excluir na apresentação mais dramática: dor de cabeça persistente que não cede, mantendo-se inclusive à noite; aura migranosa mais intensa e prolongada do que o habitual, com cefaleia leve ou ausente (aqui, a preocupação não é a dor, e sim a possibilidade de um infarto cerebral real por trás de um quadro que "parece" apenas uma aura prolongada); cefaleia com duração superior a 72 horas; e cefaleia de início brusco, de grande intensidade, associada a vômitos e alteração do nível de consciência — o quadro clássico de hemorragia subaracnóidea, que exige tomografia de crânio sem contraste imediata e, se negativa mas a suspeita clínica permanecer alta, punção lombar para pesquisa de xantocromia.</p>
+  </div>
+
+  <details class="deepdive">
+    <summary>Aprofunde-se: por que a hemorragia subaracnóidea é a urgência que nenhum médico pode perder</summary>
+    <div class="deepdive-body">
+      <p>A hemorragia subaracnóidea, tipicamente por ruptura de aneurisma sacular, extravasa sangue diretamente no espaço subaracnóideo, banhando estruturas ricamente inervadas por nociceptores (a própria aracnoide e os vasos do polígono de Willis) — daí a intensidade extrema e o início absolutamente súbito da dor, muitas vezes descrita literalmente como "a pior dor de cabeça da minha vida" ou como uma "explosão" na cabeça. O sangue também irrita quimicamente as meninges, causando rigidez de nuca (que pode demorar horas para se desenvolver plenamente, então sua ausência inicial não exclui o diagnóstico).</p>
+      <p>A tomografia de crânio sem contraste tem sensibilidade muito alta nas primeiras 6 horas do sangramento (superior a 95% em muitas séries), mas essa sensibilidade cai progressivamente com o passar do tempo, à medida que o sangue vai sendo reabsorvido. É por isso que uma tomografia normal, realizada muitos dias após o início dos sintomas, não exclui com segurança o diagnóstico — e a punção lombar, à procura de xantocromia (a coloração amarelada do líquor causada pela degradação da hemoglobina extravasada, que só se desenvolve entre 6 e 12 horas após o sangramento), continua sendo o exame complementar de escolha nesse contexto.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ============================================================ -->
+<!-- 7. CID -->
+<!-- ============================================================ -->
+<section id="cid" style="--accent:var(--c-cid)">
+  <div class="section-head">
+    <span class="tag">07</span>
+    <h2>Classificação CID-10 das cefaleias</h2>
+    <span class="line"></span>
+  </div>
+
+  <p class="section-intro">Enquanto a ICHD-3 é a classificação clínica de referência, usada para diagnóstico e critérios de pesquisa, a CID-10 é a classificação administrativa e epidemiológica — usada em prontuários, atestados, notificações e estatísticas de saúde pública. Vale a pena entender por que as duas convivem: a ICHD-3 responde "que doença é essa, com que critérios?"; a CID-10 responde "como codificar isso no sistema de saúde?".</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>R51 — Cefaleia</h4>
+      <p>Código sintomático inespecífico, usado quando a cefaleia ainda não tem diagnóstico etiológico definido ou quando se trata de um sintoma isolado sem classificação mais específica disponível no momento do atendimento.</p>
+    </div>
+    <div class="card">
+      <h4>Grupo G43 — Enxaqueca</h4>
+      <p><span class="code">G43.0</span> enxaqueca sem aura (enxaqueca comum); <span class="code">G43.1</span> enxaqueca com aura (enxaqueca clássica); <span class="code">G43.2</span> estado de mal enxaquecoso (crise que persiste além de 72 horas apesar de tratamento, correspondendo a um dos critérios de urgência já discutidos); <span class="code">G43.3</span> enxaqueca complicada; <span class="code">G43.8</span> outras formas; <span class="code">G43.9</span> enxaqueca sem especificação.</p>
+    </div>
+    <div class="card">
+      <h4>Grupo G44 — Outras síndromes de cefaleia</h4>
+      <p><span class="code">G44.0</span> síndrome de "cluster headache" (cefaleia em salvas); <span class="code">G44.1</span> cefaleia vascular não classificada em outra parte; <span class="code">G44.2</span> cefaleia tensional; <span class="code">G44.3</span> cefaleia crônica pós-traumática (cefaleia secundária, relevante em contexto de traumatismo cranioencefálico); <span class="code">G44.4</span> cefaleia induzida por drogas (o correlato administrativo da cefaleia por uso excessivo de medicação discutida na seção de enxaqueca); <span class="code">G44.8</span> outras síndromes de cefaleia especificadas.</p>
+    </div>
+  </div>
+
+  <div class="clinical">
+    <span class="clinical-label">Correlação prática</span>
+    <p>Note que a própria estrutura da CID-10 já reflete, embora de forma menos refinada que a ICHD-3, a separação entre cefaleia primária (G43, G44.0, G44.1, G44.2) e cefaleia secundária a trauma ou a uso de substância (G44.3, G44.4) — reforçando que a lógica primária/secundária discutida na seção 2 não é apenas um exercício acadêmico, mas está incorporada até no sistema de codificação usado no dia a dia assistencial e para fins de notificação epidemiológica e faturamento.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- REFERÊNCIAS -->
+<!-- ============================================================ -->
+<section id="referencias" style="--accent:var(--c-classif)">
+  <div class="section-head">
+    <span class="tag">refs</span>
+    <h2>Referências</h2>
+    <span class="line"></span>
+  </div>
+  <div class="ref-item">ARGOFF, Charles E.; DUBIN, Andrew; PILITSIS, Julie G. <em>Tratamento da dor</em>. (Secrets). 4. ed. Rio de Janeiro: Thieme Revinter, 2019.</div>
+  <div class="ref-item">BERTOLUCCI, Paulo H. F.; FERRAZ, Henrique B.; FÉLIX, Evandro Penteado V.; PEDROSO, José L. <em>Guia de neurologia</em>. Barueri: Manole, 2011.</div>
+  <div class="ref-item">BRAGA, Jorge L. <em>Cefaleia enxaqueca: diagnóstico e tratamento</em>. Rio de Janeiro: Thieme Revinter, 2017. E-book.</div>
+  <div class="ref-item">GREENBERG, David A.; AMINOFF, Michael J.; SIMON, Roger P. <em>Neurologia clínica</em>. 8. ed. Porto Alegre: Artmed, 2014.</div>
+  <div class="ref-item">GUYTON, Arthur C.; HALL, John E. <em>Tratado de fisiologia médica</em>. 13. ed. Rio de Janeiro: Elsevier, 2017.</div>
+  <div class="ref-item">JAMESON, J. Larry et al. (Ed.). <em>Medicina interna de Harrison</em>. 20. ed. Porto Alegre: AMGH, 2020.</div>
+  <div class="ref-item">KATZUNG, Bertram G.; TREVOR, Anthony J. <em>Farmacologia básica e clínica</em>. 13. ed. Porto Alegre: AMGH, 2017.</div>
+  <div class="ref-item">KUMAR, Vinay; ABBAS, Abul K.; ASTER, Jon C. <em>Robbins &amp; Cotran: patologia — bases patológicas das doenças</em>. 9. ed. Rio de Janeiro: Guanabara Koogan, 2016.</div>
+  <div class="ref-item">LINDE, Klaus et al. Acupuncture for migraine prophylaxis. <em>Cochrane Database of Systematic Reviews</em>, n. 1, 2009.</div>
+  <div class="ref-item">LINDE, Klaus et al. Acupuncture for the prevention of tension-type headache. <em>Cochrane Database of Systematic Reviews</em>, n. 4, 2016.</div>
+  <div class="ref-item">MINSON, Fabiola P.; MORETE, Marcia C.; MARANGONI, Marco A. <em>Dor</em>. Barueri: Manole, 2015.</div>
+  <div class="ref-item">NETO, Olympio de Hollanda C. <em>Dor e cuidados paliativos</em>. (Série Saesp). Barueri: Manole, 2024.</div>
+  <div class="ref-item">ROBBINS, Matthew S. Diagnosis and management of headache: a review. <em>Jama</em>, v. 325, n. 18, p. 1874-1885, 2021.</div>
+  <div class="ref-item">ROENN, Jaime H. V.; PAICE, Judith A.; PREODOR, Michael E. <em>Current dor</em>. Porto Alegre: Artmed, 2010.</div>
+  <div class="ref-item">SILVA, Penildon. <em>Farmacologia</em>. 8. ed. Rio de Janeiro: Guanabara Koogan, 2010.</div>
+</section>
+
+</main>
+
+<footer class="doc-footer">
+  <p>Material de aprofundamento produzido a partir dos slides "Aula 4 — Manejo Terapêutico da Cefaleia e Enxaqueca" (UCXIII — Dor, Uniarp-SC, Prof. Andrew). A parte de tipos de receituários e prescrição regulatória foi deixada fora deste documento, a pedido.</p>
+</footer>
+
+<div class="edit-banner" id="edit-banner">
+  <div class="edit-banner-inner">
+    Modo de edição ativo. Clique em qualquer parágrafo, item de lista ou título para editar o texto diretamente. As alterações salvam automaticamente a cada 15 segundos neste navegador — mas isso só funciona de forma confiável quando este arquivo é baixado e aberto diretamente no navegador (fora da pré-visualização de artefato do Claude.ai, que não mantém armazenamento local entre sessões). Dentro do Claude.ai, as edições ficam apenas na memória desta visualização.
+  </div>
+</div>
+
+<div class="toolbar">
+  <div class="toolbar-note" id="toolbar-note"></div>
+  <div class="toolbar-buttons">
+    <button id="btn-edit" type="button">Ativar edição</button>
+    <button id="btn-download" type="button">Baixar cópia editada</button>
+    <button id="btn-restore" type="button">Restaurar original</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var STORAGE_KEY = 'uniarp-cefaleia-enxaqueca-manejo-v1';
+  var editMode = false;
+  var autosaveInterval = null;
+  var originalContent = null;
+  var localStorageOk = true;
+
+  function testLocalStorage(){
+    try{
+      var k = '__test__' + STORAGE_KEY;
+      window.localStorage.setItem(k, '1');
+      window.localStorage.removeItem(k);
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+
+  function init(){
+    var contentEl = document.getElementById('study-content');
+    originalContent = contentEl.innerHTML;
+    localStorageOk = testLocalStorage();
+
+    var note = document.getElementById('toolbar-note');
+    if(!localStorageOk){
+      note.textContent = 'Este ambiente não permite salvar edições localmente. O botão de download ainda funciona para exportar suas alterações.';
+      note.classList.add('show');
+    } else {
+      try{
+        var saved = window.localStorage.getItem(STORAGE_KEY);
+        if(saved){ contentEl.innerHTML = saved; }
+      }catch(e){}
+    }
+
+    document.getElementById('btn-edit').addEventListener('click', toggleEdit);
+    document.getElementById('btn-download').addEventListener('click', downloadCopy);
+    document.getElementById('btn-restore').addEventListener('click', restoreOriginal);
+  }
+
+  function setEditableState(state){
+    var root = document.getElementById('study-content');
+    var els = root.querySelectorAll('p, li, h2, h3, h4, summary, .clinical-label, .alert-label, div.ref-item');
+    for(var i=0;i<els.length;i++){
+      els[i].setAttribute('contenteditable', state ? 'true' : 'false');
+    }
+  }
+
+  function toggleEdit(){
+    editMode = !editMode;
+    setEditableState(editMode);
+    var btn = document.getElementById('btn-edit');
+    var banner = document.getElementById('edit-banner');
+    if(editMode){
+      btn.textContent = 'Salvar e sair da edição';
+      btn.classList.add('active');
+      document.body.classList.add('edit-mode');
+      banner.classList.add('show');
+      if(localStorageOk){
+        autosaveInterval = setInterval(saveToLocalStorage, 15000);
+      }
+    } else {
+      btn.textContent = 'Ativar edição';
+      btn.classList.remove('active');
+      document.body.classList.remove('edit-mode');
+      banner.classList.remove('show');
+      if(autosaveInterval){ clearInterval(autosaveInterval); autosaveInterval = null; }
+      saveToLocalStorage();
+    }
+  }
+
+  function saveToLocalStorage(){
+    if(!localStorageOk) return;
+    try{
+      var content = document.getElementById('study-content').innerHTML;
+      window.localStorage.setItem(STORAGE_KEY, content);
+    }catch(e){
+      localStorageOk = false;
+    }
+  }
+
+  function downloadCopy(){
+    if(editMode){
+      saveToLocalStorage();
+    }
+    var htmlEl = document.documentElement.cloneNode(true);
+    var toolbarClone = htmlEl.querySelector('.toolbar');
+    if(toolbarClone){ toolbarClone.parentNode.removeChild(toolbarClone); }
+    var bannerClone = htmlEl.querySelector('#edit-banner');
+    if(bannerClone){ bannerClone.parentNode.removeChild(bannerClone); }
+    var htmlStr = '<!DOCTYPE html>\n' + htmlEl.outerHTML;
+    var blob = new Blob([htmlStr], {type:'text/html;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'cefaleia-enxaqueca-manejo-terapeutico.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  }
+
+  function restoreOriginal(){
+    if(window.confirm('Restaurar o conteúdo original? As edições salvas neste navegador serão apagadas.')){
+      document.getElementById('study-content').innerHTML = originalContent;
+      if(localStorageOk){
+        try{ window.localStorage.removeItem(STORAGE_KEY); }catch(e){}
+      }
+      if(editMode){
+        editMode = false;
+        document.getElementById('btn-edit').textContent = 'Ativar edição';
+        document.getElementById('btn-edit').classList.remove('active');
+        document.body.classList.remove('edit-mode');
+        document.getElementById('edit-banner').classList.remove('show');
+        if(autosaveInterval){ clearInterval(autosaveInterval); autosaveInterval = null; }
+      }
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+</body>
+</html>

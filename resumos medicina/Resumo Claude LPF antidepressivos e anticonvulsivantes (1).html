@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farmacoterapia da Dor — Antidepressivos e Anticonvulsivantes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-page:#0a0e17;
+  --bg-page-2:#0d1320;
+  --bg-card:#121a2b;
+  --bg-card-2:#161f34;
+  --bg-inset:#0d1422;
+  --text-primary:#e9edf5;
+  --text-secondary:#9aa7bd;
+  --text-tertiary:#6b7690;
+  --border-subtle:#232d42;
+  --border-subtle-2:#1a2336;
+
+  --c-fundamentos:#2dd4bf;
+  --c-fundamentos-dim:#2dd4bf33;
+  --c-fisiopatologia:#a78bfa;
+  --c-fisiopatologia-dim:#a78bfa33;
+  --c-abordagem:#fbbf24;
+  --c-abordagem-dim:#fbbf2433;
+  --c-antidepressivos:#fb7189;
+  --c-antidepressivos-dim:#fb718933;
+  --c-anticonvulsivantes:#60a5fa;
+  --c-anticonvulsivantes-dim:#60a5fa33;
+  --c-clinica:#34d399;
+  --c-clinica-dim:#34d39933;
+  --c-sintese:#f0abfc;
+  --c-sintese-dim:#f0abfc33;
+  --c-referencias:#94a3b8;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:radial-gradient(ellipse 1200px 800px at 50% -200px, #131c30 0%, var(--bg-page) 55%), var(--bg-page);
+  color:var(--text-primary);
+  font-family:"Source Serif 4", Georgia, serif;
+  font-size:17px;
+  line-height:1.7;
+  padding-bottom:6rem;
+}
+
+.wrap{max-width:880px; margin:0 auto; padding:0 1.5rem;}
+
+h1,h2,h3,h4,.font-display{font-family:"Cormorant Garamond", Georgia, serif;}
+
+/* ---------- HERO ---------- */
+.hero{
+  padding:5rem 0 3.5rem;
+  text-align:center;
+  border-bottom:1px solid var(--border-subtle-2);
+  margin-bottom:3.5rem;
+}
+.hero .eyebrow{
+  font-family:"JetBrains Mono", monospace;
+  font-size:0.72rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--c-anticonvulsivantes);
+  margin-bottom:1.3rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:.7rem;
+}
+.hero .eyebrow::before, .hero .eyebrow::after{
+  content:"";
+  height:1px;
+  width:2.5rem;
+  background:linear-gradient(90deg, transparent, var(--c-anticonvulsivantes));
+}
+.hero .eyebrow::after{background:linear-gradient(90deg, var(--c-anticonvulsivantes), transparent);}
+.hero h1{
+  font-size:3.1rem;
+  font-weight:600;
+  line-height:1.12;
+  margin:0 0 1rem;
+  background:linear-gradient(120deg, #f4f6fb 30%, #b9c4dd 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.hero h1 em{
+  font-style:italic;
+  background:linear-gradient(120deg, var(--c-antidepressivos), var(--c-anticonvulsivantes));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.hero p.lede{
+  color:var(--text-secondary);
+  font-size:1.15rem;
+  max-width:600px;
+  margin:0 auto;
+  font-style:italic;
+}
+.hero .meta-row{
+  margin-top:2rem;
+  display:flex;
+  gap:.6rem;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.pill{
+  font-family:"JetBrains Mono", monospace;
+  font-size:.7rem;
+  letter-spacing:.05em;
+  padding:.35rem .8rem;
+  border-radius:99px;
+  border:1px solid var(--border-subtle);
+  color:var(--text-tertiary);
+}
+
+/* ---------- SECTION HEADER: tag + line ---------- */
+.section-header{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  margin:4rem 0 1.6rem;
+}
+.section-header .tag{
+  font-family:"JetBrains Mono", monospace;
+  font-size:.74rem;
+  letter-spacing:.08em;
+  white-space:nowrap;
+  padding:.4rem .9rem;
+  border:1px solid var(--accent);
+  color:var(--accent);
+  border-radius:3px;
+  background:transparent;
+}
+.section-header .line{
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg, var(--accent), var(--border-subtle) 70%);
+  opacity:.55;
+}
+.section-header h2{
+  display:none;
+}
+.section-title{
+  font-size:2.1rem;
+  font-weight:600;
+  margin:0 0 .4rem;
+  color:var(--text-primary);
+  letter-spacing:.01em;
+}
+.section-title .accent-dot{color:var(--accent);}
+.section-kicker{
+  color:var(--text-secondary);
+  font-size:1.02rem;
+  font-style:italic;
+  margin:0 0 1.8rem;
+  max-width:640px;
+}
+
+/* ---------- CARDS ---------- */
+.card{
+  background:linear-gradient(180deg, var(--bg-card) 0%, var(--bg-card-2) 100%);
+  border:1px solid var(--border-subtle);
+  border-top:3px solid var(--accent);
+  border-radius:8px;
+  padding:1.7rem 1.9rem;
+  margin-bottom:1.4rem;
+}
+.card h3{
+  font-size:1.5rem;
+  font-weight:600;
+  margin:0 0 .8rem;
+  color:var(--text-primary);
+}
+.card h3 .accent-text{color:var(--accent);}
+.card p{margin:0 0 1rem;}
+.card p:last-child{margin-bottom:0;}
+.card ul, .card ol{padding-left:1.3rem; margin:0 0 1rem;}
+.card li{margin-bottom:.5rem;}
+.card .drug{color:var(--accent); font-style:italic;}
+
+.card-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.2rem;
+  margin-bottom:1.4rem;
+}
+@media (max-width:640px){.card-grid{grid-template-columns:1fr;}}
+.mini-card{
+  background:var(--bg-inset);
+  border:1px solid var(--border-subtle);
+  border-top:3px solid var(--accent);
+  border-radius:7px;
+  padding:1.2rem 1.4rem;
+}
+.mini-card h4{
+  font-family:"Cormorant Garamond", serif;
+  font-size:1.25rem;
+  font-weight:600;
+  margin:0 0 .5rem;
+  color:var(--accent);
+}
+.mini-card p{margin:0; font-size:.96rem; color:var(--text-secondary);}
+.mini-card p em{color:var(--text-primary); font-style:italic;}
+
+/* ---------- ALERTS (outline only) ---------- */
+.alert{
+  border:1px solid var(--accent);
+  background:transparent;
+  border-radius:6px;
+  padding:1.1rem 1.4rem;
+  margin:1.2rem 0;
+  display:flex;
+  gap:.9rem;
+}
+.alert .alert-icon{
+  color:var(--accent);
+  font-family:"JetBrains Mono", monospace;
+  font-size:.85rem;
+  flex-shrink:0;
+  padding-top:.15rem;
+}
+.alert .alert-body p{margin:0 0 .5rem; font-size:.97rem;}
+.alert .alert-body p:last-child{margin-bottom:0;}
+.alert .alert-title{
+  font-family:"Cormorant Garamond", serif;
+  font-weight:600;
+  font-size:1.15rem;
+  color:var(--accent);
+  margin:0 0 .4rem;
+  display:block;
+}
+
+/* ---------- DETAILS / SUMMARY (Aprofunde-se) ---------- */
+details{
+  margin:1.1rem 0;
+  border:1px solid var(--border-subtle);
+  border-radius:7px;
+  overflow:hidden;
+  background:var(--bg-inset);
+}
+details[open]{border-color:var(--accent);}
+summary{
+  cursor:pointer;
+  list-style:none;
+  padding:.85rem 1.3rem;
+  font-family:"Cormorant Garamond", serif;
+  font-weight:600;
+  font-size:1.15rem;
+  color:var(--accent);
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+  user-select:none;
+}
+summary::-webkit-details-marker{display:none;}
+summary::before{
+  content:"▸";
+  transition:transform .18s ease;
+  font-size:.85rem;
+  color:var(--accent);
+}
+details[open] > summary::before{transform:rotate(90deg);}
+summary .summary-label{
+  font-family:"JetBrains Mono", monospace;
+  font-size:.66rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--text-tertiary);
+  font-weight:400;
+  border:1px solid var(--border-subtle);
+  padding:.15rem .5rem;
+  border-radius:3px;
+  margin-left:auto;
+}
+.details-body{
+  padding:.3rem 1.3rem 1.3rem;
+  border-top:1px solid var(--border-subtle-2);
+}
+.details-body p{margin:.9rem 0 0; font-size:.97rem; color:var(--text-secondary);}
+.details-body p em{color:var(--text-primary);}
+.details-body ul{padding-left:1.2rem;}
+.details-body li{margin-bottom:.5rem; font-size:.97rem; color:var(--text-secondary);}
+details details{
+  margin:1rem 0 .3rem;
+  background:var(--bg-page-2);
+}
+
+/* ---------- clinical correlation strip ---------- */
+.clinical-strip{
+  border-left:2px solid var(--accent);
+  padding-left:1.1rem;
+  margin:1.3rem 0;
+}
+.clinical-strip .cs-label{
+  font-family:"JetBrains Mono", monospace;
+  font-size:.68rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--accent);
+  display:block;
+  margin-bottom:.3rem;
+}
+.clinical-strip p{margin:0; font-size:.97rem; color:var(--text-secondary);}
+
+em{font-style:italic; color:var(--text-primary);}
+.italic-term{font-style:italic;}
+a{color:var(--c-anticonvulsivantes);}
+
+/* ---------- References ---------- */
+.ref-list{
+  font-size:.92rem;
+  color:var(--text-secondary);
+  line-height:1.9;
+}
+.ref-list p{margin:0 0 1rem; padding-left:1.6rem; text-indent:-1.6rem;}
+
+/* ---------- Toolbar ---------- */
+#toolbar{
+  position:fixed;
+  bottom:1.3rem;
+  right:1.3rem;
+  display:flex;
+  flex-direction:column;
+  gap:.55rem;
+  z-index:999;
+  font-family:"JetBrains Mono", monospace;
+}
+#toolbar button{
+  background:var(--bg-card);
+  border:1px solid var(--border-subtle);
+  color:var(--text-secondary);
+  font-family:"JetBrains Mono", monospace;
+  font-size:.72rem;
+  letter-spacing:.03em;
+  padding:.6rem .9rem;
+  border-radius:6px;
+  cursor:pointer;
+  text-align:left;
+  transition:.15s ease;
+  white-space:nowrap;
+}
+#toolbar button:hover{border-color:var(--c-anticonvulsivantes); color:var(--text-primary);}
+#toolbar button.active{border-color:var(--c-antidepressivos); color:var(--c-antidepressivos);}
+#edit-status{
+  font-size:.65rem;
+  color:var(--text-tertiary);
+  text-align:right;
+  padding-right:.2rem;
+  min-height:1em;
+}
+[contenteditable="true"]{outline:1px dashed var(--c-anticonvulsivantes)44; border-radius:3px;}
+[contenteditable="true"]:focus{outline:1px dashed var(--c-anticonvulsivantes);}
+
+footer.note{
+  max-width:880px;
+  margin:3rem auto 0;
+  padding:0 1.5rem;
+  color:var(--text-tertiary);
+  font-size:.82rem;
+  font-family:"JetBrains Mono", monospace;
+  line-height:1.7;
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="content-root">
+
+<div class="hero">
+  <div class="eyebrow">UCXIII · Farmacologia da Dor · 2026</div>
+  <h1>Antidepressivos e <em>Anticonvulsivantes</em><br>no tratamento da dor crônica</h1>
+  <p class="lede">Um aprofundamento fisiopatológico e farmacológico do material apresentado em aula, construído para quem já domina o básico e quer entender o porquê por trás de cada escolha terapêutica.</p>
+  <div class="meta-row">
+    <span class="pill">PCDT Dor Crônica · Port. Conjunta SAES/SAPS/SECTICS nº1, 2024</span>
+    <span class="pill">Nível: Katzung / Goodman &amp; Gilman / Rang &amp; Dale</span>
+  </div>
+</div>
+
+<!-- ================= SEÇÃO 1 — FUNDAMENTOS ================= -->
+<div class="section-header" style="--accent:var(--c-fundamentos)">
+  <span class="tag">01 · Fundamentos</span>
+  <span class="line"></span>
+</div>
+<h2 class="section-title"><span class="accent-dot" style="color:var(--c-fundamentos)">◆</span> Classificar a dor antes de tratá-la</h2>
+<p class="section-kicker">Por que o mesmo sintoma — dor — pode exigir famílias de fármacos completamente diferentes? A resposta começa em identificar de onde a dor está vindo.</p>
+
+<div class="card" style="--accent:var(--c-fundamentos)">
+<p>Antes de qualquer receita, pare e pergunte: essa dor está sendo gerada porque um nociceptor foi ativado por uma lesão tecidual real, ou porque o próprio sistema nervoso que deveria transmitir a informação de dor está, ele mesmo, danificado ou hiperfuncionante? Essa pergunta simples é a espinha dorsal de todo o raciocínio farmacológico que vamos construir neste material, e é exatamente a lógica adotada pelo Protocolo Clínico e Diretrizes Terapêuticas (PCDT) de Dor Crônica de 2024 do Ministério da Saúde.</p>
+<p>O PCDT reconhece três grandes categorias fisiopatológicas de dor crônica, e vale a pena internalizar cada uma delas não como uma etiqueta, mas como uma história mecanística diferente:</p>
+</div>
+
+<div class="card-grid">
+  <div class="mini-card" style="--accent:var(--c-fundamentos)">
+    <h4>Dor nociceptiva</h4>
+    <p>Os nociceptores das estruturas lesionadas estão sendo ativados de forma apropriada — o sistema nervoso está <em>relatando corretamente</em> um dano tecidual real. Dor profunda, em peso, pontada, aperto ou queimação. Pense em lombalgia mecânica, osteoartrite, dor miofascial.</p>
+  </div>
+  <div class="mini-card" style="--accent:var(--c-fundamentos)">
+    <h4>Dor neuropática</h4>
+    <p>A lesão está na própria via de condução — nervo, plexo ou tronco nervoso. O "mensageiro" está com defeito. Dor superficial, em queimação, choque, formigamento ou amortecimento. Pense em neuropatia diabética, neuralgia pós-herpética, neuralgia do trigêmeo.</p>
+  </div>
+</div>
+<div class="card-grid">
+  <div class="mini-card" style="--accent:var(--c-fundamentos)">
+    <h4>Dor nociplástica</h4>
+    <p>Não há lesão tecidual nem lesão neural identificável — o próprio processamento central da dor está alterado, amplificando sinais que normalmente não seriam dolorosos. Sensação de peso, tensão, dolorimento difuso. Pense em fibromialgia, síndrome do intestino irritável.</p>
+  </div>
+  <div class="mini-card" style="--accent:var(--c-fundamentos)">
+    <h4>Por que isso importa</h4>
+    <p>Cada categoria aponta para um alvo farmacológico distinto: nociceptiva responde bem a AINEs e opioides; neuropática e nociplástica dependem muito mais de antidepressivos e anticonvulsivantes — o tema central deste material.</p>
+  </div>
+</div>
+
+<details>
+<summary>Aprofunde-se — por que a mesma dor "muda de nome" dependendo de quem descreve<span class="summary-label">nível 1</span></summary>
+<div class="details-body">
+<p>Um ponto que vale a pena explicitar, porque os slides o deixam implícito: a classificação nociceptiva/neuropática/nociplástica não é apenas descritiva, ela é <em>funcional</em> — o tipo de dor prediz, com boa probabilidade, qual classe de receptor ou canal está mais envolvida na gênese do sinal, e é justamente esse racional mecanístico que orienta a escolha do fármaco adjuvante. Uma dor neuropática, por definição, nasce de um processo <em>ectópico</em>: axônios lesionados passam a gerar potenciais de ação de forma espontânea e repetitiva, sem que exista, ali, nenhum estímulo nociceptivo real. É basicamente um curto-circuito do sistema, não um alarme funcionando corretamente. Isso explica por que anti-inflamatórios, desenhados para reduzir a síntese de prostaglandinas em tecido inflamado, praticamente não fazem efeito nesse contexto: não existe processo inflamatório periférico ativo para inibir. O alvo precisa ser a própria membrana do neurônio hiperexcitável — e é exatamente aí que entram os bloqueadores de canais iônicos, o tema da seção 2.</p>
+<details>
+<summary>Detalhamento avançado — dor mista e os limites da classificação<span class="summary-label">nível 2</span></summary>
+<div class="details-body">
+<p>Na prática clínica real, essas três categorias frequentemente coexistem no mesmo paciente — uma lombociatalgia crônica pode ter um componente nociceptivo (degeneração discal, ativação de nociceptores do ânulo fibroso) somado a um componente neuropático (radiculopatia por compressão de raiz nervosa) e, em pacientes com dor de longa duração, um componente de sensibilização central sobreposto (nociplástico). O próprio PCDT reconhece essa sobreposição ao observar, na discussão sobre dor nociceptiva, que "em contextos em que há um componente de dor neuropática associada ou em casos em que existem componentes de sensibilização segmentar, pode-se considerar o uso de antidepressivos ou anticonvulsivantes" mesmo fora do contexto neuropático puro. Isso é coerente com o conceito de sensibilização central: estímulos nociceptivos persistentes podem, com o tempo, induzir plasticidade sináptica no corno dorsal da medula (fenômeno de <em>wind-up</em>, mediado por receptores NMDA), fazendo com que uma dor originalmente nociceptiva adquira características neuroplásticas que passam a responder aos mesmos adjuvantes usados na dor neuropática.</p>
+</div>
+</details>
+</div>
+</details>
+
+<!-- ================= SEÇÃO 2 — FISIOPATOLOGIA ================= -->
+<div class="section-header" style="--accent:var(--c-fisiopatologia)">
+  <span class="tag">02 · Fisiopatologia</span>
+  <span class="line"></span>
+</div>
+<h2 class="section-title"><span class="accent-dot" style="color:var(--c-fisiopatologia)">◆</span> Os quatro achados que justificam cada fármaco</h2>
+<p class="section-kicker">O slide do professor resume em quatro linhas o racional inteiro da farmacoterapia da dor neuropática. Vamos abrir cada uma dessas linhas por dentro.</p>
+
+<div class="card" style="--accent:var(--c-fisiopatologia)">
+<p>Quando um nervo periférico é lesionado — por compressão, trauma, isquemia, hiperglicemia crônica ou infecção viral latente reativada — o neurônio sensorial não simplesmente "para de funcionar". Ele entra em um estado de remodelação molecular ativa, e são exatamente essas quatro mudanças remodeladoras que os slides apontam como o alicerce fisiopatológico de toda a farmacoterapia que vem a seguir. Cada uma delas é a fechadura; cada fármaco que estudaremos é a chave desenhada especificamente para ela.</p>
+</div>
+
+<h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.55rem; color:var(--text-primary); margin:2rem 0 .8rem;">1 · Aumento dos canais de sódio Nav1.8, Nav1.7 e Nav1.3</h3>
+<div class="card" style="--accent:var(--c-fisiopatologia)">
+<p>Todo potencial de ação depende da abertura de canais de sódio voltagem-dependentes (Nav), que permitem o influxo rápido de Na⁺ responsável pela fase de despolarização. Existem várias isoformas desses canais (Nav1.1 a Nav1.9), com distribuição tecidual distinta — o coração usa predominantemente Nav1.5, o músculo esquelético usa Nav1.4, e os neurônios sensoriais periféricos dependem fortemente de Nav1.7, Nav1.8 e Nav1.9.</p>
+<p>Após lesão de um nervo periférico, o corpo celular do neurônio sensorial no gânglio da raiz dorsal aumenta a transcrição e o tráfego axonal dessas isoformas específicas, e elas passam a se acumular de forma anômala tanto no local da lesão quanto ao longo de todo o axônio danificado. O resultado é a formação de <em>neuromas</em> funcionais: pontos com densidade extraordinariamente alta de canais de sódio, capazes de gerar potenciais de ação de forma espontânea, repetitiva, sem qualquer estímulo externo — os chamados focos ectópicos. É essa atividade ectópica, autônoma e descontrolada, que o paciente sente como choque, queimação ou pontada espontânea.</p>
+<p>Isso é o racional direto para o uso de bloqueadores de canais de sódio como a <span class="drug">carbamazepina</span>: ao estabilizar esses canais em conformação inativa, o fármaco reduz preferencialmente o disparo de alta frequência desses focos hiperexcitáveis, sem abolir a condução nervosa normal, que dispara em frequências muito mais baixas.</p>
+</div>
+
+<h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.55rem; color:var(--text-primary); margin:2rem 0 .8rem;">2 · Aumento da subunidade α2δ dos canais de cálcio voltagem-dependentes</h3>
+<div class="card" style="--accent:var(--c-fisiopatologia)">
+<p>Os canais de cálcio voltagem-dependentes do tipo N, localizados nos terminais pré-sinápticos dos neurônios aferentes primários no corno dorsal da medula, são responsáveis por converter a chegada de um potencial de ação em liberação de neurotransmissor: a despolarização abre o canal, o Ca²⁺ entra, e esse influxo dispara a fusão das vesículas sinápticas carregadas de glutamato, substância P e CGRP com a membrana pré-sináptica.</p>
+<p>Esses canais não funcionam sozinhos — dependem de subunidades auxiliares, entre elas a subunidade α2δ, que regula o tráfego do canal até a membrana plasmática e module sua cinética de abertura. Após lesão nervosa periférica, há um aumento robusto na expressão dessa subunidade nos terminais centrais dos neurônios sensoriais lesionados, e mais canais de cálcio funcionais na membrana significam mais neurotransmissor excitatório liberado por potencial de ação que chega — o sinal doloroso é, literalmente, amplificado na sinapse.</p>
+<p>É esse achado específico — não um excesso de cálcio genérico, mas o aumento seletivo dessa subunidade — que justifica o uso da <span class="drug">gabapentina</span> e da <span class="drug">pregabalina</span>, fármacos desenhados para se ligar exatamente na α2δ e reduzir essa liberação amplificada de neurotransmissor.</p>
+</div>
+
+<h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.55rem; color:var(--text-primary); margin:2rem 0 .8rem;">3 · Redução da inibição descendente (locus coeruleus)</h3>
+<div class="card" style="--accent:var(--c-fisiopatologia)">
+<p>A dor não é processada apenas de baixo para cima. Existe um sistema robusto de modulação descendente que nasce em núcleos do tronco encefálico — principalmente a substância cinzenta periaquedutal e, de particular interesse aqui, o <em>locus coeruleus</em>, principal núcleo noradrenérgico do sistema nervoso central — e desce pela medula espinhal até o corno dorsal, onde libera noradrenalina que ativa receptores α2-adrenérgicos inibitórios nos próprios terminais aferentes e nos neurônios de segunda ordem. Esse sistema funciona como um "freio" endógeno da dor, silenciando parcialmente a transmissão nociceptiva mesmo antes que ela alcance níveis mais altos de processamento.</p>
+<p>Na dor neuropática crônica, esse sistema de freio descendente fica funcionalmente deficiente — seja por esgotamento, seja por alterações plásticas no próprio <em>locus coeruleus</em>. O resultado prático é que o mesmo estímulo aferente, que antes seria parcialmente amortecido, agora chega quase sem filtro aos centros superiores.</p>
+<p>Esse é o racional mecanístico central para o uso de fármacos que aumentam a disponibilidade sináptica de noradrenalina no corno dorsal: a <span class="drug">amitriptilina</span> e a <span class="drug">duloxetina</span> reforçam farmacologicamente esse freio descendente debilitado, e mesmo o <span class="drug">tramadol</span> — um opioide atípico — contribui parcialmente por essa mesma via, já que também inibe a recaptação de noradrenalina e serotonina além de agonizar receptores μ.</p>
+</div>
+
+<h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.55rem; color:var(--text-primary); margin:2rem 0 .8rem;">4 · Redução da expressão de receptores opioides</h3>
+<div class="card" style="--accent:var(--c-fisiopatologia)">
+<p>Por fim, e talvez o achado mais clinicamente relevante para evitar prescrições inadequadas: após lesão nervosa periférica, há uma redução mensurável na expressão e no tráfego de receptores opioides μ nos terminais centrais dos neurônios aferentes primários lesionados. Isso significa que o próprio substrato molecular sobre o qual os opioides atuam está, em parte, "desligado" no contexto específico da dor neuropática.</p>
+<p>Isso não torna os opioides ineficazes na dor neuropática, mas explica, ao menos parcialmente, por que a eficácia analgésica costuma ser inferior à observada na dor nociceptiva aguda, e reforça por que o PCDT posiciona os opioides como segunda ou terceira linha nesse contexto — reservados para exacerbações, dor intratável de alta intensidade ou dor neuropática relacionada ao câncer, e sempre na menor dose efetiva, com reavaliação regular de risco-benefício.</p>
+</div>
+
+<details>
+<summary>Aprofunde-se — a biofísica da comporta de inativação dos canais Nav<span class="summary-label">nível 1</span></summary>
+<div class="details-body">
+<p>Vale entender minimamente a cinética de um canal de sódio voltagem-dependente para compreender por que os bloqueadores atuam seletivamente sobre neurônios hiperativos e poupam a condução nervosa normal — esse conceito será retomado com mais profundidade na seção 5, mas já vale plantar a semente aqui. O canal Nav percorre três estados conformacionais principais: em repouso (fechado, mas disponível para abrir), aberto (conduzindo Na⁺) e inativado (uma "alça de inativação" intracelular ocupa fisicamente o poro, tornando o canal insensível a uma nova despolarização, mesmo que o potencial de membrana já tenha retornado ao repouso). É apenas depois de um período de repouso adequado que o canal transita de volta do estado inativado para o estado fechado-disponível.</p>
+<p>Fármacos bloqueadores de canal de sódio se ligam preferencialmente ao estado inativado, com maior afinidade quanto mais tempo o canal permanece nesse estado — um fenômeno chamado bloqueio uso-dependente ou dependente de frequência. Neurônios que disparam potenciais de ação em altíssima frequência (como os focos ectópicos gerados por Nav1.7/1.8/1.3 hiperexpressos) passam mais tempo proporcional no estado inativado, e por isso acumulam mais fármaco ligado — o bloqueio se concentra exatamente onde a atividade patológica está ocorrendo, relativamente poupando a transmissão nervosa fisiológica de baixa frequência.</p>
+</div>
+</details>
+
+<details>
+<summary>Aprofunde-se — sensibilização central e o papel do NMDA<span class="summary-label">nível 1</span></summary>
+<div class="details-body">
+<p>Os quatro mecanismos acima descrevem principalmente eventos periféricos e no corno dorsal superficial. Mas a dor neuropática crônica também envolve sensibilização central — um fenômeno de plasticidade sináptica no próprio corno dorsal, no qual a liberação repetida e intensa de glutamato ativa não apenas receptores AMPA (responsáveis pela transmissão sináptica rápida basal), mas também desbloqueia receptores NMDA, que em condições normais ficam obstruídos por um íon Mg²⁺ preso no poro. A despolarização sustentada expulsa esse Mg²⁺, permitindo influxo maciço de Ca²⁺ pelo NMDA, o que desencadeia cascatas intracelulares (ativação de CaMKII, PKC) que aumentam a sensibilidade sináptica de forma duradoura — o fenômeno de <em>wind-up</em> e, em sua forma mais estabelecida, de sensibilização central propriamente dita. Esse mecanismo ajuda a explicar a alodinia (dor a estímulos normalmente não dolorosos) e a hiperalgesia observadas clinicamente, e é também parte do racional, ainda que menos central nos slides, para o uso eventual de antagonistas NMDA como a cetamina em quadros refratários — fármaco fora do escopo deste material, mas que compartilha a mesma lógica fisiopatológica.</p>
+</div>
+</details>
+
+<!-- ================= SEÇÃO 3 — ABORDAGEM TERAPÊUTICA ================= -->
+<div class="section-header" style="--accent:var(--c-abordagem)">
+  <span class="tag">03 · Abordagem terapêutica</span>
+  <span class="line"></span>
+</div>
+<h2 class="section-title"><span class="accent-dot" style="color:var(--c-abordagem)">◆</span> Da avaliação à escolha do fármaco</h2>
+<p class="section-kicker">Antes de qualquer prescrição, o PCDT lembra algo que é fácil esquecer em meio à farmacologia: nem toda dor crônica se resolve com comprimido.</p>
+
+<div class="card" style="--accent:var(--c-abordagem)">
+<p>O tratamento não farmacológico não é um adendo simbólico — ele é reconhecidamente uma abordagem relevante e deve ser considerado em paralelo, não depois, da farmacoterapia. Programas educativos ajudam o paciente a entender sua própria condição, o que por si só reduz catastrofização e ansiedade relacionada à dor; atividade física, condicionamento físico e cinesioterapia mobilizam o sistema de analgesia endógena, incluindo liberação de opioides endógenos e ativação das próprias vias inibitórias descendentes que discutimos na seção anterior; a acupuntura tem evidência para modulação segmentar e supraespinhal da dor; e a terapia cognitivo-comportamental atua diretamente sobre os componentes centrais de processamento e catastrofização da dor, particularmente relevante na dor nociplástica, onde a origem do problema é, por definição, o processamento central.</p>
+</div>
+
+<h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.55rem; color:var(--text-primary); margin:2rem 0 .8rem;">A escada farmacológica muda conforme o tipo de dor</h3>
+<div class="card" style="--accent:var(--c-abordagem)">
+<p>Para dor nociceptiva, o raciocínio segue uma lógica escalonada clássica, semelhante à escada analgésica da OMS: começa-se com não opioides (paracetamol, dipirona, AINEs) associados ou não a um adjuvante; sobe-se para opioides fracos como a codeína em dor leve a moderada; e reserva-se opioides fortes como morfina e metadona para dor moderada a intensa, sempre com parcimônia na dor crônica não oncológica, já que a eficácia e a segurança do uso prolongado permanecem incertas nesse contexto.</p>
+<p>Para dor neuropática e nociplástica, a lógica se inverte completamente: a terapia de primeira linha já é um antidepressivo (tricíclico ou IRSN) ou um anticonvulsivante — não um analgésico simples, e muito menos um opioide de imediato. Os opioides entram apenas como segunda ou terceira linha, tipicamente quando outras opções são inadequadas para dor intensa o suficiente para exigir tratamento potencialmente diário e de longo prazo, sempre limitando dose e duração e vinculando o uso a metas objetivas de funcionalidade.</p>
+</div>
+
+<div class="alert" style="--accent:var(--c-abordagem)">
+<span class="alert-icon">⚠</span>
+<div class="alert-body">
+<span class="alert-title">Ponto de atenção — dor nociplástica e opioides</span>
+<p>Na dor nociplástica, o PCDT é ainda mais restritivo: os opioides costumam <em>piorar</em> o quadro, e devem ser evitados sempre que outras opções de tratamento multidisciplinar não tenham sido testadas de forma sistemática, suficiente e consistente. Isso é coerente com o conceito de hiperalgesia induzida por opioides, um fenômeno paradoxal em que a exposição opioide sensibiliza ainda mais o sistema nervoso central já hiperexcitável — o oposto do efeito pretendido.</p>
+</div>
+</div>
+
+<p style="color:var(--text-secondary); font-size:.97rem; margin-top:1.5rem;">A decisão de qual terapia inicial escolher, segundo o próprio PCDT, não é padronizada e cega — deve considerar a condição de dor conhecida, as comorbidades do paciente, os medicamentos concomitantes em uso, o perfil de efeitos colaterais de cada fármaco, o custo e a preferência do paciente quanto à frequência de dosagem. É exatamente esse racional individualizado que estrutura as próximas duas seções: entender profundamente o mecanismo e o perfil de efeitos adversos de cada classe é o que permite essa escolha personalizada.</p>
+
+<!-- ================= SEÇÃO 4 — ANTIDEPRESSIVOS ================= -->
+<div class="section-header" style="--accent:var(--c-antidepressivos)">
+  <span class="tag">04 · Antidepressivos</span>
+  <span class="line"></span>
+</div>
+<h2 class="section-title"><span class="accent-dot" style="color:var(--c-antidepressivos)">◆</span> Antidepressivos na farmacoterapia da dor</h2>
+<p class="section-kicker">O nome da classe engana. Um antidepressivo analgésico não está "tratando a depressão que acompanha a dor" — ele está agindo, com um mecanismo e um tempo de resposta próprios, diretamente sobre a via da dor.</p>
+
+<h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.65rem; color:var(--c-antidepressivos); margin:2rem 0 .8rem;">4.1 · Mecanismo geral dos fármacos antidepressivos</h3>
+<div class="card" style="--accent:var(--c-antidepressivos)">
+<p>No terminal pré-sináptico, o triptofano é convertido, pela triptofano-hidroxilase, em serotonina (5-HT), enquanto a tirosina é convertida, pela tirosina-hidroxilase, em norepinefrina — passando por dopamina como intermediário. Ambos os neurotransmissores são armazenados em vesículas e liberados na fenda sináptica mediante um potencial de ação. Depois de exercerem sua ação sobre receptores pós-sinápticos, a maior parte é removida da fenda por recaptação ativa de volta ao neurônio pré-sináptico, através de transportadores específicos: o SERT (transportador de serotonina) e o NET (transportador de noradrenalina). Uma fração do neurotransmissor recapturado é reciclada em novas vesículas; outra fração é degradada pela monoamina oxidase A (MAO-A) mitocondrial em metabólitos inativos.</p>
+<p>É exatamente sobre esse ciclo de recaptação que a maioria dos antidepressivos atua: eles bloqueiam o SERT, o NET, ou ambos, impedindo a remoção do neurotransmissor da fenda sináptica e, portanto, aumentando sua disponibilidade para continuar estimulando receptores pós-sinápticos.</p>
+</div>
+
+<div class="alert" style="--accent:var(--c-antidepressivos)">
+<span class="alert-icon">⏱</span>
+<div class="alert-body">
+<span class="alert-title">Por que o efeito demora a aparecer?</span>
+<p>Se o bloqueio do transportador é imediato, por que o efeito terapêutico de um antidepressivo demora dias a semanas para se manifestar? A resposta está nos receptores inibitórios pré-sinápticos — os autorreceptores α2-adrenérgicos e os heterorreceptores/autorreceptores 5-HT1A. Antes do tratamento, esses receptores já exercem um freio constante sobre a própria liberação de neurotransmissor. No efeito agudo do fármaco, o bloqueio da recaptação de fato aumenta a concentração de neurotransmissor na fenda — mas boa parte desse excesso imediatamente ativa esses mesmos autorreceptores inibitórios, que respondem reduzindo ainda mais a liberação pré-sináptica. O resultado líquido inicial é uma resposta pós-sináptica apenas modesta.</p>
+<p>É somente com o uso crônico que esses autorreceptores sofrem dessensibilização e down-regulation — um processo de neuroadaptação que exige tempo, e que se acompanha da síntese de neurotrofinas como o BDNF, um processo que leva por volta de duas semanas (KATZUNG, 15 ed., 2021). Só então a liberação de neurotransmissor deixa de ser autolimitada, a atividade do receptor pós-sináptico aumenta de fato, e surge a resposta terapêutica plena.</p>
+</div>
+</div>
+
+<details>
+<summary>Aprofunde-se — o efeito analgésico não segue o mesmo cronograma do efeito antidepressivo<span class="summary-label">nível 1</span></summary>
+<div class="details-body">
+<p>Este é um dos pontos mais importantes — e mais frequentemente mal compreendidos — de toda essa farmacologia: a analgesia induzida por antidepressivos na dor neuropática não segue a mesma cinética temporal da melhora do humor. Enquanto o efeito antidepressivo caracteristicamente leva de duas a quatro semanas para se manifestar a partir do início do fármaco — podendo levar de seis a doze semanas, incluindo duas semanas na dose máxima tolerada, para um ensaio terapêutico adequado com um tricíclico — o efeito analgésico sobre dor crônica pode se manifestar em questão de poucos dias a uma semana (OBATA, 2017; ONGHENA; VAN HOUDENHOVE, 1992).</p>
+<p>Essa dissociação temporal é a evidência mais forte de que o mecanismo analgésico dos antidepressivos é <em>diferente</em> do mecanismo que medeia seu efeito sobre o humor — não é simplesmente "o paciente ficou menos deprimido e por isso sente menos dor". De fato, os antidepressivos inibem a dor neuropática mesmo em pacientes que não estão em estado depressivo (OBATA, 2017). O racional mais aceito, coerente com o que vimos na seção 2, é que a analgesia depende primariamente do aumento agudo de noradrenalina no corno dorsal da medula espinhal, reforçando diretamente a via inibitória descendente do <em>locus coeruleus</em> — um efeito que não exige as semanas de neuroadaptação central necessárias para a resposta antidepressiva propriamente dita (VAN RENSBURG; REUTER, 2019).</p>
+</div>
+</details>
+
+<h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.65rem; color:var(--c-antidepressivos); margin:2.5rem 0 .8rem;">4.2 · Antidepressivos tricíclicos (ADT)</h3>
+<div class="card" style="--accent:var(--c-antidepressivos)">
+<h3><span class="accent-text">Representantes e mecanismo</span></h3>
+<p>Os principais representantes usados na dor são a <span class="drug">amitriptilina</span>, a <span class="drug">nortriptilina</span> (seu metabólito ativo, também disponível como fármaco isolado) e a <span class="drug">clomipramina</span>. O efeito analgésico decorre de dois mecanismos combinados: a inibição da recaptação neuronal de noradrenalina e serotonina — aumentando a oferta de ambas no corno dorsal da medula, reforçando a inibição descendente — e o bloqueio de canais de sódio voltagem-dependentes, um efeito tipo anestésico local/estabilizador de membrana que contribui tanto para a analgesia quanto, infelizmente, para a cardiotoxicidade que discutiremos a seguir.</p>
+</div>
+
+<h4 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.3rem; color:var(--text-primary); margin:1.6rem 0 .6rem;">Efeitos adversos — organizados por receptor bloqueado</h4>
+<div class="card" style="--accent:var(--c-antidepressivos)">
+<p>A melhor forma de memorizar os efeitos adversos dos ADTs não é decorar uma lista solta, mas entender que cada efeito colateral é a consequência previsível do bloqueio de um receptor específico, além da inibição de recaptação de monoaminas que já discutimos:</p>
+<ul>
+<li><em>Bloqueio de receptores H1 (histamínicos):</em> sedação e ganho de peso. Esse efeito é menos pronunciado com a desipramina e a nortriptilina, o que as torna opções preferíveis quando a sedação é indesejável.</li>
+<li><em>Bloqueio de receptores α1-adrenérgicos:</em> hipotensão ortostática/postural, particularmente nos primeiros dias de uso e especialmente relevante em idosos, população em que o risco de queda associado é clinicamente significativo.</li>
+<li><em>Bloqueio de receptores muscarínicos (efeito anticolinérgico):</em> xerostomia, visão embaçada, taquicardia, retenção urinária e constipação intestinal — o clássico conjunto de sintomas anticolinérgicos.</li>
+<li><em>Bloqueio de canais de sódio (cardiotoxicidade):</em> risco de arritmias ventriculares, decorrente da combinação entre o bloqueio muscarínico e um efeito "quinidina-símile" sobre canais de sódio cardíacos — o mesmo mecanismo estabilizador de membrana que contribui para a analgesia também pode prolongar a condução cardíaca e favorecer arritmias em superdosagem ou em pacientes com doença cardíaca de base.</li>
+<li><em>Risco de convulsões:</em> também reduzido com desipramina e nortriptilina em comparação aos demais ADTs.</li>
+</ul>
+</div>
+
+<div class="alert" style="--accent:var(--c-antidepressivos)">
+<span class="alert-icon">☾</span>
+<div class="alert-body">
+<span class="alert-title">Correlação clínica — por que prescrever à noite</span>
+<p>Justamente por conta do perfil sedativo e hipotensor, recomenda-se o uso de ADT no período noturno (KATZUNG, 15 ed., 2021) — isso transforma um efeito adverso incômodo durante o dia em um benefício terapêutico indireto (auxílio ao sono), além de reduzir o risco de quedas por hipotensão ortostática durante as atividades diurnas.</p>
+</div>
+</div>
+
+<h4 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.3rem; color:var(--text-primary); margin:1.6rem 0 .6rem;">Interações farmacológicas</h4>
+<div class="card" style="--accent:var(--c-antidepressivos)">
+<p>Os ADTs são substratos da enzima CYP2D6, e suas concentrações séricas tendem a se elevar na presença de inibidores dessa enzima — entre os mais relevantes estão a bupropiona, a fluoxetina, a paroxetina e a sertralina (KATZUNG, 15 ed., 2021; GOODMAN, 14 ed., 2022). Coadministrar amitriptilina com fluoxetina, por exemplo, pode elevar significativamente as concentrações plasmáticas do tricíclico, com relatos de convulsão, delirium e até fatalidade atribuída à toxicidade crônica por amitriptilina potencializada por fluoxetina.</p>
+<p>Além da interação farmacocinética via CYP2D6, existe uma interação farmacodinâmica igualmente importante: qualquer fármaco que aumente os níveis sinápticos de serotonina — ISRS, IRSN ou inibidores da MAO — combinado a um ADT eleva o risco de síndrome serotoninérgica, por potencialização da hiperestimulação de receptores 5-HT1A e 2A no tronco encefálico.</p>
+</div>
+
+<div class="alert" style="--accent:var(--c-antidepressivos)">
+<span class="alert-icon">✕</span>
+<div class="alert-body">
+<span class="alert-title">Síndrome serotoninérgica — reconhecer é vital</span>
+<p>É uma condição potencialmente fatal associada ao aumento da atividade serotoninérgica. A apresentação clínica clássica combina agitação, tremor, hiperatividade muscular com clônus, hipertermia (temperatura acima de 38,5°C) e, nos casos graves, colapso cardiovascular. O manejo é fundamentalmente de suporte, com sedação preferencialmente por benzodiazepínicos; em hipertermia acima de 41,1°C, considera-se intubação. Um ponto de prova clássico: agentes antipiréticos como o paracetamol são ineficazes nesse contexto — a hipertermia aqui não é mediada por prostaglandinas hipotalâmicas, mas por hiperatividade muscular periférica, e por isso não respondem à via de ação do paracetamol. A ciproeptadina, um antagonista de receptores de histamina e serotonina, é reservada para pacientes em que benzodiazepínicos e cuidados de suporte não corrigem a agitação e os sinais vitais (UpToDate — Serotonin syndrome, 2025).</p>
+</div>
+</div>
+
+<details>
+<summary>Aprofunde-se — síndrome de descontinuação dos ADTs<span class="summary-label">nível 1</span></summary>
+<div class="details-body">
+<p>Os ADTs, quando suspensos abruptamente após uso prolongado, associam-se a uma síndrome de retirada caracterizada por rebote colinérgico — já que o uso crônico induz uma espécie de compensação com up-regulation de receptores muscarínicos, que ficam subitamente "descobertos" quando o bloqueio farmacológico é removido de forma súbita — somado a sintomas gripais inespecíficos (KATZUNG, 15 ed., 2021). Isso reforça, na prática clínica, a importância de sempre reduzir a dose de forma gradual ao suspender um tricíclico, nunca interrompendo de forma abrupta.</p>
+</div>
+</details>
+
+<h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.65rem; color:var(--c-antidepressivos); margin:2.5rem 0 .8rem;">4.3 · Inibidores da recaptação de serotonina e noradrenalina (IRSN)</h3>
+<div class="card" style="--accent:var(--c-antidepressivos)">
+<p>Os principais representantes usados na dor são a <span class="drug">venlafaxina</span> (cujo principal metabólito ativo é a desvenlafaxina) e a <span class="drug">duloxetina</span>, surgidas no final da década de 1990 como uma evolução farmacológica dos tricíclicos. O mecanismo analgésico é conceitualmente idêntico ao dos ADTs — inibição da recaptação de 5-HT e NA, aumentando a oferta de ambas no corno dorsal da medula espinhal — mas os IRSNs carecem dos efeitos anti-histamínicos, bloqueadores α-adrenérgicos e anticolinérgicos que caracterizam os tricíclicos (KATZUNG, 15 ed., 2021; GOODMAN, 13 ed., 2018). É essa "limpeza" farmacológica — manter o mecanismo analgésico útil, descartar a bagagem de receptores indesejados — que torna os IRSNs, de forma geral, mais bem tolerados.</p>
+</div>
+
+<div class="card" style="--accent:var(--c-antidepressivos)">
+<h3><span class="accent-text">Efeitos adversos</span></h3>
+<p>Sem o bloqueio anticolinérgico, anti-histamínico e α-adrenérgico, o perfil de efeitos adversos passa a ser dominado por dois eixos: o serotonérgico e o noradrenérgico.</p>
+<ul>
+<li><em>Eixo serotonérgico:</em> o aumento da atividade serotonérgica no trato gastrintestinal está comumente associado a náuseas, desconforto gastrintestinal e diarreia — o mesmo perfil visto com os ISRS puros, já que o trato GI é extremamente rico em receptores serotonérgicos (5-HT3, entre outros) envolvidos na motilidade e nas náuseas. Disfunção sexual também é comum, compartilhada com os ISRS.</li>
+<li><em>Eixo noradrenérgico:</em> o bloqueio do NET aumenta a disponibilidade sistêmica de noradrenalina, o que pode se traduzir em aumento da pressão arterial e da frequência cardíaca, além de ativação do sistema nervoso central — insônia, ansiedade e agitação.</li>
+</ul>
+</div>
+
+<div class="alert" style="--accent:var(--c-antidepressivos)">
+<span class="alert-icon">↷</span>
+<div class="alert-body">
+<span class="alert-title">Síndrome de descontinuação — atenção especial à venlafaxina</span>
+<p>Todos os IRSNs foram associados a uma síndrome de retirada abrupta, mas a venlafaxina merece atenção redobrada por sua meia-vida curta, que faz os sintomas surgirem rapidamente após uma dose esquecida ou uma suspensão brusca (GOODMAN, 13 ed., 2018). O quadro é semelhante ao observado com a descontinuação de ISRS: tontura, cefaleia, nervosismo, náuseas e insônia (KATZUNG, 15 ed., 2021; GOODMAN, 13 ed., 2018) — reforçando, mais uma vez, que a redução de dose deve ser sempre gradual.</p>
+</div>
+</div>
+
+<h4 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.3rem; color:var(--text-primary); margin:1.6rem 0 .6rem;">Qual antidepressivo tem mais evidência para dor neuropática?</h4>
+<div class="card-grid">
+  <div class="mini-card" style="--accent:var(--c-antidepressivos)">
+    <h4>ADTs de amina terciária</h4>
+    <p>Amitriptilina, doxepina, imipramina — <em>eficácia</em> comprovada, <em>suporte de evidência</em> alto, mas <em>efeitos colaterais</em> também altos (JANAKIRAMAN et al., 2016).</p>
+  </div>
+  <div class="mini-card" style="--accent:var(--c-antidepressivos)">
+    <h4>Venlafaxina e duloxetina</h4>
+    <p>Eficácia comprovada, suporte de evidência moderado, mas com perfil de efeitos colaterais consideravelmente mais favorável — por isso frequentemente preferidos como primeira escolha prática.</p>
+  </div>
+  <div class="mini-card" style="--accent:var(--c-antidepressivos)">
+    <h4>ADTs de amina secundária</h4>
+    <p>Desipramina, nortriptilina — eficácia comprovada, evidência moderada, efeitos colaterais altos, ainda que tipicamente menores que os da amitriptilina.</p>
+  </div>
+  <div class="mini-card" style="--accent:var(--c-antidepressivos)">
+    <h4>Fluoxetina</h4>
+    <p>Sem eficácia demonstrada para dor neuropática. É a exceção que confirma a regra: um ISRS "puro", sem ação noradrenérgica relevante, falha justamente onde o componente noradrenérgico é o mais importante para a analgesia.</p>
+  </div>
+</div>
+<p style="color:var(--text-tertiary); font-size:.85rem; font-style:italic; margin-top:-.5rem;">Síntese baseada em Janakiraman, Raguraman &amp; Hamilton, Laura &amp; Wan, Aston (2016), com dados originalmente reproduzidos de Sansone &amp; Sansone (2008).</p>
+
+<details>
+<summary>Aprofunde-se — por que a fluoxetina não funciona, mas a duloxetina sim<span class="summary-label">nível 1</span></summary>
+<div class="details-body">
+<p>Essa diferença de eficácia entre a fluoxetina (ISRS puro) e a duloxetina (IRSN) é, na verdade, a peça de evidência mais elegante de todo o racional apresentado nesta seção. Se a analgesia dependesse apenas de aumentar a serotonina, ambos os fármacos deveriam funcionar igualmente bem — afinal, os dois bloqueiam potentemente o SERT. O fato de a fluoxetina falhar e a duloxetina funcionar aponta diretamente para a noradrenalina, e não a serotonina isoladamente, como o eixo farmacológico dominante da analgesia mediada por antidepressivos na dor neuropática. Isso é coerente com a fisiopatologia da seção 2: o freio descendente deficiente que precisa ser reforçado é primariamente noradrenérgico, originado no <em>locus coeruleus</em>. A síntese mais aceita na literatura é que "o principal mecanismo dos antidepressivos que inibem a dor neuropática é, primeiro, aumentar a noradrenalina na medula espinhal e, segundo, atuar no <em>locus coeruleus</em>, inibindo diretamente a dor e ativando o sistema inibidor noradrenérgico descendente prejudicado. A serotonina, também aumentada no sistema nervoso central, potencializa os efeitos inibitórios da noradrenalina de maneira auxiliar" (VAN RENSBURG; REUTER, 2019).</p>
+</div>
+</details>
+
+<!-- ================= SEÇÃO 5 — ANTICONVULSIVANTES ================= -->
+<div class="section-header" style="--accent:var(--c-anticonvulsivantes)">
+  <span class="tag">05 · Anticonvulsivantes</span>
+  <span class="line"></span>
+</div>
+<h2 class="section-title"><span class="accent-dot" style="color:var(--c-anticonvulsivantes)">◆</span> Anticonvulsivantes na farmacoterapia da dor</h2>
+<p class="section-kicker">Se os antidepressivos reforçam o freio descendente, os anticonvulsivantes atacam diretamente a hiperexcitabilidade da membrana neuronal — seja no canal de sódio, seja no de cálcio, seja em ambos.</p>
+
+<h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.65rem; color:var(--c-anticonvulsivantes); margin:2rem 0 .8rem;">5.1 · Bloqueadores de canais de sódio voltagem-dependentes</h3>
+<div class="card" style="--accent:var(--c-anticonvulsivantes)">
+<p>Os representantes dessa classe são a <span class="drug">carbamazepina</span>, a <span class="drug">fenitoína</span> e a <span class="drug">oxcarbazepina</span>. Como já introduzimos na seção 2, esses fármacos estabilizam o canal de sódio voltagem-dependente na sua conformação inativa — insensível a uma nova ativação — impedindo que o canal retorne à conformação de repouso disponível para disparar novamente. Como esse bloqueio é uso-dependente (maior afinidade pelo estado inativado, que predomina em neurônios disparando em alta frequência), o efeito recai preferencialmente sobre os focos ectópicos hiperativos gerados pelo acúmulo patológico de Nav1.7/1.8/1.3, poupando relativamente a transmissão nervosa fisiológica.</p>
+<p>Isso pode ser visualizado experimentalmente em registros intracelulares: na ausência de fármaco, um pulso de corrente despolarizante sustentado gera uma série repetitiva de potenciais de ação de alta frequência que preenche toda a duração do estímulo; na presença de fenitoína, carbamazepina ou valproato de sódio, o número de potenciais de ação evocados pelo mesmo pulso cai drasticamente — o disparo de alta frequência é seletivamente suprimido.</p>
+</div>
+
+<div class="clinical-strip" style="--accent:var(--c-anticonvulsivantes)">
+<span class="cs-label">uso clínico principal</span>
+<p>A carbamazepina é a primeira linha clássica para neuralgia do trigêmeo — uma das dores mais intensas conhecidas na prática clínica — e pode ser considerada também para dor neuropática de outras origens.</p>
+</div>
+
+<h4 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.3rem; color:var(--text-primary); margin:1.8rem 0 .6rem;">Perfil de efeitos adversos por fármaco</h4>
+<div class="card-grid">
+  <div class="mini-card" style="--accent:var(--c-anticonvulsivantes)">
+    <h4>Fenitoína</h4>
+    <p>Hipertrofia gengival (relatada em até 20% dos pacientes em uso crônico), acentuação das características faciais (nariz alargado, lábios grossos, espessamento da pele facial e do couro cabeludo — reversível meses após a suspensão), confusão, fala arrastada, visão dupla e ataxia. Farmacocinética não linear — pequenos aumentos de dose podem gerar elevações desproporcionais da concentração sérica, exigindo monitorização cuidadosa. Potente indutor de CYP (por exemplo, CYP3A4).</p>
+  </div>
+  <div class="mini-card" style="--accent:var(--c-anticonvulsivantes)">
+    <h4>Carbamazepina</h4>
+    <p>Náuseas, vômitos, diarreia, hiponatremia, erupção cutânea e prurido; sonolência, tontura, visão turva ou dupla, letargia, cefaleia — e pode, paradoxalmente, agravar crises de ausência em pacientes epilépticos. Induz suas próprias enzimas de metabolização (autoindução), além de CYP2C, CYP3A e UGT.</p>
+  </div>
+</div>
+<div class="card-grid">
+  <div class="mini-card" style="--accent:var(--c-anticonvulsivantes)">
+    <h4>Oxcarbazepina</h4>
+    <p>Náusea, erupção cutânea, hiponatremia; sedação, cefaleia, tontura, vertigem, ataxia, diplopia. É um pró-fármaco, metabolizado a eslicarbazepina, e é um indutor enzimático menos potente que a carbamazepina — vantagem prática em pacientes polimedicados.</p>
+  </div>
+  <div class="mini-card" style="--accent:var(--c-anticonvulsivantes)">
+    <h4>Em comum</h4>
+    <p>Todos os três compartilham o risco de hiponatremia (mais pronunciado com carbamazepina e oxcarbazepina) e efeitos neurológicos dose-dependentes (sedação, ataxia, diplopia), refletindo o mesmo mecanismo de estabilização de membrana atuando também sobre neurônios sadios em doses mais altas.</p>
+  </div>
+</div>
+
+<details>
+<summary>Aprofunde-se — a hiperplasia gengival e a fácies fenitoínica<span class="summary-label">nível 1</span></summary>
+<div class="details-body">
+<p>Vale a pena visualizar mentalmente esses dois efeitos adversos característicos da fenitoína, porque são clássicos de prova e de reconhecimento clínico direto. A hiperplasia gengival ocorre por proliferação do tecido conjuntivo gengival, um efeito trófico do fármaco sobre fibroblastos que se acumula com o tempo de exposição — descrita em relatos de caso mesmo em pacientes jovens que iniciaram o fármaco na infância e mantiveram uso por décadas (MOHAN et al., <em>BMJ Case Reports</em>). Já a acentuação das características faciais — nariz alargado, lábios grossos, espessamento progressivo e indolor da pele da face, pálpebras e couro cabeludo — é um efeito de longo prazo, dose e tempo-dependente, que tende a regredir parcialmente meses após a descontinuação do fármaco, como demonstrado em relatos fotográficos de acompanhamento (MISHRIKI, 1998; SIRA et al., 2011). Ambos os achados reforçam um princípio importante: anticonvulsivantes bloqueadores de canal de sódio não são "inertes" fora do sistema nervoso — têm efeitos tróficos mensuráveis em tecido conjuntivo periférico.</p>
+</div>
+</details>
+
+<details>
+<summary>Aprofunde-se — teratogenicidade dos anticonvulsivantes<span class="summary-label">nível 1</span></summary>
+<div class="details-body">
+<p>Um ponto de altíssima relevância clínica, especialmente em mulheres em idade fértil: fenitoína, carbamazepina, valproato, topiramato e fenobarbital carregam risco teratogênico documentado, o que exige planejamento reprodutivo cuidadoso, suplementação de ácido fólico peri-concepcional e, sempre que possível, reavaliação da necessidade do fármaco antes de uma gestação planejada. O valproato, como veremos na seção 5.3, é o de maior risco entre esses, com associação bem estabelecida a defeitos de fechamento do tubo neural.</p>
+</div>
+</details>
+
+<h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.65rem; color:var(--c-anticonvulsivantes); margin:2.5rem 0 .8rem;">5.2 · Ligantes da subunidade α2δ (gabapentinoides)</h3>
+<div class="card" style="--accent:var(--c-anticonvulsivantes)">
+<p>A <span class="drug">gabapentina</span> e a <span class="drug">pregabalina</span> ligam-se à subunidade α2δ do canal de cálcio voltagem-dependente nos terminais nervosos, reduzindo a liberação de diversos neurotransmissores excitatórios — glutamato e noradrenalina entre eles — e de outros moduladores (RANG; DALE, 9 ed., 2020). Adicionalmente, esses fármacos também reduzem o próprio tráfego dos canais de cálcio que contêm essa subunidade até a membrana plasmática, diminuindo o número de canais funcionalmente disponíveis, não apenas bloqueando os já presentes.</p>
+<p>Esses canais têm localização pré-sináptica, exatamente no compartimento envolvido na exocitose de neurotransmissor — o que os coloca em posição estratégica para modular, na origem, a amplificação sináptica que descrevemos como o segundo achado fisiopatológico da seção 2.</p>
+</div>
+
+<div class="alert" style="--accent:var(--c-anticonvulsivantes)">
+<span class="alert-icon">✎</span>
+<div class="alert-body">
+<span class="alert-title">Um nome enganoso</span>
+<p>Apesar do nome "gabapentina" remeter ao GABA, esses fármacos não atuam sobre receptores GABAérgicos — foram originalmente sintetizados como análogos estruturais do GABA capazes de atravessar a barreira hematoencefálica, mas seu mecanismo de ação real, descoberto posteriormente, é a ligação à subunidade α2δ dos canais de cálcio, um alvo completamente distinto do sistema GABAérgico.</p>
+</div>
+</div>
+
+<div class="card-grid">
+  <div class="mini-card" style="--accent:var(--c-anticonvulsivantes)">
+    <h4>Gabapentina</h4>
+    <p>Efeitos sistêmicos pouco frequentes; sonolência, tontura e ataxia como principais efeitos neurológicos. Absorção intestinal saturável, o que gera farmacocinética não linear — a biodisponibilidade proporcionalmente cai à medida que a dose aumenta, exigindo fracionamento em múltiplas tomadas diárias.</p>
+  </div>
+  <div class="mini-card" style="--accent:var(--c-anticonvulsivantes)">
+    <h4>Pregabalina</h4>
+    <p>Ganho de peso, edema periférico e boca seca; tontura, sonolência, ataxia e tremor. Farmacocinética linear e absorção mais previsível, o que permite posologia mais simples (duas vezes ao dia) e início de ação mais rápido que a gabapentina.</p>
+  </div>
+</div>
+
+<div class="card" style="--accent:var(--c-anticonvulsivantes)">
+<p>Um diferencial farmacológico importante dessa classe é o baixo potencial de interações medicamentosas — ambos os fármacos são eliminados predominantemente por via renal inalterada, sem envolvimento relevante do sistema CYP450, o que os torna particularmente atrativos em pacientes polimedicados ou idosos com múltiplas comorbidades.</p>
+</div>
+
+<div class="alert" style="--accent:var(--c-anticonvulsivantes)">
+<span class="alert-icon">⌛</span>
+<div class="alert-body">
+<span class="alert-title">Paciência terapêutica</span>
+<p>Geralmente é necessário um período de teste de dois a três meses para ajustar a dose até obter o efeito desejado e avaliar adequadamente a resposta à terapia inicial — um paciente que interrompe o gabapentinoide após poucos dias por "falta de efeito" provavelmente nunca chegou perto de uma dose ou de um tempo de exposição terapêuticos. Evitar opioides continua sendo a recomendação de base enquanto esse ajuste é conduzido (UpToDate — Management of diabetic neuropathy, 2026).</p>
+</div>
+</div>
+
+<h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.65rem; color:var(--c-anticonvulsivantes); margin:2.5rem 0 .8rem;">5.3 · Fármacos de mecanismo misto</h3>
+<div class="card" style="--accent:var(--c-anticonvulsivantes)">
+<p>O <span class="drug">topiramato</span> e o <span class="drug">valproato de sódio</span> (junto de seu congênere, o ácido valproico) não têm um único alvo molecular — eles atuam simultaneamente sobre múltiplos sistemas, o que explica tanto sua versatilidade terapêutica quanto seu perfil de efeitos adversos mais amplo:</p>
+<ul>
+<li>Bloqueio de canais de sódio — compartilhado por valproato e topiramato, pelo mesmo racional já descrito.</li>
+<li>Bloqueio de canais de cálcio tipo T — exclusivo do valproato, relevante sobretudo em crises de ausência.</li>
+<li>Inibição da GABA-transaminase — exclusivo do valproato, reduzindo a degradação do GABA e, portanto, aumentando sua disponibilidade sináptica inibitória.</li>
+<li>Bloqueio de receptores AMPA — exclusivo do topiramato, reduzindo a transmissão glutamatérgica excitatória rápida.</li>
+<li>Modulação alostérica positiva do receptor GABA-A — exclusivo do topiramato, potencializando a inibição GABAérgica por outra via.</li>
+</ul>
+</div>
+
+<div class="card-grid">
+  <div class="mini-card" style="--accent:var(--c-anticonvulsivantes)">
+    <h4>Topiramato</h4>
+    <p>Perda de peso e parestesias como marcas registradas; fadiga, nervosismo, dificuldade de concentração, confusão, sedação, anorexia, problemas de linguagem (dificuldade de encontrar palavras), ansiedade e alterações de humor.</p>
+  </div>
+  <div class="mini-card" style="--accent:var(--c-anticonvulsivantes)">
+    <h4>Valproato</h4>
+    <p>Ganho de peso, náuseas, vômitos, queda de cabelo e facilidade para hematomas; sedação e tremor. Inibe CYP2C9 e UGT — relevante para interações com outros fármacos metabolizados por essas vias.</p>
+  </div>
+</div>
+
+<details>
+<summary>Aprofunde-se — o mecanismo do ganho de peso induzido por valproato<span class="summary-label">nível 1</span></summary>
+<div class="details-body">
+<p>O ganho de peso associado ao valproato não é um efeito colateral inespecífico — há um mecanismo proposto relativamente bem descrito: um peso pré-tratamento mais elevado é o principal fator de risco para ganho de peso adicional durante a terapia com valproato; esse ganho parece ser mediado por hipoadiponectinemia induzida pelo fármaco (redução da adiponectina, hormônio secretado pelo tecido adiposo que normalmente sensibiliza os tecidos à insulina), que por sua vez favorece resistência à insulina, resultando em ganho de peso presumidamente via aumento do apetite. É uma cascata metabólica interessante de acompanhar: menos adiponectina → mais resistência insulínica → mais apetite → mais peso — um ciclo que tende a se autoperpetuar enquanto o fármaco continua em uso.</p>
+</div>
+</details>
+
+<div class="alert" style="--accent:var(--c-anticonvulsivantes)">
+<span class="alert-icon">⚠</span>
+<div class="alert-body">
+<span class="alert-title">Divalproato de sódio versus valproato de sódio</span>
+<p>O divalproato de sódio é um complexo de coordenação entre ácido valproico e valproato de sódio, em proporção 1:1 — não é apenas "outro nome comercial" para o mesmo fármaco. Essa formulação específica confere maior tempo de meia-vida (permitindo menor frequência de administrações ao longo do dia) e menor desconforto gastrintestinal em comparação ao valproato de sódio simples, o que na prática se traduz em melhor adesão terapêutica.</p>
+</div>
+</div>
+
+<h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.65rem; color:var(--c-anticonvulsivantes); margin:2.5rem 0 .8rem;">5.4 · Efeitos adversos de classe e interações farmacológicas</h3>
+<div class="card" style="--accent:var(--c-anticonvulsivantes)">
+<p>Além dos efeitos específicos de cada fármaco, vale reconhecer os padrões que atravessam toda a classe dos anticonvulsivantes clássicos — náuseas e êmese, sedação e sonolência, e ataxia aparecem, em maior ou menor grau, com praticamente todos eles, refletindo o mesmo princípio de que estabilizar membranas neuronais hiperexcitáveis também afeta, em alguma medida, neurônios normais em doses mais altas.</p>
+<p>Um efeito frequentemente subestimado é o impacto sobre a saúde óssea: os anticonvulsivantes indutores enzimáticos aumentam o catabolismo da vitamina D3 e reduzem os níveis plasmáticos de cálcio, contribuindo para osteoporose em uso crônico — um motivo a mais para monitorização laboratorial periódica e, quando indicado, suplementação em pacientes de uso prolongado.</p>
+</div>
+
+<div class="alert" style="--accent:var(--c-anticonvulsivantes)">
+<span class="alert-icon">⇄</span>
+<div class="alert-body">
+<span class="alert-title">Indução enzimática — o efeito cascata sobre outros fármacos</span>
+<p>As interações entre anticonvulsivantes, e entre anticonvulsivantes e outras classes farmacológicas, são relativamente frequentes — até 25% dos pacientes epilépticos utilizam mais de um fármaco anticonvulsivante simultaneamente. Carbamazepina, oxcarbazepina, fenitoína e fenobarbital são indutores das enzimas CYP3A4, CYP2C9 e CYP1A2. A CYP3A4, em particular, desempenha papel central no metabolismo de contraceptivos hormonais orais — o que significa que esses indutores podem reduzir a eficácia contraceptiva, uma orientação essencial a discutir com qualquer paciente em idade fértil. Vale notar que antiepilépticos de geração mais nova, como levetiracetam, gabapentina, zonisamida, lacosamida e retigabina, não alteram as concentrações séricas de etinilestradiol nem de progestógenos exógenos como o levonorgestrel — uma vantagem prática relevante na escolha do fármaco para essa população.</p>
+</div>
+</div>
+
+<!-- ================= SEÇÃO 6 — CORRELAÇÕES CLÍNICAS ================= -->
+<div class="section-header" style="--accent:var(--c-clinica)">
+  <span class="tag">06 · Correlações Clínicas</span>
+  <span class="line"></span>
+</div>
+<h2 class="section-title"><span class="accent-dot" style="color:var(--c-clinica)">◆</span> Da teoria ao paciente: três síndromes-chave</h2>
+<p class="section-kicker">Toda a farmacologia que construímos até aqui só ganha sentido clínico quando aplicada a síndromes dolorosas reais. Vamos percorrer três delas.</p>
+
+<h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.55rem; color:var(--c-clinica); margin:2rem 0 .8rem;">Neuropatia diabética</h3>
+<div class="card" style="--accent:var(--c-clinica)">
+<p>A hiperglicemia crônica lesiona fibras nervosas periféricas por múltiplos mecanismos concomitantes — dano microvascular aos vasa nervorum, estresse oxidativo e acúmulo de produtos finais de glicação avançada, entre outros — e o resultado clínico é uma polineuropatia sensitiva distal, tipicamente em "bota e luva", que se manifesta com os sintomas neuropáticos clássicos: queimação, choque, formigamento.</p>
+<p>O controle glicêmico é a intervenção que retarda a progressão da neuropatia e das demais complicações microvasculares do diabetes, variando conforme o tipo de diabetes; normalizar peso, pressão arterial e perfil lipídico também compõe a base do manejo, antes mesmo de qualquer fármaco analgésico entrar em cena.</p>
+</div>
+<div class="clinical-strip" style="--accent:var(--c-clinica)">
+<span class="cs-label">primeira linha farmacológica</span>
+<p>Antidepressivos (duloxetina, venlafaxina, amitriptilina e outros tricíclicos) e anticonvulsivantes gabapentinoides (pregabalina, gabapentina) — sempre com o período de teste de dois a três meses para ajuste de dose antes de considerar falha terapêutica, e evitando opioides como estratégia inicial (UpToDate — Management of diabetic neuropathy, 2026).</p>
+</div>
+
+<h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.55rem; color:var(--c-clinica); margin:2rem 0 .8rem;">Neuralgia do trigêmeo e neuralgia pós-herpética</h3>
+<div class="card" style="--accent:var(--c-clinica)">
+<p>Vale distinguir bem essas duas entidades, porque a escolha do fármaco de primeira linha depende diretamente da qualidade da dor predominante — reforçando, na prática, tudo que discutimos sobre mecanismo.</p>
+<p>A neuralgia do trigêmeo é caracterizada por crises paroxísticas e estereotipadas de dor intensa e lancinante, descrita como elétrica, em choque, aguda ou em pontadas, atingindo seu pico rapidamente no início da crise. Essa qualidade puramente neurálgica, paroxística, aponta diretamente para hiperexcitabilidade de membrana por focos ectópicos — e por isso a primeira linha é um anticonvulsivante bloqueador de canal de sódio, carbamazepina ou oxcarbazepina, com gabapentina ou lamotrigina como alternativas e adjuvantes.</p>
+<p>Na neuralgia pós-herpética, a farmacoterapia inicial é guiada pela predominância da dor: se predominantemente <em>neurálgica</em> (breve, recorrente, paroxística, elétrica, em choque), a primeira linha também são os anticonvulsivantes gabapentinoides, com antidepressivo tricíclico ou anticonvulsivante bloqueador de sódio como alternativa; se predominantemente <em>neuropática</em> (constante, em queimação), a primeira linha se inverte para um antidepressivo tricíclico, como amitriptilina ou nortriptilina, com gabapentinoide ou IRSN como alternativa.</p>
+</div>
+
+<details>
+<summary>Aprofunde-se — por que a qualidade da dor prediz o fármaco<span class="summary-label">nível 1</span></summary>
+<div class="details-body">
+<p>Essa lógica de escolher o fármaco pela qualidade descritiva da dor não é arbitrária — ela é, na verdade, uma aplicação direta e elegante de tudo que construímos na seção 2. Dor paroxística, elétrica, em choque, é a assinatura clínica de disparo ectópico de alta frequência a partir de focos hiperexcitáveis ricos em canais de sódio — por isso responde preferencialmente a um bloqueador de canal de sódio. Dor constante, em queimação, reflete mais um estado de sensibilização mantida e amplificação sináptica contínua no corno dorsal — o cenário em que reforçar a inibição descendente noradrenérgica (tricíclico) ou reduzir a liberação sináptica excitatória amplificada pela subunidade α2δ (gabapentinoide) tende a trazer mais benefício. Em outras palavras: a anamnese cuidadosa sobre a <em>qualidade</em> da dor já é, ela mesma, um teste fisiopatológico informal.</p>
+</div>
+</details>
+
+<h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.55rem; color:var(--c-clinica); margin:2rem 0 .8rem;">Fibromialgia</h3>
+<div class="card" style="--accent:var(--c-clinica)">
+<p>O sintoma definidor da fibromialgia é a dor generalizada ou em múltiplos locais — bilateral, acima e abaixo da cintura —, presente por pelo menos três meses e não atribuída a outra doença. Fadiga física e/ou mental, alterações de humor e distúrbios do sono compõem o quadro sintomático nuclear. Não há lesão tecidual nem lesão neural identificável — é o protótipo clínico da dor nociplástica, um estado de amplificação central do processamento doloroso.</p>
+<p>A primeira linha farmacológica reúne antidepressivos tricíclicos (amitriptilina), IRSN (duloxetina), anticonvulsivantes gabapentinoides (pregabalina, gabapentina) e um relaxante muscular, a ciclobenzaprina. A escolha entre essas opções é guiada pelos sintomas predominantes — dor, fadiga ou distúrbio do sono — e pela presença de comorbidades como transtornos de humor ou dor periférica associada. É importante alinhar expectativas: uma melhora significativa costuma levar vários meses para se manifestar, e AINEs, corticoides e opioides devem ser evitados, já que tendem a ser pouco eficazes e, no caso dos opioides, potencialmente deletérios nesse contexto nociplástico, como discutido na seção 3.</p>
+</div>
+
+<!-- ================= SEÇÃO 7 — SÍNTESE ================= -->
+<div class="section-header" style="--accent:var(--c-sintese)">
+  <span class="tag">07 · Síntese</span>
+  <span class="line"></span>
+</div>
+<h2 class="section-title"><span class="accent-dot" style="color:var(--c-sintese)">◆</span> Fechando o raciocínio</h2>
+<div class="card" style="--accent:var(--c-sintese)">
+<p>Se há uma ideia central para levar deste material, é esta: cada classe farmacológica que estudamos hoje foi escolhida para corrigir um mecanismo fisiopatológico específico, não para "tratar dor" de forma genérica. Um bloqueador de canal de sódio silencia focos ectópicos hiperexcitáveis. Um gabapentinoide reduz a liberação sináptica amplificada pela subunidade α2δ. Um antidepressivo reforça um freio descendente noradrenérgico que ficou deficiente. Nenhum desses três mecanismos é intercambiável com os outros — e é exatamente por isso que a escolha inicial não deveria ser aleatória, mas orientada pela apresentação clínica, pelas comorbidades do paciente, pelos medicamentos concomitantes, pelo perfil de efeitos adversos de cada fármaco, pelo custo e pela preferência do paciente quanto à frequência de dosagem, como o próprio PCDT recomenda.</p>
+<p>E, talvez o ponto mais contraintuitivo de toda a aula: entender que o efeito analgésico desses fármacos frequentemente precede — e é mecanisticamente distinto d — o efeito principal pelo qual eles foram originalmente desenvolvidos (humor, no caso dos antidepressivos; controle de crises convulsivas, no caso dos anticonvulsivantes) é o que transforma decorar uma lista de nomes em compreender, de fato, farmacologia clínica.</p>
+</div>
+
+<!-- ================= REFERÊNCIAS ================= -->
+<div class="section-header" style="--accent:var(--c-referencias)">
+  <span class="tag">Referências</span>
+  <span class="line"></span>
+</div>
+<h2 class="section-title" style="font-size:1.7rem;"><span class="accent-dot" style="color:var(--c-referencias)">◆</span> Referências</h2>
+<div class="card" style="--accent:var(--c-referencias)">
+<div class="ref-list">
+<p>BRASIL. Ministério da Saúde. Secretaria de Atenção Especializada à Saúde; Secretaria de Atenção Primária à Saúde; Secretaria de Ciência, Tecnologia e Inovação e do Complexo Econômico-Industrial da Saúde. Portaria Conjunta SAES/SAPS/SECTICS nº 1, de 22 de agosto de 2024. Aprova o Protocolo Clínico e Diretrizes Terapêuticas da Dor Crônica. Brasília, DF: Ministério da Saúde, 2024.</p>
+<p>CLEARE, A. et al. Evidence-based guidelines for treating depressive disorders with antidepressants: a revision of the 2008 British Association for Psychopharmacology guidelines. Journal of Psychopharmacology, v. 29, n. 5, p. 459-525, maio 2015.</p>
+<p>DRUGBANK. DrugBank Online. Disponível em: https://go.drugbank.com/. Acesso em: 20 ago. 2026.</p>
+<p>DRUGS.COM. Drug Interactions Checker. Disponível em: https://www.drugs.com/drug-interactions/. Acesso em: 20 ago. 2026.</p>
+<p>GOMEZ, A. Manual de anticonvulsivantes. 1. ed. [S.l.]: [s.n.], 2017.</p>
+<p>GOODMAN, L. S.; GILMAN, A. As bases farmacológicas da terapêutica de Goodman &amp; Gilman. 13. ed. Porto Alegre: AMGH, 2018.</p>
+<p>GOODMAN, L. S.; GILMAN, A. As bases farmacológicas da terapêutica de Goodman &amp; Gilman. 14. ed. Porto Alegre: AMGH, 2022.</p>
+<p>JANAKIRAMAN, R.; HAMILTON, L.; WAN, A. Unravelling the efficacy of antidepressants as analgesics. Australian Family Physician, v. 45, n. 3, p. 113-117, 2016.</p>
+<p>KATZUNG, B. G. Farmacologia básica e clínica. 15. ed. Porto Alegre: AMGH, 2021.</p>
+<p>MISHRIKI, Y. Y. When the face tells the tale. Postgraduate Medicine, v. 103, n. 3, p. 49-50, 1998. DOI: 10.3810/pgm.1998.03.415.</p>
+<p>MOHAN, R. P. S.; RASTOGI, K.; BHUSHAN, R. et al. Phenytoin induced gingival enlargement. BMJ Case Reports, 2013. DOI: 10.1136/bcr-2013-008679.</p>
+<p>OBATA, H. Analgesic mechanisms of antidepressants for neuropathic pain. International Journal of Molecular Sciences, v. 18, n. 11, p. 2483, nov. 2017. DOI: 10.3390/ijms18112483.</p>
+<p>ONGHENA, P.; VAN HOUDENHOVE, B. Antidepressant-induced analgesia in chronic non-malignant pain: a meta-analysis of 39 placebo-controlled studies. Pain, v. 49, n. 2, p. 205-219, 1992. DOI: 10.1016/0304-3959(92)90144-Z.</p>
+<p>RANG, H. P.; DALE, M. M. Rang &amp; Dale farmacologia. 9. ed. Rio de Janeiro: Elsevier, 2020.</p>
+<p>SEIZURE: European Journal of Epilepsy. Proposed underlying pathophysiological mechanism explaining valproate-induced weight gain. [S.l.]: Elsevier, 2017. DOI: 10.1016/j.seizure.2017.03.007.</p>
+<p>SIRA, M.; GILBERT, P.; SNEDDON, K.; AKINWUNMI, J.; MALHOTRA, R. Recognising phenytoin therapy as a cause of thickening of the eyelids and paranasal region. Journal of Plastic, Reconstructive &amp; Aesthetic Surgery, v. 64, n. 12, p. 1720-1721, 2011. DOI: 10.1016/j.bjps.2011.06.021.</p>
+<p>UPTODATE. Antiseizure medications: mechanism of action, pharmacology, and adverse effects. Waltham, MA: UpToDate, 2024.</p>
+<p>UPTODATE. Fibromyalgia: treatment in adults. Waltham, MA: UpToDate, 2026.</p>
+<p>UPTODATE. Management of diabetic neuropathy. Waltham, MA: UpToDate, 2026.</p>
+<p>UPTODATE. Overview of pharmacologic management of chronic pain in adults. Waltham, MA: UpToDate, 2025.</p>
+<p>UPTODATE. Postherpetic neuralgia. Waltham, MA: UpToDate, 2026.</p>
+<p>UPTODATE. Serotonin syndrome (serotonin toxicity). Waltham, MA: UpToDate, 2025.</p>
+<p>UPTODATE. Trigeminal neuralgia. Waltham, MA: UpToDate, 2026.</p>
+<p>VAN RENSBURG, R.; REUTER, H. An overview of analgesics: anticonvulsants, antidepressants, and other medications (Part 3). South African Family Practice, v. 61, n. 3, p. 59-63, 2019. DOI: 10.4102/safp.v61i3.4972.</p>
+</div>
+</div>
+
+</div><!-- /wrap content-root -->
+
+<footer class="note">
+  Material de aprofundamento gerado a partir dos slides "Farmacoterapia da dor: antidepressivos e anticonvulsivantes" (UCXIII, 2026) e do PCDT Dor Crônica 2024. Uso educacional — não substitui bula, protocolo institucional ou julgamento clínico individualizado.
+</footer>
+
+<div id="toolbar">
+  <div id="edit-status"></div>
+  <button id="btn-edit" type="button">✎ Ativar edição</button>
+  <button id="btn-download" type="button">⇩ Baixar cópia editada</button>
+  <button id="btn-restore" type="button">↺ Restaurar original</button>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('content-root');
+  var originalHTML = root.innerHTML; // kept in memory only — no localStorage
+  var editing = false;
+  var autosaveTimer = null;
+  var lastSavedHTML = originalHTML;
+
+  var btnEdit = document.getElementById('btn-edit');
+  var btnDownload = document.getElementById('btn-download');
+  var btnRestore = document.getElementById('btn-restore');
+  var statusEl = document.getElementById('edit-status');
+
+  var EDITABLE_SELECTOR = 'p, li, h1, h2, h3, h4, .section-title, .section-kicker, summary, .pill, .card-title';
+
+  function setEditable(on){
+    var els = root.querySelectorAll(EDITABLE_SELECTOR);
+    els.forEach(function(el){
+      // avoid making the summary marker itself weirdly editable structure-breaking;
+      el.setAttribute('contenteditable', on ? 'true' : 'false');
+    });
+  }
+
+  function startAutosave(){
+    stopAutosave();
+    autosaveTimer = setInterval(function(){
+      lastSavedHTML = root.innerHTML;
+      var now = new Date();
+      statusEl.textContent = 'salvo nesta sessão às ' + now.toLocaleTimeString('pt-BR');
+    }, 15000);
+  }
+  function stopAutosave(){
+    if(autosaveTimer){ clearInterval(autosaveTimer); autosaveTimer = null; }
+  }
+
+  btnEdit.addEventListener('click', function(){
+    editing = !editing;
+    setEditable(editing);
+    if(editing){
+      btnEdit.textContent = '✓ Salvar e sair da edição';
+      btnEdit.classList.add('active');
+      statusEl.textContent = 'edição ativa — autosave em memória a cada 15s';
+      startAutosave();
+    } else {
+      btnEdit.textContent = '✎ Ativar edição';
+      btnEdit.classList.remove('active');
+      lastSavedHTML = root.innerHTML;
+      stopAutosave();
+      statusEl.textContent = 'edições salvas nesta sessão do navegador';
+    }
+  });
+
+  btnRestore.addEventListener('click', function(){
+    if(confirm('Restaurar o conteúdo original? As edições feitas nesta sessão serão perdidas.')){
+      root.innerHTML = originalHTML;
+      lastSavedHTML = originalHTML;
+      editing = false;
+      btnEdit.textContent = '✎ Ativar edição';
+      btnEdit.classList.remove('active');
+      stopAutosave();
+      statusEl.textContent = 'conteúdo original restaurado';
+    }
+  });
+
+  btnDownload.addEventListener('click', function(){
+    var fullHTML = '<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n' + document.head.innerHTML + '\n</head>\n<body>\n' + document.body.innerHTML + '\n</body>\n</html>';
+    var blob = new Blob([fullHTML], {type: 'text/html;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'farmacoterapia_dor_antidepressivos_anticonvulsivantes_editado.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+})();
+</script>
+
+</body>
+</html>

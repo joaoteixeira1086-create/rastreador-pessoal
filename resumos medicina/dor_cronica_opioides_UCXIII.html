@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relação Médico-Paciente e Manejo da Dor Crônica — UCXIII</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060b14;
+  --bg-elev:#0a121f;
+  --bg-card:#0e1726;
+  --bg-card-2:#101b2d;
+  --border:#1b2942;
+  --border-soft:#152238;
+  --text:#e7edf7;
+  --text-dim:#93a6c6;
+  --text-mute:#5c6c8c;
+
+  --cyan:#22d3ee;
+  --violet:#a78bfa;
+  --amber:#f5a524;
+  --green:#34d399;
+  --red:#f87171;
+  --orange:#fb923c;
+  --teal:#2dd4bf;
+  --lime:#a3e635;
+
+  --sidebar-w:290px;
+  --radius:14px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(34,211,238,0.07), transparent 60%),
+    radial-gradient(ellipse 900px 600px at 90% 10%, rgba(167,139,250,0.06), transparent 60%),
+    var(--bg);
+  color:var(--text);
+  font-family:'DM Sans', sans-serif;
+  line-height:1.65;
+  font-size:16px;
+}
+h1,h2,h3,h4{ font-family:'Cormorant Garamond', serif; font-weight:600; color:var(--text); letter-spacing:.2px;}
+.mono{ font-family:'DM Mono', monospace; }
+a{ color:inherit; text-decoration:none; }
+::selection{ background:rgba(34,211,238,0.25); }
+
+/* ---------- SIDEBAR ---------- */
+#sb{
+  position:fixed; top:0; left:0; bottom:0; width:var(--sidebar-w);
+  background:linear-gradient(180deg, var(--bg-elev), var(--bg));
+  border-right:1px solid var(--border);
+  padding:28px 22px 22px;
+  overflow-y:auto;
+  z-index:100;
+}
+#sb::-webkit-scrollbar{ width:6px; }
+#sb::-webkit-scrollbar-thumb{ background:var(--border); border-radius:4px; }
+.sb-brand{
+  display:flex; align-items:center; gap:10px; margin-bottom:6px;
+}
+.sb-dot{ width:9px; height:9px; border-radius:50%; background:var(--cyan); box-shadow:0 0 12px var(--cyan); flex-shrink:0;}
+.sb-disc{ font-family:'DM Mono', monospace; font-size:11px; letter-spacing:1.5px; color:var(--text-mute); text-transform:uppercase; }
+.sb-title{ font-size:22px; line-height:1.25; margin:10px 0 4px; color:var(--text); }
+.sb-sub{ font-size:12.5px; color:var(--text-dim); margin-bottom:24px; padding-bottom:20px; border-bottom:1px solid var(--border-soft); }
+.sb-kicker{ font-family:'DM Mono', monospace; font-size:10.5px; letter-spacing:1.8px; color:var(--text-mute); text-transform:uppercase; margin:18px 0 10px; }
+.sb-nav a{
+  display:flex; align-items:center; gap:10px;
+  font-size:13.5px; color:var(--text-dim);
+  padding:8px 10px; border-radius:8px; margin-bottom:2px;
+  transition:background .15s, color .15s;
+  line-height:1.3;
+}
+.sb-nav a:hover{ background:var(--bg-card); color:var(--text); }
+.sb-nav a .m{ width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.sb-foot{ margin-top:24px; padding-top:16px; border-top:1px solid var(--border-soft); font-size:11px; color:var(--text-mute); font-family:'DM Mono', monospace; }
+
+/* ---------- MAIN ---------- */
+#main{ margin-left:var(--sidebar-w); max-width:980px; padding:0 56px 100px; }
+
+/* ---------- HERO ---------- */
+.hero{ padding:64px 0 46px; border-bottom:1px solid var(--border-soft); margin-bottom:52px; }
+.hero-tag{
+  display:inline-block; font-family:'DM Mono', monospace; font-size:11px; letter-spacing:2px;
+  text-transform:uppercase; color:var(--cyan); border:1px solid rgba(34,211,238,.35);
+  background:rgba(34,211,238,.06); padding:5px 12px; border-radius:100px; margin-bottom:22px;
+}
+.hero h1{ font-size:48px; line-height:1.08; font-weight:600; margin-bottom:18px; }
+.hero h1 em{ font-style:italic; color:var(--violet); }
+.hero p{ font-size:16.5px; color:var(--text-dim); max-width:640px; margin-bottom:26px; }
+.hero-tags{ display:flex; flex-wrap:wrap; gap:8px; }
+.tag{
+  font-family:'DM Mono', monospace; font-size:11px; letter-spacing:.5px;
+  color:var(--text-dim); border:1px solid var(--border); padding:5px 11px; border-radius:100px;
+}
+
+/* ---------- SECTIONS ---------- */
+.section{ padding-top:62px; scroll-margin-top:24px; }
+.section-head{ display:flex; gap:22px; align-items:flex-start; margin-bottom:8px; }
+.section-num{ font-family:'Cormorant Garamond', serif; font-size:52px; font-weight:600; color:var(--border); line-height:1; }
+.section-titles{ flex:1; }
+.section-kicker{ font-family:'DM Mono', monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; }
+.section h2{ font-size:32px; margin-bottom:6px; }
+.section-sub{ color:var(--text-dim); font-size:14.5px; max-width:680px; }
+.section-rule{ height:1px; background:linear-gradient(90deg, var(--border) 0%, transparent 85%); margin:22px 0 32px; }
+.section-body > *{ margin-bottom:20px; }
+.section-body p{ color:#c7d3e8; font-size:15.5px; }
+.section-body p i, .section-body p em{ color:var(--text); font-style:italic; }
+.lead{ font-size:17px !important; color:var(--text) !important; }
+
+/* ---------- TAG LINE (headers within section, per instructions) ---------- */
+.tagline{ display:flex; align-items:center; gap:14px; margin:30px 0 16px; }
+.tagline .lab{
+  font-family:'DM Mono', monospace; font-size:11px; letter-spacing:1.5px; text-transform:uppercase;
+  padding:4px 10px; border-radius:6px; white-space:nowrap;
+}
+.tagline .ln{ flex:1; height:1px; background:var(--border); }
+
+/* ---------- CARDS ---------- */
+.card{
+  background:var(--bg-card); border:1px solid var(--border); border-top:3px solid var(--cyan);
+  border-radius:var(--radius); padding:20px 22px;
+}
+.card h4{ font-size:18px; margin-bottom:8px; color:var(--text); }
+.card p{ font-size:14.5px; color:var(--text-dim); margin-bottom:0; }
+.card .k{ font-family:'DM Mono', monospace; font-size:10.5px; letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; display:block;}
+
+.grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.grid-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+.grid-4{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+
+/* ---------- ALERT / OUTLINE BOXES ---------- */
+.alert{
+  border:1px solid; background:transparent; border-radius:12px; padding:16px 20px;
+  display:flex; gap:14px; align-items:flex-start;
+}
+.alert .lbl{
+  font-family:'DM Mono', monospace; font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase;
+  padding:3px 9px; border-radius:6px; flex-shrink:0; margin-top:1px; white-space:nowrap;
+}
+.alert p{ font-size:14.5px; color:var(--text-dim) !important; margin:0 !important; }
+.alert strong{ color:var(--text); font-weight:500; }
+
+.alert.atencao{ border-color:rgba(245,165,36,.35); background:rgba(245,165,36,.045);}
+.alert.atencao .lbl{ color:var(--amber); border:1px solid rgba(245,165,36,.4); }
+.alert.clinica{ border-color:rgba(34,211,238,.35); background:rgba(34,211,238,.045);}
+.alert.clinica .lbl{ color:var(--cyan); border:1px solid rgba(34,211,238,.4); }
+.alert.prova{ border-color:rgba(167,139,250,.35); background:rgba(167,139,250,.045);}
+.alert.prova .lbl{ color:var(--violet); border:1px solid rgba(167,139,250,.4); }
+.alert.pegadinha{ border-color:rgba(248,113,113,.35); background:rgba(248,113,113,.045);}
+.alert.pegadinha .lbl{ color:var(--red); border:1px solid rgba(248,113,113,.4); }
+.alert.importante{ border-color:rgba(52,211,153,.35); background:rgba(52,211,153,.045);}
+.alert.importante .lbl{ color:var(--green); border:1px solid rgba(52,211,153,.4); }
+
+/* ---------- FLOWCHART ---------- */
+.flow{ display:flex; align-items:stretch; gap:0; flex-wrap:wrap; }
+.flow-step{
+  background:var(--bg-card-2); border:1px solid var(--border); border-radius:10px;
+  padding:13px 16px; font-size:13.5px; color:var(--text); min-width:140px; text-align:center;
+  display:flex; align-items:center; justify-content:center;
+}
+.flow-arrow{ display:flex; align-items:center; justify-content:center; padding:0 10px; color:var(--text-mute); font-size:18px; }
+.flow-vert{ display:flex; flex-direction:column; gap:0; }
+.flow-vert .flow-step{ width:100%; }
+.flow-vert .flow-arrow{ padding:4px 0; }
+
+/* ---------- TABLES ---------- */
+.table-wrap{ overflow-x:auto; border:1px solid var(--border); border-radius:12px; }
+table{ width:100%; border-collapse:collapse; min-width:560px; }
+thead th{
+  background:var(--bg-card-2); font-family:'DM Mono', monospace; font-size:11px; letter-spacing:.6px;
+  text-transform:uppercase; text-align:left; padding:12px 16px; color:var(--text-dim);
+  border-bottom:1px solid var(--border);
+}
+tbody td{ padding:12px 16px; font-size:14px; color:var(--text-dim); border-bottom:1px solid var(--border-soft); vertical-align:top; }
+tbody tr:last-child td{ border-bottom:none; }
+tbody td:first-child{ color:var(--text); font-weight:500; }
+tbody tr:hover{ background:rgba(255,255,255,0.015); }
+
+/* ---------- LISTS ---------- */
+.ulist{ list-style:none; }
+.ulist li{ position:relative; padding-left:22px; margin-bottom:9px; color:#c7d3e8; font-size:14.5px; }
+.ulist li::before{ content:"—"; position:absolute; left:0; color:var(--text-mute); }
+
+/* ---------- DETAILS / APROFUNDE-SE ---------- */
+details.deep{
+  border:1px dashed var(--border); border-radius:12px; padding:0; background:rgba(255,255,255,0.012);
+  overflow:hidden;
+}
+details.deep summary{
+  cursor:pointer; list-style:none; padding:13px 20px; font-family:'DM Mono', monospace;
+  font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--violet);
+  display:flex; align-items:center; gap:10px; user-select:none;
+}
+details.deep summary::-webkit-details-marker{ display:none; }
+details.deep summary::before{ content:"+"; font-family:'DM Sans'; font-size:16px; font-weight:700; color:var(--violet); }
+details.deep[open] summary::before{ content:"−"; }
+details.deep .deep-body{ padding:2px 22px 20px; border-top:1px solid var(--border-soft); }
+details.deep .deep-body p{ font-size:14.5px; color:var(--text-dim); }
+details.deep.l2{ margin-top:14px; border-color:var(--border-soft); }
+details.deep.l2 summary{ color:var(--amber); font-size:10.5px; }
+details.deep.l2 summary::before{ color:var(--amber); }
+
+/* ---------- BADGE ---------- */
+.badge{ font-family:'DM Mono', monospace; font-size:10.5px; padding:3px 9px; border-radius:100px; letter-spacing:.5px; display:inline-block; }
+
+/* ---------- SUPER RESUMO ---------- */
+.superbox{
+  background:linear-gradient(180deg, rgba(163,230,53,.05), transparent);
+  border:1px solid rgba(163,230,53,.28); border-radius:var(--radius); padding:28px 30px;
+}
+.superbox h3{ color:var(--lime); font-size:22px; margin-bottom:14px; }
+
+/* ---------- REFERENCES ---------- */
+.ref-item{ font-size:13.5px; color:var(--text-dim); padding:12px 0; border-bottom:1px solid var(--border-soft); }
+.ref-item:last-child{ border-bottom:none; }
+
+/* ---------- EDIT BAR ---------- */
+#editbar{
+  position:fixed; bottom:22px; right:22px; z-index:500;
+  display:flex; gap:8px; background:var(--bg-elev); border:1px solid var(--border);
+  border-radius:100px; padding:8px; box-shadow:0 10px 40px rgba(0,0,0,.5);
+}
+#editbar button{
+  font-family:'DM Mono', monospace; font-size:11px; letter-spacing:.5px; text-transform:uppercase;
+  background:var(--bg-card); color:var(--text-dim); border:1px solid var(--border);
+  border-radius:100px; padding:9px 15px; cursor:pointer; transition:all .15s;
+}
+#editbar button:hover{ color:var(--text); border-color:var(--cyan); }
+#editbar button.active{ background:var(--cyan); color:#04202a; border-color:var(--cyan); font-weight:700;}
+.editable-on [contenteditable="true"]{ outline:1px dashed rgba(34,211,238,.4); outline-offset:3px; border-radius:4px; }
+.editable-on [contenteditable="true"]:focus{ outline:1px solid var(--cyan); background:rgba(34,211,238,.04); }
+
+#warnbox{
+  position:fixed; top:18px; right:18px; max-width:340px; z-index:600;
+  background:var(--bg-elev); border:1px solid rgba(245,165,36,.4); border-radius:12px;
+  padding:14px 16px; font-size:12.5px; color:var(--text-dim); box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+#warnbox b{ color:var(--amber); display:block; margin-bottom:5px; font-family:'DM Mono', monospace; font-size:10.5px; letter-spacing:1px; text-transform:uppercase;}
+#warnbox button{ position:absolute; top:8px; right:10px; background:none; border:none; color:var(--text-mute); cursor:pointer; font-size:14px;}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 980px){
+  #sb{ width:100%; height:auto; position:relative; border-right:none; border-bottom:1px solid var(--border); padding:20px; }
+  #main{ margin-left:0; padding:0 22px 80px; }
+  .hero h1{ font-size:34px; }
+  .grid-2,.grid-3,.grid-4{ grid-template-columns:1fr; }
+  .section-num{ font-size:38px; }
+  #warnbox{ left:14px; right:14px; max-width:none; }
+}
+</style>
+</head>
+<body>
+
+<div id="warnbox">
+  <button onclick="document.getElementById('warnbox').style.display='none'">×</button>
+  <b>Sobre o modo de edição</b>
+  Dentro do preview do Claude.ai, edições não são salvas automaticamente entre sessões (localStorage não funciona aqui). Use "Ativar edição" para editar e depois "Baixar cópia editada" para gerar um .html definitivo com suas alterações. Abrindo esse .html baixado direto no navegador, tudo funciona normalmente.
+</div>
+
+<nav id="sb">
+  <div class="sb-brand">
+    <span class="sb-dot"></span>
+    <span class="sb-disc">UCXIII — Dor · TBL Aula 3</span>
+  </div>
+  <div class="sb-title">Dor Crônica &amp; Opioides</div>
+  <div class="sb-sub">Relação médico-paciente e manejo farmacológico da dor crônica — material de aprofundamento para estudo prévio e discussão em TBL.</div>
+
+  <div class="sb-kicker">Sumário</div>
+  <div class="sb-nav">
+    <a href="#s1"><span class="m" style="background:var(--cyan)"></span>01 · Dor aguda x dor crônica</a>
+    <a href="#s2"><span class="m" style="background:var(--violet)"></span>02 · Vias da nocicepção</a>
+    <a href="#s3"><span class="m" style="background:var(--violet)"></span>03 · Modulação no corno dorsal</a>
+    <a href="#s4"><span class="m" style="background:var(--cyan)"></span>04 · Mecanismos da dor: tipos</a>
+    <a href="#s5"><span class="m" style="background:var(--teal)"></span>05 · Semiologia da dor</a>
+    <a href="#s6"><span class="m" style="background:var(--green)"></span>06 · Terapêutica e escada analgésica</a>
+    <a href="#s7"><span class="m" style="background:var(--violet)"></span>07 · Farmacologia dos opioides</a>
+    <a href="#s8"><span class="m" style="background:var(--amber)"></span>08 · Classificação dos opioides</a>
+    <a href="#s9"><span class="m" style="background:var(--red)"></span>09 · Efeitos adversos</a>
+    <a href="#s10"><span class="m" style="background:var(--orange)"></span>10 · Mitos, barreiras e boas práticas</a>
+    <a href="#s11"><span class="m" style="background:var(--teal)"></span>11 · Fármacos: apresentação e posologia</a>
+    <a href="#s12"><span class="m" style="background:var(--red)"></span>12 · Uso indevido de opioides</a>
+    <a href="#s13"><span class="m" style="background:var(--lime)"></span>13 · Super-resumo</a>
+    <a href="#s14"><span class="m" style="background:var(--text-mute)"></span>Referências</a>
+  </div>
+
+  <div class="sb-foot">Prof. Andrew G. Wischneski · Uniarp · 04/08/2026</div>
+</nav>
+
+<div id="main">
+
+  <header class="hero">
+    <span class="hero-tag">UCXIII — Dor · Ciclo Clínico · 5º Semestre</span>
+    <h1>Relação médico-paciente e<br>manejo da <em>dor crônica</em></h1>
+    <p>Este material parte dos slides da Aula 3 e vai além deles: para cada conceito apresentado pelo professor, reconstruímos o mecanismo fisiológico ou farmacológico por trás — a via nervosa, o receptor, a cascata bioquímica — para que você não apenas memorize, mas entenda por que cada conduta terapêutica faz sentido.</p>
+    <div class="hero-tags">
+      <span class="tag">Nocicepção</span>
+      <span class="tag">Dor neuropática</span>
+      <span class="tag">Sensibilização central</span>
+      <span class="tag">Escada analgésica OMS</span>
+      <span class="tag">Farmacologia de opioides</span>
+      <span class="tag">Prescrição e receituário</span>
+    </div>
+  </header>
+
+  <!-- ============ SEÇÃO 01 ============ -->
+  <section class="section" id="s1">
+    <div class="section-head">
+      <div class="section-num">01</div>
+      <div class="section-titles">
+        <div class="section-kicker" style="color:var(--cyan)">Fundamentos</div>
+        <h2>Dor aguda x dor crônica</h2>
+        <div class="section-sub">Por que o professor insiste tanto nessa distinção antes de falar de qualquer fármaco — porque ela muda completamente o raciocínio terapêutico.</div>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+    <div class="section-body">
+
+      <p class="lead">O primeiro erro conceitual que você precisa evitar é tratar "dor crônica" como se fosse apenas "dor aguda que durou mais tempo". Não é uma questão de duração — é uma questão de <i>natureza fisiopatológica</i>. Na dor aguda, o sistema nervoso está intacto e funcionando exatamente como deveria: ele está avisando você de que algo está errado. Na dor crônica, o sistema nervoso central deixou de ser um mensageiro fiel e passou a ser, ele mesmo, a fonte do problema.</p>
+
+      <p>A definição operacional que a maioria dos serviços usa — dor que persiste além do tempo necessário para a cura do tecido lesado, tipicamente acima de <i>três meses</i> — é útil na prática, mas é apenas a ponta do iceberg. O que realmente acontece por trás dessa cronificação é uma reorganização funcional (e às vezes estrutural) das vias nociceptivas, um fenômeno que veremos em detalhe na Seção 03: a sensibilização central.</p>
+
+      <div class="tagline"><span class="lab" style="color:var(--cyan); border:1px solid rgba(34,211,238,.4)">Comparativo</span><div class="ln"></div></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Característica</th><th>Dor aguda</th><th>Dor crônica</th></tr></thead>
+          <tbody>
+            <tr><td>Início e duração</td><td>Repentino; resolve com a reparação tecidual; até cerca de 1–3 meses.</td><td>Insidioso; persiste apesar da reparação tecidual já concluída; duração acima de 3 meses.</td></tr>
+            <tr><td>Função biológica</td><td>Sinal de alerta de lesão tecidual real ou potencial — é <i>protetora</i>.</td><td>Perdeu a função de alerta; não protege mais nada, apenas consome o paciente.</td></tr>
+            <tr><td>Relação com a lesão</td><td>Guarda relação (nem sempre proporcional) com a gravidade da lesão.</td><td>Frequentemente dissociada da lesão original — pode persistir mesmo sem lesão ativa demonstrável.</td></tr>
+            <tr><td>Sistema nervoso central</td><td>Íntegro e funcional — a dor é um <i>sintoma</i> de algo externo a ele.</td><td>Disfuncional — a dor passa a ser a própria <i>doença</i>.</td></tr>
+            <tr><td>Repercussão psicossocial</td><td>Ansiedade e alteração de sono transitórias, que melhoram junto com a dor.</td><td>Associação frequente e persistente com quadros psicológicos (ansiedade, depressão) e prejuízo social/laboral.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tagline"><span class="lab" style="color:var(--amber); border:1px solid rgba(245,165,36,.4)">Mecanismo</span><div class="ln"></div></div>
+
+      <p>O slide do professor mostra um ciclo com quatro caixas que merece ser lido como uma sequência causal, não como quatro fatos soltos. Veja o fluxo:</p>
+
+      <div class="flow-vert">
+        <div class="flow-step">Dor aguda — imediata, intensa, localizada, autolimitada, com função protetora (segundos a meses)</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step" style="border-color:rgba(245,165,36,.4)">Dor aguda tratada inadequadamente — analgesia insuficiente, fatores emocionais e sociais não abordados</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step" style="border-color:rgba(248,113,113,.4)">Mecanismos de plasticidade neuronal alterados — sensibilização periférica e central se instalam</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step" style="border-color:rgba(248,113,113,.5)">Dor crônica — mal definida, difusa, sem início/fim claros, intensidade variável, tornou-se a própria doença</div>
+      </div>
+
+      <p>O ponto-chave clínico aqui — e que costuma ser cobrado — é que esse ciclo é <i>evitável</i>. Se você trata a dor aguda de forma insuficiente (subdosando analgésicos por medo infundado de opioides, por exemplo, tema que vamos aprofundar na Seção 10), você não está apenas prolongando o sofrimento do paciente naquele momento: você está criando a janela temporal necessária para que o sistema nervoso central sofra as adaptações plásticas que cronificam a dor.</p>
+
+      <details class="deep">
+        <summary>Aprofunde-se — o que exatamente muda no SNC durante a cronificação?</summary>
+        <div class="deep-body">
+          <p>Três fenômenos moleculares e celulares sustentam essa "plasticidade alterada" citada no slide. O primeiro é o <i>wind-up</i>: estímulos repetidos de fibras C sobre o mesmo neurônio do corno dorsal produzem uma despolarização progressivamente maior a cada novo estímulo, mesmo que a intensidade do estímulo periférico permaneça constante — isso ocorre porque o glutamato liberado repetidamente remove o bloqueio de magnésio dos receptores NMDA, permitindo influxo maciço de cálcio. O segundo é a <i>potenciação de longa duração (LTP)</i> nas sinapses do corno dorsal, um fortalecimento sináptico persistente que, em outras regiões do sistema nervoso, é o substrato celular da memória — de forma bastante literal, o corno dorsal "aprende" a dor. O terceiro é a alteração da expressão gênica em neurônios do gânglio da raiz dorsal e do corno dorsal, com upregulação de canais de sódio (Nav 1.7, 1.8) e de receptores glutamatérgicos, tornando esses neurônios permanentemente mais excitáveis. Esse é exatamente o substrato pelo qual a dor crônica deixa de precisar de um estímulo periférico contínuo para se manter.</p>
+          <details class="deep l2">
+            <summary>Nível avançado — por que isso torna a dor crônica resistente a analgésicos comuns?</summary>
+            <div class="deep-body">
+              <p>Anti-inflamatórios e opioides fracos atuam predominantemente na periferia ou em receptores pré-sinápticos que modulam a liberação de neurotransmissor. Quando a hiperexcitabilidade já está consolidada pós-sinapticamente (receptores NMDA sensibilizados, canais de sódio upregulados), bloquear a entrada do sinal na periferia deixa de resolver o problema — o "gerador" da dor já não está mais lá fora, está no próprio corno dorsal ou em centros supraespinhais. É exatamente por isso que a dor crônica, sobretudo a de componente neuropático, responde melhor a fármacos moduladores centrais (antidepressivos tricíclicos, gabapentinoides) do que a analgésicos periféricos — voltaremos a esse ponto na Seção 06.</p>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <div class="alert prova">
+        <span class="lbl">Prova</span>
+        <p>A pergunta clássica de prova costuma inverter a lógica: "por que a dor crônica não tem função de alerta?" A resposta não é "porque já dura muito tempo", e sim porque o processo já deixou de refletir dano tecidual em curso — o sistema que deveria sinalizar lesão está ele mesmo lesado/hiperfuncionante.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SEÇÃO 02 ============ -->
+  <section class="section" id="s2">
+    <div class="section-head">
+      <div class="section-num">02</div>
+      <div class="section-titles">
+        <div class="section-kicker" style="color:var(--violet)">Neuroanatomia funcional</div>
+        <h2>Vias da nocicepção</h2>
+        <div class="section-sub">Do receptor periférico ao córtex — e por que existem duas rotas ascendentes com destinos e funções completamente diferentes.</div>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+    <div class="section-body">
+
+      <p class="lead">Antes de falar de "dor", vale a pena separar dois conceitos que os slides tratam corretamente como distintos: <i>nocicepção</i> é o processo neural de detecção e transmissão de estímulos potencialmente lesivos; <i>dor</i> é a experiência subjetiva, consciente, que emerge do processamento desse sinal em estruturas corticais e límbicas. Você pode ter nocicepção sem dor consciente (sob anestesia geral, por exemplo, os nociceptores continuam disparando) e — mais importante para a discussão de dor nociplástica — pode haver dor sem nocicepção periférica evidente.</p>
+
+      <div class="tagline"><span class="lab" style="color:var(--violet); border:1px solid rgba(167,139,250,.4)">Periferia → medula</span><div class="ln"></div></div>
+
+      <p>O primeiro passo da via é a transdução: um estímulo mecânico, térmico ou químico é convertido em potencial de ação por um receptor sensorial periférico (o nociceptor, na maioria dos casos, uma terminação nervosa livre). O tipo de fibra que carrega esse sinal até a medula espinal determina praticamente todo o caráter clínico da dor:</p>
+
+      <div class="grid-3">
+        <div class="card" style="border-top-color:var(--violet)">
+          <span class="k" style="color:var(--violet)">Fibra Aβ</span>
+          <h4>Tato, pressão, propriocepção</h4>
+          <p>Mielinizada, grande calibre, condução muito rápida. Carrega estímulos mecânicos <i>não nocivos</i> (a pena do slide). Normalmente não veicula dor — mas é ela que, quando "recrutada" de forma anômala no corno dorsal sensibilizado, gera a alodinia (dor a um toque leve).</p>
+        </div>
+        <div class="card" style="border-top-color:var(--cyan)">
+          <span class="k" style="color:var(--cyan)">Fibra Aδ</span>
+          <h4>Dor rápida, "primeira dor"</h4>
+          <p>Mielinização fina, condução rápida (12–30 m/s). Responde a estímulo mecânico nocivo e a estímulos térmicos subnocivos (o martelo do slide). Gera a dor bem localizada, aguda, em pontada, que você sente no instante do trauma.</p>
+        </div>
+        <div class="card" style="border-top-color:var(--red)">
+          <span class="k" style="color:var(--red)">Fibra C</span>
+          <h4>Dor lenta, difusa, "segunda dor"</h4>
+          <p>Amielínica, condução lenta (0,5–2 m/s), polimodal (responde a estímulos térmicos e químicos nocivos — a pimenta e o fogo do slide). Gera a dor em queimação, latejante, mal localizada, que persiste após o estímulo inicial.</p>
+        </div>
+      </div>
+
+      <p>Esses três tipos de fibra têm seus corpos celulares no <i>gânglio da raiz dorsal</i> — neurônios pseudounipolares cujo prolongamento periférico capta o estímulo e cujo prolongamento central entra na medula espinal pela raiz dorsal, fazendo sinapse no corno dorsal (substância cinzenta). É ali, na sinapse entre o neurônio aferente primário e o <i>neurônio de projeção</i> (identificado como "NP" no esquema do slide), que ocorre toda a modulação que discutiremos na Seção 03.</p>
+
+      <div class="tagline"><span class="lab" style="color:var(--amber); border:1px solid rgba(245,165,36,.4)">Errata do slide — atenção</span><div class="ln"></div></div>
+
+      <div class="alert pegadinha">
+        <span class="lbl">Pegadinha</span>
+        <p>O slide 2 traz uma errata visual importante: ele mostra dois sistemas ascendentes lado a lado — o <strong>sistema da coluna dorsal</strong> (tato fino, pressão, propriocepção) e o <strong>sistema anterolateral</strong> (dor, temperatura, tato leve) — e marca com um X os núcleos grácil e cuneado no tronco encefálico, justamente para deixar claro que a informação nociceptiva <i>não</i> passa por esses núcleos. Um erro comum de prova é misturar as duas vias, imaginando que a dor "sobe" pela via lemniscal clássica (coluna dorsal → núcleos grácil/cuneado → decussação no bulbo → lemnisco medial → tálamo). Ela não sobe por aí.</p>
+      </div>
+
+      <p>A via correta da dor é o <i>trato espinotalâmico</i>, do sistema anterolateral: o neurônio de primeira ordem (fibra Aδ ou C) faz sinapse com o neurônio de segunda ordem já no próprio corno dorsal da medula (não precisa subir até o tronco para isso, ao contrário da via de tato fino). Esse neurônio de segunda ordem <i>cruza para o lado contralateral ainda dentro da medula espinal</i>, sobe pelo funículo anterolateral e só então atinge o tálamo, de onde um neurônio de terceira ordem projeta para o córtex somatossensorial. Compare: na via de tato fino/propriocepção, o neurônio de primeira ordem sobe inteiro, sem cruzar, dentro da coluna dorsal até o bulbo (núcleos grácil e cuneado), cruza <i>ali</i>, e só então ganha o lemnisco medial em direção ao tálamo. São arquiteturas anatômicas opostas — uma cruza cedo (dor), a outra cruza tarde (tato fino) — e essa diferença é a base fisiológica de testes neurológicos como o de sensibilidade dissociada na síndrome de Brown-Séquard.</p>
+
+      <div class="tagline"><span class="lab" style="color:var(--teal); border:1px solid rgba(45,212,191,.4)">Duas vias, dois destinos</span><div class="ln"></div></div>
+
+      <p>Uma vez no tronco encefálico e no tálamo, a informação nociceptiva se divide funcionalmente em duas rotas com propósitos distintos — essa é a essência do slide "Nocicepção x Dor":</p>
+
+      <div class="grid-2">
+        <div class="card" style="border-top-color:var(--cyan)">
+          <span class="k" style="color:var(--cyan)">Via discriminativa / sensorial</span>
+          <h4>Trato espinotalâmico → tálamo → córtex somatossensorial primário (S1)</h4>
+          <p>Permite identificar <i>onde</i> dói, <i>quanto</i> dói e <i>que tipo</i> de dor é — a dimensão sensorial-discriminativa da experiência dolorosa, que você usa clinicamente quando pede ao paciente para localizar e caracterizar a dor.</p>
+        </div>
+        <div class="card" style="border-top-color:var(--orange)">
+          <span class="k" style="color:var(--orange)">Via emocional / motivacional</span>
+          <h4>Trato espinobulbar → tronco encefálico, tálamo, estruturas límbicas</h4>
+          <p>Responsável pelas respostas emocionais, autonômicas (taquicardia, sudorese) e comportamentais à dor — é essa via que explica por que a dor sempre vem acompanhada de sofrimento afetivo, não apenas de uma "localização de sinal".</p>
+        </div>
+      </div>
+
+      <div class="alert clinica">
+        <span class="lbl">Clínica</span>
+        <p>Essa dupla via explica um fenômeno que você já observou clinicamente: pacientes com a mesma lesão anatômica relatam intensidades de sofrimento muito diferentes. A via discriminativa informa a intensidade do estímulo, mas é a via emocional/motivacional — modulada por ansiedade, catastrofização, contexto social — que determina o quanto aquela dor perturba a vida do paciente. É também a base racional para o uso de antidepressivos no manejo da dor crônica: eles não "apagam" o sinal nociceptivo, mas modulam fortemente o componente afetivo processado por essas estruturas límbicas.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SEÇÃO 03 ============ -->
+  <section class="section" id="s3">
+    <div class="section-head">
+      <div class="section-num">03</div>
+      <div class="section-titles">
+        <div class="section-kicker" style="color:var(--violet)">Neuroquímica</div>
+        <h2>Modulação da dor no corno dorsal</h2>
+        <div class="section-sub">O corno dorsal não é um cabo de transmissão passivo — é um centro de processamento onde sinais excitatórios e inibitórios competem em tempo real.</div>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+    <div class="section-body">
+
+      <p class="lead">Esse é, provavelmente, o slide mais denso farmacologicamente da aula, e vale a pena entender por que ele importa tanto: praticamente <i>todos</i> os analgésicos que você vai prescrever na vida atuam em algum ponto dessa sinapse do corno dorsal. Entender esse mapa de receptores é entender o mecanismo de ação de opioides, antidepressivos, anticonvulsivantes e anestésicos locais ao mesmo tempo.</p>
+
+      <p>A sinapse entre o neurônio aferente primário (fibra Aδ/C) e o neurônio de projeção (NP) do corno dorsal recebe também a influência de interneurônios locais e de vias descendentes que vêm do tronco encefálico. O resultado — dor ou ausência de dor — depende do balanço entre sinais que <i>facilitam</i> e sinais que <i>inibem</i> essa transmissão. É essencialmente a base neuroquímica da clássica "teoria da comporta" (gate control theory) de Melzack e Wall, atualizada com a farmacologia molecular que conhecemos hoje.</p>
+
+      <div class="tagline"><span class="lab" style="color:var(--red); border:1px solid rgba(248,113,113,.4)">Vias facilitatórias</span><div class="ln"></div></div>
+
+      <div class="card" style="border-top-color:var(--red)">
+        <h4>Substância P e glutamato</h4>
+        <p>São os principais neurotransmissores excitatórios liberados pelo terminal pré-sináptico do neurônio aferente primário. O glutamato age em receptores <i>AMPA</i> (despolarização rápida, resposta inicial ao estímulo) e <i>NMDA</i> (normalmente bloqueado por Mg²⁺ em repouso; quando a despolarização já é suficiente, o bloqueio se desfaz e entra cálcio maciçamente — esse é o substrato do wind-up que vimos na Seção 01). A substância P age em receptores <i>NK1 a NK3</i>, amplificando e prolongando a resposta excitatória, especialmente em estímulos repetidos ou intensos.</p>
+      </div>
+
+      <div class="tagline"><span class="lab" style="color:var(--green); border:1px solid rgba(52,211,153,.4)">Vias inibitórias</span><div class="ln"></div></div>
+
+      <div class="grid-2">
+        <div class="card" style="border-top-color:var(--green)">
+          <span class="k" style="color:var(--green)">Opioides endógenos</span>
+          <h4>Receptores μ-opioides</h4>
+          <p>Encefalinas e endorfinas liberadas por interneurônios locais reduzem a excitabilidade do neurônio de projeção — mecanismo pré-sináptico (menos liberação de glutamato/substância P) e pós-sináptico (hiperpolarização). É exatamente esse sistema que os opioides exógenos (morfina, fentanil) exploram farmacologicamente — veremos o mecanismo molecular completo na Seção 07.</p>
+        </div>
+        <div class="card" style="border-top-color:var(--cyan)">
+          <span class="k" style="color:var(--cyan)">Serotonina e noradrenalina</span>
+          <h4>5-HT₁B/D, 5-HT₃, α₂-adrenérgicos</h4>
+          <p>Chegam ao corno dorsal por vias <i>descendentes</i> que se originam na substância cinzenta periaquedutal (PAG) e no núcleo magno da rafe/locus coeruleus. Essa é a base racional do uso de antidepressivos tricíclicos e inibidores da recaptação de serotonina-noradrenalina (duloxetina) no tratamento da dor crônica: ao bloquear a recaptação desses neurotransmissores, você prolonga e amplifica essa inibição descendente natural.</p>
+        </div>
+        <div class="card" style="border-top-color:var(--violet)">
+          <span class="k" style="color:var(--violet)">GABA e glicina</span>
+          <h4>GABA-A, GABA-B, GlyR</h4>
+          <p>Interneurônios inibitórios locais liberam GABA (receptores GABA-A ionotrópicos, influxo de Cl⁻; GABA-B metabotrópicos, ligados a proteína Gi) e glicina (receptor ionotrópico de Cl⁻), promovendo inibição direta do neurônio de projeção. A <i>perda</i> dessa inibição tônica — um fenômeno chamado desinibição — é um dos principais mecanismos da alodinia na dor neuropática.</p>
+        </div>
+        <div class="card" style="border-top-color:var(--amber)">
+          <span class="k" style="color:var(--amber)">Outros moduladores</span>
+          <h4>CGRP, somatostatina, VIP, CCK, óxido nítrico</h4>
+          <p>O slide os agrupa corretamente como majoritariamente <i>pró-nociceptivos/facilitatórios</i>. Vale destacar a colecistocinina (CCK): ela antagoniza funcionalmente a analgesia opioide, e seu aumento é um dos mecanismos propostos para explicar a <i>tolerância</i> aos opioides — quanto mais você usa opioide, mais CCK é liberada, "empurrando de volta" a dor.</p>
+        </div>
+      </div>
+
+      <details class="deep">
+        <summary>Aprofunde-se — como esse mapa de receptores dita a escolha do fármaco na prática</summary>
+        <div class="deep-body">
+          <p>Pense nessa sinapse como um painel de controle com vários botões independentes. Anti-inflamatórios não esteroides não atuam diretamente nesse painel central — eles reduzem a produção periférica de prostaglandinas, que sensibilizam o próprio nociceptor (ação essencialmente pré-sináptica, na periferia). Opioides apertam o botão inibitório μ diretamente nessa sinapse (e também perifericamente e supraespinalmente). Antidepressivos tricíclicos e duloxetina não têm ação direta em nenhum receptor de dor — eles bloqueiam a recaptação de serotonina/noradrenalina, aumentando a disponibilidade desses neurotransmissores na fenda sináptica das vias descendentes inibitórias, essencialmente "reforçando o sistema de frenagem" natural do corpo. Gabapentina e pregabalina (que veremos na dor neuropática) bloqueiam a subunidade α2δ dos canais de cálcio voltagem-dependentes, reduzindo a liberação pré-sináptica de glutamato e substância P — atacam diretamente o lado excitatório do painel. Entender isso transforma a escolha terapêutica de "decoreba de nomes" para raciocínio farmacológico real.</p>
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- ============ SEÇÃO 04 ============ -->
+  <section class="section" id="s4">
+    <div class="section-head">
+      <div class="section-num">04</div>
+      <div class="section-titles">
+        <div class="section-kicker" style="color:var(--cyan)">Classificação fisiopatológica</div>
+        <h2>Mecanismos da dor: nociceptiva, neuropática e nociplástica</h2>
+        <div class="section-sub">A classificação da IASP (International Association for the Study of Pain) que orienta diretamente a escolha terapêutica.</div>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+    <div class="section-body">
+
+      <p class="lead">Essa tríade é provavelmente o conceito mais cobrado de toda a aula, porque ela é o eixo organizador de toda a terapêutica que vem depois (Seção 06). Preste atenção: a classificação não é sobre <i>onde</i> dói, mas sobre <i>por que</i> o sistema nervoso está gerando aquele sinal.</p>
+
+      <div class="grid-3">
+        <div class="card" style="border-top-color:var(--cyan)">
+          <span class="k" style="color:var(--cyan)">Nociceptiva</span>
+          <h4>Nociceptor ativado por dano real</h4>
+          <p>Dor que advém de dano real ou potencial ao tecido <i>não neural</i>, decorrente da ativação direta dos nociceptores. É a dor "esperada" fisiologicamente: uma fratura, uma queimadura, uma osteoartrite, uma apendicite. O sistema somatossensorial está intacto — ele está apenas fazendo seu trabalho.</p>
+        </div>
+        <div class="card" style="border-top-color:var(--violet)">
+          <span class="k" style="color:var(--violet)">Neuropática</span>
+          <h4>Lesão do próprio sistema somatossensorial</h4>
+          <p>Dor causada por lesão ou doença que acomete diretamente o sistema nervoso somatossensorial — periférico (neuropatia diabética, neuralgia pós-herpética) ou central (dor pós-AVC talâmico, lesão medular). Aqui, o "detector" está quebrado e disparando de forma autônoma.</p>
+        </div>
+        <div class="card" style="border-top-color:var(--amber)">
+          <span class="k" style="color:var(--amber)">Nociplástica</span>
+          <h4>Nocicepção alterada sem lesão demonstrável</h4>
+          <p>Dor que decorre de nocicepção alterada, <i>sem</i> evidência clara de dano tecidual real (ou ameaça de dano) que ative nociceptores periféricos, e <i>sem</i> evidência de doença ou lesão no sistema somatossensorial. O protótipo é a fibromialgia: a "fábrica" de dor é a hipersensibilidade central em si, sem um gerador periférico identificável.</p>
+        </div>
+      </div>
+
+      <div class="alert atencao">
+        <span class="lbl">Atenção</span>
+        <p>Essa terceira categoria — nociplástica — é relativamente recente na nomenclatura da IASP (formalizada por volta de 2017) e substitui, em boa parte, o antigo conceito impreciso de "dor psicogênica" ou "dor funcional". Ela reconhece que existe um mecanismo neurobiológico genuíno (sensibilização central sustentada) mesmo sem lesão estrutural identificável — isso é importante para não estigmatizar o paciente como "somatizador" quando exames de imagem e laboratoriais estão normais.</p>
+      </div>
+
+      <div class="tagline"><span class="lab" style="color:var(--amber); border:1px solid rgba(245,165,36,.4)">Correção do slide (errata)</span><div class="ln"></div></div>
+
+      <p>O próprio material da aula sinaliza uma errata sobre esse tópico associando dois pontos-chave a essa classificação: de um lado, "estímulos não nóxios das fibras Aβ" — reforçando que, na dor neuropática e nociplástica, fibras que normalmente carregam apenas tato (Aβ) passam a contribuir para a percepção dolorosa, o substrato da alodinia mecânica. De outro, junto à dor nociceptiva: "estímulos nociceptivos, maior estímulo, sensibilização" — reforçando que, na dor nociceptiva pura, existe uma relação de proporcionalidade que se perde nas outras categorias: quanto maior o estímulo periférico, maior a resposta, e há sensibilização periférica localizada (não central e difusa).</p>
+
+      <details class="deep">
+        <summary>Aprofunde-se — as três categorias podem coexistir no mesmo paciente?</summary>
+        <div class="deep-body">
+          <p>Sim, e isso é extremamente comum na prática — o termo usado é "dor mista". Um exemplo clássico: um paciente com lombociatalgia por hérnia discal pode ter (1) componente nociceptivo, pela inflamação e degeneração do disco e das facetas articulares; (2) componente neuropático, pela compressão radicular direta da raiz nervosa (daí a dor irradiada, em choque, ao longo do dermátomo); e, se a dor persistir cronicamente sem controle adequado, pode desenvolver (3) componente nociplástico sobreposto, por sensibilização central mantida. Reconhecer os três componentes muda a prescrição: você trata o nociceptivo com anti-inflamatório, o neuropático com gabapentinoide ou duloxetina, e — se houver componente central estabelecido — precisa de abordagem multimodal incluindo terapias não farmacológicas.</p>
+        </div>
+      </details>
+
+      <div class="alert prova">
+        <span class="lbl">Prova</span>
+        <p>Se a questão descrever "dor em queimação, choque, formigamento, associada a exame neurológico com déficit sensitivo em território de nervo específico" → pense neuropática. Se descrever "dor difusa, generalizada, com pontos dolorosos múltiplos, fadiga, sono não reparador, exames normais" → pense nociplástica. Se descrever "dor proporcional a uma lesão tecidual óbvia e localizada" → pense nociceptiva.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SEÇÃO 05 ============ -->
+  <section class="section" id="s5">
+    <div class="section-head">
+      <div class="section-num">05</div>
+      <div class="section-titles">
+        <div class="section-kicker" style="color:var(--teal)">Anamnese dirigida</div>
+        <h2>Decálogo semiológico da dor</h2>
+        <div class="section-sub">Dez perguntas que, feitas em sequência, praticamente fecham o raciocínio diagnóstico antes de qualquer exame complementar.</div>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+    <div class="section-body">
+
+      <p class="lead">O decálogo não é uma lista arbitrária de itens para "preencher prontuário" — cada um desses dez pontos tem valor diagnóstico específico, e ignorar qualquer um deles pode custar caro clinicamente (é literalmente como se perde o diagnóstico de infarto, dissecção de aorta ou abdome agudo por uma anamnese incompleta).</p>
+
+      <div class="grid-2">
+        <div class="card"><span class="k" style="color:var(--teal)">01</span><h4>Localização</h4><p>Onde exatamente dói. Dor visceral costuma ser mal localizada e mediana (poucas fibras aferentes, convergência ampla); dor somática é bem localizada (inervação sensitiva densa).</p></div>
+        <div class="card"><span class="k" style="color:var(--teal)">02</span><h4>Irradiação</h4><p>Para onde a dor se propaga. Padrão radicular (dermátomo) sugere compressão neural; dor referida (ex.: dor em ombro na irritação diafragmática) reflete convergência visceral-somática na medula.</p></div>
+        <div class="card"><span class="k" style="color:var(--teal)">03</span><h4>Qualidade / caráter</h4><p>Em cólica (víscera oca, contração de musculatura lisa contra obstrução), em pontada (pleural, pericárdica), em queimação (neuropática), em peso/aperto (isquêmica).</p></div>
+        <div class="card"><span class="k" style="color:var(--teal)">04</span><h4>Intensidade</h4><p>Idealmente quantificada por escala numérica (0–10) ou visual analógica — é o parâmetro que orienta diretamente o degrau da escada analgésica (Seção 06).</p></div>
+        <div class="card"><span class="k" style="color:var(--teal)">05</span><h4>Duração</h4><p>Segundos (nevralgia do trigêmeo), minutos (cólica biliar), horas/dias (cefaleia tensional), meses (dor crônica) — cada padrão temporal estreita muito o diagnóstico diferencial.</p></div>
+        <div class="card"><span class="k" style="color:var(--teal)">06</span><h4>Evolução</h4><p>Constante, intermitente, progressiva, em crescendo. Uma dor abdominal que evolui de cólica intermitente para constante e localizada sugere progressão para peritonite.</p></div>
+        <div class="card"><span class="k" style="color:var(--teal)">07</span><h4>Relação com funções orgânicas</h4><p>Piora com alimentação (biliar/péptica), com respiração (pleurítica), com evacuação (retal), com micção (vesical) — associa o sintoma a um sistema-alvo.</p></div>
+        <div class="card"><span class="k" style="color:var(--teal)">08</span><h4>Fatores desencadeantes/agravantes</h4><p>Esforço físico (anginosa), rotação cervical (cervicogênica), jejum prolongado (péptica) — orientam tanto diagnóstico quanto prevenção.</p></div>
+        <div class="card"><span class="k" style="color:var(--teal)">09</span><h4>Fatores atenuantes</h4><p>Repouso, posição antálgica, medicações já testadas pelo paciente — informação valiosa também para não repetir terapêuticas já ineficazes.</p></div>
+        <div class="card"><span class="k" style="color:var(--teal)">10</span><h4>Manifestações concomitantes</h4><p>Sinais de alarme (febre, emagrecimento, sudorese, dispneia) que sinalizam a necessidade de investigação mais agressiva e imediata.</p></div>
+      </div>
+
+      <div class="alert importante">
+        <span class="lbl">Importante</span>
+        <p>Esse decálogo funciona tanto para dor aguda quanto crônica, mas seu peso relativo muda: na dor aguda, ele serve principalmente para localizar a etiologia orgânica; na dor crônica, ele também ajuda a identificar componentes neuropáticos (qualidade em queimação/choque, alodinia) e psicossociais (relação com estresse, sono, humor) que vão determinar a escolha terapêutica combinada.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SEÇÃO 06 ============ -->
+  <section class="section" id="s6">
+    <div class="section-head">
+      <div class="section-num">06</div>
+      <div class="section-titles">
+        <div class="section-kicker" style="color:var(--green)">Conduta terapêutica</div>
+        <h2>Terapêutica da dor crônica e escada analgésica</h2>
+        <div class="section-sub">Como transformar o mecanismo fisiopatológico (Seção 04) em prescrição racional — e por que a "subida" da escada é lenta na dor crônica e rápida na dor aguda.</div>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+    <div class="section-body">
+
+      <p class="lead">Agora que você já sabe diferenciar dor nociceptiva de neuropática, a terapêutica deixa de ser uma lista de medicamentos para decorar e passa a ser uma consequência lógica do mecanismo.</p>
+
+      <div class="grid-2">
+        <div class="card" style="border-top-color:var(--cyan)">
+          <span class="k" style="color:var(--cyan)">Dor nociceptiva</span>
+          <h4>Alvo: a periferia e a via ascendente clássica</h4>
+          <p>Responde bem a anti-inflamatórios (reduzem prostaglandinas na periferia, diminuindo a sensibilização do nociceptor), analgésicos opioides e não opioides, acupuntura, fisioterapia, bloqueios anestésicos proximais à região dolorosa e, em casos refratários, interrupção cirúrgica da via neoespinotalâmica (ou neotrigeminotalâmica, na dor facial) e procedimentos modulatórios como estimulação elétrica crônica da substância cinzenta periventricular/periaquedutal (PVG-PAG) ou administração intratecal de opioides.</p>
+        </div>
+        <div class="card" style="border-top-color:var(--violet)">
+          <span class="k" style="color:var(--violet)">Dor neuropática</span>
+          <h4>Alvo: a modulação central da sinapse (Seção 03)</h4>
+          <p>Responde melhor a antidepressivos tricíclicos e inibidores da recaptação de serotonina-noradrenalina, neurolépticos quando associados a antidepressivos, anestésicos locais (úteis em alguns casos de neuropatia diabética), destruição cirúrgica de vias reticulotalâmicas em casos extremos e refratários, e a procedimentos modulatórios como estimulação da medula espinal, lemnisco medial, tálamo (núcleos VPL/VPM), cápsula interna e córtex motor.</p>
+        </div>
+      </div>
+
+      <p>Vale destacar um ponto sutil, já discutido na Seção 04: os componentes <i>espontâneo</i>, <i>paroxístico</i> e <i>evocado</i> da dor neuropática respondem de forma diferente entre si. As dores paroxísticas (em choque, tipo nevralgia do trigêmeo) frequentemente respondem bem a anticonvulsivantes bloqueadores de canais de sódio (carbamazepina, oxcarbazepina), enquanto anestésicos locais tópicos podem reduzir manifestações evocadas (alodinia ao toque). O componente <i>constante</i> da dor — a queimação de fundo, presente o tempo todo — costuma ser o mais resistente às terapêuticas habituais, podendo inclusive piorar com interrupção cirúrgica das vias neoespinotalâmica ou neotrigeminotalâmica; ele tende a responder melhor a fármacos moduladores centrais como amitriptilina, duloxetina e gabapentinoides (gabapentina, pregabalina).</p>
+
+      <div class="tagline"><span class="lab" style="color:var(--green); border:1px solid rgba(52,211,153,.4)">Diretrizes OMS</span><div class="ln"></div></div>
+
+      <p>As diretrizes da Organização Mundial da Saúde para o tratamento farmacológico da dor se organizam em cinco princípios que você deve internalizar como um checklist de prescrição:</p>
+
+      <div class="grid-3">
+        <div class="card"><span class="k" style="color:var(--green)">1</span><h4>Horário fixo</h4><p>Administrar em intervalos regulares, não apenas "se necessário" — mantém níveis plasmáticos estáveis e evita picos de dor não controlada.</p></div>
+        <div class="card"><span class="k" style="color:var(--green)">2</span><h4>Via menos invasiva</h4><p>Preferir via oral sempre que possível; evitar via intramuscular (dolorosa, absorção errática, risco de hematoma/abscesso).</p></div>
+        <div class="card"><span class="k" style="color:var(--green)">3</span><h4>Escala analgésica</h4><p>Escolher o fármaco conforme a intensidade da dor relatada pelo paciente — é a escada de três degraus que detalhamos abaixo.</p></div>
+        <div class="card"><span class="k" style="color:var(--green)">4</span><h4>Individualizado</h4><p>Ajustar dose e fármaco conforme resposta, comorbidades e função renal/hepática de cada paciente — não existe dose "padrão" universal.</p></div>
+        <div class="card"><span class="k" style="color:var(--green)">5</span><h4>Efeitos adversos antecipados</h4><p>Prescrever profilaticamente para efeitos previsíveis (laxante junto com opioide, por exemplo) em vez de esperar o paciente sofrer para depois tratar.</p></div>
+      </div>
+
+      <div class="tagline"><span class="lab" style="color:var(--amber); border:1px solid rgba(245,165,36,.4)">Escada analgésica da OMS</span><div class="ln"></div></div>
+
+      <div class="flow-vert">
+        <div class="flow-step" style="border-color:rgba(34,211,238,.4)">Degrau 1 — Dor leve (ENV 1–3/10)<br><span style="color:var(--text-mute); font-size:12px">Analgésicos anti-inflamatórios, dipirona, paracetamol ± adjuvantes</span></div>
+        <div class="flow-arrow">↑</div>
+        <div class="flow-step" style="border-color:rgba(245,165,36,.4)">Degrau 2 — Dor moderada (ENV 4–6/10)<br><span style="color:var(--text-mute); font-size:12px">Opioides fracos: codeína e tramadol ± adjuvantes</span></div>
+        <div class="flow-arrow">↑</div>
+        <div class="flow-step" style="border-color:rgba(248,113,113,.4)">Degrau 3 — Dor forte (ENV 7–10/10)<br><span style="color:var(--text-mute); font-size:12px">Opioides potentes: morfina, metadona, fentanil ± adjuvantes</span></div>
+        <div class="flow-arrow">↑</div>
+        <div class="flow-step" style="border-color:rgba(248,113,113,.6)">Dor muito intensa / refratária<br><span style="color:var(--text-mute); font-size:12px">Bloqueios analgésicos e procedimentos intervencionistas</span></div>
+      </div>
+
+      <div class="alert prova">
+        <span class="lbl">Prova</span>
+        <p>Um ponto muito explorado em prova é a direção da "subida" e "descida" da escada conforme o contexto clínico: na <strong>dor aguda</strong>, a lógica é começar já no degrau adequado à intensidade e depois fazer uma <i>descida rápida</i> à medida que a causa é resolvida (pós-operatório, por exemplo). Na <strong>dor crônica</strong>, a lógica é o oposto — uma <i>subida lenta e gradual</i>, começando pelo degrau mais baixo possível e escalando apenas quando o degrau anterior se mostra insuficiente, justamente para minimizar exposição desnecessária a opioides potentes e seus riscos de tolerância/dependência (Seção 09).</p>
+      </div>
+
+      <details class="deep">
+        <summary>Aprofunde-se — por que "adjuvante" acompanha todos os degraus?</summary>
+        <div class="deep-body">
+          <p>Fármacos adjuvantes (antidepressivos, anticonvulsivantes, corticoides, relaxantes musculares, bifosfonatos em dor óssea metastática) não são analgésicos "puros" — eles têm outra indicação primária, mas produzem efeito analgésico relevante em contextos específicos, geralmente atuando em mecanismos diferentes dos analgésicos clássicos (ação central moduladora, como vimos na Seção 03, em vez de ação anti-inflamatória periférica). A grande vantagem clínica de associá-los é o conceito de <i>analgesia multimodal</i>: ao atacar simultaneamente vários pontos da via nociceptiva (periferia, corno dorsal, vias descendentes), você consegue efeito analgésico superior com doses menores de cada fármaco individual — reduzindo, principalmente, a dose necessária de opioide e, com ela, seus efeitos adversos.</p>
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- ============ SEÇÃO 07 ============ -->
+  <section class="section" id="s7">
+    <div class="section-head">
+      <div class="section-num">07</div>
+      <div class="section-titles">
+        <div class="section-kicker" style="color:var(--violet)">Farmacologia molecular</div>
+        <h2>Receptores opioides e mecanismo de ação</h2>
+        <div class="section-sub">Por que uma única classe de receptor consegue, ao mesmo tempo, aliviar a dor, deprimir a respiração, causar euforia e gerar dependência.</div>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+    <div class="section-body">
+
+      <p class="lead">O slide 19 resume em poucas linhas um sistema neurofisiológico inteiro. Vamos desmontar essa informação peça por peça, porque entender o mecanismo molecular explica <i>simultaneamente</i> a eficácia analgésica, o potencial de abuso e cada um dos efeitos adversos que veremos na Seção 09 — não são fenômenos separados, são a mesma molécula agindo em locais diferentes.</p>
+
+      <div class="tagline"><span class="lab" style="color:var(--violet); border:1px solid rgba(167,139,250,.4)">O sistema opioide endógeno</span><div class="ln"></div></div>
+
+      <p>Os receptores opioides — <i>μ (mu)</i>, <i>δ (delta)</i>, <i>κ (kappa)</i> e <i>σ (sigma)</i> — são receptores metabotrópicos acoplados à proteína G inibitória (Gi/o), distribuídos amplamente no sistema nervoso central (córtex pré-frontal, amígdala, hipocampo, área tegmental ventral, núcleo accumbens, tálamo), na medula espinal (onde já os encontramos na Seção 03, modulando a sinapse do corno dorsal) e também em tecidos periféricos. Em condições fisiológicas, eles são ativados por peptídeos opioides endógenos — endorfinas (afinidade preferencial por μ), encefalinas (preferência por δ) e dinorfinas (preferência por κ) — produzidos justamente em resposta à nocicepção, como um sistema natural de analgesia sob demanda.</p>
+
+      <details class="deep">
+        <summary>Aprofunde-se — a cascata intracelular completa da ativação do receptor μ</summary>
+        <div class="deep-body">
+          <p>Quando um agonista (endógeno ou exógeno) ativa o receptor μ acoplado à proteína Gi/o, três eventos moleculares ocorrem em sequência e explicam o efeito analgésico em múltiplos níveis: <i>(1)</i> inibição da enzima adenilato ciclase, reduzindo os níveis de AMP cíclico intracelular — isso diminui a atividade geral do neurônio; <i>(2)</i> abertura de canais de potássio retificadores de influxo (GIRK), provocando efluxo de K⁺ e <i>hiperpolarização</i> da membrana — o neurônio fica mais "difícil de disparar"; <i>(3)</i> fechamento de canais de cálcio voltagem-dependentes tipo N no terminal pré-sináptico, reduzindo drasticamente o influxo de Ca²⁺ necessário para a exocitose de vesículas — o resultado prático é <i>menor liberação de glutamato e substância P</i> na sinapse do corno dorsal que vimos na Seção 03. Ou seja: o mesmo receptor produz efeito pré-sináptico (menos neurotransmissor liberado) e pós-sináptico (neurônio menos excitável) simultaneamente — uma dupla blindagem contra a transmissão do sinal doloroso.</p>
+        </div>
+      </details>
+
+      <div class="tagline"><span class="lab" style="color:var(--orange); border:1px solid rgba(251,146,60,.4)">Três esferas de ação</span><div class="ln"></div></div>
+
+      <p>É justamente a distribuição desses receptores em regiões cerebrais funcionalmente distintas que explica por que os opioides não são "apenas" analgésicos — eles atuam em três esferas simultâneas:</p>
+
+      <div class="grid-3">
+        <div class="card" style="border-top-color:var(--cyan)">
+          <span class="k" style="color:var(--cyan)">Esfera sensorial</span>
+          <h4>Inibição direta da nocicepção</h4>
+          <p>Ação espinal (corno dorsal) e supraespinal (substância cinzenta periaquedutal, ativando vias descendentes inibitórias) inibindo a resposta a estímulos dolorosos — o efeito analgésico propriamente dito.</p>
+        </div>
+        <div class="card" style="border-top-color:var(--violet)">
+          <span class="k" style="color:var(--violet)">Esfera cognitiva</span>
+          <h4>Aprendizado e memória</h4>
+          <p>Receptores no hipocampo e córtex pré-frontal modulam esses processos — parte da explicação de efeitos como sedação e "névoa mental" (fog) relatados por pacientes em uso crônico de opioides.</p>
+        </div>
+        <div class="card" style="border-top-color:var(--amber)">
+          <span class="k" style="color:var(--amber)">Esfera emocional</span>
+          <h4>Recompensa (euforia) e adição</h4>
+          <p>Ativação de receptores μ na área tegmental ventral (ATV) desinibe neurônios dopaminérgicos que projetam para o núcleo accumbens, aumentando a liberação de dopamina — o circuito clássico de recompensa, base neurobiológica do potencial de abuso e dependência.</p>
+        </div>
+      </div>
+
+      <div class="alert atencao">
+        <span class="lbl">Atenção</span>
+        <p>Esse é o ponto central para entender por que opioides não são "apenas mais um analgésico forte": a mesma molécula que alivia a dor no corno dorsal está, ao mesmo tempo, ativando o sistema de recompensa mesolímbico na área tegmental ventral. Isso não significa que todo paciente que usa opioide vai desenvolver dependência (mito que desmontaremos na Seção 10), mas explica por que o uso prolongado exige monitoramento e critério clínico.</p>
+        </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SEÇÃO 08 ============ -->
+  <section class="section" id="s8">
+    <div class="section-head">
+      <div class="section-num">08</div>
+      <div class="section-titles">
+        <div class="section-kicker" style="color:var(--amber)">Farmacologia</div>
+        <h2>Classificação dos opioides</h2>
+        <div class="section-sub">Por potência, por origem e — a mais importante clinicamente — por atividade funcional no receptor.</div>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+    <div class="section-body">
+
+      <p class="lead">Existem três eixos de classificação diferentes, e é comum o aluno confundi-los porque os slides os apresentam em sequência. Vamos separar cada um.</p>
+
+      <div class="tagline"><span class="lab" style="color:var(--amber); border:1px solid rgba(245,165,36,.4)">Por potência analgésica</span><div class="ln"></div></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Fracos (degrau 2 da escada)</th><th>Fortes (degrau 3 da escada)</th></tr></thead>
+          <tbody>
+            <tr><td>Codeína</td><td>Morfina</td></tr>
+            <tr><td>Diidrocodeína</td><td>Oxicodona</td></tr>
+            <tr><td>Dextropropoxifeno</td><td>Hidromorfona</td></tr>
+            <tr><td>Tramadol</td><td>Metadona</td></tr>
+            <tr><td>—</td><td>Meperidina</td></tr>
+            <tr><td>—</td><td>Fentanil</td></tr>
+            <tr><td>—</td><td>Buprenorfina</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tagline"><span class="lab" style="color:var(--teal); border:1px solid rgba(45,212,191,.4)">Por origem</span><div class="ln"></div></div>
+
+      <p>Naturais (derivados diretamente do ópio — morfina, codeína), semissintéticos (modificação química de alcaloides naturais — oxicodona, hidromorfona, buprenorfina) e sintéticos (estrutura totalmente construída em laboratório sem derivar do ópio — fentanil, metadona, tramadol, meperidina). Essa classificação tem menos relevância clínica direta e mais relevância regulatória/histórica.</p>
+
+      <div class="tagline"><span class="lab" style="color:var(--violet); border:1px solid rgba(167,139,250,.4)">Por atividade funcional — a mais importante</span><div class="ln"></div></div>
+
+      <p>Esse é o eixo que realmente importa para prever o comportamento farmacológico do fármaco em diferentes cenários clínicos, incluindo situações de superdosagem.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Categoria</th><th>Mecanismo</th><th>Uso principal</th><th>Exemplos</th></tr></thead>
+          <tbody>
+            <tr><td>Agonistas puros</td><td>Alta afinidade e elevada atividade intrínseca (eficácia máxima) no receptor.</td><td>Analgesia, inclusive em dor de origem neoplásica.</td><td>Codeína, hidrocodona, di-hidrocodeína, morfina, hidromorfona, fentanil, oxicodona, oximorfona, levorfanol, metadona, meperidina.</td></tr>
+            <tr><td>Agonista-antagonista</td><td>Agonistas em um subtipo de receptor e antagonistas (ou agonistas fracos/parciais) em outro.</td><td>Desenvolvidos para reduzir risco de abuso; não recomendados de forma generalizada para dor oncológica.</td><td>Agonista parcial: buprenorfina. Agonista-antagonista misto: butorfanol, dezocina, nalbufina.</td></tr>
+            <tr><td>Antagonistas puros</td><td>Afinidade pelo receptor, porém <i>nenhuma</i> atividade intrínseca — ocupam o sítio sem ativá-lo, bloqueando o agonista.</td><td>Reverter efeitos adversos graves dos agonistas, sobretudo depressão respiratória por sobredosagem.</td><td>Naloxona, naltrexona, nalmefene, metilnaltrexona, alvimopan.</td></tr>
+            <tr><td>Mecanismo misto</td><td>Ação central que combina agonismo opioide fraco com inibição da recaptação de serotonina e noradrenalina.</td><td>Sem evidência de superioridade aos agonistas puros para dor oncológica; o mecanismo monoaminérgico impõe dose-teto.</td><td>Tramadol, tapentadol.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert pegadinha">
+        <span class="lbl">Pegadinha</span>
+        <p>Um erro clássico é pensar que "agonista parcial" (buprenorfina) é sempre mais fraco na prática clínica do que um agonista pleno. A buprenorfina tem afinidade extremamente alta pelo receptor μ (maior que a própria morfina), mas atividade intrínseca (eficácia) menor — ela pode inclusive <i>deslocar</i> um agonista pleno já ligado ao receptor e, paradoxalmente, precipitar quadro de abstinência em paciente já usando opioide potente, por reduzir a ativação líquida do receptor. É por isso que a troca para buprenorfina exige protocolo específico de transição.</p>
+      </div>
+
+      <details class="deep">
+        <summary>Aprofunde-se — por que a naloxona reverte overdose tão rapidamente?</summary>
+        <div class="deep-body">
+          <p>A naloxona tem afinidade muito alta pelo receptor μ, mas atividade intrínseca zero — ela desloca competitivamente o agonista (morfina, fentanil, heroína) do receptor sem ativá-lo, revertendo em minutos a depressão respiratória potencialmente fatal. O detalhe farmacocinético crucial, frequentemente cobrado em prova e vital na prática clínica, é que a naloxona tem meia-vida plasmática curta (30–90 minutos), muito mais curta que a de muitos opioides de ação prolongada (metadona, fentanil transdérmico). Isso significa que um paciente revertido com naloxona pode voltar a apresentar depressão respiratória horas depois, quando o efeito da naloxona já passou mas o opioide original ainda está circulando — por isso, após reversão de overdose, o paciente precisa de observação prolongada, e não apenas de uma dose única e alta.</p>
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- ============ SEÇÃO 09 ============ -->
+  <section class="section" id="s9">
+    <div class="section-head">
+      <div class="section-num">09</div>
+      <div class="section-titles">
+        <div class="section-kicker" style="color:var(--red)">Segurança do paciente</div>
+        <h2>Efeitos adversos por subtipo de receptor</h2>
+        <div class="section-sub">Nem todo efeito adverso é igual — e saber qual receptor gera qual efeito permite prever, antecipar e às vezes até escolher o opioide certo para minimizar um efeito específico.</div>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+    <div class="section-body">
+
+      <p class="lead">O slide traz duas tabelas praticamente idênticas em conteúdo, mas vale a pena consolidá-las porque juntas formam um mapa completo de causa (subtipo de receptor) e efeito (manifestação clínica).</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Efeito</th><th>μ1</th><th>μ2</th><th>κ</th><th>σ</th><th>δ</th></tr></thead>
+          <tbody>
+            <tr><td>Analgesia</td><td>+</td><td>–</td><td>+</td><td>–</td><td>+</td></tr>
+            <tr><td>Sedação</td><td>–</td><td>+</td><td>+</td><td>–</td><td>?</td></tr>
+            <tr><td>Euforia / disforia</td><td>Euforia</td><td>–</td><td>Disforia</td><td>Alucinação</td><td>–</td></tr>
+            <tr><td>Depressão respiratória</td><td>–</td><td>+</td><td>±</td><td>–</td><td>+</td></tr>
+            <tr><td>Bradicardia</td><td>+</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+            <tr><td>Constipação</td><td>–</td><td>+</td><td>–</td><td>–</td><td>+</td></tr>
+            <tr><td>Retenção urinária</td><td>+</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+            <tr><td>Miose</td><td>—</td><td>—</td><td>+ (via κ)</td><td>—</td><td>—</td></tr>
+            <tr><td>Tolerância / dependência física</td><td>+</td><td>+</td><td>–</td><td>–</td><td>+</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:12.5px; color:var(--text-mute)">+ efeito presente/reforçado · − sem efeito relevante · ± efeito parcial · ? resultados insuficientes na literatura.</p>
+
+      <div class="tagline"><span class="lab" style="color:var(--red); border:1px solid rgba(248,113,113,.4)">O efeito que mais mata: depressão respiratória</span><div class="ln"></div></div>
+
+      <p>A depressão respiratória é predominantemente mediada por receptores μ2 (e, em menor grau, δ) localizados nos centros respiratórios do tronco encefálico — bulbo e ponte —, onde a hiperpolarização e a redução de AMPc reduzem diretamente a responsividade desses neurônios ao CO₂, o principal estímulo fisiológico da respiração. É o efeito adverso mais temido e a causa da maioria dos óbitos por overdose de opioides — mas, ao contrário do que muitos acreditam (mito que abordaremos na Seção 10), ela é <i>rara</i> quando o opioide é titulado e administrado em doses adequadas e individualizadas, justamente porque a tolerância à depressão respiratória se desenvolve rapidamente com o uso continuado.</p>
+
+      <div class="tagline"><span class="lab" style="color:var(--orange); border:1px solid rgba(251,146,60,.4)">O efeito que nunca desaparece: constipação</span><div class="ln"></div></div>
+
+      <p>Aqui está um ponto de altíssimo valor prático e frequentemente cobrado: <i>diferentemente</i> da sedação, náusea e até da depressão respiratória (que desenvolvem tolerância farmacológica com o uso continuado — o organismo "se acostuma"), a constipação intestinal <i>não</i> desenvolve tolerância significativa. Isso ocorre porque ela é mediada por receptores opioides no plexo mioentérico e submucoso do próprio trato gastrointestinal — redução da motilidade propulsiva, aumento do tônus esfincteriano e redução da secreção intestinal —, um efeito periférico local que persiste enquanto o opioide for usado. Por isso, o item 5 das diretrizes da OMS (Seção 06) — antecipar e tratar efeitos adversos previamente — se traduz, na prática, em prescrever laxante <i>junto</i> com o opioide desde o primeiro dia, e não esperar o paciente desenvolver constipação para só então tratá-la.</p>
+
+      <details class="deep">
+        <summary>Aprofunde-se — tolerância e dependência física não são a mesma coisa que adição</summary>
+        <div class="deep-body">
+          <p>Essa é uma distinção conceitual que separa clinicamente competentes de leigos — e que costuma ser mal compreendida até por profissionais de saúde (voltaremos a isso na Seção 10). <i>Tolerância</i> é um fenômeno farmacológico puro: com o uso continuado, o receptor sofre dessensibilização (fosforilação por GRKs, recrutamento de beta-arrestina, internalização do receptor) e a mesma dose passa a produzir efeito menor, exigindo aumento de dose para manter o mesmo efeito analgésico. <i>Dependência física</i> também é puramente farmacológica: o organismo se adaptou fisiologicamente à presença constante do opioide, e a interrupção abrupta desencadeia síndrome de abstinência (Seção 12) — isso ocorre com qualquer paciente em uso prolongado, independentemente de haver comportamento aditivo. Já <i>adição</i> (transtorno por uso de substância) é um diagnóstico comportamental, caracterizado por uso compulsivo apesar de consequências negativas, perda de controle sobre o uso e fissura — envolve o circuito de recompensa mesolímbico que vimos na Seção 07, mas não decorre automaticamente do uso terapêutico correto. Um paciente pode estar fisicamente dependente e tolerante (farmacologicamente esperado) sem jamais desenvolver adição (comportamentalmente patológico).</p>
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- ============ SEÇÃO 10 ============ -->
+  <section class="section" id="s10">
+    <div class="section-head">
+      <div class="section-num">10</div>
+      <div class="section-titles">
+        <div class="section-kicker" style="color:var(--orange)">Prática clínica</div>
+        <h2>Mitos, barreiras e boas práticas de prescrição</h2>
+        <div class="section-sub">Por que tanto médicos quanto pacientes ainda subtratam a dor — e o que a OMS recomenda para corrigir esse padrão.</div>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+    <div class="section-body">
+
+      <p class="lead">Volte à Seção 01 por um instante: lembra do ciclo de cronificação que começa com "dor aguda tratada inadequadamente"? Os quatro mitos e as cinco barreiras que veremos agora são, na prática, as causas-raiz mais comuns desse subtratamento — e é por isso que essa seção fecha o círculo lógico da aula inteira.</p>
+
+      <div class="tagline"><span class="lab" style="color:var(--red); border:1px solid rgba(248,113,113,.4)">Quatro conceitos equivocados</span><div class="ln"></div></div>
+
+      <div class="grid-2">
+        <div class="card" style="border-top-color:var(--red)">
+          <span class="k" style="color:var(--red)">Mito 1</span>
+          <h4>"Opioide é só para paciente terminal"</h4>
+          <p>Falso. Opioides são indicados sempre que a intensidade da dor justificar (degrau 3 da escada), independentemente de prognóstico — dor pós-operatória intensa, trauma, dor oncológica em tratamento curativo, e diversos quadros de dor crônica não oncológica bem selecionados.</p>
+        </div>
+        <div class="card" style="border-top-color:var(--red)">
+          <span class="k" style="color:var(--red)">Mito 2</span>
+          <h4>"Depois da morfina não há mais nada a fazer"</h4>
+          <p>Falso. A morfina não é o "fim da linha" — existem rotação de opioides, associação de adjuvantes, vias alternativas (intratecal, por exemplo) e procedimentos intervencionistas. Essa crença gera resistência a prescrever o fármaco correto por medo de "esgotar as opções".</p>
+        </div>
+        <div class="card" style="border-top-color:var(--red)">
+          <span class="k" style="color:var(--red)">Mito 3</span>
+          <h4>"Todo paciente que usa opioide fica dependente"</h4>
+          <p>Falso, como já detalhamos na Seção 09 — dependência física e tolerância são esperadas farmacologicamente, mas adição (transtorno comportamental) não é uma consequência automática do uso terapêutico correto e monitorado.</p>
+        </div>
+        <div class="card" style="border-top-color:var(--red)">
+          <span class="k" style="color:var(--red)">Mito 4</span>
+          <h4>"Depressão respiratória é comum mesmo em dose correta"</h4>
+          <p>Falso. Em doses adequadamente tituladas e individualizadas, a depressão respiratória grave é rara — o risco aumenta desproporcionalmente com doses inadequadas, associação com outros depressores do SNC (benzodiazepínicos, álcool) ou em pacientes virgens de exposição prévia (naive) recebendo dose alta de início.</p>
+        </div>
+      </div>
+
+      <div class="tagline"><span class="lab" style="color:var(--orange); border:1px solid rgba(251,146,60,.4)">Barreiras ao manejo adequado</span><div class="ln"></div></div>
+
+      <ul class="ulist">
+        <li>Preconceito quanto ao uso de derivados opioides — tanto pela população geral quanto pela própria equipe de assistência.</li>
+        <li>Falta de conhecimento farmacológico dos opioides pela equipe prescritora (exatamente o que essa seção busca corrigir).</li>
+        <li>Descrença da equipe de saúde em relação à queixa do paciente sobre a intensidade real de sua dor — subestimação sistemática, especialmente em populações vulneráveis.</li>
+        <li>Crença de que a dor é apenas "parte do processo patológico" e deve ser tolerada — postura que contraria diretamente o princípio de que dor crônica não tratada tem consequências neurobiológicas próprias (Seção 01).</li>
+        <li>Crença de que a dor é um "sinal vital" indispensável para acompanhar a evolução da doença, e que aliviá-la dificultaria essa avaliação — na prática, existem parâmetros objetivos (exames, sinais vitais, evolução clínica) que permitem monitorar a doença independentemente do controle álgico.</li>
+      </ul>
+
+      <div class="tagline"><span class="lab" style="color:var(--green); border:1px solid rgba(52,211,153,.4)">Orientações da OMS para prescrição segura</span><div class="ln"></div></div>
+
+      <div class="grid-3">
+        <div class="card" style="border-top-color:var(--green)"><h4>Administração cautelosa e individualizada</h4><p>Suporte analgésico básico para dor intensa; buscar a dose máxima que equilibre analgesia e efeitos colaterais toleráveis.</p></div>
+        <div class="card" style="border-top-color:var(--green)"><h4>Via oral como preferência</h4><p>Baixo custo, facilidade de administração, boa previsibilidade — sempre a primeira escolha quando o paciente consegue deglutir e absorver.</p></div>
+        <div class="card" style="border-top-color:var(--green)"><h4>Horários regulares</h4><p>Evitar esquema "se necessário" (SOS); manter administração em intervalos fixos, prevenindo picos e vales de analgesia.</p></div>
+        <div class="card" style="border-top-color:var(--green)"><h4>Seleção do opioide conforme intensidade</h4><p>Agonistas fortes (morfina, metadona, oxicodona, fentanil) para dores intensas; agonistas mais fracos (codeína, tramadol) para dores moderadas.</p></div>
+        <div class="card" style="border-top-color:var(--green)"><h4>Uso de fármacos coadjuvantes</h4><p>Potencializar o efeito analgésico ou controlar efeitos colaterais específicos (antieméticos, laxantes, ansiolíticos quando indicados).</p></div>
+        <div class="card" style="border-top-color:var(--green)"><h4>Reavaliação constante</h4><p>Ajustar dose continuamente visando alívio total da dor ou, quando isso não for possível, desconforto mínimo tolerável pelo paciente.</p></div>
+        <div class="card" style="border-top-color:var(--green)"><h4>Vias parenterais quando necessário</h4><p>Endovenosa ou subcutânea são preferidas; a via intramuscular é desencorajada por ser irritante, dolorosa e ter absorção errática.</p></div>
+        <div class="card" style="border-top-color:var(--green)"><h4>Troca (rotação) de opioide</h4><p>Considerar em casos de necessidade de altas doses, efeitos adversos intoleráveis ou tolerância — sempre com substituição baseada em doses equianalgésicas calculadas.</p></div>
+      </div>
+
+      <div class="alert clinica">
+        <span class="lbl">Clínica</span>
+        <p>A rotação de opioides existe porque a tolerância cruzada entre diferentes opioides costuma ser incompleta — trocar de fármaco frequentemente recupera eficácia analgésica com dose equianalgésica menor do que a que seria necessária se você simplesmente continuasse aumentando a dose do opioide original. Isso também reduz a exposição acumulada a metabólitos tóxicos específicos de cada fármaco.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SEÇÃO 11 ============ -->
+  <section class="section" id="s11">
+    <div class="section-head">
+      <div class="section-num">11</div>
+      <div class="section-titles">
+        <div class="section-kicker" style="color:var(--teal)">Farmácia clínica</div>
+        <h2>Fármacos específicos: apresentação e posologia</h2>
+        <div class="section-sub">Os quatro opioides mais prescritos na prática — com as doses exatamente como constam no material da aula, mais o contexto regulatório de prescrição no Brasil.</div>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+    <div class="section-body">
+
+      <p class="lead">Antes das tabelas específicas, um resumo comparativo geral de doses (via, dose de ataque e manutenção) para os principais fármacos, exatamente como trazido no slide de prescrição:</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Droga</th><th>Via</th><th>Dose de ataque (mg/kg)</th><th>Dose de manutenção (mg/kg)</th><th>Intervalo</th></tr></thead>
+          <tbody>
+            <tr><td>Tramadol</td><td>Via oral</td><td>1,5–2,0</td><td>1,0–1,5</td><td>6–8h</td></tr>
+            <tr><td>Codeína</td><td>Via oral</td><td>1,5</td><td>0,75</td><td>3–4h</td></tr>
+            <tr><td>Oxicodona</td><td>Via oral</td><td>0,15</td><td>0,07–0,15</td><td>3–4h</td></tr>
+            <tr><td rowspan="2">Morfina</td><td>Via oral</td><td>0,5–1,0</td><td>0,5–1,0</td><td>4h</td></tr>
+            <tr><td>Intravenosa</td><td>0,15</td><td>0,01–0,04/h</td><td>Contínuo</td></tr>
+            <tr><td>Metadona</td><td>Via oral</td><td>0,2–0,4</td><td>0,1–0,4</td><td>6–12h</td></tr>
+            <tr><td>Fentanil</td><td>Intravenosa</td><td>0,0008–0,0016</td><td>0,0003–0,0016/h</td><td>Contínuo</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert prova">
+        <span class="lbl">Prova</span>
+        <p>Repare no padrão de intervalos: fármacos de meia-vida mais curta (codeína, oxicodona) precisam de doses a cada 3–4h; fármacos de meia-vida mais longa ou com formulações de liberação prolongada (metadona) toleram intervalos de 6–12h; morfina e fentanil em infusão contínua são usados justamente quando se precisa de nível plasmático estável sem os picos e vales das doses intermitentes — típico de UTI e pós-operatório de grande porte.</p>
+      </div>
+
+      <div class="tagline"><span class="lab" style="color:var(--teal); border:1px solid rgba(45,212,191,.4)">Cloridrato de tramadol</span><div class="ln"></div></div>
+
+      <div class="card">
+        <p><i>Apresentações:</i> cápsula 50 mg; comprimido de liberação prolongada 50 mg e 100 mg; solução injetável 50 mg/mL; solução oral 100 mg/mL (40 gotas = 1 mL).<br><br>
+        <i>Uso injetável:</i> dose usual 50–100 mg EV/IM/SC de 4/4 ou 6/6h; diluir 50 mg em 50 mL ou 100 mg em 100 mL de SF 0,9% ou SG 5%.<br><br>
+        <i>Uso oral:</i> cápsulas 50–100 mg a cada 4–6h; liberação prolongada iniciando 50–100 mg 2x/dia, podendo chegar a 150–200 mg 2x/dia; solução oral 20–40 gotas (50–100 mg) de 4/4 ou 6/6h. Dose máxima diária: 400 mg. As formas sólidas não devem ser partidas (preservação da matriz de liberação prolongada).<br><br>
+        <i>Receituário:</i> até 100 mg por unidade posológica → Adendo A2 (Receita de Controle Especial em duas vias); acima de 100 mg → A2, Receituário Amarelo tipo A.</p>
+      </div>
+
+      <div class="tagline"><span class="lab" style="color:var(--teal); border:1px solid rgba(45,212,191,.4)">Fosfato de codeína</span><div class="ln"></div></div>
+
+      <div class="card">
+        <p><i>Apresentações:</i> comprimido 30 mg e 60 mg; solução oral 3 mg/mL (frasco 120 mL); solução injetável 30 mg/mL (ampola 2 mL).<br><br>
+        <i>Uso oral:</i> comprimido 30 mg (variação 15–60 mg) VO 4–6x/dia; solução oral 10 mL (variação 5–20 mL) VO 4–6x/dia; solução injetável 1 mL (variação 0,5–2 mL) IM/SC 4–6x/dia. Dose máxima: 360 mg/dia.<br><br>
+        <i>Receituário:</i> até 100 mg por unidade posológica e concentração menor que 2,5% em formas indivisíveis → Adendo A2 (Receita de Controle Especial em duas vias); acima de 100 mg → A2, Receituário Amarelo tipo A.</p>
+      </div>
+
+      <div class="tagline"><span class="lab" style="color:var(--teal); border:1px solid rgba(45,212,191,.4)">Paracetamol + fosfato de codeína</span><div class="ln"></div></div>
+
+      <div class="card">
+        <p><i>Apresentações:</i> comprimido 500 mg + 7,5 mg; comprimido 500 mg + 30 mg.<br><br>
+        <i>Uso oral:</i> dose inicial 1 comprimido VO de até 4/4h; dores de grau mais intenso, 2 comprimidos VO de 6/6h. Dose máxima diária: 240 mg de fosfato de codeína e 4.000 mg de paracetamol (atenção ao limite hepatotóxico do paracetamol quando associado a outras fontes do fármaco). Não deve ser partido.<br><br>
+        <i>Receituário:</i> C1, Receita de Controle Especial em duas vias.</p>
+      </div>
+
+      <div class="tagline"><span class="lab" style="color:var(--teal); border:1px solid rgba(45,212,191,.4)">Sulfato de morfina</span><div class="ln"></div></div>
+
+      <div class="card">
+        <p><i>Apresentações:</i> comprimido simples 10 mg e 30 mg; cápsula de liberação prolongada 30 mg, 60 mg e 100 mg; solução injetável em diversas concentrações (1 mg/mL, 0,1 mg/mL, 0,2 mg/mL e 10 mg/mL); solução oral 10 mg/mL (frasco 60 mL).<br><br>
+        <i>Uso EV:</i> dose usual 2–10 mg/70 kg; dose máxima varia com tolerância individual, situando-se na maioria dos pacientes entre 60–90 mg/dia. EV direta administrada em 3–5 minutos (diluir 10 mg em 10 mL de SF 0,9% ou SG 5%, concentração 1 mg/mL) ou EV contínua em bomba infusora (diluir 100 mg em 90 mL, concentração 1 mg/mL).<br><br>
+        <i>Uso oral:</i> comprimido simples 5–30 mg de 4/4h (máximo 180 mg/dia); cápsula de liberação prolongada 30–100 mg de 12/12h (máximo 200 mg/dia); solução oral 5–20 mg de 4/4h (máximo 120 mg/dia).<br><br>
+        <i>Receituário:</i> até 5 mg → C1 (Receita de Controle Especial em duas vias); acima de 5 mg → A1, Receituário Amarelo.</p>
+      </div>
+
+      <details class="deep">
+        <summary>Aprofunde-se — o que significam essas letras do receituário (A1, A2, B, C1)?</summary>
+        <div class="deep-body">
+          <p>No Brasil, a prescrição de substâncias controladas segue a Portaria SVS/MS nº 344/1998 e suas atualizações, que organiza as substâncias em listas com receituários específicos. As listas <i>A1 e A2</i> correspondem a substâncias entorpecentes (opioides potentes de alto risco de abuso, como morfina em dose alta e fentanil) e exigem o Receituário Amarelo, com numeração controlada, retenção da segunda via na farmácia e notificação à vigilância sanitária. A lista <i>C1</i> corresponde a substâncias sujeitas a controle especial (opioides de menor potencial de abuso em determinadas apresentações, como tramadol e codeína em baixas doses, ou associações), exigindo a Receita de Controle Especial em duas vias, com retenção de uma via na farmácia, mas sem a mesma numeração sequencial do Receituário Amarelo. Note, nas tabelas acima, como o mesmo fármaco pode mudar de categoria dependendo exclusivamente da <i>dose por unidade posológica</i> — é o caso do tramadol (A2 acima de 100 mg) e da morfina (A1 acima de 5 mg), reforçando que a classificação regulatória acompanha diretamente o potencial de abuso/toxicidade em cada faixa de dose.</p>
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- ============ SEÇÃO 12 ============ -->
+  <section class="section" id="s12">
+    <div class="section-head">
+      <div class="section-num">12</div>
+      <div class="section-titles">
+        <div class="section-kicker" style="color:var(--red)">Vigilância clínica</div>
+        <h2>Rastreamento de uso indevido de opioides</h2>
+        <div class="section-sub">Como reconhecer, na consulta, sinais de que algo está fora do padrão esperado — e diferenciar intoxicação de abstinência, dois quadros com fisiopatologias opostas.</div>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+    <div class="section-body">
+
+      <p class="lead">O ponto mais importante desta seção não é decorar as listas — é entender que intoxicação e abstinência são fisiologicamente <i>opostas</i>, porque a primeira é excesso de ativação do receptor μ e a segunda é a "queda brusca" dessa ativação em um sistema que já havia se adaptado à presença constante do fármaco (dependência física, Seção 09).</p>
+
+      <div class="grid-3">
+        <div class="card" style="border-top-color:var(--amber)">
+          <span class="k" style="color:var(--amber)">Sinais de alerta comportamentais</span>
+          <h4>Padrões sugestivos de uso indevido</h4>
+          <p>História vaga sobre a dor ou o uso do medicamento; rapport fraco na consulta; relatos recorrentes de medicamentos "perdidos" ou "roubados"; pedidos precoces de renovação da receita; telefonemas urgentes fora do horário; "doctor shopping" (buscar vários médicos para múltiplas prescrições); ausência de qualquer alívio relatado sem opioides; e histórico de abuso de outras substâncias, incluindo álcool.</p>
+        </div>
+        <div class="card" style="border-top-color:var(--red)">
+          <span class="k" style="color:var(--red)">Intoxicação</span>
+          <h4>Excesso de ativação do receptor μ</h4>
+          <p>Pupilas constritas (miose — efeito clássico, mediado sobretudo por receptores κ no núcleo de Edinger-Westphal), fala mal articulada, coceira/prurido, euforia ou agitação paradoxal, boca seca, sonolência progredindo até depressão do nível de consciência, e julgamento prejudicado. O quadro grave evolui com depressão respiratória e coma — a tríade clássica de overdose é miose puntiforme + depressão respiratória + rebaixamento de consciência.</p>
+        </div>
+        <div class="card" style="border-top-color:var(--cyan)">
+          <span class="k" style="color:var(--cyan)">Abstinência</span>
+          <h4>Rebote de hiperatividade simpática</h4>
+          <p>Humor disfórico, náusea e vômitos, dores musculares difusas, coriza, pupilas dilatadas (midríase — o oposto da intoxicação), arrepios (piloereção), sudorese, diarreia, bocejos, febre e insônia — um conjunto que lembra, na prática, uma síndrome gripal intensa somada a hiperatividade autonômica.</p>
+        </div>
+      </div>
+
+      <details class="deep">
+        <summary>Aprofunde-se — por que a abstinência produz esse quadro específico?</summary>
+        <div class="deep-body">
+          <p>Com o uso crônico de opioides, o locus coeruleus — principal núcleo noradrenérgico do tronco encefálico, normalmente inibido tonicamente pela ativação do receptor μ — sofre um processo adaptativo compensatório: a via de sinalização intracelular (via AMPc) é upregulada para "compensar" a inibição constante imposta pelo opioide, numa tentativa do neurônio de manter sua atividade basal apesar da frenagem contínua. Quando o opioide é retirado abruptamente, essa inibição desaparece de uma hora para outra, mas a maquinaria intracelular upregulada continua lá — o resultado é uma explosão de atividade noradrenérgica muito acima do normal, gerando exatamente os sinais de hiperatividade simpática que listamos: midríase, sudorese, taquicardia, diarreia, piloereção. É esse mesmo mecanismo (rebote do locus coeruleus) que justifica o uso da clonidina, um agonista α2-adrenérgico, como adjuvante no manejo farmacológico da síndrome de abstinência — ela reativa artificialmente o freio que o opioide fazia, atenuando o rebote.</p>
+        </div>
+      </details>
+
+      <div class="alert clinica">
+        <span class="lbl">Clínica</span>
+        <p>Reconhecer sinais de alerta comportamentais não deve levar a negar analgesia adequada a um paciente com dor real — o objetivo do rastreamento é identificar quando é preciso reavaliar a estratégia terapêutica (rotação de opioide, encaminhamento para equipe especializada em dor, avaliação de comorbidade psiquiátrica), não punir o paciente retirando o controle da dor. O equilíbrio entre vigilância e empatia é justamente o cerne da "relação médico-paciente" que dá título a esta aula.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SEÇÃO 13 — SUPER RESUMO ============ -->
+  <section class="section" id="s13">
+    <div class="section-head">
+      <div class="section-num">13</div>
+      <div class="section-titles">
+        <div class="section-kicker" style="color:var(--lime)">Revisão rápida</div>
+        <h2>Super-resumo</h2>
+        <div class="section-sub">Se você só tiver cinco minutos antes do TBL, leia esta seção.</div>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+    <div class="section-body">
+
+      <div class="superbox">
+        <h3>O que você precisa ter na ponta da língua</h3>
+
+        <div class="grid-2" style="margin-bottom:18px;">
+          <div class="card" style="border-top-color:var(--lime)">
+            <h4>Dor aguda x crônica</h4>
+            <p>Aguda: sintoma, protetora, SNC íntegro. Crônica: doença em si, sem função de alerta, SNC disfuncional (sensibilização central por wind-up e LTP no corno dorsal). Corte temporal usual: 3 meses.</p>
+          </div>
+          <div class="card" style="border-top-color:var(--lime)">
+            <h4>Três mecanismos de dor</h4>
+            <p>Nociceptiva (nociceptor ativado por dano tecidual real), neuropática (lesão do próprio sistema somatossensorial), nociplástica (nocicepção alterada sem lesão periférica/somatossensorial demonstrável — ex.: fibromialgia).</p>
+          </div>
+          <div class="card" style="border-top-color:var(--lime)">
+            <h4>Vias ascendentes</h4>
+            <p>Dor sobe pelo trato espinotalâmico (cruza cedo, na medula) — não pela via lemniscal de tato fino (cruza tarde, no bulbo). Via discriminativa (S1, localização/intensidade) x via emocional/motivacional (límbico, sofrimento).</p>
+          </div>
+          <div class="card" style="border-top-color:var(--lime)">
+            <h4>Modulação no corno dorsal</h4>
+            <p>Excitatório: glutamato/NMDA-AMPA, substância P/NK. Inibitório: opioides endógenos (μ), serotonina/noradrenalina (vias descendentes), GABA/glicina. Base racional de opioides, tricíclicos/duloxetina e gabapentinoides.</p>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="margin-bottom:18px;">
+          <table>
+            <thead><tr><th>Tipo de dor</th><th>Tratamento de escolha</th></tr></thead>
+            <tbody>
+              <tr><td>Nociceptiva</td><td>AINE, opioides, acupuntura, fisioterapia, bloqueios anestésicos</td></tr>
+              <tr><td>Neuropática — componente constante</td><td>Tricíclicos (amitriptilina), duloxetina, gabapentinoides</td></tr>
+              <tr><td>Neuropática — componente paroxístico</td><td>Anticonvulsivantes bloqueadores de canal de sódio</td></tr>
+              <tr><td>Neuropática — componente evocado (alodinia)</td><td>Anestésicos locais tópicos (eficácia limitada)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid-2" style="margin-bottom:18px;">
+          <div class="card" style="border-top-color:var(--lime)">
+            <h4>Escada analgésica OMS</h4>
+            <p>Leve (1–3/10): não opioide. Moderada (4–6/10): opioide fraco (codeína/tramadol). Forte (7–10/10): opioide forte (morfina/metadona/fentanil). Adjuvantes em todos os degraus. Aguda: descida rápida. Crônica: subida lenta.</p>
+          </div>
+          <div class="card" style="border-top-color:var(--lime)">
+            <h4>Receptor μ — mecanismo</h4>
+            <p>Proteína Gi/o → ↓AMPc, abertura de canais K⁺ (hiperpolarização), fechamento de canais Ca²⁺ (↓liberação de glutamato/substância P). Ação em 3 esferas: sensorial (analgesia), cognitiva (memória) e emocional (recompensa/ATV-núcleo accumbens).</p>
+          </div>
+          <div class="card" style="border-top-color:var(--lime)">
+            <h4>Efeito adverso que não some</h4>
+            <p>Constipação — mediada perifericamente no plexo mioentérico, não desenvolve tolerância. Prescreva laxante junto com o opioide desde o dia 1.</p>
+          </div>
+          <div class="card" style="border-top-color:var(--lime)">
+            <h4>Tolerância ≠ Dependência física ≠ Adição</h4>
+            <p>Tolerância e dependência física são fenômenos farmacológicos esperados no uso crônico. Adição é diagnóstico comportamental (uso compulsivo, perda de controle) e não decorre automaticamente do uso terapêutico correto.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card" style="border-top-color:var(--lime)">
+            <h4>Intoxicação x Abstinência</h4>
+            <p>Intoxicação: miose, sedação, depressão respiratória (excesso de μ). Abstinência: midríase, sudorese, diarreia, piloereção (rebote noradrenérgico do locus coeruleus após retirada abrupta).</p>
+          </div>
+          <div class="card" style="border-top-color:var(--lime)">
+            <h4>Os 4 mitos a nunca repetir</h4>
+            <p>Opioide não é só para terminal; morfina não é "fim de linha"; nem todo usuário de opioide vira dependente; depressão respiratória é rara em dose correta e titulada.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SEÇÃO 14 — REFERÊNCIAS ============ -->
+  <section class="section" id="s14">
+    <div class="section-head">
+      <div class="section-num">14</div>
+      <div class="section-titles">
+        <div class="section-kicker" style="color:var(--text-mute)">Bibliografia</div>
+        <h2>Referências</h2>
+        <div class="section-sub">Fontes indicadas no material original da aula, em formato ABNT.</div>
+      </div>
+    </div>
+    <div class="section-rule"></div>
+    <div class="section-body">
+
+      <div class="card">
+        <div class="ref-item">ARGOFF, Charles E.; DUBIN, Andrew; PILITSIS, Julie G. <i>Tratamento da Dor</i>. (Secrets). 4. ed. Rio de Janeiro: Thieme Revinter, 2019.</div>
+        <div class="ref-item">AVILA, Mariana A.; GOMES, Cid André Fidelis de P.; FILHO, Almir Vieira D. <i>Métodos e técnicas de avaliação da dor crônica: abordagem prática</i>. Barueri: Manole, 2023.</div>
+        <div class="ref-item">BARROS, Elvino; BARROS, Helena M. T. <i>Medicamentos na prática clínica</i>. Porto Alegre: ArtMed, 2010.</div>
+        <div class="ref-item">MINSON, Fabíola P.; MORETE, Márcia C.; MARANGONI, Marco A. <i>Dor</i>. Barueri: Manole, 2015.</div>
+        <div class="ref-item">NETO, Olympio de Hollanda C. <i>Dor e cuidados paliativos</i>. (Série Saesp). Barueri: Manole, 2024.</div>
+        <div class="ref-item">ROENN, Jaime H. V.; PAICE, Judith A.; PREODOR, Michael E. <i>CURRENT Dor</i>. Porto Alegre: ArtMed, 2010.</div>
+        <div class="ref-item">SILVA, Penildon. <i>Farmacologia</i>. 8. ed. Rio de Janeiro: Guanabara Koogan, 2010.</div>
+        <div class="ref-item">SPLITTGERBER, Ryan. <i>Snell Neuroanatomia Clínica</i>. 9. ed. Rio de Janeiro: Guanabara Koogan, 2026.</div>
+        <div class="ref-item">STAHL, Stephen M. <i>Stahl psicofarmacologia: bases neurocientíficas e aplicações práticas</i>. 5. ed. Rio de Janeiro: Guanabara Koogan, 2022.</div>
+      </div>
+
+      <div class="alert atencao" style="margin-top:20px;">
+        <span class="lbl">Nota do material</span>
+        <p>Este documento aprofunda e reorganiza o conteúdo apresentado nos slides da Aula 3 (Prof. Andrew Georg Wischneski, UCXIII — Dor, Uniarp), acrescentando explicações mecanísticas baseadas na bibliografia acima. Sempre que um ponto do slide original pareceu passível de mais de uma interpretação, isso foi sinalizado explicitamente no texto (ver, por exemplo, a errata sobre vias ascendentes na Seção 02 e sobre fibras Aβ na Seção 04) em vez de presumido silenciosamente.</p>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<!-- ============ BARRA DE EDIÇÃO ============ -->
+<div id="editbar">
+  <button id="btnEdit" onclick="toggleEdit()">Ativar edição</button>
+  <button id="btnDownload" onclick="downloadCopy()">Baixar cópia editada</button>
+  <button id="btnRestore" onclick="restoreOriginal()">Restaurar original</button>
+</div>
+
+<script>
+  let editing = false;
+
+  function toggleEdit(){
+    editing = !editing;
+    const editableSelectors = '#main p, #main h1, #main h2, #main h3, #main h4, #main li, #main td, #main .hero p, #main .card p, #main .alert p';
+    const nodes = document.querySelectorAll(editableSelectors);
+    nodes.forEach(el => el.setAttribute('contenteditable', editing ? 'true' : 'false'));
+    document.body.classList.toggle('editable-on', editing);
+    const btn = document.getElementById('btnEdit');
+    btn.textContent = editing ? 'Salvar e sair' : 'Ativar edição';
+    btn.classList.toggle('active', editing);
+  }
+
+  function downloadCopy(){
+    // Congela o estado de edição atual (remove atributos contenteditable e outline de edição antes de exportar)
+    const wasEditing = editing;
+    if (wasEditing){ toggleEdit(); }
+
+    const docClone = document.documentElement.cloneNode(true);
+    // Remove a barra de edição e o aviso do clone exportado, mas mantém tudo reutilizável ao reabrir
+    const clonedBar = docClone.querySelector('#editbar');
+    const clonedWarn = docClone.querySelector('#warnbox');
+    if (clonedWarn) clonedWarn.remove();
+
+    const htmlString = '<!DOCTYPE html>\n' + docClone.outerHTML;
+    const blob = new Blob([htmlString], {type: 'text/html'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'dor_cronica_opioides_editado.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    if (wasEditing){ toggleEdit(); }
+  }
+
+  function restoreOriginal(){
+    if (confirm('Isso recarrega a página, descartando edições feitas nesta sessão que ainda não foram baixadas. Continuar?')){
+      location.reload();
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LMF | Sistema Muscular — Músculo Estriado Esquelético</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#080b10;
+    --bg-1:#0d121a;
+    --bg-2:#121924;
+    --bg-card:#131b26;
+    --bg-card-hover:#17202d;
+    --border:#212c3b;
+    --border-soft:#1a2330;
+    --text-0:#eaf0f7;
+    --text-1:#c3ceda;
+    --text-2:#8fa0b3;
+    --text-3:#5f7086;
+
+    --ana:#5fb4e8;   /* Anatomia macroscópica - azul */
+    --ana-dim: rgba(95,180,232,.12);
+    --hist:#e8a94f;  /* Histologia / fibra - âmbar */
+    --hist-dim: rgba(232,169,79,.12);
+    --mol:#6fdb9c;   /* Biologia molecular / proteínas - verde */
+    --mol-dim: rgba(111,219,156,.12);
+    --neuro:#f2c94c; /* Controle neural - dourado */
+    --neuro-dim: rgba(242,201,76,.12);
+    --physio:#b490f0; /* Fisiologia / contração - roxo */
+    --physio-dim: rgba(180,144,240,.12);
+    --clin:#ec6a7d;  /* Correlação clínica - rosa/vermelho */
+    --clin-dim: rgba(236,106,125,.12);
+
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --body: 'Lora', Georgia, serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -5%, rgba(95,180,232,.06), transparent 60%),
+      radial-gradient(ellipse 900px 600px at 85% 10%, rgba(180,144,240,.05), transparent 60%),
+      var(--bg-0);
+    color:var(--text-1);
+    font-family:var(--body);
+    font-size:17px;
+    line-height:1.7;
+    min-height:100vh;
+  }
+
+  ::selection{ background: rgba(95,180,232,.28); color:#fff; }
+
+  a{color:inherit;}
+
+  /* ---------- LAYOUT ---------- */
+  .app{
+    display:grid;
+    grid-template-columns: 280px 1fr;
+    min-height:100vh;
+  }
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+    background:linear-gradient(180deg, var(--bg-1), var(--bg-0));
+    border-right:1px solid var(--border-soft);
+    padding:32px 22px 40px;
+  }
+  .sidebar::-webkit-scrollbar{width:6px;}
+  .sidebar::-webkit-scrollbar-thumb{background:var(--border); border-radius:3px;}
+
+  .brand{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    margin-bottom:8px;
+    padding-bottom:20px;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .brand .tag{
+    font-family:var(--mono);
+    font-size:10.5px;
+    letter-spacing:.16em;
+    color:var(--ana);
+    text-transform:uppercase;
+  }
+  .brand h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:26px;
+    color:var(--text-0);
+    line-height:1.15;
+    margin-top:2px;
+  }
+  .brand .sub{
+    font-family:var(--body);
+    font-style:italic;
+    font-size:13px;
+    color:var(--text-2);
+    margin-top:4px;
+  }
+
+  .navgroup{ margin-top:26px; }
+  .navgroup .navtitle{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--text-3);
+    margin-bottom:10px;
+  }
+  .navlink{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    padding:8px 10px;
+    border-radius:6px;
+    font-size:14px;
+    color:var(--text-2);
+    text-decoration:none;
+    cursor:pointer;
+    transition:background .15s, color .15s;
+    border-left:2px solid transparent;
+  }
+  .navlink:hover{ background:var(--bg-2); color:var(--text-0); }
+  .navlink .n{
+    font-family:var(--mono);
+    font-size:10.5px;
+    color:var(--text-3);
+    min-width:16px;
+  }
+  .navlink.a1{border-left-color:var(--ana);}
+  .navlink.a2{border-left-color:var(--hist);}
+  .navlink.a3{border-left-color:var(--mol);}
+  .navlink.a4{border-left-color:var(--mol);}
+  .navlink.a5{border-left-color:var(--neuro);}
+  .navlink.a6{border-left-color:var(--neuro);}
+  .navlink.a7{border-left-color:var(--physio);}
+  .navlink.a8{border-left-color:var(--physio);}
+  .navlink.a9{border-left-color:var(--hist);}
+  .navlink.a10{border-left-color:var(--clin);}
+  .navlink.a11{border-left-color:var(--text-3);}
+
+  .sidebar-foot{
+    margin-top:34px;
+    padding-top:18px;
+    border-top:1px solid var(--border-soft);
+    font-family:var(--mono);
+    font-size:10.5px;
+    color:var(--text-3);
+    line-height:1.6;
+  }
+
+  /* ---------- MAIN ---------- */
+  main{ padding:0; min-width:0; }
+
+  .hero{
+    position:relative;
+    padding:86px 64px 64px;
+    border-bottom:1px solid var(--border-soft);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      linear-gradient(120deg, rgba(95,180,232,.07), transparent 40%),
+      linear-gradient(240deg, rgba(180,144,240,.06), transparent 45%);
+    pointer-events:none;
+  }
+  .hero-eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ana);
+    margin-bottom:22px;
+  }
+  .hero-eyebrow::before{
+    content:"";
+    width:26px; height:1px;
+    background:var(--ana);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(38px, 5vw, 62px);
+    color:var(--text-0);
+    line-height:1.05;
+    max-width:16ch;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--ana);
+    font-weight:500;
+  }
+  .hero .lede{
+    margin-top:22px;
+    max-width:64ch;
+    font-size:18px;
+    color:var(--text-1);
+    font-style:italic;
+  }
+  .hero-meta{
+    display:flex;
+    gap:28px;
+    margin-top:34px;
+    flex-wrap:wrap;
+  }
+  .hero-meta .item{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-3);
+  }
+  .hero-meta .item b{
+    display:block;
+    font-family:var(--body);
+    font-style:normal;
+    color:var(--text-1);
+    font-size:13.5px;
+    margin-top:3px;
+    font-weight:500;
+  }
+
+  .content{
+    padding:8px 64px 120px;
+    max-width:980px;
+  }
+
+  /* ---------- SECTION HEADERS (tag + linha) ---------- */
+  section{ padding-top:74px; scroll-margin-top:24px; }
+  section:first-of-type{ padding-top:56px; }
+
+  .sec-head{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:8px;
+  }
+  .sec-tag{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    padding:5px 12px;
+    border-radius:20px;
+    white-space:nowrap;
+    border:1px solid;
+  }
+  .sec-line{
+    flex:1;
+    height:1px;
+    background:linear-gradient(90deg, var(--border), transparent);
+  }
+  .sec-head.c-ana .sec-tag{color:var(--ana); border-color:rgba(95,180,232,.35); background:var(--ana-dim);}
+  .sec-head.c-ana .sec-line{background:linear-gradient(90deg, rgba(95,180,232,.35), transparent);}
+  .sec-head.c-hist .sec-tag{color:var(--hist); border-color:rgba(232,169,79,.35); background:var(--hist-dim);}
+  .sec-head.c-hist .sec-line{background:linear-gradient(90deg, rgba(232,169,79,.35), transparent);}
+  .sec-head.c-mol .sec-tag{color:var(--mol); border-color:rgba(111,219,156,.35); background:var(--mol-dim);}
+  .sec-head.c-mol .sec-line{background:linear-gradient(90deg, rgba(111,219,156,.35), transparent);}
+  .sec-head.c-neuro .sec-tag{color:var(--neuro); border-color:rgba(242,201,76,.35); background:var(--neuro-dim);}
+  .sec-head.c-neuro .sec-line{background:linear-gradient(90deg, rgba(242,201,76,.35), transparent);}
+  .sec-head.c-physio .sec-tag{color:var(--physio); border-color:rgba(180,144,240,.35); background:var(--physio-dim);}
+  .sec-head.c-physio .sec-line{background:linear-gradient(90deg, rgba(180,144,240,.35), transparent);}
+  .sec-head.c-clin .sec-tag{color:var(--clin); border-color:rgba(236,106,125,.35); background:var(--clin-dim);}
+  .sec-head.c-clin .sec-line{background:linear-gradient(90deg, rgba(236,106,125,.35), transparent);}
+
+  h2.sec-title{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:34px;
+    color:var(--text-0);
+    margin-bottom:26px;
+    line-height:1.15;
+  }
+  h3.sub-title{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:23px;
+    color:var(--text-0);
+    margin:34px 0 12px;
+  }
+  h4.mini-title{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:18px;
+    color:var(--text-1);
+    margin:22px 0 8px;
+  }
+
+  p{ margin-bottom:16px; color:var(--text-1); }
+  p.lead{ font-size:18px; color:var(--text-0); }
+  em{ color:var(--text-0); font-style:italic; }
+  .accent-ana{ color:var(--ana); font-style:italic; }
+  .accent-hist{ color:var(--hist); font-style:italic; }
+  .accent-mol{ color:var(--mol); font-style:italic; }
+  .accent-neuro{ color:var(--neuro); font-style:italic; }
+  .accent-physio{ color:var(--physio); font-style:italic; }
+  .accent-clin{ color:var(--clin); font-style:italic; }
+
+  ul.plain, ol.plain{ margin:14px 0 18px 22px; }
+  ul.plain li, ol.plain li{ margin-bottom:8px; color:var(--text-1); }
+  ul.plain li::marker{ color:var(--text-3); }
+
+  /* ---------- CARD GRID ---------- */
+  .grid{ display:grid; gap:16px; margin:20px 0 28px; }
+  .grid.cols-2{ grid-template-columns:1fr 1fr; }
+  .grid.cols-3{ grid-template-columns:repeat(3,1fr); }
+  @media(max-width:860px){ .grid.cols-2, .grid.cols-3{ grid-template-columns:1fr; } }
+
+  .card{
+    background:var(--bg-card);
+    border:1px solid var(--border-soft);
+    border-top:3px solid var(--border);
+    border-radius:10px;
+    padding:20px 22px;
+    transition:transform .15s, border-color .15s, background .15s;
+  }
+  .card:hover{ background:var(--bg-card-hover); transform:translateY(-2px); }
+  .card .k{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--text-3);
+    margin-bottom:6px;
+  }
+  .card h5{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:19px;
+    color:var(--text-0);
+    margin-bottom:8px;
+  }
+  .card p{ font-size:15px; color:var(--text-2); margin-bottom:0; }
+  .card.ana{ border-top-color:var(--ana); }
+  .card.hist{ border-top-color:var(--hist); }
+  .card.mol{ border-top-color:var(--mol); }
+  .card.neuro{ border-top-color:var(--neuro); }
+  .card.physio{ border-top-color:var(--physio); }
+  .card.clin{ border-top-color:var(--clin); }
+
+  /* ---------- ALERTS (outline) ---------- */
+  .alert{
+    border:1px solid;
+    border-radius:8px;
+    background:transparent;
+    padding:16px 20px;
+    margin:20px 0;
+    font-size:15px;
+  }
+  .alert .alert-tag{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    margin-bottom:6px;
+    display:block;
+  }
+  .alert p{ font-size:15px; margin-bottom:0; color:var(--text-1); }
+  .alert.clin{ border-color:rgba(236,106,125,.4); }
+  .alert.clin .alert-tag{ color:var(--clin); }
+  .alert.physio{ border-color:rgba(180,144,240,.4); }
+  .alert.physio .alert-tag{ color:var(--physio); }
+  .alert.mol{ border-color:rgba(111,219,156,.4); }
+  .alert.mol .alert-tag{ color:var(--mol); }
+  .alert.warn{ border-color:rgba(242,201,76,.45); }
+  .alert.warn .alert-tag{ color:var(--neuro); }
+  .alert.ana{ border-color:rgba(95,180,232,.4); }
+  .alert.ana .alert-tag{ color:var(--ana); }
+
+  /* ---------- DETAILS / APROFUNDE-SE ---------- */
+  details.deep{
+    margin:18px 0;
+    border:1px solid var(--border-soft);
+    border-radius:10px;
+    background:var(--bg-1);
+    overflow:hidden;
+  }
+  details.deep > summary{
+    list-style:none;
+    cursor:pointer;
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--physio);
+    user-select:none;
+  }
+  details.deep > summary::-webkit-details-marker{ display:none; }
+  details.deep > summary::before{
+    content:"+";
+    font-family:var(--serif);
+    font-size:18px;
+    line-height:1;
+    color:var(--physio);
+    border:1px solid rgba(180,144,240,.4);
+    width:20px; height:20px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .2s;
+  }
+  details.deep[open] > summary::before{ content:"–"; transform:rotate(180deg); }
+  details.deep .deep-body{
+    padding:4px 22px 22px;
+    border-top:1px solid var(--border-soft);
+    padding-top:16px;
+  }
+  details.deep .deep-body p{ font-size:15.5px; }
+
+  details.deeper{
+    margin:14px 0;
+    border-left:2px solid rgba(236,106,125,.35);
+    padding-left:16px;
+  }
+  details.deeper > summary{
+    cursor:pointer;
+    list-style:none;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--clin);
+    margin-bottom:8px;
+  }
+  details.deeper > summary::-webkit-details-marker{ display:none; }
+  details.deeper > summary::before{ content:"▸ "; }
+  details.deeper[open] > summary::before{ content:"▾ "; }
+
+  /* ---------- FLOWCHART ---------- */
+  .flow{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    margin:22px 0;
+  }
+  .flow-step{
+    display:grid;
+    grid-template-columns:44px 1fr;
+    gap:16px;
+    padding:14px 0;
+  }
+  .flow-step .num{
+    width:38px; height:38px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--text-1);
+    background:var(--bg-1);
+  }
+  .flow-step .txt b{ display:block; font-family:var(--body); font-weight:600; color:var(--text-0); font-size:15.5px; }
+  .flow-step .txt span{ font-size:14px; color:var(--text-2); }
+  .flow-step:not(:last-child){ position:relative; }
+  .flow-step:not(:last-child)::after{
+    content:"";
+    position:absolute;
+    left:21px; top:52px; bottom:-14px;
+    width:1px;
+    background:var(--border);
+  }
+  .flow.physio .num{ border-color:rgba(180,144,240,.5); color:var(--physio); }
+  .flow.physio .flow-step::after{ background:rgba(180,144,240,.25); }
+  .flow.neuro .num{ border-color:rgba(242,201,76,.5); color:var(--neuro); }
+  .flow.neuro .flow-step::after{ background:rgba(242,201,76,.25); }
+
+  /* ---------- TIMELINE PROGRESSÃO DIDÁTICA ---------- */
+  .progress-strip{
+    display:flex;
+    gap:0;
+    margin:26px 0 10px;
+    border:1px solid var(--border-soft);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .progress-strip .p-item{
+    flex:1;
+    padding:14px 16px;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-3);
+    border-right:1px solid var(--border-soft);
+    text-align:center;
+  }
+  .progress-strip .p-item:last-child{ border-right:none; }
+  .progress-strip .p-item b{ display:block; font-family:var(--body); font-size:13px; color:var(--text-1); margin-top:4px; font-weight:500;}
+
+  /* ---------- REFERENCES ---------- */
+  .refs{ margin-top:14px; }
+  .refs li{
+    font-family:var(--body);
+    font-size:14.5px;
+    color:var(--text-2);
+    margin-bottom:14px;
+    padding-left:0;
+    list-style:none;
+    text-indent:-1.6em;
+    margin-left:1.6em;
+  }
+
+  hr.divider{
+    border:none;
+    border-top:1px solid var(--border-soft);
+    margin:52px 0;
+  }
+
+  footer.end{
+    padding:50px 64px 90px;
+    color:var(--text-3);
+    font-family:var(--mono);
+    font-size:11.5px;
+    text-align:center;
+  }
+
+  /* ---------- EDIT TOOLBAR ---------- */
+  .edit-toolbar{
+    position:fixed;
+    bottom:22px; right:22px;
+    display:flex;
+    gap:8px;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:8px;
+    box-shadow:0 12px 40px rgba(0,0,0,.5);
+    z-index:999;
+  }
+  .edit-toolbar button{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    background:var(--bg-1);
+    color:var(--text-1);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:10px 14px;
+    cursor:pointer;
+    transition:all .15s;
+    white-space:nowrap;
+  }
+  .edit-toolbar button:hover{ background:var(--bg-2); color:var(--text-0); border-color:var(--ana); }
+  .edit-toolbar button.active{ background:var(--ana-dim); color:var(--ana); border-color:var(--ana); }
+  .edit-toast{
+    position:fixed;
+    bottom:80px; right:22px;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-left:3px solid var(--mol);
+    border-radius:8px;
+    padding:10px 16px;
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--text-1);
+    z-index:999;
+    opacity:0;
+    transform:translateY(8px);
+    transition:all .25s;
+    pointer-events:none;
+  }
+  .edit-toast.show{ opacity:1; transform:translateY(0); }
+
+  [contenteditable="true"]{
+    outline:1px dashed rgba(95,180,232,.4);
+    outline-offset:4px;
+    border-radius:4px;
+  }
+  [contenteditable="true"]:focus{ outline:1px solid var(--ana); background:rgba(95,180,232,.05); }
+
+  @media(max-width:960px){
+    .app{ grid-template-columns:1fr; }
+    .sidebar{ position:relative; height:auto; }
+    .hero{ padding:56px 24px 40px; }
+    .content{ padding:8px 24px 100px; }
+    footer.end{ padding:40px 24px 90px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="tag">LMF · Ciclo Clínico</span>
+      <h1>Sistema<br>Muscular</h1>
+      <span class="sub">Músculo estriado esquelético — macro e microscopia</span>
+    </div>
+
+    <nav class="navgroup">
+      <div class="navtitle">Morfologia</div>
+      <a class="navlink a1" href="#organizacao"><span class="n">01</span> Organização macroscópica</a>
+      <a class="navlink a2" href="#fibra"><span class="n">02</span> A fibra muscular</a>
+      <a class="navlink a3" href="#sarcomero"><span class="n">03</span> O sarcômero</a>
+      <a class="navlink a4" href="#proteinas"><span class="n">04</span> Proteínas contráteis</a>
+    </nav>
+
+    <nav class="navgroup">
+      <div class="navtitle">Controle e fisiologia</div>
+      <a class="navlink a5" href="#controle-neural"><span class="n">05</span> Controle neural do movimento</a>
+      <a class="navlink a6" href="#juncao"><span class="n">06</span> Junção neuromuscular</a>
+      <a class="navlink a7" href="#acoplamento"><span class="n">07</span> Acoplamento excitação-contração</a>
+      <a class="navlink a8" href="#relaxamento"><span class="n">08</span> Relaxamento muscular</a>
+      <a class="navlink a9" href="#tonus"><span class="n">09</span> Tônus, fuso e propriocepção</a>
+    </nav>
+
+    <nav class="navgroup">
+      <div class="navtitle">Síntese</div>
+      <a class="navlink a10" href="#clinica"><span class="n">10</span> Painel de correlações clínicas</a>
+      <a class="navlink a11" href="#referencias"><span class="n">11</span> Referências</a>
+    </nav>
+
+    <div class="sidebar-foot">
+      MOTOR: CÓRTEX → NÚCLEOS DA BASE/CEREBELO → MOTONEURÔNIO → MÚSCULO<br><br>
+      Baseado em Guyton &amp; Hall, Junqueira &amp; Carneiro, Moore e Robbins &amp; Cotran.
+    </div>
+  </aside>
+
+  <main>
+
+    <div class="hero">
+      <span class="hero-eyebrow">Laboratório Morfofuncional · Aprofundamento</span>
+      <h1>O músculo esquelético é uma <em>máquina molecular</em> disparada por um sinal elétrico</h1>
+      <p class="lede">Da bainha de tecido conjuntivo que envolve o músculo inteiro até a cabeça da miosina que hidrolisa ATP: uma reconstrução completa da estrutura, da bioquímica da contração e da sua tradução clínica, a partir dos slides da Profa. Elizama de Gregório.</p>
+      <div class="hero-meta">
+        <div class="item">ORIGEM<b>Slides — Sistema Muscular</b></div>
+        <div class="item">EIXOS<b>Anatomia · Histologia · Fisiologia · Clínica</b></div>
+        <div class="item">REFERÊNCIAS PRINCIPAIS<b>Guyton &amp; Hall · Junqueira &amp; Carneiro</b></div>
+      </div>
+    </div>
+
+    <div class="content" id="doc-content">
+
+      <div class="progress-strip">
+        <div class="p-item">O que observo<b>Estrutura</b></div>
+        <div class="p-item">Como se organiza<b>Arquitetura</b></div>
+        <div class="p-item">Qual sua função<b>Fisiologia</b></div>
+        <div class="p-item">O que muda quando falha<b>Fisiopatologia</b></div>
+        <div class="p-item">Por que importa na clínica<b>Aplicação</b></div>
+      </div>
+
+      <!-- ============ SEÇÃO 1 — ORGANIZAÇÃO MACROSCÓPICA ============ -->
+      <section id="organizacao">
+        <div class="sec-head c-ana">
+          <span class="sec-tag">01 · Anatomia</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Organização macroscópica do músculo esquelético</h2>
+
+        <p class="lead">O slide mostra uma sequência de "bonecas russas": músculo → fascículo → fibra, cada nível envolvido por uma camada de tecido conjuntivo com um nome próprio. Essa hierarquia não é decorativa — ela é o que permite que um músculo se contraia como uma unidade só, mesmo sendo formado por milhares de células independentes, e é o que confere resistência mecânica ao tecido.</p>
+
+        <p>Pense no músculo esquelético como um cabo elétrico grosso. O cabo inteiro tem uma capa externa; dentro dele existem vários feixes de fios; e cada fio individual também tem seu próprio isolamento. Essa é exatamente a lógica do tecido conjuntivo muscular, só que aqui cada "fio" é uma célula viva capaz de se encurtar.</p>
+
+        <div class="grid cols-3">
+          <div class="card ana">
+            <div class="k">Camada externa</div>
+            <h5>Epimísio</h5>
+            <p>Envolve o músculo inteiro. É tecido conjuntivo denso não modelado, rico em colágeno tipo I, que se continua diretamente com o tendão nas extremidades — não há uma "costura", é a mesma malha de colágeno que se condensa progressivamente.</p>
+          </div>
+          <div class="card ana">
+            <div class="k">Camada intermediária</div>
+            <h5>Perimísio</h5>
+            <p>Envolve cada fascículo muscular (feixe de fibras). É a camada mais espessa funcionalmente, porque carrega os principais vasos sanguíneos e nervos que penetram no músculo — por isso um fascículo é também uma unidade de irrigação e inervação.</p>
+          </div>
+          <div class="card ana">
+            <div class="k">Camada interna</div>
+            <h5>Endomísio</h5>
+            <p>Tecido conjuntivo frouxo que envolve cada fibra muscular individualmente. Contém a lâmina basal da fibra, capilares sanguíneos e as células satélites — as células-tronco do músculo adulto, essenciais para regeneração.</p>
+          </div>
+        </div>
+
+        <details class="deep">
+          <summary>Aprofunde-se — por que essa arquitetura importa mecanicamente</summary>
+          <div class="deep-body">
+            <p>O sistema epimísio-perimísio-endomísio não serve apenas para "embrulhar" o músculo: ele forma um <span class="accent-ana">esqueleto conjuntivo contínuo</span> que transmite a força gerada pelas fibras individuais até o tendão e, daí, ao osso. Sem essa malha, a força de contração de cada sarcômero se perderia internamente, como puxar uma corda frouxa. As fibras de colágeno do endomísio e do perimísio se organizam de forma a permitir alongamento e retorno elástico, funcionando como uma espécie de "amortecedor" que protege a fibra muscular de lesão por estiramento excessivo.</p>
+            <p>Vale destacar que a transição entre músculo e tendão — a <em>junção miotendínea</em> — é um ponto de concentração de estresse mecânico particularmente vulnerável. Nessa região, o sarcolema da fibra muscular forma múltiplas invaginações digitiformes que aumentam a área de superfície de ancoragem com as fibrilas de colágeno do tendão, distribuindo a carga e reduzindo a tensão por unidade de área. É justamente aqui, e não no ventre muscular, que ocorrem a maioria das lesões musculares por distensão (as "estirões" do dia a dia clínico e esportivo).</p>
+            <details class="deeper">
+              <summary>Nível avançado — classificação histológica do tecido conjuntivo muscular</summary>
+              <p>O epimísio e o perimísio são compostos predominantemente por colágeno tipo I, organizado em feixes ondulados que conferem resistência à tração, entremeados por fibras elásticas em menor proporção. O endomísio, por sua vez, é mais rico em colágeno tipo III (reticular) e em componentes da matriz extracelular como laminina e proteoglicanos, formando uma rede mais delicada e mais permeável — compatível com sua função de sustentar trocas metabólicas entre capilar e fibra. Em processos patológicos como as miopatias inflamatórias (polimiosite, dermatomiosite), é justamente o padrão de infiltrado inflamatório — perimisial versus endomisial — que orienta o diagnóstico histopatológico diferencial na biópsia muscular.</p>
+            </details>
+          </div>
+        </details>
+
+        <div class="alert clin">
+          <span class="alert-tag">Correlação clínica</span>
+          <p>A biópsia muscular explora exatamente esses planos: um fragmento pequeno é suficiente para avaliar arquitetura fascicular, espessamento do perimísio (sugestivo de fibrose ou processo inflamatório crônico) e infiltrados inflamatórios no endomísio (típicos de miosites por corpos de inclusão e polimiosite). Já a eletroneuromiografia (ENMG) avalia a função elétrica através dessas camadas — uma unidade motora comprometida altera o padrão de recrutamento registrado no músculo, sem que a arquitetura conjuntiva macroscópica precise estar visivelmente alterada nas fases iniciais.</p>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ============ SEÇÃO 2 — FIBRA MUSCULAR ============ -->
+      <section id="fibra">
+        <div class="sec-head c-hist">
+          <span class="sec-tag">02 · Histologia</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">A fibra muscular: arquitetura de uma célula gigante</h2>
+
+        <p class="lead">A fibra muscular esquelética é, sob qualquer critério celular convencional, uma célula extraordinária: pode medir de poucos milímetros até dezenas de centímetros de comprimento, é multinucleada e organiza seu citoplasma — o sarcoplasma — em torno de estruturas altamente especializadas para uma única função: gerar força mecânica de forma rápida e controlada.</p>
+
+        <div class="grid cols-2">
+          <div class="card hist">
+            <div class="k">Membrana</div>
+            <h5>Sarcolema</h5>
+            <p>Membrana plasmática da fibra muscular. É excitável — contém canais de sódio dependentes de voltagem — e se invagina profundamente para dentro da célula formando os túbulos T, o que permite que o sinal elétrico de superfície alcance o interior da fibra quase instantaneamente.</p>
+          </div>
+          <div class="card hist">
+            <div class="k">Citoplasma</div>
+            <h5>Sarcoplasma</h5>
+            <p>Contém as organelas comuns a qualquer célula, mas em arranjo peculiar: os núcleos (múltiplos) ficam deslocados para a periferia, deixando o centro da célula livre para o empacotamento denso das miofibrilas.</p>
+          </div>
+          <div class="card hist">
+            <div class="k">Estrutura contrátil</div>
+            <h5>Miofibrilas</h5>
+            <p>Feixes cilíndricos que ocupam a maior parte do volume intracelular — milhares por fibra. Cada miofibrila é uma sequência repetida de sarcômeros e é, literalmente, o aparelho contrátil da célula.</p>
+          </div>
+          <div class="card hist">
+            <div class="k">Reservatório de cálcio</div>
+            <h5>Retículo sarcoplasmático (RS)</h5>
+            <p>Análogo especializado do retículo endoplasmático liso, forma uma rede membranosa que envolve cada miofibrila e termina em dilatações chamadas cisternas terminais — o principal depósito intracelular de Ca²⁺.</p>
+          </div>
+          <div class="card hist">
+            <div class="k">Condução do sinal</div>
+            <h5>Túbulo T (transverso)</h5>
+            <p>Invaginação tubular do sarcolema que penetra perpendicularmente entre as miofibrilas. Duas cisternas terminais mais um túbulo T formam a <em>tríade</em>, o ponto de acoplamento elétrico-químico da contração.</p>
+          </div>
+          <div class="card hist">
+            <div class="k">Suprimento energético</div>
+            <h5>Mitocôndria e glicogênio</h5>
+            <p>Mitocôndrias concentram-se próximas às miofibrilas e sob o sarcolema, fornecendo ATP por fosforilação oxidativa. Grânulos de glicogênio funcionam como reserva energética de rápida mobilização durante o exercício.</p>
+          </div>
+        </div>
+
+        <details class="deep">
+          <summary>Aprofunde-se — a tríade e a lógica da velocidade de condução</summary>
+          <div class="deep-body">
+            <p>A existência do sistema de túbulos T resolve um problema físico real: uma fibra muscular pode ter dezenas de micrômetros de diâmetro, e a difusão simples de um sinal químico do centro até a periferia seria lenta demais para permitir uma contração sincronizada e rápida de toda a célula. Ao invadir o interior da fibra com invaginações do próprio sarcolema, o potencial de ação — que se propaga eletricamente, na ordem de milissegundos — chega simultaneamente próximo a cada sarcômero, garantindo que toda a fibra se contraia de forma praticamente sincrônica.</p>
+            <p>É importante diferenciar o músculo esquelético do músculo cardíaco nesse ponto, por ser uma pergunta clássica de prova: no músculo esquelético, a tríade é formada por <em>um</em> túbulo T entre <em>duas</em> cisternas terminais (uma tríade "clássica" na junção entre banda A e banda I), enquanto no músculo cardíaco geralmente existe uma díade (um túbulo T e uma cisterna), e os túbulos T cardíacos são mais largos e localizados na altura da linha Z.</p>
+            <details class="deeper">
+              <summary>Nível avançado — proteínas de ancoragem da tríade</summary>
+              <p>A justaposição entre a membrana do túbulo T e a membrana do retículo sarcoplasmático não é aleatória: é mantida por complexos proteicos especializados, com destaque para a junofilina (junctophilin), que ancora fisicamente as duas membranas a uma distância nanométrica constante, permitindo o acoplamento direto entre o receptor de di-idropiridina (no túbulo T) e o receptor de rianodina (no RS) — mecanismo detalhado na seção de acoplamento excitação-contração.</p>
+            </details>
+          </div>
+        </details>
+
+        <div class="alert warn">
+          <span class="alert-tag">Ponto de atenção didático</span>
+          <p>O slide cita "mitocôndria e glicogênio" agrupados como um único tópico — mas para fins de prova prática vale separar mentalmente: mitocôndrias produzem ATP continuamente (metabolismo oxidativo, dependente de oxigênio), enquanto o glicogênio é substrato armazenado, mobilizado rapidamente por glicogenólise nos primeiros minutos de esforço intenso, antes que o metabolismo oxidativo se ajuste plenamente à demanda (déficit de O₂ inicial do exercício).</p>
+        </div>
+
+        <div class="alert clin">
+          <span class="alert-tag">Correlação clínica</span>
+          <p>Doenças que afetam especificamente essas organelas geram fenótipos clínicos característicos. Miopatias mitocondriais (como a MELAS) cursam com fadiga muscular desproporcional e podem mostrar, na biópsia, as clássicas <em>ragged red fibers</em> à coloração tricrômica de Gomori, refletindo acúmulo subsarcolemal de mitocôndrias anormais. Já a doença de McArdle (glicogenose tipo V, deficiência de miofosforilase) impede a mobilização do glicogênio muscular, causando intolerância ao exercício, cãibras e mioglobinúria após esforço — um exemplo direto de como a bioquímica do sarcoplasma se traduz em sintoma clínico objetivo.</p>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ============ SEÇÃO 3 — SARCÔMERO ============ -->
+      <section id="sarcomero">
+        <div class="sec-head c-mol">
+          <span class="sec-tag">03 · Biologia estrutural</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">O sarcômero: a unidade contrátil</h2>
+
+        <p class="lead">Se a fibra muscular é a célula e a miofibrila é o cabo, o sarcômero é o elo — a menor unidade capaz de se contrair de forma completa. Ele se repete milhares de vezes ao longo de cada miofibrila, e é a soma sincronizada do encurtamento de todos esses elos, em série e em paralelo, que produz o encurtamento macroscópico do músculo.</p>
+
+        <p>Ao microscópio de luz, essa organização repetitiva é o que cria a <em>estriação transversal</em> característica do músculo esquelético (e cardíaco) — faixas claras e escuras alternadas que correspondem exatamente à disposição dos filamentos finos e grossos dentro de cada sarcômero.</p>
+
+        <div class="grid cols-2">
+          <div class="card mol">
+            <div class="k">Limite estrutural</div>
+            <h5>Disco Z (linha Z)</h5>
+            <p>Estrutura proteica em ziguezague que serve como ponto de ancoragem para os filamentos finos de actina. Delimita o sarcômero em cada extremidade: um sarcômero é, por definição, o segmento entre dois discos Z consecutivos.</p>
+          </div>
+          <div class="card mol">
+            <div class="k">Centro do sarcômero</div>
+            <h5>Linha M</h5>
+            <p>Estrutura proteica central que ancora e estabiliza os filamentos grossos de miosina, mantendo-os alinhados no meio do sarcômero. Contém proteínas como a miomesina.</p>
+          </div>
+          <div class="card mol">
+            <div class="k">Faixa escura</div>
+            <h5>Banda A</h5>
+            <p>Corresponde a toda a extensão ocupada pelos filamentos grossos de miosina, incluindo a região onde eles se sobrepõem aos filamentos finos de actina. É anisotrópica à luz polarizada (daí o nome "A"), e seu comprimento <em>não muda</em> durante a contração.</p>
+          </div>
+          <div class="card mol">
+            <div class="k">Faixa clara</div>
+            <h5>Banda I</h5>
+            <p>Região ocupada apenas por filamentos finos de actina, sem sobreposição de miosina. É isotrópica ("I"). Ao contrário da banda A, a banda I <em>encurta</em> durante a contração — é exatamente essa mudança que embasa a teoria do filamento deslizante.</p>
+          </div>
+        </div>
+
+        <details class="deep">
+          <summary>Aprofunde-se — a teoria do filamento deslizante (sliding filament theory)</summary>
+          <div class="deep-body">
+            <p>O ponto-chave, frequentemente mal compreendido, é este: <em>os filamentos de actina e miosina não encurtam</em>. O que encurta é a <em>distância</em> entre os discos Z, porque os filamentos finos deslizam por entre os filamentos grossos, aumentando sua zona de sobreposição. Formulada por Huxley e Hanson na década de 1950, essa teoria explica por que, na contração, a banda I e a chamada zona H (a região central da banda A onde não há sobreposição com actina) diminuem de tamanho, enquanto a banda A permanece com comprimento constante — porque ela é definida pelo comprimento fixo do próprio filamento de miosina.</p>
+            <p>Esse comportamento gera uma consequência fisiológica importante: existe um comprimento de sarcômero ótimo (em torno de 2,0 a 2,2 μm em humanos) no qual o número de pontes cruzadas potenciais entre actina e miosina é máximo, e portanto a força ativa gerada é máxima. Se o sarcômero estiver muito encurtado ou muito estirado além desse ponto, a sobreposição entre os filamentos diminui e a força cai — é a chamada <em>relação comprimento-tensão</em> do músculo esquelético, um dos gráficos mais cobrados em fisiologia.</p>
+            <details class="deeper">
+              <summary>Nível avançado — o papel estabilizador da titina no comprimento ótimo</summary>
+              <p>A titina, que se estende do disco Z até a linha M, funciona como uma "mola molecular" que centraliza o filamento de miosina dentro do sarcômero e gera tensão passiva quando o músculo é estirado além do seu comprimento de repouso. Isso explica por que a curva de tensão passiva do músculo esquelético cresce de forma não linear com o estiramento — é a titina, e não o colágeno do tecido conjuntivo, a principal responsável pela resistência elástica passiva em estiramentos fisiológicos moderados.</p>
+            </details>
+          </div>
+        </details>
+
+        <div class="alert mol">
+          <span class="alert-tag">Fixação prática de prova</span>
+          <p>Regra mnemônica útil: a banda A é <em>A</em>nisotrópica e tem comprimento fixo (pense em "A de Anchor/Ancorado"); a banda I é <em>I</em>sotrópica e some quase completamente na contração máxima. Se uma questão de imagem histológica pedir para identificar o sarcômero em contração versus relaxado, a banda I estreitada é o marcador visual mais confiável.</p>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ============ SEÇÃO 4 — PROTEÍNAS CONTRÁTEIS ============ -->
+      <section id="proteinas">
+        <div class="sec-head c-mol">
+          <span class="sec-tag">04 · Biologia molecular</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Proteínas contráteis e reguladoras</h2>
+
+        <p class="lead">Cada sarcômero é, em última análise, um arranjo preciso de proteínas com funções distintas e complementares. O slide separa cinco grupos — miosina, actina, tropomiosina, troponina, titina/nebulina — e essa divisão didática reflete uma divisão funcional real: proteínas <em>motoras</em>, proteínas <em>estruturais</em> do filamento fino, proteínas <em>regulatórias</em> e proteínas de <em>citoesqueleto/andaime</em>.</p>
+
+        <h3 class="sub-title">Miosina — o motor molecular</h3>
+        <p>A miosina é o filamento grosso do sarcômero, com aproximadamente 1.500 moléculas por filamento. Cada molécula de miosina II (a isoforma muscular) é formada por <em>seis cadeias polipeptídicas</em>: duas cadeias pesadas, que se entrelaçam formando uma cauda em hélice alfa e terminam em duas cabeças globulares, e quatro cadeias leves (duas para cada cabeça), que regulam a atividade da cabeça.</p>
+
+        <div class="grid cols-2">
+          <div class="card mol">
+            <div class="k">Domínio estrutural</div>
+            <h5>Cauda</h5>
+            <p>Formada pelo entrelaçamento das duas cadeias pesadas. Múltiplas moléculas de miosina se agregam por suas caudas, com as cabeças projetadas para fora em direções opostas nas duas metades do filamento — arranjo que garante que a contração puxe a actina de ambos os lados simetricamente em direção à linha M.</p>
+          </div>
+          <div class="card mol">
+            <div class="k">Domínio funcional</div>
+            <h5>Cabeça</h5>
+            <p>Contém o sítio de ligação com a actina e a enzima <em>miosina ATPase</em>, que hidrolisa ATP fornecendo a energia para o movimento da cabeça (o chamado "golpe de força"). É também aqui que atuam as pontes cruzadas — as conexões físicas transitórias entre miosina e actina.</p>
+          </div>
+        </div>
+
+        <h3 class="sub-title">Actina — o trilho sobre o qual a miosina caminha</h3>
+        <p>A actina globular (actina G) é uma proteína monomérica que polimeriza formando duas cadeias helicoidais entrelaçadas — a actina filamentosa (actina F), que constitui o filamento fino, com cerca de 3.000 filamentos por sarcômero. Cada monômero de actina G possui um sítio ativo de ligação para a cabeça da miosina.</p>
+
+        <div class="grid cols-2">
+          <div class="card mol">
+            <div class="k">Bloqueio estérico</div>
+            <h5>Tropomiosina</h5>
+            <p>Proteína filamentosa alongada que se enrola ao longo do sulco da dupla-hélice de actina F, recobrindo fisicamente os sítios ativos de ligação à miosina no estado de repouso — é o principal "freio" mecânico da contração.</p>
+          </div>
+          <div class="card mol">
+            <div class="k">Sensor de cálcio</div>
+            <h5>Complexo de troponina</h5>
+            <p>Complexo de três subunidades globulares ligado à tropomiosina em intervalos regulares: <em>troponina T</em> (fixa o complexo à tropomiosina), <em>troponina I</em> (inibe a interação actina-miosina em repouso) e <em>troponina C</em> (liga-se ao Ca²⁺ e desencadeia a mudança conformacional que libera o sítio ativo).</p>
+          </div>
+        </div>
+
+        <div class="alert mol">
+          <span class="alert-tag">Memorize o "ITC" da troponina</span>
+          <p><em>I</em> de Inibitória (liga-se à actina e inibe), <em>T</em> de Tropomiosina (liga-se à tropomiosina) e <em>C</em> de Cálcio (liga-se ao Ca²⁺). É exatamente essa sequência — cálcio entra, liga-se à troponina C, que desloca a troponina I, que desloca a tropomiosina, que expõe o sítio ativo — que constitui o elo molecular entre o sinal elétrico e a contração mecânica, detalhado adiante na cascata de acoplamento excitação-contração.</p>
+        </div>
+
+        <h3 class="sub-title">Titina e nebulina — as proteínas de andaime</h3>
+        <p>Frequentemente subestimadas nos resumos de graduação, titina e nebulina são essenciais para a estabilidade estrutural do sarcômero. A <em>titina</em> é a maior proteína conhecida do corpo humano — uma única molécula se estende do disco Z até a linha M, atuando como uma mola molecular que centraliza o filamento de miosina e confere elasticidade passiva ao músculo. A <em>nebulina</em>, por sua vez, corre paralela ao filamento de actina desde o disco Z e funciona como um "molde" ou régua molecular que determina o comprimento preciso do filamento fino durante a montagem do sarcômero.</p>
+
+        <details class="deep">
+          <summary>Aprofunde-se — o ciclo bioquímico completo das pontes cruzadas</summary>
+          <div class="deep-body">
+            <p>A cabeça da miosina não realiza um único movimento e para — ela executa um <em>ciclo</em> repetitivo enquanto houver Ca²⁺ disponível e ATP para hidrólise. O ciclo, na ordem correta, é:</p>
+            <div class="flow physio">
+              <div class="flow-step">
+                <div class="num">1</div>
+                <div class="txt"><b>Hidrólise do ATP</b><span>A cabeça da miosina, ainda desligada da actina, hidrolisa ATP em ADP + Pi. Essa reação "arma" a cabeça em uma configuração de alta energia (cocked position).</span></div>
+              </div>
+              <div class="flow-step">
+                <div class="num">2</div>
+                <div class="txt"><b>Formação da ponte cruzada</b><span>Com o sítio ativo da actina exposto (cálcio já ligado à troponina C), a cabeça armada de miosina se liga fracamente à actina.</span></div>
+              </div>
+              <div class="flow-step">
+                <div class="num">3</div>
+                <div class="txt"><b>Golpe de força (power stroke)</b><span>A liberação do fosfato inorgânico (Pi) desencadeia a mudança conformacional da cabeça, que gira e traciona o filamento de actina em direção ao centro do sarcômero. Em seguida, o ADP também é liberado.</span></div>
+              </div>
+              <div class="flow-step">
+                <div class="num">4</div>
+                <div class="txt"><b>Desligamento (rigor e nova ligação de ATP)</b><span>Uma <em>nova</em> molécula de ATP se liga à cabeça da miosina, o que reduz drasticamente sua afinidade pela actina e provoca o desligamento da ponte cruzada, reiniciando o ciclo.</span></div>
+              </div>
+            </div>
+            <details class="deeper">
+              <summary>Nível avançado — o que acontece na ausência de ATP: a base molecular do rigor mortis</summary>
+              <p>Repare que a etapa 4 do ciclo — o desligamento da ponte cruzada — depende da ligação de uma <em>nova</em> molécula de ATP, e não de sua hidrólise. Isso significa que, sem ATP disponível, a miosina permanece firmemente ligada à actina, em um estado de ponte cruzada travada. É esse exato mecanismo bioquímico que explica o rigor mortis: após a morte, a produção celular de ATP cessa, o Ca²⁺ extravasa do retículo sarcoplasmático degenerado e permanece elevado no sarcoplasma (não há bomba de cálcio ativa para removê-lo), e as pontes cruzadas se formam mas não conseguem se desfazer — resultando em rigidez muscular generalizada, que só se resolve horas depois pela autólise enzimática das próprias proteínas contráteis.</p>
+            </details>
+          </div>
+        </details>
+
+        <div class="alert clin">
+          <span class="alert-tag">Correlação clínica</span>
+          <p>Mutações nos genes que codificam essas proteínas sarcoméricas causam um espectro amplo de doenças hereditárias. Mutações na titina estão entre as causas mais comuns de cardiomiopatia dilatada familiar; mutações em genes de proteínas sarcoméricas cardíacas (miosina, troponina T, tropomiosina) causam cardiomiopatia hipertrófica, uma causa importante de morte súbita em atletas jovens. Já mutações em proteínas associadas ao citoesqueleto muscular — como a distrofina, que ancora o complexo actina-sarcolema à matriz extracelular, embora não seja uma proteína sarcomérica propriamente dita — causam as distrofias musculares de Duchenne e Becker, discutidas com mais detalhe no painel de correlações clínicas ao final deste material.</p>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ============ SEÇÃO 5 — CONTROLE NEURAL ============ -->
+      <section id="controle-neural">
+        <div class="sec-head c-neuro">
+          <span class="sec-tag">05 · Neurofisiologia</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Controle neural do movimento: da ideia ao músculo</h2>
+
+        <p class="lead">Antes de qualquer evento bioquímico na fibra muscular, existe uma cadeia de decisão hierárquica no sistema nervoso central. O slide resume essa cadeia em quatro níveis funcionais — planejadores, controladores, ordenadores e efetuadores — uma forma elegante de organizar um sistema que, na realidade, é fortemente interconectado e paralelo.</p>
+
+        <div class="grid cols-2">
+          <div class="card neuro">
+            <div class="k">Nível 1 — Planejamento</div>
+            <h5>Córtex motor</h5>
+            <p>Área motora suplementar e área pré-motora concebem e planejam a sequência do movimento; o córtex motor primário (giro pré-central) converte esse plano em comandos específicos, organizados somatotopicamente ao longo do homúnculo motor.</p>
+          </div>
+          <div class="card neuro">
+            <div class="k">Nível 2 — Controle e ajuste fino</div>
+            <h5>Núcleos da base e cerebelo</h5>
+            <p>Os núcleos da base (núcleo caudado, putame, globo pálido, substância negra) selecionam e modulam programas motores, suprimindo movimentos indesejados. O cerebelo compara o movimento planejado com o executado em tempo real, corrigindo erros e garantindo coordenação e precisão temporal.</p>
+          </div>
+          <div class="card neuro">
+            <div class="k">Nível 3 — Comando final</div>
+            <h5>Motoneurônio (medula espinal e tronco encefálico)</h5>
+            <p>O motoneurônio alfa é a "via final comum" de Sherrington: todo comando motor, independentemente da sua origem cortical ou subcortical, converge para esse neurônio antes de alcançar o músculo. Seu corpo celular está no corno anterior da medula (ou nos núcleos motores dos nervos cranianos, no tronco).</p>
+          </div>
+          <div class="card neuro">
+            <div class="k">Nível 4 — Execução</div>
+            <h5>Músculo esquelético</h5>
+            <p>O efetuador final. Toda a elegância do planejamento cortical e todo o refinamento cerebelar só se traduzem em movimento real através da contração mecânica das fibras musculares — o assunto central deste material.</p>
+          </div>
+        </div>
+
+        <details class="deep">
+          <summary>Aprofunde-se — a unidade motora como elo entre neurônio e músculo</summary>
+          <div class="deep-body">
+            <p>A conexão funcional entre o "ordenador" (motoneurônio) e o "efetuador" (músculo) se dá através da <em>unidade motora</em>: um único motoneurônio alfa e todas as fibras musculares que ele inerva. Esse número varia enormemente conforme a função do músculo — unidades motoras pequenas (poucas fibras por neurônio, às vezes menos de 10) em músculos que exigem controle motor fino, como os músculos extrínsecos do olho ou os pequenos músculos da mão; unidades motoras grandes (centenas a milhares de fibras por neurônio) em músculos que exigem força bruta, como o gastrocnêmio ou o glúteo máximo.</p>
+            <p>A força muscular é graduada por dois mecanismos complementares: <em>recrutamento</em> (quantas unidades motoras estão ativas simultaneamente, obedecendo ao princípio do tamanho de Henneman — as unidades motoras menores, mais excitáveis, são recrutadas primeiro) e <em>somação por frequência</em> (a taxa de disparo de cada motoneurônio, que determina se as contrações individuais se fundem em uma contração tetânica sustentada).</p>
+            <details class="deeper">
+              <summary>Nível avançado — vias piramidais versus extrapiramidais</summary>
+              <p>Didaticamente, divide-se a via motora descendente em via piramidal (corticoespinal e corticobulbar), responsável primariamente pelo movimento voluntário fino, especialmente distal, e vias extrapiramidais (rubroespinal, reticuloespinal, vestibuloespinal, tectoespinal), envolvidas em postura, tônus e movimentos automáticos/grosseiros. Essa distinção, embora didaticamente útil e cobrada em prova, é uma simplificação — na prática há intensa interação entre esses sistemas, e os núcleos da base e o cerebelo modulam ambas as vias, não atuando como uma via descendente própria e independente.</p>
+            </details>
+          </div>
+        </details>
+
+        <div class="alert clin">
+          <span class="alert-tag">Correlação clínica</span>
+          <p>Essa hierarquia é a base do raciocínio semiológico em neurologia. Uma lesão do <em>neurônio motor superior</em> (córtex ou trato corticoespinal) gera fraqueza com hiper-reflexia, espasticidade (aumento do tônus dependente da velocidade) e sinal de Babinski. Uma lesão do <em>neurônio motor inferior</em> (motoneurônio alfa, raiz nervosa ou nervo periférico) gera fraqueza com hipo/arreflexia, hipotonia (flacidez) e, ao exame, fasciculações e atrofia muscular precoce — como se observa na esclerose lateral amiotrófica (ELA), doença que classicamente combina sinais de neurônio motor superior e inferior simultaneamente. A doença de Parkinson, por sua vez, ilustra a disfunção do "nível 2": a degeneração dopaminérgica da substância negra desregula o circuito dos núcleos da base, produzindo bradicinesia, rigidez e tremor de repouso, sem paralisia verdadeira.</p>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ============ SEÇÃO 6 — JUNÇÃO NEUROMUSCULAR ============ -->
+      <section id="juncao">
+        <div class="sec-head c-neuro">
+          <span class="sec-tag">06 · Sinapse química</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Junção neuromuscular: a sinapse química</h2>
+
+        <p class="lead">É aqui que o comando elétrico do sistema nervoso é traduzido em um sinal químico capaz de atravessar o espaço entre duas células diferentes — o axônio do motoneurônio e o sarcolema da fibra muscular. A junção neuromuscular é, em essência, uma sinapse colinérgica altamente eficiente e altamente estudada, servindo de modelo para o entendimento de sinapses em todo o sistema nervoso.</p>
+
+        <div class="grid cols-2">
+          <div class="card neuro">
+            <div class="k">Componente pré-sináptico</div>
+            <h5>Terminal axonal e botões sinápticos</h5>
+            <p>A porção final do axônio do motoneurônio perde a bainha de mielina e se ramifica em múltiplos botões sinápticos, cada um repousando em uma goteira sináptica na superfície da fibra muscular. Contém alta densidade de mitocôndrias (a liberação de neurotransmissor é um processo energeticamente caro) e vesículas sinápticas repletas de acetilcolina (ACh).</p>
+          </div>
+          <div class="card neuro">
+            <div class="k">Componente pós-sináptico</div>
+            <h5>Placa motora</h5>
+            <p>Região especializada do sarcolema, com dobras juncionais que aumentam enormemente a área de superfície disponível para receptores. É nas cristas dessas dobras que se concentram os receptores nicotínicos de acetilcolina, enquanto a enzima acetilcolinesterase se concentra nas depressões entre as dobras.</p>
+          </div>
+        </div>
+
+        <h3 class="sub-title">A cascata pré-sináptica</h3>
+        <div class="flow neuro">
+          <div class="flow-step">
+            <div class="num">1</div>
+            <div class="txt"><b>Despolarização do axônio terminal</b><span>O potencial de ação motoneuronal se propaga até o terminal axonal.</span></div>
+          </div>
+          <div class="flow-step">
+            <div class="num">2</div>
+            <div class="txt"><b>Abertura de canais de cálcio voltagem-dependentes</b><span>A despolarização abre canais de Ca²⁺ tipo P/Q na membrana pré-sináptica, permitindo o influxo de cálcio a favor do gradiente eletroquímico.</span></div>
+          </div>
+          <div class="flow-step">
+            <div class="num">3</div>
+            <div class="txt"><b>Liberação de acetilcolina por exocitose</b><span>O aumento local de Ca²⁺ desencadeia a fusão das vesículas sinápticas com a membrana pré-sináptica na zona ativa, liberando ACh na fenda sináptica em "pacotes" quantais.</span></div>
+          </div>
+        </div>
+
+        <details class="deep">
+          <summary>Aprofunde-se — o receptor colinérgico nicotínico e o fator de segurança da transmissão</summary>
+          <div class="deep-body">
+            <p>O receptor de acetilcolina na placa motora é do tipo <em>nicotínico</em> (N2, para diferenciá-lo do receptor muscarínico presente no músculo liso e cardíaco), um canal iônico ligante-dependente pentamérico composto por duas subunidades alfa, uma beta, uma delta e uma gama (ou épsilon no adulto). A ligação de <em>duas</em> moléculas de ACh — uma em cada subunidade alfa — é necessária para que o canal mude de conformação e se abra, permitindo o influxo simultâneo de Na⁺ (predominante) e efluxo discreto de K⁺, gerando uma despolarização local chamada potencial de placa motora terminal (EPP).</p>
+            <p>Fisiologicamente, a transmissão neuromuscular opera com uma ampla margem de segurança: a quantidade de ACh liberada por um único potencial de ação é, em condições normais, muito maior do que o mínimo necessário para gerar um EPP capaz de disparar um potencial de ação no sarcolema adjacente. Essa margem é o que permite que doenças que reduzem parcialmente a transmissão — como a miastenia gravis — ainda assim permitam alguma função muscular residual, até que a reserva funcional se esgote.</p>
+            <details class="deeper">
+              <summary>Nível avançado — liberação quantal e potenciais de placa em miniatura</summary>
+              <p>Mesmo na ausência de um potencial de ação, ocorre liberação espontânea e esporádica de vesículas isoladas de ACh, gerando os chamados potenciais de placa em miniatura (MEPPs) — despolarizações muito pequenas, insuficientes para gerar um potencial de ação muscular, mas detectáveis eletrofisiologicamente. Esse fenômeno demonstrou pela primeira vez, nos experimentos clássicos de Bernard Katz, que a liberação de neurotransmissor ocorre em unidades discretas ("quanta"), cada uma correspondendo ao conteúdo de uma única vesícula sináptica — um dos fundamentos da neurociência sináptica moderna.</p>
+            </details>
+          </div>
+        </details>
+
+        <div class="alert clin">
+          <span class="alert-tag">Correlação clínica — farmacologia e doenças da junção neuromuscular</span>
+          <p>A junção neuromuscular é um dos pontos de intervenção farmacológica e patológica mais ricos da fisiologia muscular. Na <em>miastenia gravis</em>, autoanticorpos contra o receptor nicotínico pós-sináptico reduzem progressivamente o número de receptores funcionais, causando fraqueza flutuante que piora com o uso repetido do músculo (fatigabilidade) — o tratamento com inibidores da acetilcolinesterase (piridostigmina) prolonga a permanência da ACh na fenda sináptica, compensando parcialmente esse déficit. Na <em>síndrome miastênica de Lambert-Eaton</em>, o alvo autoimune são os canais de cálcio pré-sinápticos, reduzindo a liberação de ACh — condição classicamente associada a neoplasias, sobretudo o carcinoma pulmonar de pequenas células. O <em>botulismo</em> (toxina de Clostridium botulinum) cliva proteínas SNARE necessárias para a exocitose vesicular, bloqueando a liberação pré-sináptica de ACh e causando paralisia flácida. Já os <em>curares</em> e bloqueadores neuromusculares usados em anestesia (como o rocurônio) competem com a ACh pelo receptor nicotínico, bloqueando-o de forma reversível — seu efeito pode ser revertido farmacologicamente com inibidores de acetilcolinesterase. Os <em>organofosforados</em> (usados em alguns pesticidas e como agentes de guerra química) inibem irreversivelmente a acetilcolinesterase, causando acúmulo tóxico de ACh, com despolarização mantida da placa motora que paradoxalmente evolui para bloqueio da transmissão e paralisia flácida.</p>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ============ SEÇÃO 7 — ACOPLAMENTO EXCITAÇÃO-CONTRAÇÃO ============ -->
+      <section id="acoplamento">
+        <div class="sec-head c-physio">
+          <span class="sec-tag">07 · Fisiologia integrada</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Acoplamento excitação-contração: a cascata completa</h2>
+
+        <p class="lead">Esta é a seção que amarra tudo o que foi visto até aqui. O termo "acoplamento excitação-contração" descreve exatamente a sequência de eventos que converte um sinal elétrico na membrana (excitação) em um evento mecânico dentro da célula (contração) — e o slide traz essa sequência dividida em pequenos blocos que, juntos, formam uma única cascata contínua. Vamos percorrê-la do início ao fim, sem pular nenhum elo.</p>
+
+        <h3 class="sub-title">Da placa motora ao interior da fibra</h3>
+        <div class="flow physio">
+          <div class="flow-step">
+            <div class="num">1</div>
+            <div class="txt"><b>ACh se liga ao receptor colinérgico na placa motora</b><span>O canal nicotínico abre, permitindo entrada líquida de Na⁺ no sarcoplasma.</span></div>
+          </div>
+          <div class="flow-step">
+            <div class="num">2</div>
+            <div class="txt"><b>Despolarização do sarcolema</b><span>O potencial de placa motora, se suficientemente grande, dispara um potencial de ação verdadeiro na membrana muscular adjacente, que se propaga em ambas as direções ao longo da fibra.</span></div>
+          </div>
+          <div class="flow-step">
+            <div class="num">3</div>
+            <div class="txt"><b>Despolarização dos túbulos T</b><span>O potencial de ação se propaga para dentro da fibra através dos túbulos T, levando a despolarização a alcançar rapidamente cada sarcômero, mesmo os mais centrais.</span></div>
+          </div>
+          <div class="flow-step">
+            <div class="num">4</div>
+            <div class="txt"><b>Alteração conformacional no receptor de di-idropiridina (DHP)</b><span>Este receptor sensor de voltagem, localizado na membrana do túbulo T, sofre mudança de conformação em resposta à despolarização — funcionando essencialmente como um "sensor mecânico" de voltagem, sem que haja necessariamente influxo relevante de Ca²⁺ extracelular por ele no músculo esquelético.</span></div>
+          </div>
+          <div class="flow-step">
+            <div class="num">5</div>
+            <div class="txt"><b>Abertura do receptor de rianodina no retículo sarcoplasmático</b><span>O receptor DHP está fisicamente acoplado ao receptor de rianodina (RyR1) na membrana do RS, na região da tríade. A mudança conformacional do DHP abre mecanicamente o canal de rianodina.</span></div>
+          </div>
+          <div class="flow-step">
+            <div class="num">6</div>
+            <div class="txt"><b>Liberação maciça de Ca²⁺ do retículo sarcoplasmático</b><span>O Ca²⁺ armazenado nas cisternas terminais flui a favor do gradiente para o sarcoplasma, elevando rapidamente sua concentração intracelular em várias ordens de magnitude.</span></div>
+          </div>
+          <div class="flow-step">
+            <div class="num">7</div>
+            <div class="txt"><b>Ligação do Ca²⁺ à troponina C</b><span>O cálcio se liga à subunidade C do complexo de troponina no filamento fino.</span></div>
+          </div>
+          <div class="flow-step">
+            <div class="num">8</div>
+            <div class="txt"><b>Deslocamento da tropomiosina</b><span>A mudança conformacional na troponina C é transmitida à troponina I e à tropomiosina, que se desloca lateralmente sobre o filamento de actina, expondo os sítios ativos de ligação à miosina.</span></div>
+          </div>
+          <div class="flow-step">
+            <div class="num">9</div>
+            <div class="txt"><b>Ciclo de pontes cruzadas e geração de força</b><span>As cabeças de miosina, já "armadas" pela hidrólise prévia de ATP, ligam-se aos sítios expostos e executam o golpe de força, deslizando o filamento de actina em direção ao centro do sarcômero — repetindo-se o ciclo enquanto houver Ca²⁺ e ATP disponíveis.</span></div>
+          </div>
+        </div>
+
+        <div class="alert physio">
+          <span class="alert-tag">A engenharia por trás do sistema DHP–rianodina</span>
+          <p>Vale destacar algo elegante e frequentemente cobrado em prova: no músculo esquelético, o acoplamento entre o receptor de DHP (túbulo T) e o receptor de rianodina (retículo sarcoplasmático) é <em>mecânico e direto</em> — não depende de influxo significativo de Ca²⁺ extracelular, ao contrário do músculo cardíaco, onde o pequeno influxo de Ca²⁺ pelo receptor DHP (que ali funciona como um verdadeiro canal de cálcio tipo L) é o gatilho químico que abre o receptor de rianodina, em um mecanismo chamado "liberação de cálcio induzida por cálcio" (CICR). Essa diferença explica, entre outras coisas, por que o músculo esquelético pode se contrair mesmo em meio praticamente livre de cálcio extracelular, enquanto o músculo cardíaco depende dele.</p>
+        </div>
+
+        <details class="deep">
+          <summary>Aprofunde-se — quantificando a amplificação do sinal</summary>
+          <div class="deep-body">
+            <p>Um único potencial de ação na membrana muscular, durando apenas 1 a 2 milissegundos, é capaz de desencadear a liberação de uma quantidade de Ca²⁺ suficiente para elevar sua concentração citosólica de um nível basal de repouso (em torno de 10⁻⁷ mol/L) para níveis da ordem de 10⁻⁵ mol/L — um aumento de aproximadamente 100 vezes, ocorrendo em poucos milissegundos. Essa amplificação extrema é o que permite que um evento elétrico brevíssimo dispare uma resposta mecânica robusta e sustentada o suficiente para gerar trabalho útil.</p>
+            <p>É essa mesma velocidade de disparo que permite a somação de contrações: se um segundo potencial de ação chega antes que o Ca²⁺ do primeiro estímulo tenha sido totalmente recapturado, a nova liberação se soma à concentração residual, e a força da contração aumenta — mecanismo que embasa a somação temporal e o tétano muscular fisiológico (não confundir com a doença tétano, de mecanismo completamente distinto, discutida no painel clínico).</p>
+            <details class="deeper">
+              <summary>Nível avançado — hipertermia maligna e a mutação do receptor de rianodina</summary>
+              <p>Mutações no gene <em>RYR1</em>, que codifica o receptor de rianodina do músculo esquelético, tornam esse canal hipersensível a certos agentes anestésicos voláteis (como halotano) e à succinilcolina. Em indivíduos suscetíveis, a exposição a esses fármacos provoca liberação maciça e descontrolada de Ca²⁺ do retículo sarcoplasmático, levando a contração muscular sustentada e generalizada, hipermetabolismo, produção excessiva de calor (hipertermia, frequentemente acima de 40°C), rabdomiólise e acidose — a chamada hipertermia maligna, uma emergência anestésica potencialmente fatal, tratada com dantroleno, um fármaco que bloqueia diretamente o receptor de rianodina.</p>
+            </details>
+          </div>
+        </details>
+
+        <div class="alert clin">
+          <span class="alert-tag">Correlação clínica — comparando duas paralisias com mecanismos opostos</span>
+          <p>É pedagogicamente valioso comparar o botulismo (visto na seção anterior) com o tétano (doença), porque ambos são causados por toxinas de clostrídios que atuam em proteínas SNARE, mas geram quadros clínicos opostos. A toxina botulínica age perifericamente, na junção neuromuscular, bloqueando a liberação de ACh e causando <em>paralisia flácida</em> descendente. A toxina tetânica (tetanospasmina), por outro lado, é transportada retrogradamente até a medula espinal e bloqueia a liberação de neurotransmissores inibitórios (GABA e glicina) de interneurônios inibitórios espinais, removendo a inibição sobre os motoneurônios e causando <em>paralisia espástica</em>, com contraturas musculares generalizadas e sustentadas (o clássico trismo/"riso sardônico" na face).</p>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ============ SEÇÃO 8 — RELAXAMENTO ============ -->
+      <section id="relaxamento">
+        <div class="sec-head c-physio">
+          <span class="sec-tag">08 · Fisiologia integrada</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Relaxamento muscular e recaptação de cálcio</h2>
+
+        <p class="lead">A contração muscular só é útil se puder ser desligada de forma tão precisa quanto foi ligada. O relaxamento não é um processo passivo de "esgotamento" do sinal — é um processo ativo, dependente de ATP, que remove tanto o estímulo elétrico quanto o mensageiro químico intracelular que sustentam a contração.</p>
+
+        <div class="grid cols-2">
+          <div class="card physio">
+            <div class="k">Fim do sinal pré-sináptico</div>
+            <h5>Destruição da acetilcolina</h5>
+            <p>A ACh na fenda sináptica é rapidamente hidrolisada pela enzima <em>acetilcolinesterase</em>, ancorada na lâmina basal da fenda sináptica, em colina e acetato. Uma fração adicional se difunde para fora da fenda sináptica, diluindo-se. Sem ACh ligada ao receptor, o canal nicotínico se fecha e o estímulo elétrico na placa motora cessa.</p>
+          </div>
+          <div class="card physio">
+            <div class="k">Fim do sinal intracelular</div>
+            <h5>Bomba de cálcio e calsequestrina</h5>
+            <p>Uma bomba de Ca²⁺ ATP-dependente (SERCA — Ca²⁺-ATPase do retículo sarcoplasmático) recaptura ativamente o cálcio do sarcoplasma de volta para dentro do retículo sarcoplasmático, contra o gradiente de concentração, consumindo ATP no processo. Dentro do RS, a <em>calsequestrina</em>, uma proteína de baixa afinidade e alta capacidade, sequestra o cálcio recapturado, mantendo baixa a concentração de Ca²⁺ livre dentro do retículo e favorecendo, por gradiente, a continuidade da recaptação.</p>
+          </div>
+        </div>
+
+        <p>Com a concentração citosólica de Ca²⁺ novamente próxima do nível basal, o cálcio se dissocia da troponina C, a troponina I retoma sua posição inibitória, a tropomiosina desliza de volta cobrindo os sítios ativos da actina, e o ciclo de pontes cruzadas cessa — o sarcômero relaxa e retorna ao seu comprimento de repouso, auxiliado pela recuperação elástica da titina.</p>
+
+        <details class="deep">
+          <summary>Aprofunde-se — por que o relaxamento também custa energia</summary>
+          <div class="deep-body">
+            <p>Um erro conceitual comum é pensar que o ATP é gasto apenas na contração. Na realidade, o relaxamento muscular é tão dependente de ATP quanto a contração: a bomba SERCA consome uma fração substancial do ATP muscular total durante o exercício, e a ligação de uma nova molécula de ATP à cabeça da miosina é, como vimos, o próprio evento que desliga a ponte cruzada. É justamente por isso que a depleção completa de ATP não relaxa o músculo — pelo contrário, trava-o em contração sustentada, como no rigor mortis.</p>
+            <details class="deeper">
+              <summary>Nível avançado — a homologia com o músculo cardíaco: fosfolambam</summary>
+              <p>No músculo cardíaco, a atividade da bomba SERCA2a é regulada por uma proteína reguladora chamada fosfolambam, que em seu estado desfosforilado inibe a bomba. A fosforilação do fosfolambam pela proteína quinase A (PKA), estimulada por catecolaminas via receptores beta-adrenérgicos, remove essa inibição e acelera a recaptação de cálcio — mecanismo que contribui tanto para o aumento da força de contração (efeito inotrópico positivo) quanto para o relaxamento mais rápido (efeito lusitrópico positivo) observados durante a ativação simpática do coração. O músculo esquelético não possui fosfolambam de forma significativa, o que é uma diferença regulatória relevante entre os dois tecidos.</p>
+            </details>
+          </div>
+        </details>
+
+        <div class="alert clin">
+          <span class="alert-tag">Correlação clínica</span>
+          <p>Os inibidores da acetilcolinesterase têm dupla relevância clínica: em baixas doses e de forma controlada (piridostigmina, neostigmina), são usados terapeuticamente na miastenia gravis e para reverter o bloqueio neuromuscular por curares ao final de procedimentos anestésicos; em altas doses ou de forma irreversível (organofosforados), causam síndrome colinérgica tóxica. Já a rabdomiólise — lise maciça de fibras musculares, seja por trauma, hipertermia maligna, exercício extremo ou certas medicações (estatinas) — libera mioglobina na circulação, que pode precipitar nos túbulos renais e causar lesão renal aguda, sendo uma emergência que exige hidratação vigorosa e monitorização de creatinoquinase (CK) sérica.</p>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ============ SEÇÃO 9 — TÔNUS, FUSO E PROPRIOCEPÇÃO ============ -->
+      <section id="tonus">
+        <div class="sec-head c-hist">
+          <span class="sec-tag">09 · Fisiologia sensorial</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Tônus muscular, fuso e propriocepção</h2>
+
+        <p class="lead">Nem toda atividade muscular gera movimento visível. Grande parte da atividade elétrica do músculo esquelético serve para manter uma leve contração basal contínua — o tônus — e para informar continuamente ao sistema nervoso central o estado de comprimento e tensão do próprio músculo, permitindo ajustes reflexos rápidos, sem necessidade de processamento cortical consciente.</p>
+
+        <h3 class="sub-title">Tônus muscular</h3>
+        <p>O slide define o tônus muscular como o estado de leve contração contínua presente nos músculos de um indivíduo consciente, mesmo em repouso aparente. É importante fixar duas características negativas que o definem por exclusão: <em>não há produção de movimento visível</em> e <em>não há resistência ativa</em> perceptível ao examinador em condições normais. O tônus confere firmeza basal ao músculo, contribuindo para a estabilidade das articulações e para a manutenção da postura contra a gravidade, sem exigir esforço consciente.</p>
+
+        <h3 class="sub-title">Fuso muscular</h3>
+        <p>O fuso muscular é o principal receptor proprioceptivo do músculo esquelético, especializado em monitorar mudanças no <em>comprimento</em> muscular (e a velocidade dessa mudança). Estruturalmente, é uma cápsula de tecido conjuntivo contendo pequenas fibras musculares especializadas, as <em>fibras intrafusais</em> — em contraste com as fibras musculares comuns que geram a força de contração, chamadas <em>fibras extrafusais</em>.</p>
+
+        <div class="grid cols-2">
+          <div class="card hist">
+            <div class="k">Componente motor</div>
+            <h5>Neurônio motor gama</h5>
+            <p>Inerva as extremidades contráteis das fibras intrafusais. Sua função não é gerar força útil, mas sim ajustar a tensão basal do fuso, mantendo-o "sob tensão" mesmo quando o músculo como um todo encurta — evitando que o fuso "afrouxe" e perca sensibilidade durante a contração ativa.</p>
+          </div>
+          <div class="card hist">
+            <div class="k">Componente sensorial</div>
+            <h5>Terminações nervosas sensitivas (axônio Ia)</h5>
+            <p>Enrolam-se na porção central (não contrátil) das fibras intrafusais e disparam potenciais de ação proporcionalmente ao estiramento do fuso, enviando essa informação para a medula espinal através de fibras aferentes de condução rápida.</p>
+          </div>
+        </div>
+
+        <details class="deep">
+          <summary>Aprofunde-se — o reflexo de estiramento (miotático) e a coativação alfa-gama</summary>
+          <div class="deep-body">
+            <p>O circuito mais simples e mais rápido do sistema nervoso é o reflexo de estiramento (miotático), a base fisiológica dos reflexos tendinosos profundos avaliados em qualquer exame neurológico de rotina (patelar, bicipital, aquileu). Quando um músculo é estirado subitamente — por exemplo, pela percussão do tendão patelar com o martelo de reflexos — o fuso muscular também é estirado, aumentando a taxa de disparo das fibras Ia. Esse sinal chega à medula espinal e faz sinapse <em>monossináptica direta</em> com o motoneurônio alfa do mesmo músculo, provocando sua contração reflexa — um mecanismo de proteção contra o estiramento excessivo e súbito.</p>
+            <p>Um refinamento importante, mostrado na figura do slide, é o fenômeno de <em>coativação alfa-gama</em>: durante uma contração voluntária, o sistema nervoso central ativa simultaneamente os motoneurônios alfa (que contraem as fibras extrafusais, gerando força) e os motoneurônios gama (que contraem as extremidades das fibras intrafusais). Se apenas o motoneurônio alfa fosse ativado, o encurtamento do músculo afrouxaria o fuso muscular, que "sairia do ar" e pararia de sinalizar comprimento com precisão. A coativação gama mantém o fuso sob tensão constante, preservando sua sensibilidade e permitindo o monitoramento contínuo do comprimento muscular durante todo o movimento, não apenas em repouso.</p>
+            <details class="deeper">
+              <summary>Nível avançado — o órgão tendíneo de Golgi e o reflexo inverso</summary>
+              <p>Complementar ao fuso muscular, o órgão tendíneo de Golgi (mencionado na figura anatômica junto ao fuso) está localizado na junção miotendínea e monitora não o comprimento, mas a <em>tensão</em> ativa gerada pela contração muscular. Quando a tensão é excessiva, o órgão tendíneo de Golgi dispara um reflexo inibitório polissináptico (reflexo miotático inverso) sobre o próprio motoneurônio alfa, promovendo relaxamento reflexo — um mecanismo protetor contra lesão por sobrecarga mecânica excessiva do músculo ou do tendão.</p>
+            </details>
+          </div>
+        </details>
+
+        <div class="alert clin">
+          <span class="alert-tag">Correlação clínica</span>
+          <p>A avaliação do tônus e dos reflexos tendinosos profundos é uma das ferramentas semiológicas mais informativas do exame neurológico. <em>Hiper-reflexia com espasticidade</em> sugere lesão de neurônio motor superior (por perda da modulação inibitória descendente sobre o arco reflexo espinal); <em>hiporreflexia ou arreflexia com hipotonia</em> sugere lesão de neurônio motor inferior, doença primária do músculo, ou comprometimento do próprio arco reflexo (neuropatia periférica). A rigidez em roda denteada do Parkinson e a espasticidade em canivete de lesões piramidais são exemplos clássicos de alterações qualitativamente distintas do tônus, com localização topográfica diferente dentro do sistema motor discutido na seção 5.</p>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ============ SEÇÃO 10 — PAINEL CLÍNICO ============ -->
+      <section id="clinica">
+        <div class="sec-head c-clin">
+          <span class="sec-tag">10 · Síntese clínica</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Painel de correlações clínicas</h2>
+        <p class="lead">Um consolidado das principais doenças mencionadas ao longo deste material, organizadas pelo nível estrutural ou funcional predominantemente afetado — útil para revisão rápida antes de provas práticas e PBL.</p>
+
+        <div class="grid cols-2">
+          <div class="card clin">
+            <div class="k">Citoesqueleto / sarcolema</div>
+            <h5>Distrofia muscular de Duchenne</h5>
+            <p>Mutação no gene da distrofina (ligado ao X), proteína que ancora o citoesqueleto de actina à matriz extracelular via complexo distrofina-glicoproteínas. Sua ausência causa fragilidade progressiva do sarcolema durante ciclos de contração-relaxamento, com necrose de fibras, elevação de CK e substituição progressiva do tecido muscular por gordura e fibrose (pseudo-hipertrofia de panturrilha).</p>
+          </div>
+          <div class="card clin">
+            <div class="k">Retículo sarcoplasmático</div>
+            <h5>Hipertermia maligna</h5>
+            <p>Mutação no receptor de rianodina (RYR1), causando liberação descontrolada de Ca²⁺ em resposta a anestésicos voláteis e succinilcolina. Emergência anestésica com contratura muscular sustentada, hipertermia e rabdomiólise; tratamento com dantroleno.</p>
+          </div>
+          <div class="card clin">
+            <div class="k">Junção neuromuscular pós-sináptica</div>
+            <h5>Miastenia gravis</h5>
+            <p>Doença autoimune com anticorpos contra o receptor nicotínico de ACh. Fraqueza flutuante, piora com esforço repetido (fatigabilidade), frequentemente com envolvimento ocular precoce (ptose, diplopia). Tratamento com inibidores da acetilcolinesterase e imunossupressão.</p>
+          </div>
+          <div class="card clin">
+            <div class="k">Junção neuromuscular pré-sináptica</div>
+            <h5>Botulismo</h5>
+            <p>Toxina botulínica cliva proteínas SNARE, bloqueando a exocitose de ACh. Paralisia flácida descendente, potencialmente fatal por insuficiência respiratória. Contraste didático com o tétano, cujo mecanismo é medular (não é doença da junção neuromuscular).</p>
+          </div>
+          <div class="card clin">
+            <div class="k">Metabolismo energético</div>
+            <h5>Doença de McArdle (glicogenose V)</h5>
+            <p>Deficiência de miofosforilase impede mobilização do glicogênio muscular durante o exercício. Intolerância ao exercício, cãibras e mioglobinúria após esforço, com fenômeno de "second wind" ao reduzir a intensidade.</p>
+          </div>
+          <div class="card clin">
+            <div class="k">Neurônio motor</div>
+            <h5>Esclerose lateral amiotrófica (ELA)</h5>
+            <p>Degeneração combinada de neurônio motor superior e inferior. Fraqueza progressiva com sinais mistos (hiper-reflexia + fasciculações e atrofia), sem comprometimento sensitivo, refletindo dano seletivo à via motora descrita na seção 5.</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ============ SEÇÃO 11 — REFERÊNCIAS ============ -->
+      <section id="referencias">
+        <div class="sec-head c-ana">
+          <span class="sec-tag">11 · Bibliografia</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Referências</h2>
+        <ol class="refs">
+          <li>GUYTON, Arthur C.; HALL, John E. <em>Tratado de fisiologia médica</em>. 14. ed. Rio de Janeiro: Guanabara Koogan, 2021.</li>
+          <li>JUNQUEIRA, Luiz Carlos Uchôa; CARNEIRO, José. <em>Histologia básica: texto e atlas</em>. 13. ed. Rio de Janeiro: Guanabara Koogan, 2017.</li>
+          <li>MOORE, Keith L.; DALLEY, Arthur F.; AGUR, Anne M. R. <em>Anatomia orientada para a clínica</em>. 8. ed. Rio de Janeiro: Guanabara Koogan, 2019.</li>
+          <li>ROBBINS, Stanley L.; COTRAN, Ramzi S. <em>Robbins e Cotran: bases patológicas das doenças</em>. 10. ed. Rio de Janeiro: Guanabara Koogan, 2021.</li>
+          <li>ROSS, Michael H.; PAWLINA, Wojciech. <em>Histologia: texto e atlas</em>. 8. ed. Rio de Janeiro: Guanabara Koogan, 2020.</li>
+          <li>AIRES, Margarida de Mello (Coord.). <em>Fisiologia</em>. 5. ed. Rio de Janeiro: Guanabara Koogan, 2018.</li>
+          <li>PORTO, Celmo Celeno. <em>Semiologia médica</em>. 8. ed. Rio de Janeiro: Guanabara Koogan, 2019.</li>
+          <li>GREGÓRIO, Elizama de. <em>Sistema muscular</em> [slides de aula]. Laboratório Morfofuncional, Uniarp-SC, 2026.</li>
+        </ol>
+      </section>
+
+    </div>
+
+    <footer class="end">
+      Material de aprofundamento — Laboratório Morfofuncional · uso pessoal de estudo · edite livremente pelo botão no canto inferior direito
+    </footer>
+
+  </main>
+
+</div>
+
+<div class="edit-toolbar">
+  <button id="btnEdit" title="Ativa a edição direta do texto nesta página">Ativar edição</button>
+  <button id="btnDownload" title="Baixa uma cópia .html com suas edições">Baixar cópia editada</button>
+  <button id="btnRestore" title="Apaga as edições salvas e volta ao texto original">Restaurar original</button>
+</div>
+<div class="edit-toast" id="toast"></div>
+
+<script>
+(function(){
+  var STORAGE_KEY = "lmf_edit_sistema_muscular_v1";
+  var contentEl = document.getElementById("doc-content");
+  var btnEdit = document.getElementById("btnEdit");
+  var btnDownload = document.getElementById("btnDownload");
+  var btnRestore = document.getElementById("btnRestore");
+  var toastEl = document.getElementById("toast");
+
+  var editing = false;
+  var autosaveTimer = null;
+  var runningInsideArtifactPreview = (function(){
+    try{
+      return window.self !== window.top;
+    }catch(e){ return true; }
+  })();
+
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(function(){ toastEl.classList.remove("show"); }, 2800);
+  }
+
+  function localStorageAvailable(){
+    try{
+      var k = "__lmf_test__";
+      window.localStorage.setItem(k, "1");
+      window.localStorage.removeItem(k);
+      return true;
+    }catch(e){ return false; }
+  }
+
+  function loadSavedContent(){
+    if(!localStorageAvailable()) return;
+    try{
+      var saved = window.localStorage.getItem(STORAGE_KEY);
+      if(saved){
+        contentEl.innerHTML = saved;
+        showToast("Edições salvas anteriormente foram carregadas.");
+      }
+    }catch(e){}
+  }
+
+  function saveContent(silent){
+    if(!localStorageAvailable()){
+      if(!silent) showToast("Este navegador não permite salvar (localStorage indisponível aqui).");
+      return;
+    }
+    try{
+      window.localStorage.setItem(STORAGE_KEY, contentEl.innerHTML);
+      if(!silent) showToast("Progresso salvo neste navegador.");
+    }catch(e){
+      if(!silent) showToast("Não foi possível salvar automaticamente.");
+    }
+  }
+
+  function makeEditable(state){
+    var editableTags = "P, LI, H2, H3, H4, H5, SPAN, TD, TH, EM, B, I";
+    var walker = contentEl.querySelectorAll("p, li, h2, h3, h4, h5, .card p, .card h5, .alert p, .flow-step b, .flow-step span, .refs li, .lede, .lead");
+    walker.forEach(function(el){
+      el.setAttribute("contenteditable", state ? "true" : "false");
+    });
+  }
+
+  btnEdit.addEventListener("click", function(){
+    editing = !editing;
+    makeEditable(editing);
+    btnEdit.textContent = editing ? "Salvar e sair" : "Ativar edição";
+    btnEdit.classList.toggle("active", editing);
+
+    if(editing){
+      showToast(runningInsideArtifactPreview
+        ? "Modo edição ativo. Atenção: dentro da pré-visualização do Claude.ai o autosave (localStorage) pode não persistir — use 'Baixar cópia editada' para garantir suas alterações."
+        : "Modo edição ativo. Autosave a cada 15s neste navegador.");
+      autosaveTimer = setInterval(function(){ saveContent(true); }, 15000);
+    } else {
+      clearInterval(autosaveTimer);
+      saveContent(false);
+    }
+  });
+
+  btnDownload.addEventListener("click", function(){
+    var clone = document.documentElement.cloneNode(true);
+    var cloneContent = clone.querySelector("#doc-content");
+    if(cloneContent){ cloneContent.innerHTML = contentEl.innerHTML; }
+    var editables = clone.querySelectorAll('[contenteditable]');
+    editables.forEach(function(el){ el.removeAttribute("contenteditable"); });
+    var toolbar = clone.querySelector(".edit-toolbar");
+    if(toolbar){
+      var editBtn = toolbar.querySelector("#btnEdit");
+      if(editBtn){ editBtn.textContent = "Ativar edição"; editBtn.classList.remove("active"); }
+    }
+    var htmlString = "<!DOCTYPE html>\n" + clone.outerHTML;
+    var blob = new Blob([htmlString], {type: "text/html"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "sistema_muscular_editado.html";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast("Cópia editada baixada.");
+  });
+
+  btnRestore.addEventListener("click", function(){
+    if(!confirm("Isso apaga as edições salvas neste navegador e restaura o texto original gerado. Continuar?")) return;
+    try{ window.localStorage.removeItem(STORAGE_KEY); }catch(e){}
+    location.reload();
+  });
+
+  loadSavedContent();
+
+  if(runningInsideArtifactPreview){
+    setTimeout(function(){
+      showToast("Você está na pré-visualização do Claude.ai: o autosave local pode não persistir entre sessões. Baixe o arquivo para editar com segurança fora daqui.");
+    }, 900);
+  }
+})();
+</script>
+
+</body>
+</html>

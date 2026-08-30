@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fármacos Anti-histamínicos — Resumo LPF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0d1117;
+    --bg-alt: #12181f;
+    --card-bg: #151c24;
+    --text: #e7ecf1;
+    --text-dim: #9aa7b4;
+    --text-faint: #6b7784;
+    --border: #232c36;
+
+    --teal:   #3ecfb2;
+    --orange: #f0955c;
+    --purple: #b48ce0;
+    --blue:   #5fa8f5;
+    --indigo: #8a93f0;
+    --cyan:   #4fd0e3;
+    --green:  #6fce7f;
+    --amber:  #ecc25f;
+    --red:    #f0616b;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Source Sans 3', sans-serif;
+    line-height:1.65;
+    font-size:16.5px;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    letter-spacing:0.01em;
+    color:var(--text);
+  }
+
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px 100px;}
+
+  /* ===== HERO ===== */
+  .hero{
+    padding:78px 24px 54px;
+    text-align:center;
+    border-bottom:1px solid var(--border);
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(62,207,178,0.08), transparent 55%),
+      radial-gradient(ellipse at 80% 10%, rgba(240,97,107,0.07), transparent 55%),
+      var(--bg-alt);
+  }
+  .hero .eyebrow{
+    font-family:'Source Sans 3', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.22em;
+    font-size:12.5px;
+    color:var(--teal);
+    font-weight:600;
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:52px;
+    font-style:italic;
+    margin:0 0 14px;
+    line-height:1.1;
+  }
+  .hero p.sub{
+    color:var(--text-dim);
+    font-size:18px;
+    max-width:600px;
+    margin:0 auto;
+  }
+  .hero .meta{
+    margin-top:28px;
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .pill{
+    font-size:12.5px;
+    padding:5px 14px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    color:var(--text-faint);
+    letter-spacing:0.03em;
+  }
+
+  /* ===== SECTION HEADER: tag + line ===== */
+  .section-head{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin:64px 0 26px;
+  }
+  .section-head .tag{
+    font-family:'Source Sans 3', sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    white-space:nowrap;
+    padding:6px 14px;
+    border-radius:5px;
+    color:#0d1117;
+  }
+  .section-head .line{
+    flex:1;
+    height:1px;
+    background:linear-gradient(to right, var(--line-color, var(--border)), transparent 85%);
+  }
+  .section-head h2{
+    display:none;
+  }
+  .section-intro{
+    color:var(--text-dim);
+    font-size:16px;
+    margin:-10px 0 22px;
+  }
+
+  /* topic accent utility classes */
+  .t-teal   { --accent: var(--teal); }
+  .t-orange { --accent: var(--orange); }
+  .t-purple { --accent: var(--purple); }
+  .t-blue   { --accent: var(--blue); }
+  .t-indigo { --accent: var(--indigo); }
+  .t-cyan   { --accent: var(--cyan); }
+  .t-green  { --accent: var(--green); }
+  .t-amber  { --accent: var(--amber); }
+  .t-red    { --accent: var(--red); }
+
+  .section-head.t-teal .tag{background:var(--teal);}
+  .section-head.t-orange .tag{background:var(--orange);}
+  .section-head.t-purple .tag{background:var(--purple);}
+  .section-head.t-blue .tag{background:var(--blue);}
+  .section-head.t-indigo .tag{background:var(--indigo);}
+  .section-head.t-cyan .tag{background:var(--cyan);}
+  .section-head.t-green .tag{background:var(--green);}
+  .section-head.t-amber .tag{background:var(--amber);}
+  .section-head.t-red .tag{background:var(--red);}
+
+  .section-head.t-teal .line{--line-color:var(--teal);}
+  .section-head.t-orange .line{--line-color:var(--orange);}
+  .section-head.t-purple .line{--line-color:var(--purple);}
+  .section-head.t-blue .line{--line-color:var(--blue);}
+  .section-head.t-indigo .line{--line-color:var(--indigo);}
+  .section-head.t-cyan .line{--line-color:var(--cyan);}
+  .section-head.t-green .line{--line-color:var(--green);}
+  .section-head.t-amber .line{--line-color:var(--amber);}
+  .section-head.t-red .line{--line-color:var(--red);}
+
+  h3.subhead{
+    font-size:24px;
+    font-style:italic;
+    margin:34px 0 12px;
+    color:var(--text);
+  }
+  h3.subhead::before{
+    content:"";
+    display:inline-block;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+    margin-right:10px;
+    vertical-align:middle;
+  }
+
+  p{color:var(--text-dim); margin:0 0 14px;}
+  strong{color:var(--text); font-weight:600;}
+  em{color:var(--text); font-style:italic;}
+
+  ul, ol{color:var(--text-dim); padding-left:22px; margin:0 0 16px;}
+  li{margin-bottom:6px;}
+  li::marker{color:var(--accent);}
+
+  /* ===== CARDS (top border only) ===== */
+  .card{
+    background:var(--card-bg);
+    border:1px solid var(--border);
+    border-top:3px solid var(--accent);
+    border-radius:8px;
+    padding:22px 24px;
+    margin-bottom:18px;
+  }
+  .card h4{
+    font-size:20px;
+    margin:0 0 8px;
+    color:var(--text);
+  }
+  .card h4 .kicker{
+    display:block;
+    font-family:'Source Sans 3', sans-serif;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    color:var(--accent);
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .card p:last-child{margin-bottom:0;}
+
+  .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  .grid-4{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+  @media (max-width:760px){
+    .grid-2, .grid-3, .grid-4{grid-template-columns:1fr;}
+  }
+
+  .mini-card{
+    background:var(--card-bg);
+    border:1px solid var(--border);
+    border-top:3px solid var(--accent);
+    border-radius:7px;
+    padding:14px 16px;
+  }
+  .mini-card .label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--accent);
+    font-weight:700;
+    margin-bottom:4px;
+  }
+  .mini-card p{font-size:14.5px; margin:0; color:var(--text-dim);}
+
+  /* ===== ALERTS: outline style ===== */
+  .alert{
+    border:1.5px solid var(--accent);
+    background:transparent;
+    border-radius:8px;
+    padding:16px 20px;
+    margin:20px 0;
+    color:var(--text);
+  }
+  .alert .alert-title{
+    font-weight:700;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:0.09em;
+    color:var(--accent);
+    margin-bottom:6px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .alert p{color:var(--text-dim); margin:0;}
+  .alert p + p{margin-top:8px;}
+
+  /* ===== TABLE ===== */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:12px 0 20px;
+    font-size:14.5px;
+    background:var(--card-bg);
+    border:1px solid var(--border);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  thead th{
+    background:var(--bg-alt);
+    text-align:left;
+    padding:11px 14px;
+    font-family:'Source Sans 3', sans-serif;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--accent);
+    border-bottom:1px solid var(--border);
+  }
+  tbody td{
+    padding:11px 14px;
+    color:var(--text-dim);
+    border-bottom:1px solid var(--border);
+    vertical-align:top;
+  }
+  tbody tr:last-child td{border-bottom:none;}
+  tbody td:first-child{color:var(--text); font-weight:600;}
+
+  /* ===== FLOW DIAGRAM ===== */
+  .flow{
+    display:flex;
+    align-items:stretch;
+    gap:0;
+    margin:22px 0;
+    flex-wrap:wrap;
+  }
+  .flow-step{
+    flex:1;
+    min-width:150px;
+    background:var(--card-bg);
+    border:1px solid var(--border);
+    border-top:3px solid var(--accent);
+    border-radius:8px;
+    padding:14px 16px;
+    position:relative;
+  }
+  .flow-step .n{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:26px;
+    color:var(--accent);
+    display:block;
+    margin-bottom:4px;
+  }
+  .flow-step p{font-size:14px; margin:0; color:var(--text-dim);}
+  .flow-arrow{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--accent);
+    font-size:20px;
+    padding:0 8px;
+    flex:0 0 auto;
+  }
+  @media (max-width:760px){
+    .flow{flex-direction:column;}
+    .flow-arrow{transform:rotate(90deg); padding:4px 0;}
+  }
+
+  /* receptor diagram */
+  .receptor-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin:20px 0;
+  }
+  @media (max-width:760px){ .receptor-grid{grid-template-columns:1fr 1fr;} }
+  .receptor-box{
+    background:var(--card-bg);
+    border:1px solid var(--border);
+    border-top:3px solid var(--accent);
+    border-radius:8px;
+    padding:16px 14px;
+    text-align:center;
+  }
+  .receptor-box .rname{
+    font-family:'Cormorant Garamond', serif;
+    font-size:30px;
+    font-style:italic;
+    color:var(--accent);
+    margin-bottom:2px;
+  }
+  .receptor-box .rg{
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:10px;
+  }
+  .receptor-box .rloc{
+    font-size:13px;
+    color:var(--text-dim);
+    margin-bottom:8px;
+    min-height:52px;
+  }
+  .receptor-box .reff{
+    font-size:12.5px;
+    color:var(--text-faint);
+    border-top:1px solid var(--border);
+    padding-top:8px;
+  }
+
+  /* toc */
+  .toc{
+    background:var(--card-bg);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:22px 26px;
+    margin-top:38px;
+  }
+  .toc .tt{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.15em;
+    color:var(--text-faint);
+    margin-bottom:12px;
+    font-weight:700;
+  }
+  .toc ol{
+    columns:2;
+    -webkit-columns:2;
+    padding-left:18px;
+    margin:0;
+  }
+  .toc li{margin-bottom:8px; font-size:14.5px;}
+  .toc a{color:var(--text-dim); text-decoration:none; border-bottom:1px dotted var(--border);}
+  .toc a:hover{color:var(--text); border-color:var(--text-dim);}
+  @media (max-width:600px){ .toc ol{columns:1;} }
+
+  .divider-fig{
+    text-align:center;
+    font-size:12px;
+    color:var(--text-faint);
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    margin:6px 0 26px;
+  }
+
+  footer{
+    text-align:center;
+    color:var(--text-faint);
+    font-size:13px;
+    padding:50px 24px 30px;
+    border-top:1px solid var(--border);
+    margin-top:60px;
+  }
+  footer .refs{
+    max-width:700px;
+    margin:0 auto 18px;
+    text-align:left;
+    font-size:13px;
+    line-height:1.8;
+  }
+  footer .refs .rtitle{
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    font-size:11px;
+    color:var(--text-dim);
+    margin-bottom:8px;
+    font-weight:700;
+  }
+
+  .keyword{color:var(--accent); font-weight:600;}
+  code{
+    background:var(--bg-alt);
+    border:1px solid var(--border);
+    padding:1px 6px;
+    border-radius:4px;
+    font-size:0.9em;
+    color:var(--text);
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="eyebrow">LPF · Laboratório de Prática Funcional — Farmacologia Aplicada</div>
+  <h1>Fármacos Anti-histamínicos</h1>
+  <p class="sub">Da fisiologia da histamina ao raciocínio clínico à beira do leito: rinite, urticária e o limite crítico da anafilaxia.</p>
+  <div class="meta">
+    <span class="pill">5ª fase · Medicina</span>
+    <span class="pill">Farmacologia dos anti-H₁ e correlatos</span>
+    <span class="pill">Base: Katzung · Goodman &amp; Gilman</span>
+  </div>
+
+  <div class="toc">
+    <div class="tt">Roteiro deste resumo</div>
+    <ol>
+      <li><a href="#sec1">A histamina: síntese, depósito e degradação</a></li>
+      <li><a href="#sec2">Degranulação mastocitária e alergia imediata</a></li>
+      <li><a href="#sec3">Os quatro receptores histaminérgicos</a></li>
+      <li><a href="#sec4">"Anti-histamínico" não é uma classe única</a></li>
+      <li><a href="#sec5">Mecanismo de ação dos anti-H₁</a></li>
+      <li><a href="#sec6">Primeira x segunda geração</a></li>
+      <li><a href="#sec7">Quando o anti-H₁ funciona (e quando não)</a></li>
+      <li><a href="#sec8">Conduta na rinite alérgica</a></li>
+      <li><a href="#sec9">Conduta na urticária</a></li>
+      <li><a href="#sec10">Anafilaxia: o anti-H₁ é coadjuvante</a></li>
+      <li><a href="#sec11">Síntese final e erros frequentes</a></li>
+    </ol>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ============ SEÇÃO 1 ============ -->
+  <div class="section-head t-teal" id="sec1">
+    <span class="tag">01 · Fisiologia</span>
+    <span class="line"></span>
+  </div>
+  <h2 style="font-size:34px; font-style:italic; margin-top:-8px;">A histamina é formada, armazenada e rapidamente inativada</h2>
+  <p class="section-intro">Antes de entender qualquer anti-histamínico, é preciso entender a molécula que ele bloqueia. A histamina é uma amina biógena com meia-vida curtíssima em tecido livre — seu efeito depende quase inteiramente de onde ela está armazenada e de quão rápido é degradada.</p>
+
+  <h3 class="subhead t-teal">Síntese</h3>
+  <div class="card t-teal">
+    <h4><span class="kicker">Via metabólica</span>Descarboxilação da L-histidina</h4>
+    <p>A histamina é sintetizada a partir do aminoácido <strong>L-histidina</strong>, por ação da enzima <strong>histidina-descarboxilase (HDC)</strong>, que utiliza o <strong>piridoxal-fosfato (PLP, vitamina B6 ativa)</strong> como cofator. Essa é uma via de descarboxilação simples e direta, sem etapas intermediárias complexas — o que explica por que praticamente qualquer célula com HDC ativa (mastócitos, basófilos, células ECL, neurônios histaminérgicos) consegue gerar histamina rapidamente quando estimulada.</p>
+  </div>
+
+  <div class="flow">
+    <div class="flow-step t-teal">
+      <span class="n">I</span>
+      <p><strong>L-histidina</strong><br>aminoácido precursor, obtido da dieta e do pool celular</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step t-teal">
+      <span class="n">II</span>
+      <p><strong>Histidina-descarboxilase + PLP</strong><br>enzima catalisa a remoção do grupo carboxila</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step t-teal">
+      <span class="n">III</span>
+      <p><strong>Histamina</strong><br>armazenada em grânulos, pronta para liberação</p>
+    </div>
+  </div>
+
+  <h3 class="subhead t-teal">Armazenamento</h3>
+  <p>A histamina fica majoritariamente <strong>pré-formada dentro de grânulos secretórios de mastócitos e basófilos</strong>, complexada com proteoglicanos (heparina) que a mantêm inerte até o sinal de exocitose. Além dessas duas populações clássicas, também há síntese e liberação em <strong>neurônios histaminérgicos centrais</strong> (envolvidos em vigília e ciclo sono-vigília) e em <strong>células enterocromafins-like (ECL) gástricas</strong>, que usam histamina como sinal parácrino para estimular a secreção ácida via receptores H₂ nas células parietais.</p>
+
+  <div class="grid-4">
+    <div class="mini-card t-teal"><div class="label">Tecido-chave</div><p>Pele e mucosas</p></div>
+    <div class="mini-card t-teal"><div class="label">Tecido-chave</div><p>Vasos e músculo liso</p></div>
+    <div class="mini-card t-teal"><div class="label">Tecido-chave</div><p>Trato gastrointestinal</p></div>
+    <div class="mini-card t-teal"><div class="label">Tecido-chave</div><p>Sistema nervoso central</p></div>
+  </div>
+
+  <h3 class="subhead t-teal">Inativação: duas vias, dois territórios</h3>
+  <p>Diferente de neurotransmissores clássicos que são recaptados, a histamina livre é <strong>degradada enzimaticamente</strong> por duas vias que atuam em compartimentos distintos — esse detalhe importa clinicamente porque explica, por exemplo, por que alguns pacientes têm intolerância alimentar à histamina quando a via intestinal está prejudicada.</p>
+
+  <div class="grid-2">
+    <div class="card t-teal">
+      <h4><span class="kicker">Via intracelular</span>HNMT</h4>
+      <p>A <strong>histamina N-metiltransferase</strong> metila a histamina dentro da célula. É a via predominante em muitos tecidos, <strong>incluindo o sistema nervoso central</strong>, onde não há DAO relevante.</p>
+    </div>
+    <div class="card t-teal">
+      <h4><span class="kicker">Via extracelular</span>DAO</h4>
+      <p>A <strong>diamino-oxidase</strong> oxida a histamina fora da célula, sendo <strong>especialmente relevante no intestino e em tecidos periféricos</strong> — daí sua importância na histamina de origem alimentar.</p>
+    </div>
+  </div>
+
+  <div class="alert t-teal">
+    <div class="alert-title">Correlação clínica</div>
+    <p>Como a HNMT é a via dominante no SNC, fármacos que atravessam a barreira hematoencefálica encontram pouca depuração local de histamina — um dos motivos pelos quais o bloqueio central de H₁ (sedação) é tão pronunciado com anti-histamínicos lipofílicos de 1ª geração, tema que retomaremos na Seção 6.</p>
+  </div>
+
+  <!-- ============ SEÇÃO 2 ============ -->
+  <div class="section-head t-orange" id="sec2">
+    <span class="tag">02 · Imunologia</span>
+    <span class="line"></span>
+  </div>
+  <h2 style="font-size:34px; font-style:italic; margin-top:-8px;">A alergia imediata começa com a degranulação do mastócito</h2>
+  <p class="section-intro">O evento central da hipersensibilidade tipo I (mediada por IgE) é a liberação explosiva de histamina pré-formada. Entender esse gatilho é o que permite prever, à beira do leito, a velocidade e o tipo de sintoma que o paciente vai apresentar.</p>
+
+  <div class="flow">
+    <div class="flow-step t-orange">
+      <span class="n">1</span>
+      <p><strong>Sensibilização prévia</strong><br>IgE específica se liga ao receptor FcεRI na superfície do mastócito</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step t-orange">
+      <span class="n">2</span>
+      <p><strong>Reexposição ao alérgeno</strong><br>o alérgeno faz ligação cruzada (<em>cross-link</em>) entre moléculas de IgE adjacentes</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step t-orange">
+      <span class="n">3</span>
+      <p><strong>Ativação do FcεRI</strong><br>sinalização intracelular dispara a exocitose dos grânulos</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step t-orange">
+      <span class="n">4</span>
+      <p><strong>Degranulação</strong><br>histamina (e outros mediadores) despejada no interstício em segundos</p>
+    </div>
+  </div>
+
+  <div class="card t-orange">
+    <h4><span class="kicker">Janela temporal</span>Efeito em segundos a minutos</h4>
+    <p>Uma vez liberada, a histamina ativa receptores nas células vizinhas quase imediatamente, produzindo o quadro clássico da reação imediata: <strong>prurido</strong> (estimulação de nervos sensitivos), <strong>vasodilatação</strong> (eritema, calor), <strong>aumento da permeabilidade vascular</strong> (edema, pápula), <strong>secreção glandular aumentada</strong> (rinorreia, lacrimejamento) e <strong>contração de músculo liso</strong> (broncoconstrição, cólica).</p>
+  </div>
+
+  <div class="alert t-orange">
+    <div class="alert-title">Por que isso importa clinicamente</div>
+    <p>Essa velocidade é a razão pela qual reações IgE-mediadas (picada de inseto, alimento, fármaco) evoluem em minutos, não em horas. Reconhecer esse padrão temporal ajuda a diferenciar hipersensibilidade tipo I de outras reações adversas mais tardias.</p>
+  </div>
+
+  <!-- ============ SEÇÃO 3 ============ -->
+  <div class="section-head t-purple" id="sec3">
+    <span class="tag">03 · Farmacodinâmica</span>
+    <span class="line"></span>
+  </div>
+  <h2 style="font-size:34px; font-style:italic; margin-top:-8px;">Quatro receptores traduzem a histamina em respostas diferentes</h2>
+  <p class="section-intro">A histamina é uma molécula única, mas seus efeitos são plurais porque existem <strong>quatro subtipos de receptores</strong>, todos acoplados à proteína G, cada um com localização e via de sinalização próprias. Esse é o ponto mais cobrado em prova e o mais relevante na prática: sem saber qual receptor domina em cada tecido, não é possível prever o efeito de bloqueá-lo.</p>
+
+  <div class="receptor-grid">
+    <div class="receptor-box t-teal">
+      <div class="rname">H₁</div>
+      <div class="rg">Gq</div>
+      <div class="rloc">Endotélio, músculo liso, nervos sensitivos e SNC</div>
+      <div class="reff">Vasodilatação, permeabilidade, prurido, broncoconstrição, vigília</div>
+    </div>
+    <div class="receptor-box t-blue">
+      <div class="rname">H₂</div>
+      <div class="rg">Gs</div>
+      <div class="rloc">Células parietais gástricas, coração e células imunes</div>
+      <div class="reff">Secreção de ácido gástrico; efeitos cronotrópico/inotrópico</div>
+    </div>
+    <div class="receptor-box t-purple">
+      <div class="rname">H₃</div>
+      <div class="rg">Gi/o</div>
+      <div class="rloc">Predominantemente pré-sináptico no SNC</div>
+      <div class="reff">Autorreceptor/heterorreceptor: reduz liberação de histamina e outros neurotransmissores</div>
+    </div>
+    <div class="receptor-box t-orange">
+      <div class="rname">H₄</div>
+      <div class="rg">Gi/o</div>
+      <div class="rloc">Mastócitos, eosinófilos e outras células imunes</div>
+      <div class="reff">Quimiotaxia e modulação imune; sem uso antialérgico de rotina</div>
+    </div>
+  </div>
+
+  <div class="alert t-purple">
+    <div class="alert-title">Raciocínio para fixar</div>
+    <p>Pense assim: <strong>H₁</strong> é o receptor da "alergia visível" (pele, mucosas, vasos). <strong>H₂</strong> é o receptor do "estômago e do coração". <strong>H₃</strong> é o receptor "regulador central", que funciona como freio da própria histamina no SNC. <strong>H₄</strong> é o receptor "imunológico emergente", ainda sem antagonista consagrado na rotina clínica.</p>
+  </div>
+
+  <!-- ============ SEÇÃO 4 ============ -->
+  <div class="section-head t-blue" id="sec4">
+    <span class="tag">04 · Conceito farmacológico</span>
+    <span class="line"></span>
+  </div>
+  <h2 style="font-size:34px; font-style:italic; margin-top:-8px;">"Anti-histamínico" não é uma única classe farmacológica</h2>
+  <p class="section-intro">Se existem quatro receptores diferentes, a pergunta natural é: todo bloqueador de histamina serve para tratar alergia? <strong>Não.</strong> Na prática clínica, o termo "anti-histamínico" quase sempre se refere ao bloqueio de H₁ — usar essa palavra de forma genérica é um erro conceitual comum.</p>
+
+  <div class="grid-2">
+    <div class="card t-teal">
+      <h4><span class="kicker">Bloqueio H₁</span>Uso alergológico</h4>
+      <p>Indicado para <strong>rinite, conjuntivite e urticária</strong>. É o que o senso comum chama de "anti-histamínico" e o foco central deste resumo.</p>
+    </div>
+    <div class="card t-blue">
+      <h4><span class="kicker">Bloqueio H₂</span>Uso gastroenterológico</h4>
+      <p>Reduz a <strong>secreção ácida gástrica</strong> (ex.: ranitidina, famotidina). Não tem papel relevante no controle de sintomas alérgicos cutâneos ou respiratórios.</p>
+    </div>
+    <div class="card t-purple">
+      <h4><span class="kicker">Alvo H₃</span>Uso neurológico</h4>
+      <p>Alvo farmacológico central; o antagonista <strong>pitolisant</strong> é usado no tratamento da <strong>narcolepsia</strong>, aumentando a liberação de histamina e de outros neurotransmissores promotores de vigília.</p>
+    </div>
+    <div class="card t-orange">
+      <h4><span class="kicker">Alvo H₄</span>Uso imunológico (em desenvolvimento)</h4>
+      <p>Alvo de pesquisa em doenças inflamatórias e imunomediadas, mas <strong>ainda sem papel antialérgico de rotina</strong> na prática clínica atual.</p>
+    </div>
+  </div>
+
+  <!-- ============ SEÇÃO 5 ============ -->
+  <div class="section-head t-blue" id="sec5">
+    <span class="tag">05 · Mecanismo de ação</span>
+    <span class="line"></span>
+  </div>
+  <h2 style="font-size:34px; font-style:italic; margin-top:-8px;">Anti-H₁ não "destroem" histamina: estabilizam o receptor inativo</h2>
+  <p class="section-intro">Um erro conceitual frequente é imaginar que o anti-histamínico "neutraliza" ou "degrada" a histamina circulante. Na realidade, o mecanismo é de <strong>agonismo inverso</strong> sobre o receptor H₁, não de inativação da molécula de histamina.</p>
+
+  <div class="grid-2">
+    <div class="card t-orange">
+      <h4><span class="kicker">Situação basal / com histamina</span>Receptor na conformação ativa</h4>
+      <p>Na presença de histamina, o receptor H₁ assume a <strong>conformação ativa</strong> e sinaliza pela via <strong>Gq → PLC → IP₃ → Ca²⁺ intracelular</strong>, desencadeando os efeitos celulares já descritos (contração de músculo liso, aumento de permeabilidade vascular, ativação de terminações sensitivas).</p>
+    </div>
+    <div class="card t-blue">
+      <h4><span class="kicker">Com anti-H₁</span>Receptor estabilizado na conformação inativa</h4>
+      <p>O fármaco se liga ao mesmo receptor e <strong>favorece a conformação inativa</strong>, reduzindo tanto a <strong>atividade constitutiva</strong> do receptor (sinalização basal, mesmo sem histamina) quanto a resposta a uma eventual ligação de histamina.</p>
+    </div>
+  </div>
+
+  <div class="alert t-blue">
+    <div class="alert-title">Por que isso é chamado de "agonista inverso" e não "antagonista puro"</div>
+    <p>Um antagonista puro apenas ocupa o receptor e bloqueia a ligação do agonista, sem alterar a atividade basal. Já os anti-H₁ deslocam o equilíbrio conformacional do próprio receptor para o estado inativo — por isso reduzem inclusive a sinalização constitutiva, um comportamento farmacológico de agonista inverso. Esse conceito costuma aparecer em provas de farmacologia geral, cruzado com o tema anti-histamínicos.</p>
+  </div>
+
+  <!-- ============ SEÇÃO 6 ============ -->
+  <div class="section-head t-indigo" id="sec6">
+    <span class="tag">06 · Classificação</span>
+    <span class="line"></span>
+  </div>
+  <h2 style="font-size:34px; font-style:italic; margin-top:-8px;">A diferença entre gerações aparece principalmente no SNC</h2>
+  <p class="section-intro">Todos os anti-H₁ compartilham o mesmo mecanismo molecular (agonismo inverso em H₁). O que separa a 1ª e a 2ª geração é essencialmente <strong>farmacocinético</strong>: a capacidade de atravessar a barreira hematoencefálica e a seletividade sobre outros receptores.</p>
+
+  <div class="grid-2">
+    <div class="card t-purple">
+      <h4><span class="kicker">1ª geração</span>Lipofílica, ação central</h4>
+      <p>Cruza livremente a <strong>barreira hematoencefálica</strong> e, além do H₁, também bloqueia receptores <strong>muscarínicos, adrenérgicos e serotoninérgicos</strong> — daí seu perfil de efeitos adversos mais amplo (sedação, efeitos anticolinérgicos, hipotensão postural).</p>
+    </div>
+    <div class="card t-indigo">
+      <h4><span class="kicker">2ª geração</span>Periférica, menos sedativa</h4>
+      <p>Desenhada para ter <strong>ação predominantemente periférica</strong>, com menor penetração no SNC e maior seletividade por H₁. Mas atenção: <strong>"menos sedativo" não significa risco zero</strong> — a cetirizina, por exemplo, pode causar sonolência em parte dos pacientes.</p>
+    </div>
+  </div>
+
+  <h3 class="subhead t-purple">Primeira geração: usos pontuais, maior custo de segurança</h3>
+  <div class="card t-purple">
+    <h4><span class="kicker">Exemplos</span></h4>
+    <p>Prometazina, difenidramina, clorfeniramina, hidroxizina, dimenidrinato e cipro-heptadina.</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="mini-card t-purple">
+      <div class="label">Efeitos no SNC</div>
+      <p>Sonolência, prejuízo psicomotor, de atenção e de memória. Cuidado ao orientar o paciente sobre dirigir, estudar ou operar máquinas.</p>
+    </div>
+    <div class="mini-card t-purple">
+      <div class="label">Carga anticolinérgica</div>
+      <p>Boca seca, visão turva, retenção urinária, constipação e taquicardia — efeitos do bloqueio muscarínico associado.</p>
+    </div>
+    <div class="mini-card t-purple">
+      <div class="label">Idosos</div>
+      <p>Maior risco de confusão, delirium e quedas. Os <strong>critérios de Beers</strong> recomendam evitar essa classe na maioria das situações nesse grupo etário.</p>
+    </div>
+    <div class="mini-card t-purple">
+      <div class="label">Uso seletivo</div>
+      <p>Podem ter nicho em <strong>cinetose</strong> (dimenidrinato) ou náuseas, mas não são escolha de rotina para rinite ou urticária.</p>
+    </div>
+  </div>
+
+  <div class="alert t-purple">
+    <div class="alert-title">Ponto de segurança do paciente</div>
+    <p>Antes de prescrever um anti-H₁ de 1ª geração, avalie sempre: idade do paciente, necessidade de dirigir ou operar máquinas, uso concomitante de outros depressores do SNC e presença de comorbidades (glaucoma de ângulo fechado, hiperplasia prostática, arritmias) que contraindicam a carga anticolinérgica.</p>
+  </div>
+
+  <h3 class="subhead t-indigo">Segunda geração: a escolha depende do perfil do paciente</h3>
+  <table>
+    <thead>
+      <tr><th>Fármaco</th><th>Sedação</th><th>Ponto de atenção</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Loratadina / desloratadina</td><td>Baixa</td><td>Boa opção diurna; considerar interações e função hepática.</td></tr>
+      <tr><td>Cetirizina</td><td>Possível</td><td>Início rápido de ação; sonolência em parte dos pacientes; ajustar dose na disfunção renal.</td></tr>
+      <tr><td>Levocetirizina</td><td>Possível</td><td>Perfil semelhante à cetirizina; atenção à função renal.</td></tr>
+      <tr><td>Fexofenadina</td><td>Muito baixa</td><td>Tomar com água; sucos e antiácidos com Al/Mg reduzem a absorção.</td></tr>
+      <tr><td>Bilastina</td><td>Muito baixa</td><td>Alimentos e sucos podem reduzir a absorção; seguir orientação de bula.</td></tr>
+      <tr><td>Rupatadina</td><td>Baixa</td><td>Também antagoniza PAF; atenção a interações via CYP3A4.</td></tr>
+      <tr><td>Regra prática</td><td>Individual</td><td>Avaliar resposta clínica, comorbidades, função renal/hepática, interações medicamentosas e necessidade de dirigir.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============ SEÇÃO 7 ============ -->
+  <div class="section-head t-cyan" id="sec7">
+    <span class="tag">07 · Aplicabilidade clínica</span>
+    <span class="line"></span>
+  </div>
+  <h2 style="font-size:34px; font-style:italic; margin-top:-8px;">Anti-H₁ funcionam melhor quando a histamina domina o sintoma</h2>
+  <p class="section-intro">Saber quando o anti-H₁ é a ferramenta certa — e quando não é — evita tanto a subutilização quanto a prescrição inadequada em situações que exigem outra conduta.</p>
+
+  <div class="grid-2">
+    <div class="card t-cyan">
+      <h4><span class="kicker">Boa resposta esperada</span></h4>
+      <p>Prurido, pápula/eritema, espirros, rinorreia e sintomas oculares alérgicos — quadros em que a histamina é o mediador dominante.</p>
+    </div>
+    <div class="card t-amber">
+      <h4><span class="kicker">Resposta parcial</span></h4>
+      <p>Congestão nasal importante costuma responder mal ao anti-H₁ isolado; <strong>corticosteroide intranasal</strong> geralmente controla melhor esse sintoma específico.</p>
+    </div>
+  </div>
+
+  <div class="alert t-red">
+    <div class="alert-title">Limites que o estudante precisa memorizar</div>
+    <p><strong>Anti-H₁ não tratam a causa:</strong> não eliminam o alérgeno, não curam infecção viral e não substituem o controle ambiental quando indicado.</p>
+    <p><strong>Anti-H₁ não são broncodilatadores:</strong> broncoespasmo, edema de vias aéreas e choque exigem terapias específicas — nunca esperar resposta de um anti-H₁ nesses cenários.</p>
+  </div>
+
+  <div class="card t-cyan">
+    <h4><span class="kicker">Escolha da via de administração</span></h4>
+    <p><strong>Via oral</strong> para sintomas sistêmicos; <strong>via intranasal ou ocular</strong> pode oferecer ação local mais rápida, útil quando o sintoma predominante está concentrado em um único sítio.</p>
+  </div>
+
+  <!-- ============ SEÇÃO 8 ============ -->
+  <div class="section-head t-green" id="sec8">
+    <span class="tag">08 · Conduta · Rinite alérgica</span>
+    <span class="line"></span>
+  </div>
+  <h2 style="font-size:34px; font-style:italic; margin-top:-8px;">Rinite alérgica: segurança e padrão de sintomas orientam a escolha</h2>
+  <p class="section-intro">A conduta na rinite alérgica segue uma lógica escalonada, guiada pelo sintoma predominante e pela resposta ao tratamento inicial — um raciocínio clínico que deve ser verbalizado passo a passo durante o atendimento.</p>
+
+  <div class="flow">
+    <div class="flow-step t-green">
+      <span class="n">1</span>
+      <p><strong>Espirros, prurido e rinorreia</strong><br>anti-H₁ oral ou intranasal pode ser útil; preferir 2ª geração quando a via oral for escolhida</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step t-green">
+      <span class="n">2</span>
+      <p><strong>Congestão ou doença persistente</strong><br>corticosteroide intranasal tende a ser mais eficaz que anti-H₁ oral</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step t-green">
+      <span class="n">3</span>
+      <p><strong>Controle insuficiente</strong><br>combinação intranasal anti-H₁ + corticosteroide pode ser considerada conforme gravidade e disponibilidade</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step t-green">
+      <span class="n">4</span>
+      <p><strong>Decisão individual</strong><br>considerar idade, preferência, adesão, custo, sedação, comorbidades e técnica de uso</p>
+    </div>
+  </div>
+
+  <div class="alert t-green">
+    <div class="alert-title">Comunicação clínica com o paciente</div>
+    <p>Ao prescrever anti-H₁ para rinite, explique de forma clara que o corticosteroide intranasal é mais eficaz quando a congestão predomina — muitos pacientes têm a expectativa equivocada de que "remédio de alergia" (associado ao anti-histamínico) resolverá também o nariz entupido, o que gera baixa adesão quando o sintoma não melhora.</p>
+  </div>
+
+  <!-- ============ SEÇÃO 9 ============ -->
+  <div class="section-head t-amber" id="sec9">
+    <span class="tag">09 · Conduta · Urticária</span>
+    <span class="line"></span>
+  </div>
+  <h2 style="font-size:34px; font-style:italic; margin-top:-8px;">Urticária: anti-H₁ de 2ª geração é a primeira etapa</h2>
+  <p class="section-intro">O manejo da urticária segue um algoritmo escalonado bem definido, que deve ser conhecido em ordem — inclusive para orientar quando encaminhar o paciente a um especialista.</p>
+
+  <div class="flow">
+    <div class="flow-step t-amber">
+      <span class="n">1</span>
+      <p><strong>Dose-padrão diária</strong><br>anti-H₁ moderno de 2ª geração como tratamento sintomático inicial</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step t-amber">
+      <span class="n">2</span>
+      <p><strong>Controle insuficiente</strong><br>a diretriz permite aumentar gradualmente a dose até <strong>4×</strong>, sob supervisão — uso off-label</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step t-amber">
+      <span class="n">3</span>
+      <p><strong>Persistência apesar do aumento</strong><br>encaminhar/avaliar terapia adicional, como <strong>omalizumabe</strong>, conforme fenótipo e diretriz</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step t-red">
+      <span class="n">✕</span>
+      <p><strong>Evitar atalhos</strong><br>não combinar anti-H₁ aleatoriamente; não manter corticosteroide sistêmico por longo prazo</p>
+    </div>
+  </div>
+
+  <div class="alert t-amber">
+    <div class="alert-title">Erro frequente a evitar</div>
+    <p>É comum o estudante (ou o profissional iniciante) associar múltiplos anti-H₁ de forma empírica, ou prolongar corticosteroide sistêmico "só para garantir controle". Ambas as condutas fogem da diretriz: o caminho correto é escalonar a <strong>dose</strong> de um único anti-H₁ de 2ª geração antes de considerar terapias de segunda linha.</p>
+  </div>
+
+  <!-- ============ SEÇÃO 10 ============ -->
+  <div class="section-head t-red" id="sec10">
+    <span class="tag">10 · Emergência · Anafilaxia</span>
+    <span class="line"></span>
+  </div>
+  <h2 style="font-size:34px; font-style:italic; margin-top:-8px;">Na anafilaxia, anti-H₁ é adjuvante — adrenalina IM é primeira linha</h2>
+  <p class="section-intro">Este é o ponto de maior risco do tema inteiro, e o mais cobrado em avaliações práticas: reconhecer os limites do anti-histamínico diante de uma emergência que ameaça a vida.</p>
+
+  <div class="alert t-red">
+    <div class="alert-title">NÃO ATRASAR A ADRENALINA IM</div>
+    <p><strong>Sinais de alarme:</strong> comprometimento de vias aéreas, broncoespasmo, hipotensão, síncope ou envolvimento multissistêmico.</p>
+  </div>
+
+  <div class="card t-red">
+    <h4><span class="kicker">O que o anti-H₁ pode e não pode fazer</span></h4>
+    <p>O anti-H₁ <strong>pode aliviar prurido e urticária</strong>, componentes cutâneos da reação. Porém, <strong>não reverte</strong>:</p>
+    <ul>
+      <li>edema de vias aéreas</li>
+      <li>broncoespasmo</li>
+      <li>hipotensão ou choque</li>
+    </ul>
+  </div>
+
+  <h3 class="subhead t-red">Conduta prioritária</h3>
+  <div class="card t-red">
+    <h4><span class="kicker">Primeira linha, sem atraso</span>Adrenalina intramuscular</h4>
+    <p>Administrar <strong>adrenalina intramuscular na face anterolateral da coxa</strong>, associada a suporte e monitorização contínua — <strong>sem esperar o efeito do anti-H₁</strong>, que é lento demais e farmacologicamente incapaz de reverter os componentes hemodinâmico e respiratório da anafilaxia.</p>
+  </div>
+
+  <div class="alert t-red">
+    <div class="alert-title">Erro potencialmente fatal</div>
+    <p>Administrar apenas anti-histamínico (via oral ou mesmo parenteral) em um quadro de anafilaxia, na expectativa de que ele "resolva" a reação, é um erro grave. O anti-H₁ trata sintoma cutâneo; quem trata o choque distributivo, o edema de via aérea e o broncoespasmo é a <strong>adrenalina</strong>. Todo estudante deve automatizar essa priorização antes de qualquer plantão.</p>
+  </div>
+
+  <!-- ============ SEÇÃO 11 — SÍNTESE ============ -->
+  <div class="section-head t-blue" id="sec11">
+    <span class="tag">11 · Síntese clínica</span>
+    <span class="line"></span>
+  </div>
+  <h2 style="font-size:34px; font-style:italic; margin-top:-8px;">Erros frequentes e pontos-chave para fixação</h2>
+  <p class="section-intro">Consolidando o raciocínio de toda a aula em erros que devem ser ativamente evitados na prática e nas avaliações.</p>
+
+  <div class="grid-2">
+    <div class="card t-red">
+      <h4><span class="kicker">Erro conceitual</span>Achar que anti-H₁ "destrói" histamina</h4>
+      <p>O mecanismo é agonismo inverso sobre o receptor H₁ (estabilização da conformação inativa), não degradação da molécula de histamina circulante.</p>
+    </div>
+    <div class="card t-red">
+      <h4><span class="kicker">Erro de generalização</span>Tratar "anti-histamínico" como classe única</h4>
+      <p>H₁, H₂, H₃ e H₄ têm indicações completamente diferentes (alergia, secreção ácida, narcolepsia, alvo imunológico em pesquisa).</p>
+    </div>
+    <div class="card t-red">
+      <h4><span class="kicker">Erro de segurança</span>Prescrever 1ª geração em idosos sem critério</h4>
+      <p>Risco aumentado de confusão, delirium e quedas; critérios de Beers recomendam evitar na maioria das situações nesse grupo.</p>
+    </div>
+    <div class="card t-red">
+      <h4><span class="kicker">Erro de expectativa</span>Esperar que anti-H₁ resolva congestão nasal</h4>
+      <p>Congestão importante responde melhor a corticosteroide intranasal; o anti-H₁ tem eficácia parcial nesse sintoma específico.</p>
+    </div>
+    <div class="card t-red">
+      <h4><span class="kicker">Erro de posologia</span>Associar múltiplos anti-H₁ na urticária refratária</h4>
+      <p>A diretriz recomenda escalonar a dose de um único fármaco de 2ª geração (até 4×) antes de considerar terapia adicional.</p>
+    </div>
+    <div class="card t-red">
+      <h4><span class="kicker">Erro potencialmente fatal</span>Atrasar adrenalina na anafilaxia</h4>
+      <p>Anti-H₁ é adjuvante, não substitui a adrenalina IM diante de sinais de comprometimento de via aérea, broncoespasmo ou choque.</p>
+    </div>
+  </div>
+
+  <div class="alert t-blue">
+    <div class="alert-title">Checklist mental para a prática clínica</div>
+    <p>1. Identifique o sintoma predominante (cutâneo/mucoso vs. congestivo vs. sistêmico-grave).</p>
+    <p>2. Escolha a geração do anti-H₁ conforme o perfil do paciente (idade, atividade, comorbidades, necessidade de dirigir).</p>
+    <p>3. Reconheça precocemente sinais de gravidade que exigem adrenalina, não anti-histamínico.</p>
+    <p>4. Reavalie resposta terapêutica antes de escalonar ou trocar a conduta.</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="refs">
+    <div class="rtitle">Referências de base para aprofundamento</div>
+    Katzung, B. G. — <em>Farmacologia Básica e Clínica</em> (capítulo de histamina e anti-histamínicos).<br>
+    Goodman &amp; Gilman — <em>As Bases Farmacológicas da Terapêutica</em> (farmacologia dos receptores histaminérgicos).<br>
+    Diretrizes de sociedades de alergia e imunologia para rinite alérgica e urticária crônica.<br>
+    Protocolos de manejo de anafilaxia (adrenalina intramuscular como primeira linha).
+  </div>
+  Resumo elaborado a partir do material de aula — Fármacos Anti-histamínicos, LPF, 5ª fase.
+</footer>
+
+</body>
+</html>

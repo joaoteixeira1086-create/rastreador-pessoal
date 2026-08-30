@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LMF · Dor: Teorias, Neuroanatomia, Membro Fantasma e Cefaleias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root{
+  --bg:#0a0d12;
+  --bg-alt:#0d1117;
+  --panel:#12161e;
+  --card:#141920;
+  --card-hover:#171d26;
+  --border:#232a35;
+  --border-soft:#1a2029;
+  --text:#e7eaee;
+  --text-dim:#9aa5b3;
+  --text-faint:#5f6b7a;
+
+  --a1:#2dd4bf;   /* Aula 1 - Teorias da Dor (teal) */
+  --a1-glow: rgba(45,212,191,.12);
+  --a2:#a78bfa;   /* Aula 2 - Neuroanatomia/Sensibilização (violeta) */
+  --a2-glow: rgba(167,139,250,.12);
+  --a3:#f59e0b;   /* Aula 3 - Lesão Neural/Membro Fantasma (âmbar) */
+  --a3-glow: rgba(245,158,11,.12);
+  --a4:#fb7185;   /* Aula 4 - Cefaleias (rosa) */
+  --a4-glow: rgba(251,113,133,.12);
+  --a5:#60a5fa;   /* Tabelas comparativas (azul) */
+  --a5-glow: rgba(96,165,250,.12);
+  --a6:#34d399;   /* Revisão interativa (verde) */
+  --a6-glow: rgba(52,211,153,.12);
+
+  --danger:#f87171;
+  --ok:#34d399;
+
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -5%, var(--a1-glow), transparent 60%),
+    radial-gradient(ellipse 900px 500px at 85% 15%, var(--a2-glow), transparent 60%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+
+::selection{background:var(--a2); color:#0a0d12;}
+
+a{color:inherit;}
+
+img{max-width:100%;}
+
+/* ============================================================
+   LAYOUT SHELL
+   ============================================================ */
+.wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;
+  padding:86px 0 54px;
+  border-bottom:1px solid var(--border-soft);
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(var(--border-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 700px 400px at 20% 0%, black, transparent 70%);
+  opacity:.5;
+  pointer-events:none;
+}
+.hero-eyebrow{
+  font-family:var(--mono);
+  font-size:12.5px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--a1);
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:22px;
+}
+.hero-eyebrow::before{content:"§"; font-family:var(--serif); font-size:16px;}
+.hero h1{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:clamp(2.4rem, 5vw, 3.85rem);
+  line-height:1.05;
+  margin:0 0 20px;
+  letter-spacing:-.01em;
+  background:linear-gradient(100deg, #fff 30%, var(--text-dim) 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero h1 em{font-style:italic; color:var(--a1); -webkit-text-fill-color:var(--a1);}
+.hero p.lead{
+  font-size:1.08rem; color:var(--text-dim); max-width:640px; margin:0 0 30px;
+}
+.hero-meta{
+  display:flex; flex-wrap:wrap; gap:10px;
+}
+.pill{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.03em;
+  padding:6px 12px; border-radius:100px;
+  border:1px solid var(--border);
+  color:var(--text-dim);
+  background:var(--panel);
+}
+
+/* ---------- STICKY NAV ---------- */
+.topnav{
+  position:sticky; top:0; z-index:50;
+  background:rgba(10,13,18,.86);
+  backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid var(--border-soft);
+}
+.topnav-inner{
+  max-width:1180px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; gap:4px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.topnav-inner::-webkit-scrollbar{display:none;}
+.topnav a{
+  flex:0 0 auto;
+  font-family:var(--mono); font-size:12px; letter-spacing:.04em;
+  text-decoration:none; color:var(--text-faint);
+  padding:14px 14px; border-bottom:2px solid transparent;
+  white-space:nowrap;
+  transition:color .15s, border-color .15s;
+}
+.topnav a:hover{color:var(--text);}
+.topnav a.nav-a1:hover, .topnav a.nav-a1.active{color:var(--a1); border-color:var(--a1);}
+.topnav a.nav-a2:hover, .topnav a.nav-a2.active{color:var(--a2); border-color:var(--a2);}
+.topnav a.nav-a3:hover, .topnav a.nav-a3.active{color:var(--a3); border-color:var(--a3);}
+.topnav a.nav-a4:hover, .topnav a.nav-a4.active{color:var(--a4); border-color:var(--a4);}
+.topnav a.nav-a5:hover, .topnav a.nav-a5.active{color:var(--a5); border-color:var(--a5);}
+.topnav a.nav-a6:hover, .topnav a.nav-a6.active{color:var(--a6); border-color:var(--a6);}
+
+/* ============================================================
+   SECTION HEADERS  (tag + hr)
+   ============================================================ */
+.section-head{
+  display:flex; align-items:center; gap:16px;
+  margin:0 0 30px;
+}
+.section-head .tag{
+  flex:0 0 auto;
+  font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+  padding:7px 14px;
+  border:1px solid var(--accent, var(--a1));
+  color:var(--accent, var(--a1));
+  border-radius:3px;
+  background:color-mix(in srgb, var(--accent, var(--a1)) 10%, transparent);
+}
+.section-head hr{
+  flex:1 1 auto; border:none; height:1px;
+  background:linear-gradient(90deg, var(--border) 0%, transparent 100%);
+  margin:0;
+}
+.section-head h2{
+  font-family:var(--serif); font-weight:600; font-size:2.1rem; margin:0;
+  white-space:nowrap;
+}
+
+.subhead{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--accent, var(--a1)); margin:0 0 8px; display:flex; align-items:center; gap:8px;
+}
+.subhead::before{content:"›"; font-size:14px;}
+
+h3.topic-title{
+  font-family:var(--serif); font-weight:600; font-size:1.5rem; margin:0 0 4px; color:#fff;
+}
+h4.mini-title{
+  font-family:var(--sans); font-weight:600; font-size:.92rem; letter-spacing:.02em;
+  margin:18px 0 8px; color:var(--text);
+}
+
+/* ============================================================
+   AULA (topic) SECTIONS
+   ============================================================ */
+.aula{padding:72px 0; border-bottom:1px solid var(--border-soft);}
+.aula-1{--accent:var(--a1);}
+.aula-2{--accent:var(--a2);}
+.aula-3{--accent:var(--a3);}
+.aula-4{--accent:var(--a4);}
+.tabelas-section{--accent:var(--a5);}
+.revisao-section{--accent:var(--a6);}
+
+.aula-intro{
+  color:var(--text-dim); max-width:760px; margin:-14px 0 34px; font-size:.98rem;
+}
+
+/* ---------- CARD GRID ---------- */
+.grid{display:grid; gap:18px; margin-bottom:14px;}
+.grid-2{grid-template-columns:repeat(2, 1fr);}
+.grid-3{grid-template-columns:repeat(3, 1fr);}
+@media(max-width:860px){.grid-2, .grid-3{grid-template-columns:1fr;}}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-top:3px solid var(--accent, var(--a1));
+  border-radius:6px;
+  padding:22px 24px;
+  transition:background .15s, transform .15s;
+}
+.card:hover{background:var(--card-hover);}
+.card.full{grid-column:1 / -1;}
+
+.card p{margin:0 0 10px; color:var(--text-dim); font-size:.95rem;}
+.card p:last-child{margin-bottom:0;}
+.card ul, .card ol{margin:8px 0 10px; padding-left:20px; color:var(--text-dim); font-size:.95rem;}
+.card li{margin-bottom:5px;}
+.card li b, .card li strong, .card p b, .card p strong{color:var(--text); font-weight:600;}
+.card strong.pos{color:var(--accent, var(--a1));}
+
+/* ---------- IMPORTANTE badge ---------- */
+.badge-imp{
+  display:inline-flex; align-items:center; gap:5px;
+  font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+  color:#0a0d12; background:var(--accent, var(--a1));
+  padding:3px 8px; border-radius:3px; font-weight:700;
+  vertical-align:middle; margin-left:8px;
+}
+
+/* ---------- deep/important dossier card ---------- */
+.dossier{
+  border:1px solid var(--border);
+  border-top:3px solid var(--accent, var(--a1));
+  border-radius:8px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent, var(--a1)) 6%, var(--card)) 0%, var(--card) 220px);
+  padding:30px 30px 26px;
+  margin:0 0 22px;
+}
+.dossier-head{display:flex; align-items:baseline; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:6px;}
+.dossier-head h3{
+  font-family:var(--serif); font-weight:700; font-size:1.9rem; margin:0; color:#fff;
+}
+.dossier-sub{color:var(--text-dim); font-size:.95rem; margin:0 0 20px;}
+.dossier .cols{display:grid; grid-template-columns:1fr 1fr; gap:26px;}
+@media(max-width:860px){.dossier .cols{grid-template-columns:1fr;}}
+
+/* ---------- outline alert ---------- */
+.alert{
+  border:1px solid var(--accent, var(--a1));
+  background:transparent;
+  border-radius:6px;
+  padding:16px 18px;
+  margin:14px 0;
+  font-size:.92rem;
+  color:var(--text-dim);
+}
+.alert-head{
+  font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--accent, var(--a1)); margin-bottom:6px; display:flex; align-items:center; gap:7px; font-weight:600;
+}
+.alert.danger{border-color:var(--danger);}
+.alert.danger .alert-head{color:var(--danger);}
+.alert.ok{border-color:var(--ok);}
+.alert.ok .alert-head{color:var(--ok);}
+
+/* ---------- flow / sequence chips ---------- */
+.flow{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+  margin:14px 0;
+}
+.flow .chip{
+  font-family:var(--mono); font-size:12px;
+  border:1px solid var(--border); border-radius:5px;
+  padding:8px 12px; background:var(--panel); color:var(--text);
+}
+.flow .arrow{color:var(--accent, var(--a1)); font-size:14px;}
+
+/* ---------- simple 2-col compare block ---------- */
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0;}
+@media(max-width:700px){.duo{grid-template-columns:1fr;}}
+.duo>div{
+  border:1px solid var(--border); border-top:3px solid var(--accent, var(--a1));
+  border-radius:6px; padding:16px 18px; background:var(--panel);
+}
+.duo h5{margin:0 0 8px; font-family:var(--sans); font-size:.85rem; letter-spacing:.03em; color:var(--accent, var(--a1)); text-transform:uppercase; font-family:var(--mono);}
+.duo ul{margin:0; padding-left:18px; font-size:.9rem; color:var(--text-dim);}
+.duo li{margin-bottom:4px;}
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+.table-wrap{
+  overflow-x:auto; border:1px solid var(--border); border-radius:8px;
+  margin:16px 0 26px;
+}
+table{width:100%; border-collapse:collapse; font-size:.9rem; min-width:560px;}
+thead th{
+  font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+  text-align:left; color:var(--accent, var(--a5));
+  background:color-mix(in srgb, var(--accent, var(--a5)) 9%, var(--panel));
+  padding:13px 16px; border-bottom:1px solid var(--border);
+  white-space:nowrap;
+}
+tbody td{
+  padding:12px 16px; border-bottom:1px solid var(--border-soft); color:var(--text-dim); vertical-align:top;
+}
+tbody td:first-child{color:var(--text); font-weight:600;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:var(--card-hover);}
+
+.table-caption{
+  font-family:var(--mono); font-size:11.5px; color:var(--text-faint); margin:-14px 0 14px; letter-spacing:.03em;
+}
+
+/* ============================================================
+   INTERACTIVE REVIEW
+   ============================================================ */
+.review-tabs{display:flex; gap:8px; margin-bottom:26px; flex-wrap:wrap;}
+.review-tab-btn{
+  font-family:var(--mono); font-size:12.5px; letter-spacing:.04em;
+  background:var(--panel); border:1px solid var(--border); color:var(--text-dim);
+  padding:10px 18px; border-radius:100px; cursor:pointer; transition:all .15s;
+}
+.review-tab-btn:hover{color:var(--text); border-color:var(--accent, var(--a6));}
+.review-tab-btn.active{
+  background:var(--accent, var(--a6)); color:#0a0d12; border-color:var(--accent, var(--a6)); font-weight:600;
+}
+.review-panel{display:none;}
+.review-panel.active{display:block;}
+
+/* --- flashcards --- */
+.flash-shell{max-width:640px; margin:0 auto;}
+.flash-counter{
+  text-align:center; font-family:var(--mono); font-size:12px; color:var(--text-faint); margin-bottom:14px;
+}
+.flashcard{
+  perspective:1400px; height:280px; cursor:pointer; margin-bottom:20px;
+}
+.flashcard-inner{
+  position:relative; width:100%; height:100%;
+  transform-style:preserve-3d; transition:transform .5s cubic-bezier(.4,.2,.2,1);
+}
+.flashcard.flipped .flashcard-inner{transform:rotateY(180deg);}
+.flash-face{
+  position:absolute; inset:0; backface-visibility:hidden;
+  border-radius:10px; border:1px solid var(--border); border-top:3px solid var(--a6);
+  background:var(--card);
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  padding:34px; flex-direction:column; gap:10px;
+}
+.flash-face.back{transform:rotateY(180deg); border-top-color:var(--a2); background:linear-gradient(180deg, color-mix(in srgb, var(--a2) 8%, var(--card)), var(--card) 200px);}
+.flash-face .eyebrow{font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint);}
+.flash-face .fq{font-family:var(--serif); font-size:1.55rem; line-height:1.3; color:#fff; font-weight:600;}
+.flash-face .fa{font-size:.95rem; color:var(--text-dim); line-height:1.55;}
+.flash-hint{text-align:center; font-family:var(--mono); font-size:11px; color:var(--text-faint); margin-bottom:22px;}
+.flash-nav{display:flex; justify-content:center; gap:12px;}
+.flash-btn{
+  font-family:var(--mono); font-size:12.5px; background:var(--panel); border:1px solid var(--border);
+  color:var(--text); padding:10px 20px; border-radius:6px; cursor:pointer; transition:all .15s;
+}
+.flash-btn:hover{border-color:var(--a6); color:var(--a6);}
+
+/* --- quiz --- */
+.quiz-shell{max-width:680px; margin:0 auto;}
+.quiz-progress{
+  display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;
+  font-family:var(--mono); font-size:12px; color:var(--text-faint);
+}
+.quiz-progress-bar{height:3px; background:var(--border); border-radius:3px; flex:1; margin:0 14px; overflow:hidden;}
+.quiz-progress-bar span{display:block; height:100%; background:var(--a6); width:0%; transition:width .3s;}
+.quiz-card{
+  border:1px solid var(--border); border-top:3px solid var(--a6); border-radius:10px;
+  background:var(--card); padding:28px 28px 22px;
+}
+.quiz-q{font-family:var(--serif); font-size:1.35rem; font-weight:600; color:#fff; margin:0 0 20px;}
+.quiz-opt{
+  display:block; width:100%; text-align:left; background:var(--panel); border:1px solid var(--border);
+  color:var(--text); padding:13px 16px; border-radius:6px; margin-bottom:10px; cursor:pointer;
+  font-size:.93rem; font-family:var(--sans); transition:all .12s;
+}
+.quiz-opt:hover:not(:disabled){border-color:var(--a6); background:var(--card-hover);}
+.quiz-opt:disabled{cursor:default;}
+.quiz-opt.correct{border-color:var(--ok); background:color-mix(in srgb, var(--ok) 14%, var(--panel)); color:#fff;}
+.quiz-opt.incorrect{border-color:var(--danger); background:color-mix(in srgb, var(--danger) 14%, var(--panel)); color:#fff;}
+.quiz-feedback{
+  margin-top:14px; padding:14px 16px; border-radius:6px; font-size:.9rem; line-height:1.55;
+  border:1px solid var(--border); background:var(--panel); color:var(--text-dim); display:none;
+}
+.quiz-feedback.show{display:block;}
+.quiz-feedback b{color:var(--text);}
+.quiz-footer{display:flex; justify-content:space-between; align-items:center; margin-top:20px;}
+.quiz-score{
+  text-align:center; padding:50px 20px;
+}
+.quiz-score .big{font-family:var(--serif); font-size:3.4rem; color:var(--a6); font-weight:700;}
+.quiz-score p{color:var(--text-dim);}
+
+/* --- drag order --- */
+.order-shell{max-width:640px; margin:0 auto;}
+.order-select{display:flex; gap:8px; margin-bottom:20px; justify-content:center; flex-wrap:wrap;}
+.order-select button{
+  font-family:var(--mono); font-size:11.5px; background:var(--panel); border:1px solid var(--border);
+  color:var(--text-dim); padding:8px 14px; border-radius:100px; cursor:pointer;
+}
+.order-select button.active{background:var(--a2); color:#0a0d12; border-color:var(--a2); font-weight:600;}
+.order-instructions{text-align:center; color:var(--text-faint); font-family:var(--mono); font-size:11.5px; margin-bottom:18px;}
+.order-list{list-style:none; margin:0 0 18px; padding:0; display:flex; flex-direction:column; gap:10px;}
+.order-item{
+  display:flex; align-items:center; gap:14px;
+  background:var(--card); border:1px solid var(--border); border-left:3px solid var(--text-faint);
+  border-radius:6px; padding:14px 16px; cursor:grab; font-size:.92rem; color:var(--text);
+  transition:background .15s, border-color .15s;
+  user-select:none;
+}
+.order-item:active{cursor:grabbing;}
+.order-item .num{
+  font-family:var(--mono); font-size:12px; color:var(--text-faint); width:20px; flex:0 0 auto;
+}
+.order-item.dragging{opacity:.4;}
+.order-item.correct{border-left-color:var(--ok); background:color-mix(in srgb, var(--ok) 10%, var(--card));}
+.order-item.incorrect{border-left-color:var(--danger); background:color-mix(in srgb, var(--danger) 10%, var(--card));}
+.order-actions{display:flex; gap:10px; justify-content:center;}
+.order-btn{
+  font-family:var(--mono); font-size:12.5px; background:var(--panel); border:1px solid var(--border);
+  color:var(--text); padding:10px 20px; border-radius:6px; cursor:pointer;
+}
+.order-btn:hover{border-color:var(--a2); color:var(--a2);}
+.order-result{text-align:center; margin-top:16px; font-family:var(--mono); font-size:12.5px; color:var(--text-faint); min-height:18px;}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{
+  padding:44px 0 140px; text-align:center; color:var(--text-faint); font-size:.85rem;
+  font-family:var(--mono);
+}
+footer .l1{margin-bottom:6px;}
+
+/* ============================================================
+   EDIT TOOLBAR + BANNER
+   ============================================================ */
+.edit-toolbar{
+  position:fixed; bottom:22px; right:22px; z-index:200;
+  display:flex; gap:8px; align-items:center;
+  background:rgba(18,22,30,.92); backdrop-filter:blur(10px);
+  border:1px solid var(--border); border-radius:100px; padding:8px;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+.edit-toolbar button{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.02em;
+  border:none; background:transparent; color:var(--text-dim);
+  padding:9px 14px; border-radius:100px; cursor:pointer; display:flex; align-items:center; gap:6px;
+  transition:all .15s; white-space:nowrap;
+}
+.edit-toolbar button:hover{background:var(--panel); color:var(--text);}
+.edit-toolbar button.on{background:var(--ok); color:#0a0d12; font-weight:600;}
+.edit-toolbar button .dot{width:6px; height:6px; border-radius:50%; background:currentColor; opacity:.7;}
+.edit-toolbar .sep{width:1px; height:20px; background:var(--border);}
+
+.save-toast{
+  position:fixed; bottom:78px; right:22px; z-index:199;
+  font-family:var(--mono); font-size:11.5px; color:var(--ok);
+  background:rgba(18,22,30,.92); border:1px solid var(--ok); padding:8px 14px; border-radius:6px;
+  opacity:0; transform:translateY(6px); transition:all .25s; pointer-events:none;
+}
+.save-toast.show{opacity:1; transform:translateY(0);}
+
+.env-banner{
+  max-width:1180px; margin:18px auto 0; padding:0 28px;
+}
+.env-banner-inner{
+  border:1px solid var(--danger); border-radius:8px; padding:14px 18px;
+  font-size:.87rem; color:var(--text-dim); display:none;
+  font-family:var(--sans);
+}
+.env-banner-inner.show{display:block;}
+.env-banner-inner b{color:var(--danger);}
+
+[contenteditable="true"]{
+  outline:1px dashed color-mix(in srgb, var(--a6) 50%, transparent);
+  outline-offset:3px; border-radius:3px;
+  cursor:text;
+}
+[contenteditable="true"]:focus{outline:1px solid var(--a6); background:color-mix(in srgb, var(--a6) 6%, transparent);}
+body.editing .card, body.editing .dossier, body.editing td, body.editing th{
+  box-shadow:none;
+}
+body.editing .hero-eyebrow::after{
+  content:"— MODO DE EDIÇÃO ATIVO"; font-family:var(--mono); color:var(--a6); margin-left:4px;
+}
+
+@media(max-width:640px){
+  .hero{padding:60px 0 40px;}
+  .aula{padding:52px 0;}
+  .dossier{padding:22px 18px;}
+  .section-head h2{font-size:1.6rem;}
+  .edit-toolbar{left:14px; right:14px; justify-content:center; flex-wrap:wrap;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-eyebrow">LMF · Laboratório Morfofuncional — Neurologia da Dor</div>
+    <h1>Dor: da <em>nocicepção</em><br>à experiência clínica</h1>
+    <p class="lead">Guia integrado de Aulas 1–4: teorias da dor, neuroanatomia e sensibilização, lesão neural &amp; dor do membro fantasma, e cefaleias primárias. Tópicos marcados <span class="badge-imp" style="background:var(--a3)">Importante</span> recebem tratamento aprofundado.</p>
+    <div class="hero-meta">
+      <span class="pill">Guyton &amp; Hall · Aires</span>
+      <span class="pill">Robbins &amp; Cotran</span>
+      <span class="pill">Porto · Bates</span>
+      <span class="pill">ICHD-3</span>
+      <span class="pill">4 aulas integradas</span>
+    </div>
+  </div>
+</header>
+
+<nav class="topnav">
+  <div class="topnav-inner" id="topnavInner">
+    <a href="#aula1" class="nav-a1">01 · Teorias da Dor</a>
+    <a href="#aula2" class="nav-a2">02 · Neuroanatomia &amp; Sensibilização</a>
+    <a href="#aula3" class="nav-a3">03 · Lesão Neural &amp; Membro Fantasma</a>
+    <a href="#aula4" class="nav-a4">04 · Cefaleias</a>
+    <a href="#tabelas" class="nav-a5">Tabelas Comparativas</a>
+    <a href="#revisao" class="nav-a6">Revisão Interativa</a>
+  </div>
+</nav>
+
+<div class="env-banner"><div class="env-banner-inner" id="envBanner"></div></div>
+
+<main>
+
+<section class="aula aula-1" id="aula1">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Aula 01</span><hr>
+      <h2>Teorias da Dor</h2>
+    </div>
+    <p class="aula-intro">Panorama introdutório dos conceitos fundamentais que sustentam o estudo da dor: da diferença entre nocicepção e dor até os mecanismos de controle segmentar e descendente. A <b style="color:var(--text)">Teoria dos Portões</b> é aprofundada por ser o modelo histórico que ainda hoje explica intervenções analgésicas de uso clínico.</p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <h3 class="topic-title">Nocicepção × Dor</h3>
+        <p><b>Nocicepção</b> é o processo neurofisiológico de detecção e codificação de estímulos potencialmente lesivos pelos nociceptores — um evento sensorial objetivo.</p>
+        <p><b>Dor</b> é a experiência sensorial e emocional desagradável associada a lesão tecidual real ou potencial (definição IASP) — um evento subjetivo, construído pelo encéfalo.</p>
+        <p>Pode haver nocicepção sem dor (ex.: sob anestesia) e dor sem nocicepção periférica ativa (dor neuropática ou nociplástica).</p>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">Processos da Nocicepção</h3>
+        <div class="flow">
+          <span class="chip">Estímulo nóxico</span><span class="arrow">→</span>
+          <span class="chip">Transdução</span><span class="arrow">→</span>
+          <span class="chip">Transmissão</span><span class="arrow">→</span>
+          <span class="chip">Modulação</span><span class="arrow">→</span>
+          <span class="chip">Percepção</span>
+        </div>
+        <p><b>Transdução:</b> conversão do estímulo mecânico, térmico ou químico em potencial de receptor no terminal nociceptivo.</p>
+        <p><b>Transmissão:</b> condução do impulso pelas fibras Aδ/C até o corno dorsal e, daí, pelos tratos ascendentes ao encéfalo.</p>
+        <p><b>Modulação:</b> amplificação ou supressão do sinal em qualquer nível da via, sobretudo no corno dorsal medular.</p>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">Componentes da Dor</h3>
+        <ul>
+          <li><b>Sensorial-discriminativo:</b> localização, intensidade e qualidade — via lateral, córtex S1/S2.</li>
+          <li><b>Afetivo-emocional:</b> sofrimento e desagrado — via medial, cíngulo anterior, ínsula.</li>
+          <li><b>Resposta visceral/autonômica:</b> taquicardia, sudorese, náusea, por conexões com tronco e hipotálamo.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">Dor Aguda × Dor Crônica</h3>
+        <ul>
+          <li><b>Aguda:</b> função de alarme biológico; proporcional à lesão; resolve com a cicatrização tecidual (tipicamente &lt; 3 meses).</li>
+          <li><b>Crônica:</b> persiste além do tempo esperado de reparo (&gt; 3 meses); perde a função protetora; associa-se a sensibilização central e repercussões psicossociais.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">Localização da Dor</h3>
+        <ul>
+          <li><b>Periférica:</b> origem em tecidos superficiais ou profundos.</li>
+          <li><b>Central:</b> gerada por lesão ou disfunção do próprio SNC.</li>
+          <li><b>Somática:</b> pele, músculos, articulações — bem localizada.</li>
+          <li><b>Visceral:</b> órgãos internos — difusa, mal localizada, frequentemente referida.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">Vias da Dor</h3>
+        <p><b>Via ascendente:</b> conduz a informação nociceptiva da periferia até o córtex (trato espinotalâmico e feixes associados).</p>
+        <p><b>Via descendente:</b> origina-se em estruturas encefálicas (córtex, hipotálamo, tronco) e modula — inibindo ou facilitando — a transmissão no corno dorsal.</p>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">Fibras Aδ e C</h3>
+        <ul>
+          <li><b>Aδ</b> — mielínicas finas, condução rápida (5–30 m/s): <b class="pos">dor rápida</b>, em pontada, bem localizada ("primeira dor").</li>
+          <li><b>C</b> — amielínicas, condução lenta (0,5–2 m/s): <b class="pos">dor lenta</b>, em queimação, difusa ("segunda dor").</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">Controle Descendente da Dor</h3>
+        <ul>
+          <li><b>Inibição:</b> eixo córtex–PAG–RVM–corno dorsal, com opioides endógenos, noradrenalina e serotonina reduzindo a transmissão nociceptiva.</li>
+          <li><b>Facilitação:</b> as mesmas estruturas (via células "ON" da RVM) podem amplificar a dor, sobretudo em estados de cronificação.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">Controle da Dor — Visão Geral</h3>
+        <p>Integra modulação segmentar (portões), controle descendente, opioides endógenos e estratégias farmacológicas e não farmacológicas — a base racional da analgesia multimodal.</p>
+      </div>
+    </div>
+
+    <!-- ===== DOSSIÊ APROFUNDADO: TEORIA DOS PORTÕES ===== -->
+    <div class="dossier">
+      <div class="dossier-head">
+        <h3>Teoria dos Portões da Dor <span class="badge-imp">Aprofundado</span></h3>
+      </div>
+      <p class="dossier-sub">Melzack &amp; Wall, 1965 — o modelo que explica por que "esfregar onde dói" alivia a dor, e a base neurofisiológica do TENS.</p>
+
+      <p>A teoria propõe a existência de um <b style="color:var(--text)">"portão" neural no corno dorsal da medula</b>, especificamente na <b style="color:var(--text)">substância gelatinosa (lâmina II de Rexed)</b>, capaz de abrir ou fechar a passagem do estímulo nociceptivo antes que ele alcance os neurônios de projeção (células T, lâmina V) rumo ao encéfalo.</p>
+
+      <div class="cols">
+        <div>
+          <h4 class="mini-title">Os três atores do circuito</h4>
+          <ul>
+            <li><b>Fibras aferentes grossas e mielinizadas (Aβ)</b> — tato, pressão, vibração. Conduzem rapidamente e <b>excitam</b> os interneurônios inibitórios da substância gelatinosa.</li>
+            <li><b>Fibras aferentes finas (Aδ e C)</b> — nociceptivas. Conduzem o estímulo doloroso e <b>inibem</b> os interneurônios inibitórios da substância gelatinosa.</li>
+            <li><b>Interneurônio inibitório (substância gelatinosa)</b> — funciona como o próprio "portão", pré-sinapticamente inibindo o neurônio de projeção (célula T).</li>
+          </ul>
+          <h4 class="mini-title">Controle central disparador</h4>
+          <p style="color:var(--text-dim); font-size:.92rem;">Melzack &amp; Wall também descreveram um <b style="color:var(--text)">"central control trigger"</b>: vias descendentes do encéfalo (atenção, ansiedade, expectativa, memória) modulam diretamente o portão medular — a base neurofisiológica de como fatores cognitivo-emocionais alteram a percepção dolorosa.</p>
+        </div>
+        <div>
+          <div class="duo" style="margin-top:0;">
+            <div>
+              <h5>Portão fechado (↓ dor)</h5>
+              <ul>
+                <li>Predomínio de estímulo em fibras Aβ</li>
+                <li>Interneurônio inibitório ativado</li>
+                <li>Célula T inibida → ↓ transmissão ascendente</li>
+                <li>Ex.: esfregar a área, TENS, massagem, acupuntura</li>
+              </ul>
+            </div>
+            <div>
+              <h5>Portão aberto (↑ dor)</h5>
+              <ul>
+                <li>Predomínio de estímulo em fibras Aδ/C</li>
+                <li>Interneurônio inibitório suprimido</li>
+                <li>Célula T desinibida → ↑ transmissão ascendente</li>
+                <li>Ex.: lesão tecidual intensa, inflamação, ausência de estímulo tátil concomitante</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert">
+        <div class="alert-head">◆ Aplicação clínica</div>
+        Todo o racional da <b style="color:var(--text)">estimulação elétrica nervosa transcutânea (TENS)</b> e da <b style="color:var(--text)">estimulação medular</b> para dor crônica deriva diretamente deste modelo: ativar seletivamente fibras Aβ grossas para "fechar o portão" e suprimir a transmissão nociceptiva no próprio corno dorsal, sem necessidade de opioides sistêmicos.
+      </div>
+
+      <div class="alert danger">
+        <div class="alert-head">◆ Limite do modelo</div>
+        A teoria explica bem a modulação <i>aguda e segmentar</i> da dor, mas não contempla fenômenos de plasticidade sináptica (wind-up, potenciação de longa duração/LTP, receptores NMDA) responsáveis pela cronificação e pela sensibilização central — aprofundados na <a href="#aula2" style="color:var(--accent); text-decoration:underline;">Aula 2</a>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="aula aula-2" id="aula2">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Aula 02</span><hr>
+      <h2>Neuroanatomia &amp; Sensibilização</h2>
+    </div>
+    <p class="aula-intro">A espinha dorsal mecanicista do módulo: como a dor é classificada, o trajeto anatômico do estímulo nociceptivo da periferia ao córtex, e os fenômenos de sensibilização que explicam a transição de dor aguda para dor crônica.</p>
+
+    <div class="subhead">Classificação mecanicista da dor</div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 class="topic-title">Componentes da experiência dolorosa</h3>
+        <p>O modelo triádico de Melzack &amp; Casey amplia os componentes vistos na Aula 1:</p>
+        <ul>
+          <li><b>Sensorial-discriminativo</b> — localização, intensidade, qualidade.</li>
+          <li><b>Afetivo-motivacional</b> — desagrado, urgência de fuga/proteção.</li>
+          <li><b>Cognitivo-avaliativo</b> — significado atribuído, expectativas, memória prévia de dor.</li>
+        </ul>
+        <p>Esses três componentes, processados em paralelo por redes distribuídas, fundamentam o conceito de <b>neuromatriz</b> (abaixo).</p>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">Dor Neuropática</h3>
+        <p>Dor causada por <b>lesão ou doença que acomete diretamente o sistema somatossensorial</b> (e não apenas o ativa, como na dor nociceptiva).</p>
+        <p>Classificação por grau de certeza diagnóstica:</p>
+        <ul>
+          <li><b>Possível</b> — história compatível, sem confirmação por exame.</li>
+          <li><b>Provável</b> — achados sensitivos no exame físico compatíveis com o território de uma lesão neuroanatomicamente plausível.</li>
+          <li><b>Definida</b> — teste diagnóstico confirmatório (eletroneuromiografia, neuroimagem, biópsia de pele).</li>
+        </ul>
+      </div>
+
+      <div class="card full">
+        <h3 class="topic-title">Dor Referida × Irradiada × Miofascial</h3>
+        <div class="duo" style="margin-top:8px;">
+          <div>
+            <h5>Referida</h5>
+            <ul><li>Sentida à distância do órgão acometido</li><li>Convergência víscero-somática no corno dorsal (neurônios WDR)</li><li>Ex.: dor no ombro por irritação diafragmática/frênica</li></ul>
+          </div>
+          <div>
+            <h5>Irradiada</h5>
+            <ul><li>Propaga-se ao longo do trajeto de um nervo comprometido</li><li>Segue distribuição neuroanatômica precisa</li><li>Ex.: ciatalgia lombar irradiando até o pé</li></ul>
+          </div>
+          <div>
+            <h5>Miofascial</h5>
+            <ul><li>Origem em pontos-gatilho musculares (trigger points)</li><li>Banda tensa palpável + padrão de referência característico</li><li>Ex.: cefaleia tensional por trigger point em trapézio</li></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">Dor Nociplástica</h3>
+        <p><b>Conceito (IASP):</b> dor que surge de nocicepção alterada, sem evidência clara de lesão tecidual que ative nociceptores periféricos e sem evidência de lesão/doença somatossensorial — a dor é gerada por <b class="pos">amplificação do próprio sistema de processamento</b>.</p>
+        <ul>
+          <li><b>Duração:</b> tipicamente crônica.</li>
+          <li><b>Distribuição:</b> regional ou difusa, não segue dermátomos.</li>
+          <li><b>Hipersensibilidade:</b> alodinia e hiperalgesia generalizadas — marca de sensibilização central.</li>
+        </ul>
+        <p style="font-size:.85rem;">Protótipo clínico: <b>fibromialgia</b> — ver tabela comparativa adiante.</p>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">Dor Mista</h3>
+        <p>Associação de mais de um mecanismo fisiopatológico coexistindo no mesmo quadro álgico.</p>
+        <ul>
+          <li>Componente <b>nociceptivo</b> (ex.: inflamação compressiva)</li>
+          <li>Componente <b>neuropático</b> (ex.: lesão radicular concomitante)</li>
+        </ul>
+        <p>Exemplos: lombociatalgia crônica, dor oncológica (infiltração tecidual + neural), dor pós-cirúrgica persistente.</p>
+      </div>
+    </div>
+
+    <div class="subhead" style="margin-top:8px;">Neuroanatomia da via nociceptiva — do nociceptor ao córtex</div>
+    <div class="flow">
+      <span class="chip">Nociceptor</span><span class="arrow">→</span>
+      <span class="chip">Gânglio da raiz dorsal (1º neurônio)</span><span class="arrow">→</span>
+      <span class="chip">Corno dorsal (lâminas de Rexed)</span><span class="arrow">→</span>
+      <span class="chip">Decussação</span><span class="arrow">→</span>
+      <span class="chip">Trato espinotalâmico (2º neurônio)</span><span class="arrow">→</span>
+      <span class="chip">Tálamo VPL/VPM (3º neurônio)</span><span class="arrow">→</span>
+      <span class="chip">Córtex &amp; neuromatriz</span>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <h3 class="topic-title">Nociceptores Moleculares</h3>
+        <p>Terminações nervosas livres, não encapsuladas. Principais transdutores:</p>
+        <ul>
+          <li><b>TRPV1</b> — capsaicina, calor nocivo (&gt;43°C), sensibilizado por prótons/mediadores inflamatórios.</li>
+          <li><b>TRPA1</b> — irritantes químicos, frio nocivo.</li>
+          <li><b>ASIC</b> — sensível à queda de pH (isquemia, inflamação).</li>
+          <li><b>P2X3</b> — purinérgico, ativado por ATP de células lesadas.</li>
+          <li><b>Nav1.7 / Nav1.8</b> — canais de sódio essenciais à geração do potencial de ação nociceptivo; mutações em Nav1.7 causam desde insensibilidade congênita até síndromes de dor extrema.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">1º Neurônio &amp; Corno Dorsal</h3>
+        <p><b>1º neurônio:</b> pseudounipolar, corpo celular no <b>gânglio da raiz dorsal</b>; prolongamento periférico capta o estímulo, prolongamento central entra pela raiz dorsal.</p>
+        <p><b>Lâminas de Rexed:</b> lâmina I (marginal) recebe aferência nociceptiva específica de Aδ/C; lâmina II (substância gelatinosa) contém os interneurônios do "portão"; lâmina V possui neurônios de amplo espectro dinâmico (WDR), com convergência víscero-somática — base da dor referida.</p>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">Primeira Sinapse</h3>
+        <p><b>Neurotransmissores:</b> glutamato (ação rápida, receptores AMPA e NMDA) e peptídeos como substância P e CGRP (ação lenta, sensibilizadora).</p>
+        <p><b>Cronificação:</b> o receptor NMDA é normalmente bloqueado por Mg²⁺; despolarização repetitiva remove esse bloqueio, permitindo entrada de Ca²⁺ e amplificação progressiva da resposta (wind-up) — porta de entrada para a sensibilização central.</p>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">Decussação &amp; Vias Ascendentes</h3>
+        <p>O 2º neurônio cruza pela <b>comissura branca anterior</b>, próximo ao nível de entrada, e ascende contralateralmente pelo <b>trato espinotalâmico</b> (funículo anterolateral).</p>
+        <p>Feixes associados: espinorreticular (excitação/alerta), espinomesencefálico (conexão com PAG) e espino-hipotalâmico (resposta neuroendócrina/autonômica).</p>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">Tálamo, Córtex &amp; Neuromatriz</h3>
+        <p><b>Via lateral:</b> núcleos VPL (tronco/membros) e VPM (face, via trigeminal) → córtex S1/S2 — componente discriminativo.</p>
+        <p><b>Via medial:</b> núcleos mediais/intralaminares → ínsula, cíngulo anterior, amígdala, córtex pré-frontal — componente afetivo.</p>
+        <p><b>Neuromatriz (Melzack):</b> rede distribuída e não um centro único da dor — explica por que a dor pode ser gerada sem estímulo periférico presente (ex.: dor do membro fantasma).</p>
+      </div>
+
+      <div class="card">
+        <h3 class="topic-title">Sistema Descendente</h3>
+        <p>Origem em córtex, ínsula, amígdala e hipotálamo, convergindo para a <b>substância cinzenta periaquedutal (PAG)</b> → <b>bulbo rostroventromedial/núcleo magno da rafe (RVM)</b> → <b>locus ceruleus (LC)</b> → corno dorsal, liberando serotonina e noradrenalina.</p>
+        <p><b>Inibição × facilitação:</b> a RVM contém células "OFF" (inibem a dor) e "ON" (facilitam a dor) — o equilíbrio entre elas decide se a via desce suprimindo ou amplificando a nocicepção.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 class="topic-title">Opioides Endógenos</h3>
+        <p><b>Peptídeos:</b> endorfinas, encefalinas e dinorfinas.</p>
+        <p><b>Receptores:</b> mu, delta e kappa — metabotrópicos, acoplados à proteína Gi, hiperpolarizam o neurônio e inibem a liberação pré-sináptica de neurotransmissores.</p>
+        <p>Base farmacológica dos opioides exógenos: morfina e fentanil atuam predominantemente em receptores <b>mu</b>.</p>
+      </div>
+      <div class="card">
+        <h3 class="topic-title">Além do Portão: Limitações do Modelo</h3>
+        <p>A Teoria dos Portões (Aula 1) não explica sozinha a cronificação. A plasticidade sináptica do corno dorsal envolve:</p>
+        <ul>
+          <li><b>Wind-up</b> — somação progressiva da resposta a estímulos repetitivos em fibras C.</li>
+          <li><b>LTP espinal</b> — potenciação de longa duração, fortalecimento sináptico persistente.</li>
+          <li><b>Receptores NMDA</b> — desbloqueio dependente de voltagem, essencial para wind-up e LTP.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subhead">Sensibilização: o eixo da cronificação</div>
+    <div class="duo">
+      <div>
+        <h5>Sensibilização periférica</h5>
+        <ul>
+          <li>Redução do limiar de ativação dos nociceptores</li>
+          <li>Mediada pela "sopa inflamatória": bradicinina, prostaglandinas, histamina, citocinas</li>
+          <li>Resulta em <b style="color:#fff;">hiperalgesia primária</b>, restrita ao local da lesão</li>
+        </ul>
+      </div>
+      <div>
+        <h5>Sensibilização central</h5>
+        <ul>
+          <li>Hiperexcitabilidade de neurônios do corno dorsal e supraespinais</li>
+          <li>Wind-up, ativação de NMDA, LTP</li>
+          <li>Resulta em <b style="color:#fff;">alodinia</b> e <b style="color:#fff;">hiperalgesia secundária</b>, além do tecido lesado</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 class="topic-title">Red Flags × Yellow Flags</h3>
+        <p><b>Red flags</b> — sinais de alerta para doença grave subjacente: perda de peso inexplicada, febre, déficit neurológico progressivo, história oncológica.</p>
+        <p><b>Yellow flags</b> — fatores psicossociais preditores de <b>risco de cronificação</b>: catastrofização, crenças de medo-evitação, insatisfação laboral, sintomas depressivos.</p>
+      </div>
+      <div class="card">
+        <h3 class="topic-title">Síndrome Dolorosa Complexa Regional (CRPS)</h3>
+        <p>Dor <b>desproporcional</b> ao evento desencadeante, com quatro categorias de alteração associadas:</p>
+        <ul>
+          <li><b>Sensitivas</b> — alodinia, hiperalgesia</li>
+          <li><b>Autonômicas</b> — assimetria de temperatura/cor, sudorese</li>
+          <li><b>Motoras</b> — fraqueza, tremor, distonia</li>
+          <li><b>Tróficas</b> — alterações de pelos, unhas, pele, edema</li>
+        </ul>
+        <p style="font-size:.85rem;">Diagnóstico clínico pelos <b>Critérios de Budapeste</b> (sintomas relatados + sinais ao exame em ≥3 das 4 categorias, sem diagnóstico que explique melhor o quadro).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="aula aula-3" id="aula3">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Aula 03</span><hr>
+      <h2>Lesão Neural &amp; Membro Fantasma</h2>
+    </div>
+    <p class="aula-intro">Da classificação da lesão nervosa periférica aos distúrbios pós-amputação. Seis tópicos foram marcados como <span class="badge-imp" style="background:var(--a3)">Importante</span> no material original e recebem dossiês dedicados abaixo.</p>
+
+    <div class="subhead">Lesão nervosa periférica — panorama</div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 class="topic-title">Mecanismos de Lesão Neural</h3>
+        <p>Compressão, tração/estiramento, secção, isquemia, e causas inflamatórias, metabólicas (ex.: neuropatia diabética) ou tóxicas — cada mecanismo determina o grau e a extensão do dano às diferentes camadas do nervo.</p>
+      </div>
+      <div class="card">
+        <h3 class="topic-title">Degeneração Walleriana</h3>
+        <div class="flow">
+          <span class="chip">Lesão axonal</span><span class="arrow">→</span>
+          <span class="chip">Fragmentação axônio/mielina distal</span><span class="arrow">→</span>
+          <span class="chip">Limpeza (macrófagos + Schwann)</span><span class="arrow">→</span>
+          <span class="chip">Bandas de Büngner</span><span class="arrow">→</span>
+          <span class="chip">Regeneração</span>
+        </div>
+        <p style="font-size:.87rem;">No SNP, as células de Schwann sustentam a regeneração (~1 mm/dia); no SNC, oligodendrócitos e o ambiente glial são predominantemente inibitórios à regeneração axonal.</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Classificação (Seddon)</th><th>Sunderland</th><th>Estrutura lesada</th><th>Recuperação</th></tr></thead>
+        <tbody>
+          <tr><td>Neurapraxia</td><td>Grau I</td><td>Bainha de mielina — bloqueio focal de condução; axônio e conjuntivo preservados</td><td>Completa, em semanas a poucos meses (remielinização)</td></tr>
+          <tr><td>Axonotmese</td><td>Graus II–IV</td><td>Axônio interrompido; endoneuro (e progressivamente perineuro) comprometidos</td><td>Espontânea, ~1 mm/dia; funcional variável conforme o grau</td></tr>
+          <tr><td>Neurotmese</td><td>Grau V</td><td>Secção completa: axônio + todo o tecido conjuntivo (endo/peri/epineuro)</td><td>Sem recuperação espontânea — requer reparo cirúrgico</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 class="topic-title">Da Lesão Neural à Dor Neuropática</h3>
+        <p>Geração ectópica de impulsos no local da lesão/neuroma, somada a sensibilização periférica e central, desinibição de vias moduladoras, neuroinflamação e plasticidade neural — o conjunto que transforma uma lesão estrutural em dor persistente.</p>
+      </div>
+      <div class="card">
+        <h3 class="topic-title">Mecanismos da Cronificação</h3>
+        <p><b>Periféricos:</b> neuromas (brotamento axonal desorganizado), brotamento de fibras Aβ para lâminas superficiais nociceptivas, alterações de canais iônicos (upregulation de Nav), redução do limiar de ativação.</p>
+        <p><b>Centrais:</b> ativação de receptores NMDA, desinibição por perda de interneurônios GABAérgicos, ativação de micróglia, neuroinflamação central, reorganização cortical.</p>
+      </div>
+    </div>
+
+    <!-- ===== DOSSIÊ A: PLS / PLP / RLP ===== -->
+    <div class="dossier">
+      <div class="dossier-head"><h3>Distúrbios Pós-Amputação <span class="badge-imp">Importante</span></h3></div>
+      <p class="dossier-sub">Três entidades distintas — e frequentemente confundidas — no paciente amputado.</p>
+      <div class="duo" style="margin-top:0;">
+        <div>
+          <h5>PLS — Phantom Limb Syndrome</h5>
+          <ul><li>Sensação de membro fantasma</li><li><b style="color:#fff;">Não dolorosa</b></li><li>Percepção contínua da presença do membro amputado</li></ul>
+        </div>
+        <div>
+          <h5>PLP — Phantom Limb Pain</h5>
+          <ul><li>Dor do membro fantasma</li><li><b style="color:#fff;">Dolorosa</b></li><li>Dor localizada no território do membro ausente</li></ul>
+        </div>
+        <div>
+          <h5>RLP — Residual Limb Pain</h5>
+          <ul><li>Dor do coto</li><li><b style="color:#fff;">Dolorosa</b></li><li>Localizada no tecido residual ainda presente</li></ul>
+        </div>
+      </div>
+      <div class="cols" style="margin-top:18px;">
+        <div>
+          <h4 class="mini-title">Epidemiologia</h4>
+          <ul>
+            <li>Sensação fantasma (PLS): virtualmente universal logo após a amputação.</li>
+            <li>Dor fantasma (PLP): ocorre em cerca de 60–80% dos amputados em algum momento.</li>
+            <li>Início tipicamente na primeira semana pós-operatória; tende a atenuar em parte dos casos, mas cronifica em proporção significativa.</li>
+            <li>Impacto funcional relevante: sono, reabilitação e qualidade de vida.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="mini-title">Fenomenologia da sensação não dolorosa</h4>
+          <ul>
+            <li><b>Cinéticas</b> — percepção de movimento do membro ausente.</li>
+            <li><b>Cinestésicas</b> — percepção de postura e posição.</li>
+            <li><b>Exteroceptivas</b> — toque, pressão, prurido, temperatura, textura, forma e tamanho percebidos.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="alert" style="margin-top:6px;">
+        <div class="alert-head">◆ Telescopagem</div>
+        Fenômeno de <b style="color:var(--text)">retração progressiva</b> da porção distal do membro fantasma em direção ao coto — por exemplo, a mão fantasma parece "aproximar-se" até ficar percebida como presa ao próprio coto. Reflete a reorganização cortical progressiva do mapa somatossensorial e, em parte dos estudos, relaciona-se inversamente com a intensidade da dor fantasma.
+      </div>
+    </div>
+
+    <!-- ===== DOSSIÊ B: FISIOPATOLOGIA DA DOR FANTASMA ===== -->
+    <div class="dossier">
+      <div class="dossier-head"><h3>Dor do Membro Fantasma: Fisiopatologia <span class="badge-imp">Importante</span></h3></div>
+      <p class="dossier-sub">Multifatorial — periférica, central e psicológica atuam em conjunto, não isoladamente.</p>
+      <p><b style="color:var(--text)">Características:</b> dor percebida no território do membro ausente; padrão contínuo ou intermitente; qualidade mista (queimação, choque, aperto, cãibra); componente neuropático predominante, podendo coexistir componente nociceptivo (ex.: espasmo do coto). Incidência de ~60–80% dos amputados.</p>
+      <div class="cols">
+        <div>
+          <h4 class="mini-title">Mecanismos periféricos</h4>
+          <ul>
+            <li>Geração ectópica em neuromas do coto</li>
+            <li>Alterações de canais de sódio voltagem-dependentes</li>
+            <li>Perda do controle inibitório normal</li>
+          </ul>
+          <h4 class="mini-title">Fatores de risco</h4>
+          <ul>
+            <li>Dor pré-amputação intensa e prolongada</li>
+            <li>Presença de dor do coto</li>
+            <li><b>Memória somatossensorial</b> — o sistema nervoso parece registrar um traço da dor sentida antes da amputação, capaz de reemergir como dor fantasma</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="mini-title">Mecanismos centrais</h4>
+          <ul>
+            <li>Reorganização cortical do mapa somatossensorial (regiões vizinhas "invadem" a área desaferentada)</li>
+            <li>Degeneração de fibras C</li>
+            <li>Sensibilização central e componente nociplástico</li>
+          </ul>
+          <h4 class="mini-title">Influência psicológica</h4>
+          <p style="color:var(--text-dim); font-size:.9rem; margin:0;">Ansiedade, estresse e atenção <b>modulam</b> a intensidade percebida — mas não são a causa primária do fenômeno; "é psicológico" isoladamente não explica a dor fantasma.</p>
+        </div>
+      </div>
+      <div class="alert">
+        <div class="alert-head">◆ Da teoria dos portões à neuromatriz</div>
+        A dor fantasma não pode ser explicada apenas pela modulação segmentar do portão medular — não há aferência periférica normal do membro ausente. Isso reforça o conceito de <b style="color:var(--text)">neuromatriz</b>: a dor pode ser construída centralmente, de forma relativamente independente do estímulo periférico ativo. Bloqueios anestésicos regionais (ex.: bloqueio do plexo braquial) reduzem, em parte dos estudos, tanto a dor quanto a reorganização cortical associada — evidenciando a relação bidirecional entre aferência periférica e plasticidade central.
+      </div>
+    </div>
+
+    <!-- ===== DOSSIÊ C: REORGANIZAÇÃO CORTICAL ===== -->
+    <div class="dossier">
+      <div class="dossier-head"><h3>Modelos de Reorganização Cortical <span class="badge-imp">Importante</span></h3></div>
+      <p class="dossier-sub">Do modelo maladaptativo clássico ao debate contemporâneo Flor × Makin.</p>
+      <div class="cols">
+        <div>
+          <h4 class="mini-title">Modelo maladaptativo (clássico)</h4>
+          <p style="color:var(--text-dim); font-size:.92rem;">A amputação remove a aferência normal de uma região do córtex somatossensorial primário (homúnculo). Regiões corticais vizinhas <b style="color:var(--text)">invadem</b> o território cortical desaferentado — plasticidade maladaptativa. O grau de deslocamento cortical correlaciona-se, em parte dos estudos, com a intensidade da dor fantasma.</p>
+        </div>
+        <div>
+          <h4 class="mini-title">Representação persistente (revisão)</h4>
+          <p style="color:var(--text-dim); font-size:.92rem;">Estudos mais recentes desafiam a leitura puramente maladaptativa: o mapa cortical original do membro amputado pode permanecer parcialmente <b style="color:var(--text)">preservado e ativável</b> (ex.: ao mover o membro fantasma), sugerindo que a dor se relaciona mais a alterações de <b style="color:var(--text)">conectividade</b> entre regiões corticais do que ao seu apagamento.</p>
+        </div>
+      </div>
+      <div class="alert ok">
+        <div class="alert-head">◆ Flor × Makin</div>
+        <b style="color:var(--text)">Flor</b> (anos 1990) correlacionou, por magnetoencefalografia, o deslocamento do mapa cortical à intensidade da dor fantasma — base do modelo maladaptativo. <b style="color:var(--text)">Makin</b> (estudos mais recentes) questiona a interpretação puramente causal, propondo que a <b>persistência</b> — não o apagamento — da representação original, associada a alterações de conectividade, seria o achado mais relevante. O debate ilustra a evolução de um modelo cortical simples para um modelo de rede mais complexo.
+      </div>
+    </div>
+
+    <!-- ===== DOSSIÊ D: TRATAMENTO ===== -->
+    <div class="dossier">
+      <div class="dossier-head"><h3>Tratamento da Dor Fantasma <span class="badge-imp">Importante</span></h3></div>
+      <p class="dossier-sub">Não há padrão-ouro estabelecido — abordagem multimodal e individualizada.</p>
+      <div class="cols">
+        <div>
+          <h4 class="mini-title">Farmacológico</h4>
+          <p style="color:var(--text-dim); font-size:.92rem;">Antidepressivos tricíclicos, anticonvulsivantes (gabapentina, pregabalina); opioides/cetamina reservados a casos refratários (mecanismos detalhados adiante).</p>
+          <h4 class="mini-title">Cirúrgico</h4>
+          <p style="color:var(--text-dim); font-size:.92rem;">Revisão de coto e tratamento de neuromas sintomáticos, quando há causa periférica identificável e refratariedade ao tratamento conservador.</p>
+          <h4 class="mini-title">Tratamento precoce</h4>
+          <p style="color:var(--text-dim); font-size:.92rem;">Manejo multimodal iniciado no período peri-operatório pode reduzir o risco de cronificação, dada a relação com a memória somatossensorial da dor.</p>
+        </div>
+        <div>
+          <h4 class="mini-title">Fisioterapia e reabilitação</h4>
+          <p style="color:var(--text-dim); font-size:.92rem;">Dessensibilização progressiva do coto e adequação protética.</p>
+          <h4 class="mini-title">Imagética motora graduada</h4>
+          <div class="flow" style="margin:10px 0;">
+            <span class="chip">Reconhecimento de lateralidade</span><span class="arrow">→</span>
+            <span class="chip">Imagética motora</span><span class="arrow">→</span>
+            <span class="chip">Terapia do espelho</span>
+          </div>
+          <p style="color:var(--text-dim); font-size:.92rem;">Sequência que busca "reconectar" a representação cortical e reduzir a incongruência sensório-motora.</p>
+          <h4 class="mini-title">Eletroestimulação periférica</h4>
+          <p style="color:var(--text-dim); font-size:.92rem;">Estimulação de nervos periféricos residuais, com redução da dor relatada em parte dos pacientes.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert" style="border-color:var(--a5);">
+      <div class="alert-head" style="color:var(--a5);">◆ Dor fantasma × dor do coto</div>
+      Comparação completa dos dois quadros — critérios distintivos, mecanismos e conduta — na <a href="#tabelas" style="color:var(--a5); text-decoration:underline;">seção de Tabelas Comparativas</a>.
+    </div>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <h3 class="topic-title">Dor do Coto (RLP)</h3>
+        <ul>
+          <li>Dor aguda esperada no pós-operatório; tende a resolver com a cicatrização</li>
+          <li>Localizada no tecido residual presente</li>
+          <li>Padrão contínuo ou intermitente</li>
+          <li>Componentes nociceptivo (cirúrgico/inflamatório) e neuropático (neuroma) frequentemente coexistentes</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="topic-title">Imagem na Avaliação do Amputado</h3>
+        <p>Ultrassonografia e ressonância magnética auxiliam na identificação de neuromas sintomáticos e alterações de partes moles do coto, orientando a decisão terapêutica (conservadora × cirúrgica).</p>
+      </div>
+      <div class="card">
+        <h3 class="topic-title">Medicações</h3>
+        <ul>
+          <li><b>Tricíclicos</b> — inibem recaptação de serotonina/noradrenalina, potencializando a via descendente inibitória.</li>
+          <li><b>ISRN/duais</b> — mecanismo semelhante, melhor perfil de efeitos adversos.</li>
+          <li><b>Anticonvulsivantes</b> — ligam-se à subunidade α2δ de canais de cálcio voltagem-dependentes, reduzindo liberação de neurotransmissores excitatórios.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="aula aula-4" id="aula4">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Aula 04</span><hr>
+      <h2>Cefaleias</h2>
+    </div>
+    <p class="aula-intro">Da triagem clínica inicial às três grandes cefaleias primárias — tensional, migrânea e em salvas — todas marcadas como <span class="badge-imp" style="background:var(--a4)">Importante</span> e detalhadas em dossiês dedicados.</p>
+
+    <div class="subhead">Triagem da cefaleia</div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 class="topic-title">Primárias × Secundárias</h3>
+        <p><b>Primárias:</b> a cefaleia é a própria doença (tensional, migrânea, salvas) — diagnóstico clínico, sem lesão estrutural subjacente.</p>
+        <p><b>Secundárias:</b> a dor é <b>sintoma</b> de uma causa subjacente identificável (vascular, infecciosa, estrutural, metabólica) — exige investigação direcionada pelos sinais de alarme.</p>
+      </div>
+      <div class="card">
+        <h3 class="topic-title">Intensidade da Dor como Preditor</h3>
+        <p>Dor intensa é comum e esperada em cefaleias <b>primárias</b> (enxaqueca, salvas). Muitas causas secundárias graves podem cursar com dor apenas <b>moderada</b>.</p>
+        <p>A intensidade isolada é um <b class="pos">mau preditor etiológico</b> — deve sempre ser interpretada em conjunto com os sinais de alarme, nunca isoladamente.</p>
+      </div>
+    </div>
+
+    <div class="duo">
+      <div style="border-top-color:var(--danger);">
+        <h5 style="color:var(--danger);">Sinais de alarme (red flags)</h5>
+        <ul>
+          <li>Mudança de padrão habitual</li>
+          <li>Piora progressiva</li>
+          <li>Início súbito/thunderclap</li>
+          <li>Febre, rigidez nucal</li>
+          <li>Neoplasia, imunossupressão</li>
+          <li>Início tardio (após os 50 anos)</li>
+          <li>Déficit neurológico focal, papiledema, convulsões</li>
+        </ul>
+      </div>
+      <div style="border-top-color:var(--ok);">
+        <h5 style="color:var(--ok);">Sinais verdes (tranquilizadores)</h5>
+        <ul>
+          <li>Cefaleia recorrente e estereotipada</li>
+          <li>História desde a infância/adolescência</li>
+          <li>Intervalos assintomáticos entre as crises</li>
+          <li>Relação temporal com o ciclo menstrual</li>
+          <li>História familiar positiva</li>
+          <li>Ausência de qualquer sinal de alarme</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card full" style="margin-bottom:26px;">
+      <h3 class="topic-title">Diagnóstico Diferencial dos Sinais de Alarme</h3>
+      <p>Diante de red flags, considerar: hemorragia subaracnóidea, aneurisma roto, hemorragia intraparenquimatosa, trombose venosa cerebral, dissecção arterial cervical, hipertensão intracraniana, meningite, neoplasia do SNC e arterite temporal (células gigantes).</p>
+    </div>
+
+    <!-- ===== DOSSIÊ: CEFALEIA DO TIPO TENSÃO ===== -->
+    <div class="dossier">
+      <div class="dossier-head"><h3>Cefaleia do Tipo Tensão <span class="badge-imp">Importante</span></h3></div>
+      <p class="dossier-sub">A cefaleia primária mais prevalente da população geral.</p>
+      <div class="cols">
+        <div>
+          <h4 class="mini-title">Epidemiologia</h4>
+          <p style="color:var(--text-dim); font-size:.92rem;">Altíssima prevalência ao longo da vida; impacto socioeconômico relevante por absenteísmo. Apresenta-se em formas <b style="color:var(--text)">episódica</b> e <b style="color:var(--text)">crônica</b>.</p>
+          <h4 class="mini-title">Inervação e territórios sensitivos</h4>
+          <p style="color:var(--text-dim); font-size:.92rem;">O <b style="color:var(--text)">trigêmeo</b> inerva a face e a porção anterior do couro cabeludo; os <b style="color:var(--text)">nervos cervicais</b> (occipitais maior/menor, raízes C2–C3) cobrem a região posterior; os nervos facial e acessório contribuem para a musculatura pericraniana avaliada à palpação.</p>
+          <h4 class="mini-title">Dolorimento pericraniano</h4>
+          <p style="color:var(--text-dim); font-size:.92rem;">Aumento da sensibilidade à palpação da musculatura pericraniana — achado característico ao exame físico, que se correlaciona com a intensidade e a cronicidade do quadro.</p>
+        </div>
+        <div>
+          <h4 class="mini-title">Fisiopatologia</h4>
+          <p style="color:var(--text-dim); font-size:.92rem;">Multifatorial: estresse, tensão muscular pericraniana, sensibilização central, predisposição genética, associação com depressão e ansiedade (inclusive cefaleia desencadeada por estresse em terreno depressivo), e um ciclo de retroalimentação entre dor e tensão muscular.</p>
+          <div class="alert" style="margin-top:10px;">
+            <div class="alert-head">◆ Óxido nítrico (NO)</div>
+            Doadores de NO (nitroglicerina) podem desencadear crise em indivíduos suscetíveis; inibidores da síntese de NO (L-NMMA) reduzem a dor experimentalmente — evidência do papel do NO na sensibilização central da CTT.
+          </div>
+          <p style="color:var(--text-dim); font-size:.85rem; margin-top:10px;"><b style="color:var(--text)">Pressão liquórica:</b> tanto hipertensão quanto hipotensão liquórica podem se apresentar como cefaleia crônica refratária — diagnóstico diferencial a lembrar em quadros atípicos.</p>
+        </div>
+      </div>
+      <h4 class="mini-title">Critérios diagnósticos (ICHD-3) e classificação</h4>
+      <ul style="color:var(--text-dim); font-size:.92rem;">
+        <li>Dor <b style="color:var(--text)">bilateral</b>, em aperto/pressão (não pulsátil), intensidade leve a moderada</li>
+        <li><b style="color:var(--text)">Não</b> agravada por atividade física de rotina</li>
+        <li>Sem náusea significativa; no máximo fotofobia <b style="color:var(--text)">ou</b> fonofobia (nunca ambas)</li>
+        <li><b>Classificação:</b> episódica infrequente (&lt;1 dia/mês) · episódica frequente (1–14 dias/mês) · crônica (≥15 dias/mês por &gt;3 meses)</li>
+      </ul>
+      <div class="alert ok">
+        <div class="alert-head">◆ Tratamento</div>
+        Analgésicos simples e AINEs para crises episódicas; relaxantes musculares e bloqueios nervosos pericranianos em casos selecionados; antidepressivos tricíclicos como profilaxia na forma crônica.
+      </div>
+    </div>
+
+    <!-- ===== DOSSIÊ: MIGRÂNEA ===== -->
+    <div class="dossier">
+      <div class="dossier-head"><h3>Migrânea <span class="badge-imp">Importante</span></h3></div>
+      <p class="dossier-sub">Critérios ICHD-3 — sem aura e com aura.</p>
+      <div class="cols">
+        <div>
+          <h4 class="mini-title">Migrânea sem aura</h4>
+          <ul style="color:var(--text-dim); font-size:.92rem;">
+            <li>≥5 crises prévias</li>
+            <li>Duração de 4–72h sem tratamento</li>
+            <li>Pelo menos 2: unilateral, pulsátil, intensidade moderada-grave, piora com atividade física de rotina</li>
+            <li>Pelo menos 1: náusea/vômito <b>ou</b> fotofobia + fonofobia</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="mini-title">Migrânea com aura</h4>
+          <ul style="color:var(--text-dim); font-size:.92rem;">
+            <li>≥2 crises com aura totalmente reversível (visual, sensitiva, de fala/linguagem, motora, de tronco encefálico ou retiniana)</li>
+            <li>Pelo menos 3 de: propagação gradual (≥5 min), sintomas sucessivos, duração de 5–60 min cada, ao menos um sintoma unilateral, ao menos um sintoma positivo (ex.: escotomas cintilantes), cefaleia acompanhando ou seguindo a aura em até 60 min</li>
+          </ul>
+        </div>
+      </div>
+      <div class="alert ok">
+        <div class="alert-head">◆ Tratamento da crise</div>
+        Hidratação e analgésicos/AINEs para crises leves-moderadas; <b style="color:var(--text)">triptanos</b> (agonistas 5-HT1B/1D — vasoconstrição e inibição da liberação de neuropeptídeos pró-inflamatórios) para crises moderadas-graves; bloqueadores dopaminérgicos como antieméticos com efeito analgésico coadjuvante; anticonvulsivantes em status migranoso ou como profilaxia.
+      </div>
+    </div>
+
+    <!-- ===== DOSSIÊ: CEFALEIA EM SALVAS ===== -->
+    <div class="dossier">
+      <div class="dossier-head"><h3>Cefaleia em Salvas e Neuralgias <span class="badge-imp">Importante</span></h3></div>
+      <p class="dossier-sub">Cefaleia trigêmino-autonômica — a mais intensa das cefaleias primárias.</p>
+      <div class="cols">
+        <div>
+          <h4 class="mini-title">Quadro clínico</h4>
+          <ul style="color:var(--text-dim); font-size:.92rem;">
+            <li>Dor <b style="color:var(--text)">unilateral</b>, excruciante, em região orbitária/supraorbitária/temporal</li>
+            <li>Sintomas autonômicos <b style="color:var(--text)">ipsilaterais</b>: lacrimejamento, hiperemia conjuntival, congestão nasal/rinorreia, ptose/miose (Horner parcial), edema palpebral</li>
+            <li><b style="color:var(--text)">Agitação psicomotora</b> durante a crise — o paciente se move, ao contrário do repouso buscado na migrânea</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="mini-title">Critérios diagnósticos (ICHD-3)</h4>
+          <p style="color:var(--text-dim); font-size:.92rem;">Crises de dor unilateral grave, orbitária/supraorbitária/temporal, com <b style="color:var(--text)">15–180 minutos</b> de duração sem tratamento, acompanhadas de ao menos um sintoma autonômico ipsilateral ou sensação de inquietação/agitação. Frequência variável: de 1 crise a cada 2 dias até 8 crises/dia.</p>
+        </div>
+      </div>
+      <div class="alert ok">
+        <div class="alert-head">◆ Tratamento</div>
+        <b style="color:var(--text)">Crise:</b> oxigênio em alto fluxo (12–15 L/min, máscara não reinalante) e triptanos de ação rápida (sumatriptano subcutâneo ou spray nasal). <b style="color:var(--text)">Prevenção:</b> verapamil como primeira linha; bloqueio do gânglio esfenopalatino em casos selecionados.
+      </div>
+    </div>
+
+    <div class="alert" style="border-color:var(--a5);">
+      <div class="alert-head" style="color:var(--a5);">◆ Cefaleia tensional × migrânea × salvas</div>
+      Tabela comparativa completa — localização, qualidade, intensidade, comportamento e sintomas associados — na <a href="#tabelas" style="color:var(--a5); text-decoration:underline;">seção de Tabelas Comparativas</a>.
+    </div>
+  </div>
+</section>
+
+<section class="aula tabelas-section" id="tabelas">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Síntese</span><hr>
+      <h2>Tabelas Comparativas</h2>
+    </div>
+    <p class="aula-intro">Três quadros de fixação rápida para revisão pré-prova: os dois pilares explicitamente comparativos do material (dor do coto × dor fantasma; cefaleia tensional × migrânea × salvas) e um quadro-síntese de fibromialgia — o protótipo clínico da dor nociplástica discutida na Aula 2.</p>
+
+    <h3 class="topic-title" style="margin-bottom:2px;">① Dor do Coto (RLP) × Dor do Membro Fantasma (PLP)</h3>
+    <p class="table-caption">referente ao item "Dor fantasma × dor do coto" — Aula 3</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Critério</th><th>Dor do Coto — RLP</th><th>Dor do Membro Fantasma — PLP</th></tr></thead>
+        <tbody>
+          <tr><td>Localização percebida</td><td>No próprio coto / tecido residual presente</td><td>No território do membro ausente</td></tr>
+          <tr><td>Relação temporal</td><td>Precoce, tipicamente no pós-operatório imediato</td><td>Pode iniciar já na 1ª semana e persistir/cronificar</td></tr>
+          <tr><td>Mecanismo predominante</td><td>Nociceptivo (cirúrgico/inflamatório) + neuropático focal (neuroma)</td><td>Neuropático, com forte componente central (reorganização cortical)</td></tr>
+          <tr><td>Qualidade da dor</td><td>Latejante, em pontada, agravada à palpação/manipulação do coto</td><td>Queimação, choque, aperto, cãibra</td></tr>
+          <tr><td>Fator agravante típico</td><td>Uso de prótese, pressão local, manipulação do coto</td><td>Estresse, mudanças de temperatura; muitas vezes sem gatilho identificável</td></tr>
+          <tr><td>Evolução esperada</td><td>Tende a resolver com a cicatrização tecidual</td><td>Tende a persistir; cronifica em proporção significativa dos casos</td></tr>
+          <tr><td>Relação com sensação fantasma (PLS)</td><td>Independente da sensação fantasma</td><td>Frequentemente coexiste com PLS e com telescopagem</td></tr>
+          <tr><td>Conduta inicial</td><td>Analgesia local, avaliação de neuroma, cuidados de coto</td><td>Abordagem multimodal: farmacológica + imagética motora graduada + terapia do espelho</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="topic-title" style="margin-bottom:2px;">② Cefaleia Tensional × Migrânea × Salvas</h3>
+    <p class="table-caption">referente ao item "cefaleia tipo tensão × migrânea" — Aula 4, ampliado com a cefaleia em salvas</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Característica</th><th>Tensional</th><th>Migrânea</th><th>Em Salvas</th></tr></thead>
+        <tbody>
+          <tr><td>Localização</td><td>Bilateral</td><td>Uni ou bilateral (tipicamente unilateral)</td><td>Unilateral, orbitária/supraorbitária/temporal</td></tr>
+          <tr><td>Qualidade</td><td>Aperto/pressão, não pulsátil</td><td>Pulsátil, latejante</td><td>Excruciante, em facada</td></tr>
+          <tr><td>Intensidade</td><td>Leve a moderada</td><td>Moderada a grave</td><td>Muito grave — a mais intensa das três</td></tr>
+          <tr><td>Duração da crise</td><td>30 min a 7 dias (crônica: quase contínua)</td><td>4–72 horas</td><td>15–180 minutos</td></tr>
+          <tr><td>Comportamento do paciente</td><td>Mantém a rotina, sem prostração importante</td><td>Busca repouso, escuro e silêncio (piora com atividade)</td><td>Agitação psicomotora — não consegue ficar parado</td></tr>
+          <tr><td>Sintomas associados</td><td>Dolorimento pericraniano; geralmente sem náusea</td><td>Náusea/vômito, fotofobia <b>e</b> fonofobia; pode haver aura</td><td>Sintomas autonômicos ipsilaterais: lacrimejamento, rinorreia, ptose/miose</td></tr>
+          <tr><td>Tratamento de crise</td><td>Analgésicos simples, AINEs</td><td>Triptanos, AINEs, antieméticos</td><td>Oxigênio a alto fluxo, triptano SC/spray nasal</td></tr>
+          <tr><td>Profilaxia típica</td><td>Tricíclicos (forma crônica)</td><td>Individualizada conforme frequência das crises</td><td>Verapamil</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="topic-title" style="margin-bottom:2px;">③ Fibromialgia — o protótipo da dor nociplástica</h3>
+    <p class="table-caption">complemento ao conceito de dor nociplástica apresentado na Aula 2</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspecto</th><th>Características</th></tr></thead>
+        <tbody>
+          <tr><td>Mecanismo predominante</td><td>Dor nociplástica — sensibilização central, sem lesão tecidual ou neural identificável que a explique</td></tr>
+          <tr><td>Critérios diagnósticos (ACR 2016, resumo)</td><td>Índice de dor generalizada (WPI) e escala de gravidade de sintomas (SSS); sintomas presentes de forma semelhante por ≥3 meses</td></tr>
+          <tr><td>Distribuição da dor</td><td>Difusa e generalizada, bilateral, acima e abaixo da cintura, incluindo o esqueleto axial</td></tr>
+          <tr><td>Hipersensibilidade</td><td>Alodinia e hiperalgesia generalizadas (os clássicos "pontos dolorosos" têm hoje papel diagnóstico secundário aos critérios de 2016)</td></tr>
+          <tr><td>Sintomas associados</td><td>Fadiga, sono não reparador, disfunção cognitiva ("fibro fog"), sintomas depressivos/ansiosos, cefaleia, síndrome do intestino irritável</td></tr>
+          <tr><td>Exame físico e exames complementares</td><td>Exame neurológico e provas inflamatórias tipicamente normais — diagnóstico clínico, por exclusão</td></tr>
+          <tr><td>Tratamento</td><td>Abordagem multimodal: educação e exercício físico (pilar do tratamento), antidepressivos duais/tricíclicos, anticonvulsivantes (pregabalina, gabapentina), terapia cognitivo-comportamental</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="aula revisao-section" id="revisao">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Revisão</span><hr>
+      <h2>Revisão Interativa</h2>
+    </div>
+    <p class="aula-intro">Fixação ativa dos conteúdos das quatro aulas, com peso maior para os tópicos marcados como <span class="badge-imp" style="background:var(--a6)">Importante</span>. Alterne entre flashcards, quiz e o exercício de ordenar sequências fisiológicas.</p>
+
+    <div class="review-tabs">
+      <button class="review-tab-btn active" data-panel="flash" type="button">Flashcards</button>
+      <button class="review-tab-btn" data-panel="quiz" type="button">Quiz</button>
+      <button class="review-tab-btn" data-panel="order" type="button">Ordenar Sequências</button>
+    </div>
+
+    <div class="review-panel active" id="panel-flash">
+      <div class="flash-shell">
+        <div class="flash-counter" id="flashCounter">1 / 16</div>
+        <div class="flashcard" id="flashcardEl">
+          <div class="flashcard-inner">
+            <div class="flash-face front">
+              <div class="eyebrow">Pergunta</div>
+              <div class="fq" id="flashQ"></div>
+            </div>
+            <div class="flash-face back">
+              <div class="eyebrow">Resposta</div>
+              <div class="fa" id="flashA"></div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-hint">clique no card para virar</div>
+        <div class="flash-nav">
+          <button class="flash-btn" id="flashPrev" type="button">← Anterior</button>
+          <button class="flash-btn" id="flashShuffle" type="button">Embaralhar</button>
+          <button class="flash-btn" id="flashNext" type="button">Próximo →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-panel" id="panel-quiz">
+      <div class="quiz-shell" id="quizShell"></div>
+    </div>
+
+    <div class="review-panel" id="panel-order">
+      <div class="order-shell">
+        <div class="order-select" id="orderSelect"></div>
+        <div class="order-instructions">arraste os itens até a ordem correta e clique em "Verificar"</div>
+        <ul class="order-list" id="orderList"></ul>
+        <div class="order-actions">
+          <button class="order-btn" id="orderCheck" type="button">Verificar</button>
+          <button class="order-btn" id="orderReset" type="button">Embaralhar de novo</button>
+        </div>
+        <div class="order-result" id="orderResult"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="l1">LMF — Laboratório Morfofuncional · UCXIII · Prof.ª Elizama de Gregório</div>
+  <div>Bibliografia: Guyton &amp; Hall · Aires · Robbins &amp; Cotran · Porto · Bates · ICHD-3</div>
+</footer>
+
+<!-- ============================================================
+     EDIT TOOLBAR
+============================================================ -->
+<div class="edit-toolbar">
+  <button id="btnToggleEdit" title="Ativar/salvar edição"><span class="dot"></span>Ativar edição</button>
+  <div class="sep"></div>
+  <button id="btnDownload" title="Baixar cópia editada">Baixar cópia</button>
+  <div class="sep"></div>
+  <button id="btnRestore" title="Restaurar original">Restaurar original</button>
+</div>
+<div class="save-toast" id="saveToast">Alterações salvas neste navegador</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   0. UTIL
+============================================================ */
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+/* ============================================================
+   1. SCROLLSPY — destaca o link ativo na nav conforme o scroll
+============================================================ */
+const navLinks=[...document.querySelectorAll(".topnav-inner a")];
+const spySections=navLinks.map(a=>document.querySelector(a.getAttribute("href"))).filter(Boolean);
+if("IntersectionObserver" in window && spySections.length){
+  const spy=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting) return;
+      const href="#"+entry.target.id;
+      navLinks.forEach(l=>l.classList.toggle("active", l.getAttribute("href")===href));
+    });
+  }, {rootMargin:"-35% 0px -55% 0px", threshold:0});
+  spySections.forEach(s=>spy.observe(s));
+}
+
+/* ============================================================
+   2. AMBIENTE / LOCALSTORAGE — banner de aviso quando indisponível
+============================================================ */
+let storageOK=true;
+try{
+  localStorage.setItem("__lmf_test__","1");
+  localStorage.removeItem("__lmf_test__");
+}catch(e){ storageOK=false; }
+
+const envBanner=document.getElementById("envBanner");
+if(!storageOK && envBanner){
+  envBanner.innerHTML='<b>Aviso —</b> este ambiente não permite salvar dados localmente (localStorage indisponível). A edição ainda funciona nesta sessão, mas nada será mantido ao recarregar a página. Use "Baixar cópia" para não perder o que editar.';
+  envBanner.classList.add("show");
+}
+
+/* ============================================================
+   3. TOOLBAR DE EDIÇÃO — ativar/salvar, baixar, restaurar
+============================================================ */
+const STORAGE_PREFIX="lmf_dor_v1_";
+const EDITABLE_IDS=["aula1","aula2","aula3","aula4","tabelas"];
+
+function getEditableRoots(){
+  const roots=EDITABLE_IDS.map(id=>document.getElementById(id)).filter(Boolean);
+  const heroWrap=document.querySelector(".hero .wrap");
+  if(heroWrap) roots.push(heroWrap);
+  return roots;
+}
+
+// restaura conteúdo salvo (se houver) antes de qualquer outra coisa
+if(storageOK){
+  EDITABLE_IDS.forEach(id=>{
+    const saved=localStorage.getItem(STORAGE_PREFIX+id);
+    if(saved){ const el=document.getElementById(id); if(el) el.innerHTML=saved; }
+  });
+  const savedHero=localStorage.getItem(STORAGE_PREFIX+"hero");
+  if(savedHero){ const hw=document.querySelector(".hero .wrap"); if(hw) hw.innerHTML=savedHero; }
+}
+
+const btnToggleEdit=document.getElementById("btnToggleEdit");
+const btnDownload=document.getElementById("btnDownload");
+const btnRestore=document.getElementById("btnRestore");
+const saveToast=document.getElementById("saveToast");
+let editing=false;
+let toastTimer=null;
+
+function showToast(msg){
+  if(!saveToast) return;
+  if(msg) saveToast.textContent=msg;
+  saveToast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>saveToast.classList.remove("show"), 2400);
+}
+
+function setEditable(state){
+  getEditableRoots().forEach(root=>{ root.contentEditable=state?"true":"false"; });
+  document.body.classList.toggle("editing", state);
+}
+
+if(btnToggleEdit){
+  btnToggleEdit.addEventListener("click", ()=>{
+    editing=!editing;
+    setEditable(editing);
+    btnToggleEdit.classList.toggle("on", editing);
+    btnToggleEdit.innerHTML=editing
+      ? '<span class="dot"></span>Salvar edição'
+      : '<span class="dot"></span>Ativar edição';
+
+    if(!editing){
+      if(storageOK){
+        EDITABLE_IDS.forEach(id=>{
+          const el=document.getElementById(id);
+          if(el) localStorage.setItem(STORAGE_PREFIX+id, el.innerHTML);
+        });
+        const heroWrap=document.querySelector(".hero .wrap");
+        if(heroWrap) localStorage.setItem(STORAGE_PREFIX+"hero", heroWrap.innerHTML);
+        showToast("Alterações salvas neste navegador");
+      }else{
+        showToast("Alterações mantidas apenas nesta sessão");
+      }
+    }
+  });
+}
+
+if(btnDownload){
+  btnDownload.addEventListener("click", ()=>{
+    const htmlContent="<!DOCTYPE html>\n"+document.documentElement.outerHTML;
+    const blob=new Blob([htmlContent], {type:"text/html;charset=utf-8"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url; a.download="LMF_Dor_editado.html";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+}
+
+if(btnRestore){
+  btnRestore.addEventListener("click", ()=>{
+    const ok=confirm("Restaurar o conteúdo original? As alterações salvas neste navegador serão apagadas.");
+    if(!ok) return;
+    if(storageOK){
+      EDITABLE_IDS.forEach(id=>localStorage.removeItem(STORAGE_PREFIX+id));
+      localStorage.removeItem(STORAGE_PREFIX+"hero");
+    }
+    location.reload();
+  });
+}
+
+/* ============================================================
+   4. ABAS DA REVISÃO (flashcards / quiz / ordenar)
+============================================================ */
+document.querySelectorAll(".review-tab-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".review-tab-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".review-panel").forEach(p=>p.classList.remove("active"));
+    const panel=document.getElementById("panel-"+btn.dataset.panel);
+    if(panel) panel.classList.add("active");
+  });
+});
+
+/* ============================================================
+   5. FLASHCARDS
+============================================================ */
+const FLASHCARDS=[
+  {q:`Qual a diferença fundamental entre nocicepção e dor?`,
+   a:`Nocicepção é o processo neurofisiológico objetivo de detecção do estímulo nocivo pelos nociceptores. Dor é a experiência sensorial e emocional subjetiva, construída pelo encéfalo — pode haver uma sem a outra (ex.: nocicepção sob anestesia; dor neuropática sem nocicepção ativa).`},
+  {q:`Na Teoria dos Portões (Melzack & Wall), o que "fecha o portão" da dor no corno dorsal?`,
+   a:`A ativação de fibras Aβ grossas e mielinizadas (tato/pressão), que excitam o interneurônio inibitório da substância gelatinosa (lâmina II), inibindo a célula de projeção e reduzindo a transmissão nociceptiva ascendente.`},
+  {q:`Qual a diferença entre PLS, PLP e RLP?`,
+   a:`PLS (Phantom Limb Syndrome) = sensação não dolorosa do membro ausente. PLP (Phantom Limb Pain) = dor no território do membro ausente. RLP (Residual Limb Pain) = dor do coto, no tecido residual presente.`},
+  {q:`O que é telescopagem?`,
+   a:`Retração progressiva da porção distal do membro fantasma em direção ao coto, refletindo reorganização cortical do mapa somatossensorial — em parte dos estudos, relaciona-se inversamente com a intensidade da dor fantasma.`},
+  {q:`Quais os três grupos de mecanismos por trás da fisiopatologia da dor fantasma?`,
+   a:`Mecanismos periféricos (neuromas, alterações de canais de sódio), mecanismos centrais (reorganização cortical, sensibilização central) e influência psicológica (modula a intensidade, mas não é a causa primária isolada).`},
+  {q:`O que propõe o modelo maladaptativo de reorganização cortical, e como Makin o desafia?`,
+   a:`Flor propôs que regiões corticais vizinhas "invadem" o território desaferentado, correlacionando o deslocamento à dor fantasma. Makin sugere que o mapa original pode permanecer preservado e ativável, e que alterações de conectividade — não o apagamento — seriam o achado mais relevante.`},
+  {q:`Cite três abordagens não farmacológicas no tratamento da dor fantasma.`,
+   a:`Imagética motora graduada (reconhecimento de lateralidade → imagética motora → terapia do espelho), eletroestimulação de nervos periféricos residuais e dessensibilização/fisioterapia do coto.`},
+  {q:`Como diferenciar cefaleia tensional de migrânea quanto à atividade física?`,
+   a:`Na cefaleia tensional, a dor tipicamente não piora com atividade física de rotina. Na migrânea, a atividade física de rotina tende a piorar a dor — critério diagnóstico do ICHD-3.`},
+  {q:`Quais sintomas autonômicos caracterizam a cefaleia em salvas?`,
+   a:`Lacrimejamento, hiperemia conjuntival, congestão nasal/rinorreia e ptose/miose (Horner parcial) ipsilaterais, tipicamente acompanhados de agitação psicomotora — ao contrário do repouso buscado na migrânea.`},
+  {q:`Qual o tratamento de primeira linha na crise de cefaleia em salvas?`,
+   a:`Oxigênio em alto fluxo (12–15 L/min, máscara não reinalante) e triptano de ação rápida (sumatriptano subcutâneo ou spray nasal). Verapamil é a profilaxia de primeira linha — não trata a crise aguda.`},
+  {q:`O que caracteriza a dor nociplástica e qual seu protótipo clínico?`,
+   a:`Dor por amplificação do próprio sistema de processamento nociceptivo, sem evidência clara de lesão tecidual periférica ou de lesão/doença somatossensorial. O protótipo clínico é a fibromialgia.`},
+  {q:`Diferencie sensibilização periférica de sensibilização central.`,
+   a:`Periférica: redução do limiar dos nociceptores por mediadores inflamatórios, gerando hiperalgesia primária local. Central: hiperexcitabilidade de neurônios do SNC (wind-up, NMDA, LTP), gerando alodinia e hiperalgesia secundária à distância do tecido lesado.`},
+  {q:`O que exigem os Critérios de Budapeste para diagnóstico de CRPS?`,
+   a:`Sintomas relatados e sinais ao exame físico presentes em pelo menos 3 das 4 categorias — sensitiva, autonômica, motora e trófica —, sem outro diagnóstico que explique melhor o quadro.`},
+  {q:`Qual a diferença entre dor referida e dor irradiada?`,
+   a:`Referida: sentida à distância do órgão acometido, por convergência víscero-somática no corno dorsal (ex.: dor no ombro por irritação frênica). Irradiada: propaga-se ao longo do trajeto de um nervo comprometido, seguindo distribuição neuroanatômica precisa (ex.: ciatalgia).`},
+  {q:`O que diferencia as fibras Aδ e C na condução da dor?`,
+   a:`Aδ: mielínicas finas, condução rápida — geram a "primeira dor" (rápida, em pontada, bem localizada). C: amielínicas, condução lenta — geram a "segunda dor" (lenta, em queimação, difusa).`},
+  {q:`Cite red flags que sugerem cefaleia secundária e exigem investigação.`,
+   a:`Início súbito/thunderclap, mudança de padrão habitual, piora progressiva, febre, rigidez nucal, déficit neurológico focal, papiledema, convulsões, início após os 50 anos, neoplasia ou imunossupressão.`}
+];
+
+let flashOrder=FLASHCARDS.map((_,i)=>i);
+let flashIdx=0;
+const flashcardEl=document.getElementById("flashcardEl");
+const flashQ=document.getElementById("flashQ");
+const flashA=document.getElementById("flashA");
+const flashCounter=document.getElementById("flashCounter");
+
+function renderFlash(){
+  if(!flashcardEl) return;
+  flashcardEl.classList.remove("flipped");
+  const item=FLASHCARDS[flashOrder[flashIdx]];
+  flashQ.textContent=item.q;
+  flashA.textContent=item.a;
+  flashCounter.textContent=(flashIdx+1)+" / "+FLASHCARDS.length;
+}
+if(flashcardEl){
+  flashcardEl.addEventListener("click", ()=>flashcardEl.classList.toggle("flipped"));
+  document.getElementById("flashNext").addEventListener("click", ()=>{ flashIdx=(flashIdx+1)%FLASHCARDS.length; renderFlash(); });
+  document.getElementById("flashPrev").addEventListener("click", ()=>{ flashIdx=(flashIdx-1+FLASHCARDS.length)%FLASHCARDS.length; renderFlash(); });
+  document.getElementById("flashShuffle").addEventListener("click", ()=>{ shuffleArray(flashOrder); flashIdx=0; renderFlash(); });
+  renderFlash();
+}
+
+/* ============================================================
+   6. QUIZ
+============================================================ */
+const QUIZ=[
+  {q:`Qual estrutura medular é considerada o "portão" na Teoria de Melzack & Wall?`,
+   options:[`Núcleo VPL do tálamo`,`Substância gelatinosa (lâmina II de Rexed)`,`Núcleo magno da rafe`,`Gânglio da raiz dorsal`],
+   correct:1,
+   exp:`A substância gelatinosa, na lâmina II de Rexed, contém os interneurônios inibitórios que funcionam como o "portão" pré-sináptico sobre a célula de projeção (célula T).`},
+  {q:`Um paciente amputado relata sentir a mão fantasma "encolhendo" e se aproximando progressivamente do coto. Esse fenômeno é:`,
+   options:[`Neurapraxia`,`Wind-up`,`Telescopagem`,`Alodinia`],
+   correct:2,
+   exp:`Telescopagem é a retração progressiva da porção distal do membro fantasma em direção ao coto, refletindo reorganização cortical.`},
+  {q:`Qual alternativa diferencia corretamente PLP de RLP?`,
+   options:[`PLP é dor no coto; RLP é dor no membro ausente`,`PLP é dor no território do membro ausente; RLP é dor no tecido residual (coto)`,`PLP e RLP são sinônimos`,`PLP é sensação não dolorosa; RLP é sempre dolorosa`],
+   correct:1,
+   exp:`PLP (Phantom Limb Pain) localiza-se no membro ausente; RLP (Residual Limb Pain) localiza-se no coto, no tecido ainda presente.`},
+  {q:`No debate Flor × Makin sobre reorganização cortical, o achado mais recentemente valorizado é:`,
+   options:[`O apagamento completo do mapa cortical original`,`A persistência do mapa original associada a alterações de conectividade`,`A ausência total de plasticidade após amputação`,`A ativação exclusiva do hemisfério ipsilateral`],
+   correct:1,
+   exp:`Makin propõe que o mapa cortical original pode permanecer preservado e ativável, e que alterações de conectividade — não o apagamento — seriam o achado mais relevante.`},
+  {q:`Quanto à lateralidade e qualidade da dor, o que diferencia cefaleia tensional de migrânea?`,
+   options:[`Tensional é unilateral e pulsátil; migrânea é bilateral em aperto`,`Tensional é bilateral em aperto/pressão; migrânea é tipicamente unilateral e pulsátil`,`Ambas são sempre unilaterais`,`Ambas são sempre bilaterais`],
+   correct:1,
+   exp:`Cefaleia tensional: bilateral, em aperto/pressão, não pulsátil. Migrânea: tipicamente unilateral e pulsátil/latejante.`},
+  {q:`Qual a duração típica de uma crise de cefaleia em salvas sem tratamento?`,
+   options:[`30 minutos a 7 dias`,`4 a 72 horas`,`15 a 180 minutos`,`Menos de 5 minutos`],
+   correct:2,
+   exp:`As crises de cefaleia em salvas duram de 15 a 180 minutos, podendo ocorrer de 1 vez a cada 2 dias até 8 vezes ao dia.`},
+  {q:`O que caracteriza a dor nociplástica, cujo protótipo clínico é a fibromialgia?`,
+   options:[`Lesão evidente do sistema somatossensorial`,`Ativação de nociceptores por lesão tecidual clara`,`Amplificação da nocicepção sem evidência clara de lesão tecidual ou neural`,`Transtorno psiquiátrico primário isolado`],
+   correct:2,
+   exp:`Dor nociplástica surge de nocicepção alterada, sem evidência clara de lesão tecidual periférica nem de lesão/doença somatossensorial.`},
+  {q:`Na sensibilização central, qual receptor é fundamental para o fenômeno de wind-up?`,
+   options:[`TRPV1`,`Receptor NMDA`,`Receptor opioide mu`,`ASIC`],
+   correct:1,
+   exp:`O receptor NMDA, normalmente bloqueado por Mg²⁺, é desbloqueado por despolarização repetitiva, permitindo entrada de Ca²⁺ e amplificação progressiva da resposta (wind-up).`},
+  {q:`Qual o tratamento de primeira linha para a crise (não a profilaxia) de cefaleia em salvas?`,
+   options:[`Verapamil oral`,`Oxigênio em alto fluxo + triptano de ação rápida`,`Anticonvulsivante`,`Bloqueio esfenopalatino isolado`],
+   correct:1,
+   exp:`Oxigênio em alto fluxo e triptano de ação rápida (SC ou spray nasal) tratam a crise; verapamil é usado na prevenção, não na crise aguda.`},
+  {q:`Sobre os Critérios de Budapeste para CRPS, é correto afirmar que:`,
+   options:[`Exigem exclusivamente exame de imagem positivo`,`Requerem sintomas e sinais em pelo menos 3 das 4 categorias (sensitiva, autonômica, motora, trófica)`,`Aplicam-se apenas a membros superiores`,`Dispensam a exclusão de outros diagnósticos`],
+   correct:1,
+   exp:`O diagnóstico é clínico: sintomas relatados + sinais ao exame em ≥3 das 4 categorias, sem outro diagnóstico que explique melhor o quadro.`}
+];
+
+let quizIndex=0, quizScore=0;
+const quizShell=document.getElementById("quizShell");
+
+function renderQuiz(){
+  if(!quizShell) return;
+  if(quizIndex>=QUIZ.length){
+    quizShell.innerHTML=
+      '<div class="quiz-score">'+
+        '<div class="big">'+quizScore+'/'+QUIZ.length+'</div>'+
+        '<p>respostas corretas</p>'+
+        '<button class="flash-btn" id="quizRestart" type="button">Refazer quiz</button>'+
+      '</div>';
+    document.getElementById("quizRestart").addEventListener("click", ()=>{ quizIndex=0; quizScore=0; renderQuiz(); });
+    return;
+  }
+  const q=QUIZ[quizIndex];
+  const pct=(quizIndex/QUIZ.length)*100;
+  quizShell.innerHTML=
+    '<div class="quiz-progress">'+
+      '<span>Questão '+(quizIndex+1)+' de '+QUIZ.length+'</span>'+
+      '<div class="quiz-progress-bar"><span style="width:'+pct+'%"></span></div>'+
+      '<span>Acertos: '+quizScore+'</span>'+
+    '</div>'+
+    '<div class="quiz-card">'+
+      '<div class="quiz-q"></div>'+
+      '<div id="quizOpts"></div>'+
+      '<div class="quiz-feedback" id="quizFeedback"></div>'+
+      '<div class="quiz-footer"><span></span><button class="flash-btn" id="quizNext" type="button" style="display:none;">'+(quizIndex===QUIZ.length-1?"Ver resultado":"Próxima →")+'</button></div>'+
+    '</div>';
+  quizShell.querySelector(".quiz-q").textContent=q.q;
+
+  const optsWrap=document.getElementById("quizOpts");
+  q.options.forEach((optText, idx)=>{
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.className="quiz-opt";
+    btn.textContent=optText;
+    btn.addEventListener("click", ()=>{
+      const allBtns=optsWrap.querySelectorAll(".quiz-opt");
+      allBtns.forEach(b=>b.disabled=true);
+      if(idx===q.correct){
+        btn.classList.add("correct");
+        quizScore++;
+      }else{
+        btn.classList.add("incorrect");
+        allBtns[q.correct].classList.add("correct");
+      }
+      const fb=document.getElementById("quizFeedback");
+      fb.innerHTML="<b>"+(idx===q.correct?"Correto! ":"Incorreto. ")+"</b>"+q.exp;
+      fb.classList.add("show");
+      document.getElementById("quizNext").style.display="inline-flex";
+    });
+    optsWrap.appendChild(btn);
+  });
+
+  document.getElementById("quizNext").addEventListener("click", ()=>{ quizIndex++; renderQuiz(); });
+}
+if(quizShell) renderQuiz();
+
+/* ============================================================
+   7. ORDENAR SEQUÊNCIAS (drag & drop)
+============================================================ */
+const SEQUENCES={
+  processos:{
+    label:"Processos da Nocicepção",
+    items:[
+      {id:"p1", text:"Estímulo nóxico"},
+      {id:"p2", text:"Transdução — conversão do estímulo em potencial de receptor"},
+      {id:"p3", text:"Transmissão — condução do impulso até o SNC"},
+      {id:"p4", text:"Modulação — amplificação/supressão no corno dorsal"},
+      {id:"p5", text:"Percepção — construção consciente da dor"}
+    ]
+  },
+  via:{
+    label:"Via Nociceptiva Ascendente",
+    items:[
+      {id:"v1", text:"Nociceptor"},
+      {id:"v2", text:"Gânglio da raiz dorsal (1º neurônio)"},
+      {id:"v3", text:"Corno dorsal (lâminas de Rexed)"},
+      {id:"v4", text:"Decussação"},
+      {id:"v5", text:"Trato espinotalâmico (2º neurônio)"},
+      {id:"v6", text:"Tálamo VPL/VPM (3º neurônio)"},
+      {id:"v7", text:"Córtex & neuromatriz"}
+    ]
+  },
+  walleriana:{
+    label:"Degeneração Walleriana",
+    items:[
+      {id:"w1", text:"Lesão axonal"},
+      {id:"w2", text:"Fragmentação do axônio e mielina distal"},
+      {id:"w3", text:"Limpeza por macrófagos e células de Schwann"},
+      {id:"w4", text:"Formação das bandas de Büngner"},
+      {id:"w5", text:"Regeneração axonal (~1 mm/dia)"}
+    ]
+  },
+  imagetica:{
+    label:"Imagética Motora Graduada",
+    items:[
+      {id:"i1", text:"Reconhecimento de lateralidade"},
+      {id:"i2", text:"Imagética motora"},
+      {id:"i3", text:"Terapia do espelho"}
+    ]
+  }
+};
+
+let currentSeqKey=Object.keys(SEQUENCES)[0];
+const orderSelect=document.getElementById("orderSelect");
+const orderList=document.getElementById("orderList");
+const orderResult=document.getElementById("orderResult");
+
+function getDragAfterElement(container, y){
+  const els=[...container.querySelectorAll(".order-item:not(.dragging)")];
+  return els.reduce((closest, child)=>{
+    const box=child.getBoundingClientRect();
+    const offset=y-box.top-box.height/2;
+    if(offset<0 && offset>closest.offset) return {offset, element:child};
+    return closest;
+  }, {offset:-Infinity, element:null}).element;
+}
+
+function refreshNumbers(){
+  [...orderList.children].forEach((li, idx)=>{
+    li.querySelector(".num").textContent=idx+1;
+  });
+}
+
+function attachDragHandlers(){
+  orderList.querySelectorAll(".order-item").forEach(item=>{
+    item.addEventListener("dragstart", ()=>{ item.classList.add("dragging"); });
+    item.addEventListener("dragend", ()=>{ item.classList.remove("dragging"); refreshNumbers(); });
+  });
+}
+
+orderList && orderList.addEventListener("dragover", (e)=>{
+  e.preventDefault();
+  const dragging=orderList.querySelector(".dragging");
+  if(!dragging) return;
+  const after=getDragAfterElement(orderList, e.clientY);
+  if(after==null) orderList.appendChild(dragging);
+  else orderList.insertBefore(dragging, after);
+});
+
+function renderOrderList(seqKey){
+  const seq=SEQUENCES[seqKey];
+  const items=shuffleArray([...seq.items]);
+  orderList.innerHTML="";
+  items.forEach((it, idx)=>{
+    const li=document.createElement("li");
+    li.className="order-item";
+    li.draggable=true;
+    li.dataset.id=it.id;
+    li.innerHTML='<span class="num">'+(idx+1)+'</span><span>'+it.text+'</span>';
+    orderList.appendChild(li);
+  });
+  attachDragHandlers();
+  orderResult.textContent="";
+}
+
+function renderOrderSelect(){
+  orderSelect.innerHTML="";
+  Object.keys(SEQUENCES).forEach(key=>{
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.textContent=SEQUENCES[key].label;
+    if(key===currentSeqKey) btn.classList.add("active");
+    btn.addEventListener("click", ()=>{
+      currentSeqKey=key;
+      orderSelect.querySelectorAll("button").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      renderOrderList(key);
+    });
+    orderSelect.appendChild(btn);
+  });
+}
+
+if(orderSelect && orderList){
+  renderOrderSelect();
+  renderOrderList(currentSeqKey);
+
+  document.getElementById("orderCheck").addEventListener("click", ()=>{
+    const correctIds=SEQUENCES[currentSeqKey].items.map(i=>i.id);
+    const currentIds=[...orderList.children].map(li=>li.dataset.id);
+    let correctCount=0;
+    [...orderList.children].forEach((li, idx)=>{
+      if(currentIds[idx]===correctIds[idx]){
+        li.classList.add("correct"); li.classList.remove("incorrect"); correctCount++;
+      }else{
+        li.classList.add("incorrect"); li.classList.remove("correct");
+      }
+    });
+    orderResult.textContent=correctCount+" de "+correctIds.length+" itens na posição correta";
+  });
+
+  document.getElementById("orderReset").addEventListener("click", ()=>renderOrderList(currentSeqKey));
+}
+
+})();
+</script>
+
+</body>
+</html>

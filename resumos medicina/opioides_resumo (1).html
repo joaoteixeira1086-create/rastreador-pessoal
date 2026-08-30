@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fármacos Opioides — Resumo Completo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1117;
+  --bg-panel:#151b23;
+  --bg-card:#161d27;
+  --text:#dbe2ea;
+  --text-dim:#8b96a5;
+  --line:#26303c;
+
+  --c-hist:#c9a24b;     /* história / âmbar */
+  --c-def:#5aa9e6;      /* definições / azul */
+  --c-receptor:#7ec98f; /* receptores / verde */
+  --c-mecanismo:#c77dd2;/* mecanismo / roxo */
+  --c-classif:#e08a4e;  /* classificação / laranja */
+  --c-farmaco:#4fc3c0;  /* farmacocinética / ciano */
+  --c-adverso:#e2617b;  /* efeitos adversos / rosa-vermelho */
+  --c-interacao:#d4b83f;/* interações / dourado */
+  --c-tolerancia:#8f9de0;/* tolerância / índigo */
+  --c-intox:#e15656;    /* intoxicação / vermelho */
+  --c-transtorno:#b06fd6;/* transtorno de uso / violeta */
+  --c-tratamento:#4fbf7a;/* tratamento / verde-esmeralda */
+}
+
+*{box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(90,169,230,0.06), transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(199,125,210,0.06), transparent 40%),
+    var(--bg);
+  color:var(--text);
+  font-family: 'Georgia', 'Times New Roman', serif;
+  line-height:1.65;
+  padding:0 0 80px 0;
+}
+
+/* ---------- SIDEBAR ---------- */
+.layout{
+  display:flex;
+  max-width:1280px;
+  margin:0 auto;
+}
+.sidebar{
+  width:250px;
+  flex-shrink:0;
+  position:sticky;
+  top:0;
+  align-self:flex-start;
+  height:100vh;
+  overflow-y:auto;
+  padding:36px 18px 36px 28px;
+  border-right:1px solid var(--line);
+  scrollbar-width:thin;
+}
+.sidebar-title{
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic;
+  font-size:19px;
+  color:#f0f3f7;
+  margin-bottom:4px;
+}
+.sidebar-sub{
+  font-size:11px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  margin-bottom:24px;
+}
+.sidebar nav a{
+  display:block;
+  text-decoration:none;
+  color:var(--text-dim);
+  font-size:13.5px;
+  padding:7px 10px;
+  border-left:2px solid transparent;
+  border-radius:0 4px 4px 0;
+  margin-bottom:2px;
+  transition:all .15s ease;
+  font-family:Georgia, serif;
+}
+.sidebar nav a:hover{
+  color:var(--text);
+  border-left-color:var(--line);
+  background:rgba(255,255,255,0.03);
+}
+.sidebar nav a .n{
+  color:var(--text-dim);
+  font-size:11px;
+  margin-right:6px;
+}
+.main-col{
+  flex:1;
+  min-width:0;
+}
+@media (max-width:960px){
+  .sidebar{display:none;}
+}
+
+h1,h2,h3,h4, .titlefont{
+  font-family:'Cormorant Garamond', 'Georgia', serif;
+  font-weight:600;
+  letter-spacing:0.3px;
+}
+
+.wrap{max-width:980px;margin:0 auto;padding:0 28px;}
+
+/* ---------- HEADER ---------- */
+header.hero{
+  padding:70px 28px 50px 28px;
+  text-align:center;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg, rgba(90,169,230,0.05), transparent);
+}
+header.hero .eyebrow{
+  font-family:'Cormorant Garamond', serif;
+  text-transform:uppercase;
+  letter-spacing:4px;
+  font-size:13px;
+  color:var(--text-dim);
+  margin-bottom:14px;
+}
+header.hero h1{
+  font-size:58px;
+  margin:0 0 12px 0;
+  color:#f0f3f7;
+  font-style:italic;
+}
+header.hero p.sub{
+  font-size:19px;
+  color:var(--text-dim);
+  font-family:'Cormorant Garamond', serif;
+  margin:0;
+}
+header.hero .meta{
+  margin-top:22px;
+  font-size:13px;
+  color:var(--text-dim);
+  font-family:Georgia, serif;
+  letter-spacing:0.5px;
+}
+
+/* ---------- SECTION HEADER: tag + linha ---------- */
+.section{
+  margin-top:64px;
+}
+.section-head{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin-bottom:24px;
+}
+.section-tag{
+  font-family:'Cormorant Garamond', serif;
+  font-size:26px;
+  font-weight:700;
+  font-style:italic;
+  white-space:nowrap;
+  padding-bottom:2px;
+}
+.section-head hr{
+  flex:1;
+  border:none;
+  border-top:1px solid var(--line);
+  margin:0;
+}
+.section-num{
+  font-size:12px;
+  letter-spacing:2px;
+  color:var(--text-dim);
+  font-family:Georgia, serif;
+  text-transform:uppercase;
+}
+
+/* ---------- CARDS ---------- */
+.card{
+  background:var(--bg-card);
+  border:1px solid var(--line);
+  border-top:3px solid var(--accent, var(--c-def));
+  border-radius:6px;
+  padding:22px 24px;
+  margin-bottom:18px;
+}
+.card h3{
+  margin-top:0;
+  font-size:23px;
+  color:#f0f3f7;
+}
+.card h4{
+  font-size:18px;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.card p{margin:8px 0;}
+.card ul, .card ol{margin:8px 0;padding-left:22px;}
+.card li{margin-bottom:5px;}
+
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+@media (max-width:720px){
+  .grid2{grid-template-columns:1fr;}
+  header.hero h1{font-size:40px;}
+}
+
+/* ---------- ALERT / HIGHLIGHT (outline style) ---------- */
+.alert{
+  border:1px solid var(--accent, var(--c-adverso));
+  background:transparent;
+  border-radius:6px;
+  padding:14px 18px;
+  margin:14px 0;
+  font-size:15.5px;
+}
+.alert .alert-title{
+  font-family:'Cormorant Garamond', serif;
+  font-weight:700;
+  font-style:italic;
+  font-size:17px;
+  margin-bottom:4px;
+  color:var(--accent, var(--c-adverso));
+}
+
+/* ---------- TABLE ---------- */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:14px 0;
+  font-size:14.5px;
+}
+th,td{
+  border:1px solid var(--line);
+  padding:9px 10px;
+  text-align:left;
+  vertical-align:top;
+}
+th{
+  background:rgba(255,255,255,0.03);
+  color:var(--text);
+  font-family:'Cormorant Garamond', serif;
+  font-size:15px;
+  font-weight:700;
+}
+tr:nth-child(even) td{background:rgba(255,255,255,0.015);}
+
+/* ---------- TAGS/pills ---------- */
+.pill{
+  display:inline-block;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:2px 10px;
+  font-size:12px;
+  color:var(--text-dim);
+  margin-right:6px;
+}
+
+/* ---------- misc ---------- */
+.small{font-size:13px;color:var(--text-dim);}
+.ref{font-size:12.5px;color:var(--text-dim);font-style:italic;margin-top:6px;}
+.divider-soft{border:none;border-top:1px dashed var(--line);margin:18px 0;}
+.caso-box{
+  border:1px solid var(--c-hist);
+  border-radius:6px;
+  padding:20px 22px;
+  margin:22px 0 0 0;
+}
+.caso-box h4{color:var(--c-hist);margin-top:0;}
+
+footer{
+  text-align:center;
+  margin-top:80px;
+  padding-top:24px;
+  border-top:1px solid var(--line);
+  color:var(--text-dim);
+  font-size:13px;
+}
+
+code{
+  background:rgba(255,255,255,0.06);
+  padding:1px 6px;
+  border-radius:4px;
+  font-size:0.92em;
+}
+
+/* ---------- FLOWCHART ---------- */
+.flow{
+  display:flex;
+  align-items:stretch;
+  gap:0;
+  margin:22px 0;
+  flex-wrap:wrap;
+}
+.flow-step{
+  flex:1;
+  min-width:190px;
+  border:1px solid var(--accent, var(--line));
+  border-top:3px solid var(--accent, var(--c-tratamento));
+  border-radius:6px;
+  padding:16px 16px;
+  background:var(--bg-card);
+  position:relative;
+}
+.flow-step h5{
+  margin:0 0 6px 0;
+  font-family:'Cormorant Garamond', serif;
+  font-size:18px;
+  font-style:italic;
+  color:var(--accent, var(--c-tratamento));
+}
+.flow-step p{margin:0;font-size:13.5px;color:var(--text-dim);}
+.flow-arrow{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:36px;
+  color:var(--text-dim);
+  font-size:22px;
+  font-family:Georgia, serif;
+}
+@media (max-width:720px){
+  .flow{flex-direction:column;}
+  .flow-arrow{transform:rotate(90deg);padding:2px 0;}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">Farmacologia — 5º Semestre de Medicina</div>
+  <h1>Fármacos Opioides</h1>
+  <p class="sub">Do ópio à naloxona: farmacologia, uso clínico e segurança do paciente</p>
+  <div class="meta">Baseado no material de Felipe Vanz (2026) · Goodman &amp; Gilman · Katzung · Rang &amp; Dale · UpToDate</div>
+</header>
+
+<div class="layout">
+<aside class="sidebar">
+  <div class="sidebar-title">Fármacos Opioides</div>
+  <div class="sidebar-sub">Sumário do resumo</div>
+  <nav>
+    <a href="#s01"><span class="n">01</span>História &amp; Definições</a>
+    <a href="#s02"><span class="n">02</span>Sistema Opioide Endógeno</a>
+    <a href="#s03"><span class="n">03</span>Mecanismo de Ação</a>
+    <a href="#s04"><span class="n">04</span>Classificação &amp; Fármacos</a>
+    <a href="#s05"><span class="n">05</span>Posologia &amp; Farmacocinética</a>
+    <a href="#s06"><span class="n">06</span>Efeitos Adversos</a>
+    <a href="#s07"><span class="n">07</span>Interações Farmacológicas</a>
+    <a href="#s08"><span class="n">08</span>Tolerância</a>
+    <a href="#s09"><span class="n">09</span>Otimização da Analgesia</a>
+    <a href="#s10"><span class="n">10</span>Intoxicação Aguda</a>
+    <a href="#s11"><span class="n">11</span>Transtorno por Uso</a>
+    <a href="#s12"><span class="n">12</span>Tratamento do Transtorno</a>
+    <a href="#s13"><span class="n">13</span>Síntese Integrativa</a>
+  </nav>
+</aside>
+
+<div class="main-col">
+<div class="wrap">
+
+  <!-- CASO CLÍNICO -->
+  <div class="caso-box">
+    <h4>Caso Clínico Norteador</h4>
+    <p>Homem de 36 anos, sem comorbidades, dá entrada no departamento de emergência com <strong>fratura de fêmur</strong> após acidente automobilístico, queixando-se de dor intensa. Com base na escada analgésica da OMS, prescreve-se <strong>Morfina 0,05–0,1 mg/kg IV</strong> associada a <strong>Dipirona 1 g IV</strong> (estratégia poupadora de opioide), com reavaliação da dor em 15 minutos.</p>
+    <p class="small">Este caso ilustra o uso racional de opioides fortes na dor aguda intensa, a estratégia de "opioid-sparing" com analgésicos não opioides e a importância da reavaliação sistemática — conceitos que serão retomados ao longo deste resumo.</p>
+  </div>
+
+  <!-- SEÇÃO 1: HISTÓRIA E DEFINIÇÕES -->
+  <div class="section" id="s01">
+    <div class="section-head">
+      <span class="section-tag" style="color:var(--c-hist)">01 · História &amp; Definições</span>
+      <hr>
+    </div>
+
+    <div class="card" style="--accent:var(--c-hist)">
+      <h3>Contextualização histórica</h3>
+      <p>A relação do ser humano com a <em>Papaver somniferum</em> (papoula) é milenar, e compreender essa trajetória ajuda a entender por que os opioides permanecem, até hoje, os analgésicos mais potentes disponíveis — e também os mais associados a risco de dependência.</p>
+      <ul>
+        <li><strong>~4.000 a.C.</strong> — Os sumérios já cultivavam a papoula, chamando-a de "planta da alegria".</li>
+        <li><strong>~1.500 a.C.</strong> — O Papiro de Ebers já registrava seus efeitos analgésico e sedativo.</li>
+        <li><strong>~300 a.C.</strong> — Os árabes introduzem o ópio na medicina como "o mais poderoso dos analgésicos" da época.</li>
+        <li><strong>1700</strong> — Publicação do primeiro livro sobre dependência ao ópio.</li>
+        <li><strong>1804</strong> — Friedrich Sertürner isola a <strong>morfina</strong>, nomeando-a em homenagem a Morfeu, deus grego dos sonhos.</li>
+        <li><strong>1808</strong> — William Cullen descreve o efeito analgésico do ópio, mas o mecanismo permanecia desconhecido.</li>
+        <li><strong>1972</strong> — Descoberta de que a <strong>naloxona</strong> reverte a analgesia induzida por opioides.</li>
+        <li><strong>1973</strong> — Identificação dos sítios de ligação (receptores opioides) no cérebro.</li>
+        <li><strong>1976</strong> — Isolamento das <strong>endorfinas</strong>, os ligantes endógenos desses receptores.</li>
+      </ul>
+      <p class="ref">Fonte: material de aula (Felipe Vanz, 2026); Rang &amp; Dale, 2020.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card" style="--accent:var(--c-def)">
+        <h4>Opiáceo</h4>
+        <p>Termo que descreve a <strong>morfina, a codeína</strong> e compostos estruturalmente relacionados, naturalmente encontrados no ópio — como a tebaína e a papaverina.</p>
+      </div>
+      <div class="card" style="--accent:var(--c-def)">
+        <h4>Opioide</h4>
+        <p>Termo mais amplo: qualquer composto que se liga diretamente ao sítio ortostérico dos <strong>receptores opioides</strong>, incluindo os opiáceos naturais, os sintéticos, os semissintéticos e os peptídeos opioides endógenos.</p>
+      </div>
+    </div>
+
+    <div class="alert" style="--accent:var(--c-def)">
+      <div class="alert-title">Por que isso importa clinicamente</div>
+      Todo opiáceo é opioide, mas nem todo opioide é opiáceo. Essa distinção evita confusões de nomenclatura em prova e na prática — por exemplo, o fentanil é um opioide sintético, e não um opiáceo.
+    </div>
+    <p class="ref">Fonte: Goodman &amp; Gilman, 14ª ed., 2025; Katzung, 15ª ed., 2023.</p>
+  </div>
+
+  <!-- SEÇÃO 2: SISTEMA OPIOIDE ENDÓGENO -->
+  <div class="section" id="s02">
+    <div class="section-head">
+      <span class="section-tag" style="color:var(--c-receptor)">02 · Sistema Opioide Endógeno</span>
+      <hr>
+    </div>
+
+    <div class="card" style="--accent:var(--c-receptor)">
+      <h3>Receptores opioides</h3>
+      <p>Existem três famílias clássicas de receptores opioides, todos acoplados à proteína G (Gi/o), cada um com subtipos e um perfil funcional distinto:</p>
+      <table>
+        <tr><th>Receptor</th><th>Subtipos</th><th>Principais efeitos associados</th></tr>
+        <tr><td><strong>Mu (µ) — MOR</strong></td><td>µ1, µ2, µ3</td><td>Analgesia supraespinal e espinal, euforia, depressão respiratória, dependência física, miose, redução da motilidade GI</td></tr>
+        <tr><td><strong>Delta (δ) — DOR</strong></td><td>δ1, δ2</td><td>Analgesia espinal e periférica, modulação do humor</td></tr>
+        <tr><td><strong>Kappa (κ) — KOR</strong></td><td>κ1, κ2, κ3</td><td>Analgesia espinal e periférica, disforia, sedação, efeitos alucinógenos</td></tr>
+      </table>
+      <p class="ref">Fonte: Katzung, 15ª ed., 2023; Rang &amp; Dale, 10ª ed., 2025.</p>
+    </div>
+
+    <div class="card" style="--accent:var(--c-receptor)">
+      <h3>Peptídeos opioides endógenos</h3>
+      <p>São peptídeos produzidos pelo próprio organismo, com propriedades farmacológicas semelhantes às dos opioides exógenos, cada um com preferência por um subtipo de receptor:</p>
+      <ul>
+        <li><strong>β-endorfina</strong> — preferência µ &gt; δ</li>
+        <li><strong>Encefalina</strong> — preferência δ &gt; µ</li>
+        <li><strong>Dinorfina</strong> — preferência κ</li>
+      </ul>
+    </div>
+
+    <div class="card" style="--accent:var(--c-receptor)">
+      <h3>Localização e envolvimento funcional dos receptores</h3>
+      <table>
+        <tr><th>Função</th><th>Localização</th><th>µ</th><th>δ</th><th>κ</th></tr>
+        <tr><td>Analgesia supraespinal</td><td>Substância cinzenta periaquedutal (SCP)</td><td>+++</td><td>−(?)</td><td>−</td></tr>
+        <tr><td>Analgesia espinal</td><td>Corno posterior da medula</td><td>++</td><td>++</td><td>+</td></tr>
+        <tr><td>Analgesia periférica</td><td>Terminais periféricos</td><td>++</td><td>−</td><td>++</td></tr>
+        <tr><td>Depressão respiratória</td><td>Bulbo</td><td>+++</td><td>−</td><td>−</td></tr>
+        <tr><td>Miose</td><td>Pupila</td><td>++</td><td>−</td><td>+</td></tr>
+        <tr><td>Euforia</td><td>ATV, núcleo accumbens</td><td>+++</td><td>−</td><td>−</td></tr>
+        <tr><td>Disforia</td><td>ATV, núcleo accumbens</td><td>−</td><td>−</td><td>+++</td></tr>
+        <tr><td>Sedação</td><td>Locus coeruleus</td><td>++</td><td>−</td><td>++</td></tr>
+        <tr><td>Dependência física</td><td>—</td><td>+++</td><td>−</td><td>−</td></tr>
+        <tr><td>Redução da motilidade intestinal</td><td>Neurônios entéricos</td><td>++</td><td>++</td><td>+</td></tr>
+        <tr><td>Náusea e vômito</td><td>Zona de gatilho bulbar</td><td>+</td><td>+</td><td>−</td></tr>
+      </table>
+      <p class="ref">Fonte: Rang &amp; Dale, 10ª ed., 2025; Graeff &amp; Guimarães, 2ª ed., 2012.</p>
+    </div>
+
+    <div class="alert" style="--accent:var(--c-receptor)">
+      <div class="alert-title">Correlação clínica</div>
+      É por causa do domínio quase absoluto do receptor µ sobre analgesia, euforia e depressão respiratória que praticamente todos os analgésicos opioides disponíveis na prática atuam predominantemente como agonistas µ — e é por isso também que esse receptor concentra o maior risco de dependência e de óbito por superdosagem.
+    </div>
+  </div>
+
+  <!-- SEÇÃO 3: MECANISMO DE AÇÃO -->
+  <div class="section" id="s03">
+    <div class="section-head">
+      <span class="section-tag" style="color:var(--c-mecanismo)">03 · Mecanismo de Ação</span>
+      <hr>
+    </div>
+
+    <div class="card" style="--accent:var(--c-mecanismo)">
+      <h3>Sinalização intracelular</h3>
+      <p>Os receptores opioides são receptores metabotrópicos acoplados à proteína <strong>Gi/o</strong>. Quando o opioide se liga ao receptor, ocorrem duas ações diretas bem estabelecidas:</p>
+      <ol>
+        <li><strong>Fechamento de canais de Ca²⁺ voltagem-dependentes</strong> nos terminais nervosos pré-sinápticos → reduz a liberação de neurotransmissores (ex.: glutamato).</li>
+        <li><strong>Abertura de canais de K⁺</strong> → hiperpolarização da membrana pós-sináptica → inibição do neurônio pós-sináptico.</li>
+      </ol>
+      <p>Além disso, a subunidade αi inibe a <strong>adenilato ciclase (AC)</strong>, reduzindo a produção de <strong>cAMP</strong> e, consequentemente, a ativação da <strong>PKA</strong>, o que diminui a fosforilação de múltiplas proteínas-alvo envolvidas na excitabilidade neuronal e na liberação de neurotransmissores.</p>
+      <p><strong>Resultado funcional:</strong> inibição pré-sináptica (menos neurotransmissor liberado) somada a hiperpolarização pós-sináptica (neurônio menos excitável) = bloqueio da transmissão do estímulo nociceptivo.</p>
+      <p class="ref">Fonte: Katzung, 15ª ed., 2023.</p>
+    </div>
+
+    <div class="card" style="--accent:var(--c-mecanismo)">
+      <h3>Sítios de ação ao longo da via da dor</h3>
+      <p>Os opioides atuam em múltiplos níveis do sistema nociceptivo, o que explica sua eficácia analgésica ampla:</p>
+      <ul>
+        <li><strong>Nível periférico</strong> — inibem a transdução do sinal nos nociceptores.</li>
+        <li><strong>Nível espinal</strong> — inibem a condução/transmissão no corno posterior da medula.</li>
+        <li><strong>Nível supraespinal</strong> — ativam a substância cinzenta periaquedutal (SCP), que projeta para o núcleo magno da rafe (NMR, via serotoninérgica) e para o locus coeruleus (LC, via noradrenérgica), reforçando a <strong>modulação descendente inibitória da dor</strong>.</li>
+        <li><strong>Nível cortical</strong> — reduzem diretamente a percepção da dor.</li>
+      </ul>
+      <p class="ref">Fonte: adaptado de clinicalgate.com/acute-pain.</p>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 4: CLASSIFICAÇÃO E AGENTES -->
+  <div class="section" id="s04">
+    <div class="section-head">
+      <span class="section-tag" style="color:var(--c-classif)">04 · Classificação &amp; Principais Fármacos</span>
+      <hr>
+    </div>
+
+    <div class="card" style="--accent:var(--c-classif)">
+      <h3>Opioides "fracos" x "fortes"</h3>
+      <p>Tradicionalmente, os opioides são classificados de acordo com a potência analgésica relativa à morfina oral:</p>
+      <ul>
+        <li><strong>Fracos:</strong> codeína (potência ≈ 0,13) e tramadol (≈ 0,20–0,24)</li>
+        <li><strong>Fortes:</strong> morfina (1,0–3,0), oxicodona (1,5–3,0), metadona (4,7–13,5), hidromorfona (5–15), buprenorfina (38,8–85,0), fentanil (100)</li>
+      </ul>
+      <div class="alert" style="--accent:var(--c-classif)">
+        <div class="alert-title">Erro conceitual frequente</div>
+        "Fraco" não significa "sem risco". Opioides fracos também produzem efeitos adversos relevantes e apresentam risco real de dependência — a classificação se refere apenas à potência analgésica, não à segurança.
+      </div>
+      <p class="ref">Fonte: Australian Institute of Health and Welfare, 2018; Ekelin &amp; Hansson, 2018.</p>
+    </div>
+
+    <div class="card" style="--accent:var(--c-classif)">
+      <h3>Perfil receptorial dos principais agentes clínicos</h3>
+      <table>
+        <tr><th>Fármaco</th><th>Uso principal</th><th>Perfil receptorial</th></tr>
+        <tr><td>Morfina</td><td>Dor aguda e crônica, amplamente usada</td><td>Agonista µ (+++), δ (+)</td></tr>
+        <tr><td>Hidromorfona</td><td>Dor aguda e crônica</td><td>Agonista µ (+++), δ (+)</td></tr>
+        <tr><td>Metadona</td><td>Dor crônica; manutenção de dependentes (doses baixas)</td><td>Agonista µ (+++)</td></tr>
+        <tr><td>Buprenorfina</td><td>Dor aguda/crônica; manutenção de dependentes</td><td>Agonista <strong>parcial</strong> µ, antagonista κ</td></tr>
+        <tr><td>Pentazocina</td><td>Dor aguda</td><td>Agonista parcial µ, agonista κ (+)</td></tr>
+        <tr><td>Petidina (meperidina)</td><td>Dor aguda</td><td>Agonista µ (+++)</td></tr>
+        <tr><td>Fentanil</td><td>Dor aguda; anestesia</td><td>Agonista µ (+++)</td></tr>
+        <tr><td>Oxicodona</td><td>Dor crônica e aguda</td><td>Agonista µ (++)</td></tr>
+        <tr><td>Codeína</td><td>Dor moderada</td><td>Agonista µ fraco (pró-fármaco)</td></tr>
+        <tr><td>Tramadol</td><td>Dor aguda (pós-operatória) e crônica</td><td>Agonista µ fraco (~30% da ação) + inibição de recaptação de serotonina/noradrenalina</td></tr>
+        <tr><td>Naloxona</td><td>Antagonista — reversão de intoxicação</td><td>Antagonista µ, δ, κ</td></tr>
+      </table>
+      <p class="ref">Fonte: Goodman &amp; Gilman, 13ª ed., 2018; Rang &amp; Dale, 9ª ed., 2020; Katzung, 15ª ed., 2021.</p>
+    </div>
+
+    <div class="card" style="--accent:var(--c-classif)">
+      <h3>Formulações comerciais de referência (Brasil)</h3>
+      <ul>
+        <li><strong>Sulfato de morfina</strong> — DIMORF® (solução injetável, oral e comprimidos) / DIMORF LC® (liberação retardada)</li>
+        <li><strong>Cloridrato de oxicodona</strong> — OXYCONTIN® (liberação prolongada)</li>
+        <li><strong>Fentanila</strong> — DUROGESIC D-TRANS® (adesivo transdérmico) / FENTANEST® (injetável)</li>
+        <li><strong>Citrato de sufentanila</strong> — SUFENTA® (injetável)</li>
+        <li><strong>Cloridrato de metadona</strong> — MYTEDOM® (injetável e comprimidos)</li>
+        <li><strong>Cloridrato de petidina/meperidina</strong> — DOLOSAL® (injetável)</li>
+        <li><strong>Fosfato de codeína</strong> — CODEIN® (comprimidos e solução oral)</li>
+        <li><strong>Cloridrato de tramadol</strong> — TRAMAL® (oral, cápsula e injetável)</li>
+      </ul>
+      <p class="small">*A petidina é chamada de meperidina nos EUA.</p>
+    </div>
+
+    <div class="card" style="--accent:var(--c-classif)">
+      <h3>Fentanil e sufentanila na anestesia</h3>
+      <p>A <strong>fentanila</strong> (100× mais potente que a morfina) e a <strong>sufentanila</strong> (1000× mais potente) são adjuvantes anestésicos muito populares por associarem:</p>
+      <ul>
+        <li>Tempo curto para atingir efeito analgésico máximo (~5 min)</li>
+        <li>Finalização rápida do efeito após doses em bolus</li>
+        <li>Segurança cardiovascular — não liberam histamina diretamente, com efeitos mínimos no miocárdio</li>
+        <li>Capacidade de reduzir a necessidade de dosagem de anestésicos voláteis</li>
+      </ul>
+      <p class="ref">Fonte: Goodman &amp; Gilman, 14ª ed., 2025.</p>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 5: POSOLOGIA -->
+  <div class="section" id="s05">
+    <div class="section-head">
+      <span class="section-tag" style="color:var(--c-farmaco)">05 · Posologia &amp; Farmacocinética</span>
+      <hr>
+    </div>
+
+    <div class="card" style="--accent:var(--c-farmaco)">
+      <h3>Doses equianalgésicas de referência</h3>
+      <table>
+        <tr><th>Fármaco</th><th>Dose oral equianalgésica</th><th>Dose parenteral equianalgésica</th></tr>
+        <tr><td>Morfina</td><td>30 mg/3–4h</td><td>10 mg/3–4h</td></tr>
+        <tr><td>Codeína</td><td>130 mg/3–4h</td><td>75 mg/3–4h</td></tr>
+        <tr><td>Hidromorfona</td><td>6 mg/3–4h</td><td>1,5 mg/3–4h</td></tr>
+        <tr><td>Meperidina</td><td>300 mg/2–3h</td><td>100 mg/3h</td></tr>
+        <tr><td>Metadona</td><td>10 mg/6–8h</td><td>10 mg/6–8h</td></tr>
+        <tr><td>Oxicodona</td><td>20 mg/3–4h</td><td>indisponível</td></tr>
+        <tr><td>Tramadol</td><td>100 mg</td><td>100 mg</td></tr>
+        <tr><td>Fentanila transdérmica</td><td colspan="2">adesivo de 72h (25 µg/h) ≈ morfina 50 mg/24h</td></tr>
+      </table>
+      <p class="small">Tabela de conversão essencial para rotação de opioides e prescrição segura — sempre consultar tabela completa ao converter doses na prática.</p>
+      <p class="ref">Fonte: Goodman &amp; Gilman, 13ª ed., 2018.</p>
+    </div>
+
+    <div class="card" style="--accent:var(--c-farmaco)">
+      <h3>Absorção, distribuição e eliminação</h3>
+      <ul>
+        <li>Em geral, os opioides são <strong>moderadamente bem absorvidos</strong> pelo trato gastrointestinal, mas apresentam <strong>variabilidade de metabolismo de primeira passagem</strong> — o que justifica a diferença marcante entre dose oral e parenteral equianalgésica.</li>
+        <li><strong>Atravessam a placenta</strong> e alcançam tecidos fetais; como o neonato tem menor capacidade de biotransformação, há risco de <strong>depressão respiratória neonatal</strong>, tratável com naloxona.</li>
+        <li>A via <strong>peridural</strong> é popular no trabalho de parto por reduzir a transferência placentária e o risco de depressão respiratória neonatal.</li>
+      </ul>
+      <p class="ref">Fonte: Goodman &amp; Gilman, 14ª ed., 2024.</p>
+    </div>
+
+    <div class="card" style="--accent:var(--c-farmaco)">
+      <h3>Metabolismo e meia-vida dos principais agentes</h3>
+      <table>
+        <tr><th>Fármaco</th><th>Via metabólica principal</th><th>Meia-vida</th><th>Eliminação urinária</th></tr>
+        <tr><td>Morfina</td><td>UGT (metabólito ativo: morfina-6-glicuronídeo)</td><td>3–4h</td><td>90%</td></tr>
+        <tr><td>Hidromorfona</td><td>UGT</td><td>2–4h</td><td>75%</td></tr>
+        <tr><td>Metadona</td><td>CYP3A4</td><td>7–59h</td><td>&lt;10%</td></tr>
+        <tr><td>Buprenorfina</td><td>CYP3A4</td><td>31–42h</td><td>30%</td></tr>
+        <tr><td>Fentanil</td><td>CYP3A4</td><td>1–2h</td><td>75%</td></tr>
+        <tr><td>Oxicodona</td><td>CYP2D6 (metabólito: oximorfona)</td><td>3–4h</td><td>19–64%</td></tr>
+        <tr><td>Codeína</td><td>CYP2D6 (pró-fármaco → morfina)</td><td>—</td><td>90%</td></tr>
+        <tr><td>Tramadol</td><td>CYP2D6 (metabólito: O-desmetiltramadol)</td><td>4–6h</td><td>90%</td></tr>
+        <tr><td>Naloxona</td><td>UGT</td><td>~1,5h</td><td>70%</td></tr>
+      </table>
+      <div class="alert" style="--accent:var(--c-farmaco)">
+        <div class="alert-title">Ponto-chave farmacogenético</div>
+        A <strong>codeína é um pró-fármaco</strong> que precisa ser convertida em morfina pela CYP2D6 para produzir analgesia. Metabolizadores lentos de CYP2D6 (variação genética) terão pouco efeito analgésico da codeína.
+      </div>
+      <p class="ref">Fonte: adaptado de Rang &amp; Dale, 9ª ed.; DrugBank, 2022.</p>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 6: EFEITOS ADVERSOS -->
+  <div class="section" id="s06">
+    <div class="section-head">
+      <span class="section-tag" style="color:var(--c-adverso)">06 · Efeitos Adversos</span>
+      <hr>
+    </div>
+
+    <div class="card" style="--accent:var(--c-adverso)">
+      <h3>Uso agudo x uso crônico</h3>
+      <p class="small">Convenção: uso agudo ≤ 30–90 dias consecutivos; uso crônico ≥ 30–90 dias consecutivos.</p>
+      <table>
+        <tr><th>Reações com uso agudo</th><th>Reações com uso crônico</th></tr>
+        <tr><td>Depressão respiratória</td><td>Hipogonadismo</td></tr>
+        <tr><td>Náuseas/vômitos</td><td>Imunossupressão</td></tr>
+        <tr><td>Prurido</td><td>Aumento da ingestão alimentar</td></tr>
+        <tr><td>Urticária</td><td>Aumento da secreção de hormônio do crescimento</td></tr>
+        <tr><td>Constipação intestinal</td><td>Efeitos de abstinência</td></tr>
+        <tr><td>Retenção urinária</td><td>Tolerância, dependência</td></tr>
+        <tr><td>Delírio</td><td>Abuso, adição</td></tr>
+        <tr><td>Sedação</td><td>Hiperalgesia</td></tr>
+        <tr><td>Mioclonia</td><td>Comprometimento da capacidade de dirigir</td></tr>
+        <tr><td>Convulsões</td><td>—</td></tr>
+      </table>
+      <p class="ref">Fonte: Katzung, 15ª ed., 2023.</p>
+    </div>
+
+    <div class="alert" style="--accent:var(--c-adverso)">
+      <div class="alert-title">Segurança do paciente — Fatores de risco para depressão respiratória</div>
+      Mesmo em doses terapêuticas, o risco de depressão respiratória aumenta com:
+      <ul style="margin-top:8px;">
+        <li>Associação com outros depressores do SNC (anestésicos gerais, sedativo-hipnóticos, benzodiazepínicos, álcool)</li>
+        <li>Extremos de idade (recém-nascidos e idosos)</li>
+        <li>Doenças cardiopulmonares e DPOC</li>
+      </ul>
+    </div>
+    <p class="ref">Fonte: Goodman &amp; Gilman, 13ª ed., 2018.</p>
+  </div>
+
+  <!-- SEÇÃO 7: INTERAÇÕES -->
+  <div class="section" id="s07">
+    <div class="section-head">
+      <span class="section-tag" style="color:var(--c-interacao)">07 · Interações Farmacológicas</span>
+      <hr>
+    </div>
+
+    <div class="grid2">
+      <div class="card" style="--accent:var(--c-interacao)">
+        <h4>Inibição da CYP2D6</h4>
+        <p>Paroxetina e fluoxetina (inibidores potentes da CYP2D6) <strong>reduzem a bioativação da codeína em morfina</strong>, diminuindo seu efeito analgésico.</p>
+      </div>
+      <div class="card" style="--accent:var(--c-interacao)">
+        <h4>Inibição da CYP3A4</h4>
+        <p>Ciprofloxacino, macrolídeos (claritromicina, eritromicina), fluconazol e cetoconazol <strong>aumentam a analgesia e o risco de toxicidade</strong> da metadona e do fentanil. Alternativas: morfina ou hidromorfona.</p>
+      </div>
+      <div class="card" style="--accent:var(--c-interacao)">
+        <h4>Indução da CYP3A4</h4>
+        <p>Carbamazepina, fenobarbital e fenitoína <strong>reduzem</strong> os efeitos de metadona e fentanil por aumento do metabolismo.</p>
+      </div>
+      <div class="card" style="--accent:var(--c-interacao)">
+        <h4>Depressores do SNC</h4>
+        <p>Benzodiazepínicos, antipsicóticos, anti-histamínicos sedativos e álcool <strong>potencializam</strong> os efeitos dos opioides, especialmente a depressão respiratória.</p>
+      </div>
+    </div>
+
+    <div class="card" style="--accent:var(--c-interacao)">
+      <h3>Síndrome serotoninérgica</h3>
+      <p>O uso associado de opioides — em especial o <strong>tramadol</strong> — com IMAO, ISRS, IRSN ou antidepressivos tricíclicos aumenta o risco de síndrome serotoninérgica (Classificação de risco C: monitorar terapia).</p>
+      <div class="alert" style="--accent:var(--c-interacao)">
+        <div class="alert-title">Quadro clínico</div>
+        Condição potencialmente fatal caracterizada por <strong>agitação, tremor, hiperatividade muscular (clônus)</strong> e <strong>hipertermia (&gt;38,5°C)</strong>, podendo evoluir para colapso cardiovascular.
+      </div>
+      <p><strong>Conduta:</strong> cuidados de suporte são a base do tratamento. Sedação com benzodiazepínicos. Em hipertermia &gt;41,1°C, considerar intubação. Antipiréticos (ex.: paracetamol) são ineficazes e não devem ser usados. A <strong>ciproeptadina</strong> (antagonista de receptores de histamina e serotonina) é indicada quando benzodiazepínicos e cuidados de suporte não controlam a agitação e os sinais vitais.</p>
+      <p class="ref">Fonte: UpToDate — Serotonin syndrome (serotonin toxicity), 2025.</p>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 8: TOLERÂNCIA -->
+  <div class="section" id="s08">
+    <div class="section-head">
+      <span class="section-tag" style="color:var(--c-tolerancia)">08 · Tolerância</span>
+      <hr>
+    </div>
+
+    <div class="card" style="--accent:var(--c-tolerancia)">
+      <h3>Conceito</h3>
+      <p><strong>Tolerância</strong> refere-se à redução gradual da eficácia do agonista opioide com sua administração contínua ou repetida (ao longo de dias ou semanas), manifestando-se clinicamente como necessidade de <strong>doses crescentes</strong> para obter a mesma analgesia inicial.</p>
+      <p>A tolerância se desenvolve <strong>mais rapidamente</strong> com altas doses em intervalos curtos, e é <strong>minimizada</strong> com baixas doses em intervalos maiores.</p>
+      <p class="ref">Fonte: Goodman &amp; Gilman, 13ª ed., 2018; Katzung, 15ª ed., 2023.</p>
+    </div>
+
+    <div class="card" style="--accent:var(--c-tolerancia)">
+      <h3>Graus de tolerância por efeito</h3>
+      <table>
+        <tr><th>Alto grau de tolerância</th><th>Moderado</th><th>Mínimo ou nenhum</th></tr>
+        <tr><td>Analgesia</td><td>Bradicardia</td><td><strong>Miose</strong></td></tr>
+        <tr><td>Euforia, disforia</td><td></td><td><strong>Constipação intestinal</strong></td></tr>
+        <tr><td>Embotamento mental</td><td></td><td>Convulsões</td></tr>
+        <tr><td>Sedação</td><td></td><td></td></tr>
+        <tr><td>Depressão respiratória</td><td></td><td></td></tr>
+        <tr><td>Antidiurese</td><td></td><td></td></tr>
+        <tr><td>Náuseas e vômitos</td><td></td><td></td></tr>
+        <tr><td>Supressão da tosse</td><td></td><td></td></tr>
+      </table>
+
+      <div class="alert" style="--accent:var(--c-tolerancia)">
+        <div class="alert-title">Exemplos clínicos de escalonamento</div>
+        <strong>Exemplo 1:</strong> parada respiratória pode ocorrer em indivíduo não tolerante com 60 mg de morfina. Já em paciente com dependência ou dor refratária de câncer, doses de até 2.000 mg de morfina em 2–3h podem não causar depressão respiratória significativa.<br><br>
+        <strong>Exemplo 2:</strong> 10 mg de morfina oral são dose alta para paciente virgem de opioide, enquanto 100 mg IV podem causar sedação mínima em paciente com tolerância grave.
+      </div>
+
+      <p><strong>Miose como sinal de alarme:</strong> por mostrar mínima ou nenhuma tolerância, a miose é um <strong>valioso indício de superdosagem</strong>, mesmo em pacientes altamente tolerantes — ela surge antes da depressão respiratória.</p>
+      <p><strong>Constipação intestinal</strong> é efeito adverso esperado e persistente durante todo o tratamento, pois o organismo raramente desenvolve tolerância a esse efeito — daí a importância de profilaxia com laxativos desde o início da terapia opioide crônica.</p>
+      <p class="ref">Fonte: Katzung, 15ª ed., 2023.</p>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 9: ESTRATÉGIAS DE OTIMIZAÇÃO -->
+  <div class="section" id="s09">
+    <div class="section-head">
+      <span class="section-tag" style="color:var(--c-classif)">09 · Estratégias de Otimização da Analgesia</span>
+      <hr>
+    </div>
+
+    <div class="card" style="--accent:var(--c-classif)">
+      <h3>1. Rotação de opioides (opioid rotation)</h3>
+      <p>A <strong>tolerância cruzada</strong> é característica importante dos opioides: pacientes tolerantes à morfina apresentam também redução do efeito analgésico a outros agonistas µ, como o fentanil. Entretanto, essa tolerância cruzada pode ser <strong>parcial ou incompleta</strong> — por razões relacionadas ao "agonismo tendencioso" (biased agonism), em que diferentes opioides ativam de forma distinta as vias de proteína G versus recrutamento de β-arrestinas, gerando padrões diferentes de dessensibilização do receptor.</p>
+      <p>Essa observação sustenta a estratégia de <strong>rotação de opioides</strong>, historicamente usada no manejo da dor oncológica: trocar o opioide em uso tende a melhorar o equilíbrio entre alívio da dor e efeitos colaterais.</p>
+      <p><strong>Exemplos de rotação:</strong> morfina → hidromorfona; hidromorfona → metadona; morfina → metadona.</p>
+      <p class="ref">Fonte: Katzung, 15ª ed., 2023; Goodman &amp; Gilman, 13ª ed., 2018; UpToDate — Cancer pain management with opioids: Optimizing analgesia, 2025.</p>
+    </div>
+
+    <div class="card" style="--accent:var(--c-classif)">
+      <h3>2. Combinação de opioides</h3>
+      <p>Estratégia estudada em contextos de dor oncológica refratária, com combinações como:</p>
+      <ul>
+        <li>Oxicodona + morfina</li>
+        <li>Morfina espinal + buprenorfina sistêmica</li>
+        <li>Fentanil transdérmico + outro opioide (tramadol, morfina oral ou codeína)</li>
+      </ul>
+      <p class="ref">Fonte: Mercadante S. — Opioid combination: rationale and possible clinical applications; Zouka et al., 2009.</p>
+    </div>
+
+    <div class="card" style="--accent:var(--c-classif)">
+      <h3>Opioides na dor crônica: quando usar</h3>
+      <table>
+        <tr><th>Tipo de dor</th><th>Terapia de 1ª linha</th><th>Papel dos opioides</th></tr>
+        <tr><td>Nociceptiva</td><td>AINEs</td><td>Considerar quando outras opções forem inadequadas, para dores intensas que exijam tratamento diário e de longo prazo; limitar dose e duração sempre que possível</td></tr>
+        <tr><td>Neuropática</td><td>Antidepressivos (ADTs ou IRSN) ou anticonvulsivantes</td><td>Segunda/terceira linha; considerar em estágios precoces em casos de dor intratável, exacerbações agudas ou dor neuropática oncológica</td></tr>
+        <tr><td>Nociplástica</td><td>Antidepressivos ou anticonvulsivantes</td><td>Evitar; opioides tendem a piorar a dor nociplástica</td></tr>
+      </table>
+      <p class="ref">Fonte: UpToDate — Overview of pharmacologic management of chronic pain in adults, 2025.</p>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 10: INTOXICAÇÃO AGUDA -->
+  <div class="section" id="s10">
+    <div class="section-head">
+      <span class="section-tag" style="color:var(--c-intox)">10 · Intoxicação Aguda por Opioides (Emergência)</span>
+      <hr>
+    </div>
+
+    <div class="card" style="--accent:var(--c-intox)">
+      <h3>Conduta imediata</h3>
+      <p><strong>Medidas básicas:</strong> o tratamento inicial deve se concentrar no suporte de <strong>vias aéreas e respiração</strong> — ABC do atendimento de emergência antes de qualquer antídoto.</p>
+      <p><strong>Antídoto: cloridrato de naloxona (NARCAN®)</strong> — antagonista competitivo puro nos receptores µ, δ e κ.</p>
+      <div class="alert" style="--accent:var(--c-intox)">
+        <div class="alert-title">Objetivo terapêutico da naloxona</div>
+        O alvo <strong>não</strong> é um nível normal de consciência, mas sim <strong>ventilação adequada</strong>. "Exagerar" na dose em um paciente dependente de opioides precipita síndrome de abstinência aguda.
+      </div>
+    </div>
+
+    <div class="card" style="--accent:var(--c-intox)">
+      <h3>Posologia da naloxona</h3>
+      <table>
+        <tr><th>Cenário</th><th>Dose</th></tr>
+        <tr><td>Adultos com ventilação espontânea</td><td>Dose inicial: 0,04–0,05 mg. Se sem resposta: 2 mg, repetir a cada 5–10 min até máximo 10 mg</td></tr>
+        <tr><td>Adultos apneicos</td><td>Dose inicial: 0,2–1 mg</td></tr>
+        <tr><td>Crianças &lt;20 kg</td><td>0,1 mg/kg IV (máximo 2 mg/dose)</td></tr>
+        <tr><td>Crianças ≥20 kg</td><td>2 mg IV</td></tr>
+      </table>
+      <p><strong>Via preferencial:</strong> intravenosa (IV). Pode ser administrada por via intranasal, subcutânea ou intramuscular se o acesso IV não estiver disponível.</p>
+      <p class="ref">Fonte: UpToDate — Acute opioid intoxication in adults, 2025; Opioid intoxication in children and adolescents, 2025.</p>
+    </div>
+
+    <div class="alert" style="--accent:var(--c-intox)">
+      <div class="alert-title">Erro frequente</div>
+      Administrar dose única alta de naloxona "para garantir reversão total" em paciente cronicamente dependente. Isso pode precipitar abstinência aguda grave, agitação e risco de nova dor intensa descontrolada — a titulação cuidadosa é a conduta correta.
+    </div>
+  </div>
+
+  <!-- SEÇÃO 11: TRANSTORNO POR USO -->
+  <div class="section" id="s11">
+    <div class="section-head">
+      <span class="section-tag" style="color:var(--c-transtorno)">11 · Transtorno por Uso de Opioides</span>
+      <hr>
+    </div>
+
+    <div class="grid2">
+      <div class="card" style="--accent:var(--c-transtorno)">
+        <h4>Dependência psicológica (adição)</h4>
+        <p>Estágio crônico e severo do transtorno por uso de substância, caracterizado por comportamento <strong>descontrolado e compulsivo</strong> de buscar e usar a droga para satisfação pessoal, apesar das consequências negativas e da negligência de responsabilidades sociais importantes.</p>
+      </div>
+      <div class="card" style="--accent:var(--c-transtorno)">
+        <h4>Dependência física</h4>
+        <p>Estado caracterizado por sinais e sintomas evidentes (síndrome de abstinência) quando a droga é retirada após uso crônico, quando a dose é reduzida repentinamente, ou pela administração de um antagonista.</p>
+      </div>
+    </div>
+
+    <div class="card" style="--accent:var(--c-transtorno)">
+      <h3>Características da abstinência</h3>
+      <p class="small">Síndrome de abstinência comum (dura 5–7 dias) → dependência física · Síndrome de abstinência prolongada (dura meses) → dependência psicológica.</p>
+      <table>
+        <tr><th>Abstinência comum — Sintomas</th><th>Abstinência comum — Sinais</th></tr>
+        <tr><td>Desejo incontrolável de usar opioides</td><td>Dilatação das pupilas (midríase)</td></tr>
+        <tr><td>Inquietude, irritabilidade</td><td>Sudorese, piloereção ("pele de ganso")</td></tr>
+        <tr><td>Acentuação da sensibilidade à dor (hiperalgesia)</td><td>Taquicardia, hipertensão arterial</td></tr>
+        <tr><td>Náuseas, cãibras, dores musculares</td><td>Vômitos, diarreia, bocejos</td></tr>
+        <tr><td>Humor disfórico, insônia, ansiedade</td><td>Febre</td></tr>
+      </table>
+      <table>
+        <tr><th>Medicamento</th><th>Início dos sintomas</th><th>Pico</th><th>Resolução quase completa</th></tr>
+        <tr><td>Fentanil (IV)</td><td>3–5h</td><td>8–12h</td><td>4–5 dias</td></tr>
+        <tr><td>Heroína (IV/inalada)</td><td>8–12h</td><td>36–72h</td><td>7–10 dias</td></tr>
+        <tr><td>Metadona</td><td>24–72h</td><td>4–6 dias</td><td>14–21 dias</td></tr>
+      </table>
+      <p class="small">O curso temporal da abstinência da heroína se aproxima da oxicodona, hidrocodona, codeína e morfina.</p>
+      <p class="ref">Fonte: UpToDate — Opioid withdrawal: Clinical features, assessment, and diagnosis, 2025; Goodman &amp; Gilman, 14ª ed.</p>
+    </div>
+
+    <div class="card" style="--accent:var(--c-transtorno)">
+      <h3>Intoxicação aguda x abstinência — quadro comparativo</h3>
+      <table>
+        <tr><th>Intoxicação</th><th>Abstinência</th></tr>
+        <tr><td>Ativação/"ímpeto" (baixas doses) ou sedação/apatia (altas doses)</td><td>Humor deprimido, ansiedade, disforia</td></tr>
+        <tr><td>Euforia ou disforia</td><td>Fissura</td></tr>
+        <tr><td>Sensação de calor, rubor facial, coceira</td><td>Piloereção, lacrimejamento, rinorreia</td></tr>
+        <tr><td>Juízo, atenção ou memória prejudicados</td><td>Frequentemente, "alta" atenção</td></tr>
+        <tr><td>Analgesia</td><td>Hiperalgesia, dores nas juntas e músculos</td></tr>
+        <tr><td>Constipação</td><td>Diarreia, cãibras GI, náusea/vômitos</td></tr>
+        <tr><td>Constrição pupilar (miose)</td><td>Dilatação pupilar, fotofobia</td></tr>
+        <tr><td>Sonolência</td><td>Insônia</td></tr>
+        <tr><td>Depressão respiratória, arreflexia, hipotensão, taquicardia</td><td>Hiperatividade autonômica (hiperreflexia, taquicardia, hipertensão, taquipneia, sudorese, hipertermia)</td></tr>
+        <tr><td>Apneia, sedação, coma</td><td>Bocejar</td></tr>
+      </table>
+      <p class="ref">Fonte: Baltieri et al., 2004 — Brazilian Journal of Psychiatry, traduzido de Martin &amp; Hubbard, 2000.</p>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 12: TRATAMENTO DO TRANSTORNO -->
+  <div class="section" id="s12">
+    <div class="section-head">
+      <span class="section-tag" style="color:var(--c-tratamento)">12 · Tratamento do Transtorno por Uso de Opioides</span>
+      <hr>
+    </div>
+
+    <div class="card" style="--accent:var(--c-tratamento)">
+      <h4 style="margin-top:0;color:var(--text-dim);font-size:14px;text-transform:uppercase;letter-spacing:1.5px;font-family:Georgia,serif;">Fluxo geral do tratamento</h4>
+      <div class="flow">
+        <div class="flow-step" style="--accent:var(--c-intox)">
+          <h5>Avaliação inicial</h5>
+          <p>Confirmação diagnóstica do transtorno por uso de opioides e triagem de risco (intoxicação, abstinência, comorbidades).</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="--accent:var(--c-tratamento)">
+          <h5>Etapa 1 — Desintoxicação</h5>
+          <p>Metadona ou buprenorfina ± naloxona (1ª linha) · Clonidina (2ª linha, apenas sintomas autonômicos).</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="--accent:var(--c-transtorno)">
+          <h5>Etapa 2 — Manutenção</h5>
+          <p>Agonista (metadona/buprenorfina) ou antagonista (naltrexona LP) + psicoterapia · mínimo 6–12 meses.</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="--accent:var(--c-def)">
+          <h5>Reavaliação &amp; desmame</h5>
+          <p>Redução gradual guiada por estabilidade clínica, suporte psicossocial contínuo.</p>
+        </div>
+      </div>
+      <p class="ref">Fluxo elaborado a partir de BMJ — Transtorno relacionado ao uso de Opioides, 2023 e UpToDate, 2025.</p>
+    </div>
+
+    <div class="card" style="--accent:var(--c-tratamento)">
+      <h3>Etapa 1 — Desintoxicação</h3>
+      <p>É a primeira etapa do tratamento, envolvendo a administração de medicamentos para reduzir a gravidade dos sintomas de abstinência (dependência física) na retirada dos opioides. O principal objetivo é fazer a <strong>transição segura</strong> do paciente para a medicação de manutenção do transtorno por uso de opioides.</p>
+
+      <h4>1ª estratégia (1ª linha): substituição por um agonista opioide</h4>
+      <table>
+        <tr><th>Fármaco</th><th>Mecanismo</th><th>Aplicação clínica</th><th>Farmacocinética / toxicidade</th></tr>
+        <tr><td><strong>Metadona</strong></td><td>Agonista de ação lenta do receptor µ</td><td>Terapia de substituição para dependentes de opioides</td><td>Alta biodisponibilidade oral; meia-vida muito variável (4–130h); toxicidade: depressão respiratória, constipação, miose, tolerância, dependência, abstinência</td></tr>
+        <tr><td><strong>Buprenorfina</strong></td><td>Agonista parcial do receptor µ</td><td>Terapia de substituição oral</td><td>Meia-vida longa (~40h); formulada com naloxona para evitar uso injetável ilícito</td></tr>
+      </table>
+      <p class="small">Recomenda-se manter o <strong>mesmo fármaco</strong> na desintoxicação (Etapa 1) e na manutenção (Etapa 2).</p>
+      <p class="ref">Fonte: BMJ — Transtorno relacionado ao uso de Opioides, 2023; UpToDate — Opioid withdrawal: Medically supervised withdrawal, 2025.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card" style="--accent:var(--c-tratamento)">
+        <h4>Estratégia com a metadona</h4>
+        <p>Agonista opioide de ação prolongada, com meia-vida plasmática longa e variável (relatos entre 7 e 207 horas conforme a fonte). Isso permite manter concentração plasmática estável, "achatando" os picos e vales que caracterizam o uso de opioides de meia-vida curta como a heroína — reduzindo tanto a euforia intensa ("onda") quanto os sintomas de abstinência entre doses.</p>
+      </div>
+      <div class="card" style="--accent:var(--c-tratamento)">
+        <h4>Estratégia com buprenorfina ± naloxona</h4>
+        <p>Agonista parcial µ que se dissocia lentamente do receptor (meia-vida de dissociação ≈ 166 min). Por ser agonista parcial, seu efeito atinge um "teto" (ceiling effect), oferecendo maior margem de segurança em superdosagem que agonistas plenos. A associação com naloxona (ex.: Suboxone®) visa desestimular o uso injetável ilícito, já que a naloxona só se torna biodisponível se a formulação for injetada.</p>
+      </div>
+    </div>
+
+    <div class="card" style="--accent:var(--c-tratamento)">
+      <h3>2ª estratégia (2ª linha): agonista α2-adrenérgico — clonidina</h3>
+      <p>Quando um agonista opioide ativa o receptor µ em neurônios noradrenérgicos do <strong>locus coeruleus</strong>, a liberação de noradrenalina é suprimida — daí a sedação, hipotensão e bradipneia da intoxicação opioide. Na abstinência, ocorre o oposto: <strong>aumento da liberação de noradrenalina</strong>, responsável por lacrimejamento, sudorese, taquicardia e midríase.</p>
+      <p>A <strong>clonidina</strong>, ao ativar o receptor α2-adrenérgico pré-sináptico, reduz essa neurotransmissão adrenérgica excessiva do locus coeruleus, atenuando os sintomas autonômicos da abstinência.</p>
+      <div class="alert" style="--accent:var(--c-tratamento)">
+        <div class="alert-title">Limitação importante</div>
+        A clonidina atenua sintomas autonômicos, mas <strong>não reduz o desejo incontrolável (fissura)</strong> de usar a droga — por isso não substitui a terapia com agonistas/antagonistas opioides.
+      </div>
+      <p class="ref">Fonte: Goodman &amp; Gilman, 13ª ed., 2018; MedComm, 2022.</p>
+    </div>
+
+    <div class="card" style="--accent:var(--c-tratamento)">
+      <h3>Etapa 2 — Manutenção e estabilização</h3>
+      <p>Após a Etapa 1, inicia-se a fase de manutenção, cujo objetivo é garantir <strong>ausência de abstinência e de fissura</strong>, com redução acentuada (ou ausência) do uso indevido de opioides.</p>
+      <ul>
+        <li>Recomenda-se tratar todos os pacientes com <strong>medicamentos + psicoterapia</strong>.</li>
+        <li><strong>Opções medicamentosas:</strong> agonistas opioides (metadona, buprenorfina) ou antagonistas opioides (naltrexona injetável de liberação prolongada).</li>
+        <li><strong>Duração recomendada:</strong> mínimo de 6 a 12 meses após a estabilização, antes de considerar redução gradual.</li>
+      </ul>
+      <p class="ref">Fonte: UpToDate — Opioid use disorder: Treatment overview / Pharmacologic management, 2025.</p>
+    </div>
+  </div>
+
+  <!-- RESUMO FINAL / QUADRO SÍNTESE -->
+  <div class="section" id="s13">
+    <div class="section-head">
+      <span class="section-tag" style="color:var(--c-def)">13 · Síntese Integrativa</span>
+      <hr>
+    </div>
+
+    <div class="card" style="--accent:var(--c-def)">
+      <h3>Pontos essenciais para revisão</h3>
+      <ul>
+        <li>Opioide é o termo mais amplo (inclui opiáceos naturais, sintéticos, semissintéticos e peptídeos endógenos); opiáceo refere-se especificamente aos compostos naturais do ópio.</li>
+        <li>O receptor <strong>µ</strong> é o principal responsável tanto pela analgesia quanto pelos efeitos adversos mais temidos (depressão respiratória, dependência).</li>
+        <li>Mecanismo celular: inibição pré-sináptica (fechamento de canais de Ca²⁺) + hiperpolarização pós-sináptica (abertura de canais de K⁺) + redução de cAMP/PKA.</li>
+        <li>A classificação "fraco x forte" reflete <strong>potência</strong>, não segurança.</li>
+        <li>Tolerância se desenvolve de forma desigual: alta para analgesia e depressão respiratória; mínima para miose e constipação — por isso a miose é sinal de alarme confiável de superdosagem mesmo em usuários crônicos.</li>
+        <li>Rotação de opioides se apoia na tolerância cruzada parcial/incompleta entre diferentes agonistas µ.</li>
+        <li>No manejo da intoxicação aguda, o alvo da naloxona é <strong>ventilação adequada</strong>, não o nível de consciência — titular sempre.</li>
+        <li>No transtorno por uso de opioides, o tratamento farmacológico segue duas etapas: <strong>desintoxicação</strong> (metadona ou buprenorfina ± naloxona; clonidina como 2ª linha) e <strong>manutenção</strong> (agonistas ou antagonista de longa duração, associados à psicoterapia).</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    Resumo elaborado a partir do material "Fármacos Opioides" (Felipe Vanz, 2026), com correlação às referências citadas ao longo do documento — Goodman &amp; Gilman, Katzung, Rang &amp; Dale e UpToDate.
+  </footer>
+
+</div>
+</div>
+</div>
+</body>
+</html>

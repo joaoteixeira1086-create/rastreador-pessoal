@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AINEs e Analgésicos — Resumo LPF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0b0e14;
+    --bg-alt: #10141d;
+    --card: #141924;
+    --card-border: #232a38;
+    --text: #dbe1ea;
+    --text-dim: #97a2b4;
+    --text-faint: #6b7488;
+
+    --c-cox: #4fb3ff;      /* azul - COX/LOX */
+    --c-pg: #ff9f5a;       /* laranja - prostaglandinas */
+    --c-mec: #7fd99a;      /* verde - mecanismo de ação */
+    --c-cox3: #c48bff;     /* roxo - COX-3 */
+    --c-analg: #ffd166;    /* amarelo - analgesia */
+    --c-classes: #4fd1c5;  /* teal - classes de fármacos */
+    --c-coxibe: #ff6f91;   /* rosa - coxibes */
+    --c-gi: #ff8a65;       /* laranja-avermelhado - GI */
+    --c-renal: #64b5f6;    /* azul renal */
+    --c-cardio: #ef5350;   /* vermelho cardio */
+    --c-derma: #ba68c8;    /* roxo pele */
+    --c-erros: #ffb74d;    /* âmbar - erros */
+    --c-resumo: #81c995;   /* verde resumo */
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--bg);
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(79,179,255,0.06), transparent 40%),
+      radial-gradient(circle at 85% 20%, rgba(196,139,255,0.05), transparent 40%);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.65;
+    padding: 0 0 80px 0;
+  }
+
+  .wrap{ max-width: 920px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- HEADER ---------- */
+  .masthead{
+    padding: 64px 24px 40px;
+    text-align:center;
+    border-bottom: 1px solid var(--card-border);
+    margin-bottom: 48px;
+    background: linear-gradient(180deg, rgba(79,179,255,0.06), transparent);
+  }
+  .masthead .kicker{
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 14px;
+  }
+  .masthead h1{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 52px;
+    margin: 0 0 14px;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+  .masthead p{
+    font-size: 16px;
+    color: var(--text-dim);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* ---------- SECTION HEADERS (tag + linha) ---------- */
+  .section{ margin: 64px 0; }
+  .section-head{
+    display:flex;
+    align-items:center;
+    gap: 16px;
+    margin-bottom: 26px;
+  }
+  .tag{
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+    border: 1px solid currentColor;
+  }
+  .section-head hr{
+    flex: 1;
+    border: none;
+    border-top: 1px solid var(--card-border);
+    margin: 0;
+  }
+  .section h2{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 34px;
+    margin: 0 0 18px;
+    color: #fff;
+  }
+  .section h3{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 23px;
+    color: #fff;
+    margin: 28px 0 10px;
+  }
+  .section p{ color: var(--text); font-size: 15.5px; }
+  .section ul, .section ol{ font-size: 15.5px; padding-left: 22px; }
+  .section li{ margin-bottom: 6px; }
+
+  /* ---------- CARDS ---------- */
+  .card{
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-top: 3px solid var(--accent, var(--c-cox));
+    border-radius: 10px;
+    padding: 22px 24px;
+    margin: 16px 0;
+  }
+  .card h4{
+    margin: 0 0 10px;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 700;
+  }
+  .card-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 700px){ .card-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- ALERTS (outline style) ---------- */
+  .alert{
+    border: 1px solid currentColor;
+    background: transparent;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 18px 0;
+    font-size: 14.5px;
+    display:flex;
+    gap:12px;
+  }
+  .alert .label{
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 11.5px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .alert-danger{ color: var(--c-cardio); }
+  .alert-warn{ color: var(--c-erros); }
+  .alert-info{ color: var(--c-cox); }
+  .alert-good{ color: var(--c-resumo); }
+
+  /* ---------- TABLES ---------- */
+  table{
+    width:100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 14px 0;
+  }
+  th{
+    text-align:left;
+    color: var(--text-dim);
+    font-weight: 600;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--card-border);
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  td{
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--card-border);
+    color: var(--text);
+    vertical-align: top;
+  }
+  tr:last-child td{ border-bottom: none; }
+
+  .pill{
+    display:inline-block;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 2px 9px;
+    border-radius: 20px;
+    border: 1px solid currentColor;
+  }
+
+  /* ---------- DIAGRAM (SVG container) ---------- */
+  .diagram{
+    background: var(--bg-alt);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    overflow-x: auto;
+  }
+  .diagram svg{ display:block; margin: 0 auto; }
+
+  /* ---------- TOC ---------- */
+  .toc{
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 8px;
+  }
+  .toc h3{ font-family:'Cormorant Garamond',serif; font-size:20px; color:#fff; margin:0 0 12px; }
+  .toc ol{ columns: 2; column-gap: 32px; padding-left: 20px; font-size: 14px; }
+  .toc li{ break-inside: avoid; margin-bottom: 8px; color: var(--text-dim); }
+  .toc a{ color: var(--text-dim); text-decoration:none; }
+  .toc a:hover{ color: #fff; }
+  @media (max-width:700px){ .toc ol{ columns:1; } }
+
+  footer{
+    text-align:center;
+    color: var(--text-faint);
+    font-size: 12.5px;
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid var(--card-border);
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="kicker">LPF — Laboratório de Prática Funcional · Farmacologia Aplicada</div>
+  <h1>Anti-inflamatórios Não Esteroidais<br>e Analgésicos</h1>
+  <p>Resumo didático baseado na aula anexada, aprofundado com farmacologia de referência (Katzung, Goodman &amp; Gilman) para consolidar o raciocínio clínico sobre prescrição, efeitos adversos e segurança do paciente.</p>
+</div>
+
+<div class="wrap">
+
+  <div class="toc">
+    <h3>Roteiro do resumo</h3>
+    <ol>
+      <li><a href="#s1">1. Contextualização: a cascata do ácido araquidônico</a></li>
+      <li><a href="#s2">2. COX-1 x COX-2: constitutiva x induzível</a></li>
+      <li><a href="#s3">3. Via da lipo-oxigenase (LOX)</a></li>
+      <li><a href="#s4">4. Mecanismo de ação dos AINEs</a></li>
+      <li><a href="#s5">5. A polêmica COX-3 e o paracetamol</a></li>
+      <li><a href="#s6">6. O que é analgesia?</a></li>
+      <li><a href="#s7">7. Classificação clínica dos AINEs</a></li>
+      <li><a href="#s8">8. Coxibes: seletividade e segurança</a></li>
+      <li><a href="#s9">9. Efeitos adversos, sistema por sistema</a></li>
+      <li><a href="#s10">10. Populações de risco e cuidados</a></li>
+      <li><a href="#s11">11. Erros frequentes na prescrição</a></li>
+      <li><a href="#s12">12. Síntese integrada</a></li>
+      <li><a href="#s13">13. Referências</a></li>
+    </ol>
+  </div>
+
+  <!-- =============== 1 =============== -->
+  <div class="section" id="s1">
+    <div class="section-head">
+      <span class="tag" style="color:var(--c-cox)">Contextualização</span>
+      <hr>
+    </div>
+    <h2>1. A cascata do ácido araquidônico</h2>
+    <p>Antes de falar em AINE (anti-inflamatório não esteroidal), é preciso entender de onde vem o processo inflamatório em nível bioquímico. Toda a farmacologia dos AINEs gira em torno de uma única enzima-chave: a <strong>ciclo-oxigenase (COX)</strong>. Compreender essa via não é decoreba — é o que permite prever, à beira do leito, por que um AINE causa gastrite, por que outro poupa mais a plaqueta, e por que nenhum deles deveria ser prescrito "no automático" sem pensar em comorbidades.</p>
+
+    <p>Quando uma célula sofre agressão (trauma, infecção, estímulo inflamatório), a enzima <strong>fosfolipase A₂</strong> é ativada e libera o <strong>ácido araquidônico (AA)</strong> a partir dos fosfolipídeos da membrana celular. A partir daqui, o ácido araquidônico pode seguir por duas vias enzimáticas distintas, e é exatamente nesse ponto de bifurcação que a farmacologia dos AINEs atua:</p>
+
+    <div class="card-grid">
+      <div class="card" style="--accent:var(--c-cox)">
+        <h4 style="color:var(--c-cox)">Via da Ciclo-oxigenase (COX)</h4>
+        <p style="margin:0">Gera <strong>endoperóxidos cíclicos</strong> instáveis, que são convertidos em prostanóides: prostaglandinas (PGs), prostaciclina (PGI₂) e tromboxano (TXA₂). É o alvo farmacológico direto dos AINEs.</p>
+      </div>
+      <div class="card" style="--accent:var(--c-pg)">
+        <h4 style="color:var(--c-pg)">Via da Lipo-oxigenase (LOX)</h4>
+        <p style="margin:0">Gera <strong>leucotrienos</strong> e ácido HPETE, mediadores fortemente pró-inflamatórios, com papel de destaque na fisiopatologia da asma e de outras doenças respiratórias.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-info">
+      <span class="label">Por que importa</span>
+      <span>Como o AINE bloqueia apenas a via da COX, o substrato (ácido araquidônico) pode ser "desviado" em maior quantidade para a via da LOX. Esse desvio ajuda a explicar por que alguns pacientes sensíveis ao ácido acetilsalicílico (AAS) e a outros AINEs desenvolvem broncoespasmo — fenômeno conhecido como asma induzida por AINE ou tríade de Samter.</span>
+    </div>
+  </div>
+
+  <!-- =============== 2 =============== -->
+  <div class="section" id="s2">
+    <div class="section-head">
+      <span class="tag" style="color:var(--c-cox)">Fisiologia</span>
+      <hr>
+    </div>
+    <h2>2. COX-1 x COX-2: constitutiva x induzível</h2>
+    <p>A ciclo-oxigenase existe em duas isoformas principais, e a diferença funcional entre elas é a base racional de toda a farmacologia moderna dos AINEs — inclusive da criação dos coxibes.</p>
+
+    <table>
+      <tr><th></th><th style="color:var(--c-cox)">COX-1 (constitutiva)</th><th style="color:var(--c-pg)">COX-2 (induzível)</th></tr>
+      <tr><td><strong>Expressão</strong></td><td>Presente na maioria dos tecidos normais, de forma basal e contínua</td><td>Baixa ou ausente em tecido normal; é <em>induzida</em> por estímulos inflamatórios</td></tr>
+      <tr><td><strong>Função principal</strong></td><td>Homeostática: citoproteção da mucosa gástrica, agregação plaquetária (via TXA₂), fluxo sanguíneo renal</td><td>Mediação da resposta inflamatória: dor, febre, vasodilatação inflamatória</td></tr>
+      <tr><td><strong>Consequência de bloqueá-la</strong></td><td>Efeitos adversos gástricos, renais e hemorrágicos</td><td>Efeito terapêutico desejado (analgesia, antipirese, anti-inflamação)</td></tr>
+    </table>
+
+    <p>Essa dualidade é a chave de leitura de toda a farmacologia clínica dos AINEs: <strong>quanto mais seletivo um fármaco for para COX-2, teoricamente menor é o risco gastrointestinal e maior é o perfil anti-inflamatório relativo</strong> — mas, como veremos, essa seletividade tem um preço em risco cardiovascular.</p>
+  </div>
+
+  <!-- =============== 3 =============== -->
+  <div class="section" id="s3">
+    <div class="section-head">
+      <span class="tag" style="color:var(--c-pg)">Fisiologia</span>
+      <hr>
+    </div>
+    <h2>3. Prostaglandinas e a via da lipo-oxigenase</h2>
+    <h3>Prostaglandinas (PGs)</h3>
+    <p>As prostaglandinas são produzidas por mastócitos, macrófagos, células endoteliais e diversos outros tipos celulares. Elas participam tanto das reações vasculares quanto das reações sistêmicas da inflamação — vasodilatação local, aumento da permeabilidade vascular, sensibilização de nociceptores (potencializando a dor causada por outros mediadores, como a bradicinina) e febre (atuando no hipotálamo).</p>
+
+    <h3>Lipo-oxigenase (LOX)</h3>
+    <p>A via da LOX converte o ácido araquidônico em <strong>ácido HPETE</strong> (ácido hidroperoxieicosatetraenoico) e, posteriormente, em <strong>leucotrienos</strong>. Do ponto de vista clínico, memorize três pontos:</p>
+    <ul>
+      <li>É uma via <strong>pró-inflamatória</strong> por excelência;</li>
+      <li>Promove <strong>quimiotaxia</strong> — recrutamento de granulócitos, mastócitos, monócitos e leucócitos para o foco inflamatório;</li>
+      <li>Tem repercussão respiratória importante: os leucotrienos são potentes broncoconstritores, daí a expressão usada em aula de que essa via é "terrível para os pulmões" — é o racional fisiopatológico da asma induzida por AINEs.</li>
+    </ul>
+  </div>
+
+  <!-- =============== 4 =============== -->
+  <div class="section" id="s4">
+    <div class="section-head">
+      <span class="tag" style="color:var(--c-mec)">Mecanismo de Ação</span>
+      <hr>
+    </div>
+    <h2>4. Mecanismo de ação dos AINEs</h2>
+    <p>O mecanismo de ação dos AINEs é, em sua essência, a <strong>inibição da enzima COX</strong>, impedindo a conversão do ácido araquidônico em endoperóxidos cíclicos e, consequentemente, reduzindo a síntese de prostaglandinas, prostaciclina e tromboxano. O esquema abaixo resume a via completa e os efeitos gerados por cada produto final — é o diagrama mais importante para fixar antes de estudar qualquer fármaco individualmente.</p>
+
+    <div class="diagram">
+<svg viewBox="0 0 980 760" xmlns="http://www.w3.org/2000/svg" width="100%">
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 Z" fill="#5a6577"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 Z" fill="#ef5350"/>
+    </marker>
+  </defs>
+  <style>
+    .box{ fill:#141924; stroke:#232a38; stroke-width:1.4; }
+    .title{ font-family:'Inter',sans-serif; font-size:14.5px; font-weight:700; fill:#f2f5f9; }
+    .sub{ font-family:'Inter',sans-serif; font-size:11.5px; fill:#8b96a8; }
+    .edge{ stroke:#3a4254; stroke-width:1.6; fill:none; marker-end:url(#arrow); }
+    .edgeLbl{ font-family:'Inter',sans-serif; font-size:11px; fill:#8b96a8; }
+    .effect{ font-family:'Inter',sans-serif; font-size:12px; fill:#c3cad6; }
+  </style>
+
+  <!-- ===== NÍVEL 1 — membrana ===== -->
+  <rect class="box" x="370" y="16" width="240" height="52" rx="10"/>
+  <text x="490" y="47" text-anchor="middle" class="title">Fosfolipídeos de membrana</text>
+
+  <!-- seta 1 -->
+  <line x1="490" y1="68" x2="490" y2="118" class="edge"/>
+  <rect x="520" y="80" width="150" height="26" rx="6" fill="#0b0e14" stroke="none"/>
+  <text x="595" y="97" text-anchor="middle" class="edgeLbl" style="fill:#7fd99a">catalisado por Fosfolipase A₂</text>
+
+  <!-- ===== NÍVEL 2 — Ácido Araquidônico ===== -->
+  <rect class="box" x="390" y="122" width="200" height="52" rx="10" stroke="#4fb3ff"/>
+  <text x="490" y="153" text-anchor="middle" class="title" style="fill:#4fb3ff">Ácido Araquidônico</text>
+
+  <!-- bloqueio dos AINEs (callout à direita) -->
+  <rect x="700" y="120" width="220" height="58" rx="10" fill="none" stroke="#ef5350" stroke-dasharray="5,4" stroke-width="1.6"/>
+  <text x="810" y="144" text-anchor="middle" class="title" style="fill:#ef5350; font-size:13.5px">Os AINEs atuam aqui</text>
+  <text x="810" y="163" text-anchor="middle" class="sub" style="fill:#ef9a94">inibem a enzima COX (1 e/ou 2)</text>
+  <line x1="700" y1="149" x2="655" y2="230" class="edge" stroke="#ef5350" marker-end="url(#arrowRed)"/>
+
+  <!-- tronco descendo até o ponto de bifurcação -->
+  <line x1="490" y1="174" x2="490" y2="222" stroke="#3a4254" stroke-width="1.6"/>
+  <!-- barra horizontal de bifurcação -->
+  <line x1="230" y1="222" x2="750" y2="222" stroke="#3a4254" stroke-width="1.6"/>
+  <!-- desce para LOX -->
+  <line x1="230" y1="222" x2="230" y2="248" class="edge"/>
+  <!-- desce para COX -->
+  <line x1="655" y1="222" x2="655" y2="248" class="edge"/>
+
+  <text x="490" y="205" text-anchor="middle" class="sub">ponto de bifurcação enzimática</text>
+
+  <!-- ===== NÍVEL 3 — duas enzimas ===== -->
+  <rect class="box" x="120" y="252" width="220" height="50" rx="10" stroke="var(--c-pg)"/>
+  <text x="230" y="282" text-anchor="middle" class="title" style="fill:#ff9f5a">5-Lipoxigenase (LOX)</text>
+
+  <rect class="box" x="545" y="252" width="220" height="50" rx="10" stroke="var(--c-cox)"/>
+  <text x="655" y="282" text-anchor="middle" class="title" style="fill:#4fb3ff">Ciclo-oxigenase (COX-1 / COX-2)</text>
+
+  <!-- ===== coluna LOX descendo ===== -->
+  <line x1="230" y1="302" x2="230" y2="336" class="edge"/>
+  <rect class="box" x="140" y="340" width="180" height="46" rx="9"/>
+  <text x="230" y="368" text-anchor="middle" class="title" style="font-size:13px">Ácido HPETE</text>
+
+  <line x1="230" y1="386" x2="230" y2="420" class="edge"/>
+  <rect class="box" x="140" y="424" width="180" height="46" rx="9" stroke="var(--c-pg)"/>
+  <text x="230" y="452" text-anchor="middle" class="title" style="fill:#ff9f5a; font-size:13px">Leucotrienos</text>
+
+  <line x1="230" y1="470" x2="230" y2="504" class="edge"/>
+  <rect x="105" y="508" width="250" height="66" rx="9" fill="none" stroke="#ff9f5a" stroke-width="1.3"/>
+  <text x="230" y="530" text-anchor="middle" class="effect" style="fill:#ff9f5a; font-weight:600">Broncoconstrição</text>
+  <text x="230" y="550" text-anchor="middle" class="effect" style="fill:#ff9f5a; font-weight:600">Quimiotaxia de granulócitos,</text>
+  <text x="230" y="566" text-anchor="middle" class="effect" style="fill:#ff9f5a; font-weight:600">mastócitos, monócitos e leucócitos</text>
+
+  <!-- ===== coluna COX descendo ===== -->
+  <line x1="655" y1="302" x2="655" y2="336" class="edge"/>
+  <rect class="box" x="545" y="340" width="220" height="46" rx="9"/>
+  <text x="655" y="368" text-anchor="middle" class="title" style="font-size:13px">Endoperóxidos cíclicos</text>
+
+  <!-- bifurcação em 3 -->
+  <line x1="655" y1="386" x2="655" y2="410" stroke="#3a4254" stroke-width="1.6"/>
+  <line x1="450" y1="410" x2="860" y2="410" stroke="#3a4254" stroke-width="1.6"/>
+  <line x1="450" y1="410" x2="450" y2="436" class="edge"/>
+  <line x1="655" y1="410" x2="655" y2="436" class="edge"/>
+  <line x1="860" y1="410" x2="860" y2="436" class="edge"/>
+
+  <rect class="box" x="375" y="440" width="150" height="44" rx="9" stroke="var(--c-pg)"/>
+  <text x="450" y="467" text-anchor="middle" class="title" style="fill:#ff9f5a; font-size:13px">Prostaglandinas</text>
+
+  <rect class="box" x="580" y="440" width="150" height="44" rx="9" stroke="var(--c-cardio)"/>
+  <text x="655" y="467" text-anchor="middle" class="title" style="fill:#ef5350; font-size:13px">Tromboxano A₂</text>
+
+  <rect class="box" x="785" y="440" width="150" height="44" rx="9" stroke="var(--c-renal)"/>
+  <text x="860" y="467" text-anchor="middle" class="title" style="fill:#64b5f6; font-size:13px">Prostaciclina I₂</text>
+
+  <!-- efeitos finais -->
+  <line x1="450" y1="484" x2="450" y2="512" class="edge"/>
+  <rect x="365" y="516" width="170" height="80" rx="9" fill="none" stroke="#ff9f5a" stroke-width="1.3"/>
+  <text x="450" y="538" text-anchor="middle" class="effect" style="fill:#ff9f5a; font-weight:600">Sensibilização de</text>
+  <text x="450" y="554" text-anchor="middle" class="effect" style="fill:#ff9f5a; font-weight:600">nociceptores (dor)</text>
+  <text x="450" y="574" text-anchor="middle" class="effect" style="fill:#ff9f5a; font-weight:600">Febre</text>
+  <text x="450" y="590" text-anchor="middle" class="effect" style="fill:#ff9f5a; font-weight:600">Vasodilatação inflamatória</text>
+
+  <line x1="655" y1="484" x2="655" y2="512" class="edge"/>
+  <rect x="570" y="516" width="170" height="80" rx="9" fill="none" stroke="#ef5350" stroke-width="1.3"/>
+  <text x="655" y="542" text-anchor="middle" class="effect" style="fill:#ef5350; font-weight:600">Agregação</text>
+  <text x="655" y="558" text-anchor="middle" class="effect" style="fill:#ef5350; font-weight:600">plaquetária</text>
+  <text x="655" y="578" text-anchor="middle" class="effect" style="fill:#ef5350; font-weight:600">Vasoconstrição</text>
+
+  <line x1="860" y1="484" x2="860" y2="512" class="edge"/>
+  <rect x="765" y="516" width="190" height="80" rx="9" fill="none" stroke="#64b5f6" stroke-width="1.3"/>
+  <text x="860" y="538" text-anchor="middle" class="effect" style="fill:#64b5f6; font-weight:600">Inibição da agregação</text>
+  <text x="860" y="554" text-anchor="middle" class="effect" style="fill:#64b5f6; font-weight:600">plaquetária</text>
+  <text x="860" y="574" text-anchor="middle" class="effect" style="fill:#64b5f6; font-weight:600">Vasodilatação</text>
+
+  <!-- destaque do equilíbrio TXA2 x PGI2 -->
+  <line x1="730" y1="556" x2="775" y2="556" stroke="#6b7488" stroke-width="1.3" stroke-dasharray="3,3"/>
+  <text x="655" y="628" text-anchor="middle" class="sub" style="font-size:12px; fill:#9aa4b5">TXA₂ e PGI₂ têm efeitos opostos sobre a coagulação — o equilíbrio entre os dois é o que sustenta a hemostasia normal</text>
+
+  <text x="490" y="672" text-anchor="middle" class="sub" style="font-size:12.5px">Cascata do ácido araquidônico: ponto de bloqueio dos AINEs e destino final de cada mediador</text>
+</svg>
+    </div>
+
+    <p>Note o ponto central do esquema: o TXA₂ (tromboxano A₂, produzido principalmente nas plaquetas) e a PGI₂ (prostaciclina, produzida no endotélio vascular) têm efeitos <strong>opostos</strong> sobre a agregação plaquetária. Isso é o racional fisiopatológico por trás do risco cardiovascular dos coxibes: ao inibir seletivamente a COX-2 (fonte principal de PGI₂ endotelial) sem tocar significativamente na COX-1 plaquetária (fonte de TXA₂), rompe-se o equilíbrio entre um fator antitrombótico e um pró-trombótico, favorecendo eventos trombóticos.</p>
+
+    <div class="alert alert-good">
+      <span class="label">Fixação clínica</span>
+      <span>Três efeitos farmacológicos nascem diretamente da inibição da COX pelos AINEs: <strong>analgesia</strong> (menos sensibilização de nociceptores), <strong>antipirese</strong> (menos PGE₂ hipotalâmica) e <strong>ação anti-inflamatória</strong> (menos vasodilatação e menos mediadores inflamatórios locais).</span>
+    </div>
+  </div>
+
+  <!-- =============== 5 =============== -->
+  <div class="section" id="s5">
+    <div class="section-head">
+      <span class="tag" style="color:var(--c-cox3)">Curiosidade Farmacológica</span>
+      <hr>
+    </div>
+    <h2>5. A polêmica COX-3 e sua relação com o paracetamol</h2>
+    <p>A chamada <strong>COX-3</strong> foi descrita pela primeira vez em 2002, quando pesquisadores identificaram uma variante do gene <em>PTGS1</em> (o mesmo gene que codifica a COX-1), resultante de splicing alternativo, principalmente em tecido cerebral canino. Até hoje sua existência e relevância clínica em humanos são debatidas — por isso a aula enfatiza a ressalva "a COX-3 não existe (com certeza)".</p>
+
+    <p>O interesse clínico nessa isoforma vem de uma tentativa histórica de explicar o comportamento farmacológico peculiar do <strong>paracetamol</strong>: diferentemente dos AINEs clássicos, o paracetamol tem</p>
+    <ul>
+      <li><strong>Efeito analgésico</strong> relevante;</li>
+      <li><strong>Efeito antipirético</strong> relevante;</li>
+      <li><strong>Pouquíssimo efeito anti-inflamatório periférico</strong> — motivo pelo qual, rigorosamente, o paracetamol não é classificado como um AINE clássico, e sim como um analgésico-antipirético de mecanismo central ainda incompletamente elucidado.</li>
+    </ul>
+
+    <div class="alert alert-warn">
+      <span class="label">Atenção na prova</span>
+      <span>Não confunda: o paracetamol tem baixíssima atividade anti-inflamatória periférica (diferente do ibuprofeno, diclofenaco etc.) e não tem efeito antiplaquetário clinicamente relevante nas doses usuais, o que o torna uma opção mais segura em pacientes com risco de sangramento — mas não o torna isento de risco: em superdosagem, é hepatotóxico (depleção de glutationa, acúmulo do metabólito NAPQI).</span>
+    </div>
+  </div>
+
+  <!-- =============== 6 =============== -->
+  <div class="section" id="s6">
+    <div class="section-head">
+      <span class="tag" style="color:var(--c-analg)">Conceito</span>
+      <hr>
+    </div>
+    <h2>6. O que é analgesia?</h2>
+    <p><strong>Analgesia</strong> significa alívio da dor. Antes de escolher qualquer fármaco, o raciocínio clínico do preceptor exige classificar a dor do paciente, porque a intensidade orienta diretamente a escala terapêutica a ser utilizada:</p>
+
+    <table>
+      <tr><th>Intensidade</th><th>Abordagem inicial típica</th></tr>
+      <tr><td>Dor leve</td><td>Analgésicos simples / AINEs em dose baixa</td></tr>
+      <tr><td>Dor moderada</td><td>AINEs em dose plena, associações, opioides fracos</td></tr>
+      <tr><td>Dor grave</td><td>Opioides potentes, associações multimodais, anestésicos</td></tr>
+    </table>
+
+    <p>Essa classificação não é rígida — "vai depender de cada caso", como reforçado na aula: contexto cirúrgico, dor oncológica, dor neuropática e dor aguda musculoesquelética exigem estratégias diferentes mesmo com intensidades semelhantes.</p>
+
+    <h3>Classes farmacológicas usadas no alívio da dor</h3>
+    <ul>
+      <li>AINEs;</li>
+      <li>Opioides;</li>
+      <li>Cannabis medicinal;</li>
+      <li>Antidepressivos (sobretudo em dor crônica/neuropática, ex.: tricíclicos, duloxetina);</li>
+      <li>Anestésicos (locais e, em contexto hospitalar, gerais).</li>
+    </ul>
+
+    <div class="alert alert-danger">
+      <span class="label">Cuidado</span>
+      <span>Escolher a classe errada para o tipo de dor é um erro clínico comum: dor neuropática responde mal a AINE isolado; dor inflamatória aguda intensa pode não ser suficientemente controlada por opioide fraco isolado, exigindo abordagem multimodal.</span>
+    </div>
+
+    <h3>Mecanismo da analgesia pelos AINEs</h3>
+    <p>Os AINEs atuam principalmente no <strong>sistema nervoso periférico (SNP)</strong>: a diminuição da síntese de prostaglandinas reduz a sensibilização dos nociceptores a outros mediadores inflamatórios, como a bradicinina (BK). Ou seja, o AINE não "anestesia" o nervo — ele reduz o limiar de sensibilização que amplificaria a percepção dolorosa. Essa via é utilizada no tratamento de artrite, bursite, dores de origem muscular e vascular, odontalgia, dismenorreia, dor pós-parto e dor por metástase óssea.</p>
+
+    <p>Os fármacos mais utilizados nessa finalidade, segundo a aula, incluem <strong>paracetamol, dipirona, ibuprofeno e cetorolaco</strong>, além dos inibidores seletivos de COX-2 em contextos específicos.</p>
+  </div>
+
+  <!-- =============== 7 =============== -->
+  <div class="section" id="s7">
+    <div class="section-head">
+      <span class="tag" style="color:var(--c-classes)">Farmacologia Clínica</span>
+      <hr>
+    </div>
+    <h2>7. Classificação clínica dos AINEs</h2>
+    <p>Os AINEs são agrupados por classe química, e cada classe tem um perfil característico de seletividade COX-1/COX-2, apresentações disponíveis e indicações preferenciais. Este é o conteúdo mais "decoreba" da aula, mas cada fármaco vale a pena ser associado a uma imagem clínica de uso, não apenas ao nome.</p>
+
+    <h3>Propionatos</h3>
+    <table>
+      <tr><th>Fármaco</th><th>Seletividade</th><th>Observação clínica</th></tr>
+      <tr><td>Flurbiprofeno</td><td>Muito seletivo COX-1</td><td>Pastilhas, spray bucal, comprimidos, gel/creme</td></tr>
+      <tr><td>Ibuprofeno</td><td>Fracamente seletivo COX-1</td><td>Ampla disponibilidade de formas farmacêuticas; costuma ser preferido em pediatria</td></tr>
+      <tr><td>Cetoprofeno</td><td>Fracamente seletivo COX-1</td><td>Comprimido, injetável, gel/creme</td></tr>
+      <tr><td>Naproxeno</td><td>Fracamente seletivo COX-1</td><td>Meia-vida mais longa entre os propionatos clássicos</td></tr>
+    </table>
+
+    <h3>Oxicanes</h3>
+    <table>
+      <tr><th>Fármaco</th><th>Seletividade</th><th>Observação clínica</th></tr>
+      <tr><td>Meloxicam</td><td>Moderadamente seletivo COX-2</td><td>Comprimidos, cápsulas, injetável</td></tr>
+      <tr><td>Piroxicam</td><td>Fracamente seletivo COX-2</td><td>Cápsula, gel dermatológico, injetável, supositório</td></tr>
+      <tr><td>Tenoxicam</td><td>Não classificado até o momento</td><td>Comprimidos e solução injetável</td></tr>
+    </table>
+
+    <h3>Fenilacetatos e fenamatos</h3>
+    <table>
+      <tr><th>Fármaco</th><th>Seletividade</th><th>Observação clínica</th></tr>
+      <tr><td>Diclofenaco sódico</td><td>Fracamente seletivo COX-2</td><td>Comprimido, injetável, colírio, supositório</td></tr>
+      <tr><td>Diclofenaco potássico</td><td>Fracamente seletivo COX-2</td><td>Absorção mais rápida — útil para dor aguda</td></tr>
+      <tr><td>Diclofenaco resinato</td><td>Fracamente seletivo COX-2</td><td>Formulação pediátrica em gotas</td></tr>
+      <tr><td>Diclofenaco dietilamônio</td><td>Fracamente seletivo COX-2</td><td>Uso tópico (gel) — menor exposição sistêmica</td></tr>
+      <tr><td>Aceclofenaco</td><td>Não classificado</td><td>Comprimido, gel, suspensão oral</td></tr>
+      <tr><td>Ácido mefenâmico</td><td>Não classificado</td><td>Associado a maior incidência de reações cutâneas idiossincráticas</td></tr>
+    </table>
+
+    <h3>Sulfanilidas, salicilatos e diversos</h3>
+    <table>
+      <tr><th>Fármaco</th><th>Seletividade</th><th>Observação clínica</th></tr>
+      <tr><td>Nimesulida</td><td>Fracamente seletivo COX-2</td><td>Uso restrito/controverso em vários países por hepatotoxicidade</td></tr>
+      <tr><td>Cetorolaco</td><td>Altamente seletivo COX-1</td><td>Potente analgésico; uso de curta duração pelo risco GI e renal</td></tr>
+      <tr><td>Nabumetona</td><td>Não classificado</td><td>Pró-fármaco</td></tr>
+      <tr><td>Etodolaco</td><td>Moderadamente seletivo COX-2</td><td>Comprimido revestido, cápsula</td></tr>
+      <tr><td>Ácido acetilsalicílico (AAS)</td><td>Fracamente seletivo COX-1</td><td>Inibição <strong>irreversível</strong> da COX plaquetária — base do uso em cardioproteção; agride diretamente a mucosa gástrica</td></tr>
+    </table>
+
+    <div class="alert alert-info">
+      <span class="label">Como memorizar</span>
+      <span>Não decore a tabela isolada — associe cada seletividade ao risco predominante: quanto mais seletivo COX-1, maior tendência a efeito antiplaquetário e risco gástrico; quanto mais seletivo COX-2, menor risco GI/plaquetário, porém maior atenção ao risco cardiovascular.</span>
+    </div>
+  </div>
+
+  <!-- =============== 8 =============== -->
+  <div class="section" id="s8">
+    <div class="section-head">
+      <span class="tag" style="color:var(--c-coxibe)">Classe Especial</span>
+      <hr>
+    </div>
+    <h2>8. Coxibes: seletividade extrema para COX-2</h2>
+    <p>Os coxibes foram desenvolvidos justamente para explorar a lógica da seletividade: se a COX-2 é a isoforma predominantemente induzida na inflamação, um inibidor altamente seletivo para COX-2 teoria deveria manter o efeito anti-inflamatório/analgésico com menor toxicidade gástrica (menos interferência na COX-1 citoprotetora).</p>
+
+    <table>
+      <tr><th>Fármaco</th><th>Seletividade</th><th>Uso clínico principal</th></tr>
+      <tr><td>Celecoxibe</td><td>Moderadamente seletivo COX-2</td><td>Alívio sintomático em osteoartrite e artrite reumatoide</td></tr>
+      <tr><td>Etoricoxibe</td><td>Muito seletivo COX-2</td><td>Alívio sintomático em osteoartrite e artrite reumatoide</td></tr>
+      <tr><td>Parecoxibe</td><td>Não classificado</td><td>Tratamento de curto prazo da dor pós-operatória (via injetável)</td></tr>
+    </table>
+
+    <div class="alert alert-danger">
+      <span class="label">Marco histórico obrigatório</span>
+      <span>O parecoxibe é um pró-fármaco do <strong>valdecoxibe</strong>, que foi retirado do mercado mundial por aumento comprovado de eventos cardiovasculares graves (infarto e AVC). Esse episódio, junto à retirada anterior do rofecoxibe pelo mesmo motivo, é o principal argumento farmacológico contra o uso indiscriminado de inibidores altamente seletivos de COX-2, sobretudo em pacientes com risco cardiovascular preexistente.</span>
+    </div>
+
+    <p><strong>Conduta clínica:</strong> coxibes não são "AINEs mais seguros" de forma absoluta — eles trocam risco gastrointestinal por risco cardiovascular. A escolha deve ser individualizada: pacientes com alto risco GI e baixo risco cardiovascular podem se beneficiar de um coxibe (idealmente associado a gastroproteção quando indicado); pacientes cardiopatas devem evitá-los ou usá-los com extrema cautela e pelo menor tempo possível.</p>
+  </div>
+
+  <!-- =============== 9 =============== -->
+  <div class="section" id="s9">
+    <div class="section-head">
+      <span class="tag" style="color:var(--c-gi)">Segurança do Paciente</span>
+      <hr>
+    </div>
+    <h2>9. Efeitos adversos dos AINEs, sistema por sistema</h2>
+    <p>Esta é a seção mais relevante para a prática clínica: prescrever um AINE sem avaliar comorbidades é uma das causas evitáveis mais comuns de iatrogenia em ambulatório e pronto-atendimento. Analise cada sistema com o mecanismo por trás — isso é o que permite antecipar o problema antes que ele aconteça.</p>
+
+    <h3 style="color:var(--c-gi)">Gastrointestinais</h3>
+    <div class="card" style="--accent:var(--c-gi)">
+      <p style="margin:0"><strong>Mecanismo:</strong> a inibição da COX-1 reduz a síntese de PGE₂, prostaglandina responsável pela citoproteção da mucosa gástrica (redução da secreção ácida, manutenção do muco protetor e do fluxo sanguíneo mucoso). Sem essa proteção, a mucosa fica vulnerável.</p>
+      <p><strong>Manifestações:</strong> dispepsia, náusea, hemorragia digestiva, úlcera péptica.</p>
+      <p style="margin:0"><strong>Particularidade do AAS:</strong> além do mecanismo sistêmico via COX-1, o ácido acetilsalicílico causa <strong>agressão direta e tópica</strong> à mucosa gástrica (é um ácido fraco que fica retido/ionizado no meio ácido gástrico), somando dois mecanismos lesivos.</p>
+    </div>
+
+    <h3 style="color:var(--c-derma)">Reações cutâneas</h3>
+    <div class="card" style="--accent:var(--c-derma)">
+      <p style="margin:0">Mais observadas com o uso do <strong>ácido mefenâmico</strong>, tipicamente por mecanismo <strong>idiossincrático</strong> (não previsível pela dose, ligado a suscetibilidade individual, possivelmente imunomediado).</p>
+    </div>
+
+    <h3 style="color:var(--c-renal)">Renais</h3>
+    <div class="card" style="--accent:var(--c-renal)">
+      <p><strong>Mecanismo:</strong> em condições de baixo fluxo renal efetivo (desidratação, insuficiência cardíaca, cirrose, uso de diuréticos), a manutenção da perfusão renal depende de vasodilatação compensatória mediada por PGE₂, contrapondo-se à ação vasoconstritora da noradrenalina e da angiotensina II. Ao inibir a síntese de prostanóides, o AINE remove esse mecanismo compensatório.</p>
+      <p style="margin:0"><strong>Consequência:</strong> injúria renal aguda (geralmente reversível com a suspensão do fármaco), mais comum em pacientes já suscetíveis.</p>
+      <p><strong>Grupos de maior risco:</strong> recém-nascidos, idosos, cardiopatas e hepatopatas.</p>
+    </div>
+
+    <h3 style="color:var(--c-cardio)">Cardiovasculares</h3>
+    <div class="card" style="--accent:var(--c-cardio)">
+      <p style="margin:0">O desequilíbrio entre TXA₂ (pró-trombótico, plaquetário, dependente de COX-1) e PGI₂ (antitrombótico, endotelial, dependente predominantemente de COX-2) é o mecanismo central do aumento de risco cardiovascular associado sobretudo aos inibidores seletivos de COX-2 — o exemplo histórico mais grave dessa categoria foi a retirada do valdecoxibe/rofecoxibe do mercado.</p>
+    </div>
+
+    <h3>Hepáticos</h3>
+    <div class="card" style="--accent:var(--c-mec)">
+      <p style="margin:0">Alterações enzimáticas hepáticas podem ocorrer com diversos AINEs; a <strong>nimesulida</strong> é classicamente associada a maior atenção quanto a hepatotoxicidade, o que motivou restrições de uso em diversos países.</p>
+    </div>
+
+    <h3>Plaquetários (efeito transversal)</h3>
+    <div class="card" style="--accent:var(--c-classes)">
+      <p style="margin:0">Bloqueio da agregação plaquetária pela inibição da síntese de TXA₂ — desejável no uso cardioprotetor do AAS em baixas doses, porém indesejável (aumento de sangramento) em contexto perioperatório ou de trauma.</p>
+    </div>
+  </div>
+
+  <!-- =============== 10 =============== -->
+  <div class="section" id="s10">
+    <div class="section-head">
+      <span class="tag" style="color:var(--c-erros)">Conduta</span>
+      <hr>
+    </div>
+    <h2>10. Populações de risco e cuidados na prescrição</h2>
+    <ul>
+      <li><strong>Idosos:</strong> maior risco de lesão renal, sangramento GI e interação medicamentosa (polifarmácia) — preferir menor dose eficaz pelo menor tempo possível, associar gastroproteção quando indicado.</li>
+      <li><strong>Recém-nascidos e crianças pequenas:</strong> maior sensibilidade renal; ibuprofeno costuma ser preferido entre os AINEs pediátricos pelo perfil de segurança relativamente mais estudado nessa faixa etária, sempre respeitando dose por peso.</li>
+      <li><strong>Cardiopatas / risco cardiovascular elevado:</strong> evitar coxibes e AINEs muito seletivos para COX-2; se necessário AINE, preferir os de menor risco cardiovascular relativo e pelo menor tempo possível.</li>
+      <li><strong>Hepatopatas:</strong> atenção redobrada com nimesulida e com doses cumulativas de paracetamol.</li>
+      <li><strong>Pacientes com asma/hipersensibilidade a AAS:</strong> risco de broncoespasmo por desvio da via LOX (tríade de Samter) — investigar história prévia antes de prescrever qualquer AINE.</li>
+      <li><strong>Pacientes desidratados, em uso de diuréticos ou com função renal limítrofe:</strong> risco aumentado de lesão renal aguda induzida por AINE — avaliar função renal antes de prescrever, especialmente em uso prolongado.</li>
+    </ul>
+  </div>
+
+  <!-- =============== 11 =============== -->
+  <div class="section" id="s11">
+    <div class="section-head">
+      <span class="tag" style="color:var(--c-erros)">Erros Frequentes</span>
+      <hr>
+    </div>
+    <h2>11. Erros frequentes na prescrição e na compreensão do tema</h2>
+    <div class="alert alert-warn">
+      <span class="label">Erro 1</span>
+      <span>Tratar todos os AINEs como equivalentes e trocá-los "no automático" sem considerar a seletividade COX-1/COX-2 e o perfil de risco individual do paciente.</span>
+    </div>
+    <div class="alert alert-warn">
+      <span class="label">Erro 2</span>
+      <span>Classificar o paracetamol como "só mais um AINE fraco" — na verdade seu perfil farmacológico (pouco efeito anti-inflamatório periférico, mecanismo central ainda debatido, possível relação com COX-3) o torna uma classe à parte na prática clínica.</span>
+    </div>
+    <div class="alert alert-warn">
+      <span class="label">Erro 3</span>
+      <span>Assumir que coxibes são sempre "a opção mais segura" por poupar o estômago, ignorando o risco cardiovascular — decisão que já custou vidas historicamente (retirada do rofecoxibe e do valdecoxibe do mercado).</span>
+    </div>
+    <div class="alert alert-warn">
+      <span class="label">Erro 4</span>
+      <span>Prescrever AINE por tempo prolongado sem reavaliação, sobretudo em idosos, cardiopatas, hepatopatas ou pacientes com função renal limítrofe — o dano renal e gástrico costuma ser dose e tempo-dependente.</span>
+    </div>
+    <div class="alert alert-warn">
+      <span class="label">Erro 5</span>
+      <span>Não perguntar sobre história de asma, pólipos nasais ou reação prévia a AAS/AINEs antes de prescrever — deixando passar um risco previsível de broncoespasmo grave.</span>
+    </div>
+    <div class="alert alert-warn">
+      <span class="label">Erro 6</span>
+      <span>Associar AINE + AAS em baixa dose sem atenção: alguns AINEs (como o ibuprofeno) podem interferir competitivamente na ligação irreversível do AAS à COX-1 plaquetária, reduzindo seu efeito cardioprotetor se administrados de forma inadequada em relação ao horário.</span>
+    </div>
+  </div>
+
+  <!-- =============== 12 =============== -->
+  <div class="section" id="s12">
+    <div class="section-head">
+      <span class="tag" style="color:var(--c-resumo)">Síntese</span>
+      <hr>
+    </div>
+    <h2>12. Síntese integrada</h2>
+
+    <div class="card" style="--accent:var(--c-resumo)">
+      <h4 style="color:var(--c-resumo)">Uso terapêutico central dos AINEs</h4>
+      <ul style="margin:0">
+        <li>Alívio de dor relacionada a processo inflamatório;</li>
+        <li>Retardar ou interromper o processo responsável pela lesão tecidual inflamatória.</li>
+      </ul>
+    </div>
+
+    <div class="card" style="--accent:var(--c-gi)">
+      <h4 style="color:var(--c-gi)">Tríade de efeitos adversos típicos dos AINEs</h4>
+      <table style="margin:0">
+        <tr><th>Sistema</th><th>Mecanismo</th><th>Manifestação</th></tr>
+        <tr><td>Gastrointestinal</td><td>↓ PGE₂/PGI₂ → ↓ citoproteção da mucosa</td><td>Dispepsia, úlcera, sangramento, perfuração</td></tr>
+        <tr><td>Plaquetário</td><td>↓ TXA₂ → ↓ agregação plaquetária</td><td>Aumento do sangramento</td></tr>
+        <tr><td>Renal</td><td>↓ Prostanóides vasodilatadores compensatórios</td><td>↓ Filtração glomerular, injúria renal aguda</td></tr>
+        <tr><td>Hepático</td><td>Variável conforme o fármaco</td><td>Alterações enzimáticas</td></tr>
+      </table>
+    </div>
+
+    <p>Do ponto de vista de raciocínio clínico, a escolha de um AINE nunca deve se basear apenas na potência analgésica — deve responder a três perguntas: <strong>(1)</strong> qual o risco gastrointestinal deste paciente? <strong>(2)</strong> qual o risco cardiovascular deste paciente? <strong>(3)</strong> qual a função renal atual deste paciente? A resposta a essas três perguntas direciona, na prática, se o AINE é seguro, se precisa de gastroproteção associada, se deve ser evitado, e por quanto tempo pode ser mantido.</p>
+  </div>
+
+  <!-- =============== 13 =============== -->
+  <div class="section" id="s13">
+    <div class="section-head">
+      <span class="tag" style="color:var(--text-faint)">Bibliografia</span>
+      <hr>
+    </div>
+    <h2>13. Referências</h2>
+    <ul>
+      <li>Material da aula anexada — "Fármacos anti-inflamatórios não esteroidais e analgésicos" (LPF).</li>
+      <li>Katzung, B. G. — <em>Farmacologia Básica e Clínica</em>.</li>
+      <li>Goodman &amp; Gilman — <em>As Bases Farmacológicas da Terapêutica</em>.</li>
+      <li>Brunton, L. — referenciado na aula para dados de seletividade das isoformas COX.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  LPF — Laboratório de Prática Funcional · Material de apoio para estudo dirigido · Uso acadêmico
+</footer>
+
+</body>
+</html>

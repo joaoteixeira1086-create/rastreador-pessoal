@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dor Neuropática — Resumo de Estudo | UC XIII</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#080a10;
+    --bg-1:#0d1119;
+    --bg-2:#131826;
+    --bg-3:#1a2032;
+    --border:#232a3d;
+    --border-soft:#1b2133;
+    --text-0:#eaecf2;
+    --text-1:#b7bfd1;
+    --text-2:#7d869c;
+
+    --accent-fisio:#a78bfa;
+    --accent-diabetes:#f0a848;
+    --accent-herpes:#f0637f;
+    --accent-exame:#45d6c4;
+    --accent-farmaco:#5fd68a;
+    --accent-tratamento:#5b9cf0;
+    --accent-neutral:#8892a6;
+
+    --font-display:'Cormorant Garamond', serif;
+    --font-body:'Source Sans 3', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 1200px 600px at 15% -10%, rgba(167,139,250,0.06), transparent),
+      radial-gradient(ellipse 1000px 500px at 85% 10%, rgba(91,156,240,0.05), transparent),
+      var(--bg-0);
+    color:var(--text-1);
+    font-family:var(--font-body);
+    font-size:16.5px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background: rgba(167,139,250,0.28); color:#fff; }
+
+  h1,h2,h3,h4{
+    font-family:var(--font-display);
+    color:var(--text-0);
+    font-weight:600;
+    letter-spacing:0.01em;
+    margin:0 0 0.5em;
+  }
+  p{ margin:0 0 1.05em; color:var(--text-1); }
+  em{ color:var(--text-0); font-style:italic; }
+  i.term{ color:var(--accent-current, var(--accent-fisio)); font-style:italic; }
+  a{ color:var(--accent-tratamento); }
+  ul,ol{ color:var(--text-1); padding-left:1.4em; margin:0 0 1.1em; }
+  li{ margin-bottom:0.45em; }
+  hr.thin{ border:none; border-top:1px solid var(--border-soft); margin:2.5em 0; }
+
+  /* ===== LAYOUT ===== */
+  .wrap{ max-width:920px; margin:0 auto; padding:0 24px 120px; }
+
+  /* ===== HERO ===== */
+  .hero{
+    padding:80px 24px 50px;
+    max-width:920px; margin:0 auto;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .hero .eyebrow{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--accent-fisio);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:22px;
+  }
+  .hero .eyebrow .dot{ width:6px;height:6px;border-radius:50%;background:var(--accent-fisio); box-shadow:0 0 8px var(--accent-fisio);}
+  .hero h1{
+    font-size:clamp(2.4rem, 5vw, 3.6rem);
+    line-height:1.05;
+    margin-bottom:18px;
+    font-weight:600;
+  }
+  .hero h1 .accent{ color:var(--accent-fisio); font-style:italic; font-weight:500;}
+  .hero p.lead{
+    font-size:1.12rem;
+    color:var(--text-1);
+    max-width:640px;
+    margin-bottom:0;
+  }
+  .hero .badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }
+  .hero .badge{
+    font-family:var(--font-mono);
+    font-size:0.7rem;
+    letter-spacing:0.06em;
+    padding:6px 12px;
+    border-radius:20px;
+    border:1px solid var(--border);
+    color:var(--text-2);
+  }
+
+  /* ===== TOC ===== */
+  .toc{
+    max-width:920px; margin:40px auto 0; padding:0 24px;
+  }
+  .toc-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+    gap:10px;
+  }
+  .toc-item{
+    display:flex; align-items:center; gap:12px;
+    padding:14px 16px;
+    background:var(--bg-2);
+    border:1px solid var(--border);
+    border-top:3px solid var(--tc, var(--accent-fisio));
+    border-radius:6px;
+    text-decoration:none;
+    transition:transform .15s ease, border-color .15s ease;
+  }
+  .toc-item:hover{ transform:translateY(-2px); }
+  .toc-item .n{
+    font-family:var(--font-mono); font-size:0.75rem; color:var(--tc, var(--accent-fisio));
+    border:1px solid var(--tc, var(--accent-fisio)); border-radius:4px;
+    width:28px; height:28px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .toc-item .label{ font-family:var(--font-body); font-size:0.92rem; color:var(--text-0); }
+  .toc-item .sub{ display:block; font-size:0.76rem; color:var(--text-2); margin-top:2px;}
+
+  /* ===== SECTION / TOPIC ===== */
+  section.topic{ max-width:920px; margin:0 auto; padding:64px 24px 8px; }
+  section.topic:first-of-type{ padding-top:56px; }
+
+  .topic-kicker{
+    display:flex; align-items:baseline; gap:16px; margin-bottom:6px;
+  }
+  .topic-kicker .num{
+    font-family:var(--font-mono); font-size:0.85rem; color:var(--accent-current);
+  }
+  .topic-title{
+    font-size:clamp(1.9rem, 3.4vw, 2.5rem);
+    color:var(--accent-current);
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .topic-deck{ color:var(--text-2); font-size:0.98rem; margin-bottom:36px; max-width:640px; }
+
+  /* section header: tag + line */
+  .section-header{
+    display:flex; align-items:center; gap:14px;
+    margin:44px 0 20px;
+  }
+  .section-header:first-child{ margin-top:0; }
+  .section-header .tag{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.13em;
+    text-transform:uppercase;
+    color:var(--accent-current);
+    border:1px solid var(--accent-current);
+    padding:5px 11px;
+    border-radius:3px;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  .section-header .line{
+    flex:1; height:1px;
+    background:linear-gradient(90deg, var(--accent-current), var(--border) 80%);
+    opacity:0.55;
+  }
+  h3.sub-h{
+    font-family:var(--font-display);
+    font-size:1.32rem;
+    color:var(--text-0);
+    font-weight:600;
+    margin:1.6em 0 0.55em;
+  }
+  h4.micro-h{
+    font-family:var(--font-body);
+    font-size:0.92rem;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--accent-current);
+    font-weight:600;
+    margin:1.4em 0 0.5em;
+  }
+
+  /* ===== CARDS ===== */
+  .card{
+    background:var(--bg-2);
+    border:1px solid var(--border);
+    border-top:3px solid var(--accent-current);
+    border-radius:6px;
+    padding:22px 24px;
+    margin:18px 0;
+  }
+  .card h4{
+    font-family:var(--font-display);
+    font-size:1.15rem;
+    color:var(--text-0);
+    margin-bottom:8px;
+  }
+  .card p:last-child{ margin-bottom:0; }
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+    gap:16px;
+    margin:20px 0;
+  }
+  .card-grid .card{ margin:0; }
+  .card .mini-tag{
+    font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--accent-current); display:block; margin-bottom:8px;
+  }
+
+  /* stepped process flow */
+  .flow{
+    display:flex; flex-direction:column; gap:0; margin:22px 0;
+    border-left:2px solid var(--border);
+    padding-left:0;
+  }
+  .flow-step{
+    position:relative;
+    padding:10px 0 10px 28px;
+    border-left:2px solid var(--accent-current);
+    margin-left:-2px;
+  }
+  .flow-step::before{
+    content:'';
+    position:absolute; left:-6px; top:16px;
+    width:10px; height:10px; border-radius:50%;
+    background:var(--bg-0); border:2px solid var(--accent-current);
+  }
+  .flow-step .ft{ font-family:var(--font-mono); font-size:0.72rem; color:var(--accent-current); letter-spacing:.05em; text-transform:uppercase;}
+  .flow-step p{ margin:4px 0 0; }
+
+  /* ===== ALERTS (outline style) ===== */
+  .alert{
+    border:1px solid var(--accent-current);
+    background:transparent;
+    border-radius:5px;
+    padding:16px 20px;
+    margin:20px 0;
+    position:relative;
+  }
+  .alert .alert-tag{
+    font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--accent-current); display:block; margin-bottom:6px;
+  }
+  .alert p{ margin:0; color:var(--text-0); }
+  .alert p + p{ margin-top:0.6em; }
+  .alert.redflag{ border-color:#f0637f; }
+  .alert.redflag .alert-tag{ color:#f0637f; }
+  .alert.keypoint{ border-style:solid; }
+
+  /* ===== DETAILS / APROFUNDE-SE ===== */
+  details.deepen{
+    margin:16px 0;
+    border:1px dashed var(--border);
+    border-radius:6px;
+    background:rgba(255,255,255,0.012);
+    overflow:hidden;
+  }
+  details.deepen[open]{ border-color:var(--accent-current); }
+  details.deepen summary{
+    cursor:pointer;
+    list-style:none;
+    padding:13px 18px;
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--font-mono);
+    font-size:0.8rem;
+    letter-spacing:0.03em;
+    color:var(--accent-current);
+    user-select:none;
+  }
+  details.deepen summary::-webkit-details-marker{ display:none; }
+  details.deepen summary::before{
+    content:'+';
+    display:inline-flex; align-items:center; justify-content:center;
+    width:18px; height:18px;
+    border:1px solid var(--accent-current);
+    border-radius:3px;
+    font-size:0.85rem;
+    flex-shrink:0;
+    transition:transform .15s ease;
+  }
+  details.deepen[open] summary::before{ content:'–'; }
+  details.deepen .deepen-body{
+    padding:2px 22px 20px 46px;
+    border-top:1px solid var(--border-soft);
+    padding-top:16px;
+  }
+  details.deepen .deepen-body p:last-child{ margin-bottom:0.4em; }
+
+  details.deepen2{
+    margin:14px 0 4px;
+    border:1px dashed var(--border-soft);
+    border-radius:5px;
+  }
+  details.deepen2 summary{
+    cursor:pointer; list-style:none;
+    padding:9px 14px;
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.02em;
+    color:var(--text-2);
+    display:flex; align-items:center; gap:8px;
+  }
+  details.deepen2 summary::-webkit-details-marker{ display:none; }
+  details.deepen2 summary::before{ content:'›'; color:var(--accent-current); font-size:0.95rem; transition:transform .15s ease; }
+  details.deepen2[open] summary::before{ transform:rotate(90deg); }
+  details.deepen2 .deepen2-body{ padding:0 14px 14px 30px; color:var(--text-1); font-size:0.96rem; }
+
+  /* ===== TERM PILL / DEFINITIONS ===== */
+  .def-list{ display:flex; flex-direction:column; gap:10px; margin:18px 0; }
+  .def-item{ display:flex; gap:14px; align-items:baseline; flex-wrap:wrap; }
+  .def-term{ font-family:var(--font-display); font-style:italic; font-size:1.05rem; color:var(--accent-current); min-width:150px; }
+  .def-desc{ color:var(--text-1); flex:1; min-width:220px; }
+
+  /* ===== FIGURE / PATHWAY DIAGRAM (css only) ===== */
+  .pathway{
+    display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+    margin:22px 0; padding:20px;
+    background:var(--bg-2); border:1px solid var(--border); border-radius:8px;
+  }
+  .pathway .node{
+    font-family:var(--font-mono); font-size:0.78rem; color:var(--text-0);
+    background:var(--bg-3); border:1px solid var(--accent-current);
+    padding:8px 12px; border-radius:5px; text-align:center;
+  }
+  .pathway .arrow{ color:var(--accent-current); font-size:1.1rem; }
+
+  /* ===== CLINICAL INTEGRATION FINAL BOX ===== */
+  .integration{
+    margin-top:26px;
+    padding:26px 28px;
+    background:var(--bg-2);
+    border:1px solid var(--border);
+    border-top:3px solid var(--accent-current);
+    border-radius:8px;
+  }
+  .integration h4{ font-family:var(--font-display); color:var(--accent-current); font-size:1.25rem; margin-bottom:14px;}
+
+  /* ===== REFERENCES ===== */
+  .refs{ font-size:0.92rem; color:var(--text-2); }
+  .refs .ref-group{ margin-bottom:22px; }
+  .refs .ref-group h5{
+    font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--accent-current); margin-bottom:10px; font-weight:600;
+  }
+  .refs p{ margin:0 0 10px; padding-left:1.4em; text-indent:-1.4em; color:var(--text-2); }
+
+  /* ===== FOOTER SPACER ===== */
+  .end-space{ height:40px; }
+
+  /* ===== EDIT TOOLBAR ===== */
+  .edit-toolbar{
+    position:fixed; right:22px; bottom:22px;
+    display:flex; flex-direction:column; gap:8px;
+    background:var(--bg-1);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.5);
+    z-index:9999;
+    font-family:var(--font-body);
+  }
+  .toolbar-btn{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    background:var(--bg-2);
+    color:var(--text-1);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:10px 14px;
+    cursor:pointer;
+    text-align:left;
+    transition:all .15s ease;
+    white-space:nowrap;
+  }
+  .toolbar-btn:hover{ border-color:var(--accent-tratamento); color:var(--text-0); }
+  .toolbar-btn.active{ border-color:var(--accent-fisio); color:var(--accent-fisio); background:rgba(167,139,250,0.08); }
+  .toolbar-btn.danger:hover{ border-color:var(--accent-herpes); color:var(--accent-herpes); }
+  .storage-note{
+    max-width:180px;
+    font-size:0.66rem;
+    color:var(--text-2);
+    line-height:1.4;
+    padding:2px 4px 0;
+  }
+  [contenteditable="true"]{ outline:none; }
+  [contenteditable="true"]:hover{ background:rgba(167,139,250,0.03); }
+
+  @media (max-width:640px){
+    .hero{ padding:56px 18px 34px; }
+    section.topic{ padding:44px 18px 4px; }
+    .edit-toolbar{ right:12px; bottom:12px; }
+    .def-item{ flex-direction:column; gap:2px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow"><span class="dot"></span> UC XIII · Dor — Nocicepção e Mecanismos da Dor</div>
+  <h1>Dor <span class="accent">Neuropática</span></h1>
+  <p class="lead">Da fisiologia da lesão do sistema somatossensorial às bases moleculares da neuropatia diabética e da neuralgia pós-herpética, passando pela semiologia dirigida e pela farmacoterapia racional.</p>
+  <div class="badges">
+    <span class="badge">Fisiologia</span>
+    <span class="badge">Fisiopatologia</span>
+    <span class="badge">Semiologia</span>
+    <span class="badge">Farmacologia</span>
+    <span class="badge">Medicina Baseada em Evidências</span>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="toc-grid">
+    <a class="toc-item" href="#fisiologia" style="--tc:var(--accent-fisio)">
+      <span class="n">01</span>
+      <span><span class="label">Fisiologia da dor neuropática</span><span class="sub">mecanismos periféricos e centrais</span></span>
+    </a>
+    <a class="toc-item" href="#diabetes" style="--tc:var(--accent-diabetes)">
+      <span class="n">02</span>
+      <span><span class="label">Neuropatia diabética</span><span class="sub">mecanismo e prevenção</span></span>
+    </a>
+    <a class="toc-item" href="#herpes" style="--tc:var(--accent-herpes)">
+      <span class="n">03</span>
+      <span><span class="label">Neuralgia pós-herpética</span><span class="sub">mecanismo e prevenção</span></span>
+    </a>
+    <a class="toc-item" href="#exame" style="--tc:var(--accent-exame)">
+      <span class="n">04</span>
+      <span><span class="label">Exame e questionários</span><span class="sub">exame físico, DN4, McGill</span></span>
+    </a>
+    <a class="toc-item" href="#farmaco" style="--tc:var(--accent-farmaco)">
+      <span class="n">05</span>
+      <span><span class="label">Mecanismo de ação</span><span class="sub">anticonvulsivantes, AL, B12, capsaicina</span></span>
+    </a>
+    <a class="toc-item" href="#tratamento" style="--tc:var(--accent-tratamento)">
+      <span class="n">06</span>
+      <span><span class="label">Tratamento</span><span class="sub">farmacológico e não farmacológico</span></span>
+    </a>
+  </div>
+</nav>
+
+<main id="editableRoot">
+
+<!-- ======================================================= -->
+<!-- 1. FISIOLOGIA DA DOR NEUROPÁTICA -->
+<!-- ======================================================= -->
+<section class="topic" id="fisiologia" style="--accent-current:var(--accent-fisio)">
+  <div class="topic-kicker"><span class="num">01</span></div>
+  <h2 class="topic-title">Fisiologia da Dor Neuropática</h2>
+  <p class="topic-deck">Por que uma lesão no próprio sistema nervoso gera dor sem que exista, na maioria das vezes, nenhum estímulo lesivo em curso? A resposta está numa reorganização molecular e sináptica que transforma vias de transmissão sensorial normal em geradores autônomos de dor.</p>
+
+  <div class="section-header"><span class="tag">Conceito</span><span class="line"></span></div>
+  <p>Comece fixando a diferença mais cobrada em prova, porque ela organiza todo o raciocínio clínico da UC XIII. A <i class="term">dor nociceptiva</i> é aquela gerada pela ativação de nociceptores íntegros diante de um estímulo lesivo real ou potencial — o sistema nervoso está funcionando perfeitamente, apenas relatando uma agressão tecidual (uma queimadura, uma inflamação articular). Já a <i class="term">dor neuropática</i>, segundo a definição oficial da International Association for the Study of Pain (IASP, revisada em 2011), é a dor causada diretamente por uma lesão ou doença que acomete o próprio sistema somatossensorial — seja em nervo periférico, raiz, plexo, medula espinhal ou encéfalo. Aqui o sistema de alarme está avariado: ele dispara mesmo sem agressão tecidual em curso, porque o defeito está no próprio fio elétrico, não no que ele deveria estar sinalizando.</p>
+  <p>Existe ainda uma terceira categoria, mais recente, reconhecida pela IASP em 2016: a <i class="term">dor nociplástica</i>, na qual há sensibilização do sistema nervoso sem lesão tecidual demonstrável nem lesão do sistema somatossensorial — o protótipo é a fibromialgia. Ela não será nosso foco aqui, mas vale saber que ela existe para você nunca confundir os três mecanismos numa discussão tutorial.</p>
+
+  <div class="alert keypoint">
+    <span class="alert-tag">Por que essa distinção importa clinicamente</span>
+    <p>Um anti-inflamatório resolve muito bem uma dor nociceptiva inflamatória, mas tem efeito discreto sobre dor neuropática, porque o problema não está mais na periferia lesada — está na maneira como o próprio neurônio aferente e o corno dorsal da medula processam (ou mal processam) a informação. É exatamente por isso que a primeira linha farmacológica da dor neuropática é totalmente diferente da dor nociceptiva: antidepressivos e anticonvulsivantes, e não AINEs.</p>
+  </div>
+
+  <div class="section-header"><span class="tag">Base fisiológica necessária</span><span class="line"></span></div>
+  <p>Relembre rapidamente a via nociceptiva normal, porque a dor neuropática nada mais é do que essa mesma via operando de forma patológica. A informação nociceptiva normal segue quatro etapas: <i class="term">transdução</i> (conversão do estímulo físico/químico em potencial de receptor nas terminações livres de fibras Aδ e C), <i class="term">transmissão</i> (condução do potencial de ação até o corno dorsal da medula, primeiro sinapse com neurônios de segunda ordem, decussação e ascensão pelo trato espinotalâmico até o tálamo), <i class="term">modulação</i> (amplificação ou inibição do sinal em diversos pontos, sobretudo no corno dorsal, por vias descendentes originadas no tronco encefálico) e <i class="term">percepção</i> (integração cortical que gera a experiência consciente e afetiva da dor). Na dor neuropática, cada uma dessas quatro etapas pode estar alterada — só que ao invés de sinalizar corretamente uma lesão periférica, o sistema passa a gerar sinal de forma espontânea, amplificada e mal regulada.</p>
+
+  <div class="section-header"><span class="tag">Mecanismos periféricos</span><span class="line"></span></div>
+
+  <h3 class="sub-h">1. Geração ectópica de impulsos</h3>
+  <p>Depois de uma lesão axonal, o próprio nervo lesado passa a se comportar como um marca-passo anômalo de dor. No local da lesão (e também no corpo do neurônio, dentro do gânglio da raiz dorsal) há um acúmulo desproporcional de canais de sódio voltagem-dependentes recém-sintetizados, sobretudo as isoformas Nav1.3, Nav1.7, Nav1.8 e Nav1.9. Esse acúmulo forma verdadeiros microneuromas hiperexcitáveis, capazes de disparar potenciais de ação de maneira espontânea, sem qualquer estímulo externo — é essa descarga ectópica que o paciente sente como choques, fisgadas ou queimação espontânea, mesmo em repouso completo.</p>
+  <details class="deepen">
+    <summary>Aprofunde-se: por que justamente os canais de sódio?</summary>
+    <div class="deepen-body">
+      <p>O canal Nav1.7 (codificado pelo gene <em>SCN9A</em>) é particularmente instrutivo porque a genética humana já demonstrou, de forma quase experimental, seu papel central na nocicepção. Mutações de perda de função nesse gene causam a insensibilidade congênita à dor, uma condição rara em que indivíduos absolutamente não sentem dor apesar de todo o resto da via estar intacto. Já mutações de ganho de função no mesmo gene causam a eritromelalgia primária e a desordem de dor extrema paroxística, síndromes de dor neuropática espontânea gravíssima. Ou seja: um único canal iônico é capaz, sozinho, de ligar ou desligar completamente a experiência de dor — o que mostra por que fármacos moduladores de canais de sódio (anestésicos locais, alguns anticonvulsivantes) são tão relevantes nessa unidade curricular.</p>
+      <details class="deepen2">
+        <summary>Detalhamento avançado: Nav1.3 e reexpressão de canal "fetal"</summary>
+        <div class="deepen2-body">
+          <p>O Nav1.3 é fisiologicamente expresso durante o desenvolvimento embrionário e depois é normalmente silenciado no neurônio sensorial adulto. Após lesão axonal, ocorre reexpressão desse canal "fetal" no corpo celular do gânglio da raiz dorsal. Ele tem cinética de recuperação da inativação muito mais rápida que os canais adultos, permitindo disparos repetitivos de alta frequência — um substrato molecular elegante para explicar por que nervos lesados descarregam de forma tão persistente.</p>
+        </div>
+      </details>
+    </div>
+  </details>
+
+  <h3 class="sub-h">2. Sensibilização e acoplamento simpático-sensorial</h3>
+  <p>Depois de uma lesão nervosa, fibras simpáticas pós-ganglionares literalmente brotam (sprouting) em direção aos corpos neuronais dos aferentes primários dentro do gânglio da raiz dorsal, formando estruturas em cesto ao redor desses corpos celulares. Como esses neurônios lesados passam a expressar receptores alfa-adrenérgicos de forma anômala, a noradrenalina liberada pelas terminações simpáticas passa a excitar diretamente o neurônio sensorial — uma verdadeira ponte anômala entre o sistema simpático e o sistema sensorial. É esse mecanismo que explica por que o estresse, o frio ou a ativação simpática pioram certas dores neuropáticas, e é também a base fisiopatológica das síndromes dolorosas regionais complexas.</p>
+
+  <h3 class="sub-h">3. Transmissão efáptica</h3>
+  <p>Em nervos parcialmente desmielinizados, axônios vizinhos danificados podem entrar em contato elétrico direto entre si, sem sinapse química — um verdadeiro curto-circuito. O potencial de ação de uma fibra "vaza" e ativa a fibra adjacente. Isso ajuda a explicar por que estímulos táteis inócuos, transmitidos por fibras Aβ, conseguem ativar indiretamente fibras nociceptivas vizinhas.</p>
+
+  <div class="section-header"><span class="tag">Mecanismos centrais</span><span class="line"></span></div>
+
+  <h3 class="sub-h">4. Sensibilização central e potenciação de longa duração</h3>
+  <p>Esse é provavelmente o mecanismo mais cobrado em provas de fisiopatologia da dor, então vamos com calma. Em condições normais, o receptor NMDA do neurônio de segunda ordem no corno dorsal está bloqueado, em repouso, por um íon magnésio alojado dentro do próprio poro do canal — mesmo que o glutamato se ligue ao receptor, o canal não conduz corrente porque o magnésio o obstrui fisicamente. Só que, diante de uma descarga nociceptiva repetitiva e intensa (a chamada estimulação C, característica de lesão nervosa persistente), há liberação maciça e repetida de glutamato agindo em receptores AMPA, gerando despolarização somatória progressiva — o fenômeno eletrofisiológico clássico de <i class="term">wind-up</i>. Essa despolarização sustentada finalmente expulsa o magnésio do poro do NMDA, "destravando" o canal. Uma vez destravado, o influxo de cálcio pelo NMDA ativa quinases intracelulares (proteína quinase C, CaMKII) que fosforilam os próprios receptores AMPA e NMDA, aumentando permanentemente sua eficiência sináptica — isso é <i class="term">potenciação de longa duração</i> (LTP) no corno dorsal, o correlato sináptico exato da sensibilização central.</p>
+  <div class="pathway">
+    <span class="node">Lesão nervosa</span><span class="arrow">→</span>
+    <span class="node">Descarga repetitiva de fibra C</span><span class="arrow">→</span>
+    <span class="node">Wind-up (AMPA)</span><span class="arrow">→</span>
+    <span class="node">Desbloqueio do Mg²⁺ no NMDA</span><span class="arrow">→</span>
+    <span class="node">Influxo de Ca²⁺</span><span class="arrow">→</span>
+    <span class="node">PKC / CaMKII</span><span class="arrow">→</span>
+    <span class="node">LTP sináptica</span>
+  </div>
+  <p>Na prática clínica, essa sensibilização central é o que explica a <i class="term">hiperalgesia secundária</i> (dor exagerada numa área maior do que a lesão original) e é um dos alicerces da cronificação da dor — uma vez que a sinapse foi potenciada, ela tende a permanecer facilitada mesmo depois que o estímulo original desaparece.</p>
+
+  <h3 class="sub-h">5. Perda da inibição segmentar (desinibição)</h3>
+  <p>No corno dorsal normal, interneurônios inibitórios GABAérgicos e glicinérgicos mantêm um freio tônico sobre os neurônios de projeção nociceptiva, impedindo que estímulos táteis inócuos sejam interpretados como dor. Depois de uma lesão de nervo periférico, uma parcela desses interneurônios inibitórios sofre morte celular por excitotoxicidade — literalmente, o próprio excesso de glutamato liberado após a lesão mata os freios que deveriam conter a dor. Some a isso o fato de que fibras Aβ de grosso calibre (que normalmente veiculam apenas tato, não dor) sofrem brotamento anômalo das lâminas profundas (III e IV) para as lâminas superficiais (I e II) do corno dorsal, onde passam a fazer sinapse diretamente com neurônios nociceptivos específicos. O resultado funcional é a <i class="term">alodinia</i>: um simples toque de lençol ou roupa passa a ser interpretado como dor, porque a via de "tato" literalmente se conectou à via de "dor" num terreno onde os freios inibitórios foram perdidos.</p>
+
+  <h3 class="sub-h">6. Ativação glial e o paradoxo do GABA excitatório</h3>
+  <p>Depois da lesão nervosa, a micróglia do corno dorsal é ativada por sinalização purinérgica (ATP liberado por neurônios lesados atuando em receptores P2X4 e P2X7 microgliais). A micróglia ativada libera BDNF (fator neurotrófico derivado do encéfalo), que age em receptores TrkB dos neurônios de projeção e provoca a redução da expressão do cotransportador KCC2 na membrana neuronal. Esse cotransportador é responsável por manter baixa a concentração intracelular de cloreto — e é justamente esse gradiente de cloreto que faz o GABA ser normalmente hiperpolarizante (inibitório). Quando o KCC2 é reduzido, o cloreto intracelular se acumula, e o mesmo GABA que antes inibia passa paradoxalmente a despolarizar o neurônio — o freio literalmente vira acelerador. Some a isso astrócitos ativados liberando citocinas pró-inflamatórias (TNF-α, IL-1β, IL-6), que sensibilizam ainda mais a sinapse, e você tem um quadro completo de neuroinflamação central mantendo a dor mesmo sem qualquer estímulo periférico.</p>
+  <details class="deepen">
+    <summary>Aprofunde-se: o experimento que mudou o entendimento da glia na dor</summary>
+    <div class="deepen-body">
+      <p>Os trabalhos de Coull e colaboradores (2003 e 2005) demonstraram que a simples injeção intratecal de BDNF em animais saudáveis, sem qualquer lesão nervosa, era suficiente para reproduzir alodinia mecânica — e que bloquear a sinalização BDNF-TrkB revertia a alodinia induzida por lesão nervosa real. Esse foi um dos primeiros experimentos a demonstrar de forma robusta que a glia não é apenas suporte estrutural do sistema nervoso, mas um participante ativo e necessário na gênese da dor neuropática, abrindo toda uma linha de pesquisa farmacológica voltada para moduladores da microglia.</p>
+    </div>
+  </details>
+
+  <h3 class="sub-h">7. Disfunção do controle inibitório descendente</h3>
+  <p>Existe uma via fisiológica que desce do tronco encefálico (substância cinzenta periaquedutal, núcleo magno da rafe, locus ceruleus) até o corno dorsal, liberando serotonina e noradrenalina para inibir a transmissão nociceptiva ascendente — é o sistema que explica, por exemplo, por que a analgesia por estresse existe. Na dor neuropática crônica, esse sistema descendente inibitório se torna disfuncional e, em muitos casos, paradoxalmente passa a facilitar a dor em vez de inibi-la (facilitação descendente). Essa é, inclusive, a justificativa farmacológica central para o uso de antidepressivos tricíclicos e inibidores da recaptação de serotonina e noradrenalina no tratamento da dor neuropática: eles não atuam como antidepressivos ali, atuam potencializando exatamente essa via inibitória descendente deficiente.</p>
+
+  <div class="section-header"><span class="tag">Terminologia clínica essencial</span><span class="line"></span></div>
+  <div class="def-list">
+    <div class="def-item"><span class="def-term">Alodinia</span><span class="def-desc">dor desencadeada por estímulo que normalmente não é doloroso (ex.: toque leve, roupa sobre a pele).</span></div>
+    <div class="def-item"><span class="def-term">Hiperalgesia</span><span class="def-desc">resposta dolorosa exagerada a um estímulo que já seria normalmente doloroso.</span></div>
+    <div class="def-item"><span class="def-term">Hiperpatia</span><span class="def-desc">reação dolorosa explosiva e prolongada, com limiar aumentado mas resposta final desproporcional, típica de lesão de vias centrais.</span></div>
+    <div class="def-item"><span class="def-term">Disestesia</span><span class="def-desc">sensação anormal e desagradável, espontânea ou provocada (queimação, formigamento desconfortável).</span></div>
+    <div class="def-item"><span class="def-term">Parestesia</span><span class="def-desc">sensação anormal não necessariamente desagradável (formigamento, "agulhadas").</span></div>
+    <div class="def-item"><span class="def-term">Hipoestesia</span><span class="def-desc">redução da sensibilidade a um estímulo — sinal negativo, reflete perda de fibras funcionantes.</span></div>
+  </div>
+
+  <div class="integration">
+    <h4>Integração Clínica</h4>
+    <p>Perceba como esses sete mecanismos, embora didaticamente separados, funcionam de modo simultâneo e sinérgico em qualquer paciente real com dor neuropática — e é exatamente essa multiplicidade de alvos moleculares que explica por que raramente uma única classe farmacológica basta: um canal de sódio ectópico na periferia não é corrigido por um antidepressivo que atua na via descendente, e uma sensibilização central por LTP não é revertida por um anestésico local tópico. Esse raciocínio é o que fundamenta, adiante nesta unidade, tanto a lógica das combinações terapêuticas quanto a escolha racional de cada classe farmacológica de acordo com o mecanismo predominante em cada etiologia — o que você vai ver de forma concreta nas seções sobre neuropatia diabética e neuralgia pós-herpética, duas doenças que usam esses mesmos mecanismos de formas ligeiramente diferentes.</p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- 2. NEUROPATIA DIABÉTICA -->
+<!-- ======================================================= -->
+<section class="topic" id="diabetes" style="--accent-current:var(--accent-diabetes)">
+  <div class="topic-kicker"><span class="num">02</span></div>
+  <h2 class="topic-title">Como o Diabetes Mellitus Causa Neuropatia</h2>
+  <p class="topic-deck">A hiperglicemia crônica não lesa o nervo por um único mecanismo — ela ativa simultaneamente quatro vias bioquímicas destrutivas a partir de um único evento mitocondrial. Entender essa via unificadora é a chave para entender por que o controle glicêmico precoce é, até hoje, a intervenção mais poderosa que existe.</p>
+
+  <div class="section-header"><span class="tag">Relevância</span><span class="line"></span></div>
+  <p>A polineuropatia diabética é a complicação microvascular mais prevalente do diabetes mellitus, acometendo ao longo da vida cerca de metade dos pacientes diabéticos, sendo dolorosa em aproximadamente um quarto deles. É também a principal via fisiopatológica que leva à úlcera de pé diabético e à amputação não traumática de membros inferiores, o que torna seu reconhecimento precoce uma prioridade de saúde pública, não apenas uma curiosidade fisiopatológica.</p>
+
+  <div class="section-header"><span class="tag">A hipótese unificadora de Brownlee</span><span class="line"></span></div>
+  <p>Por muito tempo, quatro vias bioquímicas de dano por hiperglicemia foram estudadas separadamente, até que Michael Brownlee propôs o elo comum entre elas: em células que não dependem de insulina para captar glicose — como o neurônio e a célula de Schwann —, a hiperglicemia crônica satura a glicólise, forçando um excesso de elétrons doadores para a cadeia transportadora mitocondrial. Esse excesso gera superprodução de ânion superóxido pela cadeia respiratória mitocondrial. Esse superóxido, por sua vez, inibe uma enzima-chave da glicólise, a gliceraldeído-3-fosfato desidrogenase (GAPDH) — e é justamente esse bloqueio na via glicolítica normal que desvia o excesso de glicose para quatro vias colaterais patológicas, simultaneamente. É essa simultaneidade que torna o dano neural diabético tão difícil de reverter com uma única intervenção farmacológica isolada.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="mini-tag">Via 1</span>
+      <h4>Via do poliol</h4>
+      <p>O excesso de glicose é reduzido a sorbitol pela enzima aldose redutase, consumindo NADPH nesse processo. Como o NADPH é o principal substrato necessário para regenerar glutationa reduzida (o antioxidante intracelular mais importante), essa via consome as defesas antioxidantes da célula justamente quando ela mais precisa delas. O sorbitol acumulado ainda é convertido a frutose pela sorbitol desidrogenase, consumindo NAD+, e sua acumulação intracelular gera estresse osmótico e depleta mioinositol, comprometendo a atividade da bomba Na⁺/K⁺-ATPase axonal.</p>
+    </div>
+    <div class="card">
+      <span class="mini-tag">Via 2</span>
+      <h4>Produtos finais de glicação avançada (AGEs)</h4>
+      <p>A glicose em excesso se liga de forma não enzimática a proteínas estruturais de vida longa, como a mielina e a tubulina do citoesqueleto axonal, formando os AGEs. Esses produtos ativam o receptor RAGE, desencadeando resposta inflamatória crônica, estresse oxidativo adicional e disfunção microvascular — além de alterar diretamente a estrutura e a função das proteínas glicadas.</p>
+    </div>
+    <div class="card">
+      <span class="mini-tag">Via 3</span>
+      <h4>Ativação da proteína quinase C (PKC-β)</h4>
+      <p>O excesso de glicose aumenta a síntese de diacilglicerol, que ativa a isoforma beta da proteína quinase C. Essa ativação altera o tônus vascular (aumenta endotelina-1 vasoconstritora, reduz óxido nítrico vasodilatador), aumenta a permeabilidade vascular e estimula a produção de VEGF e de citocinas pró-inflamatórias — contribuindo diretamente para a isquemia dos vasa nervorum discutida adiante.</p>
+    </div>
+    <div class="card">
+      <span class="mini-tag">Via 4</span>
+      <h4>Via da hexosamina</h4>
+      <p>O excesso de frutose-6-fosfato é desviado para essa via, gerando UDP-N-acetilglicosamina, que modifica pós-traducionalmente fatores de transcrição como o Sp1. Isso altera a expressão gênica de várias proteínas relevantes, incluindo aumento de TGF-β e do inibidor do ativador de plasminogênio, contribuindo para fibrose e disfunção vascular.</p>
+    </div>
+  </div>
+
+  <details class="deepen">
+    <summary>Aprofunde-se: por que essas células não conseguem simplesmente "reduzir a captação" de glicose diante da hiperglicemia</summary>
+    <div class="deepen-body">
+      <p>A maioria das células do organismo — músculo, tecido adiposo — capta glicose de forma insulino-dependente através do transportador GLUT4, que só é translocado à membrana quando há sinalização de insulina; assim, diante de hiperglicemia, essas células conseguem, até certo ponto, se proteger da sobrecarga intracelular de glicose. Já o neurônio, a célula de Schwann e a célula endotelial capilar captam glicose por transportadores insulino-independentes (GLUT1 e GLUT3), que não regulam sua expressão para baixo diante da hiperglicemia. O resultado é que essas células ficam obrigatoriamente expostas à concentração de glicose plasmática, sem nenhum mecanismo protetor de "portão fechado" — o que explica por que justamente nervos, retina e glomérulo renal (as clássicas complicações microvasculares do diabetes) são os alvos preferenciais do dano hiperglicêmico.</p>
+    </div>
+  </details>
+
+  <div class="section-header"><span class="tag">Componente vascular</span><span class="line"></span></div>
+  <p>Paralelamente ao dano metabólico intracelular, a hiperglicemia crônica lesa diretamente os pequenos vasos que nutrem o próprio nervo periférico, chamados <i class="term">vasa nervorum</i>. Ocorre espessamento da membrana basal capilar, hialinização e progressiva oclusão luminal, gerando isquemia endoneural crônica. Esse componente microangiopático potencializa o dano metabólico já descrito, criando um ciclo vicioso de hipóxia e disfunção mitocondrial.</p>
+
+  <div class="section-header"><span class="tag">Da bioquímica à clínica: por que o padrão é "em luva e bota"</span><span class="line"></span></div>
+  <p>A soma desses mecanismos leva à degeneração axonal progressiva do tipo <i class="term">dying-back</i> (degeneração retrógrada, iniciando na porção mais distal do axônio) associada a desmielinização segmentar secundária, por lesão da célula de Schwann. Como as fibras nervosas mais longas do corpo humano são as que inervam os pés, e como o dano é cumulativo ao longo do comprimento axonal, elas são as primeiras e mais gravemente acometidas — daí o clássico padrão de distribuição em "luva e bota", simétrico e comprimento-dependente, que começa nos artelhos e ascende lentamente.</p>
+  <p>Do ponto de vista de fibras, o processo tipicamente acomete de forma precoce as fibras finas (Aδ e C, responsáveis por dor e temperatura), explicando por que os primeiros sintomas costumam ser sensitivos positivos — queimação, choques, formigamento doloroso — muitas vezes com reflexos aquileus e propriocepção ainda preservados nessa fase inicial. Com a progressão da doença, as fibras grossas (Aβ, responsáveis por tato fino, vibração e propriocepção) também são acometidas, e os sintomas positivos dão lugar a sintomas negativos — hipoestesia, perda da sensibilidade protetora — que são, paradoxalmente, mais perigosos clinicamente por predisporem a traumas e úlceras não percebidas pelo paciente.</p>
+
+  <div class="alert redflag">
+    <span class="alert-tag">Correlação clínica de alto rendimento</span>
+    <p>A perda da sensibilidade protetora — não a dor em si — é o principal fator de risco para úlcera de pé diabético e amputação. É por isso que o rastreio da neuropatia diabética não pode se basear apenas na queixa espontânea de dor: pacientes na fase avançada, já sem sintomas dolorosos por perda extensa de fibras, estão exatamente no maior risco de lesão silenciosa.</p>
+  </div>
+
+  <div class="section-header"><span class="tag">Prevenção</span><span class="line"></span></div>
+
+  <h3 class="sub-h">Controle glicêmico precoce e intensivo</h3>
+  <p>Esta é, isoladamente, a intervenção com maior nível de evidência para prevenir a neuropatia diabética. O estudo DCCT (Diabetes Control and Complications Trial), em pacientes com diabetes tipo 1, demonstrou redução de aproximadamente 60% na incidência de neuropatia clínica com controle glicêmico intensivo comparado ao tratamento convencional, com benefício mantido a longo prazo mesmo após o fim do estudo (efeito de "memória metabólica" demonstrado no seguimento EDIC). No diabetes tipo 2, o estudo UKPDS mostrou benefício microvascular global do controle glicêmico intensivo, embora o efeito específico sobre neuropatia seja historicamente menos robusto do que no tipo 1, provavelmente por conta da contribuição adicional de fatores metabólicos concomitantes (dislipidemia, hipertensão, resistência insulínica) característicos do diabetes tipo 2.</p>
+
+  <h3 class="sub-h">Rastreamento sistemático</h3>
+  <p>As diretrizes da Sociedade Brasileira de Diabetes e da American Diabetes Association recomendam rastreio anual de neuropatia periférica a partir do diagnóstico no diabetes tipo 2 (pela frequência de diagnóstico tardio nesse tipo) e a partir de cinco anos após o diagnóstico no diabetes tipo 1. O rastreio combina obrigatoriamente: teste do monofilamento de Semmes-Weinstein de 10g (avalia perda da sensibilidade protetora e é o teste isolado de maior valor preditivo para risco de ulceração), diapasão de 128 Hz para sensibilidade vibratória, pesquisa de reflexos aquileus e avaliação de sensibilidade dolorosa (pinprick).</p>
+
+  <h3 class="sub-h">Controle de fatores de risco cardiovascular associados</h3>
+  <p>Hipertensão arterial, dislipidemia e tabagismo potencializam o componente microangiopático descrito acima, de modo que seu controle rigoroso é parte inseparável da prevenção da neuropatia — não é uma medida isolada, é parte do mesmo pacote fisiopatológico.</p>
+
+  <h3 class="sub-h">Cuidados podológicos preventivos</h3>
+  <p>Orientação sobre inspeção diária dos pés, uso de calçados adequados e higiene podológica regular reduz a incidência de úlceras mesmo em pacientes que já desenvolveram algum grau de neuropatia, quebrando o elo entre perda sensitiva e lesão tecidual subsequente.</p>
+
+  <details class="deepen">
+    <summary>Aprofunde-se: outros fatores modificáveis e o papel da vitamina B12 no diabético</summary>
+    <div class="deepen-body">
+      <p>Vale lembrar, especialmente para a integração com a farmacologia adiante, que o uso crônico de metformina reduz a absorção intestinal de vitamina B12 por interferir no mecanismo de absorção dependente de cálcio no íleo terminal. Em pacientes diabéticos de longa data em uso de metformina, uma neuropatia periférica "sobreposta" pode, portanto, ter componente misto: parte por dano hiperglicêmico direto e parte por deficiência de B12 concomitante — daí a recomendação de dosagem periódica de B12 nesses pacientes, sobretudo se houver piora inexplicada dos sintomas ou sinais de acometimento de fibras grossas desproporcional ao esperado.</p>
+    </div>
+  </details>
+
+  <div class="integration">
+    <h4>Integração Clínica</h4>
+    <p>Repare como a neuropatia diabética ilustra, de forma quase didática, uma sequência causal completa: alteração bioquímica (quatro vias convergentes a partir do estresse oxidativo mitocondrial) gerando lesão estrutural (desmielinização e degeneração axonal comprimento-dependente), gerando alteração funcional (perda progressiva de fibras finas depois grossas) e, por fim, manifestação clínica (dor neuropática seguida de hipoestesia). Essa sequência é exatamente a lógica que orienta tanto o rastreio quanto a prevenção: agir na etapa bioquímica (controle glicêmico) previne todas as etapas seguintes, enquanto agir apenas na etapa clínica (tratar a dor com fármacos) não interrompe a progressão silenciosa da perda de fibras. Essa distinção entre tratar o sintoma e modificar a doença deve estar sempre presente na sua discussão tutorial.</p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- 3. NEURALGIA PÓS-HERPÉTICA -->
+<!-- ======================================================= -->
+<section class="topic" id="herpes" style="--accent-current:var(--accent-herpes)">
+  <div class="topic-kicker"><span class="num">03</span></div>
+  <h2 class="topic-title">Como o Herpes-Zóster Causa a Neuralgia Pós-Herpética</h2>
+  <p class="topic-deck">Um vírus que passa décadas escondido dentro de um gânglio sensitivo, quando reativa, não causa apenas uma erupção cutânea — causa uma verdadeira ganglionite necro-hemorrágica, cuja cicatriz neural é exatamente o que sustenta a dor crônica muito tempo depois de a pele já ter cicatrizado.</p>
+
+  <div class="section-header"><span class="tag">Do vírus latente à reativação</span><span class="line"></span></div>
+  <p>O herpes-zóster resulta da reativação do vírus varicela-zóster (VZV), o mesmo agente da varicela. Após a infecção primária, o vírus não é eliminado — ele estabelece latência dentro dos corpos neuronais dos gânglios sensitivos, sobretudo nos gânglios da raiz dorsal e no gânglio do trigêmeo, para onde migrou por transporte axonal retrógrado durante a viremia inicial da infância. Ali ele permanece silencioso, sob controle da imunidade celular específica (linfócitos T de memória).</p>
+  <p>Quando essa vigilância imunológica declina — o que ocorre fisiologicamente com o envelhecimento (imunossenescência), mas também em imunossupressão farmacológica, neoplasias hematológicas ou estresse físico intenso — o vírus retoma sua replicação dentro do próprio gânglio sensitivo. Essa reativação local desencadeia uma resposta inflamatória intensa: ganglionite aguda com necrose hemorrágica dos neurônios sensitivos e das células satélites que os envolvem. É esse dano direto e estrutural ao gânglio — não apenas a erupção cutânea que dele resulta — que é a chave para entender a neuralgia pós-herpética.</p>
+
+  <div class="flow">
+    <div class="flow-step"><span class="ft">Latência</span><p>VZV silencioso no corpo neuronal do gânglio da raiz dorsal (ou gânglio do trigêmeo), sob controle de imunidade celular específica.</p></div>
+    <div class="flow-step"><span class="ft">Queda da imunidade celular</span><p>Imunossenescência, imunossupressão ou estresse reduzem a vigilância de linfócitos T específicos contra VZV.</p></div>
+    <div class="flow-step"><span class="ft">Reativação viral no gânglio</span><p>Replicação viral local desencadeia ganglionite aguda com necrose hemorrágica neuronal e da glia satélite.</p></div>
+    <div class="flow-step"><span class="ft">Propagação anterógrada</span><p>O vírus percorre o nervo sensitivo até a pele do dermátomo correspondente, causando o exantema vesicular característico.</p></div>
+    <div class="flow-step"><span class="ft">Propagação central concomitante</span><p>O vírus também pode alcançar o corno dorsal da medula, gerando inflamação local e, ocasionalmente, mielite segmentar.</p></div>
+    <div class="flow-step"><span class="ft">Lesão neural residual</span><p>Cicatrização fibrótica do gânglio e perda de fibras periféricas mesmo após resolução completa do exantema cutâneo.</p></div>
+  </div>
+
+  <div class="section-header"><span class="tag">Da dor aguda à neuralgia crônica</span><span class="line"></span></div>
+  <p>A dor aguda do zóster (a nevralgia zosteriana aguda, concomitante ao exantema) resulta principalmente de inflamação neural direta e de ativação de nociceptores cutâneos remanescentes na área afetada. Já a <i class="term">neuralgia pós-herpética</i> propriamente dita — definida classicamente como dor persistente por mais de 90 dias após o início do exantema — é o resultado de um dano estrutural permanente, e não apenas de inflamação residual. Os mecanismos que a sustentam são, na verdade, os mesmos mecanismos gerais de sensibilização periférica e central que você estudou na primeira seção desta unidade, aqui aplicados a essa etiologia específica:</p>
+  <ul>
+    <li><i class="term">Desaferentação central:</i> a destruição estrutural de neurônios sensitivos primários no gânglio lesado retira, de forma permanente, uma parte do input aferente normal para o corno dorsal. Paradoxalmente, essa perda de input gera hiperexcitabilidade compensatória nos neurônios centrais remanescentes — um fenômeno análogo ao que ocorre em membro fantasma, em que a ausência de sinal aferente normal é interpretada centralmente como sinal patológico.</li>
+    <li><i class="term">Nociceptor irritável residual:</i> em uma parte dos pacientes, sobrevivem terminações nociceptivas cutâneas sensibilizadas e hiperexcitáveis (fenótipo de "nociceptor irritável"), explicando por que a alodinia mecânica ao simples toque de roupas é um sinal característico e frequentemente incapacitante da neuralgia pós-herpética.</li>
+    <li><i class="term">Reorganização sináptica central:</i> os mesmos mecanismos de brotamento de fibras Aβ para lâminas superficiais e perda de interneurônios inibitórios GABAérgicos discutidos na fisiologia geral também ocorrem aqui, sustentando a dor de forma independente de qualquer atividade periférica contínua.</li>
+  </ul>
+
+  <details class="deepen">
+    <summary>Aprofunde-se: por que existem dois fenótipos clínicos aparentemente opostos de PHN</summary>
+    <div class="deepen-body">
+      <p>Um ponto que costuma gerar confusão na discussão tutorial é que alguns pacientes com neuralgia pós-herpética apresentam predominantemente hipoestesia (área "anestesiada" e ainda assim dolorosa — a chamada anesthesia dolorosa) enquanto outros apresentam predominantemente alodinia mecânica intensa com sensibilidade cutânea aparentemente preservada ou aumentada. Essa diferença fenotípica reflete o padrão predominante de lesão em cada paciente: perda extensa de fibras com desaferentação franca tende a gerar mais hipoestesia dolorosa central, enquanto preservação parcial de nociceptores cutâneos sensibilizados tende a gerar mais alodinia mecânica de origem predominantemente periférica. Essa distinção tem relevância terapêutica prática: pacientes com fenótipo mais periférico (nociceptor irritável) tendem a responder melhor a tratamentos tópicos locais, como lidocaína em adesivo, enquanto pacientes com fenótipo mais central tendem a se beneficiar mais de fármacos sistêmicos moduladores de canal de cálcio ou da via descendente.</p>
+    </div>
+  </details>
+
+  <div class="section-header"><span class="tag">Fatores de risco para cronificação</span><span class="line"></span></div>
+  <p>O principal e mais consistente fator de risco para desenvolver neuralgia pós-herpética é a idade avançada — o risco aumenta de forma acentuada acima dos 50 anos e ainda mais acima dos 70. Outros fatores incluem maior gravidade do exantema agudo, maior intensidade da dor na fase aguda, imunossupressão e acometimento do território do nervo trigêmeo (herpes-zóster oftálmico), que carrega risco adicional de complicações oculares graves.</p>
+
+  <div class="section-header"><span class="tag">Prevenção</span><span class="line"></span></div>
+
+  <h3 class="sub-h">Vacinação</h3>
+  <p>A principal estratégia preventiva atualmente disponível é a vacina recombinante contra herpes-zóster (nome comercial Shingrix), composta pela glicoproteína E do VZV associada ao adjuvante AS01B, substituindo a antiga vacina de vírus vivo atenuado. Administrada em duas doses intramusculares com intervalo de dois a seis meses, os ensaios clínicos pivotais demonstraram eficácia superior a 90% na prevenção do próprio episódio de herpes-zóster em adultos com 50 anos ou mais, e eficácia da ordem de 91% na prevenção específica da neuralgia pós-herpética nessa faixa etária, mantendo-se próxima de 89% em indivíduos com 70 anos ou mais — com proteção que se mantém elevada por vários anos após a vacinação. Ela é indicada tanto para imunocompetentes com 50 anos ou mais quanto para pacientes imunocomprometidos a partir dos 18 anos, população historicamente mais vulnerável e antes contraindicada para a vacina de vírus vivo.</p>
+
+  <h3 class="sub-h">Tratamento antiviral precoce do episódio agudo</h3>
+  <p>O início de terapia antiviral (aciclovir, valaciclovir ou fanciclovir) idealmente dentro das primeiras 72 horas do surgimento do exantema reduz a duração e a gravidade das lesões cutâneas e da dor aguda, e tem evidência de redução — embora mais modesta e heterogênea na literatura — do risco e da duração da neuralgia pós-herpética, sendo particularmente recomendado em pacientes acima de 50 anos, com exantema grave, envolvimento oftálmico ou imunossupressão.</p>
+
+  <h3 class="sub-h">Controle agressivo da dor na fase aguda</h3>
+  <p>Existe um racional fisiopatológico — a chamada janela de prevenção da sensibilização central — para tratar a dor aguda do zóster de forma precoce e eficaz, na hipótese de que reduzir a descarga nociceptiva intensa e sustentada na fase aguda diminuiria a chance de instalação da sensibilização central que sustenta a dor crônica. A evidência clínica específica para intervenções preemptivas (como gabapentina introduzida já na fase aguda) ainda é heterogênea, mas o princípio fisiopatológico — quanto menos sensibilização central se instala, menor o risco de cronificação — é sólido e coerente com tudo o que você já estudou na primeira seção desta unidade.</p>
+
+  <div class="integration">
+    <h4>Integração Clínica</h4>
+    <p>A neuralgia pós-herpética é um excelente exemplo de como a prevenção primária (vacinação, que evita a própria reativação viral) é qualitativamente diferente e mais eficaz do que a prevenção secundária (tratamento antiviral precoce, que apenas mitiga o dano já em curso) — reforçando, mais uma vez, a lógica de que intervir mais cedo na cadeia causal previne consequências que se tornam progressivamente mais difíceis de reverter à medida que a doença avança. Compare esse racional com o que você acabou de estudar na neuropatia diabética: em ambos os casos, a melhor "farmacologia" da dor neuropática crônica é, na verdade, a prevenção da lesão neural estrutural que a origina.</p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- 4. EXAME FÍSICO E QUESTIONÁRIOS -->
+<!-- ======================================================= -->
+<section class="topic" id="exame" style="--accent-current:var(--accent-exame)">
+  <div class="topic-kicker"><span class="num">04</span></div>
+  <h2 class="topic-title">Exame Neurológico e Questionários para Dor Neuropática</h2>
+  <p class="topic-deck">Se a dor neuropática nasce de uma disfunção de vias sensoriais específicas, o exame físico precisa testar exatamente essas vias, fibra por fibra — e os questionários estruturados existem justamente para transformar esse achado semiológico em um instrumento reprodutível e comparável entre avaliações.</p>
+
+  <div class="section-header"><span class="tag">Lógica do exame sensitivo dirigido</span><span class="line"></span></div>
+  <p>Diferente do exame sensitivo genérico, o exame voltado para dor neuropática precisa testar separadamente cada submodalidade sensorial, porque cada uma delas é veiculada por um tipo diferente de fibra nervosa — e é justamente o padrão de acometimento (quais fibras estão afetadas e como) que orienta tanto o diagnóstico topográfico quanto a suspeita etiológica.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="mini-tag">Fibra Aβ</span>
+      <h4>Tato leve e vibração</h4>
+      <p>Testados com algodão ou monofilamento de Semmes-Weinstein (tato/pressão) e diapasão de 128 Hz sobre proeminências ósseas (vibração). Avaliam também a integridade das colunas dorsais medulares.</p>
+    </div>
+    <div class="card">
+      <span class="mini-tag">Fibra Aδ</span>
+      <h4>Dor em picada e temperatura</h4>
+      <p>Testados com pinprick (palito ou agulha romba, comparando área suspeita com área sadia contralateral) e com tubos de água quente/fria ou objeto metálico frio.</p>
+    </div>
+    <div class="card">
+      <span class="mini-tag">Fibra C</span>
+      <h4>Dor em queimação e calor</h4>
+      <p>Avaliada principalmente pela descrição qualitativa da dor espontânea relatada pelo paciente e por testes térmicos de calor, menos padronizados na prática clínica de rotina.</p>
+    </div>
+    <div class="card">
+      <span class="mini-tag">Fibra Ia/II</span>
+      <h4>Propriocepção e reflexos</h4>
+      <p>Teste de posição articular do hálux e pesquisa de reflexos tendinosos profundos, sobretudo o aquileu — frequentemente reduzido ou abolido precocemente na polineuropatia diabética distal.</p>
+    </div>
+  </div>
+
+  <h3 class="sub-h">Pesquisa ativa de sinais positivos</h3>
+  <p>Além dos sinais negativos (perda de sensibilidade), é indispensável pesquisar ativamente sinais positivos, que são mais específicos de dor neuropática: alodinia mecânica dinâmica (passar levemente um pincel ou algodão sobre a pele, avaliando se há dor), hiperalgesia (comparar a resposta ao pinprick na área suspeita versus área sadia) e somação temporal (aplicar estímulos repetitivos idênticos e observar se a dor relatada aumenta progressivamente a cada estímulo — o correlato clínico do wind-up que você estudou na fisiologia).</p>
+
+  <div class="section-header"><span class="tag">DN4 — Douleur Neuropathique en 4 Questions</span><span class="line"></span></div>
+  <p>O DN4, desenvolvido por Bouhassira e colaboradores em 2005 e validado também em português, é o instrumento de rastreio mais utilizado na prática clínica para diferenciar dor neuropática de dor nociceptiva à beira do leito. É rápido, simples e não requer equipamento sofisticado, o que o torna extremamente aplicável tanto na enfermaria quanto no ambulatório.</p>
+  <div class="card-grid">
+    <div class="card">
+      <span class="mini-tag">Parte 1 · Entrevista (7 itens)</span>
+      <h4>Descritores verbais da dor</h4>
+      <p>O paciente responde sim ou não para a presença de: queimação, sensação de frio dolorosa, choques elétricos, formigamento, alfinetadas/agulhadas, adormecimento e coceira na região dolorosa.</p>
+    </div>
+    <div class="card">
+      <span class="mini-tag">Parte 2 · Exame físico (3 itens)</span>
+      <h4>Achados ao exame</h4>
+      <p>O examinador pesquisa: hipoestesia ao toque, hipoestesia à picada, e alodinia desencadeada por escovar levemente a pele com um pincel.</p>
+    </div>
+  </div>
+  <p>Cada item positivo vale 1 ponto, totalizando um escore de 0 a 10. Um escore igual ou superior a 4 sugere fortemente a presença de componente neuropático, com sensibilidade e especificidade elevadas (originalmente descritas em torno de 83% e 90%, respectivamente) na distinção entre dor neuropática e dor nociceptiva.</p>
+
+  <div class="alert keypoint">
+    <span class="alert-tag">Por que o DN4 combina entrevista e exame</span>
+    <p>Repare que o instrumento deliberadamente combina sintomas relatados pelo paciente com sinais objetivos encontrados pelo examinador — isso reduz o viés de depender apenas da descrição subjetiva da dor (que pode ser influenciada por vocabulário, cultura ou estado emocional do paciente) e aumenta a robustez diagnóstica ao ancorar parte da pontuação em achados reprodutíveis do exame físico.</p>
+  </div>
+
+  <div class="section-header"><span class="tag">Questionário de Dor McGill</span><span class="line"></span></div>
+  <p>Desenvolvido por Ronald Melzack em 1975, o McGill Pain Questionnaire não é específico para dor neuropática — ele foi criado para capturar a experiência multidimensional da dor de qualquer origem, e é amplamente utilizado tanto na prática clínica quanto em pesquisa para caracterizar qualidade, intensidade e impacto afetivo da dor relatada.</p>
+  <p>Sua estrutura organiza descritores de dor em vinte subclasses de palavras, agrupadas em quatro grandes categorias: a dimensão <i class="term">sensorial</i> (descreve qualidades temporais, espaciais, de pressão e térmicas da dor — por exemplo "latejante", "em pontada", "em queimação"), a dimensão <i class="term">afetiva</i> (captura o componente emocional da dor — "exaustiva", "amedrontadora", "cruel"), a dimensão <i class="term">avaliativa</i> (intensidade subjetiva global da experiência dolorosa) e uma categoria miscelânea de descritores diversos. O paciente seleciona, dentro de cada subclasse, a palavra que melhor descreve sua dor naquele momento.</p>
+  <p>A partir dessas escolhas, calculam-se três índices principais: o <i class="term">PRI</i> (Pain Rating Index — soma dos valores de intensidade atribuídos a cada palavra escolhida, calculável tanto como escore total quanto separadamente por categoria sensorial, afetiva e avaliativa), o <i class="term">NWC</i> (número total de palavras escolhidas) e o <i class="term">PPI</i> (Present Pain Intensity — uma escala simples de 0 a 5 que capta a intensidade da dor no momento exato da avaliação). Existe também uma versão abreviada do instrumento, muito mais utilizada na prática assistencial pela rapidez de aplicação.</p>
+
+  <details class="deepen">
+    <summary>Aprofunde-se: por que Melzack insistiu numa avaliação multidimensional</summary>
+    <div class="deepen-body">
+      <p>O próprio Melzack, coautor da teoria da comporta (gate control theory) junto com Patrick Wall em 1965, defendia que reduzir a dor a um único número numa escala visual analógica (0 a 10) perde informação clinicamente relevante — porque duas dores de intensidade numérica idêntica podem ter qualidades e impactos emocionais completamente diferentes, com implicações terapêuticas distintas. Uma dor descrita predominantemente com termos sensoriais "em queimação" e "em choque" aponta mais fortemente para mecanismo neuropático do que uma dor descrita como "latejante" e "pressão", ainda que a intensidade numérica relatada seja a mesma — e é exatamente esse tipo de refinamento qualitativo que o McGill se propõe a capturar.</p>
+    </div>
+  </details>
+
+  <div class="section-header"><span class="tag">Outros instrumentos relevantes</span><span class="line"></span></div>
+  <p>Vale conhecer, ainda que de forma mais breve, outros instrumentos frequentemente citados na literatura e em diretrizes: o LANSS (Leeds Assessment of Neuropathic Symptoms and Signs), estrutura semelhante ao DN4 combinando sintomas e sinais; o painDETECT, questionário autoaplicável originalmente desenvolvido para dor lombar mas hoje usado de forma mais ampla para rastreio de componente neuropático; e o NPSI (Neuropathic Pain Symptom Inventory), voltado especificamente para caracterizar diferentes dimensões sintomáticas da dor neuropática já estabelecida, útil sobretudo para acompanhamento longitudinal da resposta terapêutica.</p>
+
+  <div class="integration">
+    <h4>Integração Clínica</h4>
+    <p>Note a lógica comum entre o exame físico dirigido por fibra e os questionários estruturados: ambos existem para transformar o mecanismo fisiopatológico que você estudou na primeira seção — geração ectópica, sensibilização periférica e central, desinibição — em achados objetivos e reprodutíveis à beira do leito. Um DN4 positivo, por exemplo, não é um número arbitrário: ele está capturando, através de perguntas simples, a presença clínica de fenômenos como disestesia (sugerindo descarga ectópica) e alodinia ao pincel (sugerindo brotamento de fibra Aβ para lâminas superficiais do corno dorsal). Essa é a ponte que você deve estabelecer na discussão tutorial entre o mecanismo básico e a semiologia aplicada.</p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- 5. FARMACOLOGIA - MECANISMO DE AÇÃO -->
+<!-- ======================================================= -->
+<section class="topic" id="farmaco" style="--accent-current:var(--accent-farmaco)">
+  <div class="topic-kicker"><span class="num">05</span></div>
+  <h2 class="topic-title">Mecanismo de Ação dos Fármacos para Dor Neuropática</h2>
+  <p class="topic-deck">Cada classe farmacológica usada em dor neuropática mira um dos mecanismos fisiopatológicos que você já domina — nenhuma delas foi escolhida ao acaso, e entender o alvo molecular exato é o que separa memorizar uma lista de nomes de compreender uma estratégia terapêutica racional.</p>
+
+  <div class="section-header"><span class="tag">a. Anticonvulsivantes e antiepilépticos</span><span class="line"></span></div>
+
+  <h3 class="sub-h">Gabapentina e pregabalina — ligantes da subunidade α2δ</h3>
+  <p>Comece desfazendo um equívoco muito comum: apesar do nome, a gabapentina não age em receptores GABA-A, GABA-B, nem em transportadores de GABA, apesar de ser um análogo estrutural desse neurotransmissor. Seu alvo molecular real é completamente diferente: ela se liga com alta afinidade à subunidade auxiliar α2δ-1 (e, em menor grau, α2δ-2) dos canais de cálcio voltagem-dependentes do tipo N e P/Q, localizados nos terminais pré-sinápticos centrais dos neurônios aferentes primários que fazem sinapse no corno dorsal.</p>
+  <p>Essa ligação reduz o tráfego e a inserção desses canais de cálcio na membrana pré-sináptica, diminuindo o influxo de cálcio dependente de despolarização e, por consequência, reduzindo a liberação de neurotransmissores excitatórios pró-nociceptivos — glutamato, substância P e CGRP — na fenda sináptica. O efeito é seletivamente mais pronunciado em condições de hiperexcitabilidade patológica, porque é justamente nessas condições que a subunidade α2δ está up-regulada na membrana pré-sináptica após lesão nervosa. Isso explica, em nível molecular, por que esses fármacos são muito mais eficazes em dor neuropática do que em dor aguda fisiológica normal — eles miram preferencialmente um alvo que só está superexpresso no estado patológico.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="mini-tag">Gabapentina</span>
+      <h4>Farmacocinética não linear</h4>
+      <p>Absorvida por um transportador de aminoácidos saturável (sistema L) no intestino delgado, o que torna sua biodisponibilidade decrescente à medida que a dose aumenta — por isso é administrada em múltiplas tomadas diárias, e aumentos de dose nem sempre se traduzem proporcionalmente em maior efeito plasmático.</p>
+    </div>
+    <div class="card">
+      <span class="mini-tag">Pregabalina</span>
+      <h4>Farmacocinética linear</h4>
+      <p>Absorção não saturável, biodisponibilidade superior a 90% e relação dose-resposta mais previsível, permitindo posologia mais simples (duas vezes ao dia) e início de efeito analgésico habitualmente mais rápido do que a gabapentina.</p>
+    </div>
+  </div>
+  <p>Ambos os fármacos são eliminados predominantemente por via renal, sem metabolismo hepático relevante, exigindo ajuste de dose proporcional ao clearance de creatinina em pacientes com insuficiência renal. Os efeitos adversos mais comuns incluem sonolência, tontura, ataxia e edema periférico; a pregabalina, em particular, tem reconhecido potencial de abuso e dependência, sendo classificada como substância controlada em diversos países, o que exige atenção especial na prescrição.</p>
+
+  <details class="deepen">
+    <summary>Aprofunde-se: por que reduzir a liberação de glutamato pré-sináptico é tão eficaz</summary>
+    <div class="deepen-body">
+      <p>Lembre-se de que a sensibilização central por potenciação de longa duração (LTP), estudada na primeira seção, depende diretamente da liberação repetida e sustentada de glutamato pelo terminal pré-sináptico do neurônio aferente primário. Ao reduzir seletivamente essa liberação nos terminais que estão patologicamente hiperativos (por ter a subunidade α2δ superexpressa), os gabapentinoides atuam, na prática, "no nascedouro" do processo de sensibilização central — impedindo que o wind-up avance até o ponto de desbloquear o receptor NMDA e instalar a potenciação sináptica duradoura. É esse racional que também justifica, mais adiante, por que a combinação de gabapentinoides com fármacos que atuam na via descendente (antidepressivos) costuma ser sinérgica: são dois alvos moleculares complementares e não redundantes.</p>
+    </div>
+  </details>
+
+  <h3 class="sub-h">Carbamazepina e oxcarbazepina — bloqueadores de canal de sódio</h3>
+  <p>Diferente dos gabapentinoides, a carbamazepina atua bloqueando diretamente canais de sódio voltagem-dependentes, estabilizando-os na conformação inativada. Sua característica farmacodinâmica mais importante é o bloqueio uso-dependente: quanto mais rápida e repetitiva a frequência de disparo de um neurônio, maior o bloqueio exercido pelo fármaco — o que confere seletividade relativa para neurônios patologicamente hiperativos (como aqueles gerando descargas ectópicas) em detrimento de neurônios disparando em frequência fisiológica normal.</p>
+  <p>Esse mecanismo torna a carbamazepina o fármaco de escolha histórico e ainda atual para a neuralgia do trigêmeo, uma condição de dor neuropática paroxística associada a descargas ectópicas de altíssima frequência na raiz do nervo trigêmeo — mas não é considerada fármaco de primeira linha para neuropatia periférica dolorosa generalizada, onde os gabapentinoides e antidepressivos têm evidência mais robusta. Seus efeitos adversos relevantes incluem hiponatremia (por síndrome de secreção inapropriada de hormônio antidiurético), reações dermatológicas graves — incluindo síndrome de Stevens-Johnson, com risco marcadamente aumentado em portadores do alelo HLA-B*1502, mais prevalente em populações do sudeste asiático — e agranulocitose. É também um indutor enzimático do citocromo P450, gerando autoindução do próprio metabolismo e múltiplas interações medicamentosas clinicamente relevantes.</p>
+
+  <div class="section-header"><span class="tag">b. Anestésicos locais</span><span class="line"></span></div>
+  <h3 class="sub-h">Lidocaína</h3>
+  <p>A lidocaína bloqueia canais de sódio voltagem-dependentes atuando pela face intracelular do canal: sua forma não ionizada atravessa a membrana neuronal, reioniza-se no meio intracelular mais ácido, e nessa forma ionizada liga-se a um receptor específico localizado dentro do próprio poro do canal, impedindo fisicamente a propagação do potencial de ação.</p>
+  <p>Em dor neuropática periférica localizada — sendo a neuralgia pós-herpética a indicação clássica — a lidocaína é usada topicamente, em adesivo a 5%, atuando preferencialmente sobre os canais de sódio ectópicos acumulados nas terminações nociceptivas cutâneas lesadas e hiperexcitáveis, sem produzir bloqueio sensitivo completo da área tratada. Essa seletividade decorre da baixa concentração sistêmica alcançada por via tópica, que é suficiente para inibir os canais patologicamente hiperativos (mais sensíveis ao bloqueio por conta do estado de hiperexcitabilidade) sem bloquear a condução nervosa normal — o mesmo princípio de "seletividade para o tecido doente" que você viu na carbamazepina, aqui aplicado por via farmacocinética em vez de farmacodinâmica pura.</p>
+  <p>A lidocaína também pode ser administrada por via intravenosa, em infusão controlada e monitorizada, para dor neuropática refratária generalizada ou de origem central, atuando de forma sistêmica sobre a hiperexcitabilidade neuronal — uso reservado a ambiente especializado pelo risco de toxicidade cardíaca (bloqueio de canais de sódio cardíacos, arritmias) e neurológica (convulsões em concentrações plasmáticas elevadas).</p>
+
+  <div class="section-header"><span class="tag">c. Vitamina B12</span><span class="line"></span></div>
+  <p>A cobalamina é cofator obrigatório de duas reações enzimáticas centrais para a integridade do sistema nervoso periférico. Primeiro, da <i class="term">metionina sintase</i>, que converte homocisteína em metionina com regeneração simultânea de tetrahidrofolato — via essencial tanto para síntese de purinas e pirimidinas quanto para reações de metilação, incluindo a metilação da proteína básica da mielina. Segundo, da <i class="term">metilmalonil-CoA mutase</i>, que converte metilmalonil-CoA em succinil-CoA, etapa essencial do catabolismo de aminoácidos de cadeia ramificada e ácidos graxos de número ímpar de carbonos.</p>
+  <p>Na deficiência de B12, o acúmulo de metilmalonil-CoA leva à incorporação anômala de ácidos graxos de cadeia ímpar na síntese de mielina, gerando uma bainha estruturalmente defeituosa — mecanismo que, somado ao déficit de metilação, resulta em desmielinização progressiva. Clinicamente, isso se manifesta como neuropatia periférica sensitivo-motora e, em casos avançados e não tratados, como degeneração combinada subaguda da medula espinhal, acometendo simultaneamente as colunas dorsais (perda de propriocepção e sensibilidade vibratória) e os tratos corticoespinhais (síndrome piramidal).</p>
+  <div class="alert redflag">
+    <span class="alert-tag">Ponto de atenção farmacológica</span>
+    <p>A reposição de vitamina B12 tem indicação clara e comprovada apenas em pacientes com deficiência documentada — situação relativamente comum em idosos, em vegetarianos e veganos estritos, em portadores de gastrite atrófica ou anemia perniciosa, e em usuários crônicos de metformina (que reduz a absorção ileal de B12). Não deve ser usada de forma empírica como analgésico em pacientes normoconcentrados: a evidência de benefício analgésico isolado nesse cenário é fraca e inconsistente, e a B12 não deve ser vista como substituto dos fármacos de primeira linha com evidência robusta.</p>
+  </div>
+
+  <div class="section-header"><span class="tag">d. Capsaicina</span><span class="line"></span></div>
+  <p>A capsaicina é agonista seletivo do receptor TRPV1 (receptor vanilóide de potencial de receptor transitório tipo 1), um canal catiônico não seletivo permeável a cálcio, fisiologicamente ativado por calor nocivo (acima de 43°C) e por prótons em meio ácido — como o gerado durante processos inflamatórios. É por isso que a capsaicina, embora não seja "quente" em temperatura real, ativa a mesmíssima via molecular do calor nocivo, produzindo a sensação subjetiva de queimação.</p>
+  <p>O mecanismo analgésico não é o bloqueio direto do receptor, mas sim um processo de <i class="term">defuncionalização</i> (dessensibilização) que ocorre em duas fases: primeiro, a aplicação inicial causa ativação intensa e sustentada dos nociceptores TRPV1-positivos — daí a sensação de ardência e, por vezes, hiperalgesia transitória logo após a aplicação. Em seguida, o influxo maciço e prolongado de cálcio através do canal aberto causa disfunção mitocondrial reversível nas próprias terminações nervosas e depleção dos estoques de neuropeptídeos pró-nociceptivos armazenados ali — substância P e CGRP —, que ficam esgotados e não são prontamente ressintetizados. Com exposições repetidas, especialmente com o adesivo de alta concentração, ocorre retração reversível das terminações nervosas epidérmicas intraepidérmicas, reduzindo a densidade de fibras nociceptivas na área tratada por semanas a meses, com reinervação gradual subsequente.</p>
+  <div class="card-grid">
+    <div class="card">
+      <span class="mini-tag">Baixa concentração</span>
+      <h4>Creme 0,025% a 0,075%</h4>
+      <p>Uso doméstico diário e contínuo. Eficácia modesta e adesão frequentemente limitada pela sensação de ardência a cada aplicação, o que reduz sua utilidade prática na maioria dos pacientes.</p>
+    </div>
+    <div class="card">
+      <span class="mini-tag">Alta concentração</span>
+      <h4>Adesivo 8% (aplicação única em ambiente clínico)</h4>
+      <p>Aplicado uma única vez, sob anestesia tópica prévia (devido à dor intensa da aplicação), com efeito analgésico que pode se prolongar por até três meses. Indicado sobretudo para neuralgia pós-herpética e neuropatia periférica dolorosa.</p>
+    </div>
+  </div>
+
+  <div class="integration">
+    <h4>Integração Clínica</h4>
+    <p>Compare, lado a lado, os quatro alvos moleculares que você acabou de estudar: canal de cálcio pré-sináptico (gabapentinoides), canal de sódio (carbamazepina e lidocaína, com seletividades diferentes), cofator enzimático mitocondrial e citosólico (vitamina B12) e canal TRPV1 nociceptivo periférico (capsaicina). Nenhum deles atua sobre ciclo-oxigenase, o alvo farmacológico clássico da dor nociceptiva-inflamatória — o que reforça, em nível molecular, a distinção conceitual que abriu esta unidade curricular. Essa lógica de alvo-mecanismo é exatamente o que você vai aplicar na próxima seção, ao organizar racionalmente as linhas terapêuticas da dor neuropática.</p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- 6. TRATAMENTO -->
+<!-- ======================================================= -->
+<section class="topic" id="tratamento" style="--accent-current:var(--accent-tratamento)">
+  <div class="topic-kicker"><span class="num">06</span></div>
+  <h2 class="topic-title">Tratamento da Dor Neuropática</h2>
+  <p class="topic-deck">O tratamento moderno da dor neuropática segue uma lógica de linhas terapêuticas construída sobre revisões sistemáticas e meta-análises coordenadas pelo NeuPSIG (Neuropathic Pain Special Interest Group da IASP) — e entender por que cada classe ocupa sua posição na hierarquia é mais importante do que apenas memorizar a lista.</p>
+
+  <div class="section-header"><span class="tag">Tratamento farmacológico — primeira linha</span><span class="line"></span></div>
+  <p>As diretrizes atuais do NeuPSIG, baseadas em meta-análise de mais de 300 ensaios clínicos randomizados, sustentam recomendação forte para três classes como primeira linha: antidepressivos tricíclicos, inibidores da recaptação de serotonina e noradrenalina (IRSN/SNRIs) e os ligantes α2δ (gabapentina e pregabalina) — todas discutidas em mecanismo na seção anterior, com exceção dos antidepressivos, detalhados agora.</p>
+  <div class="card-grid">
+    <div class="card">
+      <span class="mini-tag">Antidepressivos tricíclicos</span>
+      <h4>Amitriptilina</h4>
+      <p>Inibe a recaptação de serotonina e noradrenalina na fenda sináptica, potencializando a via inibitória descendente deficiente na dor neuropática crônica — o mesmo mecanismo discutido na fisiologia. Possui ainda ação adicional sobre canais de sódio e receptores NMDA. É a classe com o menor número necessário para tratar (maior eficácia relativa), mas seu uso é limitado por efeitos anticolinérgicos (boca seca, constipação, retenção urinária) e cardiovasculares (prolongamento do intervalo QT, hipotensão ortostática), devendo ser evitada ou usada com extrema cautela em idosos.</p>
+    </div>
+    <div class="card">
+      <span class="mini-tag">IRSN / SNRI</span>
+      <h4>Duloxetina e venlafaxina</h4>
+      <p>Mesmo racional de potencialização da via descendente inibitória, com perfil de segurança mais favorável que os tricíclicos, sobretudo em idosos e cardiopatas. A duloxetina possui indicação formal e evidência robusta especificamente para a neuropatia diabética dolorosa.</p>
+    </div>
+    <div class="card">
+      <span class="mini-tag">Ligantes α2δ</span>
+      <h4>Gabapentina e pregabalina</h4>
+      <p>Mecanismo detalhado na seção anterior. Apresentam o perfil de segurança mais favorável entre as três classes de primeira linha, embora com eficácia numérica ligeiramente inferior aos tricíclicos nas meta-análises mais recentes.</p>
+    </div>
+  </div>
+
+  <div class="section-header"><span class="tag">Segunda e terceira linhas</span><span class="line"></span></div>
+  <div class="card-grid">
+    <div class="card">
+      <span class="mini-tag">Segunda linha</span>
+      <h4>Tratamentos tópicos e tramadol</h4>
+      <p>Lidocaína em adesivo tópico (particularmente útil e bem tolerada em idosos com dor neuropática localizada, pela baixa absorção sistêmica), capsaicina em adesivo de alta concentração, e tramadol — um opioide fraco com mecanismo duplo, associando agonismo em receptor opioide mu a inibição da recaptação de serotonina e noradrenalina, o que lhe confere ação adicional sobre a via descendente.</p>
+    </div>
+    <div class="card">
+      <span class="mini-tag">Terceira linha</span>
+      <h4>Opioides fortes e neuromodulação</h4>
+      <p>Opioides fortes são reservados para casos refratários, exigindo acompanhamento especializado rigoroso pelo risco de tolerância, dependência e hiperalgesia induzida por opioides. Toxina botulínica tipo A, injetada por via intradérmica, inibe a liberação de neurotransmissores e neuropeptídeos das terminações nervosas sensitivas. A estimulação magnética transcraniana repetitiva (rTMS) também figura como opção de terceira linha em centros especializados.</p>
+    </div>
+  </div>
+
+  <div class="section-header"><span class="tag">Racional da combinação terapêutica</span><span class="line"></span></div>
+  <p>Como você viu na integração da seção farmacológica, cada classe atua sobre um alvo molecular distinto e não redundante. Isso justifica, do ponto de vista mecanístico, por que combinar classes complementares — por exemplo, um gabapentinoide com um antidepressivo — costuma produzir eficácia superior à monoterapia em dose máxima isolada, com frequência permitindo doses mais baixas de cada fármaco e, portanto, melhor perfil de tolerabilidade. A recomendação atual é considerar a combinação precocemente quando a resposta à monoterapia inicial for apenas parcial, em vez de insistir indefinidamente em escalonar a dose de um único fármaco.</p>
+
+  <details class="deepen">
+    <summary>Aprofunde-se: números precisam de contexto — o que significa NNT e NNH</summary>
+    <div class="deepen-body">
+      <p>As meta-análises do NeuPSIG expressam eficácia em número necessário para tratar (NNT) — quantos pacientes precisam ser tratados para que um obtenha alívio significativo da dor além do placebo — e número necessário para causar dano (NNH) — quantos pacientes precisam ser tratados para que um sofra um evento adverso significativo. Os tricíclicos apresentam o menor NNT entre as classes de primeira linha (em torno de 4,6), refletindo maior eficácia relativa, mas também o NNH mais alto entre eles, refletindo maior toxicidade — enquanto os ligantes α2δ têm NNT maior (menor eficácia relativa, em torno de 8,9) mas também o perfil de segurança mais favorável entre as três classes. Essa é exatamente a lógica que deve orientar a escolha individualizada: não existe fármaco "melhor" em termos absolutos, existe o fármaco com a relação eficácia/segurança mais adequada para aquele paciente específico, considerando comorbidades, idade e risco de interação medicamentosa.</p>
+    </div>
+  </details>
+
+  <div class="section-header"><span class="tag">Tratamento não farmacológico</span><span class="line"></span></div>
+
+  <h3 class="sub-h">Estimulação elétrica nervosa transcutânea (TENS)</h3>
+  <p>Seu racional fisiológico se apoia diretamente na teoria da comporta (gate control theory) de Melzack e Wall: a estimulação elétrica de fibras Aβ de grosso calibre através da pele ativa interneurônios inibitórios na substância gelatinosa do corno dorsal, que por sua vez inibem a transmissão do sinal nociceptivo veiculado por fibras Aδ e C — literalmente "fechando o portão" para a dor num nível segmentar medular, antes mesmo que o sinal ascenda ao encéfalo.</p>
+
+  <h3 class="sub-h">Fisioterapia e reabilitação funcional</h3>
+  <p>Fundamental para manutenção de função, prevenção de descondicionamento físico secundário à dor crônica e, em casos com alodinia importante, para protocolos graduais de dessensibilização tátil, que buscam progressivamente reeducar o processamento central de estímulos táteis inócuos.</p>
+
+  <h3 class="sub-h">Educação em neurociência da dor e terapia cognitivo-comportamental</h3>
+  <p>A compreensão pelo próprio paciente dos mecanismos fisiopatológicos da sua dor — a chamada educação em neurociência da dor — reduz comportamentos de medo-evitação e catastrofização, que por sua vez retroalimentam a sensibilização central por vias límbicas descendentes. A terapia cognitivo-comportamental atua sobre esse mesmo componente afetivo-cognitivo, sendo particularmente relevante em dor crônica, na qual o sofrimento não é mais apenas um reflexo direto e proporcional do dano tecidual original.</p>
+
+  <h3 class="sub-h">Neuromodulação invasiva</h3>
+  <p>Técnicas como a estimulação da medula espinhal são reservadas para casos refratários ao tratamento farmacológico otimizado e às medidas conservadoras, sendo particularmente indicadas em síndromes dolorosas regionais complexas e em determinados quadros de dor neuropática pós-cirúrgica ou radicular refratária.</p>
+
+  <h3 class="sub-h">Abordagem multiprofissional</h3>
+  <p>A dor neuropática crônica, por seu impacto simultâneo sobre sono, humor e função, exige abordagem biopsicossocial integrada — e não apenas prescrição farmacológica isolada — para obter resultados clinicamente relevantes e sustentados ao longo do tempo.</p>
+
+  <div class="integration">
+    <h4>Integração Clínica</h4>
+    <p>Feche mentalmente o ciclo desta unidade: a escolha terapêutica racional em dor neuropática nasce diretamente do mecanismo fisiopatológico predominante em cada paciente. Um paciente com neuropatia diabética dolorosa de fibras finas se beneficia primariamente de duloxetina ou de um gabapentinoide, atuando sobre sensibilização periférica e central generalizada; um paciente com neuralgia pós-herpética localizada, com alodinia mecânica intensa e fenótipo predominantemente periférico, pode se beneficiar mais de lidocaína tópica ou capsaicina em adesivo; um paciente com neuralgia do trigêmeo, dominada por descargas ectópicas paroxísticas de altíssima frequência, responde preferencialmente à carbamazepina. Essa é a essência do raciocínio clínico que a UC XIII pretende consolidar: não decorar uma lista de fármacos, mas raciocinar do mecanismo para a escolha terapêutica — exatamente a sequência que você percorreu, seção por seção, ao longo deste resumo.</p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- REFERÊNCIAS -->
+<!-- ======================================================= -->
+<section class="topic" id="referencias" style="--accent-current:var(--accent-neutral)">
+  <div class="topic-kicker"><span class="num">Ref.</span></div>
+  <h2 class="topic-title">Referências</h2>
+  <p class="topic-deck">Organizadas em três níveis, do livro-texto clássico à evidência científica recente, no padrão ABNT.</p>
+
+  <div class="refs">
+    <div class="ref-group">
+      <h5>Bibliografia oficial da Unidade Curricular</h5>
+      <p>GUYTON, Arthur C.; HALL, John E. Tratado de Fisiologia Médica. 14. ed. Rio de Janeiro: Guanabara Koogan, 2021.</p>
+      <p>AIRES, Margarida de Mello. Fisiologia. 5. ed. Rio de Janeiro: Guanabara Koogan, 2018.</p>
+      <p>KUMAR, Vinay; ABBAS, Abul K.; ASTER, Jon C. Robbins &amp; Cotran: Patologia — Bases Patológicas das Doenças. 10. ed. Rio de Janeiro: Elsevier/Guanabara Koogan, 2021.</p>
+      <p>KATZUNG, Bertram G.; TREVOR, Anthony J. Farmacologia Básica e Clínica. 14. ed. Porto Alegre: AMGH, 2023.</p>
+      <p>PORTO, Celmo Celeno. Semiologia Médica. 8. ed. Rio de Janeiro: Guanabara Koogan, 2019.</p>
+      <p>BICKLEY, Lynn S. Bates: Propedêutica Médica. 13. ed. Rio de Janeiro: Guanabara Koogan, 2023.</p>
+      <p>LOSCALZO, Joseph et al. (Org.). Harrison: Medicina Interna. 21. ed. Porto Alegre: AMGH, 2023.</p>
+    </div>
+    <div class="ref-group">
+      <h5>Diretrizes clínicas</h5>
+      <p>SOCIEDADE BRASILEIRA DE DIABETES. Diretrizes da Sociedade Brasileira de Diabetes 2023-2024. São Paulo: SBD, 2023.</p>
+      <p>AMERICAN DIABETES ASSOCIATION. Standards of Care in Diabetes — 2025. Diabetes Care, v. 48, supl. 1, 2025.</p>
+      <p>SOCIEDADE BRASILEIRA DE IMUNIZAÇÕES (SBIm). Guia de Vacinação SBIm — Herpes-zóster. São Paulo: SBIm, 2024.</p>
+      <p>DWORKIN, Robert H. et al. Recommendations for the management of herpes zoster. Clinical Infectious Diseases, v. 44, supl. 1, p. S1-S26, 2007.</p>
+      <p>INTERNATIONAL ASSOCIATION FOR THE STUDY OF PAIN (IASP). NeuPSIG — Neuropathic Pain Special Interest Group: recomendações de manejo farmacológico. Disponível em: iasp-pain.org.</p>
+    </div>
+    <div class="ref-group">
+      <h5>Evidências científicas</h5>
+      <p>JENSEN, Troels S. et al. A new definition of neuropathic pain. Pain, v. 152, n. 10, p. 2204-2205, 2011.</p>
+      <p>FINNERUP, Nanna B. et al. Pharmacotherapy for neuropathic pain in adults: a systematic review and meta-analysis. The Lancet Neurology, v. 14, n. 2, p. 162-173, 2015.</p>
+      <p>BOUHASSIRA, Didier et al. Comparison of pain syndromes associated with nervous or somatic lesions and development of a new neuropathic pain diagnostic questionnaire (DN4). Pain, v. 114, n. 1-2, p. 29-36, 2005.</p>
+      <p>MELZACK, Ronald. The McGill Pain Questionnaire: major properties and scoring methods. Pain, v. 1, n. 3, p. 277-299, 1975.</p>
+      <p>MELZACK, Ronald; WALL, Patrick D. Pain mechanisms: a new theory. Science, v. 150, n. 3699, p. 971-979, 1965.</p>
+      <p>COULL, Jeffrey A. M. et al. BDNF from microglia causes the shift in neuronal anion gradient underlying neuropathic pain. Nature, v. 438, p. 1017-1021, 2005.</p>
+      <p>BROWNLEE, Michael. The pathobiology of diabetic complications: a unifying mechanism. Diabetes, v. 54, n. 6, p. 1615-1625, 2005.</p>
+      <p>SOLIMAN, Nadia et al. Pharmacological and non-pharmacological treatments for neuropathic pain: an updated systematic review and meta-analysis (NeuPSIG). 2024-2025.</p>
+    </div>
+  </div>
+
+  <div class="end-space"></div>
+</section>
+
+</main>
+
+<div class="edit-toolbar" id="editToolbar">
+  <button class="toolbar-btn" id="btnToggleEdit" title="Clique para editar qualquer texto diretamente na página">Ativar edição</button>
+  <button class="toolbar-btn" id="btnDownload" title="Baixa um novo arquivo .html com suas edições">Baixar cópia editada</button>
+  <button class="toolbar-btn danger" id="btnRestore" title="Apaga as edições salvas neste navegador">Restaurar original</button>
+  <div class="storage-note" id="storageNote">Autosave a cada 15s neste navegador. Funciona apenas com o arquivo aberto localmente (fora da pré-visualização do Claude.ai).</div>
+</div>
+
+<script>
+(function(){
+  var STORAGE_KEY = 'estudoDorNeuropatica_v1_content';
+  var root = document.getElementById('editableRoot');
+  var btnToggle = document.getElementById('btnToggleEdit');
+  var btnDownload = document.getElementById('btnDownload');
+  var btnRestore = document.getElementById('btnRestore');
+  var noteEl = document.getElementById('storageNote');
+  var editing = false;
+  var autosaveTimer = null;
+
+  function storageAvailable(){
+    try{
+      var t = '__ls_test__';
+      window.localStorage.setItem(t, t);
+      window.localStorage.removeItem(t);
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+  var storageOK = storageAvailable();
+
+  if(storageOK){
+    try{
+      var saved = window.localStorage.getItem(STORAGE_KEY);
+      if(saved){ root.innerHTML = saved; }
+    }catch(e){}
+  } else {
+    if(noteEl){
+      noteEl.textContent = 'Armazenamento local indisponível neste ambiente (comum na pré-visualização do Claude.ai). Use "Baixar cópia editada" para salvar suas alterações, ou abra o arquivo baixado direto no navegador para o autosave funcionar.';
+    }
+  }
+
+  function setSummariesEditable(state){
+    var summaries = root.querySelectorAll('summary');
+    for(var i=0; i<summaries.length; i++){
+      summaries[i].setAttribute('contenteditable', state ? 'false' : 'inherit');
+    }
+  }
+
+  function saveNow(){
+    if(!storageOK) return;
+    try{ window.localStorage.setItem(STORAGE_KEY, root.innerHTML); }catch(e){}
+  }
+
+  function startAutosave(){
+    if(autosaveTimer) return;
+    autosaveTimer = setInterval(saveNow, 15000);
+  }
+  function stopAutosave(){
+    if(autosaveTimer){ clearInterval(autosaveTimer); autosaveTimer = null; }
+  }
+
+  btnToggle.addEventListener('click', function(){
+    editing = !editing;
+    root.setAttribute('contenteditable', editing ? 'true' : 'false');
+    setSummariesEditable(editing);
+    btnToggle.textContent = editing ? 'Salvar e sair da edição' : 'Ativar edição';
+    btnToggle.classList.toggle('active', editing);
+    if(editing){
+      startAutosave();
+    } else {
+      stopAutosave();
+      saveNow();
+    }
+  });
+
+  btnRestore.addEventListener('click', function(){
+    var ok = window.confirm('Isso vai apagar as edições salvas neste navegador e restaurar o texto original gerado. Deseja continuar?');
+    if(!ok) return;
+    if(storageOK){
+      try{ window.localStorage.removeItem(STORAGE_KEY); }catch(e){}
+    }
+    window.location.reload();
+  });
+
+  btnDownload.addEventListener('click', function(){
+    saveNow();
+    var docClone = document.documentElement.cloneNode(true);
+    var cloneRoot = docClone.querySelector('#editableRoot');
+    if(cloneRoot){ cloneRoot.setAttribute('contenteditable', 'false'); }
+    var cloneToggle = docClone.querySelector('#btnToggleEdit');
+    if(cloneToggle){ cloneToggle.textContent = 'Ativar edição'; cloneToggle.classList.remove('active'); }
+    var htmlStr = '<!DOCTYPE html>\n' + docClone.outerHTML;
+    var blob = new Blob([htmlStr], {type:'text/html;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'dor_neuropatica_resumo_editado.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  });
+})();
+</script>
+
+</body>
+</html>

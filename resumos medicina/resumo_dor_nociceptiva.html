@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dor Nociceptiva — Resumo Integrado | UC XIII</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0A0E13;
+    --surface:#121821;
+    --surface-2:#182029;
+    --surface-3:#1D2731;
+    --line:#233040;
+    --line-soft:#1A232C;
+    --teal:#4FB6A6;
+    --teal-soft:rgba(79,182,166,0.14);
+    --teal-line:rgba(79,182,166,0.45);
+    --amber:#D9A441;
+    --amber-soft:rgba(217,164,65,0.12);
+    --crimson:#C1584B;
+    --crimson-soft:rgba(193,88,75,0.12);
+    --text:#E9EEF2;
+    --text-dim:#93A5B4;
+    --text-faint:#5B6E7E;
+    --font-display:'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --font-body:'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono:'IBM Plex Mono', 'Courier New', monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; background:var(--void);}
+  body{
+    margin:0;
+    background:var(--void);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:16.5px;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--teal-soft); color:var(--text); }
+
+  a{ color:var(--teal); }
+
+  .layout{ display:flex; align-items:flex-start; max-width:1280px; margin:0 auto; }
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    width:266px;
+    flex:0 0 266px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    padding:38px 0 24px 34px;
+    display:flex;
+    flex-direction:column;
+  }
+  .brand{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    color:var(--text-faint);
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .brand strong{ color:var(--teal); font-weight:600; }
+  .brand-sub{
+    font-family:var(--font-display);
+    font-size:19px;
+    color:var(--text);
+    margin:6px 0 34px 0;
+    line-height:1.3;
+  }
+
+  .toc{ position:relative; padding-left:22px; }
+  .toc::before{
+    content:"";
+    position:absolute;
+    left:5px; top:6px; bottom:6px;
+    width:1px;
+    background:linear-gradient(to bottom, var(--teal-line), var(--line) 85%, transparent);
+  }
+  .toc-item{ position:relative; margin-bottom:22px; }
+  .toc-item::before{
+    content:"";
+    position:absolute;
+    left:-22px; top:4px;
+    width:9px; height:9px;
+    border-radius:50%;
+    background:var(--void);
+    border:1.5px solid var(--text-faint);
+    transition:all .25s ease;
+  }
+  .toc-item.active::before{
+    border-color:var(--teal);
+    background:var(--teal);
+    box-shadow:0 0 0 4px var(--teal-soft);
+  }
+  .toc-item a{
+    display:block;
+    text-decoration:none;
+    color:var(--text-dim);
+    font-size:13.5px;
+    line-height:1.4;
+    transition:color .2s ease;
+  }
+  .toc-item .toc-num{
+    display:block;
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    letter-spacing:.1em;
+    color:var(--text-faint);
+    margin-bottom:2px;
+  }
+  .toc-item.active a{ color:var(--text); }
+  .toc-item.active .toc-num{ color:var(--teal); }
+  .toc-item a:hover{ color:var(--text); }
+
+  .sidebar-foot{
+    margin-top:auto;
+    padding-left:22px;
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    color:var(--text-faint);
+    line-height:1.6;
+    border-top:1px solid var(--line-soft);
+    padding-top:16px;
+  }
+
+  .mobile-toc{ display:none; }
+
+  /* ---------- MAIN ---------- */
+  main{
+    flex:1;
+    min-width:0;
+    padding:52px 56px 100px 44px;
+    max-width:900px;
+  }
+
+  .doc-header{
+    position:relative;
+    border:1px solid var(--line);
+    background:linear-gradient(180deg, var(--surface), var(--void));
+    border-radius:10px;
+    padding:34px 32px 28px;
+    overflow:hidden;
+    margin-bottom:56px;
+  }
+  .trace-svg{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    width:100%; height:70px;
+    opacity:.5;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    margin-bottom:18px;
+    position:relative; z-index:2;
+  }
+  .meta-row span{
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:4px 11px;
+    background:var(--surface-2);
+  }
+  .meta-row span.hl{ border-color:var(--teal-line); color:var(--teal); }
+  .doc-title{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:2.5rem;
+    line-height:1.15;
+    margin:0 0 12px 0;
+    color:var(--text);
+    position:relative; z-index:2;
+    max-width:640px;
+  }
+  .doc-title em{ font-style:italic; color:var(--teal); }
+  .doc-sub{
+    color:var(--text-dim);
+    font-size:15px;
+    max-width:600px;
+    position:relative; z-index:2;
+    margin:0;
+  }
+
+  section.topic{ margin-bottom:76px; scroll-margin-top:30px; }
+  section.topic:last-of-type{ margin-bottom:36px; }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--teal);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:26px; height:1px;
+    background:var(--teal-line);
+  }
+
+  h2.topic-title{
+    font-family:var(--font-display);
+    font-size:2rem;
+    font-weight:600;
+    margin:0 0 18px 0;
+    color:var(--text);
+    letter-spacing:-.01em;
+  }
+
+  .lede{
+    font-size:17px;
+    color:var(--text-dim);
+    max-width:700px;
+    margin:0 0 30px 0;
+    padding-bottom:26px;
+    border-bottom:1px solid var(--line-soft);
+  }
+
+  h3{
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:1.18rem;
+    color:var(--text);
+    margin:38px 0 12px 0;
+    padding-left:14px;
+    border-left:3px solid var(--teal-line);
+  }
+  h4{
+    font-family:var(--font-mono);
+    font-weight:600;
+    font-size:.82rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--amber);
+    margin:26px 0 10px 0;
+  }
+
+  p{ margin:0 0 15px 0; color:var(--text); }
+  .topic p, .topic li{ color:#D7E0E7; }
+
+  ul, ol{ margin:0 0 16px 0; padding-left:22px; }
+  li{ margin-bottom:7px; }
+  li::marker{ color:var(--teal); }
+
+  strong{ color:var(--text); font-weight:600; }
+
+  .pill{
+    display:inline-block;
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.03em;
+    padding:2px 9px;
+    border-radius:20px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    color:var(--teal);
+    white-space:nowrap;
+  }
+
+  /* callout boxes */
+  .callout{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:3px solid var(--teal);
+    border-radius:6px;
+    padding:18px 22px;
+    margin:22px 0;
+  }
+  .callout h4{ margin-top:0; color:var(--teal); }
+  .callout.warn{ border-left-color:var(--crimson); background:linear-gradient(180deg, var(--crimson-soft), var(--surface) 40%); }
+  .callout.warn h4{ color:var(--crimson); }
+  .callout.gold{ border-left-color:var(--amber); background:linear-gradient(180deg, var(--amber-soft), var(--surface) 40%); }
+  .callout.gold h4{ color:var(--amber); }
+  .callout p:last-child{ margin-bottom:0; }
+
+  /* tables */
+  .table-wrap{ overflow-x:auto; margin:22px 0; border:1px solid var(--line); border-radius:8px; }
+  table{ width:100%; border-collapse:collapse; font-size:14.5px; min-width:520px; }
+  thead th{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--void);
+    background:var(--teal);
+    text-align:left;
+    padding:11px 16px;
+    font-weight:600;
+  }
+  tbody td{
+    padding:12px 16px;
+    border-top:1px solid var(--line-soft);
+    color:#D7E0E7;
+    vertical-align:top;
+  }
+  tbody tr:nth-child(even){ background:var(--surface); }
+  tbody td strong{ color:var(--text); }
+
+  .flow{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--text-dim);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:20px 22px;
+    margin:22px 0;
+    line-height:2.15;
+  }
+  .flow .step{ color:var(--text); }
+  .flow .arrow{ color:var(--teal); padding:0 6px; }
+
+  hr.divider{
+    border:none;
+    height:1px;
+    background:var(--line-soft);
+    margin:46px 0;
+  }
+
+  .synthesis{
+    background:linear-gradient(150deg, var(--surface-2), var(--surface));
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:38px 38px 34px;
+    position:relative;
+  }
+  .synthesis::before{
+    content:"";
+    position:absolute; left:0; top:24px; bottom:24px; width:3px;
+    background:linear-gradient(to bottom, var(--teal), var(--amber));
+    border-radius:2px;
+  }
+  .synthesis h2.topic-title{ font-size:1.7rem; }
+  .synthesis .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px 30px;
+    margin-top:24px;
+  }
+  .synthesis .grid h4{ margin-top:0; }
+  @media (max-width:720px){ .synthesis .grid{ grid-template-columns:1fr; } }
+
+  footer.doc-footer{
+    margin-top:60px;
+    padding-top:26px;
+    border-top:1px solid var(--line-soft);
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:var(--text-faint);
+    line-height:1.9;
+  }
+  footer.doc-footer .ref-level{ color:var(--text-dim); }
+  footer.doc-footer .ref-level strong{ color:var(--teal); font-family:var(--font-body); font-size:12px; }
+
+  /* ---------- EDIT MODE ---------- */
+  .edit-toolbar{
+    position:fixed;
+    right:22px; bottom:22px;
+    z-index:100;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:8px;
+    font-family:var(--font-mono);
+  }
+  .edit-toolbar .row{ display:flex; gap:8px; }
+  .edit-toolbar button{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--text);
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:9px 16px;
+    cursor:pointer;
+    transition:all .15s ease;
+    box-shadow:0 4px 14px rgba(0,0,0,0.35);
+  }
+  .edit-toolbar button:hover{ border-color:var(--teal-line); color:var(--teal); }
+  .edit-toolbar button.primary{ background:var(--teal); color:var(--void); border-color:var(--teal); font-weight:600; }
+  .edit-toolbar button.primary:hover{ color:var(--void); opacity:.9; }
+  .edit-toolbar button.on{ background:var(--amber); color:var(--void); border-color:var(--amber); font-weight:600; }
+  .edit-toolbar .status{
+    font-size:10.5px;
+    color:var(--text-faint);
+    padding:2px 4px;
+    min-height:14px;
+  }
+  .edit-toolbar .status.show{ color:var(--teal); }
+
+  body.editing main [contenteditable="true"]:hover{
+    outline:1px dashed var(--teal-line);
+    outline-offset:3px;
+    border-radius:3px;
+    cursor:text;
+  }
+  body.editing main [contenteditable="true"]:focus{
+    outline:1.5px solid var(--teal);
+    outline-offset:3px;
+    background:rgba(79,182,166,0.05);
+    border-radius:3px;
+  }
+  body.editing .doc-header,
+  body.editing .callout,
+  body.editing .stepcards,
+  body.editing table{
+    outline:1px dashed var(--line);
+    outline-offset:4px;
+  }
+  body.editing::before{
+    content:"MODO EDIÇÃO ATIVO — clique em qualquer texto para editar";
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:99;
+    background:var(--amber);
+    color:var(--void);
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    text-align:center;
+    padding:6px 0;
+    font-weight:600;
+  }
+  body.editing .sidebar,
+  body.editing main{ margin-top:30px; }
+  body.editing .mobile-toc{ margin-top:30px; }
+
+  @media (max-width: 980px){
+    .sidebar{ display:none; }
+    .mobile-toc{
+      display:flex;
+      position:sticky; top:0; z-index:40;
+      background:rgba(10,14,19,0.94);
+      backdrop-filter:blur(6px);
+      border-bottom:1px solid var(--line);
+      overflow-x:auto;
+      padding:12px 16px;
+      gap:8px;
+    }
+    .mobile-toc a{
+      flex:0 0 auto;
+      font-family:var(--font-mono);
+      font-size:11px;
+      letter-spacing:.04em;
+      text-decoration:none;
+      color:var(--text-dim);
+      border:1px solid var(--line);
+      padding:6px 12px;
+      border-radius:20px;
+      white-space:nowrap;
+    }
+    .mobile-toc a.active{ color:var(--void); background:var(--teal); border-color:var(--teal); }
+    main{ padding:32px 20px 80px; }
+    .doc-title{ font-size:1.9rem; }
+    section.topic{ scroll-margin-top:64px; }
+    .synthesis .grid{ gap:18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="edit-toolbar">
+  <div class="status" id="editStatus"></div>
+  <div class="row">
+    <button type="button" id="btnRestore" title="Apaga suas edições salvas neste navegador e volta ao texto original">Restaurar original</button>
+    <button type="button" id="btnDownload" title="Baixa um novo arquivo .html com o conteúdo atual, editado ou não">Baixar cópia editada</button>
+    <button type="button" id="btnEdit" class="primary" title="Liga/desliga a edição direta do texto">Ativar edição</button>
+  </div>
+</div>
+
+<div class="mobile-toc" id="mobileToc">
+  <a href="#s1" data-target="s1">01 Semiologia</a>
+  <a href="#s2" data-target="s2">02 Fisiologia</a>
+  <a href="#s3" data-target="s3">03 Farmacologia</a>
+  <a href="#s4" data-target="s4">04 Tratamento</a>
+  <a href="#s5" data-target="s5">05 Biopsicossocial</a>
+  <a href="#s6" data-target="s6">06 Síntese</a>
+</div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand"><strong>UC XIII</strong> · Dor — PBL</div>
+    <div class="brand-sub">Dor Nociceptiva: Semiologia, Fisiologia, Farmacologia e Manejo Clínico</div>
+
+    <nav class="toc" id="toc">
+      <div class="toc-item" data-target="s1">
+        <span class="toc-num">01</span>
+        <a href="#s1">Semiologia da dor</a>
+      </div>
+      <div class="toc-item" data-target="s2">
+        <span class="toc-num">02</span>
+        <a href="#s2">Fisiologia da nocicepção</a>
+      </div>
+      <div class="toc-item" data-target="s3">
+        <span class="toc-num">03</span>
+        <a href="#s3">Farmacologia analgésica</a>
+      </div>
+      <div class="toc-item" data-target="s4">
+        <span class="toc-num">04</span>
+        <a href="#s4">Tratamento da dor nociceptiva</a>
+      </div>
+      <div class="toc-item" data-target="s5">
+        <span class="toc-num">05</span>
+        <a href="#s5">Impacto biopsicossocial</a>
+      </div>
+      <div class="toc-item" data-target="s6">
+        <span class="toc-num">06</span>
+        <a href="#s6">Síntese e integração clínica</a>
+      </div>
+    </nav>
+
+    <div class="sidebar-foot">
+      5º SEMESTRE — CICLO CLÍNICO<br>
+      METODOLOGIA PBL/TBL<br>
+      NÍVEL: GRADUAÇÃO
+    </div>
+  </aside>
+
+  <main>
+
+    <header class="doc-header">
+      <div class="meta-row">
+        <span class="hl">UC XIII — Dor</span>
+        <span>Eixo: Nocicepção</span>
+        <span>PBL — Objetivos de Aprendizagem</span>
+        <span>Nível: Graduação Clínica</span>
+      </div>
+      <h1 class="doc-title">Resumo integrado sobre <em>dor nociceptiva</em>: da membrana do nociceptor à experiência do paciente</h1>
+      <p class="doc-sub">Construção do raciocínio na sequência semiologia → fisiologia → farmacologia → tratamento → dimensão biopsicossocial, com fundamentação em Guyton &amp; Hall, Robbins &amp; Cotran, Katzung, Porto e Harrison.</p>
+
+      <svg class="trace-svg" viewBox="0 0 900 70" preserveAspectRatio="none" aria-hidden="true">
+        <polyline points="0,50 70,50 82,50 90,12 98,64 106,46 118,50 240,50 252,50 260,12 268,64 276,46 288,50 430,50 442,50 450,8 458,66 466,44 478,50 620,50 632,50 640,15 648,60 656,44 668,50 900,50"
+          fill="none" stroke="#4FB6A6" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+    </header>
+
+    <!-- ============ SEÇÃO 1 — SEMIOLOGIA ============ -->
+    <section class="topic" id="s1">
+      <div class="eyebrow">Objetivo 01 — Semiologia</div>
+      <h2 class="topic-title">Semiologia da dor</h2>
+      <p class="lede">Antes de investigar mecanismos, o clínico precisa saber definir o fenômeno que está diante dele e reconhecer quando a dor ainda cumpre sua função biológica de proteção — e quando ela já se tornou, por si só, uma doença.</p>
+
+      <h3>Definição de dor</h3>
+      <p>Segundo a <strong>International Association for the Study of Pain (IASP)</strong>, dor é uma experiência sensorial e emocional desagradável, associada a uma lesão tecidual real ou potencial, ou descrita em termos semelhantes aos de tal lesão. Três elementos dessa definição são essenciais para a prática clínica:</p>
+      <ul>
+        <li>A dor é sempre uma <strong>experiência subjetiva</strong>, construída pela integração de estímulos sensoriais com fatores cognitivos, emocionais e sociais — por isso, dois pacientes submetidos ao mesmo estímulo nociceptivo podem relatar intensidades muito diferentes.</li>
+        <li>A dor e a <strong>nocicepção</strong> não são sinônimos: nocicepção é o processo neural de detecção do estímulo nocivo, enquanto a dor é a experiência consciente resultante — pode haver nocicepção sem dor (por exemplo, sob anestesia geral) e dor sem estímulo nociceptivo periférico identificável (dor neuropática ou nociplástica).</li>
+        <li>O relato do paciente deve ser respeitado como a medida mais confiável da própria dor, ainda que a incapacidade de comunicá-la verbalmente não signifique ausência de sofrimento.</li>
+      </ul>
+
+      <h3>Dor fisiológica versus dor patológica</h3>
+      <p>Um dos primeiros exercícios de raciocínio clínico diante de um paciente com dor é reconhecer se essa dor ainda representa um mecanismo <strong>adaptativo de proteção</strong> ou se já configura um processo <strong>mal-adaptativo</strong>, que perdeu sua função biológica original.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Característica</th><th>Dor fisiológica (nociceptiva/adaptativa)</th><th>Dor patológica (mal-adaptativa)</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Relação com o estímulo</strong></td><td>Proporcional à intensidade da lesão</td><td>Desproporcional, ou presente sem lesão identificável</td></tr>
+            <tr><td><strong>Duração</strong></td><td>Transitória, cessa com a resolução do estímulo</td><td>Persiste além do tempo esperado de reparo tecidual (habitualmente &gt; 3 meses)</td></tr>
+            <tr><td><strong>Limiar nociceptivo</strong></td><td>Normal, sem sensibilização persistente</td><td>Reduzido, por sensibilização periférica e/ou central</td></tr>
+            <tr><td><strong>Função biológica</strong></td><td>Protetora — alerta, retirada reflexa, imobilização da área lesada</td><td>Perdida — a dor deixa de proteger e passa a ser, em si, a doença</td></tr>
+            <tr><td><strong>Exemplo</strong></td><td>Dor ao encostar em superfície quente; dor pós-operatória imediata</td><td>Dor lombar crônica sem substrato mecânico ativo; fibromialgia; neuralgia pós-herpética</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Quando a dor patológica se torna crônica, ela pode ser subdividida, de acordo com o mecanismo predominante, em <strong>dor inflamatória persistente</strong> (mantida por processo inflamatório ativo), <strong>dor neuropática</strong> (lesão ou doença do sistema somatossensorial) e <strong>dor nociplástica</strong> (termo consagrado pela IASP para descrever dor decorrente de alteração da nocicepção sem evidência clara de dano tecidual real ou potencial, nem de doença do sistema somatossensorial — como ocorre na fibromialgia). Essas categorias frequentemente se sobrepõem em um mesmo paciente.</p>
+
+      <div class="callout">
+        <h4>Hiperalgesia e alodinia</h4>
+        <p>Dois achados semiológicos centrais na dor patológica: <strong>hiperalgesia</strong> é a resposta dolorosa aumentada a um estímulo que normalmente já seria doloroso; <strong>alodinia</strong> é a percepção de dor diante de um estímulo que, em condições normais, não seria doloroso (por exemplo, o simples toque do lençol sobre a pele). Ambas refletem sensibilização do sistema nociceptivo e serão retomadas na Seção 02.</p>
+      </div>
+
+      <h3>Anamnese da dor</h3>
+      <p>A caracterização semiológica completa da dor, conforme Porto, exige a exploração sistemática dos seguintes atributos, cada um com implicação diagnóstica direta:</p>
+      <ul>
+        <li><strong>Localização:</strong> onde a dor é sentida — localizada, difusa, ou referida em dermátomo específico?</li>
+        <li><strong>Qualidade/caráter:</strong> em queimação (sugere componente neuropático ou fibra C), em pontada/facada (fibra Aδ), em aperto, em cólica (víscera oca), latejante (componente vascular) ou em choque (neuropática).</li>
+        <li><strong>Intensidade:</strong> quantificada por escalas (ver adiante).</li>
+        <li><strong>Irradiação:</strong> para onde a dor se propaga — fundamental, por exemplo, na diferenciação entre dor lombar mecânica e ciática, ou entre dor precordial isolada e síndrome coronariana com irradiação para membro superior esquerdo.</li>
+        <li><strong>Duração e periodicidade:</strong> aguda ou crônica; contínua ou intermitente; padrão de piora ao longo do dia.</li>
+        <li><strong>Fatores desencadeantes, de melhora e de piora:</strong> relação com movimento, postura, alimentação, uso de medicações.</li>
+        <li><strong>Sintomas associados:</strong> náusea, sudorese, febre, parestesias, fraqueza — orientam a busca por diagnósticos diferenciais sistêmicos.</li>
+        <li><strong>Cronologia da instalação:</strong> súbita (sugere evento vascular ou mecânico agudo) versus insidiosa (sugere processo inflamatório crônico ou neoplásico).</li>
+      </ul>
+
+      <h4>Escalas de mensuração</h4>
+      <ul>
+        <li><strong>Escala Visual Analógica (EVA):</strong> linha de 10 cm sem marcações numéricas, na qual o paciente assinala a intensidade percebida.</li>
+        <li><strong>Escala Numérica (EN) 0–10:</strong> a mais utilizada na prática clínica, por sua simplicidade e reprodutibilidade.</li>
+        <li><strong>Escala verbal categórica:</strong> dor ausente, leve, moderada ou intensa.</li>
+        <li><strong>Escalas comportamentais/observacionais:</strong> indicadas para pacientes incapazes de se comunicar verbalmente (crianças pequenas, pacientes sedados em UTI, pacientes com demência avançada).</li>
+      </ul>
+
+      <div class="callout warn">
+        <h4>Sinais de alarme (red flags)</h4>
+        <p>Determinados achados na anamnese da dor devem elevar imediatamente a suspeita de doença grave subjacente e motivar investigação prioritária: dor associada a perda ponderal inexplicada, febre ou sudorese noturna; dor que desperta o paciente durante o sono; déficit neurológico progressivo associado; dor pós-traumática com suspeita de instabilidade estrutural; dor torácica com características isquêmicas; e dor de início atípico para a faixa etária (por exemplo, lombalgia mecânica em paciente com menos de 20 ou mais de 50 anos).</p>
+      </div>
+
+    </section>
+
+    <!-- ============ SEÇÃO 2 — FISIOLOGIA ============ -->
+    <section class="topic" id="s2">
+      <div class="eyebrow">Objetivo 02 — Fisiologia</div>
+      <h2 class="topic-title">Fisiologia da dor nociceptiva</h2>
+      <p class="lede">Compreendido o que caracterizar na anamnese, o passo seguinte é entender como o sistema nervoso efetivamente gera o sinal doloroso — do receptor periférico até a percepção consciente no córtex.</p>
+
+      <h3>Nocicepção: os quatro processos fisiológicos</h3>
+      <p>Guyton &amp; Hall descrevem a nocicepção como uma sequência de quatro processos fisiológicos distintos, que ocorrem em diferentes níveis do sistema nervoso:</p>
+
+      <div class="flow">
+        <span class="step">1. Transdução</span><span class="arrow">→</span>
+        <span class="step">2. Transmissão</span><span class="arrow">→</span>
+        <span class="step">3. Modulação</span><span class="arrow">→</span>
+        <span class="step">4. Percepção</span>
+      </div>
+
+      <p><strong>Transdução</strong> é a conversão do estímulo nocivo — mecânico, térmico ou químico — em um sinal elétrico (potencial de receptor) nas terminações nervosas livres dos nociceptores. <strong>Transmissão</strong> é a propagação desse sinal, primeiro como potencial de ação ao longo do nervo periférico, depois através dos tratos ascendentes da medula até estruturas encefálicas. <strong>Modulação</strong> é a amplificação ou inibição do sinal em diferentes estações da via, sobretudo no corno dorsal da medula. <strong>Percepção</strong> é a integração final no córtex, que gera a experiência consciente e subjetiva da dor.</p>
+
+      <h3>Nociceptores e transdução do estímulo</h3>
+      <p>Nociceptores não são corpúsculos especializados, mas <strong>terminações nervosas livres</strong> distribuídas na pele, músculos, articulações e vísceras. Classificam-se, quanto à modalidade de estímulo que respondem, em mecanonociceptores, termonociceptores e <strong>nociceptores polimodais</strong> — estes últimos, a maioria, respondem a estímulos mecânicos, térmicos e químicos simultaneamente. Um subgrupo importante são os <strong>nociceptores silenciosos</strong>, normalmente inativos, que se tornam responsivos apenas após sensibilização por mediadores inflamatórios — mecanismo relevante na gênese da hiperalgesia inflamatória.</p>
+
+      <p>A transdução depende de canais e receptores moleculares específicos na membrana da terminação nervosa:</p>
+      <ul>
+        <li><span class="pill">TRPV1</span> — receptor vaniloide, ativado por calor acima de aproximadamente 43°C, capsaicina e prótons (meio ácido, como ocorre em áreas isquêmicas ou inflamadas).</li>
+        <li><span class="pill">TRPM8</span> — ativado por frio.</li>
+        <li><span class="pill">ASICs</span> — canais sensíveis a ácido, ativados por queda do pH tecidual (isquemia, inflamação).</li>
+        <li><span class="pill">P2X</span> — receptores purinérgicos ativados por ATP liberado de células lesadas.</li>
+        <li><span class="pill">Nav1.7 / 1.8 / 1.9</span> — canais de sódio voltagem-dependentes específicos de nociceptores, essenciais para gerar e sustentar o potencial de ação. Mutações no gene que codifica o Nav1.7 (SCN9A) produzem, de um lado, síndromes de dor extrema, e de outro, insensibilidade congênita à dor — demonstração direta da importância desse canal na nocicepção humana.</li>
+      </ul>
+      <p>Quando o potencial de receptor gerado nessas terminações atinge o limiar, abrem-se os canais de sódio voltagem-dependentes, disparando um potencial de ação do tipo tudo-ou-nada, que se propaga ao longo da fibra nervosa em direção à medula espinal.</p>
+
+      <h3>Fibras nervosas envolvidas na condução nociceptiva</h3>
+      <p>Duas populações de fibras conduzem a informação nociceptiva da periferia até o corno dorsal, com propriedades e papéis clínicos distintos — essa diferença explica, por exemplo, por que uma lesão aguda produz primeiro uma dor em pontada bem localizada e, segundos depois, uma dor difusa em queimação.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Característica</th><th>Fibra Aδ</th><th>Fibra C</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Mielinização</strong></td><td>Fina, mielinizada</td><td>Amielínica</td></tr>
+            <tr><td><strong>Velocidade de condução</strong></td><td>~5–30 m/s (condução saltatória)</td><td>~0,5–2 m/s (condução contínua)</td></tr>
+            <tr><td><strong>Componente da dor</strong></td><td>"Primeira dor" — rápida, aguda, bem localizada, em pontada</td><td>"Segunda dor" — lenta, difusa, mal localizada, em queimação</td></tr>
+            <tr><td><strong>Modalidade de estímulo</strong></td><td>Mecânico e térmico de alta intensidade</td><td>Polimodal — mecânico, térmico e químico</td></tr>
+            <tr><td><strong>Papel funcional</strong></td><td>Retirada reflexa rápida, proteção imediata</td><td>Resposta sustentada, componente afetivo e de alerta prolongado</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Transmissão medular: corno dorsal e neurotransmissores</h3>
+      <p>As fibras Aδ e C fazem sinapse no <strong>corno dorsal da medula espinal</strong>, organizado em camadas conhecidas como <strong>lâminas de Rexed</strong>. As lâminas mais relevantes para a nocicepção são a <strong>lâmina I</strong> (zona marginal, recebe diretamente fibras Aδ e C e projeta para os tratos ascendentes), a <strong>lâmina II</strong> (substância gelatinosa, rica em interneurônios excitatórios e inibitórios, central para os mecanismos de modulação local) e a <strong>lâmina V</strong>, que contém neurônios de amplo espectro dinâmico (WDR), capazes de receber convergência de aferências nociceptivas cutâneas e viscerais — mecanismo que explica a <strong>dor referida</strong> (por exemplo, a dor no ombro esquerdo durante um infarto do miocárdio).</p>
+
+      <p>Na sinapse do corno dorsal, a liberação de neurotransmissores pelo terminal pré-sináptico do neurônio de primeira ordem ativa o neurônio de segunda ordem por meio de:</p>
+      <ul>
+        <li><strong>Glutamato</strong> — principal neurotransmissor excitatório rápido, atuando em receptores AMPA (resposta rápida, ponto a ponto) e NMDA. O receptor NMDA, normalmente bloqueado por íon Mg²⁺, é desbloqueado quando há despolarização repetitiva sustentada — mecanismo-chave do fenômeno de <em>wind-up</em> e da sensibilização central.</li>
+        <li><strong>Substância P</strong> — neuropeptídeo que atua em receptores NK-1, com resposta mais lenta e sustentada, amplificando e prolongando o sinal nociceptivo, além de contribuir para a inflamação neurogênica (vasodilatação e extravasamento plasmático local).</li>
+        <li><strong>CGRP</strong> (peptídeo relacionado ao gene da calcitonina) — frequentemente co-liberado com a substância P, potente vasodilatador que amplifica a inflamação neurogênica; é alvo farmacológico relevante no tratamento da enxaqueca.</li>
+      </ul>
+
+      <h3>Vias ascendentes: trato espinotalâmico</h3>
+      <p>Os neurônios de segunda ordem do corno dorsal cruzam a linha média pela comissura branca anterior e ascendem contralateralmente pelo funículo anterolateral da medula, constituindo o <strong>sistema espinotalâmico</strong>, subdividido em duas vias com funções complementares:</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Via</th><th>Trajeto</th><th>Função</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Trato neoespinotalâmico</strong> (via lateral)</td><td>Projeção direta e somatotópica ao núcleo ventral posterolateral (VPL) do tálamo, e daí ao córtex somatossensorial primário (S1) e secundário (S2)</td><td>Componente <strong>discriminativo</strong> — localização, intensidade e qualidade da dor</td></tr>
+            <tr><td><strong>Trato paleoespinotalâmico</strong> (via medial/espinorreticulotalâmica)</td><td>Multissináptico, projeta para a formação reticular do tronco encefálico e núcleos talâmicos intralaminares, com conexões ao córtex cingulado anterior, à ínsula e ao sistema límbico</td><td>Componente <strong>afetivo-motivacional e autonômico</strong> — sofrimento associado, resposta emocional, ativação autonômica</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>A integração final ocorre no <strong>tálamo</strong> (estação de retransmissão) e no <strong>córtex</strong>: as áreas S1 e S2 discriminam localização e qualidade do estímulo, enquanto o córtex cingulado anterior e a ínsula processam o componente emocional — "o quanto aquilo incomoda" — explicando por que a mesma lesão pode ser vivenciada de forma muito distinta conforme o estado emocional do paciente.</p>
+
+      <h3>Modulação da dor e controle descendente</h3>
+      <p>A intensidade final do sinal nociceptivo que chega à consciência não depende apenas da intensidade do estímulo periférico — ela é continuamente ajustada por circuitos moduladores, principalmente no corno dorsal. O principal circuito modulador é a <strong>via descendente inibitória</strong>: a substância cinzenta periaquedutal (PAG) do mesencéfalo ativa o núcleo magno da rafe (serotoninérgico, no bulbo) e o locus coeruleus (noradrenérgico), cujas projeções descem até o corno dorsal e liberam serotonina e noradrenalina. Esses neurotransmissores ativam interneurônios inibitórios locais — que liberam opioides endógenos (encefalinas e dinorfinas) — e inibem diretamente a transmissão nociceptiva, tanto pré quanto pós-sinapticamente. Esse sistema é o substrato fisiológico pelo qual fatores cognitivos e emocionais (atenção, expectativa, estresse agudo) modulam a percepção da dor.</p>
+
+      <div class="callout gold">
+        <h4>Teoria do portão (Gate Control Theory — Melzack &amp; Wall, 1965)</h4>
+        <p>Este modelo clássico propõe a existência de um "portão" na substância gelatinosa (lâmina II) do corno dorsal, que regula a passagem do sinal nociceptivo até os neurônios de projeção que o enviam ao encéfalo. Interneurônios inibitórios nessa camada recebem, simultaneamente, aferências de fibras <strong>Aβ</strong> (grossas, mielinizadas, responsáveis por tato e pressão — não nociceptivas) e de fibras <strong>Aδ/C</strong> (nociceptivas).</p>
+        <p>Quando predomina a atividade das fibras Aβ, o interneurônio inibitório é ativado e "fecha o portão", reduzindo a transmissão do sinal doloroso — mecanismo que explica por que esfregar ou massagear uma área lesada alivia a dor. Quando predomina a atividade das fibras Aδ/C, o interneurônio inibitório é suprimido e o "portão se abre", facilitando a passagem do sinal nociceptivo. O controle descendente do encéfalo também module esse portão, integrando fatores cognitivos e emocionais ao processo. Esse modelo fundamenta racionalmente o uso terapêutico da <strong>estimulação elétrica nervosa transcutânea (TENS)</strong> e de técnicas como massagem terapêutica e acupuntura.</p>
+      </div>
+
+    </section>
+
+    <!-- ============ SEÇÃO 3 — FARMACOLOGIA ============ -->
+    <section class="topic" id="s3">
+      <div class="eyebrow">Objetivo 03 — Farmacologia</div>
+      <h2 class="topic-title">Mecanismo de ação dos fármacos analgésicos</h2>
+      <p class="lede">Cada classe farmacológica atua em um ponto específico da via nociceptiva descrita na Seção 02 — conhecer esse alvo é o que permite escolher racionalmente o fármaco, e não apenas memorizar uma lista de nomes comerciais.</p>
+
+      <h3>Anti-inflamatórios não esteroidais (AINEs)</h3>
+      <p>Os AINEs constituem um grupo heterogêneo de ácidos fracos, subdivididos conforme sua estrutura química: derivados do ácido propiônico (ibuprofeno, naproxeno), derivados do ácido acético (diclofenaco, indometacina), oxicams (piroxicam, meloxicam), coxibes (celecoxibe, etoricoxibe) e salicilatos (ácido acetilsalicílico).</p>
+
+      <p><strong>Alvo farmacológico:</strong> a enzima <strong>ciclo-oxigenase (COX)</strong>, existente em duas isoformas principais. A <strong>COX-1</strong> é constitutiva, presente na maioria dos tecidos, responsável por funções homeostáticas — proteção da mucosa gástrica (via PGE2/PGI2), agregação plaquetária (via tromboxano A2) e manutenção do fluxo sanguíneo renal. A <strong>COX-2</strong> é predominantemente induzível em contextos inflamatórios, por ação de citocinas e fatores de crescimento sobre macrófagos, sinoviócitos e células endoteliais, embora também tenha expressão constitutiva relevante em rim, sistema nervoso central e endotélio vascular.</p>
+
+      <p><strong>Mecanismo molecular:</strong> os AINEs inibem a conversão do ácido araquidônico — liberado da membrana celular pela ação da fosfolipase A2 — em prostaglandina H2 (PGH2), precursora comum das prostaglandinas (PGE2, PGF2α, PGD2), da prostaciclina (PGI2) e do tromboxano A2 (TXA2). A redução da síntese de prostaglandinas diminui a <strong>sensibilização de nociceptores periféricos</strong> — a PGE2 reduz o limiar de ativação dos nociceptores e potencializa a ação de bradicinina e histamina — e reduz os demais componentes da resposta inflamatória (vasodilatação, edema, calor).</p>
+
+      <p>Quanto à seletividade, os AINEs <strong>não seletivos</strong> (ibuprofeno, diclofenaco, naproxeno, ácido acetilsalicílico) inibem tanto COX-1 quanto COX-2; os <strong>seletivos para COX-2</strong> (coxibes) apresentam menor incidência de efeitos gastrointestinais, porém maior risco cardiovascular, decorrente do desequilíbrio entre o tromboxano A2 plaquetário (mantido via COX-1) e a prostaciclina endotelial protetora (reduzida via COX-2), favorecendo um estado pró-trombótico.</p>
+
+      <ul>
+        <li><strong>Indicações:</strong> dor nociceptiva leve a moderada, particularmente de origem inflamatória — osteoartrite, artrite reumatoide, dor pós-operatória, dismenorreia, cefaleia.</li>
+        <li><strong>Contraindicações relevantes:</strong> úlcera péptica ativa, doença renal crônica avançada, insuficiência cardíaca descompensada, uso concomitante de anticoagulantes, terceiro trimestre de gestação (risco de fechamento precoce do ducto arterioso).</li>
+        <li><strong>Efeitos adversos principais:</strong> gastrointestinais (dispepsia, úlcera, sangramento, por redução de prostaglandinas protetoras da mucosa), renais (redução do fluxo sanguíneo renal e da filtração glomerular, especialmente em estados de hipoperfusão), cardiovasculares (risco trombótico aumentado, sobretudo com coxibes e uso prolongado) e plaquetários — destaque para o AAS, que promove inibição <strong>irreversível</strong> da COX-1 plaquetária por acetilação, com efeito antiagregante que persiste por toda a vida útil da plaqueta (7 a 10 dias), diferente do efeito reversível dos demais AINEs.</li>
+      </ul>
+
+      <h3>Anti-inflamatórios esteroidais (AIEs / corticosteroides)</h3>
+      <p>Os corticosteroides (prednisona, prednisolona, dexametasona, betametasona, metilprednisolona) são análogos sintéticos do cortisol, com ação anti-inflamatória mais ampla e potente do que a dos AINEs.</p>
+
+      <p><strong>Alvo farmacológico:</strong> o <strong>receptor de glicocorticoide (GR)</strong>, um receptor nuclear localizado no citoplasma. <strong>Mecanismo molecular (genômico, predominante):</strong> por serem lipofílicos, os corticosteroides atravessam a membrana celular e se ligam ao GR citoplasmático, que se encontra em complexo com proteínas chaperonas (HSP90). Essa ligação dissocia as chaperonas e permite a translocação do complexo hormônio-receptor para o núcleo, onde atua como fator de transcrição, ligando-se a elementos responsivos a glicocorticoides (GRE) no DNA e modulando a expressão gênica por dois mecanismos:</p>
+
+      <ul>
+        <li><strong>Transativação:</strong> aumenta a transcrição de genes anti-inflamatórios, com destaque para a <strong>lipocortina-1 (anexina A1)</strong>, que inibe a fosfolipase A2 — bloqueando a liberação de ácido araquidônico da membrana celular já na etapa inicial da cascata, o que reduz simultaneamente a síntese de prostaglandinas (via COX) <em>e</em> de leucotrienos (via lipoxigenase), uma ação mais abrangente do que a dos AINEs.</li>
+        <li><strong>Transrepressão:</strong> inibe fatores de transcrição pró-inflamatórios como <strong>NF-κB</strong> e AP-1, reduzindo a expressão de citocinas pró-inflamatórias (IL-1, IL-6, TNF-α), moléculas de adesão leucocitária e enzimas induzíveis como a COX-2.</li>
+      </ul>
+
+      <p>Por depender de síntese proteica, o efeito genômico dos corticosteroides tem <strong>início lento</strong> (horas a dias), diferentemente do início rápido dos AINEs. Na dor, estão indicados principalmente em quadros inflamatórios intensos — crises agudas de gota, compressão radicular por edema, dor oncológica por compressão tumoral ou infiltração perineural. O uso prolongado associa-se a supressão do eixo hipotálamo-hipófise-adrenal, hiperglicemia, osteoporose, miopatia, imunossupressão e síndrome de Cushing iatrogênica.</p>
+
+      <h3>Analgésicos opioides</h3>
+      <p><strong>Alvo farmacológico:</strong> receptores opioides acoplados à proteína G, principalmente os subtipos <strong>mu (MOR)</strong>, <strong>kappa (KOR)</strong> e <strong>delta (DOR)</strong>, distribuídos em terminações nervosas periféricas, no corno dorsal da medula e em estruturas supraespinhais moduladoras (PAG, núcleo magno da rafe).</p>
+
+      <p><strong>Mecanismo molecular:</strong> a ligação do opioide ao receptor, acoplado a uma proteína G inibitória (Gi/Go), desencadeia três efeitos convergentes que reduzem a excitabilidade neuronal e a liberação de neurotransmissores:</p>
+      <ol>
+        <li>Inibição da enzima adenilato ciclase, reduzindo a concentração intracelular de AMPc;</li>
+        <li>Abertura de canais de potássio retificadores de influxo, causando hiperpolarização da membrana;</li>
+        <li>Fechamento de canais de cálcio voltagem-dependentes pré-sinápticos, reduzindo o influxo de Ca²⁺ e, consequentemente, a liberação pré-sináptica de glutamato e substância P na sinapse do corno dorsal.</li>
+      </ol>
+      <p>O resultado é a inibição direta da transmissão nociceptiva no nível espinal, associada à ativação das vias descendentes inibitórias no nível supraespinal descritas na Seção 02.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Classe</th><th>Representantes</th><th>Observação farmacológica</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Opioides fracos</strong></td><td>Codeína, tramadol</td><td>Codeína é pró-fármaco, convertida em morfina pela enzima CYP2D6; tramadol tem mecanismo dual — agonista fraco mu associado à inibição da recaptação de serotonina e noradrenalina</td></tr>
+            <tr><td><strong>Opioides fortes</strong></td><td>Morfina, fentanil, oxicodona, metadona, buprenorfina</td><td>Morfina é a referência clássica; fentanil é altamente lipofílico, de ação rápida; metadona também antagoniza receptores NMDA, útil em dor com componente neuropático; buprenorfina é agonista parcial mu com efeito teto sobre a depressão respiratória</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ul>
+        <li><strong>Indicações:</strong> dor moderada a intensa — dor oncológica, dor pós-operatória, dor aguda intensa refratária a não opioides.</li>
+        <li><strong>Efeitos adversos:</strong> depressão respiratória (o mais grave, mediado por receptores mu no centro respiratório bulbar), constipação (não desenvolve tolerância, mediada por receptores mu entéricos), náusea, sedação, prurido, miose, além de tolerância, dependência física e hiperalgesia induzida por opioides em uso crônico.</li>
+        <li><strong>Antídoto:</strong> naloxona, antagonista competitivo de receptores mu, de ação rápida, utilizado na reversão da depressão respiratória por superdosagem.</li>
+      </ul>
+
+      <h3>Analgésicos não opioides: paracetamol e dipirona</h3>
+      <p>Diferem dos AINEs por apresentarem ação anti-inflamatória periférica mínima ou ausente, sendo classificados separadamente.</p>
+
+      <p><strong>Paracetamol (acetaminofeno):</strong> seu mecanismo não é completamente elucidado, mas envolve predominantemente ação central — inibição fraca e relativamente seletiva da COX no sistema nervoso central, possivelmente favorecida por um ambiente de baixa concentração de peroxidase, além de participação do sistema serotoninérgico descendente por meio do metabólito AM404, que module receptores canabinoides e TRPV1. Sua principal vantagem sobre os AINEs é a ausência de efeitos gástricos, renais e plaquetários relevantes; seu principal risco é a <strong>hepatotoxicidade</strong> — o metabolismo hepático extenso gera, em pequena fração, o metabólito NAPQI, normalmente neutralizado pela glutationa; em superdosagem, a depleção de glutationa permite o acúmulo tóxico desse metabólito.</p>
+
+      <p><strong>Dipirona (metamizol):</strong> atua por inibição central e periférica da síntese de prostaglandinas, com participação adicional de canais TRPA1 e do sistema opioidérgico e canabinoide endógeno em parte de seu efeito analgésico. Apresenta efeito antipirético potente e ação antiespasmódica, útil na dor visceral do tipo cólica. Seu principal risco, raro porém grave, é a <strong>agranulocitose idiossincrática</strong> — motivo pelo qual seu uso é restrito em alguns países, embora permaneça amplamente utilizada no Brasil.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Classe</th><th>Alvo principal</th><th>Efeito predominante</th><th>Principal risco a monitorar</th></tr></thead>
+          <tbody>
+            <tr><td>AINE</td><td>COX-1 / COX-2</td><td>Analgésico e anti-inflamatório</td><td>Gastrointestinal, renal, cardiovascular</td></tr>
+            <tr><td>AIE (corticosteroide)</td><td>Receptor de glicocorticoide nuclear</td><td>Anti-inflamatório amplo</td><td>Eixo hipotálamo-hipófise-adrenal, metabólico</td></tr>
+            <tr><td>Opioide</td><td>Receptores mu / kappa / delta</td><td>Analgésico central potente</td><td>Depressão respiratória</td></tr>
+            <tr><td>Paracetamol</td><td>COX central (SNC)</td><td>Analgésico e antipirético, sem ação anti-inflamatória periférica relevante</td><td>Hepatotoxicidade</td></tr>
+            <tr><td>Dipirona</td><td>COX central/periférica + vias adicionais</td><td>Analgésico, antipirético e antiespasmódico</td><td>Agranulocitose (rara)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ SEÇÃO 4 — TRATAMENTO ============ -->
+    <section class="topic" id="s4">
+      <div class="eyebrow">Objetivo 04 — Manejo clínico</div>
+      <h2 class="topic-title">Tratamento da dor nociceptiva</h2>
+      <p class="lede">Compreendidos os mecanismos e os alvos farmacológicos, o tratamento deixa de ser uma escolha arbitrária e passa a ser a seleção racional da(s) classe(s) mais adequada(s) ao mecanismo predominante e à intensidade da dor de cada paciente.</p>
+
+      <h3>Princípios gerais</h3>
+      <p>O manejo da dor nociceptiva deve ser <strong>individualizado</strong>, com avaliação sistemática da intensidade (escalas) e reavaliação periódica da resposta terapêutica. Sempre que possível, prefere-se a <strong>via oral</strong>; para dor persistente, a administração deve ser feita em <strong>horário fixo</strong> — e não apenas "se necessário" — a fim de manter níveis analgésicos estáveis e prevenir picos de dor. A associação racional de classes com mecanismos de ação diferentes, conhecida como <strong>analgesia multimodal</strong>, permite reduzir a dose necessária de cada fármaco individualmente e, com isso, seus efeitos adversos.</p>
+
+      <h3>Escada analgésica da Organização Mundial da Saúde</h3>
+      <p>Desenvolvida originalmente para dor oncológica, a escada analgésica da OMS permanece um modelo conceitual útil para o manejo escalonado da dor nociceptiva em geral, orientando a escolha da classe farmacológica conforme a intensidade relatada pelo paciente.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Degrau</th><th>Intensidade da dor</th><th>Conduta farmacológica</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1</strong></td><td>Leve (EN 1–3)</td><td>Analgésicos não opioides (paracetamol, dipirona, AINEs) ± adjuvantes</td></tr>
+            <tr><td><strong>2</strong></td><td>Moderada (EN 4–6)</td><td>Opioide fraco (codeína, tramadol) + não opioide do degrau 1 ± adjuvantes</td></tr>
+            <tr><td><strong>3</strong></td><td>Intensa (EN 7–10)</td><td>Opioide forte (morfina, oxicodona, fentanil) + não opioide ± adjuvantes</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Atualizações mais recentes da própria OMS (2018) reconhecem maior flexibilidade nesse modelo, permitindo o conceito de <strong>"elevador analgésico"</strong> — iniciar diretamente com opioide forte em dose baixa diante de dor intensa, sem necessariamente percorrer todos os degraus sequencialmente.</p>
+
+      <h3>Fármacos adjuvantes (coanalgésicos)</h3>
+      <p>São medicações que não são primariamente analgésicas, mas potencializam o efeito analgésico em contextos específicos, sobretudo quando há componente neuropático associado:</p>
+      <ul>
+        <li><strong>Anticonvulsivantes</strong> (gabapentina, pregabalina) — úteis no componente neuropático.</li>
+        <li><strong>Antidepressivos tricíclicos e duais</strong> (amitriptilina, duloxetina) — atuam potencializando as vias descendentes inibitórias serotoninérgicas e noradrenérgicas descritas na Seção 02.</li>
+        <li><strong>Corticosteroides</strong> — em dor por compressão ou edema perilesional.</li>
+        <li><strong>Relaxantes musculares</strong> — em dor musculoesquelética com componente de espasmo.</li>
+        <li><strong>Anestésicos locais</strong> (bloqueios, lidocaína tópica) — para dor localizada.</li>
+      </ul>
+
+      <h3>Tratamento não farmacológico</h3>
+      <p>Nenhuma estratégia terapêutica da dor nociceptiva está completa sem medidas não farmacológicas, cujo racional fisiopatológico deve ser explicitado ao paciente:</p>
+      <ul>
+        <li><strong>Fisioterapia e reabilitação:</strong> fortalecimento muscular, alongamento e correção postural reduzem a sobrecarga mecânica e interrompem o ciclo dor–imobilidade–atrofia.</li>
+        <li><strong>TENS (estimulação elétrica nervosa transcutânea):</strong> base racional direta na teoria do portão — estimula seletivamente fibras Aβ para "fechar o portão" à transmissão nociceptiva.</li>
+        <li><strong>Acupuntura:</strong> possível ativação de vias opioidérgicas endógenas e de mecanismos de modulação descendente.</li>
+        <li><strong>Terapia cognitivo-comportamental:</strong> aborda catastrofização e crenças disfuncionais sobre a dor, temas centrais da Seção 05.</li>
+        <li><strong>Educação em neurociência da dor:</strong> explicar ao paciente os mecanismos fisiológicos envolvidos reduz a percepção de ameaça e a catastrofização, com impacto mensurável sobre a intensidade referida.</li>
+        <li><strong>Medidas físicas complementares:</strong> aplicação de calor, frio e massagem terapêutica.</li>
+      </ul>
+
+      <h3>Monitorização</h3>
+      <p>O acompanhamento terapêutico exige reavaliação seriada da dor (mesma escala utilizada na anamnese inicial), vigilância ativa de efeitos adversos, ajuste progressivo de doses (titulação) e, quando necessário, rotação de opioides diante de tolerância ou efeitos adversos intoleráveis.</p>
+    </section>
+
+    <!-- ============ SEÇÃO 5 — BIOPSICOSSOCIAL ============ -->
+    <section class="topic" id="s5">
+      <div class="eyebrow">Objetivo 05 — Modelo biopsicossocial</div>
+      <h2 class="topic-title">Impactos biopsicossociais da dor</h2>
+      <p class="lede">Sobretudo quando cronificada, a dor extrapola o eixo puramente biológico e passa a ser compreendida por meio do modelo biopsicossocial de Engel (1977): resultado da interação dinâmica entre fatores biológicos, psicológicos e sociais, que se retroalimentam continuamente.</p>
+
+      <h3>Dimensão biológica</h3>
+      <ul>
+        <li>Manutenção do próprio ciclo de dor por sensibilização periférica e central persistente.</li>
+        <li><strong>Distúrbios do sono:</strong> a dor crônica prejudica a arquitetura do sono, e a privação de sono, por sua vez, reduz o limiar nociceptivo — configurando um ciclo vicioso bidirecional.</li>
+        <li><strong>Alterações neuroendócrinas:</strong> ativação crônica do eixo hipotálamo-hipófise-adrenal, com alterações no padrão de secreção de cortisol.</li>
+        <li><strong>Descondicionamento físico:</strong> atrofia muscular por desuso e limitação funcional progressiva, frequentemente agravadas pelo próprio medo de movimentar-se.</li>
+      </ul>
+
+      <h3>Dimensão psicológica</h3>
+      <ul>
+        <li><strong>Ansiedade e transtornos depressivos:</strong> relação bidirecional com a dor crônica — compartilham vias neurobiológicas comuns, incluindo os sistemas serotoninérgico e noradrenérgico das vias descendentes moduladoras.</li>
+        <li><strong>Catastrofização da dor:</strong> padrão cognitivo de ruminação, magnificação e desesperança em relação à experiência dolorosa, reconhecido como um dos principais preditores de pior prognóstico e de cronificação.</li>
+        <li><strong>Cinesiofobia (medo-evitação):</strong> medo do movimento que leva à evitação de atividade física, favorecendo o descondicionamento e, paradoxalmente, perpetuando a dor.</li>
+        <li>Alterações de autoimagem e autoestima, além de queixas de dificuldade de concentração e memória associadas à dor crônica.</li>
+      </ul>
+
+      <h3>Dimensão social</h3>
+      <ul>
+        <li><strong>Isolamento social</strong> e afastamento de atividades de lazer e convívio.</li>
+        <li><strong>Impacto nas relações familiares</strong> — sobrecarga de cuidadores e mudança de papéis dentro do núcleo familiar.</li>
+        <li><strong>Perda de produtividade laboral:</strong> absenteísmo, afastamento do trabalho e impacto socioeconômico direto.</li>
+        <li><strong>Estigma social</strong>, especialmente relevante quando não há achado objetivo visível que "comprove" a dor relatada, gerando descrédito e sofrimento adicional.</li>
+        <li>Impacto financeiro direto (custos com tratamento) e indireto (perda de renda), podendo evoluir para dependência de terceiros nas atividades de vida diária em casos graves.</li>
+      </ul>
+
+      <div class="callout gold">
+        <h4>Yellow flags</h4>
+        <p>Em contraste com os red flags biomédicos apresentados na Seção 01, os <strong>yellow flags</strong> são fatores de risco psicossociais para cronificação da dor — crenças catastróficas sobre a dor, medo-evitação, insatisfação laboral e sofrimento psicológico não tratado. Seu reconhecimento precoce justifica a indicação de abordagem multidisciplinar (médico, fisioterapeuta, psicólogo, terapeuta ocupacional e assistente social) antes que o quadro se cronifique.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ============ SEÇÃO 6 — SÍNTESE ============ -->
+    <section class="topic synthesis" id="s6">
+      <div class="eyebrow">Fechamento — Integração PBL</div>
+      <h2 class="topic-title">Síntese e integração clínica</h2>
+      <p class="lede" style="border-bottom:none; padding-bottom:0;">Reunindo as cinco seções em uma única linha de raciocínio clínico, do reconhecimento semiológico até o cuidado integral do paciente.</p>
+
+      <div class="grid">
+        <div>
+          <h4>Do sintoma ao mecanismo</h4>
+          <p>A anamnese estruturada da dor (Seção 01) não é um exercício isolado: cada atributo semiológico — qualidade em queimação, irradiação, cronicidade — é a expressão clínica direta de um mecanismo fisiológico específico (Seção 02). Reconhecer hiperalgesia e alodinia à beira do leito significa identificar, na prática, sensibilização periférica e central em ação.</p>
+        </div>
+        <div>
+          <h4>Do mecanismo ao fármaco</h4>
+          <p>Cada classe analgésica (Seção 03) foi desenhada para interromper a via nociceptiva em um ponto específico: AINEs e AIEs atuam na transdução periférica, reduzindo a síntese de mediadores inflamatórios; opioides atuam na transmissão espinal e na modulação supraespinal; paracetamol e dipirona atuam predominantemente em nível central. Escolher o fármaco é, portanto, escolher em qual etapa da via se deseja intervir.</p>
+        </div>
+        <div>
+          <h4>Do fármaco à conduta</h4>
+          <p>A escada analgésica (Seção 04) organiza essas classes de forma escalonada e racional, associada a medidas não farmacológicas cujo racional fisiopatológico — como a teoria do portão, base da TENS — é o mesmo estudado na fisiologia. Tratar a dor nociceptiva é aplicar clinicamente o que se compreendeu sobre nocicepção.</p>
+        </div>
+        <div>
+          <h4>Do corpo à pessoa</h4>
+          <p>Por fim, nenhuma conduta está completa sem reconhecer que a dor persistente reconfigura a vida biológica, psicológica e social do paciente (Seção 05). O manejo eficaz da dor nociceptiva exige, portanto, tratar simultaneamente o mecanismo — com a farmacologia correta — e a pessoa que o vivencia, com abordagem multidisciplinar quando indicado.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="doc-footer">
+      <div class="ref-level"><strong>Bibliografia oficial da UC:</strong> Guyton &amp; Hall — Tratado de Fisiologia Médica · Aires — Fisiologia · Robbins &amp; Cotran — Bases Patológicas das Doenças · Katzung — Farmacologia Básica e Clínica · Goodman &amp; Gilman — As Bases Farmacológicas da Terapêutica · Porto — Semiologia Médica · Bates — Guia de Exame Físico e História Clínica · Moore — Anatomia Orientada para a Clínica · Harrison — Medicina Interna</div>
+      <br>
+      <div class="ref-level"><strong>Diretrizes:</strong> IASP — International Association for the Study of Pain · SBED — Sociedade Brasileira para o Estudo da Dor · SBR — Sociedade Brasileira de Reumatologia · Organização Mundial da Saúde — Escada Analgésica · NICE Guidelines</div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.topic'));
+  var tocItems = Array.prototype.slice.call(document.querySelectorAll('.toc-item'));
+  var mobileLinks = Array.prototype.slice.call(document.querySelectorAll('.mobile-toc a'));
+
+  function setActive(id){
+    tocItems.forEach(function(el){
+      el.classList.toggle('active', el.getAttribute('data-target') === id);
+    });
+    mobileLinks.forEach(function(el){
+      el.classList.toggle('active', el.getAttribute('data-target') === id);
+    });
+  }
+
+  if('IntersectionObserver' in window){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          setActive(entry.target.id);
+        }
+      });
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+    sections.forEach(function(s){ observer.observe(s); });
+  }
+})();
+</script>
+
+<script>
+/* ---------- Edição direta do conteúdo ---------- */
+(function(){
+  var STORAGE_KEY = 'resumo_dor_nociceptiva_v1';
+  var main = document.querySelector('main');
+  var body = document.body;
+  var btnEdit = document.getElementById('btnEdit');
+  var btnDownload = document.getElementById('btnDownload');
+  var btnRestore = document.getElementById('btnRestore');
+  var statusEl = document.getElementById('editStatus');
+
+  var EDITABLE_SELECTOR = 'p, li, h1, h2, h3, h4, h5, td, th, .doc-title, .doc-sub';
+
+  function markEditable(on){
+    var els = main.querySelectorAll(EDITABLE_SELECTOR);
+    els.forEach(function(el){
+      if(on){ el.setAttribute('contenteditable', 'true'); }
+      else{ el.removeAttribute('contenteditable'); }
+    });
+  }
+
+  function setStatus(msg){
+    statusEl.textContent = msg;
+    statusEl.classList.add('show');
+    clearTimeout(setStatus._t);
+    setStatus._t = setTimeout(function(){ statusEl.classList.remove('show'); }, 2800);
+  }
+
+  function saveToStorage(){
+    try{
+      localStorage.setItem(STORAGE_KEY, main.innerHTML);
+      setStatus('Edições salvas neste navegador.');
+    }catch(e){
+      setStatus('Não foi possível salvar (armazenamento indisponível).');
+    }
+  }
+
+  function restoreFromStorage(){
+    try{
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if(saved){ main.innerHTML = saved; return true; }
+    }catch(e){}
+    return false;
+  }
+
+  var editing = false;
+  function toggleEdit(){
+    editing = !editing;
+    body.classList.toggle('editing', editing);
+    markEditable(editing);
+    btnEdit.textContent = editing ? 'Salvar e sair da edição' : 'Ativar edição';
+    btnEdit.classList.toggle('on', editing);
+    if(!editing){ saveToStorage(); }
+    else{ setStatus('Clique em qualquer texto para editar. Suas alterações são salvas ao sair da edição.'); }
+  }
+
+  btnEdit.addEventListener('click', toggleEdit);
+
+  setInterval(function(){ if(editing){ saveToStorage(); } }, 15000);
+
+  btnRestore.addEventListener('click', function(){
+    if(confirm('Isso vai apagar suas edições salvas neste navegador e recarregar o texto original. Deseja continuar?')){
+      try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+      location.reload();
+    }
+  });
+
+  btnDownload.addEventListener('click', function(){
+    if(editing){ saveToStorage(); }
+    var docClone = document.documentElement.cloneNode(true);
+    var toolbar = docClone.querySelector('.edit-toolbar');
+    if(toolbar) toolbar.parentNode.removeChild(toolbar);
+    docClone.querySelector('body').classList.remove('editing');
+    var editableClones = docClone.querySelectorAll('[contenteditable]');
+    editableClones.forEach(function(el){ el.removeAttribute('contenteditable'); });
+    var html = '<!DOCTYPE html>\n' + docClone.outerHTML;
+    var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'resumo_dor_nociceptiva_editado.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    setStatus('Download iniciado.');
+  });
+
+  if(restoreFromStorage()){ setStatus('Suas edições salvas anteriormente foram restauradas.'); }
+})();
+</script>
+
+</body>
+</html>

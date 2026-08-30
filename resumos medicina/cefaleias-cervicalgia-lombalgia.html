@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cefaleias Primárias, Cervicalgia, SDM e Lombalgia — Guia de Estudo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-primary:#0a0e14; --bg-secondary:#12161f; --bg-tertiary:#1a202c; --bg-quaternary:#1e2530;
+  --text-primary:#e6eaf0; --text-secondary:#a3adc2; --text-muted:#6b7688;
+  --border-subtle:#232a38; --border-subtle-2:#2a3140;
+  --c1:#60a5fa; --c2:#2dd4bf; --c3:#f472b6; --c4:#e879f9; --c5:#fb923c;
+  --c6:#38bdf8; --c7:#84cc16; --c8:#fb7185; --c9:#fbbf24; --c10:#94a3b8;
+  --p1:#a78bfa; --p2:#f59e0b;
+  --alert-key:#fbbf24; --alert-warn:#f87171; --alert-clin:#34d399; --alert-contro:#a78bfa;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',-apple-system,sans-serif;font-weight:400;line-height:1.75;margin:0;padding:0;font-size:17px;}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.25;color:var(--text-primary);margin:0;}
+p{margin:0 0 1.1em;color:var(--text-primary);}
+p:last-child{margin-bottom:0;}
+em{color:var(--text-primary);font-style:italic;}
+.destaque{color:var(--accent,var(--c1));font-style:normal;}
+i.destaque{font-style:italic;}
+a{color:var(--c1);text-decoration:none;border-bottom:1px solid rgba(96,165,250,0.35);}
+a:hover{border-bottom-color:var(--c1);}
+ul,ol{padding-left:1.4em;margin:0 0 1.1em;}
+li{margin-bottom:0.5em;color:var(--text-primary);}
+li:last-child{margin-bottom:0;}
+.page-wrap{max-width:900px;margin:0 auto;padding:0 1.75rem 6rem;}
+.hero{padding:5rem 1.75rem 3.5rem;text-align:center;border-bottom:1px solid var(--border-subtle);margin-bottom:3rem;}
+.hero .kicker{font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:0.15em;font-size:0.78rem;color:var(--text-muted);margin-bottom:1.25rem;}
+.hero h1{font-size:clamp(1.9rem,4.6vw,3.1rem);font-style:italic;font-weight:500;background:linear-gradient(120deg,#a78bfa,#60a5fa 50%,#f59e0b);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:1rem;}
+.hero .subtitle{font-size:1.08rem;color:var(--text-secondary);max-width:660px;margin:0 auto;font-weight:300;}
+.hero .badges{display:flex;gap:0.6rem;justify-content:center;margin-top:1.75rem;flex-wrap:wrap;}
+.badge{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;padding:0.35rem 0.85rem;border:1px solid var(--border-subtle-2);border-radius:100px;color:var(--text-secondary);}
+.toc{margin:0 0 4rem;}
+.toc-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;color:var(--text-secondary);margin-bottom:1rem;}
+.toc-pergunta{border:1px solid var(--border-subtle);border-radius:10px;padding:1.1rem 1.3rem;margin-bottom:0.8rem;}
+.toc-p-link{display:block;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--text-primary);border:none;margin-bottom:0.7rem;}
+.toc-p-link:hover{color:var(--tc,var(--c1));}
+.toc-sub{display:flex;flex-wrap:wrap;gap:0.4rem;}
+.toc-sub a{font-size:0.76rem;border:1px solid var(--border-subtle);border-radius:100px;padding:0.3rem 0.7rem;color:var(--text-muted);}
+.toc-sub a:hover{color:var(--text-primary);border-color:var(--tc,var(--c1));}
+.pergunta-group{margin-bottom:1rem;}
+.pergunta-banner{margin:5rem 0 2.6rem;padding:2.1rem 2.3rem;border:1px solid var(--pcolor);border-radius:12px;background:color-mix(in srgb, var(--pcolor) 7%, transparent);}
+.pergunta-group:first-child .pergunta-banner{margin-top:0;}
+.pergunta-num{font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:0.16em;font-size:0.78rem;color:var(--pcolor);margin-bottom:0.7rem;}
+.pergunta-titulo{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;color:var(--text-primary);font-size:clamp(1.5rem,3.5vw,2.05rem);margin-bottom:0.8rem;line-height:1.2;}
+.pergunta-enunciado{color:var(--text-secondary);font-size:0.98rem;margin:0;}
+.topic-section{margin:0 0 3.2rem;scroll-margin-top:1.5rem;}
+.section-header{display:flex;align-items:center;margin:0 0 1.75rem;gap:1.1rem;flex-wrap:wrap;}
+.section-header .tag{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:500;font-style:italic;color:var(--accent);border:1px solid var(--accent);background:color-mix(in srgb, var(--accent) 8%, transparent);padding:0.45rem 1.1rem;border-radius:5px;line-height:1.3;}
+.section-header .line{flex:1;height:1px;background:linear-gradient(to right,var(--accent),transparent 85%);opacity:0.6;min-width:2rem;}
+.section-body h3{font-size:1.5rem;font-style:italic;color:var(--accent);margin:2.25rem 0 0.9rem;font-weight:500;}
+.section-body h3:first-child{margin-top:0;}
+.section-body h4{font-family:'Inter',sans-serif;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-secondary);margin:1.5rem 0 0.75rem;font-weight:500;}
+.card{background:var(--bg-secondary);border:1px solid var(--border-subtle);border-top:3px solid var(--accent);border-radius:8px;padding:1.4rem 1.6rem;margin:1.25rem 0;}
+.card h4{margin-top:0;color:var(--accent);font-family:'Cormorant Garamond',serif;font-size:1.2rem;text-transform:none;letter-spacing:0;font-style:italic;}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.1rem;margin:1.5rem 0;}
+.alert{border-radius:8px;border:1px solid;background:transparent;padding:1.1rem 1.3rem;margin:1.5rem 0;}
+.alert .alert-label{display:block;text-transform:uppercase;letter-spacing:0.08em;font-size:0.72rem;margin-bottom:0.5rem;font-family:'Inter',sans-serif;}
+.alert-chave{border-color:var(--alert-key);} .alert-chave .alert-label{color:var(--alert-key);}
+.alert-atencao{border-color:var(--alert-warn);} .alert-atencao .alert-label{color:var(--alert-warn);}
+.alert-clinico{border-color:var(--alert-clin);} .alert-clinico .alert-label{color:var(--alert-clin);}
+.alert-controversia{border-color:var(--alert-contro);} .alert-controversia .alert-label{color:var(--alert-contro);}
+details.deepen{background:var(--bg-tertiary);border:1px solid var(--border-subtle-2);border-top:2px solid var(--accent);border-radius:8px;margin:1.4rem 0;}
+details.deepen summary{padding:0.9rem 1.3rem;cursor:pointer;list-style:none;color:var(--accent);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.08rem;display:flex;align-items:center;gap:0.6rem;}
+details.deepen summary::-webkit-details-marker{display:none;}
+details.deepen summary::before{content:'+';font-family:'Inter',sans-serif;font-style:normal;font-size:1rem;border:1px solid var(--accent);border-radius:50%;width:1.3rem;height:1.3rem;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+details.deepen[open] summary::before{content:'–';}
+details.deepen .deepen-content{padding:0 1.3rem 1.3rem;color:var(--text-secondary);}
+details.deepen .deepen-content p{color:var(--text-secondary);}
+details.deepen-2{background:var(--bg-quaternary);border-top:1px dashed var(--accent);}
+details.deepen-2 summary{font-size:1rem;opacity:0.9;}
+.compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.5rem 0;}
+.compare-card{background:var(--bg-secondary);border:1px solid var(--border-subtle);border-top:3px solid var(--accent);border-radius:8px;padding:1.2rem 1.35rem;}
+.compare-card .ccard-title{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--accent);font-size:1.15rem;margin-bottom:0.6rem;}
+.compare-card dl{margin:0;}
+.compare-card dt{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-top:0.7rem;}
+.compare-card dt:first-child{margin-top:0;}
+.compare-card dd{margin:0.15rem 0 0;font-size:0.92rem;color:var(--text-secondary);}
+.integracao-box{border:1px solid var(--accent);border-top:3px solid var(--accent);border-radius:8px;padding:1.6rem 1.8rem;background:color-mix(in srgb, var(--accent) 5%, transparent);margin:1.5rem 0;}
+.ref-list{list-style:none;padding:0;}
+.ref-list li{padding:0.9rem 0;border-bottom:1px solid var(--border-subtle);font-size:0.92rem;color:var(--text-secondary);}
+.ref-list li:last-child{border-bottom:none;}
+.ref-list .ref-cat{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-primary);font-size:1.3rem;margin:2rem 0 0.5rem;}
+.ref-list .ref-cat:first-child{margin-top:0;}
+.fluxo{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:1.5rem 0;font-size:0.9rem;}
+.fluxo span.passo{border:1px solid var(--border-subtle-2);background:var(--bg-secondary);border-radius:100px;padding:0.4rem 0.9rem;color:var(--text-secondary);}
+.fluxo span.seta{color:var(--accent);opacity:0.7;}
+[contenteditable="true"]{outline:1px dashed rgba(255,255,255,0.25);outline-offset:3px;border-radius:3px;}
+[contenteditable="true"]:focus{outline:1px dashed var(--c1);background:rgba(96,165,250,0.05);}
+.editor-toolbar{position:fixed;bottom:1.4rem;right:1.4rem;z-index:2000;background:var(--bg-secondary);border:1px solid var(--border-subtle-2);border-radius:12px;padding:0.85rem;box-shadow:0 15px 40px rgba(0,0,0,0.55);display:flex;flex-direction:column;gap:0.5rem;width:212px;font-family:'Inter',sans-serif;}
+.editor-toolbar .tb-title{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:0.2rem;}
+.editor-toolbar button{background:var(--bg-tertiary);color:var(--text-primary);border:1px solid var(--border-subtle-2);border-radius:6px;padding:0.55rem 0.7rem;font-size:0.8rem;cursor:pointer;text-align:left;font-family:'Inter',sans-serif;}
+.editor-toolbar button:hover{border-color:var(--c1);color:#fff;}
+.editor-toolbar button.active{border-color:var(--c2);color:var(--c2);}
+.editor-toolbar .status{font-size:0.68rem;color:var(--text-muted);padding:0.1rem 0.2rem;min-height:2.2em;line-height:1.3;}
+@media (max-width:640px){
+  .hero{padding:3.5rem 1.25rem 2.5rem;}
+  .section-header .tag{font-size:1.2rem;}
+  .editor-toolbar{width:168px;bottom:1rem;right:1rem;padding:0.65rem;}
+  .editor-toolbar button{font-size:0.72rem;padding:0.5rem;}
+  body{font-size:16px;}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="kicker">UC XIII · Dor — 5º Semestre de Medicina · PBL</div>
+  <h1>Cefaleias Primárias, Cervicalgia, SDM e Lombalgia</h1>
+  <p class="subtitle">Do sistema trigeminovascular à síndrome dolorosa miofascial: mecanismos, semiologia, diagnóstico e tratamento das dores de cabeça primárias e das principais síndromes dolorosas axiais.</p>
+  <div class="badges">
+    <span class="badge">Fisiopatologia</span>
+    <span class="badge">Semiologia</span>
+    <span class="badge">Farmacologia</span>
+    <span class="badge">Red Flags</span>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+<div class="toc">
+  <div class="toc-title">Roteiro de estudo — as 2 perguntas do PBL</div>
+
+  <div class="toc-pergunta" style="--tc:var(--p1)">
+    <a class="toc-p-link" href="#pergunta1">Pergunta 1 · Fisiopatologia das cefaleias primárias</a>
+    <div class="toc-sub">
+      <a href="#cefaleia-base">Base fisiológica comum</a><a href="#tensional">Tensional</a>
+      <a href="#migranea-sem-aura">Migrânea sem aura</a><a href="#migranea-com-aura">Migrânea com aura</a><a href="#salvas">Em salvas</a>
+    </div>
+  </div>
+
+  <div class="toc-pergunta" style="--tc:var(--p2)">
+    <a class="toc-p-link" href="#pergunta2">Pergunta 2 · Cervicalgia, SDM e Lombalgia</a>
+    <div class="toc-sub">
+      <a href="#cervicalgia">a. Cervicalgia</a><a href="#sdm">b. SDM</a><a href="#lombalgia">c. Lombalgia</a>
+    </div>
+  </div>
+
+  <div class="toc-sub" style="margin-top:0.4rem;">
+    <a href="#integracao">Integração clínica</a><a href="#referencias">Referências</a>
+  </div>
+</div>
+
+<main id="main-content">
+
+<div class="pergunta-group" id="pergunta1">
+<div class="pergunta-banner" style="--pcolor:var(--p1)">
+  <div class="pergunta-num">Pergunta 1 do PBL</div>
+  <h2 class="pergunta-titulo">Fisiopatologia das Cefaleias Primárias</h2>
+  <p class="pergunta-enunciado">Sinais e sintomas, diagnóstico, tratamento abortivo e preventivo. Cefaleia tensional, migrânea com e sem aura, e cefaleia em salvas.</p>
+</div>
+
+<section id="cefaleia-base" class="topic-section" style="--accent:var(--c1)">
+  <div class="section-header"><h2 class="tag">1.0 — Base Fisiológica Comum: o Sistema Trigeminovascular</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Antes de separarmos tensional, migrânea e salvas em compartimentos estanques — o que você vai precisar fazer para a prova —, vale a pena entender o que elas têm em comum. Por que praticamente toda cefaleia primária, por mais diferente que pareça na superfície, converge para uma mesma estrutura anatômica central? A resposta está no <i class="destaque">sistema trigeminovascular</i>, e entendê-lo bem aqui vai poupar você de decorar mecanismos soltos em cada seção seguinte.</p>
+
+<h3>O sistema trigeminovascular</h3>
+<p>As meninges — especialmente a dura-máter — e os vasos sanguíneos intracranianos são inervados por fibras nociceptivas aferentes do ramo oftálmico (V1) do nervo trigêmeo, cujos corpos celulares residem no gânglio trigeminal (gânglio de Gasser). Essas fibras fazem sinapse no núcleo trigeminal caudal, localizado no tronco encefálico e que se estende funcionalmente até os cornos dorsais de C1 e C2 — um detalhe anatômico que vale grifar, porque explica por que cefaleias tão frequentemente vêm acompanhadas de dor cervical.</p>
+
+<div class="alert alert-chave">
+  <span class="alert-label">Ponto-chave — o complexo trigeminocervical</span>
+  <p>Fibras trigeminais (principalmente V1) e fibras sensitivas das raízes cervicais superiores (C1-C3) convergem no mesmo pool de neurônios de segunda ordem no corno dorsal alto da medula cervical — o chamado <i class="destaque">complexo trigeminocervical</i>. Essa convergência anatômica é a razão fisiológica pela qual dor originada na cabeça é referida para o pescoço, e vice-versa: o cérebro, recebendo sinais de neurônios convergentes, não consegue distinguir com precisão a origem periférica exata. Guarde esse conceito — ele será a ponte direta para a seção 2a, sobre cervicalgia.</p>
+</div>
+
+<h3>Ativação, sensibilização e o papel do CGRP</h3>
+<p>Quando o sistema trigeminovascular é ativado — por gatilhos que variam conforme o tipo de cefaleia, como veremos — os terminais nervosos perivasculares liberam neuropeptídeos, com destaque especial para o <i class="destaque">peptídeo relacionado ao gene da calcitonina</i> (CGRP). O CGRP é um vasodilatador potente e o principal mediador da chamada <i class="destaque">inflamação neurogênica</i>: promove vasodilatação dural, extravasamento plasmático perivascular e liberação adicional de mediadores inflamatórios (substância P, prostaglandinas), que por sua vez sensibilizam ainda mais os próprios nociceptores meníngeos — um ciclo de retroalimentação positiva entre nervo e vaso que amplifica e sustenta a dor.</p>
+
+<details class="deepen">
+  <summary>Aprofunde-se: sensibilização periférica e central na cefaleia</summary>
+  <div class="deepen-content">
+  <p>A sensibilização periférica dos nociceptores meníngeos explica por que a dor de cabeça pulsátil piora com manobras que aumentam a pressão intracraniana transitoriamente, como tossir ou abaixar a cabeça — o vaso já sensibilizado responde exageradamente a qualquer distensão adicional. Com a persistência do estímulo, ocorre sensibilização central no núcleo trigeminal caudal, por mecanismo em tudo análogo ao NMDA/wind-up que você já estudou na dor nociplástica — e é essa sensibilização central que explica a alodinia cutânea craniofacial (dor ao pentear o cabelo, ao usar óculos, ao encostar a cabeça no travesseiro) relatada por muitos pacientes durante uma crise de migrânea estabelecida.</p>
+  <details class="deepen deepen-2">
+    <summary>Ainda mais fundo: por que isso importa para o momento de tratar</summary>
+    <div class="deepen-content">
+    <p>Esse é o racional farmacológico por trás da recomendação de tratar a crise de migrânea o mais precocemente possível, ainda na fase de dor leve: uma vez estabelecida a sensibilização central e a alodinia, triptanos tendem a perder eficácia, porque seu mecanismo de ação depende, em parte, de agir sobre os terminais periféricos e sobre a transmissão ainda não completamente sensibilizada no núcleo trigeminal.</p>
+    </div>
+  </details>
+  </div>
+</details>
+
+<h3>Geradores centrais: tronco encefálico e hipotálamo</h3>
+<p>O sistema trigeminovascular não se ativa sozinho — ele é modulado por estruturas centrais que atuam como "geradores" e explicam características clínicas específicas de cada cefaleia: o hipotálamo (particularmente relevante na cefaleia em salvas, pela sua função de marca-passo circadiano), a substância cinzenta periaquedutal e núcleos do tronco encefálico envolvidos na modulação descendente da dor — os mesmos que você já estudou na dor nociplástica — e o córtex, cuja atividade elétrica anômala está diretamente implicada na aura da migrânea.</p>
+
+</div>
+</section>
+
+<section id="tensional" class="topic-section" style="--accent:var(--c2)">
+  <div class="section-header"><h2 class="tag">1.1 — Cefaleia do Tipo Tensional</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>A cefaleia tensional é a mais prevalente de todas as cefaleias — a maioria das pessoas terá pelo menos um episódio ao longo da vida — e, ironicamente, é também uma das menos compreendidas em termos de mecanismo exato, o que a torna um ótimo exercício de raciocínio fisiopatológico honesto: nem tudo em medicina tem um mecanismo tão elegantemente resolvido quanto o da migrânea.</p>
+
+<h3>Fisiopatologia</h3>
+<p>O modelo atual propõe mecanismos distintos conforme a frequência do quadro. Na forma episódica infrequente, o mecanismo é predominantemente <i class="destaque">periférico</i>: sensibilização de nociceptores miofasciais pericranianos (músculos temporal, frontal, occipital, trapézio), provavelmente relacionada a contração muscular sustentada, postura inadequada prolongada, estresse mecânico repetitivo e, possivelmente, liberação local de mediadores inflamatórios sensibilizantes — um mecanismo com bastante sobreposição conceitual com a síndrome dolorosa miofascial que veremos na seção 2b.</p>
+<p>Já na forma crônica (presente por 15 dias ou mais ao mês, por mais de 3 meses), acumulam-se evidências de <i class="destaque">sensibilização central</i> — aumento da sensibilidade dolorosa pericraniana à palpação, redução dos limiares de dor generalizados, e algum grau de disfunção da modulação descendente, novamente ecoando os mecanismos de sensibilização central que você já domina da dor nociplástica. Isso não é coincidência: a cronificação de praticamente qualquer dor musculoesquelética recorrente pode evoluir para um componente de amplificação central sobreposto ao mecanismo periférico original.</p>
+
+<h3>Sinais e sintomas (critérios diagnósticos, ICHD-3)</h3>
+<p>A Classificação Internacional das Cefaleias (ICHD-3) define a cefaleia tensional por características que você deve memorizar por contraste com a migrânea, já que é exatamente esse contraste que costuma ser cobrado em prova:</p>
+<div class="card-grid">
+  <div class="card">
+    <h4>Qualidade e localização</h4>
+    <p>Dor bilateral, em aperto ou pressão (não pulsátil — diferente da migrânea), intensidade leve a moderada.</p>
+  </div>
+  <div class="card">
+    <h4>Comportamento</h4>
+    <p>Não agravada por atividade física rotineira (o paciente consegue continuar suas atividades, ao contrário da migrânea).</p>
+  </div>
+  <div class="card">
+    <h4>Sintomas associados</h4>
+    <p>Ausência de náusea significativa (anorexia leve é aceitável) e, no máximo, um entre fotofobia OU fonofobia — nunca os dois juntos, o que já sugeriria migrânea.</p>
+  </div>
+  <div class="card">
+    <h4>Exame físico</h4>
+    <p>Frequentemente há dolorimento aumentado à palpação da musculatura pericraniana (temporal, trapézio, esternocleidomastóideo).</p>
+  </div>
+</div>
+
+<p>Classifica-se, conforme a frequência, em episódica infrequente (menos de 1 dia por mês), episódica frequente (1 a 14 dias por mês) e crônica (15 dias ou mais por mês, por mais de 3 meses) — distinção clinicamente relevante porque orienta diretamente a decisão entre tratamento apenas abortivo ou associação com profilaxia.</p>
+
+<h3>Tratamento abortivo</h3>
+<p>Analgésicos simples e anti-inflamatórios não esteroidais — paracetamol, ibuprofeno, naproxeno, ácido acetilsalicílico — são a primeira linha, com boa resposta na maioria dos episódios.</p>
+
+<div class="alert alert-atencao">
+  <span class="alert-label">Atenção — cefaleia por uso excessivo de medicação</span>
+  <p>O uso de analgésicos simples por 15 dias ou mais ao mês, ou de combinações analgésicas/triptanos/opioides por 10 dias ou mais ao mês, de forma sustentada por mais de 3 meses, pode por si só causar uma cefaleia secundária — a cefaleia por uso excessivo de medicação — que perpetua e piora o quadro original. Reconhecer esse risco é essencial ao orientar qualquer paciente com cefaleia recorrente sobre o tratamento abortivo, e é um dos motivos mais comuns de cefaleia tensional aparentemente "refratária" na prática ambulatorial.</p>
+</div>
+
+<h3>Tratamento preventivo</h3>
+<p>Indicado nas formas frequentes ou crônicas. A amitriptilina — o mesmo tricíclico que você já estudou em profundidade na dor nociplástica — é o fármaco com melhor evidência, atuando pelo mesmo racional de reforço da modulação descendente serotoninérgica/noradrenérgica, somado ao seu efeito sobre o sono. Mirtazapina e venlafaxina são alternativas com evidência secundária. No campo não farmacológico, terapia de relaxamento, biofeedback eletromiográfico, fisioterapia com correção postural e manejo do estresse têm respaldo consistente — e fazem sentido fisiopatológico direto diante de um mecanismo que começa, tantas vezes, na tensão miofascial pericraniana sustentada.</p>
+
+</div>
+</section>
+
+<section id="migranea-sem-aura" class="topic-section" style="--accent:var(--c3)">
+  <div class="section-header"><h2 class="tag">1.2 — Migrânea sem Aura</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Se a cefaleia tensional é a mais prevalente, a migrânea é a mais incapacitante — e também a mais estudada mecanisticamente, o que nos dá material rico para realmente entender o "porquê" por trás de cada sintoma.</p>
+
+<h3>Fisiopatologia: das quatro fases ao mecanismo central</h3>
+<p>A crise de migrânea não é um evento único — é um processo com quatro fases sucessivas, cada uma com substrato neurobiológico próprio:</p>
+
+<div class="fluxo">
+  <span class="passo">Pródromo (horas a dias antes)</span><span class="seta">→</span>
+  <span class="passo">Aura (apenas em parte dos pacientes)</span><span class="seta">→</span>
+  <span class="passo">Fase de cefaleia</span><span class="seta">→</span>
+  <span class="passo">Pós-drômica</span>
+</div>
+
+<p>O <i class="destaque">pródromo</i> — bocejos excessivos, alterações de humor, desejos alimentares específicos, poliúria, rigidez cervical — precede a dor em até 24 a 48 horas e é atribuído à ativação hipotalâmica precoce, antes mesmo de qualquer ativação vascular ou trigeminal mensurável. Esse achado é conceitualmente importante: ele derrubou a antiga teoria puramente vascular da migrânea (que a atribuía simplesmente à vasodilatação) e reposicionou o hipotálamo e o tronco encefálico como os verdadeiros geradores do processo, com a ativação trigeminovascular sendo consequência, não causa primária.</p>
+
+<p>A <i class="destaque">fase de cefaleia</i> propriamente dita segue o mecanismo trigeminovascular que você já estudou na seção 1.0: ativação do gânglio trigeminal, liberação de CGRP e substância P, inflamação neurogênica dural, vasodilatação e sensibilização periférica e central progressiva — esta última explicando por que a dor da migrânea é classicamente pulsátil (sincronizada com a distensão vascular a cada batimento cardíaco) e por que piora com atividade física rotineira (que aumenta ainda mais a pressão de pulso sobre vasos já sensibilizados).</p>
+
+<h3>Por que náusea, fotofobia e fonofobia?</h3>
+<p>Esses sintomas não são acessórios aleatórios — eles têm circuito neuroanatômico específico. Núcleos do tronco encefálico envolvidos na ativação trigeminal (núcleo do trato solitário, área postrema) têm conexões diretas com centros do vômito, explicando a náusea; e a sensibilização central que se espalha para núcleos talâmicos que processam informação visual e auditiva explica por que, durante a crise, estímulos luminosos e sonoros normalmente toleráveis tornam-se desconfortáveis ou dolorosos — um fenômeno de amplificação sensorial cruzada, e não uma simples "sensibilidade emocional" à luz e ao som.</p>
+
+<h3>Genética: a migrânea como doença de excitabilidade neuronal</h3>
+<p>A predisposição à migrânea é fortemente hereditária e poligênica na forma comum. Mas o modelo monogênico da <i class="destaque">migrânea hemiplégica familiar</i> — causada por mutações em genes como CACNA1A (canal de cálcio tipo P/Q), ATP1A2 (bomba Na⁺/K⁺-ATPase) e SCN1A (canal de sódio) — revela algo conceitualmente fundamental: a migrânea, em sua essência, é uma <i class="destaque">canalopatia</i>, um distúrbio da excitabilidade neuronal cortical. Esses genes controlam diretamente a homeostase iônica e a excitabilidade da membrana neuronal — e é exatamente essa hiperexcitabilidade cortical basal que torna o cérebro do paciente migranoso mais vulnerável a desencadear os fenômenos elétricos que discutiremos na próxima seção, sobre a aura.</p>
+
+<h3>Sinais e sintomas (critérios ICHD-3)</h3>
+<div class="card-grid">
+  <div class="card">
+    <h4>Características da dor</h4>
+    <p>Unilateral, pulsátil, intensidade moderada a grave, agravada por atividade física rotineira — o paciente tipicamente busca repouso em ambiente escuro e silencioso.</p>
+  </div>
+  <div class="card">
+    <h4>Sintomas associados</h4>
+    <p>Náusea e/ou vômitos, e/ou a combinação de fotofobia E fonofobia (diferente da tensional, que aceita no máximo um dos dois).</p>
+  </div>
+  <div class="card">
+    <h4>Duração e frequência</h4>
+    <p>Crises de 4 a 72 horas sem tratamento eficaz, com pelo menos 5 crises preenchendo esses critérios ao longo da vida para fechar o diagnóstico.</p>
+  </div>
+</div>
+
+<h3>Tratamento abortivo</h3>
+<p>Anti-inflamatórios não esteroidais em crises leves a moderadas; triptanos (agonistas dos receptores serotoninérgicos 5-HT1B/1D) como primeira linha específica em crises moderadas a graves — seu mecanismo combina vasoconstrição das artérias durais dilatadas, inibição da liberação de neuropeptídeos pró-inflamatórios (CGRP, substância P) nos terminais trigeminais periféricos, e bloqueio direto da transmissão nociceptiva no núcleo trigeminal caudal, atuando, portanto, em múltiplos pontos da cascata fisiopatológica que acabamos de descrever. Antieméticos como a metoclopramida auxiliam tanto no controle da náusea quanto, possivelmente, com efeito analgésico intrínseco adicional.</p>
+
+<details class="deepen">
+  <summary>Aprofunde-se: as novas classes terapêuticas — gepantes e ditanos</summary>
+  <div class="deepen-content">
+  <p>Duas classes mais recentes ampliaram o arsenal terapêutico com racional direto na fisiopatologia que você acabou de estudar. Os <i class="destaque">gepantes</i> (ubrogepanto, rimegepanto) são antagonistas do receptor de CGRP — bloqueiam diretamente o principal mediador da inflamação neurogênica, sem o efeito vasoconstritor dos triptanos, tornando-os uma opção mais segura em pacientes com contraindicação cardiovascular a estes últimos. Os <i class="destaque">ditanos</i> (lasmiditana) são agonistas seletivos do receptor 5-HT1F — subtipo presente nos neurônios trigeminais, mas praticamente ausente na musculatura lisa vascular —, conseguindo replicar o efeito antinociceptivo central dos triptanos sem causar vasoconstrição, ampliando ainda mais a segurança cardiovascular.</p>
+  </div>
+</details>
+
+<h3>Tratamento preventivo</h3>
+<p>Indicado quando há 4 ou mais dias de crise por mês, crises muito incapacitantes, ou resposta inadequada ao tratamento abortivo. As opções clássicas incluem betabloqueadores (propranolol), o já conhecido tricíclico amitriptilina, e anticonvulsivantes como topiramato e valproato de sódio — todos atuando, por vias distintas, na redução da excitabilidade neuronal cortical e/ou no reforço da modulação inibitória central. Mais recentemente, os anticorpos monoclonais anti-CGRP ou anti-receptor de CGRP (erenumabe, fremanezumabe, galcanezumabe) representam a primeira classe terapêutica desenhada racionalmente a partir do mecanismo molecular específico da migrânea, com boa eficácia e tolerabilidade em profilaxia.</p>
+
+</div>
+</section>
+
+<section id="migranea-com-aura" class="topic-section" style="--accent:var(--c4)">
+  <div class="section-header"><h2 class="tag">1.3 — Migrânea com Aura</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Tudo o que vimos na seção anterior sobre a fase de dor se aplica igualmente aqui — a diferença está inteiramente na fase que precede a cefaleia, e é sobre ela que vamos nos debruçar: a aura.</p>
+
+<h3>Fisiopatologia da aura: a depressão alastrante cortical</h3>
+<p>Em 1944, o fisiologista brasileiro Aristides Leão descreveu, em experimentos com coelhos, um fenômeno elétrico que hoje é reconhecido como o substrato direto da aura migranosa: a <i class="destaque">depressão alastrante cortical</i> (cortical spreading depression). Trata-se de uma onda de despolarização neuronal e glial intensa, seguida por um período prolongado de supressão da atividade elétrica cortical, que se propaga lentamente pelo córtex — cerca de 3 a 5 milímetros por minuto — e que corresponde, ponto por ponto, à progressão clínica característica da aura visual: o escotoma cintilante que "marcha" lentamente pelo campo visual ao longo de 20 a 30 minutos.</p>
+
+<p>Por que essa onda acontece? A despolarização inicial provoca efluxo maciço de potássio e liberação de glutamato para o espaço extracelular, que despolarizam os neurônios vizinhos, propagando a onda como uma reação em cadeia — e é exatamente essa hiperexcitabilidade cortical basal, geneticamente determinada (lembre-se das canalopatias da seção anterior), que torna alguns cérebros mais propensos a disparar esse fenômeno diante de determinados gatilhos.</p>
+
+<div class="alert alert-chave">
+  <span class="alert-label">Ponto-chave — a aura não é só um fenômeno visual isolado, é o gatilho da dor</span>
+  <p>A depressão alastrante cortical não fica restrita ao córtex: ela ativa diretamente os aferentes trigeminovasculares meníngeos subjacentes, via liberação de potássio e glutamato que atravessam a barreira e sensibilizam os nociceptores durais, além de abrir canais de pannexina-1 que desencadeiam uma cascata neuroinflamatória local. É esse elo mecanístico direto — onda cortical ativando o sistema trigeminovascular — que explica, em nível molecular, por que a aura tão frequentemente é seguida pela fase de dor.</p>
+</div>
+
+<h3>Tipos de aura e sinais clínicos</h3>
+<div class="card-grid">
+  <div class="card">
+    <h4>Aura visual (a mais comum)</h4>
+    <p>Escotoma cintilante, espectro de fortificação (linhas em zigue-zague progressivamente expansivas), ou perda de campo visual — refletindo a propagação da onda pelo córtex occipital.</p>
+  </div>
+  <div class="card">
+    <h4>Aura sensitiva</h4>
+    <p>Parestesias que também "marcham", tipicamente começando na mão e progredindo lentamente para o braço e a face, seguindo o mesmo padrão de propagação lenta.</p>
+  </div>
+  <div class="card">
+    <h4>Aura de linguagem</h4>
+    <p>Dificuldade transitória de expressão ou compreensão da fala.</p>
+  </div>
+  <div class="card">
+    <h4>Aura motora (migrânea hemiplégica)</h4>
+    <p>Fraqueza motora transitória — forma rara, associada às canalopatias monogênicas já mencionadas, e que exige cautela redobrada quanto ao uso de triptanos.</p>
+  </div>
+</div>
+
+<h3>Critérios diagnósticos (ICHD-3)</h3>
+<p>Sintomas de aura totalmente reversíveis, com instalação gradual ao longo de pelo menos 5 minutos (diferenciando-a de um evento vascular agudo, que tipicamente é súbito), cada sintoma individual durando entre 5 e 60 minutos, e a cefaleia seguindo-se dentro de 60 minutos do término da aura (ou ocorrendo simultaneamente a ela).</p>
+
+<div class="alert alert-atencao">
+  <span class="alert-label">Atenção — diagnóstico diferencial da aura</span>
+  <p>A instalação gradual e a "marcha" lenta e progressiva da aura são justamente os elementos semiológicos que a diferenciam de um acidente vascular cerebral isquêmico transitório, cujos déficits tipicamente se instalam de forma súbita e máxima já no início. Diante de uma aura atípica — instalação abrupta, primeira ocorrência em paciente com fatores de risco vascular, ou aura prolongada além de 60 minutos — a investigação de causas secundárias deve ser priorizada antes de assumir migrânea.</p>
+</div>
+
+<h3>Tratamento</h3>
+<p>As classes farmacológicas abortivas e preventivas são, em linhas gerais, as mesmas discutidas na seção anterior para migrânea sem aura, já que a fase de dor compartilha o mesmo mecanismo trigeminovascular. Um ponto de segurança farmacológica importante, porém, merece destaque: triptanos devem ser evitados durante a aura de migrânea hemiplégica ou de migrânea com aura de tronco encefálico, pelo risco teórico — ainda que raro na prática — de vasoconstrição excessiva em um contexto de vulnerabilidade vascular cerebral já aumentada nesses subtipos específicos.</p>
+
+</div>
+</section>
+
+<section id="salvas" class="topic-section" style="--accent:var(--c5)">
+  <div class="section-header"><h2 class="tag">1.4 — Cefaleia em Salvas</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p>Chegamos à cefaleia mais rara das três, mas também a mais dramática clinicamente — tão intensa que já foi apelidada de "cefaleia suicida" pela literatura antiga. Ela pertence a um grupo específico chamado cefaleias trigêmino-autonômicas, cujo nome já entrega a pista fisiopatológica central: aqui, diferente da migrânea, o componente autonômico não é coadjuvante — é protagonista.</p>
+
+<h3>Fisiopatologia: o hipotálamo como marca-passo e o reflexo trigêmino-autonômico</h3>
+<p>Por que a cefaleia em salvas ocorre em períodos cíclicos (as "salvas", durando semanas a meses, intercaladas por remissões que podem durar meses a anos) e por que as crises, dentro de um período de salva, costumam ocorrer nos mesmos horários do dia, com frequência à noite? Essa periodicidade circadiana e circanual quase relojoada é a maior pista fisiopatológica da doença, e aponta diretamente para o <i class="destaque">hipotálamo posterior</i>, estrutura que funciona como nosso marca-passo biológico central. Estudos de neuroimagem funcional (PET) demonstram ativação hipotalâmica ipsilateral consistente durante as crises — um achado que não se replica na migrânea, e que justifica classificar a cefaleia em salvas como uma condição de geração primariamente hipotalâmica, com o sistema trigeminovascular sendo recrutado secundariamente.</p>
+
+<p>O segundo pilar fisiopatológico é o <i class="destaque">reflexo trigêmino-autonômico</i>: a ativação nociceptiva do ramo oftálmico do trigêmeo, via conexões no tronco encefálico, desencadeia reflexamente a ativação do núcleo salivatório superior, que envia fibras parassimpáticas eferentes através do nervo facial até o gânglio pterigopalatino (esfenopalatino) — cuja ativação produz vasodilatação e secreção glandular ipsilateral, explicando diretamente os sinais autonômicos característicos: lacrimejamento, congestão nasal e rinorreia, hiperemia conjuntival.</p>
+
+<div class="alert alert-clinico">
+  <span class="alert-label">Correlação clínica</span>
+  <p>Simultaneamente, ocorre disfunção do sistema simpático ipsilateral — seja por compressão mecânica das fibras simpáticas periarteriais carotídeas pela vasodilatação parassimpática regional, seja por disrupção central hipotalâmica do tônus simpático — resultando em um quadro parcial de síndrome de Horner (ptose e miose), que tipicamente regride entre as crises nas formas episódicas, mas pode se tornar permanente em casos crônicos de longa duração.</p>
+</div>
+
+<h3>Sinais e sintomas (critérios ICHD-3)</h3>
+<div class="card-grid">
+  <div class="card">
+    <h4>Dor</h4>
+    <p>Unilateral, orbitária, supraorbitária e/ou temporal, de intensidade grave a muito grave — descrita classicamente como em "facada" ou queimação insuportável —, durando de 15 a 180 minutos sem tratamento, com frequência de 1 crise em dias alternados até 8 crises por dia.</p>
+  </div>
+  <div class="card">
+    <h4>Sinais autonômicos ipsilaterais</h4>
+    <p>Pelo menos um entre: hiperemia conjuntival, lacrimejamento, congestão nasal, rinorreia, edema palpebral, sudorese frontal/facial, miose ou ptose.</p>
+  </div>
+  <div class="card">
+    <h4>Comportamento — o grande diferencial semiológico</h4>
+    <p>Inquietação e agitação psicomotora durante a crise — o paciente se balança, anda de um lado para o outro, bate a cabeça —, em contraste direto com a migrânea, em que o paciente busca imobilidade e repouso. Esse único dado semiológico, colhido numa boa anamnese, já direciona fortemente o diagnóstico.</p>
+  </div>
+</div>
+
+<h3>Tratamento abortivo</h3>
+<p>Dado que as crises são curtas e explosivas, o tratamento abortivo precisa ser rápido — analgésicos orais convencionais chegam tarde demais. As duas opções de primeira linha são a inalação de oxigênio a 100%, em alto fluxo (12 a 15 litros por minuto, via máscara não reinalante, por 15 a 20 minutos), cujo mecanismo exato ainda não é totalmente compreendido, mas provavelmente envolve vasoconstrição cerebral e modulação da ativação trigeminal e hipotalâmica; e o sumatriptano em formulação subcutânea ou nasal — as vias orais são descartadas justamente pela lentidão de absorção frente à curta duração da crise.</p>
+
+<h3>Tratamento preventivo</h3>
+<p>O verapamil, um bloqueador dos canais de cálcio, é a droga de escolha para prevenção, exigindo monitorização eletrocardiográfica seriada pelo risco de prolongamento do intervalo PR e bloqueios de condução em doses progressivamente tituladas. Como o verapamil leva tempo para atingir eficácia plena, frequentemente se associa uma terapia de transição — corticosteroide oral em esquema de retirada progressiva, ou bloqueio do nervo occipital maior — para controlar as crises enquanto a medicação de manutenção ainda está sendo ajustada. O lítio é opção especialmente considerada na forma crônica, e anticorpos monoclonais anti-CGRP (galcanezumabe) já têm aprovação específica para a forma episódica.</p>
+
+</div>
+</section>
+
+</div>
+
+<div class="pergunta-group" id="pergunta2">
+<div class="pergunta-banner" style="--pcolor:var(--p2)">
+  <div class="pergunta-num">Pergunta 2 do PBL</div>
+  <h2 class="pergunta-titulo">Cervicalgia, Síndrome Dolorosa Miofascial e Lombalgia</h2>
+  <p class="pergunta-enunciado">O que é; possíveis etiologias, diagnóstico, tratamento farmacológico e complicações de cada uma.</p>
+</div>
+
+<section id="cervicalgia" class="topic-section" style="--accent:var(--c6)">
+  <div class="section-header"><h2 class="tag">2a — Cervicalgia</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<h3>O que é</h3>
+<p>Cervicalgia é a dor localizada na região posterior ou póstero-lateral do pescoço, podendo irradiar para a região occipital, os ombros ou, quando há componente radicular, para os membros superiores. Não é um diagnóstico único, mas uma síndrome de dor axial com múltiplas causas possíveis — e seu raciocínio clínico aqui deve seguir a mesma lógica de exclusão hierárquica de gravidade que aplicamos à lombalgia mais adiante.</p>
+
+<h3>Etiologias possíveis</h3>
+<div class="card-grid">
+  <div class="card">
+    <h4>Mecânica/postural (a mais comum, de longe)</h4>
+    <p>Sobrecarga miofascial por postura prolongada em flexão cervical — o clássico "pescoço de tecnologia" do uso prolongado de telas —, esforço muscular agudo, ou espondilose cervical degenerativa relacionada ao envelhecimento discal e facetário.</p>
+  </div>
+  <div class="card">
+    <h4>Radiculopatia cervical</h4>
+    <p>Hérnia discal cervical ou osteófito comprimindo uma raiz nervosa, gerando dor irradiada em dermátomo específico, associada a parestesias e, eventualmente, déficit motor ou reflexo correspondente.</p>
+  </div>
+  <div class="card">
+    <h4>Trauma / lesão em chicote (whiplash)</h4>
+    <p>Mecanismo de aceleração-desaceleração brusca (típico de colisões automobilísticas traseiras), lesionando estruturas miofasciais, ligamentares e, ocasionalmente, facetárias cervicais.</p>
+  </div>
+  <div class="card">
+    <h4>Causas inflamatórias e infecciosas</h4>
+    <p>Artrite reumatoide com acometimento atlantoaxial (potencialmente grave pelo risco de instabilidade C1-C2), discite ou espondilodiscite infecciosa.</p>
+  </div>
+  <div class="card">
+    <h4>Causas neoplásicas</h4>
+    <p>Metástase vertebral (mama, pulmão, próstata, rim, tireoide são os primários mais comuns) ou tumor primário ósseo, sempre a considerar diante de dor progressiva, noturna, com perda ponderal.</p>
+  </div>
+  <div class="card">
+    <h4>Causa vascular — sinal de alarme obrigatório</h4>
+    <p>Dissecção de artéria vertebral, potencialmente associada a manipulação cervical vigorosa, cursando com cervicalgia aguda intensa associada a sintomas neurológicos de tronco encefálico — diagnóstico que nunca pode ser perdido.</p>
+  </div>
+</div>
+
+<h3>Diagnóstico</h3>
+<p>A base é clínica: história detalhada sobre início, mecanismo desencadeante, irradiação e fatores de melhora/piora, associada a exame físico completo — amplitude de movimento cervical, palpação da musculatura paravertebral e trapézio, e exame neurológico dos membros superiores, incluindo o teste de Spurling (compressão axial da cabeça inclinada e rodada para o lado sintomático, reproduzindo dor radicular quando há compressão foraminal). Exames de imagem não são rotina na cervicalgia mecânica aguda sem sinais de alarme; radiografia simples ou tomografia são indicadas em contexto de trauma, e a ressonância magnética é reservada para suspeita de radiculopatia, mielopatia ou quando os sinais de alarme abaixo estão presentes.</p>
+
+<div class="alert alert-atencao">
+  <span class="alert-label">Atenção — sinais de alarme que indicam investigação por imagem</span>
+  <p>Trauma significativo, déficit neurológico focal progressivo, febre associada, dor noturna que não melhora com repouso, história de neoplasia, uso crônico de corticosteroide ou imunossupressão, e início após os 50 anos sem causa mecânica clara — qualquer um desses achados deve acelerar a investigação complementar, em vez de assumir uma causa mecânica benigna por padrão.</p>
+</div>
+
+<h3>Tratamento farmacológico</h3>
+<p>Anti-inflamatórios não esteroidais como primeira linha para o componente inflamatório/mecânico agudo; relaxantes musculares de ação central (ciclobenzaprina, tizanidina) por curto período, quando há espasmo muscular proeminente associado; analgésicos simples como adjuvantes. Na presença de componente radicular estabelecido, gabapentinoides (gabapentina, pregabalina) podem ser adicionados pelo mesmo racional farmacológico neuropático já estudado, e um curso curto de corticosteroide oral é por vezes considerado em radiculopatia aguda com dor intensa, embora a evidência de benefício sustentado seja limitada. Opioides devem ser evitados como conduta de rotina, reservados a exceções bem justificadas e por tempo limitado.</p>
+
+<h3>Complicações</h3>
+<p>Cronificação da dor (com possível sobreposição de sensibilização central, especialmente após episódios de whiplash), radiculopatia crônica com déficit motor residual quando a compressão nervosa não é tratada a tempo, e, no extremo mais grave, mielopatia cervical por compressão medular significativa — uma emergência relativa que exige avaliação neurocirúrgica, dado o risco de déficit neurológico permanente se não tratada oportunamente.</p>
+
+</div>
+</section>
+
+<section id="sdm" class="topic-section" style="--accent:var(--c7)">
+  <div class="section-header"><h2 class="tag">2b — Síndrome Dolorosa Miofascial (SDM)</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<h3>O que é</h3>
+<p>A síndrome dolorosa miofascial é uma condição de dor regional — não difusa, atenção a essa diferença crucial em relação à fibromialgia, que você já estudou — caracterizada pela presença de <i class="destaque">pontos-gatilho</i>: nódulos hiperirritáveis localizados dentro de uma banda tensa palpável do músculo esquelético, dolorosos à compressão e capazes de gerar dor referida em um padrão característico e previsível para cada músculo específico.</p>
+
+<h3>Fisiopatologia — a hipótese integrada do ponto-gatilho</h3>
+<p>O modelo mais aceito, proposto originalmente por Travell e Simons, começa em nível de placa motora: microtraumas por sobrecarga, postura mantida ou uso repetitivo excessivo levam à liberação excessiva e sustentada de acetilcolina na fenda sináptica neuromuscular, gerando contração sustentada de um pequeno grupo de sarcômeros — o chamado "nó de contração". Essa contração localizada e persistente comprime a microcirculação local, gerando isquemia e hipóxia focal, que por sua vez desencadeiam a liberação de uma verdadeira "sopa inflamatória" de mediadores sensibilizantes — bradicinina, prostaglandinas, substância P, CGRP, TNF-alfa —, sensibilizando os nociceptores musculares locais e criando o ponto-gatilho clinicamente palpável.</p>
+
+<div class="alert alert-chave">
+  <span class="alert-label">Ponto-chave — ativo versus latente</span>
+  <p>Pontos-gatilho ativos geram dor espontânea, reproduzindo o padrão de dor habitual do paciente mesmo sem palpação; pontos-gatilho latentes são dolorosos apenas quando palpados diretamente, sem gerar queixa espontânea, mas ainda assim podem restringir a amplitude de movimento e causar fraqueza muscular localizada. Essa distinção importa porque orienta a decisão terapêutica — nem todo ponto-gatilho encontrado ao exame precisa ser tratado ativamente.</p>
+</div>
+
+<details class="deepen">
+  <summary>Aprofunde-se: dor referida e a ponte com a cefaleia tensional</summary>
+  <div class="deepen-content">
+  <p>Cada músculo tem um padrão de dor referida bem mapeado — por exemplo, pontos-gatilho no músculo trapézio superior classicamente referem dor para a região temporal, mimetizando (ou efetivamente contribuindo para) uma cefaleia tensional. Isso não é coincidência didática: como vimos na seção 1.1, a musculatura pericraniana e cervical sensibilizada é justamente um dos mecanismos propostos para a cefaleia tensional, e o ponto-gatilho miofascial cervical é, para muitos pacientes, o gatilho periférico primário por trás do quadro. Reconhecer e tratar pontos-gatilho cervicais pode, portanto, ser parte legítima do tratamento de uma cefaleia tensional recorrente.</p>
+  </div>
+</details>
+
+<h3>Diagnóstico</h3>
+<p>Inteiramente clínico, sem exame complementar confirmatório específico: identificação à palpação de uma banda tensa no músculo, um ponto de dor exquisita dentro dessa banda, reprodução da dor referida característica daquele músculo ao comprimir o ponto, e, quando presente, uma resposta de contração local — um espasmo breve e visível ou palpável da banda tensa ao ser estimulada rapidamente (o chamado "twitch response" à palpação em pinça ou à agulhamento).</p>
+
+<h3>Tratamento farmacológico</h3>
+<p>Anti-inflamatórios não esteroidais e relaxantes musculares de curta duração para o componente agudo; infiltração do ponto-gatilho com anestésico local (com ou sem associação a corticosteroide) proporciona alívio direcionado e é considerada quando a dor é localizada e persistente, com a agulha seca (dry needling, sem infiltração de substância) apresentando eficácia comparável em diversos estudos, sugerindo que o efeito mecânico de romper a banda tensa é, ele próprio, parte importante do mecanismo terapêutico. Para quadros crônicos ou recorrentes, os antidepressivos tricíclicos em baixa dose voltam a aparecer, pelo mesmo racional de reforço da modulação descendente central já estudado.</p>
+
+<h3>Complicações</h3>
+<p>Cronificação com desenvolvimento de pontos-gatilho satélites (novos pontos que se formam em músculos sinergistas ou antagonistas, sobrecarregados por compensação postural), perpetuação do ciclo dor-espasmo-dor, distúrbio do sono secundário à dor crônica localizada, e — ponto conceitualmente relevante para amarrar com tudo o que você já sabe de dor nociplástica — o risco de, com a cronificação prolongada e não tratada, evoluir com sobreposição de sensibilização central, borrando a fronteira entre uma síndrome regional inicialmente bem localizada e um quadro de amplificação mais difusa e sistêmica, no espectro que se aproxima da fibromialgia.</p>
+
+</div>
+</section>
+
+<section id="lombalgia" class="topic-section" style="--accent:var(--c8)">
+  <div class="section-header"><h2 class="tag">2c — Lombalgia</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<h3>O que é</h3>
+<p>Lombalgia é a dor localizada na região lombar, entre o último arco costal e as pregas glúteas, podendo ou não irradiar para os membros inferiores. Classifica-se por duração em aguda (menos de 4 a 6 semanas), subaguda e crônica (mais de 12 semanas) — distinção que orienta diretamente a agressividade da investigação e a expectativa de resposta terapêutica.</p>
+
+<h3>Etiologias possíveis</h3>
+<p>Mais de 85% dos casos são classificados como lombalgia mecânica inespecífica — distensão muscular ou ligamentar, degeneração discal, artropatia facetária — sem uma fonte anatômica única e precisamente identificável, e cuja evolução natural costuma ser favorável independentemente da causa exata. O restante se distribui entre causas específicas que exigem raciocínio diferenciado:</p>
+
+<div class="card-grid">
+  <div class="card">
+    <h4>Hérnia discal com radiculopatia (ciática)</h4>
+    <p>Compressão de raiz nervosa lombossacra pelo núcleo pulposo herniado, gerando dor irradiada característica ao longo do trajeto do nervo ciático, com teste de elevação da perna estendida (Lasègue) positivo.</p>
+  </div>
+  <div class="card">
+    <h4>Estenose de canal vertebral</h4>
+    <p>Mais comum em idosos, causa claudicação neurogênica — dor que piora ao caminhar e melhora characteristicamente à flexão do tronco (por exemplo, ao se debruçar sobre um carrinho de supermercado).</p>
+  </div>
+  <div class="card">
+    <h4>Espondilolistese</h4>
+    <p>Deslizamento anterior de uma vértebra sobre a adjacente, podendo ser assintomática ou causar dor mecânica e, eventualmente, radiculopatia associada.</p>
+  </div>
+  <div class="card">
+    <h4>Fratura vertebral</h4>
+    <p>Osteoporótica (mesmo após trauma mínimo, em idosos) ou traumática — sempre a considerar diante de uso crônico de corticosteroide, trauma significativo ou idade avançada.</p>
+  </div>
+  <div class="card">
+    <h4>Espondiloartrite axial (dor lombar inflamatória)</h4>
+    <p>Início insidioso antes dos 40 anos, melhora com o exercício e piora com o repouso, rigidez matinal prolongada e dor noturna que desperta o paciente — um padrão semiológico distinto o suficiente para diferenciar de lombalgia mecânica já na anamnese.</p>
+  </div>
+  <div class="card">
+    <h4>Infecção (discite, abscesso epidural)</h4>
+    <p>Suspeitar diante de febre, uso de drogas endovenosas, imunossupressão ou procedimento espinhal recente.</p>
+  </div>
+  <div class="card">
+    <h4>Neoplasia primária ou metastática</h4>
+    <p>Suspeitar diante de história oncológica prévia, perda ponderal não intencional, dor progressiva e noturna, idade acima de 50 anos com início sem causa mecânica evidente.</p>
+  </div>
+</div>
+
+<h3>Diagnóstico</h3>
+<p>A anamnese e o exame físico são as ferramentas centrais, com o objetivo primário de rastrear ativamente sinais de alarme antes de assumir uma causa mecânica benigna. O teste de elevação da perna estendida avalia tensão radicular; o exame neurológico dos membros inferiores (força, sensibilidade, reflexos) localiza o nível radicular comprometido quando presente. Exames de imagem não são indicados rotineiramente na lombalgia aguda inespecífica sem sinais de alarme — a esmagadora maioria melhora espontaneamente em poucas semanas, e a imagem precoce tem alto risco de identificar achados degenerativos incidentais, comuns mesmo em assintomáticos, gerando ansiedade e intervenções desnecessárias (o mesmo raciocínio que você já viu na seção de exames complementares da fibromialgia). A investigação por imagem é reservada para sinais de alarme presentes, ou para falha de resposta ao tratamento conservador após aproximadamente 6 semanas.</p>
+
+<div class="alert alert-atencao">
+  <span class="alert-label">Atenção máxima — síndrome da cauda equina</span>
+  <p>Disfunção esfincteriana (retenção ou incontinência urinária/fecal), anestesia em sela (região perineal) e fraqueza progressiva bilateral em membros inferiores constituem a síndrome da cauda equina — uma verdadeira emergência cirúrgica. O atraso na descompressão cirúrgica está diretamente associado a déficit neurológico permanente, incluindo disfunção esfincteriana e sexual irreversível. Qualquer um desses sinais exige avaliação de imagem (ressonância magnética) e encaminhamento cirúrgico imediatos, sem postergação.</p>
+</div>
+
+<h3>Tratamento farmacológico</h3>
+<p>Anti-inflamatórios não esteroidais como primeira linha; relaxantes musculares por curto período em caso de espasmo associado; analgésicos simples como adjuvantes. Opioides não são recomendados como conduta de rotina, dada a ausência de evidência de benefício superior sustentado na lombalgia crônica inespecífica frente ao risco de dependência. Diante de radiculopatia estabelecida, gabapentinoides podem ser considerados, e a infiltração epidural de corticosteroide é uma opção para radiculopatia refratária ao tratamento conservador inicial, embora seu benefício seja predominantemente de curto prazo.</p>
+
+<h3>Complicações</h3>
+<p>Cronificação da dor lombar (definida a partir de 12 semanas), com risco real de desenvolvimento de componente de sensibilização central sobreposto à causa mecânica original — novamente o mesmo fenômeno de amplificação central que perpassa toda esta unidade —, síndrome da cauda equina com déficit neurológico permanente quando não tratada como emergência, radiculopatia crônica com déficit motor residual, e impacto funcional e ocupacional significativo, sendo a lombalgia crônica uma das principais causas de incapacidade e afastamento do trabalho em todo o mundo.</p>
+
+</div>
+</section>
+
+</div>
+
+<section id="integracao" class="topic-section" style="--accent:var(--c9)">
+  <div class="section-header"><h2 class="tag">Síntese Final — Integração Clínica</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<div class="integracao-box">
+<p>Vamos amarrar os fios de todo o material. As três cefaleias primárias que estudamos convergem para uma única estrutura anatômica final — o sistema trigeminovascular e, especificamente, o complexo trigeminocervical — mas divergem no que as ativa: a cefaleia tensional nasce, ao menos inicialmente, na periferia miofascial pericraniana; a migrânea nasce de uma hiperexcitabilidade cortical e hipotalâmica geneticamente determinada, com o CGRP como mediador central da dor; e a cefaleia em salvas nasce de um marca-passo hipotalâmico desregulado, expressando-se através do reflexo trigêmino-autonômico. Entender esse ponto de convergência anatômica é o que permite prever, sem decorar, por que tantas cefaleias vêm acompanhadas de dor cervical — e é a mesma lógica de convergência neural que explica por que um ponto-gatilho miofascial cervical pode desencadear uma cefaleia tensional a distância.</p>
+
+<p>Da mesma forma, cervicalgia, síndrome dolorosa miofascial e lombalgia compartilham um raciocínio clínico comum, ainda que acometam regiões corporais distintas: a esmagadora maioria dos casos é de origem mecânica benigna e autolimitada, e o papel central do médico é rastrear ativamente, através de uma anamnese e exame físico bem conduzidos, os sinais de alarme que sinalizam uma minoria de casos com causa grave — infecciosa, neoplásica, inflamatória ou, no extremo mais urgente, a síndrome da cauda equina — sem cair no exagero de investigar excessivamente todo paciente com dor mecânica simples, exatamente pelo mesmo motivo já discutido para a fibromialgia: exame desnecessário tem custo clínico real.</p>
+
+<p>Por fim, vale grifar um fio condutor que atravessa toda a UC XIII até aqui: praticamente toda dor musculoesquelética ou craniofacial recorrente e mal tratada carrega o risco de evoluir com sensibilização central sobreposta — seja a cefaleia tensional crônica, seja a síndrome miofascial cronificada, seja a lombalgia persistente. Tratar cedo, tratar a causa periférica identificável e educar o paciente sobre o mecanismo da sua dor não são apenas boas práticas de conforto — são medidas que, mecanisticamente, previnem a transição de uma dor nociceptiva localizada para um quadro de amplificação central mais difícil de reverter.</p>
+</div>
+
+</div>
+</section>
+
+<section id="referencias" class="topic-section" style="--accent:var(--c10)">
+  <div class="section-header"><h2 class="tag">Referências</h2><span class="line"></span></div>
+  <div class="section-body">
+
+<p class="editable">Referências organizadas conforme a hierarquia bibliográfica da UC XIII, em formato ABNT. Edições e anos devem ser conferidos contra a bibliografia oficial vigente na sua instituição.</p>
+
+<div class="ref-cat">Bibliografia oficial — fisiologia, fisiopatologia e neurologia</div>
+<ul class="ref-list">
+  <li>GUYTON, Arthur C.; HALL, John E. <em>Tratado de Fisiologia Médica</em>. 14. ed. Rio de Janeiro: Guanabara Koogan, 2021.</li>
+  <li>KUMAR, Vinay; ABBAS, Abul K.; ASTER, Jon C. (Ed.). <em>Robbins & Cotran: Bases Patológicas das Doenças</em>. 10. ed. Rio de Janeiro: Elsevier, 2021.</li>
+  <li>LOSCALZO, Joseph et al. (Ed.). <em>Harrison: Medicina Interna</em>. 20. ed. Porto Alegre: AMGH, 2020.</li>
+</ul>
+
+<div class="ref-cat">Bibliografia oficial — anatomia, farmacologia e semiologia</div>
+<ul class="ref-list">
+  <li>MOORE, Keith L.; DALLEY, Arthur F.; AGUR, Anne M. R. <em>Anatomia Orientada para a Clínica</em>. 8. ed. Rio de Janeiro: Guanabara Koogan, 2019.</li>
+  <li>KATZUNG, Bertram G.; TREVOR, Anthony J. <em>Farmacologia Básica e Clínica</em>. 14. ed. Porto Alegre: AMGH, 2023.</li>
+  <li>PORTO, Celmo Celeno. <em>Semiologia Médica</em>. 8. ed. Rio de Janeiro: Guanabara Koogan, 2019.</li>
+  <li>BICKLEY, Lynn S. <em>Bates: Guia de Exame Físico e História Clínica</em>. 13. ed. Rio de Janeiro: Guanabara Koogan, 2021.</li>
+</ul>
+
+<div class="ref-cat">Diretrizes e classificações</div>
+<ul class="ref-list">
+  <li>HEADACHE CLASSIFICATION COMMITTEE OF THE INTERNATIONAL HEADACHE SOCIETY (IHS). The International Classification of Headache Disorders, 3rd edition (ICHD-3). <em>Cephalalgia</em>, v. 38, n. 1, p. 1-211, 2018.</li>
+  <li>SOCIEDADE BRASILEIRA DE CEFALEIA (SBCe). Recomendações para o tratamento da migrânea e da cefaleia em salvas.</li>
+  <li>SOCIEDADE BRASILEIRA PARA O ESTUDO DA DOR (SBED). Consensos sobre dor musculoesquelética e lombalgia.</li>
+  <li>NATIONAL INSTITUTE FOR HEALTH AND CARE EXCELLENCE (NICE). Low back pain and sciatica in over 16s: assessment and management. NG59, 2016 (atualizado).</li>
+</ul>
+
+<div class="ref-cat">Literatura científica citada</div>
+<ul class="ref-list">
+  <li>LEÃO, A. A. P. Spreading depression of activity in the cerebral cortex. <em>Journal of Neurophysiology</em>, v. 7, n. 6, p. 359-390, 1944.</li>
+  <li>GOADSBY, P. J.; HOLLAND, P. R. et al. Pathophysiology of migraine: a disorder of sensory processing. <em>Physiological Reviews</em>, v. 97, n. 2, p. 553-622, 2017.</li>
+  <li>MAY, A. Cluster headache: pathogenesis, diagnosis, and management. <em>The Lancet</em>, v. 366, n. 9488, p. 843-855, 2005.</li>
+  <li>SIMONS, D. G.; TRAVELL, J. G.; SIMONS, L. S. <em>Travell & Simons' Myofascial Pain and Dysfunction: The Trigger Point Manual</em>. 2. ed. Baltimore: Williams & Wilkins, 1999.</li>
+  <li>CHOU, R. et al. Diagnosis and treatment of low back pain: a joint clinical practice guideline from the American College of Physicians and the American Pain Society. <em>Annals of Internal Medicine</em>, v. 147, n. 7, p. 478-491, 2007.</li>
+</ul>
+
+</div>
+</section>
+
+</main>
+</div>
+
+<div class="editor-toolbar">
+  <div class="tb-title">Editor do documento</div>
+  <button id="btn-toggle-edit" type="button">Ativar edição</button>
+  <button id="btn-download" type="button">Baixar cópia editada</button>
+  <button id="btn-restore" type="button">Restaurar original</button>
+  <div class="status" id="toolbar-status">Pronto.</div>
+</div>
+
+<script>
+(function(){
+  var STORAGE_KEY = 'medstudy_cefaleias_cervicalgia_sdm_lombalgia_uniarp_v1';
+  var mainContent = document.getElementById('main-content');
+  var originalHTML = mainContent.innerHTML;
+  var memoryFallback = null;
+  var storageAvailable = true;
+
+  function testStorage(){
+    try{ var k='__t__'; localStorage.setItem(k,'1'); localStorage.removeItem(k); return true; }
+    catch(e){ return false; }
+  }
+  storageAvailable = testStorage();
+
+  function loadSaved(){
+    if(storageAvailable){ try{ return localStorage.getItem(STORAGE_KEY); }catch(e){ return null; } }
+    return memoryFallback;
+  }
+
+  function nowTime(){
+    var d = new Date();
+    return (d.getHours()+'').padStart(2,'0')+':'+(d.getMinutes()+'').padStart(2,'0');
+  }
+
+  function updateStatus(msg){
+    var el = document.getElementById('toolbar-status');
+    if(el) el.textContent = msg;
+  }
+
+  function saveContent(){
+    var html = mainContent.innerHTML;
+    if(storageAvailable){
+      try{
+        localStorage.setItem(STORAGE_KEY, html);
+        updateStatus('Salvo automaticamente às '+nowTime()+'.');
+      }catch(e){
+        storageAvailable = false;
+        memoryFallback = html;
+        updateStatus('Armazenamento local indisponível nesta janela (ex.: pré-visualização do Claude.ai). Edições preservadas apenas na memória desta sessão — baixe a cópia editada para não perder o trabalho.');
+      }
+    } else {
+      memoryFallback = html;
+      updateStatus('Salvo na memória desta sessão (armazenamento local indisponível). Baixe a cópia editada para guardar definitivamente.');
+    }
+  }
+
+  var saved = loadSaved();
+  if(saved){ mainContent.innerHTML = saved; }
+  if(!storageAvailable){
+    updateStatus('Este ambiente não permite salvar automaticamente no navegador. Abra o arquivo baixado diretamente para que o autosave funcione.');
+  }
+
+  var editMode = false;
+  var autosaveTimer = null;
+  var btnEdit = document.getElementById('btn-toggle-edit');
+  var btnDownload = document.getElementById('btn-download');
+  var btnRestore = document.getElementById('btn-restore');
+
+  var EDITABLE_SELECTOR = 'p, li, h1, h2, h3, h4, dt, dd, .card-text, .editable, blockquote, .passo';
+
+  function enterEditMode(){
+    editMode = true;
+    mainContent.querySelectorAll(EDITABLE_SELECTOR).forEach(function(el){
+      el.setAttribute('contenteditable','true');
+    });
+    btnEdit.textContent = 'Salvar e sair da edição';
+    btnEdit.classList.add('active');
+    autosaveTimer = setInterval(saveContent, 15000);
+    updateStatus('Modo de edição ativo. Clique nos textos para editar.');
+  }
+
+  function exitEditMode(){
+    editMode = false;
+    mainContent.querySelectorAll(EDITABLE_SELECTOR).forEach(function(el){
+      el.setAttribute('contenteditable','false');
+    });
+    btnEdit.textContent = 'Ativar edição';
+    btnEdit.classList.remove('active');
+    clearInterval(autosaveTimer);
+    saveContent();
+  }
+
+  btnEdit.addEventListener('click', function(){
+    if(editMode) exitEditMode(); else enterEditMode();
+  });
+
+  btnRestore.addEventListener('click', function(){
+    if(!confirm('Restaurar o conteúdo original? As edições salvas neste navegador serão perdidas.')) return;
+    if(storageAvailable){ try{ localStorage.removeItem(STORAGE_KEY); }catch(e){} }
+    memoryFallback = null;
+    mainContent.innerHTML = originalHTML;
+    if(editMode) exitEditMode();
+    updateStatus('Conteúdo original restaurado.');
+  });
+
+  btnDownload.addEventListener('click', function(){
+    var wasEditing = editMode;
+    if(wasEditing) exitEditMode();
+    var docClone = document.documentElement.cloneNode(true);
+    var editableInClone = docClone.querySelectorAll('[contenteditable]');
+    editableInClone.forEach(function(el){ el.removeAttribute('contenteditable'); });
+    var htmlString = '<!DOCTYPE html>\n' + docClone.outerHTML;
+    var blob = new Blob([htmlString], {type:'text/html'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'cefaleias-cervicalgia-lombalgia-editado.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    updateStatus('Arquivo baixado às '+nowTime()+'.');
+  });
+})();
+</script>
+</body>
+</html>

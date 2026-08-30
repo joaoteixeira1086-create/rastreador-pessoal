@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas de Campo — Fármacos Analgésicos e Moduladores da Dor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3e9d2;
+  --paper-card:#faf3e2;
+  --ink:#2b2418;
+  --ink-soft:#5a4f3d;
+  --ink-faint:#8c8168;
+  --line:#c9b98f;
+  --line-soft:#ddd0ab;
+
+  --c-aines:#a8452e;
+  --c-corti:#a37418;
+  --c-hist:#4c6b3f;
+  --c-opio:#7a3548;
+  --c-antidep:#3a5570;
+  --c-anticonv:#2c6b5e;
+  --c-conduta:#5a3a22;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(168,69,46,0.04), transparent 45%),
+    radial-gradient(ellipse at 80% 30%, rgba(44,107,94,0.05), transparent 50%),
+    var(--paper);
+  color:var(--ink);
+  font-family:'EB Garamond', serif;
+  font-size:18px;
+  line-height:1.7;
+}
+i, em, .lat{font-style:italic;}
+.small-caps{font-variant:small-caps;letter-spacing:.03em;}
+.label{
+  font-family:'Special Elite', monospace;
+  font-size:11.5px;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+
+/* ---------- REVIEW TOGGLE ---------- */
+#review-toggle{
+  position:fixed;top:22px;right:22px;z-index:500;
+  background:var(--paper-card);border:1px solid var(--ink);
+  padding:10px 16px;border-radius:2px;cursor:pointer;
+  font-family:'Special Elite',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink);box-shadow:3px 3px 0 rgba(43,36,24,0.15);
+  transition:.15s;
+}
+#review-toggle:hover{background:var(--ink);color:var(--paper);}
+#review-toggle.active{background:var(--ink);color:var(--paper-card);}
+#review-toggle .hint{display:block;font-family:'EB Garamond',serif;font-style:italic;font-size:11.5px;letter-spacing:0;text-transform:none;color:inherit;margin-top:3px;opacity:.75;}
+
+body.quiz-mode .hideable{
+  color:transparent;
+  background:repeating-linear-gradient(115deg, rgba(43,36,24,0.14) 0 2px, transparent 2px 7px);
+  border-radius:2px;
+  cursor:pointer;
+  user-select:none;
+  transition:.15s;
+}
+body.quiz-mode .hideable.revealed{
+  color:inherit;
+  background:none;
+  cursor:default;
+}
+body.quiz-mode .hideable::before{
+  content:"toque para revelar";
+  display:block;
+  font-family:'Special Elite',monospace;
+  font-size:9.5px;
+  letter-spacing:.05em;
+  color:var(--ink-faint);
+  opacity:0;
+}
+body.quiz-mode .hideable:not(.revealed):hover::before{opacity:.6;}
+body:not(.quiz-mode) .hideable::before{display:none;}
+
+/* ---------- FRONTISPIECE ---------- */
+.frontispiece{
+  max-width:900px;margin:0 auto;padding:90px 32px 60px;text-align:center;
+}
+.frontispiece .kicker{
+  font-family:'Special Elite',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-faint);margin-bottom:22px;
+}
+.frontispiece h1{
+  font-family:'Cormorant Garamond',serif;font-weight:500;font-style:italic;
+  font-size:56px;color:var(--ink);line-height:1.15;margin-bottom:18px;
+}
+.frontispiece .subtitle{
+  font-size:19px;color:var(--ink-soft);max-width:600px;margin:0 auto 34px;
+}
+.vine{width:220px;margin:0 auto 34px;color:var(--ink-faint);}
+.frontispiece .plates-index{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:10px;
+}
+.plates-index a{
+  font-family:'EB Garamond',serif;font-style:italic;font-size:15px;color:var(--ink-soft);
+  border:1px solid var(--line);padding:7px 16px;border-radius:2px;text-decoration:none;
+  transition:.15s;
+}
+.plates-index a:hover{background:var(--paper-card);border-color:var(--ink);color:var(--ink);}
+
+/* ---------- PLATE (SECTION) ---------- */
+.plate{
+  max-width:900px;margin:0 auto;padding:70px 32px;border-top:1px solid var(--line);
+}
+.plate .plate-head{display:flex;gap:26px;align-items:flex-start;margin-bottom:26px;}
+.plate .numeral{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:64px;
+  color:var(--plate-color,var(--c-aines));opacity:.5;line-height:1;flex-shrink:0;
+}
+.plate .icon-wrap{width:46px;height:46px;flex-shrink:0;color:var(--plate-color,var(--c-aines));margin-top:8px;}
+.plate .icon-wrap svg{width:100%;height:100%;}
+.plate h2{
+  font-family:'Cormorant Garamond',serif;font-weight:500;font-size:32px;color:var(--ink);
+  margin-bottom:6px;
+}
+.plate .plate-sub{
+  font-family:'EB Garamond',serif;font-style:italic;color:var(--ink-soft);font-size:16.5px;
+}
+.plate .mecanismo{
+  font-size:17px;color:var(--ink-soft);padding:0 0 8px;margin-bottom:8px;
+}
+.plate .mecanismo .drop{
+  font-family:'Cormorant Garamond',serif;font-size:52px;font-style:italic;float:left;line-height:.75;
+  padding-right:8px;padding-top:4px;color:var(--plate-color,var(--c-aines));
+}
+
+/* ---------- FAMILIA (specimen block) ---------- */
+.familia{margin:38px 0 44px;}
+.familia .fam-tag{
+  display:inline-flex;align-items:baseline;gap:10px;margin-bottom:10px;
+  border-bottom:1px solid var(--plate-color,var(--c-aines));padding-bottom:5px;
+}
+.familia .fam-tag .gen{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:var(--plate-color,var(--c-aines));
+}
+.familia .fam-tag .tr{font-family:'Special Elite',monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);}
+.familia p.tracos{color:var(--ink-soft);font-size:16px;margin-bottom:16px;}
+.familia p.tracos .suf{font-style:italic;color:var(--plate-color,var(--c-aines));}
+
+/* ---------- FICHA / TABLE ---------- */
+.ficha{
+  background:var(--paper-card);border:1px solid var(--line);
+  box-shadow:4px 4px 0 rgba(43,36,24,0.06);
+  margin-bottom:16px;
+}
+table{width:100%;border-collapse:collapse;}
+thead th{
+  text-align:left;font-family:'Special Elite',monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--paper-card);background:var(--plate-color,var(--c-aines));padding:11px 16px;
+}
+tbody td{
+  padding:13px 16px;font-size:15.5px;color:var(--ink-soft);border-bottom:1px solid var(--line-soft);
+  vertical-align:top;
+}
+tbody tr:last-child td{border-bottom:none;}
+tbody td:first-child{font-style:italic;color:var(--ink);}
+.tbl-scroll{overflow-x:auto;}
+
+/* ---------- NOTA DE CAMPO (marginal note) ---------- */
+.nota{
+  border-left:2px solid var(--plate-color,var(--c-aines));
+  padding:4px 0 4px 18px;margin:18px 0;font-style:italic;color:var(--ink-soft);font-size:16px;
+}
+.nota .label{display:block;font-style:normal;margin-bottom:5px;color:var(--plate-color,var(--c-aines));}
+
+/* ---------- ALERTA (specimen warning corner) ---------- */
+.alerta{
+  position:relative;background:var(--paper-card);border:1px dashed var(--plate-color,var(--c-aines));
+  padding:16px 20px;margin:18px 0;
+}
+.alerta .label{color:var(--plate-color,var(--c-aines));margin-bottom:6px;display:block;}
+.alerta p{font-size:15.5px;color:var(--ink);}
+
+/* ---------- COLOPHON ---------- */
+.colophon{
+  max-width:900px;margin:0 auto;padding:60px 32px 100px;border-top:1px solid var(--line);
+  text-align:center;color:var(--ink-faint);
+}
+.colophon .vine{color:var(--ink-faint);width:160px;}
+.colophon p{font-size:14px;margin-top:16px;line-height:1.8;}
+.colophon .fonts{font-family:'Special Elite',monospace;font-size:11px;letter-spacing:.05em;margin-top:18px;}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:640px){
+  .frontispiece h1{font-size:38px;}
+  .plate{padding:50px 20px;}
+  .plate .plate-head{gap:14px;}
+  .plate .numeral{font-size:44px;}
+  #review-toggle{top:12px;right:12px;padding:8px 12px;font-size:10px;}
+  .plate .mecanismo .drop{font-size:38px;}
+}
+</style>
+</head>
+<body>
+
+<div id="review-toggle" onclick="toggleReview()">
+  Modo herbário
+  <span class="hint">clique para revisar de cabeça</span>
+</div>
+
+<!-- ============ FRONTISPÍCIO ============ -->
+<div class="frontispiece">
+  <div class="kicker">Farmacologia clínica — coleção de estudo</div>
+  <h1>Atlas de Campo dos Fármacos<br>Analgésicos e Moduladores da Dor</h1>
+  <p class="subtitle">Um guia de identificação por família, nome e comportamento farmacológico — seis ordens de substâncias catalogadas como se fossem espécimes: pelo nome que carregam, pelo mecanismo que as define e pelos traços que as distinguem das vizinhas de família.</p>
+  <svg class="vine" viewBox="0 0 220 24" fill="none"><path d="M2 12 Q 20 2, 38 12 T 74 12 T 110 12 T 146 12 T 182 12 T 218 12" stroke="currentColor" stroke-width="1.2"/><circle cx="2" cy="12" r="2.2" fill="currentColor"/><circle cx="218" cy="12" r="2.2" fill="currentColor"/></svg>
+  <div class="plates-index">
+    <a href="#p1">Prancha I — AINEs</a>
+    <a href="#p2">Prancha II — Corticoides</a>
+    <a href="#p3">Prancha III — Anti-histamínicos</a>
+    <a href="#p4">Prancha IV — Opioides</a>
+    <a href="#p5">Prancha V — Antidepressivos</a>
+    <a href="#p6">Prancha VI — Anticonvulsivantes</a>
+    <a href="#p7">Prancha VII — Caderno de Conduta Clínica</a>
+  </div>
+</div>
+
+<!-- ============ PRANCHA I — AINES ============ -->
+<section class="plate" id="p1" style="--plate-color:var(--c-aines)">
+  <div class="plate-head">
+    <div class="numeral">I</div>
+    <div class="icon-wrap"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M24 6c-4 8-12 12-12 22a12 12 0 0024 0c0-6-3-9-5-13 0 4-2 6-4 6-3 0-3-4-3-15z"/></svg></div>
+    <div>
+      <h2>Anti-inflamatórios não esteroidais</h2>
+      <div class="plate-sub">Ordem AINEs — inibidores da via da ciclo-oxigenase</div>
+    </div>
+  </div>
+
+  <p class="mecanismo"><span class="drop">T</span>oda a ordem compartilha um único alvo molecular: a enzima ciclo-oxigenase (COX), que converte o ácido araquidônico — liberado da membrana celular pela fosfolipase A2 — em prostaglandina H2, precursora comum de todas as prostaglandinas e do tromboxano A2. Há duas isoformas relevantes. A COX-1 é constitutiva, presente na maior parte dos tecidos, e sustenta funções de manutenção fisiológica: proteção da mucosa gástrica pela PGE2, agregação plaquetária pelo tromboxano A2, perfusão renal pelas prostaglandinas vasodilatadoras. A COX-2 é majoritariamente induzida em contexto inflamatório — embora tenha expressão constitutiva relevante no rim e no endotélio vascular — e produz as prostaglandinas que sensibilizam terminações nociceptivas e amplificam a resposta inflamatória local. Toda a lógica de seletividade da ordem nasce dessa dualidade: quanto mais um fármaco inibe COX-1, maior o risco de lesão gástrica e sangramento; quanto mais seletivo para COX-2, menor esse risco — mas maior a preocupação cardiovascular, pelo desequilíbrio entre o tromboxano pró-trombótico (ainda dependente de COX-1 plaquetária) e a prostaciclina antitrombótica (dependente de COX-2 endotelial).</p>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Familia Propionata</span><span class="tr">sufixo -profeno / -oxeno</span></div>
+    <p class="tracos">Derivados do ácido propiônico, inibidores competitivos e reversíveis da COX. O sufixo <span class="suf">-profeno</span> (ou <span class="suf">-oxeno</span>, no caso do naproxeno) é o traço de reconhecimento do gênero — e, na maioria dos membros, indica seletividade fraca por COX-1.</p>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Seletividade</th><th>Observação de campo</th></tr></thead>
+        <tbody>
+          <tr><td>Ibuprofeno</td><td class="hideable">fracamente seletivo COX-1</td><td class="hideable">ampla disponibilidade de formas farmacêuticas; costuma ser preferido em pediatria</td></tr>
+          <tr><td>Cetoprofeno</td><td class="hideable">fracamente seletivo COX-1</td><td class="hideable">comprimido, injetável, gel/creme</td></tr>
+          <tr><td>Naproxeno</td><td class="hideable">fracamente seletivo COX-1</td><td class="hideable">meia-vida mais longa entre os propionatos clássicos</td></tr>
+          <tr><td>Flurbiprofeno</td><td class="hideable">muito seletivo COX-1</td><td class="hideable">pastilhas, spray bucal, comprimidos, gel/creme</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alerta">
+      <span class="label">Nota de divergência</span>
+      <p>Flurbiprofeno carrega o mesmo sufixo do gênero, mas rompe o padrão: é <em>muito</em> seletivo para COX-1, não apenas fracamente. É a exceção que todo taxonomista de prova conhece.</p>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Familia Oxicana</span><span class="tr">sufixo -icam</span></div>
+    <p class="tracos">Ácidos enólicos de meia-vida longa, sustentada por alta ligação a proteínas plasmáticas e reciclagem êntero-hepática — o que permite posologia de uma tomada diária. A tendência do gênero é a seletividade por COX-2, em grau crescente conforme a espécie.</p>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Seletividade</th><th>Observação de campo</th></tr></thead>
+        <tbody>
+          <tr><td>Meloxicam</td><td class="hideable">moderadamente seletivo COX-2</td><td class="hideable">comprimidos, cápsulas, injetável</td></tr>
+          <tr><td>Piroxicam</td><td class="hideable">fracamente seletivo COX-2</td><td class="hideable">cápsula, gel dermatológico, injetável, supositório</td></tr>
+          <tr><td>Tenoxicam</td><td class="hideable">não classificado até o momento</td><td class="hideable">comprimidos e solução injetável</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Familia Fenilacetata &amp; Fenamata</span><span class="tr">sufixo -fenaco / -âmico</span></div>
+    <p class="tracos">Dois ramos próximos da mesma linhagem: os fenilacetatos, reconhecíveis pelo sufixo <span class="suf">-fenaco</span> (diclofenaco e seus sais), e os fenamatos, reconhecíveis por <span class="suf">-âmico</span> (ácido mefenâmico). Ambos tendem à seletividade fraca por COX-2.</p>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Seletividade</th><th>Observação de campo</th></tr></thead>
+        <tbody>
+          <tr><td>Diclofenaco sódico</td><td class="hideable">fracamente seletivo COX-2</td><td class="hideable">comprimido, injetável, colírio, supositório</td></tr>
+          <tr><td>Diclofenaco potássico</td><td class="hideable">fracamente seletivo COX-2</td><td class="hideable">absorção mais rápida — útil para dor aguda</td></tr>
+          <tr><td>Diclofenaco resinato</td><td class="hideable">fracamente seletivo COX-2</td><td class="hideable">formulação pediátrica em gotas</td></tr>
+          <tr><td>Diclofenaco dietilamônio</td><td class="hideable">fracamente seletivo COX-2</td><td class="hideable">uso tópico (gel) — menor exposição sistêmica</td></tr>
+          <tr><td>Aceclofenaco</td><td class="hideable">não classificado</td><td class="hideable">comprimido, gel, suspensão oral</td></tr>
+          <tr><td>Ácido mefenâmico</td><td class="hideable">não classificado</td><td class="hideable">maior incidência de reações cutâneas idiossincráticas</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Espécies avulsas</span><span class="tr">sulfanilidas, salicilatos e diversos</span></div>
+    <p class="tracos">O ramo sem sobrenome comum da árvore — cada espécie precisa ser reconhecida por um traço próprio, não por um sufixo de família.</p>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Seletividade</th><th>Observação de campo</th></tr></thead>
+        <tbody>
+          <tr><td>Nimesulida</td><td class="hideable">fracamente seletivo COX-2</td><td class="hideable">uso restrito/controverso em vários países por hepatotoxicidade</td></tr>
+          <tr><td>Cetorolaco</td><td class="hideable">altamente seletivo COX-1</td><td class="hideable">potente analgésico; uso de curta duração pelo risco gastrointestinal e renal</td></tr>
+          <tr><td>Nabumetona</td><td class="hideable">não classificado</td><td class="hideable">pró-fármaco</td></tr>
+          <tr><td>Etodolaco</td><td class="hideable">moderadamente seletivo COX-2</td><td class="hideable">comprimido revestido, cápsula</td></tr>
+          <tr><td>Ácido acetilsalicílico</td><td class="hideable">fracamente seletivo COX-1</td><td class="hideable">inibição irreversível da COX plaquetária — base da cardioproteção; agride diretamente a mucosa gástrica</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">
+      <span class="label">Nota de campo</span>
+      O ácido acetilsalicílico é o único espécime de toda a ordem que acetila covalentemente a serina 530 da COX-1 plaquetária, inativando-a de forma irreversível pelo resto da vida útil da plaqueta — cerca de dez dias, tempo que o organismo leva para produzir plaquetas novas. É essa singularidade química que sustenta o uso em dose baixa para cardioproteção: nenhum outro AINE tem esse efeito prolongado, porque todos os demais são inibidores reversíveis e competitivos.
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRANCHA II — CORTICOIDES ============ -->
+<section class="plate" id="p2" style="--plate-color:var(--c-corti)">
+  <div class="plate-head">
+    <div class="numeral">II</div>
+    <div class="icon-wrap"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M24 5 8 12v10c0 11 7 18 16 21 9-3 16-10 16-21V12z"/></svg></div>
+    <div>
+      <h2>Corticoides sistêmicos</h2>
+      <div class="plate-sub">Ordem Glicocorticoide — moduladores da transcrição gênica</div>
+    </div>
+  </div>
+
+  <p class="mecanismo"><span class="drop">O</span>s glicocorticoides atravessam a membrana celular por difusão passiva e se ligam a um receptor citoplasmático que, uma vez ativado, transloca-se ao núcleo. Ali atua por dois caminhos: a transativação, ligando-se a elementos responsivos a glicocorticoides (GRE) no DNA e induzindo a transcrição de genes anti-inflamatórios — entre eles a lipocortina-1 (anexina A1), que inibe a fosfolipase A2 e corta a cascata do ácido araquidônico logo na origem, rio acima de onde os AINEs atuam; e a transrepressão, inibindo fatores de transcrição pró-inflamatórios como o NF-κB, o que reduz a expressão de citocinas, quimiocinas e moléculas de adesão. Por ser um mecanismo genômico, o efeito clínico pleno se instala em horas, não minutos — e a duração de ação de cada espécime acompanha, em geral, a afinidade e o tempo de ocupação do receptor.</p>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Grupo de curta duração</span><span class="tr">8 – 12 horas · potência de referência</span></div>
+    <p class="tracos">São o próprio padrão-ouro da tabela — a hidrocortisona é a forma sintética do cortisol endógeno, e toda a escala de potência da ordem é medida em relação a ela.</p>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Dose equivalente</th><th>Potência (vs. hidrocortisona)</th></tr></thead>
+        <tbody>
+          <tr><td>Hidrocortisona (cortisol)</td><td class="hideable">20 mg</td><td class="hideable">1</td></tr>
+          <tr><td>Cortisona acetato</td><td class="hideable">25 mg</td><td class="hideable">0,8 — precisa de ativação hepática</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Grupo de duração intermediária</span><span class="tr">12 – 36 horas · 4 a 5 vezes mais potentes</span></div>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Dose equivalente</th><th>Potência (vs. hidrocortisona)</th></tr></thead>
+        <tbody>
+          <tr><td>Prednisona</td><td class="hideable">5 mg</td><td class="hideable">4</td></tr>
+          <tr><td>Prednisolona</td><td class="hideable">5 mg</td><td class="hideable">4</td></tr>
+          <tr><td>Metilprednisolona</td><td class="hideable">4 mg</td><td class="hideable">5</td></tr>
+          <tr><td>Triancinolona</td><td class="hideable">4 mg</td><td class="hideable">5</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alerta">
+      <span class="label">Nota de divergência</span>
+      <p>A prednisona é um pró-fármaco: depende da 11-beta-hidroxiesteroide desidrogenase hepática para se converter em prednisolona, a forma ativa. Em insuficiência hepática grave, essa conversão pode falhar — e a prednisolona, administrada diretamente, torna-se a escolha mais segura.</p>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Grupo de longa duração</span><span class="tr">36 – 72 horas · trinta vezes mais potentes</span></div>
+    <p class="tracos">Quanto maior a potência, menor a dose necessária — e, nesta faixa, a atividade mineralocorticoide praticamente desaparece em doses de reposição.</p>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Dose equivalente</th><th>Potência (vs. hidrocortisona)</th></tr></thead>
+        <tbody>
+          <tr><td>Dexametasona</td><td class="hideable">0,75 mg</td><td class="hideable">30</td></tr>
+          <tr><td>Betametasona</td><td class="hideable">0,6 mg</td><td class="hideable">30</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Ramo mineralocorticoide</span><span class="tr">receptor distinto, mesma raiz esteroide</span></div>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Dose equivalente</th><th>Uso</th></tr></thead>
+        <tbody>
+          <tr><td>Fludrocortisona</td><td class="hideable">0,1 – 0,2 mg (reposição)</td><td class="hideable">não é usada pelo efeito anti-inflamatório</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">
+      <span class="label">Nota de campo</span>
+      Vinte miligramas de hidrocortisona equivalem, em atividade mineralocorticoide, a 25 mg de cortisona acetato e a apenas 0,1 mg de fludrocortisona. Prednisona ou prednisolona em dose anti-inflamatória igual ou superior a 50 mg por dia chegam a essa mesma equivalência mineralocorticoide — um detalhe que explica por que corticoterapia prolongada em dose alta pode causar retenção de sódio e hipertensão mesmo sem o uso de fludrocortisona.
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRANCHA III — ANTI-HISTAMÍNICOS ============ -->
+<section class="plate" id="p3" style="--plate-color:var(--c-hist)">
+  <div class="plate-head">
+    <div class="numeral">III</div>
+    <div class="icon-wrap"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M24 6c8 10 14 17 14 25a14 14 0 01-28 0c0-8 6-15 14-25z"/></svg></div>
+    <div>
+      <h2>Anti-histamínicos H1 de segunda geração</h2>
+      <div class="plate-sub">Ordem Antagonista — bloqueio do receptor H1 periférico</div>
+    </div>
+  </div>
+
+  <p class="mecanismo"><span class="drop">A</span> histamina liberada por mastócitos e basófilos ativa o receptor H1, acoplado à proteína Gq, desencadeando vasodilatação, aumento da permeabilidade capilar, prurido e broncoconstrição — a tríade clínica de urticária, rinite e conjuntivite alérgicas. Os antagonistas de primeira geração atravessavam livremente a barreira hematoencefálica e bloqueavam também receptores H1 centrais, causando sedação. O traço que define toda esta segunda geração é justamente o oposto: moléculas mais polares e, sobretudo, substratos da glicoproteína-P, uma bomba de efluxo que as expulsa ativamente do sistema nervoso central de volta à circulação. É esse mecanismo de exclusão — não uma diferença de afinidade pelo receptor — que faz da sedação, e não da potência, o eixo real de identificação de campo desta ordem.</p>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Todas do mesmo gênero nominal</span><span class="tr">sufixo -ina, comum a toda a ordem</span></div>
+    <p class="tracos">Aqui o sufixo não separa ninguém — todas terminam em <span class="suf">-ina</span>. O critério de campo é o grau de penetração residual na barreira hematoencefálica, refletido na sedação relatada.</p>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Sedação</th><th>Ponto de atenção</th></tr></thead>
+        <tbody>
+          <tr><td>Loratadina / Desloratadina</td><td class="hideable">baixa</td><td class="hideable">boa opção diurna; considerar interações e função hepática</td></tr>
+          <tr><td>Cetirizina</td><td class="hideable">possível</td><td class="hideable">início rápido; sonolência em parte dos pacientes; ajustar na disfunção renal</td></tr>
+          <tr><td>Levocetirizina</td><td class="hideable">possível</td><td class="hideable">perfil semelhante à cetirizina; atenção à função renal</td></tr>
+          <tr><td>Fexofenadina</td><td class="hideable">muito baixa</td><td class="hideable">tomar com água; sucos e antiácidos de alumínio/magnésio reduzem a absorção</td></tr>
+          <tr><td>Bilastina</td><td class="hideable">muito baixa</td><td class="hideable">alimentos e sucos podem reduzir a absorção; seguir a bula</td></tr>
+          <tr><td>Rupatadina</td><td class="hideable">baixa</td><td class="hideable">também antagoniza o fator ativador de plaquetas; atenção a interações via CYP3A4</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alerta">
+      <span class="label">Nota de divergência</span>
+      <p>A rupatadina não é apenas mais um espécime do gênero — ela carrega um segundo mecanismo, o antagonismo do fator ativador de plaquetas (PAF), o que a diferencia estruturalmente do resto da ordem.</p>
+    </div>
+    <div class="nota">
+      <span class="label">Nota de campo</span>
+      Cetirizina e levocetirizina são, entre a segunda geração, as mais próximas de sua ancestral de primeira geração — a hidroxizina — o que explica por que ainda mantêm alguma penetração residual no sistema nervoso central e, com ela, a chance de sonolência que fexofenadina e bilastina praticamente não apresentam.
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRANCHA IV — OPIOIDES ============ -->
+<section class="plate" id="p4" style="--plate-color:var(--c-opio)">
+  <div class="plate-head">
+    <div class="numeral">IV</div>
+    <div class="icon-wrap"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="17" cy="17" r="9"/><path d="M23 23 40 40M31 31l5-5M36 36l5-5"/></svg></div>
+    <div>
+      <h2>Opioides</h2>
+      <div class="plate-sub">Ordem Receptorial — ligantes do sistema opioide endógeno</div>
+    </div>
+  </div>
+
+  <p class="mecanismo"><span class="drop">O</span> receptor opioide µ, alvo principal de toda a ordem, é acoplado à proteína Gi. Sua ativação inibe a adenilil ciclase, reduzindo AMP cíclico; abre canais de potássio, hiperpolarizando o neurônio; e fecha canais de cálcio voltagem-dependentes, reduzindo a liberação pré-sináptica de neurotransmissores excitatórios — entre eles a substância P nas vias nociceptivas da medula espinhal. O resultado líquido é a diminuição da transmissão do sinal doloroso em múltiplos níveis, do corno dorsal da medula ao tronco encefálico. O que distingue cada espécime dentro da ordem não é o sufixo do nome — que aqui não segue padrão algum — mas a atividade intrínseca no receptor: agonismo pleno, agonismo parcial ou antagonismo puro.</p>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Agonistas plenos</span><span class="tr">eficácia máxima no receptor µ</span></div>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Uso principal</th><th>Perfil receptorial</th></tr></thead>
+        <tbody>
+          <tr><td>Morfina</td><td class="hideable">dor aguda e crônica, amplamente usada</td><td class="hideable">agonista µ (+++), δ (+)</td></tr>
+          <tr><td>Hidromorfona</td><td class="hideable">dor aguda e crônica</td><td class="hideable">agonista µ (+++), δ (+)</td></tr>
+          <tr><td>Metadona</td><td class="hideable">dor crônica; manutenção de dependentes em doses baixas</td><td class="hideable">agonista µ (+++)</td></tr>
+          <tr><td>Petidina (meperidina)</td><td class="hideable">dor aguda</td><td class="hideable">agonista µ (+++)</td></tr>
+          <tr><td>Fentanil</td><td class="hideable">dor aguda; anestesia</td><td class="hideable">agonista µ (+++)</td></tr>
+          <tr><td>Oxicodona</td><td class="hideable">dor crônica e aguda</td><td class="hideable">agonista µ (++)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Agonistas parciais e mistos</span><span class="tr">teto de efeito abaixo do agonista pleno</span></div>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Uso principal</th><th>Perfil receptorial</th></tr></thead>
+        <tbody>
+          <tr><td>Buprenorfina</td><td class="hideable">dor aguda/crônica; manutenção de dependentes</td><td class="hideable">agonista parcial µ, antagonista κ</td></tr>
+          <tr><td>Pentazocina</td><td class="hideable">dor aguda</td><td class="hideable">agonista parcial µ, agonista κ (+)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alerta">
+      <span class="label">Nota de divergência</span>
+      <p>A buprenorfina, por ocupar o receptor µ sem ativá-lo totalmente, pode precipitar síndrome de abstinência se administrada a um paciente já em uso de um agonista pleno: ela desloca a morfina ou o fentanil do receptor, mas entrega apenas uma fração do efeito.</p>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Agonistas fracos e pró-fármacos</span><span class="tr">eficácia intrínseca baixa</span></div>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Uso principal</th><th>Perfil receptorial</th></tr></thead>
+        <tbody>
+          <tr><td>Codeína</td><td class="hideable">dor moderada</td><td class="hideable">agonista µ fraco — pró-fármaco</td></tr>
+          <tr><td>Tramadol</td><td class="hideable">dor aguda pós-operatória e dor crônica</td><td class="hideable">agonista µ fraco (cerca de 30% da ação) somado a inibição da recaptação de serotonina e noradrenalina</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">
+      <span class="label">Nota de campo</span>
+      A codeína depende da enzima hepática CYP2D6 para ser desmetilada em morfina — sem essa conversão, seu efeito analgésico é mínimo. Polimorfismos genéticos dessa enzima criam metabolizadores ultrarrápidos, com risco de toxicidade por excesso de morfina formada, e metabolizadores lentos, para os quais a codeína praticamente não analgesia. É o ponto de prova mais citado sobre este espécime.
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Antagonista puro</span><span class="tr">reversão completa, sem atividade intrínseca</span></div>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Uso principal</th><th>Perfil receptorial</th></tr></thead>
+        <tbody>
+          <tr><td>Naloxona</td><td class="hideable">reversão de intoxicação opioide</td><td class="hideable">antagonista µ, δ, κ</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRANCHA V — ANTIDEPRESSIVOS ============ -->
+<section class="plate" id="p5" style="--plate-color:var(--c-antidep)">
+  <div class="plate-head">
+    <div class="numeral">V</div>
+    <div class="icon-wrap"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 30q6-18 12 0t12 0 12 0"/></svg></div>
+    <div>
+      <h2>Antidepressivos no tratamento da dor neuropática</h2>
+      <div class="plate-sub">Ordem Moduladora — vias descendentes inibitórias da dor</div>
+    </div>
+  </div>
+
+  <p class="mecanismo"><span class="drop">A</span> dor neuropática é sustentada, em parte, por uma falha das vias descendentes que normalmente inibem a transmissão nociceptiva no corno dorsal da medula — vias que dependem de serotonina e, sobretudo, de noradrenalina liberadas por neurônios originados no tronco encefálico. Antidepressivos que bloqueiam a recaptação dessas duas aminas reforçam esse freio descendente, e é esse mecanismo — não o efeito antidepressivo em si — que explica a eficácia analgésica independente do humor do paciente. Os tricíclicos de amina terciária somam a isso um bloqueio de canais de sódio, o que amplia a eficácia mas também os efeitos colaterais anticolinérgicos, já que a mesma molécula pouco seletiva que bloqueia recaptação também bloqueia receptores muscarínicos, histamínicos e alfa-adrenérgicos.</p>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Tricíclicos de amina terciária</span><span class="tr">eficácia alta, efeitos colaterais altos</span></div>
+    <p class="tracos">Amitriptilina, doxepina e imipramina — a linhagem original, com maior força de evidência e também maior carga de efeitos anticolinérgicos, anti-histamínicos e antiadrenérgicos, decorrentes da baixa seletividade da molécula.</p>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Grupo</th><th>Eficácia</th><th>Evidência</th><th>Efeitos colaterais</th></tr></thead>
+        <tbody>
+          <tr><td>Amitriptilina, doxepina, imipramina</td><td class="hideable">sim</td><td class="hideable">+++</td><td class="hideable">+++</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Tricíclicos de amina secundária</span><span class="tr">metabólitos ativos dos terciários</span></div>
+    <p class="tracos">Desipramina é o metabólito ativo da imipramina; nortriptilina, o da amitriptilina. A perda de um grupamento metil os torna mais seletivos para a recaptação de noradrenalina — mas os efeitos colaterais permanecem relevantes.</p>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Grupo</th><th>Eficácia</th><th>Evidência</th><th>Efeitos colaterais</th></tr></thead>
+        <tbody>
+          <tr><td>Desipramina, nortriptilina</td><td class="hideable">sim</td><td class="hideable">++</td><td class="hideable">+++</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Inibidores duais e atípicos</span><span class="tr">eficazes, com poucos efeitos colaterais</span></div>
+    <p class="tracos">Venlafaxina e duloxetina bloqueiam a recaptação de serotonina e noradrenalina de forma mais seletiva que os tricíclicos, sem o bloqueio colateral de receptores muscarínicos e histamínicos — daí o perfil de tolerabilidade muito superior, hoje o motivo pelo qual são preferidos na prática.</p>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Grupo</th><th>Eficácia</th><th>Evidência</th><th>Efeitos colaterais</th></tr></thead>
+        <tbody>
+          <tr><td>Venlafaxina</td><td class="hideable">sim</td><td class="hideable">++</td><td class="hideable">+</td></tr>
+          <tr><td>Duloxetina</td><td class="hideable">sim</td><td class="hideable">++</td><td class="hideable">+</td></tr>
+          <tr><td>Bupropiona</td><td class="hideable">sim</td><td class="hideable">+</td><td class="hideable">+</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Inibidores seletivos de serotonina</span><span class="tr">eficácia modesta ou ausente</span></div>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Grupo</th><th>Eficácia</th><th>Evidência</th><th>Efeitos colaterais</th></tr></thead>
+        <tbody>
+          <tr><td>Paroxetina, citalopram</td><td class="hideable">sim, modesta</td><td class="hideable">+</td><td class="hideable">+</td></tr>
+          <tr><td>Fluoxetina</td><td class="hideable">não</td><td class="hideable">–</td><td class="hideable">+</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alerta">
+      <span class="label">Nota de divergência</span>
+      <p>Fluoxetina bloqueia quase exclusivamente a recaptação de serotonina, com efeito mínimo sobre a noradrenalina — e é justamente a via noradrenérgica a mais relevante para o freio descendente da dor. Por isso, apesar de ser um antidepressivo eficaz para depressão, não tem eficácia comprovada em dor neuropática: nem todo antidepressivo trata dor.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRANCHA VI — ANTICONVULSIVANTES ============ -->
+<section class="plate" id="p6" style="--plate-color:var(--c-anticonv)">
+  <div class="plate-head">
+    <div class="numeral">VI</div>
+    <div class="icon-wrap"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M26 4 12 26h10l-4 18 18-24H26z" stroke-linejoin="round"/></svg></div>
+    <div>
+      <h2>Anticonvulsivantes usados em dor neuropática</h2>
+      <div class="plate-sub">Ordem Estabilizadora — contenção da excitabilidade neuronal</div>
+    </div>
+  </div>
+
+  <p class="mecanismo"><span class="drop">O</span> nervo lesado, na dor neuropática, torna-se hiperexcitável: canais de sódio se acumulam ectopicamente ao longo do axônio danificado e disparam potenciais de ação espontâneos, enquanto a liberação de glutamato nas sinapses do corno dorsal se intensifica. Os anticonvulsivantes usados nesse contexto atacam justamente essa hiperexcitabilidade, por duas vias mecanísticas principais — bloqueio de canais de sódio voltagem-dependentes ou modulação de canais de cálcio — e uma terceira via mista, que combina múltiplos alvos na mesma molécula.</p>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Bloqueadores de canais de sódio</span><span class="tr">sufixo -azepina, com uma exceção nominal</span></div>
+    <p class="tracos">Estabilizam o canal de sódio em seu estado inativado, reduzindo disparos repetitivos de alta frequência sem bloquear a condução nervosa normal — um bloqueio dependente do uso, que afeta preferencialmente neurônios hiperativos.</p>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Apresentação</th></tr></thead>
+        <tbody>
+          <tr><td>Carbamazepina</td><td class="hideable">comprimidos de 200 ou 400 mg; suspensão oral 20 mg/mL</td></tr>
+          <tr><td>Fenitoína</td><td class="hideable">comprimidos de 100 mg; suspensão oral de 20 mg/mL</td></tr>
+          <tr><td>Oxcarbazepina</td><td class="hideable">análogo cetônico da carbamazepina, com menor indução enzimática</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">
+      <span class="label">Nota de campo</span>
+      A fenitoína rompe o padrão de sufixo do gênero, mas compartilha o mesmo mecanismo de bloqueio de canal de sódio dependente do estado — é a exceção de nome que não é exceção de mecanismo.
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Moduladores da subunidade α2δ</span><span class="tr">o nome engana — não agem no receptor GABA</span></div>
+    <p class="tracos">Ligam-se à subunidade auxiliar α2δ dos canais de cálcio voltagem-dependentes nos terminais pré-sinápticos, reduzindo o influxo de cálcio e, com ele, a liberação de glutamato e de outros neurotransmissores excitatórios.</p>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Apresentação</th></tr></thead>
+        <tbody>
+          <tr><td>Gabapentina</td><td class="hideable">cápsulas de 300 ou 400 mg</td></tr>
+          <tr><td>Pregabalina</td><td class="hideable">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alerta">
+      <span class="label">Nota de divergência — a armadilha do nome</span>
+      <p>Os dois espécimes carregam a raiz <em>gaba</em> no nome — gaba-pentina, pre-gaba-lina — mas nenhum dos dois age sobre o receptor GABA. O nome é um resquício histórico de sua semelhança estrutural com o neurotransmissor, não uma descrição do mecanismo real. É a pegadinha mais repetida em prova dentro desta ordem inteira.</p>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Agentes de mecanismo misto</span><span class="tr">múltiplos alvos na mesma molécula</span></div>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Apresentação</th></tr></thead>
+        <tbody>
+          <tr><td>Topiramato</td><td class="hideable">—</td></tr>
+          <tr><td>Valproato de sódio</td><td class="hideable">comprimidos de 250 ou 500 mg; cápsulas de 250 mg; xarope de 50 mg/mL</td></tr>
+          <tr><td>Ácido valpróico</td><td class="hideable">comprimidos de 250 ou 500 mg; cápsulas de 250 mg; xarope de 50 mg/mL</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">
+      <span class="label">Nota de campo</span>
+      Valproato de sódio e ácido valpróico não são dois espécimes diferentes — são a mesma molécula em duas formas de apresentação, sal sódico e ácido livre, ambas convertidas ao mesmo íon valproato no organismo. O mecanismo é chamado de misto porque a molécula bloqueia canais de sódio, bloqueia canais de cálcio do tipo T e ainda aumenta indiretamente a disponibilidade de GABA, inibindo sua degradação.
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRANCHA VII — CADERNO DE CONDUTA CLÍNICA ============ -->
+<section class="plate" id="p7" style="--plate-color:var(--c-conduta)">
+  <div class="plate-head">
+    <div class="numeral">VII</div>
+    <div class="icon-wrap"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="6" width="32" height="36" rx="1"/><path d="M16 16h16M16 24h16M16 32h10"/></svg></div>
+    <div>
+      <h2>Caderno de conduta clínica</h2>
+      <div class="plate-sub">Da doença ao espécime — primeira linha por quadro, sem posologia</div>
+    </div>
+  </div>
+
+  <p class="mecanismo"><span class="drop">E</span>sta prancha inverte o sentido do atlas: em vez de partir do fármaco para descrever sua família, parte-se do quadro clínico para apontar, entre os espécimes já catalogados nas seis ordens anteriores, qual costuma ocupar a primeira linha de conduta — e por quê. Doses não são o objeto aqui; o que importa é o raciocínio que leva à escolha, os efeitos adversos mais relevantes de cada conduta e como conter suas complicações quando elas aparecem.</p>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Cefaleias primárias</span><span class="tr">tensional · migrânea sem e com aura · em salvas</span></div>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Quadro</th><th>Primeira linha (entre os catalogados)</th><th>Justificativa e conduta</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Cefaleia tensional</td>
+            <td class="hideable">AINE na crise; tricíclico (amitriptilina) na profilaxia se episódios frequentes</td>
+            <td class="hideable">a dor nasce de sensibilização miofascial pericraniana; a amitriptilina eleva o limiar de dor central por um mecanismo independente do efeito antidepressivo, útil quando as crises se tornam quase diárias</td>
+          </tr>
+          <tr>
+            <td>Migrânea sem aura e com aura</td>
+            <td class="hideable">AINE nas crises leves a moderadas; na profilaxia de crises frequentes, anticonvulsivante (topiramato ou valproato de sódio) ou tricíclico (amitriptilina)</td>
+            <td class="hideable">os fármacos específicos de crise migranosa (triptanos) ficam fora do escopo desta coleção; entre os já catalogados, valproato de sódio exige atenção redobrada em mulheres em idade fértil pelo risco teratogênico, e ambos os anticonvulsivantes pedem monitorização hepática periódica</td>
+          </tr>
+          <tr>
+            <td>Cefaleia em salvas</td>
+            <td class="hideable">corticoide sistêmico em curso curto como ponte terapêutica, enquanto a profilaxia de fundo (fora do escopo) atinge efeito pleno</td>
+            <td class="hideable">o curso é deliberadamente curto para reduzir crises no início do período de salva; mesmo assim, a retirada deve ser gradual — mesmo cursos breves podem discretamente suprimir o eixo hipotálamo-hipófise-adrenal se repetidos</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Dor oncológica crônica e dor aguda</span><span class="tr">escada analgésica e abordagem multimodal</span></div>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Quadro</th><th>Primeira linha (entre os catalogados)</th><th>Justificativa e conduta</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Dor oncológica crônica</td>
+            <td class="hideable">degrau 1 (leve): AINE. degrau 2 (moderada): opioide fraco (codeína ou tramadol) associado a AINE. degrau 3 (forte): opioide forte (morfina, oxicodona, fentanil ou metadona). adjuvante conforme o mecanismo: anticonvulsivante ou antidepressivo se houver componente neuropático por infiltração tumoral de plexo nervoso; corticoide se a dor for por edema perilesional</td>
+            <td class="hideable">a escada da Organização Mundial da Saúde escalona pela intensidade, não pela etiologia; ao usar opioide crônico, prescrever laxante de forma profilática sempre — a constipação é praticamente universal e, ao contrário de outros efeitos adversos opioides, não desenvolve tolerância com o tempo</td>
+          </tr>
+          <tr>
+            <td>Dor aguda (pós-operatória, trauma)</td>
+            <td class="hideable">abordagem multimodal: AINE associado a opioide (tramadol para dor moderada; morfina ou oxicodona para dor intensa) e, quando indicado, anestésico local em bloqueio regional ou infiltração</td>
+            <td class="hideable">combinar classes com mecanismos diferentes reduz a dose necessária de cada uma isoladamente; o opioide deve ser mantido pelo menor tempo e na menor dose eficaz, pelo risco de depressão respiratória e de uso persistente após a alta</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Fibromialgia</span><span class="tr">dor de sensibilização central, sem substrato inflamatório periférico</span></div>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Primeira linha (entre os catalogados)</th><th>Justificativa e conduta</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="hideable">antidepressivo (duloxetina) e/ou anticonvulsivante (pregabalina)</td>
+            <td class="hideable">ambos têm indicação específica reconhecida para fibromialgia, atuando na modulação central da dor, não na periferia — coerente com a fisiopatologia de sensibilização central da síndrome</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alerta">
+      <span class="label">Nota de divergência</span>
+      <p>AINEs isolados e opioides não são primeira linha aqui: não há processo inflamatório periférico relevante para o AINE atuar, e o opioide crônico tende a piorar a hiperalgesia central característica da síndrome — a chamada hiperalgesia induzida por opioide. Escalonar opioide na fibromialgia costuma alimentar o próprio quadro que se pretende tratar.</p>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Neuropatias e neuralgias</span><span class="tr">diabética · pós-herpética · trigêmeo · membro fantasma</span></div>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Quadro</th><th>Primeira linha (entre os catalogados)</th><th>Justificativa e conduta</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Neuropatia diabética</td>
+            <td class="hideable">anticonvulsivante (pregabalina ou gabapentina) ou antidepressivo (duloxetina ou tricíclico)</td>
+            <td class="hideable">ajustar gabapentina/pregabalina na insuficiência renal, já que ambas dependem quase exclusivamente de eliminação renal; evitar duloxetina em hepatopatia relevante</td>
+          </tr>
+          <tr>
+            <td>Neuropatia pós-herpética</td>
+            <td class="hideable">anticonvulsivante (gabapentina/pregabalina) ou tricíclico; anestésico local tópico (lidocaína, em adesivo) sobre a área afetada como adjuvante</td>
+            <td class="hideable">em idosos — população predominante deste quadro — tricíclicos e gabapentinoides exigem atenção redobrada à sedação e à tontura, pelo risco de queda</td>
+          </tr>
+          <tr>
+            <td>Neuralgia do trigêmeo</td>
+            <td class="hideable">carbamazepina</td>
+            <td class="hideable">é a exceção entre as dores neuropáticas: aqui o bloqueador de canal de sódio é primeira linha, não o gabapentinoide, por refletir a fisiopatologia de descargas ectópicas paroxísticas na raiz do trigêmeo; exige monitorização de hemograma pelo risco raro de agranulocitose e anemia aplásica, e atenção a reações cutâneas graves como a síndrome de Stevens-Johnson, mais descritas em portadores do alelo HLA-B*1502</td>
+          </tr>
+          <tr>
+            <td>Dor de membro fantasma e de coto de amputação</td>
+            <td class="hideable">anticonvulsivante (gabapentina/pregabalina) e/ou tricíclico; opioide como adjuvante em casos refratários, nunca como primeira linha isolada</td>
+            <td class="hideable">a origem é central — reorganização do córtex somatossensorial após a perda do membro — o que explica por que moduladores de excitabilidade central superam analgésicos periféricos; iniciar o manejo multimodal precocemente, incluindo bloqueio anestésico local perioperatório do coto, reduz a incidência de dor fantasma crônica</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Síndromes musculoesqueléticas</span><span class="tr">cervicalgia · SDM · lombalgia · LER/DORT · mialgia · radiculopatia</span></div>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Quadro</th><th>Primeira linha (entre os catalogados)</th><th>Justificativa e conduta</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Cervicalgia, SDM, mialgia, LER/DORT (fase aguda)</td>
+            <td class="hideable">AINE em curso curto</td>
+            <td class="hideable">quadro predominantemente inflamatório/mecânico agudo; evitar prolongar o uso pelo risco cumulativo gástrico e renal</td>
+          </tr>
+          <tr>
+            <td>Lombalgia crônica e SDM crônica</td>
+            <td class="hideable">associar antidepressivo (duloxetina, com indicação específica para lombalgia crônica) quando há sensibilização central sobreposta ao quadro mecânico</td>
+            <td class="hideable">dor musculoesquelética que persiste além do tempo esperado de reparo tecidual costuma já não responder bem a AINE isolado — sinal de que o sistema nervoso central passou a amplificar o sinal</td>
+          </tr>
+          <tr>
+            <td>Radiculopatia / hérnia discal</td>
+            <td class="hideable">anticonvulsivante (gabapentina/pregabalina) para a dor irradiada em queimação; corticoide sistêmico em curso curto (ou infiltração epidural) para reduzir o edema radicular na fase aguda</td>
+            <td class="hideable">a dor irradiada, em choque ou queimação, tem componente neuropático pela compressão da raiz — por isso responde melhor ao gabapentinoide do que ao AINE isolado; o corticoide de curso curto tem baixo risco de Cushing iatrogênico, mas cursos repetidos ao longo do tempo somam risco cumulativo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Doenças alérgicas</span><span class="tr">rinite alérgica · urticária</span></div>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Quadro</th><th>Primeira linha (entre os catalogados)</th><th>Justificativa e conduta</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Rinite alérgica</td>
+            <td class="hideable">anti-histamínico H1 de segunda geração oral; corticoide tópico nasal nos quadros moderados a graves ou persistentes</td>
+            <td class="hideable">o corticoide nasal atua localmente, com absorção sistêmica mínima quando a técnica de aplicação é correta; uso crônico sem acompanhamento carrega risco de irritação e, raramente, perfuração de septo</td>
+          </tr>
+          <tr>
+            <td>Urticária</td>
+            <td class="hideable">anti-histamínico H1 de segunda geração oral, podendo associar um segundo anti-H1 em casos refratários; corticoide sistêmico reservado a exacerbações graves ou com angioedema, sempre em curso curto</td>
+            <td class="hideable">o corticoide não é tratamento de manutenção da urticária crônica — usado de forma repetida ou prolongada, pode gerar síndrome de Cushing iatrogênica</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alerta">
+      <span class="label">Efeito adverso e conduta — síndrome de Cushing iatrogênica</span>
+      <p>O uso sistêmico repetido ou prolongado de corticoide, como pode ocorrer em urticária crônica mal controlada, produz a síndrome de Cushing por excesso exógeno de glicocorticoide: face em lua cheia, giba dorsal, estrias violáceas, hiperglicemia, hipertensão e osteoporose. A contraindicação prática não é ao corticoide em si, mas ao seu uso continuado sem escalonamento para outra classe; e a suspensão, depois de uso prolongado, nunca deve ser abrupta — o eixo hipotálamo-hipófise-adrenal permanece suprimido por semanas a meses, e a retirada precisa ser gradual para evitar insuficiência adrenal aguda.</p>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Guia de escolha do anestésico local</span><span class="tr">onde o traço farmacocinético decide o uso</span></div>
+    <p class="tracos">Aqui a escolha de campo não depende de mecanismo — todos bloqueiam o canal de sódio voltagem-dependente do axônio, impedindo a propagação do potencial de ação — mas de três traços farmacocinéticos: início de ação, duração e penetração tecidual.</p>
+    <div class="ficha tbl-scroll">
+      <table>
+        <thead><tr><th>Espécime</th><th>Quando usar</th><th>Por quê</th></tr></thead>
+        <tbody>
+          <tr><td>Lidocaína</td><td class="hideable">infiltração local, bloqueios de nervo periférico, uso tópico em mucosas — o mais versátil da classe</td><td class="hideable">início rápido e duração média com boa penetração tecidual cobrem a maioria das indicações do dia a dia</td></tr>
+          <tr><td>Mepivacaína</td><td class="hideable">odontologia, quando se quer evitar o vasoconstritor geralmente associado a outros anestésicos</td><td class="hideable">perfil semelhante à lidocaína, mas sem efeito vasodilatador intrínseco relevante</td></tr>
+          <tr><td>Prilocaína</td><td class="hideable">obstetrícia</td><td class="hideable">menor cardiotoxicidade que os demais, mas com risco de metemoglobinemia em doses altas — evitar em lactentes e em deficiência de metemoglobina redutase ou G6PD</td></tr>
+          <tr><td>Articaína</td><td class="hideable">odontologia, sobretudo procedimentos mandibulares</td><td class="hideable">boa penetração óssea permite infiltração eficaz mesmo em tecido denso; início rápido e duração curta</td></tr>
+          <tr><td>Bupivacaína</td><td class="hideable">bloqueios que exigem analgesia prolongada — trabalho de parto, pós-operatório</td><td class="hideable">início lento mas duração longa; maior cardiotoxicidade em injeção intravascular acidental exige técnica cuidadosa e aspiração antes de injetar</td></tr>
+          <tr><td>Tetracaína</td><td class="hideable">uso tópico — anestesia de córnea e mucosas, nunca por infiltração</td><td class="hideable">alta potência acompanhada de toxicidade sistêmica elevada torna a via tópica a única segura</td></tr>
+          <tr><td>Procaína</td><td class="hideable">hoje em desuso clínico; mantém interesse histórico e didático</td><td class="hideable">penetração tecidual pequena e duração curta a tornaram obsoleta diante de opções mais eficazes</td></tr>
+          <tr><td>Cocaína</td><td class="hideable">uso tópico restrito, historicamente em otorrinolaringologia</td><td class="hideable">efeito vasoconstritor intrínseco associado; alto potencial de abuso limita seu uso atual</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alerta">
+      <span class="label">Efeito adverso e conduta — toxicidade sistêmica por anestésico local</span>
+      <p>Em dose excessiva ou injeção intravascular acidental, os anestésicos locais produzem toxicidade dose-dependente sobre o sistema nervoso central — agitação, tremores, ansiedade e, em graus mais avançados, convulsões seguidas de depressão respiratória — e sobre o sistema cardiovascular — bradicardia, redução do débito cardíaco e colapso circulatório, risco especialmente alto com a bupivacaína pela sua maior cardiotoxicidade. A conduta em toxicidade sistêmica grave é suporte ventilatório, controle das convulsões e, nos casos refratários, infusão de emulsão lipídica intravenosa — o chamado resgate lipídico — que sequestra o anestésico lipossolúvel para fora dos tecidos cardíaco e nervoso.</p>
+    </div>
+  </div>
+
+  <div class="familia">
+    <div class="fam-tag"><span class="gen">Alerta de segurança</span><span class="tr">depressão respiratória por associação de benzodiazepínico e opioide</span></div>
+    <p class="tracos">Não é uma doença, mas uma interação farmacológica grave o bastante para merecer prancha própria — um dos pontos mais cobrados de segurança do paciente em toda a farmacologia da dor.</p>
+    <div class="alerta">
+      <span class="label">Mecanismo</span>
+      <p>O opioide deprime o centro respiratório bulbar — sobretudo o complexo pré-Bötzinger — reduzindo a sensibilidade dos neurônios respiratórios ao acúmulo de CO2. O benzodiazepínico, por potencializar a corrente de cloreto mediada pelo receptor GABA-A, sedativo, reduz o estímulo de despertar e o tônus da musculatura das vias aéreas superiores. Associados, os dois efeitos não se somam — multiplicam-se: a depressão respiratória combinada é sinérgica, não aditiva, e pode ocorrer em doses que cada fármaco isoladamente toleraria bem.</p>
+    </div>
+    <div class="alerta">
+      <span class="label">Como resolver — conduta</span>
+      <p>Reconhecer precocemente o rebaixamento do nível de consciência e a queda da frequência respiratória. Garantir via aérea e suporte ventilatório imediato, com oxigênio suplementar e ventilação assistida se necessário. Reverter farmacologicamente: naloxona para o componente opioide, lembrando que sua duração de ação costuma ser mais curta que a de muitos opioides, exigindo reavaliação e possível repetição da dose; flumazenil para o componente benzodiazepínico, usado com cautela pelo risco de precipitar convulsões, especialmente em uso crônico de benzodiazepínico ou em associação com antidepressivo tricíclico.</p>
+    </div>
+    <div class="alerta">
+      <span class="label">Como prevenir</span>
+      <p>Evitar a associação sempre que houver alternativa; quando inevitável, usar a menor dose eficaz de cada fármaco e monitorar oximetria — e, em pacientes de maior risco, capnografia — de forma mais rigorosa em idosos, portadores de apneia obstrutiva do sono e doença pulmonar de base.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COLOFÃO ============ -->
+<div class="colophon">
+  <svg class="vine" viewBox="0 0 220 24" fill="none"><path d="M2 12 Q 20 2, 38 12 T 74 12 T 110 12 T 146 12 T 182 12 T 218 12" stroke="currentColor" stroke-width="1.2"/><circle cx="2" cy="12" r="2.2" fill="currentColor"/><circle cx="218" cy="12" r="2.2" fill="currentColor"/></svg>
+  <p class="label">Colofão</p>
+  <p>Seis ordens farmacológicas, dezenove famílias e mais de quarenta espécimes catalogados a partir do material das aulas de farmacologia do projeto — AINEs, corticoides, anti-histamínicos, opioides, antidepressivos e anticonvulsivantes — seguidos de um sétimo caderno de conduta clínica, cobrindo cefaleias primárias, dor oncológica e aguda, fibromialgia, neuropatias e neuralgias, síndromes musculoesqueléticas, doenças alérgicas, escolha de anestésico local e a interação de risco entre benzodiazepínico e opioide. Bibliografia de referência: Katzung, Farmacologia Básica e Clínica; Goodman &amp; Gilman, As Bases Farmacológicas da Terapêutica; Harrison, Medicina Interna.</p>
+  <p class="fonts">Cormorant Garamond · EB Garamond · Special Elite — via Google Fonts</p>
+</div>
+
+<script>
+function toggleReview(){
+  document.body.classList.toggle('quiz-mode');
+  document.getElementById('review-toggle').classList.toggle('active');
+}
+document.querySelectorAll('.hideable').forEach(function(el){
+  el.addEventListener('click', function(){
+    if(document.body.classList.contains('quiz-mode')){
+      el.classList.toggle('revealed');
+    }
+  });
+});
+</script>
+
+</body>
+</html>
