@@ -751,6 +751,19 @@
       <div class="score-bar"><div class="score-bar-fill" id="score-bar-fill"></div></div>
     </div>
 
+    <div class="import-hevy-box" id="diet-import-box">
+      <div class="import-hevy-top">
+        <div>
+          <div class="import-hevy-lbl">dieta personalizada</div>
+          <div class="import-hevy-sub">Importe um arquivo JSON de dieta pra substituir as opções de café, almoço, lanche, jantar e ceia. Seu histórico não é afetado.</div>
+        </div>
+        <label class="btn-ghost import-hevy-btn" for="diet-file-input">IMPORTAR JSON</label>
+      </div>
+      <input type="file" id="diet-file-input" accept=".json,application/json" style="display:none" onchange="handleDietImport(this)">
+      <div class="targets-toggle" style="margin-top:10px;" onclick="exportDiet()">exportar dieta atual</div>
+      <div class="status" id="diet-import-status"></div>
+    </div>
+
     <div id="meals-container"></div>
 
     <div class="section-lbl">observações</div>
@@ -1102,6 +1115,8 @@ async function pullDietSelections(user){
   if(sel.dietSlots) dietSlots = { ...dietSlots, ...sel.dietSlots };
   if(sel.jantarEscolha) jantarEscolha = sel.jantarEscolha;
   if(sel.almocoDiaSelecionado) almocoDiaSelecionado = sel.almocoDiaSelecionado;
+  if(sel.catalog) dietCatalog = sel.catalog;
+  if(sel.catalogSelection) catalogSelection = sel.catalogSelection;
   return true;
 }
 
@@ -1198,7 +1213,7 @@ async function pushDietTargets(){
 
 async function pushDietSelections(){
   const sb = initSupabase(); if(!sb || !currentSyncUser) return;
-  const payload = { user_id: currentSyncUser.id, data: { dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado } };
+  const payload = { user_id: currentSyncUser.id, data: { dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado, catalog: dietCatalog, catalogSelection } };
   try{
     const { error } = await sb.from('diet_selections').upsert(payload, { onConflict: 'user_id' });
     if(error) throw error;
@@ -1254,7 +1269,7 @@ async function syncFromSupabase(user){
   await storage.set('treino:bodyweight', JSON.stringify(bodyWeightLog));
   await storage.set('dieta:targets', JSON.stringify(dietaTargets));
   await storage.set('dieta:log', JSON.stringify(dietaLog));
-  await storage.set('dieta:selecoes', JSON.stringify({ dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado }));
+  await storage.set('dieta:selecoes', JSON.stringify({ dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado, catalog: dietCatalog, catalogSelection }));
 }
 
 async function syncToSupabase(){
@@ -1453,6 +1468,13 @@ let dietMode = { cafe:'classico', lanche:'wheyPT', ceia:'iogurteMel' };
 let jantarEscolha = 'A';
 let almocoDiaSelecionado = (() => { const d = new Date().getDay(); return (d >= 1 && d <= 5) ? d : 1; })();
 
+/* Catálogo personalizado por usuário (importado). null = usa o sistema padrão
+   embutido acima (cafeModes/lancheModes/ceiaModes/ruWeek/jantarA+B), exatamente
+   como funcionava antes desta funcionalidade existir. Formato de cada opção
+   dentro de dietCatalog.meals[key]: { id, label, items:[{nome,qtd}], kcal,p,c,g,f } */
+let dietCatalog = null;
+let catalogSelection = null; // { cafe:'cafe_1', almoco:'almoco_1', ... } — só usado quando dietCatalog existe
+
 function animateNumber(el, to, decimals){
   decimals = decimals || 0;
   const from = parseFloat((el.textContent || '0').replace(/[^\d.-]/g,'')) || 0;
@@ -1629,6 +1651,12 @@ function resolveItem(it){
   if(it.type === 'modefixed') return it.data;
   return groups[it.group][dietSlots[it.key]];
 }
+/* Verdadeiro somente se o usuário tem catálogo importado E ele cobre esta
+   refeição específica. Se faltar essa refeição no catálogo importado, cai
+   automaticamente no sistema padrão (regra 13 do escopo). */
+function hasCatalogFor(key){
+  return !!(dietCatalog && dietCatalog.meals && Array.isArray(dietCatalog.meals[key]) && dietCatalog.meals[key].length > 0);
+}
 function mealItemsResolved(compKey){ return getComposition(compKey).map(it => ({ ...resolveItem(it), _type:it.type, _slotKey:it.key, _group:it.group })); }
 function mealTotals(compKey){
   return mealItemsResolved(compKey).reduce((acc,it) => { acc.kcal+=it.kcal; acc.p+=it.p; acc.c+=it.c; acc.g+=it.g; acc.f+=(it.f||0); return acc; }, {kcal:0,p:0,c:0,g:0,f:0});
@@ -1689,7 +1717,162 @@ const mealOrder = ['cafe','almoco','lanche','jantar','ceia'];
 
 async function saveTargets(){ await storage.set('dieta:targets', JSON.stringify(dietaTargets)); triggerSync('diet_targets'); }
 async function saveLog(){ await storage.set('dieta:log', JSON.stringify(dietaLog)); triggerSync('diet_log'); }
-async function saveSelecoes(){ await storage.set('dieta:selecoes', JSON.stringify({ dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado })); triggerSync('diet_selections'); }
+async function saveSelecoes(){ await storage.set('dieta:selecoes', JSON.stringify({ dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado, catalog: dietCatalog, catalogSelection })); triggerSync('diet_selections'); }
+
+/* ======================================================================
+   IMPORTAÇÃO / EXPORTAÇÃO DE DIETA — formato do arquivo:
+   { "version":1, "name":"...", "meals": { "cafe":[{label,items:[{nome,qtd}],
+   kcal,protein,carbs,fat,fiber}], "almoco":[...], "lanche":[...],
+   "jantar":[...], "ceia":[...] } }
+   Qualquer refeição ausente no arquivo simplesmente não entra no catálogo
+   novo — hasCatalogFor() cai automaticamente no sistema padrão para ela.
+====================================================================== */
+const DIET_MEAL_KEYS = ['cafe','almoco','lanche','jantar','ceia'];
+
+function validateDietJson(obj){
+  if(!obj || typeof obj !== 'object' || Array.isArray(obj)) throw new Error('Arquivo inválido: não é um objeto JSON.');
+  if(!obj.meals || typeof obj.meals !== 'object') throw new Error('Arquivo inválido: campo "meals" ausente.');
+  const foundKeys = DIET_MEAL_KEYS.filter(k => Array.isArray(obj.meals[k]) && obj.meals[k].length);
+  if(!foundKeys.length) throw new Error('Arquivo inválido: nenhuma refeição reconhecida (cafe, almoco, lanche, jantar, ceia) com opções.');
+  foundKeys.forEach(k => {
+    obj.meals[k].forEach((o, i) => {
+      if(!o || typeof o.label !== 'string' || !o.label.trim()) throw new Error(`Opção ${i+1} de "${k}" sem "label" válido.`);
+      const kcalVal = o.kcal;
+      if(typeof kcalVal !== 'number' || isNaN(kcalVal)) throw new Error(`Opção "${o.label}" de "${k}" sem "kcal" numérico.`);
+    });
+  });
+  return foundKeys;
+}
+
+function importDiet(jsonText){
+  let obj;
+  try{ obj = JSON.parse(jsonText); }catch(e){ throw new Error('JSON inválido: ' + e.message); }
+  const foundKeys = validateDietJson(obj);
+
+  const newCatalog = { version: Number(obj.version)||1, name: (obj.name && String(obj.name).trim()) || 'Dieta importada', meals: {} };
+  const newSelection = {};
+  foundKeys.forEach(key => {
+    newCatalog.meals[key] = obj.meals[key].map((o, i) => ({
+      id: key + '_' + (i+1),
+      label: String(o.label).trim(),
+      items: Array.isArray(o.items)
+        ? o.items.map(it => ({ nome: String((it && (it.nome||it.name))||'').trim(), qtd: (it && (it.qtd||it.amount)) || '' })).filter(it => it.nome)
+        : [],
+      kcal: Number(o.kcal)||0,
+      p: Number(o.protein!==undefined ? o.protein : o.p)||0,
+      c: Number(o.carbs!==undefined ? o.carbs : o.c)||0,
+      g: Number(o.fat!==undefined ? o.fat : o.g)||0,
+      f: Number(o.fiber!==undefined ? o.fiber : o.f)||0
+    }));
+    newSelection[key] = newCatalog.meals[key][0].id;
+  });
+
+  /* Substitui inteiramente — sem merge, conforme decidido */
+  dietCatalog = newCatalog;
+  catalogSelection = newSelection;
+  saveSelecoes();
+  renderRefeicoes();
+  return { name: newCatalog.name, meals: foundKeys };
+}
+
+function handleDietImport(inputEl){
+  const file = inputEl.files && inputEl.files[0];
+  if(!file) return;
+  const statusEl = document.getElementById('diet-import-status');
+  statusEl.className = 'status loading';
+  statusEl.innerHTML = '<span class="spin"></span>lendo arquivo...';
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try{
+      const result = importDiet(e.target.result);
+      statusEl.className = 'status';
+      statusEl.textContent = `Dieta "${result.name}" importada — refeições: ${result.meals.join(', ')}.`;
+      inputEl.value = '';
+    }catch(err){
+      statusEl.className = 'status error';
+      statusEl.textContent = 'Erro ao importar: ' + err.message;
+    }
+  };
+  reader.onerror = () => { statusEl.className = 'status error'; statusEl.textContent = 'Não consegui ler o arquivo.'; };
+  reader.readAsText(file);
+}
+
+/* Mesma lógica de composição de cafe/lanche/ceia usada em getComposition(),
+   mas parametrizada por modeKey em vez de dietMode[key] — necessário porque,
+   ao exportar, precisamos dos itens de TODAS as opções (não só a selecionada
+   no momento). Não substitui nem altera getComposition(). */
+function getCompositionForExportMode(mealKey, modeKey){
+  if(mealKey === 'cafe'){
+    const mode = cafeModes[modeKey];
+    const items = mode.fixedItems.map(fi => ({ type:'modefixed', data:fi }));
+    if(mode.hasPao) items.push({type:'slot', key:'cafePao', group:'paoCafe'});
+    if(mode.hasFruta) items.push({type:'slot', key:'cafeFruta', group:'frutaCafe'});
+    return items;
+  }
+  if(mealKey === 'lanche'){
+    const mode = lancheModes[modeKey];
+    const items = [];
+    if(mode.hasWhey) items.push({type:'slot', key:'lancheWhey', group:'whey'});
+    mode.fixedItems.forEach(fi => items.push({ type:'modefixed', data:fi }));
+    if(mode.hasPao) items.push({type:'slot', key:'lanchePao', group:'paoCafe'});
+    if(mode.hasFruta) items.push({type:'slot', key:'lancheFruta', group:'frutaCafe'});
+    return items;
+  }
+  if(mealKey === 'ceia'){
+    const mode = ceiaModes[modeKey];
+    const items = mode.fixedItems.map(fi => ({ type:'modefixed', data:fi }));
+    if(mode.hasFruta) items.push({type:'slot', key:'ceiaFruta', group:'frutaCafe'});
+    return items;
+  }
+  return [];
+}
+
+function buildExportCatalog(){
+  if(dietCatalog && dietCatalog.meals){
+    const meals = {};
+    Object.keys(dietCatalog.meals).forEach(key => {
+      meals[key] = dietCatalog.meals[key].map(o => ({
+        label: o.label, items: o.items, kcal: o.kcal, protein: o.p, carbs: o.c, fat: o.g, fiber: o.f
+      }));
+    });
+    return { version: 1, name: dietCatalog.name || 'Minha dieta', meals };
+  }
+  /* Fallback: nenhum catálogo próprio ainda — serializa o sistema padrão
+     atual (cafeModes/lancheModes/ceiaModes/ruWeek/jantarA+B) no mesmo
+     formato de arquivo, pronto pra ser importado em outra conta. Os itens
+     de pão/fruta/proteína refletem a substituição atualmente selecionada
+     (dietSlots), já que o sistema padrão não guarda uma escolha por opção. */
+  const buildModeOptions = (mealKey, modesObj) => Object.keys(modesObj).map(mk => {
+    const t = computeModeTotals(mealKey, mk);
+    const items = expandForDisplay(getCompositionForExportMode(mealKey, mk).map(it => ({ ...resolveItem(it), _type: it.type })));
+    return { label: modesObj[mk].label, items, kcal: t.kcal, protein: t.p, carbs: t.c, fat: t.g, fiber: t.f };
+  });
+  const meals = {
+    cafe: buildModeOptions('cafe', cafeModes),
+    lanche: buildModeOptions('lanche', lancheModes),
+    ceia: buildModeOptions('ceia', ceiaModes),
+    almoco: Object.keys(ruWeek).map(d => ({
+      label: 'RU — ' + ruWeek[d].full, items: [{ nome: ruWeek[d].items, qtd:'' }],
+      kcal: ruWeek[d].kcal, protein: ruWeek[d].p, carbs: ruWeek[d].c, fat: ruWeek[d].g, fiber: 0
+    })),
+    jantar: ['jantarA','jantarB'].map(ck => {
+      const t = mealTotals(ck);
+      return { label: ck==='jantarA' ? 'Jantar A — Frango' : 'Jantar B — Carne', items: expandForDisplay(mealItemsResolved(ck)), kcal: t.kcal, protein: t.p, carbs: t.c, fat: t.g, fiber: t.f };
+    })
+  };
+  return { version: 1, name: 'Minha dieta atual', meals };
+}
+
+function exportDiet(){
+  const data = buildExportCatalog();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = (data.name || 'dieta').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,'_').toLowerCase() + '.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
 
 /* ======================================================================
@@ -1764,6 +1947,8 @@ function renderMealCard(key, entry){
     bodyHtml = `<div class="meal-done-body"><div class="meal-done-label">${escapeHtml(entry.label)}</div>${itemsHtml}
       <div class="meal-macro-row"><span class="meal-macro kcal">${Math.round(entry.kcal)} kcal</span><span class="meal-macro p">${round1(entry.p)}g P</span><span class="meal-macro c">${round1(entry.c)}g C</span><span class="meal-macro g">${round1(entry.g)}g G</span>${entry.f!==undefined ? '<span class="meal-macro c">'+round1(entry.f)+'g Fibra</span>' : ''}</div>
       <div class="meal-undo-row"><button class="btn-text" onclick="undoMeal('${key}')">desfazer</button></div></div>`;
+  } else if(hasCatalogFor(key)){
+    bodyHtml = renderCatalogMealBody(key);
   } else if(key === 'almoco'){
     const ru = ruWeek[almocoDiaSelecionado];
     const dayPills = [1,2,3,4,5].map(d => `<div class="weeknav-day ${d===almocoDiaSelecionado?'selected':''}" onclick="selectDiaRu(${d})">${ruWeek[d].label}</div>`).join('');
@@ -1883,6 +2068,64 @@ async function confirmRu(){
   const day = todayKey();
   dietaLog[day] = dietaLog[day] || {};
   dietaLog[day]['almoco'] = { tipo:'dieta', label:'RU — '+ru.full, desc:ru.items, kcal:ru.kcal, p:ru.p, c:ru.c, g:ru.g };
+  await saveLog(); renderRefeicoes();
+}
+
+/* ======================================================================
+   CATÁLOGO PERSONALIZADO (dieta importada) — opções fechadas e simples,
+   sem sistema de substituição por pão/fruta/proteína/carboidrato e sem
+   RU/toggle A-B. Só entra em uso quando hasCatalogFor(key) é verdadeiro;
+   caso contrário renderMealCard() segue exatamente como antes.
+====================================================================== */
+function renderCatalogMealBody(key){
+  const options = dietCatalog.meals[key];
+  if(!catalogSelection) catalogSelection = {};
+  let selId = catalogSelection[key];
+  if(!options.find(o => o.id === selId)) selId = options[0].id; // auto-heal: opção salva não existe mais nesta refeição
+  catalogSelection[key] = selId;
+  const current = options.find(o => o.id === selId) || options[0];
+
+  const cardsHtml = options.map(o => `
+    <div class="option-card ${o.id===current.id?'selected':''}" onclick="selectCatalogOption('${key}','${o.id}')">
+      <div class="ttl">${escapeHtml(o.label)}<span class="option-check"></span></div>
+      <div class="kc">${Math.round(o.kcal)} kcal</div>
+      <div class="pr">${round1(o.p)}g proteína</div>
+    </div>`).join('');
+
+  const itemsHtml = (current.items && current.items.length)
+    ? `<div class="composicao-box"><div class="composicao-lbl">composição</div>
+        <div class="ing-list">${current.items.map(it => `<div class="ing-row"><span class="ing-name">${escapeHtml(it.nome)}</span>${it.qtd ? '<span class="ing-qtd">'+escapeHtml(it.qtd)+'</span>' : ''}</div>`).join('')}</div>
+      </div>`
+    : '';
+
+  return `<div class="fixed-block-lbl" style="margin-bottom:8px;">escolha uma opção</div><div class="option-cards">${cardsHtml}</div>
+    <div class="divider-or">opção selecionada: ${escapeHtml(current.label)}</div>
+    ${itemsHtml}
+    <div class="meal-macro-row" style="margin-top:12px;"><span class="meal-macro kcal">${Math.round(current.kcal)} kcal</span><span class="meal-macro p">${round1(current.p)}g P</span><span class="meal-macro c">${round1(current.c)}g C</span><span class="meal-macro g">${round1(current.g)}g G</span><span class="meal-macro c">${round1(current.f||0)}g Fibra</span></div>
+    <button class="btn-primary dieta" style="margin-top:12px;" onclick="confirmMealFromCatalog('${key}')">Marcar como feito</button>${freeTextBlock(key)}`;
+}
+
+function selectCatalogOption(key, optionId){
+  if(!catalogSelection) catalogSelection = {};
+  catalogSelection[key] = optionId;
+  saveSelecoes(); renderRefeicoes();
+}
+
+async function confirmMealFromCatalog(key){
+  if(!hasCatalogFor(key)) return;
+  const options = dietCatalog.meals[key];
+  const selId = (catalogSelection && catalogSelection[key]) || options[0].id;
+  const opt = options.find(o => o.id === selId) || options[0];
+  const day = todayKey();
+  dietaLog[day] = dietaLog[day] || {};
+  /* Snapshot congelado, no mesmo formato que confirmMeal()/confirmRu() já usam
+     hoje — histórico já registrado (diet_log) nunca é reescrito depois disso,
+     mesmo que o catálogo seja trocado ou reimportado no futuro. */
+  dietaLog[day][key] = {
+    tipo:'dieta', label: opt.label, option: opt.id,
+    items: (opt.items || []).map(it => ({ nome: it.nome, qtd: it.qtd || '' })),
+    kcal: opt.kcal||0, p: opt.p||0, c: opt.c||0, g: opt.g||0, f: opt.f||0
+  };
   await saveLog(); renderRefeicoes();
 }
 
@@ -2102,6 +2345,8 @@ async function loadAll(){
       if(sel.dietSlots) dietSlots = { ...dietSlots, ...sel.dietSlots };
       if(sel.jantarEscolha) jantarEscolha = sel.jantarEscolha;
       if(sel.almocoDiaSelecionado) almocoDiaSelecionado = sel.almocoDiaSelecionado;
+      if(sel.catalog) dietCatalog = sel.catalog;
+      if(sel.catalogSelection) catalogSelection = sel.catalogSelection;
     }
   }catch(e){}
 
