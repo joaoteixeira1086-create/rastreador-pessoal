@@ -1010,8 +1010,9 @@ async function signOut(){
 async function pullWorkoutBlocks(user){
   const sb = initSupabase(); if(!sb) return;
   const { data, error } = await sb.from('workout_blocks').select('*').eq('user_id', user.id);
-  if(error){ console.warn('[sync] pull workout_blocks:', error.message); return; }
-  (data||[]).forEach(row => {
+  if(error){ console.warn('[sync] pull workout_blocks:', error.message); return; } // erro de rede/consulta: nada é removido localmente
+  const rows = data || [];
+  rows.forEach(row => {
     const local = treinoBlocks.find(b => b.remoteId === row.id);
     if(local){
       local.name = row.name;
@@ -1026,6 +1027,16 @@ async function pullWorkoutBlocks(user){
       });
     }
   });
+  /* Propaga exclusões remotas: um bloco local com remoteId preenchido que não
+     veio nesta consulta bem-sucedida foi excluído em outro dispositivo — remove
+     só o bloco de treinoBlocks (mutação in-place, sem reatribuir a variável).
+     Blocos sem remoteId (ainda não sincronizados) nunca são tocados aqui, e o
+     workoutHistory não é lido nem alterado por este laço. */
+  const remoteIds = new Set(rows.map(row => row.id));
+  for(let i = treinoBlocks.length - 1; i >= 0; i--){
+    const b = treinoBlocks[i];
+    if(b.remoteId && !remoteIds.has(b.remoteId)) treinoBlocks.splice(i, 1);
+  }
 }
 
 function historyLegacyKey(entry){
