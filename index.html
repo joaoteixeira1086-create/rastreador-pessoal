@@ -108,6 +108,7 @@
   .btn-ghost:hover{ background: var(--surface-hover); color: var(--text); }
   .btn-text{ color: var(--text-faint); font-size: 10.5px; padding: 4px 6px; min-height:auto; }
   .btn-text:hover{ color: var(--danger); }
+  .btn-text svg{ width:12px; height:12px; flex-shrink:0; }
 
   .status{ font-size: 11.5px; color: var(--text-secondary); margin-top: 8px; min-height: 15px; font-family:'JetBrains Mono',monospace; }
   .status.error{ color: var(--danger); }
@@ -179,11 +180,18 @@
   .exercise.open .exercise-detail{ display:block; animation: fadeSlide .2s var(--ease); }
   .exercise-muscle-tag{ font-family:'JetBrains Mono',monospace; font-size:9.5px; color: var(--text-faint); margin-top:2px; }
 
-  .sets-head{ display:grid; grid-template-columns: 20px 1fr 1fr 22px; gap:8px; font-family:'JetBrains Mono',monospace; font-size: 9px; text-transform:uppercase; color: var(--text-faint); padding: 0 2px; letter-spacing:0.06em; }
-  .set-row{ display:grid; grid-template-columns: 20px 1fr 1fr 22px; gap:8px; align-items:center; margin-top: 7px; }
+  .sets-head{ display:grid; grid-template-columns: 20px 22px 1fr 1fr 22px; gap:8px; font-family:'JetBrains Mono',monospace; font-size: 9px; text-transform:uppercase; color: var(--text-faint); padding: 0 2px; letter-spacing:0.06em; }
+  .set-row{ display:grid; grid-template-columns: 20px 22px 1fr 1fr 22px; gap:8px; align-items:center; margin-top: 7px; }
   .set-idx{ font-family:'JetBrains Mono',monospace; font-size: 10.5px; color: var(--text-faint); text-align:center; }
   .set-remove{ color: var(--text-faint); background:none; border:none; font-size:13px; cursor:pointer; padding:4px; min-height:auto; }
   .set-remove:hover{ color: var(--danger); }
+  /* Certinho de conclusão da série: preencher reps/carga NÃO marca isso — só o clique aqui. */
+  .set-check{ width:20px; height:20px; border-radius:6px; border:1.5px solid var(--border); background:transparent; display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0; min-height:auto; flex-shrink:0; transition: background .15s ease, border-color .15s ease; }
+  .set-check svg{ width:11px; height:11px; color:#04231a; opacity:0; transition: opacity .15s ease; }
+  .set-check:hover{ border-color: var(--dieta); }
+  .set-check.checked{ background: var(--dieta); border-color: var(--dieta); }
+  .set-check.checked svg{ opacity:1; }
+  .set-block.set-completed .set-idx{ color: var(--dieta); }
   .exercise-actions{ display:flex; gap:8px; margin-top:12px; align-items:center; justify-content:space-between; }
   .obs-field{ margin-top:11px; }
   .obs-field textarea{ min-height:36px; font-size:12px; padding: 8px 10px; }
@@ -209,9 +217,20 @@
   .lib-card::before{ content:''; position:absolute; inset:0; background: radial-gradient(200px 120px at 100% -10%, var(--treino-dim), transparent 60%); pointer-events:none; }
   .lib-card.done{ border-color: rgba(79,209,174,0.28); }
   .lib-card-top{ display:flex; align-items:center; justify-content:space-between; position:relative; }
+  .lib-card-top-right{ display:flex; align-items:center; gap:8px; }
   .lib-letter{ width:30px; height:30px; border-radius:9px; background: var(--treino-dim); color: var(--treino); display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; flex-shrink:0; }
   .lib-badge{ font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.06em; color: var(--dieta); display:flex; align-items:center; gap:4px; }
   .lib-badge svg{ width:11px; height:11px; }
+  .lib-delete-btn{ color: var(--text-faint); background:none; border:none; padding:5px; min-height:auto; display:flex; align-items:center; justify-content:center; cursor:pointer; border-radius:7px; transition: color .15s ease, background .15s ease; }
+  .lib-delete-btn:hover{ color: var(--danger); background: rgba(240,113,90,0.1); }
+  .lib-delete-btn svg{ width:14px; height:14px; }
+  .add-block-card{ display:flex; align-items:center; justify-content:center; border-style:dashed; min-height:168px; }
+  .add-block-card:hover{ border-color: var(--treino); background: var(--treino-dim); }
+  .add-block-inner{ display:flex; flex-direction:column; align-items:center; gap:10px; color: var(--text-secondary); position:relative; }
+  .add-block-card:hover .add-block-inner{ color: var(--treino); }
+  .add-block-icon{ width:36px; height:36px; border-radius:50%; border:1.5px dashed var(--border); display:flex; align-items:center; justify-content:center; font-size:20px; line-height:1; }
+  .add-block-card:hover .add-block-icon{ border-color: var(--treino); }
+  .add-block-lbl{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.08em; }
   .lib-name{ font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:700; margin-top:14px; position:relative; }
   .lib-meta{ font-family:'JetBrains Mono',monospace; font-size:10.5px; color: var(--text-secondary); margin-top:5px; position:relative; }
   .lib-bar{ height:4px; border-radius:999px; background: rgba(255,255,255,0.06); margin-top:14px; overflow:hidden; position:relative; }
@@ -263,8 +282,10 @@
   .session-main .exercise{ padding: 18px 20px; margin-top:12px; border-radius: var(--radius-lg); }
   .session-main .exercise-name-input{ font-size:16px; }
   .session-main .exercise-summary{ min-height:36px; }
-  .session-main .sets-head{ grid-template-columns: 28px 1fr 1fr 28px; gap:16px; font-size:9.5px; margin-top:14px; padding:0 4px; }
-  .session-main .set-row{ grid-template-columns: 28px 1fr 1fr 28px; gap:16px; margin-top:10px; animation: fadeSlide .22s var(--ease); }
+  .session-main .sets-head{ grid-template-columns: 28px 26px 1fr 1fr 28px; gap:14px; font-size:9.5px; margin-top:14px; padding:0 4px; }
+  .session-main .set-row{ grid-template-columns: 28px 26px 1fr 1fr 28px; gap:14px; margin-top:10px; animation: fadeSlide .22s var(--ease); }
+  .session-main .set-check{ width:24px; height:24px; }
+  .session-main .set-check svg{ width:13px; height:13px; }
   .session-main input[type=number]{ font-size:15px; padding:9px 4px; }
   .session-main .exercise-actions{ margin-top:16px; }
   .exercise-complete-badge{ display:none; align-items:center; gap:5px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.05em; color: var(--dieta); margin-top:6px; }
@@ -414,7 +435,7 @@
   .ex-last-pr b{ color: var(--dieta); font-weight:600; }
 
   /* ===================== RIR ===================== */
-  .rir-row{ display:flex; align-items:center; gap:5px; padding-left:28px; margin-top:5px; flex-wrap:wrap; }
+  .rir-row{ display:flex; align-items:center; gap:5px; padding-left:50px; margin-top:5px; flex-wrap:wrap; }
   .rir-lbl{ font-family:'JetBrains Mono',monospace; font-size:8.5px; color: var(--text-faint); text-transform:uppercase; letter-spacing:0.05em; margin-right:2px; }
   .rir-chip{ font-family:'JetBrains Mono',monospace; font-size:9.5px; color: var(--text-faint); background: rgba(255,255,255,0.03); border: 1px solid var(--border-soft); border-radius:6px; padding:3px 7px; min-height:auto; cursor:pointer; transition: all .12s ease; }
   .rir-chip:hover{ color: var(--text-secondary); border-color: var(--border); }
@@ -1188,6 +1209,14 @@ async function pushDietLog(day){
 
 async function pushAllDietLog(){
   for(const day of Object.keys(dietaLog)) await pushDietLog(day);
+}
+
+async function deleteWorkoutBlockRemote(remoteId){
+  const sb = initSupabase(); if(!sb || !currentSyncUser || !remoteId) return;
+  try{
+    const { error } = await sb.from('workout_blocks').delete().eq('id', remoteId).eq('user_id', currentSyncUser.id);
+    if(error) throw error;
+  }catch(e){ console.warn('[sync] delete workout_blocks falhou (não bloqueante):', e.message||e); }
 }
 
 async function deleteDietLogRemote(day, slot){
@@ -2081,7 +2110,7 @@ async function loadAll(){
 ====================================================================== */
 function renderHoje(){
   const wt = computeWorkoutTotals();
-  const workoutPct = wt.setCount > 0 ? Math.round((wt.filledSets/wt.setCount)*100) : 0;
+  const workoutPct = wt.setCount > 0 ? Math.round((wt.completedSets/wt.setCount)*100) : 0;
   const todayLog = dietaLog[todayKey()] || {};
   const nt = computeNutritionTotals(todayLog);
   const nutriPct = nt.nota === null ? 0 : nt.nota;
@@ -2097,7 +2126,7 @@ function renderHoje(){
   if(barEl) barEl.style.width = dayPct + '%';
 
   const metrics = [];
-  metrics.push(`<div class="today-metric"><div class="lbl"><span class="dot t"></span>TREINO</div><div class="val">${hasW ? wt.filledSets+'/'+wt.setCount+' <small>séries</small>' : '<small>sem registros</small>'}</div></div>`);
+  metrics.push(`<div class="today-metric"><div class="lbl"><span class="dot t"></span>TREINO</div><div class="val">${hasW ? wt.completedSets+'/'+wt.setCount+' <small>séries</small>' : '<small>sem registros</small>'}</div></div>`);
   metrics.push(`<div class="today-metric"><div class="lbl"><span class="dot d"></span>NUTRIÇÃO</div><div class="val">${hasN ? nutriPct+'<small>% aderência</small>' : '<small>sem registros</small>'}</div></div>`);
   if(hasN){
     metrics.push(`<div class="today-metric"><div class="lbl"><span class="dot d"></span>CALORIAS</div><div class="val">${Math.round(nt.totals.kcal)}<small> / ${dietaTargets.kcal}</small></div></div>`);
@@ -2150,6 +2179,62 @@ async function saveHistory(){ await storage.set('treino:history', JSON.stringify
 async function saveBodyWeight(){ await storage.set('treino:bodyweight', JSON.stringify(bodyWeightLog)); triggerSync('body_weight'); }
 
 /* ======================================================================
+   TREINO — ADICIONAR / EXCLUIR BLOCOS
+====================================================================== */
+function addBlock(){
+  const name = 'Bloco ' + String.fromCharCode(65 + treinoBlocks.length);
+  const id = Date.now() + treinoBlocks.length + Math.floor(Math.random()*1000);
+  treinoBlocks.push({ id, name, open:false, exercises:[] });
+  saveTreino();
+  renderBlocksLibrary();
+}
+function confirmDeleteBlock(blockId, fromSession){
+  const b = findBlock(blockId);
+  if(!b) return;
+  const ok = window.confirm('Excluir o bloco "' + (b.name || 'Sem nome') + '"? Esta ação não pode ser desfeita. O histórico de treinos já concluídos deste bloco continua disponível no relatório e no calendário.');
+  if(!ok) return;
+  if(fromSession) closeWorkoutSession();
+  deleteBlock(blockId);
+}
+function deleteBlock(blockId){
+  const idx = treinoBlocks.findIndex(b => b.id === blockId);
+  if(idx < 0) return;
+  const [removed] = treinoBlocks.splice(idx, 1);
+  saveTreino(); // persiste a lista sem o bloco e sincroniza os blocos restantes (upsert normal)
+  if(currentSyncUser && removed.remoteId) deleteWorkoutBlockRemote(removed.remoteId); // remove também da nuvem, sem tocar no workout_history
+  renderBlocksLibrary();
+}
+
+/* Uma série só é considerada "concluída" (para fins de progresso ao vivo e de
+   histórico novo) quando o certinho foi marcado — preencher reps/carga sozinho
+   não conta mais. Séries sem a propriedade `completed` (criadas antes desta
+   atualização) são tratadas como NÃO concluídas, pedindo confirmação explícita. */
+function isSetCompletedLive(s){ return !!(s && s.completed); }
+
+/* Ao ler o HISTÓRICO já salvo (recordes, relatórios, evolução por exercício),
+   usamos uma regra de compatibilidade diferente: séries antigas (inclusive
+   importadas do Hevy) não têm a propriedade `completed` — para não perder
+   nem inventar informação, elas continuam contando como realizadas se tinham
+   reps e carga preenchidas, exatamente como funcionava antes desta atualização.
+   Só séries novas, com completed===false explícito, deixam de contar. */
+function isSetRealizedHistoric(s){ return s.reps !== '' && s.carga !== '' && s.completed !== false; }
+
+/* Estatísticas "realizadas" de um bloco AO VIVO (treinoBlocks), usadas apenas
+   na hora de concluir o treino — não afeta computeBlockStats/filledSets, que
+   continuam representando séries preenchidas (com dados), como antes. */
+function computeBlockCompletedStats(b){
+  let completedSets = 0, volume = 0;
+  b.exercises.forEach(ex => {
+    ex.sets.forEach(s => {
+      if(!isSetCompletedLive(s)) return;
+      const reps = parseFloat(s.reps), carga = parseFloat(s.carga);
+      if(s.reps !== '' && s.carga !== '' && !isNaN(reps) && !isNaN(carga)){ completedSets++; volume += reps*carga; }
+    });
+  });
+  return { completedSets, volume };
+}
+
+/* ======================================================================
    CÁLCULOS DERIVADOS
 ====================================================================== */
 function computeBlockStats(b){
@@ -2163,12 +2248,24 @@ function computeBlockStats(b){
   });
   return { exCount: b.exercises.length, setCount, filledSets, volume };
 }
+/* Progresso "% concluído" exibido na UI (cabeçalho/rodapé da sessão, card da
+   biblioteca, dashboard HOJE) — usa séries com o certinho marcado, não apenas
+   preenchidas. computeBlockStats acima continua intacto e é usado onde o que
+   importa é quantidade de dados preenchidos (ex.: "X exercícios · Y séries"). */
+function computeBlockProgress(b){
+  const total = computeBlockStats(b);
+  const completed = computeBlockCompletedStats(b);
+  const pct = total.setCount > 0 ? Math.round((completed.completedSets/total.setCount)*100) : 0;
+  return { exCount: total.exCount, setCount: total.setCount, completedSets: completed.completedSets, volume: completed.volume, pct };
+}
 function computeWorkoutTotals(){
   return treinoBlocks.reduce((acc,b) => {
     const s = computeBlockStats(b);
+    const p = computeBlockProgress(b);
     acc.exCount += s.exCount; acc.setCount += s.setCount; acc.filledSets += s.filledSets; acc.volume += s.volume;
+    acc.completedSets += p.completedSets; acc.completedVolume += p.volume;
     return acc;
-  }, { exCount:0, setCount:0, filledSets:0, volume:0 });
+  }, { exCount:0, setCount:0, filledSets:0, volume:0, completedSets:0, completedVolume:0 });
 }
 
 /* ======================================================================
@@ -2177,6 +2274,7 @@ function computeWorkoutTotals(){
 const icoCheck = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
 const icoBack = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>';
 const icoArrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+const icoTrash = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6h16Z"/></svg>';
 
 /* ======================================================================
    TREINO — DONUT (compartilhado entre sessão e relatório)
@@ -2285,6 +2383,11 @@ function findLastSession(blockId, exId, exName){
   candidates.sort((a,b) => b.date.localeCompare(a.date));
   return candidates[0];
 }
+/* Mesma regra de compatibilidade de isSetRealizedHistoric, aplicada ao volume de uma sessão do histórico. */
+function sessionVolumeRealized(sets){
+  return (sets||[]).filter(isSetRealizedHistoric).reduce((v,s)=>v+(parseFloat(s.reps)||0)*(parseFloat(s.carga)||0),0);
+}
+
 function findExerciseSessions(exId, exName, limit){
   const nameKey = normName(exName);
   if(!nameKey && exId == null) return [];
@@ -2292,8 +2395,8 @@ function findExerciseSessions(exId, exName, limit){
   workoutHistory.forEach(h => {
     (h.exercises||[]).forEach(ex => {
       if(!exerciseMatches(ex, exId, nameKey)) return;
-      const vol = sessionVolume(ex.sets);
-      const filled = (ex.sets||[]).filter(s=>s.reps!=='' && s.carga!=='');
+      const vol = sessionVolumeRealized(ex.sets);
+      const filled = (ex.sets||[]).filter(isSetRealizedHistoric);
       if(filled.length) list.push({ date:h.date, sets:filled, volume:vol });
     });
   });
@@ -2305,6 +2408,9 @@ function findExerciseSessions(exId, exName, limit){
    PRs / RECORDES PESSOAIS
    Calculados sob demanda a partir do workoutHistory já salvo.
    Não inventa recordes: se não houver histórico, retorna null.
+   Considera apenas séries "realizadas" (isSetRealizedHistoric): séries novas
+   precisam do certinho marcado; séries antigas (sem essa propriedade) contam
+   se tinham reps e carga preenchidas, como sempre funcionou.
 ====================================================================== */
 function computeExercisePRs(exId, exName, excludeEntryId){
   const nameKey = normName(exName);
@@ -2314,14 +2420,14 @@ function computeExercisePRs(exId, exName, excludeEntryId){
     if(excludeEntryId && h.id === excludeEntryId) return;
     (h.exercises||[]).forEach(ex => {
       if(!exerciseMatches(ex, exId, nameKey)) return;
-      const filled = (ex.sets||[]).filter(s => s.reps !== '' && s.carga !== '');
+      const filled = (ex.sets||[]).filter(isSetRealizedHistoric);
       filled.forEach(s => {
         const c = parseFloat(s.carga) || 0, r = parseFloat(s.reps) || 0;
         if(maxCarga === null || c > maxCarga || (c === maxCarga && r > (bestSet ? bestSet.reps : -1))){
           maxCarga = c; bestSet = { carga:c, reps:r, date:h.date };
         }
       });
-      const vol = sessionVolume(ex.sets);
+      const vol = sessionVolumeRealized(ex.sets);
       if(vol > 0 && (maxVolumeSession === null || vol > maxVolumeSession)) maxVolumeSession = vol;
     });
   });
@@ -2527,25 +2633,38 @@ function renderBodyWeightSection(){
 function renderBlocksLibrary(){
   const el = document.getElementById('lib-grid');
   if(!el) return;
-  el.innerHTML = treinoBlocks.map((b,i) => renderLibCard(b,i)).join('');
+  el.innerHTML = treinoBlocks.map((b,i) => renderLibCard(b,i)).join('') + renderAddBlockCard();
 }
 
 function renderLibCard(b, idx){
   const s = computeBlockStats(b);
-  const pct = s.setCount > 0 ? Math.round((s.filledSets/s.setCount)*100) : 0;
+  const p = computeBlockProgress(b);
   const letter = String.fromCharCode(65 + idx);
   const done = isBlockConcludedToday(b.id);
-  const cta = done ? 'VER RELATÓRIO' : (pct > 0 ? 'CONTINUAR TREINO' : 'INICIAR TREINO');
+  const cta = done ? 'VER RELATÓRIO' : (p.pct > 0 ? 'CONTINUAR TREINO' : 'INICIAR TREINO');
   return `
     <div class="lib-card ${done ? 'done' : ''}" onclick="openWorkoutSession(${b.id})">
       <div class="lib-card-top">
         <span class="lib-letter">${letter}</span>
-        ${done ? `<span class="lib-badge">${icoCheck} CONCLUÍDO</span>` : ''}
+        <div class="lib-card-top-right">
+          ${done ? `<span class="lib-badge">${icoCheck} CONCLUÍDO</span>` : ''}
+          <button type="button" class="lib-delete-btn" onclick="event.stopPropagation(); confirmDeleteBlock(${b.id})" title="Excluir bloco" aria-label="Excluir bloco">${icoTrash}</button>
+        </div>
       </div>
       <div class="lib-name">${escapeHtml(b.name || 'Sem nome')}</div>
       <div class="lib-meta">${s.exCount} exercícios · ${s.setCount} séries${s.volume > 0 ? ' · ' + Math.round(s.volume) + ' kg' : ''}</div>
-      <div class="lib-bar"><div class="lib-bar-fill" style="width:${pct}%"></div></div>
+      <div class="lib-bar"><div class="lib-bar-fill" style="width:${p.pct}%"></div></div>
       <div class="lib-cta"><span>${cta}</span>${icoArrow}</div>
+    </div>`;
+}
+
+function renderAddBlockCard(){
+  return `
+    <div class="lib-card add-block-card" onclick="addBlock()">
+      <div class="add-block-inner">
+        <div class="add-block-icon">+</div>
+        <div class="add-block-lbl">ADICIONAR BLOCO</div>
+      </div>
     </div>`;
 }
 
@@ -2585,7 +2704,7 @@ function renderSession(){
 
 function renderSessionHeader(b){
   const s = computeBlockStats(b);
-  const pct = s.setCount > 0 ? Math.round((s.filledSets/s.setCount)*100) : 0;
+  const p = computeBlockProgress(b);
   const done = isBlockConcludedToday(b.id);
   const dateStr = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'short'}).toUpperCase();
   document.getElementById('session-header').innerHTML = `
@@ -2595,20 +2714,23 @@ function renderSessionHeader(b){
         <input class="session-title-input" value="${escapeHtml(b.name || '')}" placeholder="Nome do treino" oninput="renameBlock(${b.id}, this.value)">
         <div class="session-date">${dateStr}</div>
       </div>
-      <div class="session-status ${done ? 'done' : 'active'}">${done ? icoCheck + ' CONCLUÍDO' : 'EM ANDAMENTO'}</div>
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
+        <div class="session-status ${done ? 'done' : 'active'}">${done ? icoCheck + ' CONCLUÍDO' : 'EM ANDAMENTO'}</div>
+        <button type="button" class="btn-text" style="display:inline-flex; align-items:center; gap:4px;" onclick="confirmDeleteBlock(${b.id}, true)">${icoTrash} excluir bloco</button>
+      </div>
     </div>
     <div class="session-stats-row">
       <div class="session-stat"><div class="n">${s.exCount}</div><div class="l">exercícios</div></div>
       <div class="session-stat"><div class="n">${s.setCount}</div><div class="l">séries</div></div>
       <div class="session-stat"><div class="n">${Math.round(s.volume).toLocaleString('pt-BR')}</div><div class="l">kg volume</div></div>
     </div>
-    <div class="session-progress"><div class="session-progress-fill" style="width:${pct}%"></div></div>
-    <div class="session-progress-lbl">${s.filledSets} / ${s.setCount} séries · ${pct}%</div>`;
+    <div class="session-progress"><div class="session-progress-fill" style="width:${p.pct}%"></div></div>
+    <div class="session-progress-lbl">${p.completedSets} / ${s.setCount} séries concluídas · ${p.pct}%</div>`;
 }
 
 function renderSessionSidebar(b){
   const s = computeBlockStats(b);
-  const pct = s.setCount > 0 ? Math.round((s.filledSets/s.setCount)*100) : 0;
+  const p = computeBlockProgress(b);
   const { musclesVolume, total } = computeMuscleVolume(b.exercises);
   const dist = distributionFromMuscles(musclesVolume, total);
   const topMuscle = dist.find(d => d.key !== 'nao_classificado');
@@ -2643,7 +2765,7 @@ function renderSessionSidebar(b){
         <div class="side-stat"><div class="n">${s.exCount}</div><div class="l">exercícios</div></div>
         <div class="side-stat"><div class="n">${s.setCount}</div><div class="l">séries</div></div>
         <div class="side-stat"><div class="n">${Math.round(s.volume).toLocaleString('pt-BR')} kg</div><div class="l">volume</div></div>
-        <div class="side-stat"><div class="n">${pct}%</div><div class="l">concluído</div></div>
+        <div class="side-stat"><div class="n">${p.pct}%</div><div class="l">concluído</div></div>
       </div>
     </div>
     ${restCard}
@@ -2664,8 +2786,7 @@ function renderSessionExercises(b){
 }
 
 function renderSessionFooter(b){
-  const s = computeBlockStats(b);
-  const pct = s.setCount > 0 ? Math.round((s.filledSets/s.setCount)*100) : 0;
+  const p = computeBlockProgress(b);
   const done = isBlockConcludedToday(b.id);
   const footer = document.getElementById('session-footer');
   if(done){
@@ -2680,8 +2801,8 @@ function renderSessionFooter(b){
   }
   footer.innerHTML = `
     <div class="footer-progress">
-      <div class="footer-pct" id="footer-pct-lbl">${pct}% concluído</div>
-      <div class="footer-bar"><div class="footer-bar-fill" id="footer-bar-fill" style="width:${pct}%"></div></div>
+      <div class="footer-pct" id="footer-pct-lbl">${p.pct}% concluído</div>
+      <div class="footer-bar"><div class="footer-bar-fill" id="footer-bar-fill" style="width:${p.pct}%"></div></div>
       <div class="footer-warning" id="footer-warning" style="display:none;"></div>
     </div>
     <button class="conclude-btn" onclick="handleConcludeClick(${b.id})">${icoCheck} CONCLUIR TREINO</button>`;
@@ -2690,10 +2811,10 @@ function renderSessionFooter(b){
 async function handleConcludeClick(blockId){
   const b = findBlock(blockId);
   if(!b) return;
-  const s = computeBlockStats(b);
-  if(s.filledSets === 0){
+  const completedStats = computeBlockCompletedStats(b);
+  if(completedStats.completedSets === 0){
     const warn = document.getElementById('footer-warning');
-    if(warn){ warn.style.display = 'block'; warn.textContent = 'Preencha ao menos uma série antes de concluir.'; }
+    if(warn){ warn.style.display = 'block'; warn.textContent = 'Marque o certinho de ao menos uma série antes de concluir.'; }
     return;
   }
   await concludeWorkout(blockId);
@@ -2705,18 +2826,23 @@ async function handleConcludeClick(blockId){
 async function concludeWorkout(blockId){
   const b = treinoBlocks.find(x => x.id === blockId);
   if(!b) return;
-  const s = computeBlockStats(b);
-  if(s.filledSets === 0) return;
-  const { musclesVolume, total } = computeMuscleVolume(b.exercises);
+  const totalStats = computeBlockStats(b); // setCount total do bloco — não muda com este ajuste
+  const completedStats = computeBlockCompletedStats(b); // NOVO: só séries com o certinho marcado
+  if(completedStats.completedSets === 0) return; // precisa de ao menos 1 série concluída para poder concluir o treino
+  /* musclesVolume/muscleTotal do histórico passam a considerar só séries concluídas —
+     construímos uma cópia dos exercícios contendo apenas essas séries antes de calcular. */
+  const realizedExercises = b.exercises.map(ex => ({ ...ex, sets: ex.sets.filter(isSetCompletedLive) }));
+  const { musclesVolume, total } = computeMuscleVolume(realizedExercises);
   const day = todayKey();
   const entryId = day + '_' + blockId;
 
   /* Detecta novos recordes ANTES de salvar, comparando com o histórico já existente
-     (exclui uma eventual entrada de hoje já salva anteriormente, para não comparar contra si mesma) */
+     (exclui uma eventual entrada de hoje já salva anteriormente, para não comparar contra si mesma).
+     Só séries marcadas como concluídas contam para um novo recorde. */
   const newRecords = [];
   b.exercises.forEach(ex => {
     if(!ex.nome) return;
-    const filled = ex.sets.filter(s2 => s2.reps !== '' && s2.carga !== '');
+    const filled = ex.sets.filter(s2 => isSetCompletedLive(s2) && s2.reps !== '' && s2.carga !== '');
     if(!filled.length) return;
     const prevPR = computeExercisePRs(ex.id, ex.nome, entryId);
     const top = filled.reduce((max,s2) => (parseFloat(s2.carga)||0) >= (parseFloat(max.carga)||0) ? s2 : max, filled[0]);
@@ -2729,8 +2855,10 @@ async function concludeWorkout(blockId){
   const entry = {
     id: entryId, date: day, time: new Date().toTimeString().slice(0,5),
     blockId: b.id, blockName: b.name,
-    exercises: b.exercises.map(ex => ({ exId: ex.id, nome: ex.nome, sets: ex.sets.map(s => ({reps:s.reps, carga:s.carga, rir:s.rir||''})), obs: ex.obs })),
-    volume: Math.round(s.volume), setCount: s.setCount, filledSets: s.filledSets,
+    /* Guarda TODAS as séries (preenchidas ou não, concluídas ou não) com reps/carga/rir
+       intactos, mais a propriedade completed — nenhuma informação é descartada aqui. */
+    exercises: b.exercises.map(ex => ({ exId: ex.id, nome: ex.nome, sets: ex.sets.map(s => ({reps:s.reps, carga:s.carga, rir:s.rir||'', completed: !!s.completed})), obs: ex.obs })),
+    volume: Math.round(completedStats.volume), setCount: totalStats.setCount, filledSets: completedStats.completedSets,
     musclesVolume, muscleTotal: Math.round(total),
     newRecords,
   };
@@ -2796,7 +2924,7 @@ function refreshExerciseRow(blockId, exId){
   const volume = filled.reduce((v,s) => v + (parseFloat(s.reps)||0)*(parseFloat(s.carga)||0), 0);
   const repsSummary = ex.sets.length ? (ex.sets[0].reps || '-') : '-';
   const metaLine = ex.sets.length ? ex.sets.length + '×' + repsSummary + (volume > 0 ? ' · ' + Math.round(volume) + ' kg' : '') : 'sem séries';
-  const complete = ex.sets.length > 0 && filled.length === ex.sets.length;
+  const complete = ex.sets.length > 0 && ex.sets.every(isSetCompletedLive);
   const row = document.getElementById('ex-' + exId);
   if(!row) return;
   const metaEl = row.querySelector('.exercise-meta');
@@ -2829,7 +2957,7 @@ function refreshExerciseRow(blockId, exId){
       const tag = document.createElement('div');
       tag.className = 'set-pr-tag';
       tag.style.marginTop = '4px';
-      tag.style.marginLeft = '28px';
+      tag.style.marginLeft = '50px';
       tag.style.width = 'fit-content';
       tag.textContent = 'NOVO RECORDE';
       sb.appendChild(tag);
@@ -2858,7 +2986,7 @@ function renderExercise(blockId, ex){
   const volume = filled.reduce((v,s) => v + (parseFloat(s.reps)||0)*(parseFloat(s.carga)||0), 0);
   const repsSummary = ex.sets.length ? (ex.sets[0].reps || '-') : '-';
   const metaLine = ex.sets.length ? ex.sets.length + '×' + repsSummary + (volume > 0 ? ' · ' + Math.round(volume) + ' kg' : '') : 'sem séries';
-  const complete = ex.sets.length > 0 && filled.length === ex.sets.length;
+  const complete = ex.sets.length > 0 && ex.sets.every(isSetCompletedLive);
   const muscleKey = normName(ex.nome);
   const muscleTag = ex.nome && !exerciseMuscles[muscleKey] ? '<div class="exercise-muscle-tag">musculatura não classificada</div>' : '';
 
@@ -2878,15 +3006,17 @@ function renderExercise(blockId, ex){
     const isNewPR = pr && s.reps !== '' && s.carga !== '' && (parseFloat(s.carga) > pr.maxCarga || (parseFloat(s.carga) === pr.maxCarga && parseFloat(s.reps) > pr.bestSet.reps));
     const rirChips = rirOpts.map(v => `<button type="button" class="rir-chip ${s.rir===v?'active':''}" onclick="setRir(${blockId}, ${ex.id}, ${i}, '${v}')">${v}</button>`).join('');
     const filledSet = s.reps !== '' && s.carga !== '';
-    return `<div class="set-block ${isNewPR ? 'improved' : ''}">
+    const isCompleted = !!s.completed;
+    return `<div class="set-block ${isNewPR ? 'improved' : ''} ${isCompleted ? 'set-completed' : ''}">
     <div class="set-row">
       <div class="set-idx">${String(i+1).padStart(2,'0')}</div>
+      <button type="button" class="set-check ${isCompleted ? 'checked' : ''}" onclick="toggleSetCompleted(${blockId}, ${ex.id}, ${i})" title="Marcar série como concluída" aria-label="Marcar série como concluída" aria-pressed="${isCompleted}">${icoCheck}</button>
       <input type="number" placeholder="reps" value="${s.reps ?? ''}" oninput="updateSet(${blockId}, ${ex.id}, ${i}, 'reps', this.value)">
       <input type="number" placeholder="kg" value="${s.carga ?? ''}" oninput="updateSet(${blockId}, ${ex.id}, ${i}, 'carga', this.value)">
       <button class="set-remove" onclick="removeSet(${blockId}, ${ex.id}, ${i})">✕</button>
     </div>
     ${refLine}
-    ${isNewPR ? `<div class="set-pr-tag" style="margin-top:4px; margin-left:28px; width:fit-content;">NOVO RECORDE</div>` : ''}
+    ${isNewPR ? `<div class="set-pr-tag" style="margin-top:4px; margin-left:50px; width:fit-content;">NOVO RECORDE</div>` : ''}
     <div class="rir-row"><span class="rir-lbl">RIR</span>${rirChips}</div>
     ${filledSet ? `<button type="button" class="set-rest-btn" onclick="startRestTimer(${blockId}, ${restSeconds})">⏱ iniciar descanso · ${restSeconds}s</button>` : ''}
     </div>`;
@@ -2936,7 +3066,7 @@ function renderExercise(blockId, ex){
       </div>
       <div class="exercise-detail">
         ${lastRefHtml}
-        <div class="sets-head"><span></span><span>Reps</span><span>Carga (kg)</span><span></span></div>
+        <div class="sets-head"><span></span><span></span><span>Reps</span><span>Carga (kg)</span><span></span></div>
         ${setsHtml || '<div class="empty-state" style="padding:6px 0;"><div class="sub">Sem séries ainda.</div></div>'}
         ${volCompareHtml}
         <div class="exercise-actions">
@@ -2958,7 +3088,7 @@ function renameBlock(blockId, val){ findBlock(blockId).name = val; saveTreino();
 
 function addExercise(blockId){
   const b = findBlock(blockId);
-  b.exercises.push({ id: Date.now(), nome:'', sets:[{reps:'',carga:''}], obs:'', open:true });
+  b.exercises.push({ id: Date.now(), nome:'', sets:[{reps:'',carga:'',completed:false}], obs:'', open:true });
   saveTreino();
   renderSessionExercises(b);
   updateSessionStats(blockId);
@@ -2978,7 +3108,7 @@ function toggleExerciseOpen(blockId, exId){
   renderSessionExercises(findBlock(blockId));
 }
 function addSet(blockId, exId){
-  findExercise(blockId, exId).sets.push({reps:'',carga:''});
+  findExercise(blockId, exId).sets.push({reps:'',carga:'',completed:false});
   saveTreino();
   renderSessionExercises(findBlock(blockId));
   updateSessionStats(blockId);
@@ -3005,6 +3135,27 @@ function updateSet(blockId, exId, idx, field, val){
   findExercise(blockId, exId).sets[idx][field] = val;
   saveTreino();
   refreshExerciseRow(blockId, exId);
+  updateSessionStats(blockId);
+}
+/* Preencher reps/carga (updateSet acima) NUNCA marca a série como concluída.
+   Só este toggle, disparado pelo clique no certinho, muda o estado de conclusão. */
+function toggleSetCompleted(blockId, exId, idx){
+  const ex = findExercise(blockId, exId);
+  const set = ex.sets[idx];
+  if(!set) return;
+  set.completed = !set.completed;
+  saveTreino();
+  const exEl = document.getElementById('ex-' + exId);
+  if(exEl){
+    const setBlocks = exEl.querySelectorAll('.set-block');
+    const target = setBlocks[idx];
+    if(target){
+      target.classList.toggle('set-completed', !!set.completed);
+      const btn = target.querySelector('.set-check');
+      if(btn){ btn.classList.toggle('checked', !!set.completed); btn.setAttribute('aria-pressed', String(!!set.completed)); }
+    }
+  }
+  refreshExerciseRow(blockId, exId); // atualiza o selo "COMPLETO" do exercício, que agora depende do certinho
   updateSessionStats(blockId);
 }
 function updateObs(blockId, exId, val){ findExercise(blockId, exId).obs = val; saveTreino(); }
@@ -3391,7 +3542,7 @@ function openReport(dateStr){
   entries.forEach(e => (e.newRecords||[]).forEach(r => recordedExNames.add(normName(r.nome))));
 
   const exHtml = entries.map(e => e.exercises.map(ex => {
-    const filled = ex.sets.filter(s => s.reps!=='' && s.carga!=='');
+    const filled = ex.sets.filter(isSetRealizedHistoric);
     const vol = filled.reduce((v,s) => v+(parseFloat(s.reps)||0)*(parseFloat(s.carga)||0),0);
     const repsSummary = ex.sets.length ? ex.sets[0].reps||'-' : '-';
     const exIdAttr = ex.exId != null ? ex.exId : '';
