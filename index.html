@@ -674,6 +674,13 @@
   .manual-trigger-row{ margin-top:12px; }
   .manual-trigger-btn{ width:100%; font-size:10.5px; }
 
+  .pending-box{ margin-top:16px; border:1px solid rgba(240,168,96,0.3); background: rgba(240,168,96,0.05); border-radius: var(--radius-md); padding:12px 13px; }
+  .pending-item + .pending-item{ margin-top:12px; padding-top:12px; border-top:1px dashed rgba(240,168,96,0.25); }
+  .pending-item-label{ font-size:12.5px; color: var(--text-secondary); line-height:1.45; margin-bottom:8px; }
+  .pending-chip-row{ display:flex; flex-wrap:wrap; gap:6px; }
+  .pending-chip-row .weeknav-day{ flex:none; padding:7px 11px; font-size:10.5px; }
+  .pending-chip-row .pending-skip{ color: var(--text-faint); }
+
   .food-search-input{ width:100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 11px 12px; font-family:'Inter',sans-serif; font-size: 13.5px; outline:none; transition: border-color .15s ease, background .15s ease; }
   .food-search-input:focus{ border-color: rgba(255,255,255,0.22); background: var(--surface-hover); }
   .food-results-list{ margin-top:8px; max-height:220px; overflow-y:auto; display:flex; flex-direction:column; gap:6px; }
@@ -1879,8 +1886,8 @@ async function saveSelecoes(){ await storage.set('dieta:selecoes', JSON.stringif
    ------------------------------------------------------------------------
    NÃO altera dietaLog[dia]['cafe'|'almoco'|'lanche'|'jantar'|'ceia'] — isso
    continua sendo exclusivamente "o planejado marcado como feito" (ou o
-   registro livre por IA já existente em registrarLivre), exatamente como
-   antes desta versão.
+   registro livre em texto — ver analisarRegistroLivre(), 100% local desde
+   a v2.45.1), exatamente como antes desta versão.
 
    Cada refeição REAL registrada manualmente vira uma entrada PRÓPRIA dentro
    do mesmo objeto dietaLog[dia], mas com uma chave que nunca colide com as
@@ -2147,6 +2154,168 @@ function computeFoodMacros(food, qty){
     g: food.g * factor,
     f: (food.f||0) * factor,
   };
+}
+
+/* ========================================================================
+   v2.45.1 — PARSER LOCAL DE TEXTO LIVRE (substitui completamente a antiga
+   dependência de IA/API externa do registro "não segui a dieta").
+   ------------------------------------------------------------------------
+   Sem NLP sofisticado (não precisamos disso — ver escopo): normaliza o
+   texto, quebra em segmentos por vírgula / "+" / "e", extrai quantidade e
+   unidade de cada segmento e casa o nome restante contra a FOOD_DB via
+   searchFoods/aliases já existentes. 100% síncrono, 100% offline, nenhuma
+   chamada de rede em nenhum ponto deste bloco.
+==========================================================================*/
+
+/* Números escritos por extenso — só os casos simples pedidos no escopo. */
+const NUMBER_WORDS = {
+  'um':1, 'uma':1, 'dois':2, 'duas':2, 'tres':3, 'quatro':4, 'cinco':5,
+  'seis':6, 'sete':7, 'oito':8, 'nove':9, 'dez':10, 'meia':0.5, 'meio':0.5
+};
+
+/* Unidades reconhecidas → forma canônica usada pela FOOD_DB ('g'|'ml'|'un')
+   + fator de conversão pra essa forma canônica (ex.: 1kg = 1000, em 'g'). */
+const UNIT_ALIASES = [
+  { re:/^kg\b/,                                     unit:'g',  factor:1000 },
+  { re:/^gramas?\b/,                                unit:'g',  factor:1 },
+  { re:/^g\b/,                                      unit:'g',  factor:1 },
+  { re:/^(litros?|l)\b/,                            unit:'ml', factor:1000 },
+  { re:/^ml\b/,                                     unit:'ml', factor:1 },
+  { re:/^unidades?\b/,                              unit:'un', factor:1 },
+  { re:/^un\b/,                                     unit:'un', factor:1 },
+  { re:/^fatias?\b/,                                unit:'un', factor:1 },
+  { re:/^colheres?( de (sopa|cha))?\b/,             unit:'un', factor:1 },
+  { re:/^colher( de (sopa|cha))?\b/,                unit:'un', factor:1 },
+  { re:/^ovos?\b/,                                  unit:'un', factor:1, keepWord:true }, // "ovo(s)" também É o nome do alimento
+];
+
+/* Termos genéricos com um alimento-padrão definido, pra não gerar
+   ambiguidade em termos muito comuns (regra 6 do escopo: "frango → escolher
+   o alimento mais apropriado da base"). Ambiguidade real (ex.: "iogurte")
+   continua caindo no fluxo de seleção — ver resolveFoodMatch(). */
+const FOOD_DEFAULT_ALIAS = {
+  'frango':'frango_peito_grelhado', 'peito de frango':'frango_peito_grelhado',
+  'arroz':'arroz_branco', 'feijao':'feijao_carioca',
+  'pao':'pao_frances', 'pao integral':'pao_forma_integral', 'pao de forma':'pao_forma_branco',
+  'ovo':'ovo_cozido', 'ovos':'ovo_cozido', 'carne':'bife_patinho',
+  'queijo':'queijo_mussarela', 'leite':'leite_integral', 'macarrao':'macarrao',
+  'batata frita':'batata_frita', 'peito de frango grelhado':'frango_peito_grelhado',
+};
+
+/* Palavras/expressões de preenchimento sem valor pro parser — removidas
+   antes da segmentação (nunca tratadas como "alimento não encontrado"). */
+const FOOD_TEXT_STOPWORDS = [
+  'comi','comemos','tomei','bebi','hoje','ontem','de manha','a noite',
+  'no cafe da manha','no almoco','no lanche','no jantar','na ceia'
+];
+
+function normalizeFoodText(text){
+  return String(text||'')
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove acentos
+    .replace(/(\d),(\d)/g, '$1.$2')                     // vírgula decimal -> ponto ("0,2" -> "0.2")
+    .replace(/\+/g, ' e ')                              // "+" equivale a "e"
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/* Consome um número (inteiro ou decimal) do início da string, se houver. */
+function extractQuantity(s){
+  const m = String(s||'').match(/^([0-9]+(?:\.[0-9]+)?)\s*/);
+  if(m) return { qty: parseFloat(m[1]), rest: s.slice(m[0].length) };
+  return { qty: null, rest: s };
+}
+
+/* Consome uma unidade reconhecida do início da string, se houver, e o
+   eventual "de" que vier em seguida ("200 ml de leite" -> resta "leite"). */
+function extractUnit(s){
+  s = String(s||'').trim();
+  for(const u of UNIT_ALIASES){
+    const m = s.match(u.re);
+    if(m){
+      let rest = s.slice(m[0].length).trim().replace(/^de\s+/, '');
+      if(u.keepWord) rest = (m[0].trim() + ' ' + rest).trim();
+      return { unit: u.unit, factor: u.factor, rest };
+    }
+  }
+  return { unit: null, factor: 1, rest: s.replace(/^de\s+/, '') };
+}
+
+/* Casa um nome de alimento (já sem quantidade/unidade) contra a FOOD_DB.
+   Retorna { type:'single', food } | { type:'ambiguous', candidates } |
+   { type:'none' }. Reaproveita searchFoods/findFoodById — nenhuma base
+   nova é criada, só esta camada de resolução por cima. */
+function resolveFoodMatch(name){
+  const key = normSearch(name);
+  if(!key) return { type:'none' };
+  if(FOOD_DEFAULT_ALIAS[key]){
+    const food = findFoodById(FOOD_DEFAULT_ALIAS[key]);
+    if(food) return { type:'single', food };
+  }
+  let results = searchFoods(name, 6);
+  if(!results.length && key.endsWith('s') && key.length > 3){
+    results = searchFoods(name.slice(0, -1), 6); // tentativa simples de singularizar ("bananas" -> "banana")
+  }
+  if(!results.length) return { type:'none' };
+  if(results.length === 1) return { type:'single', food: results[0] };
+  const singularKey = key.replace(/s$/, '');
+  const isExact = f => normSearch(f.name) === key || normSearch(f.name) === singularKey;
+  const exactByName = results.filter(isExact);
+  // só decide sozinho quando exatamente UM candidato bate o nome com exatidão
+  // (ex.: "banana" -> "Banana"); sinônimo compartilhado por vários alimentos
+  // (ex.: "iogurte" -> vários "Iogurte ...") continua sendo ambiguidade real.
+  if(exactByName.length === 1) return { type:'single', food: exactByName[0] };
+  return { type:'ambiguous', candidates: results.slice(0, 5) };
+}
+
+/* Função principal do parser: recebe o texto livre digitado pelo usuário e
+   devolve os alimentos reconhecidos, os ambíguos (precisam de escolha) e os
+   não encontrados (precisam de ação manual) — nunca lança exceção, nunca
+   depende de rede, nunca inventa um alimento que não esteja na base. */
+function parseFoodText(text){
+  const norm = normalizeFoodText(text);
+  if(!norm) return { resolved:[], ambiguous:[], unresolved:[] };
+
+  let cleaned = norm;
+  FOOD_TEXT_STOPWORDS.slice().sort((a,b) => b.length - a.length).forEach(w => {
+    cleaned = cleaned.replace(new RegExp('\\b' + w.replace(/\s+/g, '\\s+') + '\\b', 'g'), ' ');
+  });
+  Object.keys(NUMBER_WORDS).forEach(w => {
+    cleaned = cleaned.replace(new RegExp('\\b' + w + '\\b', 'g'), String(NUMBER_WORDS[w]));
+  });
+  cleaned = cleaned.replace(/\s+/g, ' ').trim();
+
+  // segmenta por vírgula ou por "e" isolado ("+" já virou "e" na normalização)
+  const rawSegments = cleaned.split(/\s*,\s*|\s+e\s+/).map(s => s.trim()).filter(Boolean);
+
+  // v2.45.1 (correção): dentro de cada segmento, também separa itens que o
+  // usuário digitou só com espaço, sem vírgula/"e" entre eles — ex.:
+  // "1 maçã 1 banana" -> ["1 maçã", "1 banana"]. Detecta o ponto onde um
+  // novo número começa depois de uma letra (novo item), sem mexer nos
+  // separadores já tratados acima (vírgula/"e"/"+" continuam funcionando
+  // exatamente como antes).
+  const segments = [];
+  rawSegments.forEach(seg => {
+    seg.split(/(?<=[a-z%])\s+(?=[0-9])/).forEach(sub => { const t = sub.trim(); if(t) segments.push(t); });
+  });
+
+  const resolved = [], ambiguous = [], unresolved = [];
+  segments.forEach(seg => {
+    const { qty, rest: afterQty } = extractQuantity(seg);
+    const { unit, factor, rest: foodNameRaw } = extractUnit(afterQty);
+    const foodName = foodNameRaw.trim();
+    if(!foodName) return; // sobrou só número/unidade sem nome — ignora silenciosamente
+    const finalQty = qty === null ? null : qty * factor;
+    const match = resolveFoodMatch(foodName);
+    if(match.type === 'single'){
+      resolved.push({ raw: seg, food: match.food, qty: finalQty === null ? match.food.base : finalQty, unit });
+    } else if(match.type === 'ambiguous'){
+      ambiguous.push({ raw: seg, foodName, qty: finalQty, unit, candidates: match.candidates });
+    } else {
+      unresolved.push({ raw: seg, foodName, qty: finalQty, unit });
+    }
+  });
+  return { resolved, ambiguous, unresolved };
 }
 
 /* Validação de alimento personalizado (regra 20 — segurança dos dados):
@@ -2571,8 +2740,8 @@ function renderIngredientRows(compKey){
 
 function freeTextBlock(key){
   return `<div class="divider-or">ou</div><div class="ai-input-card"><div class="lbl">não segui a dieta — registrar o que comi</div>
-    <textarea id="free-${key}" placeholder="Ex: 2 ovos, arroz, 150g de frango..."></textarea>
-    <button class="ai-analyze-btn" onclick="registrarLivre('${key}')">analisar e registrar →</button>
+    <textarea id="free-${key}" placeholder='Ex: 1 maçã, 1 banana e 200 ml de iogurte'></textarea>
+    <button class="ai-analyze-btn" onclick="analisarRegistroLivre('${key}')">analisar →</button>
     <div class="status" id="status-${key}"></div></div>`;
 }
 
@@ -2657,60 +2826,36 @@ async function confirmMealFromCatalog(key){
   await saveLog(); renderRefeicoes();
 }
 
-/* ======================================================================
-   SEGURANÇA DA CHAMADA DE IA — LEIA ANTES DE MEXER AQUI
-   ------------------------------------------------------------------
-   As chamadas abaixo para https://api.anthropic.com/v1/messages NÃO
-   contêm nenhuma chave de API no código. Isso é intencional.
-
-   Este HTML foi desenhado para rodar como um artifact dentro do
-   ambiente da Claude (claude.ai / apps Claude), que intercepta essas
-   chamadas via um proxy autenticado do próprio produto — o navegador
-   nunca vê nem envia uma chave secreta. É por isso que a função de IA
-   funciona aqui sem `headers: { "x-api-key": ... }`.
-
-   Se este arquivo for aberto FORA desse ambiente (hospedado em outro
-   servidor, aberto direto no navegador como arquivo local, etc.), esta
-   chamada vai falhar (sem autenticação) — o que é o comportamento
-   seguro esperado: falha fechada, não expõe segredo nenhum. As funções
-   abaixo já tratam esse erro sem quebrar o resto do app.
-
-   PARA USAR ISSO FORA DO AMBIENTE CLAUDE (autohospedagem):
-   1. Crie um endpoint backend/serverless seu (ex: Cloudflare Worker,
-      Vercel Function, servidor Node) que guarde a chave da Anthropic
-      como variável de ambiente no SERVIDOR (nunca no frontend).
-   2. Esse endpoint recebe a requisição do navegador, injeta a chave
-      no header `x-api-key` do lado do servidor, chama a API da
-      Anthropic, e devolve a resposta ao navegador.
-   3. Troque a URL do fetch abaixo de "https://api.anthropic.com/v1/messages"
-      para a URL do SEU endpoint (ex: "/api/estimar-macros").
-   Nunca cole uma chave de API diretamente neste arquivo .html.
-====================================================================== */
-async function registrarLivre(key){
+/* ========================================================================
+   v2.45.1 — "analisar" do registro livre (100% local, sem IA/API/rede)
+   ------------------------------------------------------------------------
+   Antes desta versão, este botão chamava a API da Anthropic (ver histórico
+   da 2.45) e, fora do ambiente Claude, sempre falhava com uma mensagem de
+   erro vermelha. Essa dependência foi completamente removida: o texto
+   digitado agora é interpretado só com parseFoodText() (FOOD_DB local) e o
+   resultado abre o mesmo modal "Registrar o que comi" da 2.45, já
+   pré-preenchido — reaproveitando 100% o fluxo de busca/edição/gravação
+   que o modal manual já tinha, incluindo pendências de ambiguidade e de
+   alimentos não encontrados (ver renderPendingInterpretacao()). */
+function analisarRegistroLivre(key){
   const ta = document.getElementById('free-'+key);
   const desc = ta.value.trim();
   const statusEl = document.getElementById('status-'+key);
   if(!desc){ statusEl.textContent = 'Descreva o que você comeu.'; statusEl.className = 'status error'; return; }
-  statusEl.innerHTML = '<span class="spin"></span>Estimando macros...'; statusEl.className = 'status loading';
-  try{
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: 300, messages: [{ role:"user", content: "Estime os macronutrientes totais da seguinte refeição. Responda APENAS com um JSON válido, sem markdown, sem texto adicional, no formato exato: {\"calorias\": numero, \"proteina\": numero, \"carboidrato\": numero, \"gordura\": numero, \"resumo\": \"nome curto da refeição\"}. Todos os numeros em gramas exceto calorias (kcal). Refeição: " + desc }] })
-    });
-    if(!response.ok) throw new Error('http_' + response.status);
-    const data = await response.json();
-    const textBlock = data.content.find(b => b.type === 'text');
-    const clean = textBlock.text.replace(/```json|```/g, '').trim();
-    const macros = JSON.parse(clean);
-    const day = todayKey();
-    dietaLog[day] = dietaLog[day] || {};
-    dietaLog[day][key] = { tipo:'livre', label: macros.resumo || desc.slice(0,40), desc: desc, kcal:Number(macros.calorias)||0, p:Number(macros.proteina)||0, c:Number(macros.carboidrato)||0, g:Number(macros.gordura)||0 };
-    await saveLog(); renderRefeicoes();
-  }catch(err){
-    console.error(err);
-    statusEl.textContent = 'Não consegui estimar agora — a IA só funciona dentro do ambiente Claude (sem chave exposta aqui). Você pode registrar as gramagens manualmente se preferir.';
+  const parsed = parseFoodText(desc);
+  if(!parsed.resolved.length && !parsed.ambiguous.length && !parsed.unresolved.length){
+    statusEl.textContent = 'Não conseguimos identificar alimentos nesse texto. Tente algo como "1 maçã, 1 banana e 200 ml de iogurte".';
     statusEl.className = 'status error';
+    return;
   }
+  statusEl.textContent = '';
+  statusEl.className = 'status';
+  ta.value = '';
+  openManualMealModal(key);
+  parsed.resolved.forEach(r => addFoodToDraft(r.food.id, r.qty));
+  manualMealDraft.pendingAmbiguous = parsed.ambiguous;
+  manualMealDraft.pendingUnresolved = parsed.unresolved;
+  renderManualModal();
 }
 
 async function undoMeal(key){ const day = todayKey(); if(dietaLog[day]) delete dietaLog[day][key]; await saveLog(); if(currentSyncUser) deleteDietLogRemote(day, key); renderRefeicoes(); }
@@ -2796,11 +2941,11 @@ async function deleteManualMeal(day, key){
    relatório de treino (#modal-backdrop / openReport / closeReport), que
    não é tocado. Evita qualquer conflito entre os dois fluxos.
 ==========================================================================*/
-let manualMealDraft = null; // { slot: string|null, items: [{ foodId, name, unit, base, qty, kcal,p,c,g,f }] }
+let manualMealDraft = null; // { slot, items:[{foodId,name,unit,base,qty,kcal,p,c,g,f}], pendingAmbiguous:[], pendingUnresolved:[] }
 let manualCustomFormOpen = false;
 
 function openManualMealModal(prefillSlot){
-  manualMealDraft = { slot: prefillSlot || null, items: [] };
+  manualMealDraft = { slot: prefillSlot || null, items: [], pendingAmbiguous: [], pendingUnresolved: [] };
   manualCustomFormOpen = false;
   renderManualModal();
   document.getElementById('manual-modal-backdrop').classList.add('open');
@@ -2845,12 +2990,15 @@ function renderManualFoodResults(query){
 }
 function onManualFoodSearch(value){ renderManualFoodResults(value); }
 
-function addFoodToDraft(foodId){
+/* qty é opcional: sem ela, usa a porção de referência do alimento (1 base),
+   igual antes da 2.45.1 — usado tanto pelo clique manual na busca quanto
+   pelo parser de texto livre (que já traz uma quantidade interpretada). */
+function addFoodToDraft(foodId, qty){
   const food = findFoodById(foodId);
   if(!food || !manualMealDraft) return;
-  const qty = food.base; // ponto de partida razoável (1 porção de referência); usuário ajusta em seguida
-  const macros = computeFoodMacros(food, qty);
-  manualMealDraft.items.push({ foodId: food.id, name: food.name, unit: food.unit, base: food.base, qty, ...macros });
+  const q = (qty === undefined || qty === null || !isFinite(qty) || qty <= 0) ? food.base : qty;
+  const macros = computeFoodMacros(food, q);
+  manualMealDraft.items.push({ foodId: food.id, name: food.name, unit: food.unit, base: food.base, qty: q, ...macros });
   renderManualDraftSection();
 }
 
@@ -2928,6 +3076,79 @@ function submitCustomFoodForm(){
   renderManualFoodResults(document.getElementById('manual-food-search-input') ? document.getElementById('manual-food-search-input').value : '');
 }
 
+/* ------------------------------------------------------------------------
+   PENDÊNCIAS DA INTERPRETAÇÃO AUTOMÁTICA (v2.45.1)
+   ------------------------------------------------------------------------
+   Quando o parser encontra mais de um alimento compatível (ambíguo) ou
+   nenhum (não encontrado), o item NÃO é adicionado sozinho — fica listado
+   aqui até o usuário escolher, ignorar, buscar manualmente ou cadastrar
+   como personalizado (regras 7 e 8 do escopo). Nunca bloqueia o resto: os
+   itens já resolvidos continuam normalmente na lista de rascunho abaixo.
+==========================================================================*/
+function resolveAmbiguousItem(idx, foodId){
+  if(!manualMealDraft || !manualMealDraft.pendingAmbiguous) return;
+  const item = manualMealDraft.pendingAmbiguous[idx];
+  if(!item) return;
+  addFoodToDraft(foodId, item.qty);
+  manualMealDraft.pendingAmbiguous.splice(idx, 1);
+  renderManualModal();
+}
+function dismissPendingAmbiguous(idx){
+  if(!manualMealDraft || !manualMealDraft.pendingAmbiguous) return;
+  manualMealDraft.pendingAmbiguous.splice(idx, 1);
+  renderManualModal();
+}
+function dismissPendingUnresolved(idx){
+  if(!manualMealDraft || !manualMealDraft.pendingUnresolved) return;
+  manualMealDraft.pendingUnresolved.splice(idx, 1);
+  renderManualModal();
+}
+function searchFromPendingUnresolved(idx){
+  if(!manualMealDraft || !manualMealDraft.pendingUnresolved) return;
+  const item = manualMealDraft.pendingUnresolved[idx];
+  if(!item) return;
+  const input = document.getElementById('manual-food-search-input');
+  if(input){ input.value = item.foodName; onManualFoodSearch(item.foodName); input.focus(); input.scrollIntoView({behavior:'smooth', block:'center'}); }
+}
+function customFoodFromPendingUnresolved(idx){
+  if(!manualMealDraft || !manualMealDraft.pendingUnresolved) return;
+  const item = manualMealDraft.pendingUnresolved[idx];
+  if(!item) return;
+  manualCustomFormOpen = true;
+  renderManualModal();
+  const nameInput = document.getElementById('cf-name');
+  if(nameInput) nameInput.value = item.foodName.charAt(0).toUpperCase() + item.foodName.slice(1);
+}
+function renderPendingInterpretacao(){
+  if(!manualMealDraft) return '';
+  const amb = manualMealDraft.pendingAmbiguous || [];
+  const unr = manualMealDraft.pendingUnresolved || [];
+  if(!amb.length && !unr.length) return '';
+  let html = `<div class="pending-box">
+    <div class="manual-section-lbl">pendências da interpretação automática</div>`;
+  amb.forEach((it, idx) => {
+    html += `<div class="pending-item">
+      <div class="pending-item-label">Encontramos mais de uma opção para "${escapeHtml(it.foodName)}":</div>
+      <div class="pending-chip-row">
+        ${it.candidates.map(c => `<div class="weeknav-day" onclick="resolveAmbiguousItem(${idx},'${c.id}')">${escapeHtml(c.name)}</div>`).join('')}
+        <div class="weeknav-day pending-skip" onclick="dismissPendingAmbiguous(${idx})">ignorar</div>
+      </div>
+    </div>`;
+  });
+  unr.forEach((it, idx) => {
+    html += `<div class="pending-item">
+      <div class="pending-item-label">Não encontramos: "${escapeHtml(it.foodName)}".</div>
+      <div class="pending-chip-row">
+        <div class="weeknav-day" onclick="searchFromPendingUnresolved(${idx})">escolher alimento</div>
+        <div class="weeknav-day" onclick="customFoodFromPendingUnresolved(${idx})">adicionar personalizado</div>
+        <div class="weeknav-day pending-skip" onclick="dismissPendingUnresolved(${idx})">ignorar</div>
+      </div>
+    </div>`;
+  });
+  html += `</div>`;
+  return html;
+}
+
 function renderManualModal(){
   if(!manualMealDraft) return;
   const slotPills = MANUAL_MEAL_TYPES.map(t => `<div class="weeknav-day ${manualMealDraft.slot===t.key?'selected':''}" onclick="selectManualMealSlot('${t.key}')">${escapeHtml(t.label)}</div>`).join('');
@@ -2938,6 +3159,8 @@ function renderManualModal(){
 
     <div class="fixed-block-lbl" style="margin-bottom:8px;">1. tipo de refeição</div>
     <div class="weeknav" style="flex-wrap:wrap;">${slotPills}</div>
+
+    ${renderPendingInterpretacao()}
 
     <div class="fixed-block-lbl" style="margin:18px 0 8px;">2. buscar alimento</div>
     <input type="text" id="manual-food-search-input" class="food-search-input" placeholder="Ex: frango, arroz, batata frita..." oninput="onManualFoodSearch(this.value)">
@@ -3012,6 +3235,42 @@ ${refeicoesTexto}
 Nota de aderência: ${nt.nota === null ? 'sem refeições registradas ainda' : nt.nota + '/100'}`;
 }
 
+/* ======================================================================
+   SEGURANÇA DA CHAMADA DE IA — LEIA ANTES DE MEXER AQUI
+   ------------------------------------------------------------------
+   NOTA (v2.45.1): o registro de alimentação ("analisar" — ver
+   analisarRegistroLivre()) NÃO usa mais IA/API nenhuma — foi substituído
+   por um parser 100% local (parseFoodText(), acima). Este bloco de
+   segurança agora só se aplica à função "pergunte ao seu painel"
+   (askTracker(), logo abaixo), que continua opcionalmente usando IA e
+   está fora do escopo desta versão.
+
+   A chamada abaixo para https://api.anthropic.com/v1/messages NÃO contém
+   nenhuma chave de API no código. Isso é intencional.
+
+   Este HTML foi desenhado para rodar como um artifact dentro do
+   ambiente da Claude (claude.ai / apps Claude), que intercepta essa
+   chamada via um proxy autenticado do próprio produto — o navegador
+   nunca vê nem envia uma chave secreta. É por isso que a função de IA
+   funciona aqui sem `headers: { "x-api-key": ... }`.
+
+   Se este arquivo for aberto FORA desse ambiente (hospedado em outro
+   servidor, aberto direto no navegador como arquivo local, etc.), esta
+   chamada vai falhar (sem autenticação) — o que é o comportamento
+   seguro esperado: falha fechada, não expõe segredo nenhum. A função
+   abaixo já trata esse erro sem quebrar o resto do app.
+
+   PARA USAR ISSO FORA DO AMBIENTE CLAUDE (autohospedagem):
+   1. Crie um endpoint backend/serverless seu (ex: Cloudflare Worker,
+      Vercel Function, servidor Node) que guarde a chave da Anthropic
+      como variável de ambiente no SERVIDOR (nunca no frontend).
+   2. Esse endpoint recebe a requisição do navegador, injeta a chave
+      no header `x-api-key` do lado do servidor, chama a API da
+      Anthropic, e devolve a resposta ao navegador.
+   3. Troque a URL do fetch abaixo de "https://api.anthropic.com/v1/messages"
+      para a URL do SEU endpoint (ex: "/api/estimar-macros").
+   Nunca cole uma chave de API diretamente neste arquivo .html.
+====================================================================== */
 async function askTracker(){
   const input = document.getElementById('ask-input');
   const question = input.value.trim();
@@ -3021,9 +3280,6 @@ async function askTracker(){
   resultEl.innerHTML = '<div class="q">'+escapeHtml(question)+'</div><span class="spin"></span>analisando seus dados...';
   try{
     const context = buildTrackerContext();
-    // Ver bloco de comentário "SEGURANÇA DA CHAMADA DE IA" acima de registrarLivre():
-    // nenhuma chave de API é usada aqui — esta chamada só funciona dentro do
-    // ambiente Claude, que autentica via proxy próprio sem expor segredo ao navegador.
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: 400, messages: [{ role:"user", content: context + "\n\nPergunta do usuário: " + question + "\n\nResponda de forma curta, direta e útil, em português, usando APENAS os dados reais acima. Se não houver dados suficientes para responder algo, diga claramente que não há dados suficientes em vez de inventar. Não use markdown, apenas texto corrido em parágrafos curtos." }] })
