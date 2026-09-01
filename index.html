@@ -2543,7 +2543,7 @@ function renderRefeicoes(){
   const todayLog = dietaLog[day] || {};
   document.getElementById('meals-container').innerHTML = mealOrder.map(key => renderMealCard(key, todayLog[key], day)).join('') + renderOutraSection(day);
 
-  renderNutriHero(todayLog);
+  renderNutriHero(todayLog, day);
   renderScore(todayLog);
   renderPlannedConsumedCard(day);
 }
@@ -2594,9 +2594,16 @@ function renderPlannedConsumedCard(day){
       </div>`).join('')}</div>`;
 }
 
-function renderNutriHero(todayLog){
+/* v2.45.2: o hero (topo do painel de dieta) precisa refletir o CONSUMO
+   REAL do dia (planejado feito + manual_*), não só o planejado marcado
+   como feito — senão o registro manual fica "preso" no card de baixo
+   (planned-consumed-card) e não aparece no número grande que o usuário
+   vê primeiro. A nota de aderência (renderScore) continua isolada, só
+   sobre as 5 refeições planejadas — não mexi nisso. */
+function renderNutriHero(todayLog, day){
   const nt = computeNutritionTotals(todayLog);
-  const t = nt.totals;
+  const consumed = computeConsumedTotals(day);
+  const t = { kcal: consumed.kcal, prot: consumed.p, carb: consumed.c, gord: consumed.g };
   animateNumber(document.getElementById('nh-kcal-num'), Math.round(t.kcal), 0);
   document.getElementById('nh-kcal-target').textContent = '/ ' + dietaTargets.kcal + ' kcal';
   document.getElementById('nh-bar-fill').style.width = (dietaTargets.kcal>0 ? Math.min(100,(t.kcal/dietaTargets.kcal)*100) : 0) + '%';
