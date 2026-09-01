@@ -211,6 +211,16 @@
   .import-hevy-lbl{ font-family:'JetBrains Mono',monospace; font-size:10.5px; color: var(--treino); text-transform:uppercase; letter-spacing:0.08em; }
   .import-hevy-sub{ font-size:11.5px; color: var(--text-secondary); margin-top:5px; max-width:400px; line-height:1.5; }
   .import-hevy-btn{ flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+  .weekly-schedule-box{ background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 18px; margin-bottom: 18px; }
+  .ws-header{ margin-bottom: 12px; }
+  .ws-eyebrow{ font-family:'JetBrains Mono',monospace; font-size:10px; color: var(--treino); letter-spacing:0.12em; text-transform:uppercase; }
+  .ws-sub{ font-size:12px; color: var(--text-secondary); margin-top:4px; line-height:1.5; }
+  .ws-grid{ display:flex; flex-direction:column; gap:8px; margin-top:14px; }
+  .ws-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .ws-day-label{ font-family:'JetBrains Mono',monospace; font-size:11px; color: var(--text-secondary); text-transform:uppercase; letter-spacing:.04em; width:74px; flex-shrink:0; }
+  .ws-select{ flex:1; background: var(--bg); border:1px solid var(--border); border-radius:8px; color: var(--text); font-family:inherit; font-size:13px; padding:8px 10px; }
+  .ws-select:focus{ outline:none; border-color: var(--treino); }
+
   .lib-card{ background: var(--surface); border:1px solid var(--border); border-radius: var(--radius-lg); padding:20px; cursor:pointer; position:relative; overflow:hidden; transition: background .2s ease, border-color .2s ease, transform .15s ease; }
   .lib-card:hover{ background: var(--surface-hover); border-color: rgba(255,255,255,0.14); transform: translateY(-2px); }
   .lib-card:active{ transform: translateY(0) scale(0.99); }
@@ -238,6 +248,20 @@
   .lib-cta{ font-family:'JetBrains Mono',monospace; font-size:10.5px; color: var(--text); margin-top:14px; display:flex; align-items:center; justify-content:space-between; letter-spacing:0.04em; position:relative; }
   .lib-cta svg{ width:13px; height:13px; transition: transform .2s ease; }
   .lib-card:hover .lib-cta svg{ transform: translateX(3px); }
+
+  /* ===================== TREINO DO DIA (card na aba Hoje) ===================== */
+  .today-schedule-card{ background: var(--surface); border:1px solid var(--border); border-radius: var(--radius-lg); padding:18px 20px; margin-bottom:16px; cursor:pointer; position:relative; overflow:hidden; transition: background .2s ease, border-color .2s ease; }
+  .today-schedule-card:hover{ background: var(--surface-hover); }
+  .today-schedule-card.rest{ cursor:default; border-style:dashed; }
+  .today-schedule-card.rest:hover{ background: var(--surface); }
+  .ts-eyebrow{ font-family:'JetBrains Mono',monospace; font-size:10px; color: var(--treino); letter-spacing:0.12em; text-transform:uppercase; display:flex; align-items:center; justify-content:space-between; }
+  .ts-weekday{ color: var(--text-faint); }
+  .ts-name{ font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:700; margin-top:8px; }
+  .ts-name.rest-txt{ color: var(--text-secondary); }
+  .ts-sub{ font-family:'JetBrains Mono',monospace; font-size:11px; color: var(--text-secondary); margin-top:4px; }
+  .ts-cta{ font-family:'JetBrains Mono',monospace; font-size:10.5px; color: var(--text); margin-top:14px; display:flex; align-items:center; gap:6px; letter-spacing:0.04em; }
+  .ts-cta svg{ width:13px; height:13px; transition: transform .2s ease; }
+  .today-schedule-card:hover .ts-cta svg{ transform: translateX(3px); }
 
   /* ===================== WORKOUT SESSION (imersivo) ===================== */
   .session-overlay{ position:fixed; inset:0; z-index:400; display:none; flex-direction:column; background:
@@ -354,6 +378,7 @@
   .cal-day.has:hover{ background: var(--surface-hover); }
   .cal-day.today{ box-shadow: inset 0 0 0 1px var(--treino); }
   .cal-dot{ width:5px; height:5px; border-radius:50%; margin-top:3px; background: var(--treino); }
+  .cal-sched-tag{ position:absolute; bottom:4px; width:14px; height:2px; border-radius:999px; background: var(--treino); opacity:0.45; }
 
   .heat-grid{ display:grid; grid-auto-flow:column; grid-template-rows: repeat(7,1fr); gap:3px; overflow-x:auto; padding-bottom:4px; }
   .heat-cell{ width:11px; height:11px; border-radius:3px; background: rgba(255,255,255,0.045); flex-shrink:0; }
@@ -525,10 +550,6 @@
   .insight-row .ic{ width:6px; height:6px; border-radius:50%; margin-top:6px; flex-shrink:0; }
   .insight-row .tx{ font-size: 13px; line-height:1.5; color: var(--text); }
 
-  /* ===================== RESUMOS (link externo) ===================== */
-  .resumos-tab{ display:flex; align-items:center; gap:4px; }
-  .resumos-tab svg{ width:10px; height:10px; }
-
 /* ===================== NUTRITION HERO ===================== */
   .nutri-hero{ background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px 22px; margin-bottom: 16px; position:relative; overflow:hidden; }
   .nutri-hero::before{ content:''; position:absolute; inset:0; background: radial-gradient(450px 200px at 10% -10%, var(--dieta-dim), transparent 60%); pointer-events:none; }
@@ -630,6 +651,52 @@
   .weeknav-day.selected{ border-color: var(--dieta); color: var(--dieta); background: var(--dieta-dim); }
   .divider-or{ text-align:center; font-family:'JetBrains Mono',monospace; font-size:9.5px; color: var(--text-faint); margin: 14px 0 10px; text-transform:uppercase; letter-spacing:0.14em; display:flex; align-items:center; gap:10px; }
   .divider-or::before, .divider-or::after{ content:''; flex:1; height:1px; background: var(--border-soft); }
+
+  /* ===================== v2.45 — REGISTRO REAL / BASE DE ALIMENTOS =====================
+     Reaproveita as variáveis de tema e os componentes visuais já existentes
+     (meal-card, ing-row, option-card, btn-ghost, status etc.) — sem redesign geral. */
+  .pc-card .pc-eyebrow{ font-family:'JetBrains Mono',monospace; font-size:10px; color: var(--dieta); letter-spacing:0.12em; text-transform:uppercase; }
+  .pc-rows{ display:flex; flex-direction:column; gap:10px; margin-top:12px; }
+  .pc-row{ display:flex; align-items:center; gap:10px; padding:8px 0; border-top:1px solid var(--border-soft); }
+  .pc-row:first-child{ border-top:none; padding-top:0; }
+  .pc-row-lbl{ width:76px; flex-shrink:0; font-family:'JetBrains Mono',monospace; font-size:10.5px; color: var(--text-secondary); text-transform:uppercase; letter-spacing:0.04em; }
+  .pc-row-kcal{ font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700; flex-shrink:0; }
+  .pc-row-kcal small{ font-family:'JetBrains Mono',monospace; font-size:9.5px; color: var(--text-secondary); font-weight:400; }
+  .pc-row-macros{ font-family:'JetBrains Mono',monospace; font-size:10.5px; color: var(--text-secondary); text-align:right; flex:1; }
+
+  .manual-section{ margin-top:14px; padding-top:12px; border-top:1px dashed var(--border); }
+  .manual-section-lbl{ font-family:'JetBrains Mono',monospace; font-size:9.5px; color: var(--warn); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
+  .manual-entry{ background: rgba(240,168,96,0.05); border:1px solid rgba(240,168,96,0.18); border-radius: var(--radius-sm); padding:11px 12px; margin-bottom:8px; }
+  .manual-entry-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+  .badge-fora-dieta{ font-family:'JetBrains Mono',monospace; font-size:9px; color: var(--warn); text-transform:uppercase; letter-spacing:0.06em; background: rgba(240,168,96,0.12); padding:3px 7px; border-radius:999px; }
+  .manual-entry-label{ font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; margin-bottom:4px; }
+  .manual-outra-card .manual-section{ border-top:none; margin-top:0; padding-top:0; }
+  .manual-trigger-row{ margin-top:12px; }
+  .manual-trigger-btn{ width:100%; font-size:10.5px; }
+
+  .food-search-input{ width:100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 11px 12px; font-family:'Inter',sans-serif; font-size: 13.5px; outline:none; transition: border-color .15s ease, background .15s ease; }
+  .food-search-input:focus{ border-color: rgba(255,255,255,0.22); background: var(--surface-hover); }
+  .food-results-list{ margin-top:8px; max-height:220px; overflow-y:auto; display:flex; flex-direction:column; gap:6px; }
+  .food-result-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 11px; border-radius: var(--radius-sm); background: rgba(255,255,255,0.02); border: 1px solid var(--border-soft); cursor:pointer; transition: background .15s ease, border-color .15s ease; min-height:40px; }
+  .food-result-row:hover{ background: var(--surface-hover); border-color: var(--dieta); }
+  .food-result-main{ display:flex; flex-direction:column; gap:2px; min-width:0; }
+  .food-result-name{ font-size:12.5px; color: var(--text); }
+  .food-result-cat{ font-family:'JetBrains Mono',monospace; font-size:9px; color: var(--text-faint); text-transform:uppercase; letter-spacing:0.05em; }
+  .food-result-kcal{ font-family:'JetBrains Mono',monospace; font-size:11px; color: var(--warn); flex-shrink:0; white-space:nowrap; }
+  .food-result-base{ color: var(--text-faint); }
+  .manual-empty-hint{ font-size:12px; color: var(--text-faint); padding:10px 2px; }
+
+  .manual-draft-list{ display:flex; flex-direction:column; gap:6px; margin-top:4px; }
+  .draft-item-row{ display:flex; align-items:center; gap:8px; }
+  .draft-item-row .ing-name{ flex:1; min-width:0; }
+  .draft-qty-input{ width:56px; background: transparent; border:none; border-bottom: 1px solid var(--border-soft); color: var(--text); font-family:'JetBrains Mono',monospace; font-size: 12.5px; outline:none; padding: 4px 2px; text-align:center; flex-shrink:0; }
+  .draft-qty-input:focus{ border-bottom-color: var(--text); }
+  .draft-item-kcal{ font-family:'JetBrains Mono',monospace; font-size:10.5px; color: var(--warn); flex-shrink:0; white-space:nowrap; }
+
+  .cf-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px; }
+  .cf-select{ width:100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 9px 10px; font-family:'Inter',sans-serif; font-size: 12.5px; outline:none; }
+  .cf-num{ width:100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 9px 10px; font-family:'JetBrains Mono',monospace; font-size: 12.5px; outline:none; text-align:left; }
+  .cf-hint{ font-size:10.5px; color: var(--text-faint); margin-top:8px; }
   .ai-input-card{ border: 1px solid var(--border); border-radius: var(--radius-md); padding: 13px; background: rgba(255,255,255,0.02); }
   .ai-input-card .lbl{ font-family:'JetBrains Mono',monospace; font-size:9.5px; color: var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:9px; }
   .ai-analyze-btn{ display:flex; align-items:center; justify-content:center; gap:6px; margin-top:9px; background: var(--dieta); color:#04231a; font-weight:600; width:100%; padding: 11px; }
@@ -682,9 +749,6 @@
     <div class="segnav-tab" data-tab="treino">TREINO</div>
     <div class="segnav-tab" data-tab="dieta">DIETA</div>
     <div class="segnav-tab" data-tab="historico">HISTÓRICO</div>
-    <div class="segnav-tab resumos-tab" onclick="openResumos()">RESUMOS
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
-    </div>
   </div>
 
   <!-- ===== HOJE ===== -->
@@ -695,6 +759,7 @@
       <div class="today-bar"><div class="today-bar-fill" id="today-bar-fill"></div></div>
       <div class="today-metrics" id="today-metrics"></div>
     </div>
+    <div id="today-schedule-card-wrap"></div>
     <div class="section-lbl">insights</div>
     <div class="insights-list" id="insights-list"></div>
   </div>
@@ -715,6 +780,13 @@
       </div>
       <input type="file" id="hevy-file-input" accept=".csv" style="display:none" onchange="handleHevyImport(this)">
       <div class="status" id="hevy-import-status"></div>
+    </div>
+    <div class="weekly-schedule-box" id="weekly-schedule-box">
+      <div class="ws-header">
+        <div class="ws-eyebrow">programação semanal</div>
+        <div class="ws-sub">Defina qual bloco treinar em cada dia da semana. Você pode treinar outro bloco quando quiser — isso nunca altera a programação, só o histórico do dia.</div>
+      </div>
+      <div class="ws-grid" id="weekly-schedule-grid"></div>
     </div>
     <div class="lib-grid" id="lib-grid"></div>
   </div>
@@ -750,6 +822,9 @@
       </div>
       <div class="score-bar"><div class="score-bar-fill" id="score-bar-fill"></div></div>
     </div>
+
+    <!-- v2.45: planejado × consumido — card próprio, aditivo, mesma linguagem visual do score-card -->
+    <div class="score-card pc-card" id="planned-consumed-card"></div>
 
     <div class="import-hevy-box" id="diet-import-box">
       <div class="import-hevy-top">
@@ -798,6 +873,11 @@
 
 <div class="modal-backdrop" id="modal-backdrop" onclick="if(event.target===this) closeReport()">
   <div class="modal-sheet" id="modal-sheet"></div>
+</div>
+
+<!-- v2.45: modal próprio pra "Registrar o que comi" (consumo real) — isolado do modal de relatório de treino acima -->
+<div class="modal-backdrop" id="manual-modal-backdrop" onclick="if(event.target===this) closeManualMealModal()">
+  <div class="modal-sheet" id="manual-modal-sheet"></div>
 </div>
 
 <div class="rest-timer-widget" id="rest-timer-widget"></div>
@@ -1117,6 +1197,37 @@ async function pullDietSelections(user){
   if(sel.almocoDiaSelecionado) almocoDiaSelecionado = sel.almocoDiaSelecionado;
   if(sel.catalog) dietCatalog = sel.catalog;
   if(sel.catalogSelection) catalogSelection = sel.catalogSelection;
+  /* v2.45: merge não-destrutivo por id — nunca descarta um alimento
+     personalizado que só existe neste dispositivo ainda, e nunca duplica
+     um que já veio da nuvem antes. */
+  if(Array.isArray(sel.customFoods)){
+    const known = new Set(customFoods.map(f => f.id));
+    sel.customFoods.forEach(f => { if(f && f.id && !known.has(f.id)){ customFoods.push(f); known.add(f.id); } });
+    invalidateFoodCache();
+  }
+  return true;
+}
+
+/* Traduz remoteId (vindo da nuvem) de volta para o blockId LOCAL deste
+   dispositivo. Segue o mesmo padrão de merge não-destrutivo já usado em
+   pullDietSelections: só sobrescreve um dia local se a nuvem tiver um
+   valor definido para ele — nunca apaga uma programação local só porque
+   a nuvem ainda não tem aquele dia preenchido. */
+async function pullWorkoutSchedule(user){
+  const sb = initSupabase(); if(!sb) return false;
+  const { data, error } = await sb.from('workout_schedule').select('*').eq('user_id', user.id).maybeSingle();
+  if(error){ console.warn('[sync] pull workout_schedule:', error.message); return false; }
+  if(!data || !data.data) return false;
+  const remote = data.data;
+  WEEK_DAYS.forEach(day => {
+    if(!Object.prototype.hasOwnProperty.call(remote, day)) return; // chave nem existe no registro remoto (dado antigo/incompleto): não mexe no local
+    const remoteBlockId = remote[day];
+    if(remoteBlockId === null){ weeklySchedule[day] = null; return; } // REST DAY explícito na nuvem: aplica localmente
+    const local = treinoBlocks.find(b => b.remoteId === remoteBlockId);
+    if(local) weeklySchedule[day] = local.id;
+    /* se o bloco correspondente ainda não existe localmente (corrida rara
+       entre pulls), o dia é ignorado nesta rodada e se resolve na próxima */
+  });
   return true;
 }
 
@@ -1213,11 +1324,34 @@ async function pushDietTargets(){
 
 async function pushDietSelections(){
   const sb = initSupabase(); if(!sb || !currentSyncUser) return;
-  const payload = { user_id: currentSyncUser.id, data: { dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado, catalog: dietCatalog, catalogSelection } };
+  const payload = { user_id: currentSyncUser.id, data: { dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado, catalog: dietCatalog, catalogSelection, customFoods } };
   try{
     const { error } = await sb.from('diet_selections').upsert(payload, { onConflict: 'user_id' });
     if(error) throw error;
   }catch(e){ console.warn('[sync] push diet_selections falhou:', e.message||e); }
+}
+
+/* A programação local guarda blockId LOCAL. Para a nuvem, traduzimos cada
+   dia para o remoteId do bloco (referência estável entre dispositivos).
+   Se um bloco programado ainda não tem remoteId (não sincronizado ainda),
+   garantimos isso chamando pushWorkoutBlocks() antes — de forma idempotente,
+   sem duplicar nada (é um upsert). O dia só fica de fora desta rodada de
+   push se, mesmo assim, o bloco não tiver remoteId; ele entra na próxima. */
+async function pushWorkoutSchedule(){
+  const sb = initSupabase(); if(!sb || !currentSyncUser) return;
+  await pushWorkoutBlocks();
+  const remoteData = {};
+  WEEK_DAYS.forEach(day => {
+    const blockId = weeklySchedule[day];
+    if(!blockId){ remoteData[day] = null; return; }
+    const block = findBlock(blockId);
+    remoteData[day] = (block && block.remoteId) ? block.remoteId : null;
+  });
+  const payload = { user_id: currentSyncUser.id, data: remoteData };
+  try{
+    const { error } = await sb.from('workout_schedule').upsert(payload, { onConflict: 'user_id' });
+    if(error) throw error;
+  }catch(e){ console.warn('[sync] push workout_schedule falhou:', e.message||e); }
 }
 
 async function pushDietLog(day){
@@ -1256,20 +1390,27 @@ async function deleteDietLogRemote(day, slot){
    ORQUESTRAÇÃO
 ====================================================================== */
 async function syncFromSupabase(user){
+  /* pullWorkoutBlocks precisa terminar ANTES de pullWorkoutSchedule, porque
+     a programação resolve remoteId -> blockId local usando treinoBlocks
+     já atualizado. Por isso saiu do Promise.all e virou um await isolado
+     — o restante continua paralelo, como antes. */
+  await pullWorkoutBlocks(user);
   await Promise.all([
-    pullWorkoutBlocks(user),
     pullWorkoutHistory(user),
     pullBodyWeight(user),
     pullDietTargets(user),
     pullDietSelections(user),
-    pullDietLog(user)
+    pullDietLog(user),
+    pullWorkoutSchedule(user)
   ]);
   await storage.set('treino:blocks', JSON.stringify(treinoBlocks));
   await storage.set('treino:history', JSON.stringify(workoutHistory));
   await storage.set('treino:bodyweight', JSON.stringify(bodyWeightLog));
   await storage.set('dieta:targets', JSON.stringify(dietaTargets));
   await storage.set('dieta:log', JSON.stringify(dietaLog));
-  await storage.set('dieta:selecoes', JSON.stringify({ dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado, catalog: dietCatalog, catalogSelection }));
+  await storage.set('dieta:selecoes', JSON.stringify({ dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado, catalog: dietCatalog, catalogSelection, customFoods }));
+  await storage.set('dieta:customFoods', JSON.stringify(customFoods));
+  await storage.set('treino:weeklySchedule', JSON.stringify(weeklySchedule));
 }
 
 async function syncToSupabase(){
@@ -1279,6 +1420,7 @@ async function syncToSupabase(){
   await pushDietTargets();
   await pushAllDietLog();
   await pushDietSelections();
+  await pushWorkoutSchedule();
 }
 
 async function runInitialSyncFlow(){
@@ -1307,6 +1449,7 @@ function triggerSync(entity){
       else if(entity === 'diet_targets') await pushDietTargets();
       else if(entity === 'diet_log') await pushDietLog();
       else if(entity === 'diet_selections') await pushDietSelections();
+      else if(entity === 'workout_schedule') await pushWorkoutSchedule();
       setSyncStatus('synced', currentSyncUser.email || 'sincronizado');
     }catch(e){
       console.warn('[sync] push falhou para', entity, e);
@@ -1319,7 +1462,8 @@ function refreshAllViews(){
   renderBlocksLibrary();
   renderBodyWeightSection();
   renderRefeicoes();
-  renderHoje();
+  renderWeeklyScheduleConfig();
+  renderHoje(); // já chama renderTodayWorkoutCard() internamente
   const histPanel = document.getElementById('panel-historico');
   if(histPanel && histPanel.classList.contains('active')) renderHistorico();
 }
@@ -1414,6 +1558,20 @@ let calendarMonth = new Date();
 const REST_DEFAULT = 90;
 let restTimerState = null; /* { blockId, totalSeconds, remaining, running, intervalId } */
 
+/* ======================================================================
+   PROGRAMAÇÃO SEMANAL — dia da semana -> blockId (ou null = REST DAY)
+   IMPORTANTE: isto é só uma "agenda". Nunca é lido por nenhuma função de
+   workoutHistory, e nunca é escrito por nenhuma função de conclusão de
+   treino. As duas coisas ficam propositalmente desacopladas.
+====================================================================== */
+const WEEK_DAYS = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+const WEEK_DAY_LABELS_PT = { monday:'Segunda', tuesday:'Terça', wednesday:'Quarta', thursday:'Quinta', friday:'Sexta', saturday:'Sábado', sunday:'Domingo' };
+const WEEK_DAY_LABELS_FULL_PT = { monday:'Segunda-feira', tuesday:'Terça-feira', wednesday:'Quarta-feira', thursday:'Quinta-feira', friday:'Sexta-feira', saturday:'Sábado', sunday:'Domingo' };
+let weeklySchedule = { monday:null, tuesday:null, wednesday:null, thursday:null, friday:null, saturday:null, sunday:null };
+
+/* Date.getDay(): 0=domingo ... 6=sábado. Convertemos para nossas chaves em português. */
+function jsDayToKey(jsDay){ return ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'][jsDay]; }
+
 function todayKey(){ return new Date().toISOString().slice(0,10); }
 function dateKey(d){ return d.toISOString().slice(0,10); }
 function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
@@ -1448,10 +1606,6 @@ function updateSegnavIndicator(activeEl){
 }
 document.querySelectorAll('.segnav-tab[data-tab]').forEach(t => t.addEventListener('click', () => switchTab(t.dataset.tab)));
 window.addEventListener('resize', () => updateSegnavIndicator(document.querySelector('.segnav-tab.active')));
-
-/* Biblioteca de Resumos: arquivo externo, mantido fora do Tracker (não incorporado) */
-function openResumos(){ window.open('./indice_resumos_integrado.html', '_blank'); }
-
 
 
 
@@ -1717,7 +1871,315 @@ const mealOrder = ['cafe','almoco','lanche','jantar','ceia'];
 
 async function saveTargets(){ await storage.set('dieta:targets', JSON.stringify(dietaTargets)); triggerSync('diet_targets'); }
 async function saveLog(){ await storage.set('dieta:log', JSON.stringify(dietaLog)); triggerSync('diet_log'); }
-async function saveSelecoes(){ await storage.set('dieta:selecoes', JSON.stringify({ dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado, catalog: dietCatalog, catalogSelection })); triggerSync('diet_selections'); }
+async function saveSelecoes(){ await storage.set('dieta:selecoes', JSON.stringify({ dietMode, dietSlots, jantarEscolha, almocoDiaSelecionado, catalog: dietCatalog, catalogSelection, customFoods })); triggerSync('diet_selections'); }
+
+/* ========================================================================
+   VERSÃO 2.45 — REGISTRO REAL DE ALIMENTAÇÃO (consumo real) + BASE DE
+   ALIMENTOS + MACROS. Camada NOVA e ADITIVA sobre tudo que já existe acima.
+   ------------------------------------------------------------------------
+   NÃO altera dietaLog[dia]['cafe'|'almoco'|'lanche'|'jantar'|'ceia'] — isso
+   continua sendo exclusivamente "o planejado marcado como feito" (ou o
+   registro livre por IA já existente em registrarLivre), exatamente como
+   antes desta versão.
+
+   Cada refeição REAL registrada manualmente vira uma entrada PRÓPRIA dentro
+   do mesmo objeto dietaLog[dia], mas com uma chave que nunca colide com as
+   5 chaves fixas de refeição, no formato 'manual_<timestamp>_<random>'.
+   Vantagens dessa escolha (analisada antes de decidir por ela — ver
+   relatório final):
+     - reaproveita 100% a tabela `diet_log` já existente no Supabase
+       (mesmas colunas user_id/log_date/meal_slot/data — `meal_slot` aqui
+       só recebe um valor de texto diferente; não é um enum no código
+       cliente, então nenhuma migration é necessária do lado do app).
+     - reaproveita pushDietLog/pullDietLog/deleteDietLogRemote SEM
+       nenhuma alteração nelas: essas funções já operam genericamente
+       sobre "todas as chaves de dietaLog[dia]", não sabem e não
+       precisam saber que uma chave é 'almoco' ou 'manual_...'.
+     - snapshots antigos permanecem intocados: undoMeal(key) e o registro
+       de refeições planejadas continuam mexendo exclusivamente na chave
+       que já mexiam.
+==========================================================================*/
+const MANUAL_MEAL_PREFIX = 'manual_';
+function isManualLogKey(key){ return typeof key === 'string' && key.indexOf(MANUAL_MEAL_PREFIX) === 0; }
+function newManualLogKey(){ return MANUAL_MEAL_PREFIX + Date.now() + '_' + Math.random().toString(36).slice(2,8); }
+
+const MANUAL_MEAL_TYPES = [
+  { key:'cafe',   label:'Café da manhã' },
+  { key:'almoco', label:'Almoço' },
+  { key:'lanche', label:'Lanche' },
+  { key:'jantar', label:'Jantar' },
+  { key:'ceia',   label:'Ceia' },
+  { key:'outra',  label:'Outra' },
+];
+function manualMealTypeLabel(slot){ const m = MANUAL_MEAL_TYPES.find(t => t.key === slot); return m ? m.label : 'Refeição'; }
+
+/* ------------------------------------------------------------------------
+   BASE DE ALIMENTOS
+   ------------------------------------------------------------------------
+   Estrutura enxuta: um array simples de objetos + um índice (Map) montado
+   uma única vez, para busca rápida por prefixo de nome/categoria/sinônimo
+   sem percorrer o array inteiro a cada tecla digitada. Pensado pra ser
+   fácil de expandir depois (scanner, IA, favoritos etc. — ver relatório).
+
+   Cada alimento: { id, name, cat, unit:'g'|'ml'|'un', base, kcal,p,c,g,f, syn }
+   - unit/base definem a referência: 'g'/100, 'ml'/100 ou 'un'/1 (unidade
+     contável, com o peso típico já embutido nos macros, do mesmo jeito que
+     o restante da dieta deste app já faz com itens como "1 banana").
+   - Valores nutricionais são aproximados (fontes usuais tipo TACO/USDA),
+     no mesmo espírito de aproximação que o resto do plano já assume.
+==========================================================================*/
+const FOOD_DB = [
+  // ARROZ
+  { id:'arroz_branco', name:'Arroz branco cozido', cat:'arroz', unit:'g', base:100, kcal:128, p:2.5, c:28.1, g:0.2, f:1.6, syn:['arroz'] },
+  { id:'arroz_integral', name:'Arroz integral cozido', cat:'arroz', unit:'g', base:100, kcal:124, p:2.6, c:25.8, g:1.0, f:2.7, syn:['arroz'] },
+  { id:'arroz_parboilizado', name:'Arroz parboilizado cozido', cat:'arroz', unit:'g', base:100, kcal:123, p:2.6, c:26.2, g:0.3, f:1.9, syn:['arroz'] },
+  { id:'risoto', name:'Risoto', cat:'arroz', unit:'g', base:100, kcal:150, p:3.2, c:22.0, g:5.0, f:1.0, syn:['arroz','risotto'] },
+  { id:'arroz_doce', name:'Arroz doce', cat:'arroz', unit:'g', base:100, kcal:120, p:2.8, c:20.0, g:3.0, f:0.5, syn:['sobremesa','arroz'] },
+  // FEIJÃO
+  { id:'feijao_carioca', name:'Feijão carioca cozido', cat:'feijao', unit:'g', base:100, kcal:76, p:4.8, c:13.6, g:0.5, f:8.5, syn:['feijão'] },
+  { id:'feijao_preto', name:'Feijão preto cozido', cat:'feijao', unit:'g', base:100, kcal:77, p:4.5, c:14.0, g:0.5, f:8.4, syn:['feijão'] },
+  { id:'feijao_branco', name:'Feijão branco cozido', cat:'feijao', unit:'g', base:100, kcal:90, p:6.0, c:16.0, g:0.4, f:6.0, syn:['feijão'] },
+  { id:'lentilha', name:'Lentilha cozida', cat:'feijao', unit:'g', base:100, kcal:93, p:6.3, c:16.3, g:0.5, f:7.9, syn:['leguminosa'] },
+  { id:'grao_bico', name:'Grão de bico cozido', cat:'feijao', unit:'g', base:100, kcal:121, p:7.3, c:20.5, g:1.9, f:6.0, syn:['leguminosa'] },
+  // MASSAS
+  { id:'macarrao', name:'Macarrão cozido', cat:'massas', unit:'g', base:100, kcal:158, p:5.0, c:31.0, g:0.8, f:1.4, syn:['massa','espaguete'] },
+  { id:'macarrao_integral', name:'Macarrão integral cozido', cat:'massas', unit:'g', base:100, kcal:150, p:5.5, c:30.0, g:1.0, f:3.5, syn:['massa'] },
+  { id:'lasanha', name:'Lasanha à bolonhesa', cat:'massas', unit:'g', base:100, kcal:170, p:8.5, c:15.0, g:8.5, f:1.2, syn:['massa'] },
+  { id:'nhoque', name:'Nhoque cozido', cat:'massas', unit:'g', base:100, kcal:130, p:3.0, c:27.0, g:0.6, f:1.5, syn:['massa'] },
+  { id:'miojo', name:'Macarrão instantâneo (miojo, com tempero)', cat:'massas', unit:'g', base:100, kcal:130, p:3.0, c:18.0, g:5.0, f:1.0, syn:['miojo','lamen'] },
+  { id:'talharim_molho_branco', name:'Talharim ao molho branco', cat:'massas', unit:'g', base:100, kcal:175, p:5.0, c:22.0, g:7.5, f:1.0, syn:['massa'] },
+  // PÃES
+  { id:'pao_frances', name:'Pão francês', cat:'paes', unit:'un', base:1, kcal:135, p:4.3, c:28.0, g:1.0, f:1.6, syn:['pão'] },
+  { id:'pao_forma_integral', name:'Pão de forma integral (fatia)', cat:'paes', unit:'un', base:1, kcal:69, p:3.0, c:12.0, g:1.0, f:1.9, syn:['pão'] },
+  { id:'pao_forma_branco', name:'Pão de forma branco (fatia)', cat:'paes', unit:'un', base:1, kcal:75, p:2.3, c:14.0, g:1.0, f:0.6, syn:['pão'] },
+  { id:'pao_sirio', name:'Pão sírio (unidade média)', cat:'paes', unit:'un', base:1, kcal:170, p:6.0, c:34.0, g:1.2, f:1.8, syn:['pão','árabe'] },
+  { id:'pao_de_queijo', name:'Pão de queijo (unidade média)', cat:'paes', unit:'un', base:1, kcal:110, p:2.5, c:12.0, g:6.0, f:0.3, syn:['pão'] },
+  { id:'pao_doce', name:'Pão doce', cat:'paes', unit:'un', base:1, kcal:150, p:4.0, c:26.0, g:3.5, f:1.0, syn:['pão'] },
+  { id:'torrada', name:'Torrada (fatia)', cat:'paes', unit:'un', base:1, kcal:30, p:0.9, c:6.0, g:0.3, f:0.5, syn:['pão'] },
+  // CARNES
+  { id:'carne_moida', name:'Carne moída refogada', cat:'carnes', unit:'g', base:100, kcal:212, p:26.0, c:0.0, g:11.5, f:0, syn:['carne'] },
+  { id:'bife_patinho', name:'Bife grelhado (patinho)', cat:'carnes', unit:'g', base:100, kcal:164, p:27.2, c:0.0, g:5.6, f:0, syn:['carne','bife'] },
+  { id:'alcatra_grelhada', name:'Alcatra grelhada', cat:'carnes', unit:'g', base:100, kcal:174, p:29.6, c:0.0, g:5.6, f:0, syn:['carne','bife'] },
+  { id:'picanha_grelhada', name:'Picanha grelhada', cat:'carnes', unit:'g', base:100, kcal:243, p:26.0, c:0.0, g:15.0, f:0, syn:['carne'] },
+  { id:'costela_assada', name:'Costela assada', cat:'carnes', unit:'g', base:100, kcal:280, p:24.0, c:0.0, g:20.0, f:0, syn:['carne'] },
+  { id:'linguica_grelhada', name:'Linguiça grelhada', cat:'carnes', unit:'g', base:100, kcal:280, p:14.0, c:2.0, g:24.0, f:0, syn:['carne'] },
+  { id:'bacon_frito', name:'Bacon frito', cat:'carnes', unit:'g', base:100, kcal:541, p:37.0, c:1.4, g:42.0, f:0, syn:['carne','toucinho'] },
+  { id:'lombo_suino', name:'Carne de porco grelhada (lombo)', cat:'carnes', unit:'g', base:100, kcal:210, p:28.0, c:0.0, g:10.0, f:0, syn:['carne','porco'] },
+  // FRANGO
+  { id:'frango_peito_grelhado', name:'Peito de frango grelhado', cat:'frango', unit:'g', base:100, kcal:172, p:31.0, c:0.0, g:3.8, f:0, syn:['frango'] },
+  { id:'frango_coxa_assada', name:'Coxa de frango assada', cat:'frango', unit:'g', base:100, kcal:215, p:26.0, c:0.0, g:11.0, f:0, syn:['frango'] },
+  { id:'frango_milanesa', name:'Frango à milanesa (frito)', cat:'frango', unit:'g', base:100, kcal:290, p:20.0, c:15.0, g:16.0, f:0.8, syn:['frango','empanado'] },
+  { id:'frango_desfiado', name:'Frango desfiado', cat:'frango', unit:'g', base:100, kcal:171, p:32.5, c:0.0, g:3.8, f:0, syn:['frango'] },
+  { id:'frango_sobrecoxa', name:'Sobrecoxa de frango assada', cat:'frango', unit:'g', base:100, kcal:224, p:24.0, c:0.0, g:13.5, f:0, syn:['frango'] },
+  { id:'frango_asa_frita', name:'Asa de frango frita', cat:'frango', unit:'g', base:100, kcal:290, p:22.0, c:8.0, g:19.0, f:0.3, syn:['frango'] },
+  // PEIXE
+  { id:'tilapia_grelhada', name:'Tilápia grelhada', cat:'peixe', unit:'g', base:100, kcal:128, p:26.0, c:0.0, g:2.7, f:0, syn:['peixe'] },
+  { id:'salmao_grelhado', name:'Salmão grelhado', cat:'peixe', unit:'g', base:100, kcal:208, p:22.0, c:0.0, g:13.0, f:0, syn:['peixe'] },
+  { id:'atum_natural', name:'Atum em lata (natural)', cat:'peixe', unit:'g', base:100, kcal:96, p:22.0, c:0.0, g:0.8, f:0, syn:['peixe','atum'] },
+  { id:'atum_oleo', name:'Atum em lata (em óleo)', cat:'peixe', unit:'g', base:100, kcal:190, p:24.0, c:0.0, g:10.0, f:0, syn:['peixe','atum'] },
+  { id:'sardinha_lata', name:'Sardinha em lata', cat:'peixe', unit:'g', base:100, kcal:210, p:20.0, c:0.0, g:14.0, f:0, syn:['peixe'] },
+  // OVOS
+  { id:'ovo_cozido', name:'Ovo cozido', cat:'ovos', unit:'un', base:1, kcal:78, p:6.3, c:0.6, g:5.3, f:0, syn:['ovo'] },
+  { id:'ovo_frito', name:'Ovo frito', cat:'ovos', unit:'un', base:1, kcal:92, p:6.4, c:0.4, g:7.0, f:0, syn:['ovo'] },
+  { id:'omelete', name:'Omelete simples (2 ovos)', cat:'ovos', unit:'un', base:1, kcal:180, p:13.0, c:1.2, g:14.0, f:0, syn:['ovo'] },
+  // LEITE
+  { id:'leite_integral', name:'Leite integral', cat:'leite', unit:'ml', base:100, kcal:61, p:3.2, c:4.5, g:3.3, f:0, syn:['leite'] },
+  { id:'leite_desnatado', name:'Leite desnatado', cat:'leite', unit:'ml', base:100, kcal:35, p:3.4, c:5.0, g:0.2, f:0, syn:['leite'] },
+  { id:'leite_semidesnatado', name:'Leite semidesnatado', cat:'leite', unit:'ml', base:100, kcal:47, p:3.3, c:4.8, g:1.6, f:0, syn:['leite'] },
+  { id:'leite_amendoas', name:'Leite de amêndoas', cat:'leite', unit:'ml', base:100, kcal:24, p:0.4, c:2.5, g:1.5, f:0.3, syn:['leite','vegetal'] },
+  // DERIVADOS DO LEITE
+  { id:'iogurte_natural', name:'Iogurte natural', cat:'derivados_leite', unit:'g', base:100, kcal:61, p:3.5, c:4.7, g:3.3, f:0, syn:['iogurte'] },
+  { id:'iogurte_grego', name:'Iogurte grego natural', cat:'derivados_leite', unit:'g', base:100, kcal:59, p:10.0, c:3.5, g:0.0, f:0, syn:['iogurte'] },
+  { id:'iogurte_frutas', name:'Iogurte com frutas (industrializado)', cat:'derivados_leite', unit:'g', base:100, kcal:85, p:3.0, c:14.0, g:2.0, f:0.3, syn:['iogurte'] },
+  { id:'coalhada', name:'Coalhada', cat:'derivados_leite', unit:'g', base:100, kcal:65, p:3.5, c:4.5, g:3.5, f:0, syn:[] },
+  { id:'creme_de_leite', name:'Creme de leite', cat:'derivados_leite', unit:'g', base:100, kcal:240, p:2.5, c:3.5, g:25.0, f:0, syn:[] },
+  // QUEIJOS
+  { id:'queijo_mussarela', name:'Queijo mussarela', cat:'queijos', unit:'g', base:100, kcal:280, p:22.0, c:2.2, g:20.0, f:0, syn:['queijo'] },
+  { id:'queijo_prato', name:'Queijo prato', cat:'queijos', unit:'g', base:100, kcal:360, p:23.0, c:1.9, g:29.0, f:0, syn:['queijo'] },
+  { id:'queijo_minas_frescal', name:'Queijo minas frescal', cat:'queijos', unit:'g', base:100, kcal:264, p:17.4, c:3.2, g:20.2, f:0, syn:['queijo'] },
+  { id:'queijo_parmesao', name:'Queijo parmesão', cat:'queijos', unit:'g', base:100, kcal:420, p:36.0, c:3.2, g:29.0, f:0, syn:['queijo'] },
+  { id:'requeijao', name:'Requeijão', cat:'queijos', unit:'g', base:100, kcal:264, p:9.6, c:3.0, g:24.0, f:0, syn:['queijo'] },
+  { id:'cottage', name:'Queijo cottage', cat:'queijos', unit:'g', base:100, kcal:98, p:11.1, c:3.4, g:4.3, f:0, syn:['queijo'] },
+  // FRUTAS
+  { id:'banana', name:'Banana', cat:'frutas', unit:'un', base:1, kcal:89, p:1.1, c:22.8, g:0.3, f:2.6, syn:['fruta'] },
+  { id:'maca', name:'Maçã', cat:'frutas', unit:'un', base:1, kcal:87, p:0.5, c:23.0, g:0.3, f:4.2, syn:['fruta'] },
+  { id:'mamao', name:'Mamão papaia', cat:'frutas', unit:'un', base:1, kcal:88, p:1.3, c:23.0, g:0.2, f:4.0, syn:['fruta'] },
+  { id:'morango', name:'Morango', cat:'frutas', unit:'g', base:100, kcal:33, p:0.7, c:7.7, g:0.3, f:2.0, syn:['fruta'] },
+  { id:'laranja', name:'Laranja', cat:'frutas', unit:'un', base:1, kcal:85, p:1.3, c:23.0, g:0.2, f:4.0, syn:['fruta'] },
+  { id:'abacaxi', name:'Abacaxi', cat:'frutas', unit:'g', base:100, kcal:50, p:0.5, c:13.0, g:0.1, f:1.4, syn:['fruta'] },
+  { id:'uva', name:'Uva', cat:'frutas', unit:'g', base:100, kcal:69, p:0.6, c:18.0, g:0.2, f:0.9, syn:['fruta'] },
+  { id:'manga', name:'Manga', cat:'frutas', unit:'un', base:1, kcal:99, p:0.8, c:25.0, g:0.4, f:2.6, syn:['fruta'] },
+  { id:'melancia', name:'Melancia', cat:'frutas', unit:'g', base:100, kcal:30, p:0.6, c:7.6, g:0.2, f:0.4, syn:['fruta'] },
+  { id:'pera', name:'Pera', cat:'frutas', unit:'un', base:1, kcal:96, p:0.6, c:25.0, g:0.2, f:4.3, syn:['fruta'] },
+  // VERDURAS
+  { id:'alface', name:'Alface', cat:'verduras', unit:'g', base:100, kcal:15, p:1.4, c:2.9, g:0.2, f:1.7, syn:['salada'] },
+  { id:'rucula', name:'Rúcula', cat:'verduras', unit:'g', base:100, kcal:25, p:2.6, c:3.7, g:0.7, f:1.6, syn:['salada'] },
+  { id:'espinafre_cozido', name:'Espinafre cozido', cat:'verduras', unit:'g', base:100, kcal:23, p:2.9, c:3.6, g:0.4, f:2.2, syn:[] },
+  { id:'couve_refogada', name:'Couve refogada', cat:'verduras', unit:'g', base:100, kcal:38, p:2.3, c:4.0, g:2.0, f:2.5, syn:[] },
+  { id:'agriao', name:'Agrião', cat:'verduras', unit:'g', base:100, kcal:12, p:1.5, c:1.5, g:0.2, f:1.0, syn:['salada'] },
+  { id:'repolho_cru', name:'Repolho cru', cat:'verduras', unit:'g', base:100, kcal:25, p:1.3, c:5.8, g:0.1, f:2.3, syn:['salada'] },
+  // LEGUMES
+  { id:'tomate', name:'Tomate', cat:'legumes', unit:'un', base:1, kcal:22, p:1.1, c:4.8, g:0.2, f:1.5, syn:['salada'] },
+  { id:'cenoura_crua', name:'Cenoura crua', cat:'legumes', unit:'g', base:100, kcal:34, p:1.3, c:7.7, g:0.2, f:2.9, syn:[] },
+  { id:'cenoura_cozida', name:'Cenoura cozida', cat:'legumes', unit:'g', base:100, kcal:32, p:0.8, c:7.3, g:0.2, f:2.9, syn:[] },
+  { id:'brocolis_cozido', name:'Brócolis cozido', cat:'legumes', unit:'g', base:100, kcal:28, p:2.9, c:4.6, g:0.3, f:2.6, syn:[] },
+  { id:'abobrinha_refogada', name:'Abobrinha refogada', cat:'legumes', unit:'g', base:100, kcal:24, p:1.2, c:4.6, g:0.4, f:1.0, syn:[] },
+  { id:'berinjela_grelhada', name:'Berinjela grelhada', cat:'legumes', unit:'g', base:100, kcal:35, p:0.9, c:6.0, g:1.0, f:3.0, syn:[] },
+  { id:'pepino', name:'Pepino', cat:'legumes', unit:'g', base:100, kcal:12, p:0.7, c:2.7, g:0.1, f:0.9, syn:['salada'] },
+  { id:'beterraba_cozida', name:'Beterraba cozida', cat:'legumes', unit:'g', base:100, kcal:32, p:1.3, c:7.2, g:0.1, f:2.0, syn:[] },
+  // CEREAIS
+  { id:'granola', name:'Granola', cat:'cereais', unit:'g', base:100, kcal:471, p:10.0, c:64.0, g:20.0, f:7.0, syn:['cereal'] },
+  { id:'milho_cozido', name:'Milho cozido', cat:'cereais', unit:'g', base:100, kcal:98, p:3.4, c:19.0, g:1.5, f:2.4, syn:[] },
+  { id:'quinoa_cozida', name:'Quinoa cozida', cat:'cereais', unit:'g', base:100, kcal:120, p:4.4, c:21.3, g:1.9, f:2.8, syn:[] },
+  { id:'pipoca_sem_oleo', name:'Pipoca (sem óleo)', cat:'cereais', unit:'g', base:100, kcal:387, p:12.9, c:78.0, g:4.5, f:14.5, syn:[] },
+  // AVEIA
+  { id:'aveia_flocos', name:'Aveia em flocos', cat:'aveia', unit:'g', base:100, kcal:394, p:13.9, c:67.0, g:8.5, f:9.1, syn:[] },
+  { id:'farinha_aveia', name:'Farinha de aveia', cat:'aveia', unit:'g', base:100, kcal:389, p:14.0, c:66.0, g:7.0, f:8.0, syn:['aveia'] },
+  { id:'mingau_aveia', name:'Mingau de aveia', cat:'aveia', unit:'g', base:100, kcal:71, p:2.5, c:12.0, g:1.5, f:1.7, syn:['aveia'] },
+  // CASTANHAS / OLEAGINOSAS
+  { id:'castanha_para', name:'Castanha do Pará', cat:'castanhas', unit:'g', base:100, kcal:656, p:14.3, c:12.3, g:66.4, f:7.5, syn:['oleaginosa'] },
+  { id:'castanha_caju', name:'Castanha de caju', cat:'castanhas', unit:'g', base:100, kcal:570, p:18.2, c:30.2, g:43.9, f:3.3, syn:['oleaginosa'] },
+  { id:'amendoim_torrado', name:'Amendoim torrado', cat:'castanhas', unit:'g', base:100, kcal:590, p:25.8, c:20.3, g:49.2, f:8.0, syn:['oleaginosa'] },
+  { id:'amendoas', name:'Amêndoas', cat:'castanhas', unit:'g', base:100, kcal:579, p:21.2, c:21.6, g:49.9, f:12.5, syn:['oleaginosa'] },
+  { id:'nozes', name:'Nozes', cat:'castanhas', unit:'g', base:100, kcal:654, p:15.2, c:13.7, g:65.2, f:6.7, syn:['oleaginosa'] },
+  // DOCES
+  { id:'chocolate_leite', name:'Chocolate ao leite', cat:'doces', unit:'g', base:100, kcal:535, p:7.3, c:59.0, g:29.7, f:3.4, syn:['doce'] },
+  { id:'chocolate_amargo70', name:'Chocolate amargo 70%', cat:'doces', unit:'g', base:100, kcal:546, p:7.8, c:46.0, g:35.0, f:11.0, syn:['doce'] },
+  { id:'brigadeiro', name:'Brigadeiro (unidade)', cat:'doces', unit:'un', base:1, kcal:90, p:1.0, c:12.0, g:4.0, f:0.3, syn:['doce'] },
+  { id:'bolo_chocolate', name:'Bolo de chocolate', cat:'doces', unit:'g', base:100, kcal:389, p:5.0, c:52.0, g:18.0, f:1.5, syn:['doce'] },
+  { id:'sorvete_creme', name:'Sorvete de creme', cat:'doces', unit:'g', base:100, kcal:207, p:3.5, c:24.0, g:11.0, f:0.5, syn:['doce'] },
+  { id:'pudim', name:'Pudim', cat:'doces', unit:'g', base:100, kcal:150, p:3.6, c:24.0, g:4.2, f:0, syn:['doce'] },
+  { id:'mel', name:'Mel', cat:'doces', unit:'g', base:100, kcal:304, p:0.3, c:82.0, g:0.0, f:0.2, syn:['doce'] },
+  { id:'acucar_refinado', name:'Açúcar refinado', cat:'doces', unit:'g', base:100, kcal:387, p:0.0, c:99.8, g:0.0, f:0, syn:['doce'] },
+  // BEBIDAS
+  { id:'agua_coco', name:'Água de coco', cat:'bebidas', unit:'ml', base:100, kcal:19, p:0.1, c:4.6, g:0.1, f:0, syn:['bebida'] },
+  { id:'cafe_sem_acucar', name:'Café sem açúcar', cat:'bebidas', unit:'ml', base:100, kcal:2, p:0.1, c:0.3, g:0.0, f:0, syn:['bebida'] },
+  { id:'cha_sem_acucar', name:'Chá sem açúcar', cat:'bebidas', unit:'ml', base:100, kcal:1, p:0.0, c:0.2, g:0.0, f:0, syn:['bebida'] },
+  { id:'isotonico', name:'Isotônico', cat:'bebidas', unit:'ml', base:100, kcal:24, p:0.0, c:6.0, g:0.0, f:0, syn:['bebida'] },
+  // REFRIGERANTES
+  { id:'coca_cola', name:'Refrigerante cola', cat:'refrigerantes', unit:'ml', base:100, kcal:42, p:0.0, c:10.6, g:0.0, f:0, syn:['refrigerante','coca'] },
+  { id:'guarana', name:'Guaraná (refrigerante)', cat:'refrigerantes', unit:'ml', base:100, kcal:39, p:0.0, c:10.3, g:0.0, f:0, syn:['refrigerante'] },
+  { id:'refri_limao', name:'Refrigerante de limão', cat:'refrigerantes', unit:'ml', base:100, kcal:40, p:0.0, c:10.0, g:0.0, f:0, syn:['refrigerante'] },
+  { id:'refri_zero', name:'Refrigerante zero açúcar', cat:'refrigerantes', unit:'ml', base:100, kcal:0.5, p:0.0, c:0.1, g:0.0, f:0, syn:['refrigerante','diet'] },
+  // SUCOS
+  { id:'suco_laranja_natural', name:'Suco de laranja natural', cat:'sucos', unit:'ml', base:100, kcal:45, p:0.7, c:10.4, g:0.2, f:0.2, syn:['suco'] },
+  { id:'suco_uva_industrializado', name:'Suco de uva industrializado', cat:'sucos', unit:'ml', base:100, kcal:54, p:0.1, c:13.5, g:0.0, f:0, syn:['suco'] },
+  { id:'suco_po', name:'Suco em pó (preparado)', cat:'sucos', unit:'ml', base:100, kcal:26, p:0.0, c:6.7, g:0.0, f:0, syn:['suco'] },
+  { id:'suco_verde', name:'Suco verde', cat:'sucos', unit:'ml', base:100, kcal:35, p:0.6, c:8.0, g:0.2, f:0.8, syn:['suco','detox'] },
+  // FAST FOOD
+  { id:'hamburguer_fastfood', name:'Hambúrguer (fast food, com pão)', cat:'fast_food', unit:'un', base:1, kcal:295, p:12.0, c:29.0, g:14.0, f:1.5, syn:['fast food','lanche'] },
+  { id:'cheeseburger', name:'Cheeseburger', cat:'fast_food', unit:'un', base:1, kcal:340, p:16.0, c:30.0, g:17.0, f:1.5, syn:['fast food','lanche'] },
+  { id:'batata_frita', name:'Batata frita', cat:'fast_food', unit:'g', base:100, kcal:312, p:3.4, c:41.0, g:15.0, f:3.8, syn:['fast food'] },
+  { id:'pizza_fatia', name:'Pizza (fatia média)', cat:'fast_food', unit:'un', base:1, kcal:266, p:11.0, c:33.0, g:10.0, f:2.3, syn:['fast food'] },
+  { id:'nuggets', name:'Nuggets de frango', cat:'fast_food', unit:'g', base:100, kcal:296, p:14.0, c:16.0, g:20.0, f:1.0, syn:['fast food','frango'] },
+  { id:'cachorro_quente', name:'Cachorro-quente', cat:'fast_food', unit:'un', base:1, kcal:290, p:10.0, c:24.0, g:17.0, f:1.5, syn:['fast food','hot dog'] },
+  { id:'coxinha', name:'Coxinha', cat:'fast_food', unit:'un', base:1, kcal:250, p:8.0, c:22.0, g:14.0, f:1.0, syn:['fast food','salgado','frango'] },
+  { id:'esfiha', name:'Esfiha', cat:'fast_food', unit:'un', base:1, kcal:170, p:6.0, c:20.0, g:7.0, f:1.0, syn:['fast food','salgado'] },
+  { id:'x_salada', name:'X-salada', cat:'fast_food', unit:'un', base:1, kcal:430, p:20.0, c:35.0, g:23.0, f:1.8, syn:['fast food','lanche','hambúrguer'] },
+  { id:'milkshake', name:'Milkshake', cat:'fast_food', unit:'ml', base:100, kcal:130, p:2.8, c:19.0, g:4.5, f:0, syn:['fast food','bebida'] },
+  // INDUSTRIALIZADOS
+  { id:'batata_chips', name:'Salgadinho de pacote (batata chips)', cat:'industrializados', unit:'g', base:100, kcal:536, p:6.6, c:53.0, g:34.6, f:4.4, syn:['salgadinho'] },
+  { id:'biscoito_recheado', name:'Biscoito recheado', cat:'industrializados', unit:'g', base:100, kcal:480, p:5.5, c:68.0, g:20.0, f:1.8, syn:['biscoito'] },
+  { id:'biscoito_agua_sal', name:'Biscoito água e sal', cat:'industrializados', unit:'g', base:100, kcal:432, p:9.9, c:73.0, g:11.5, f:2.5, syn:['biscoito'] },
+  { id:'macarrao_instantaneo_tempero', name:'Macarrão instantâneo com tempero (pacote todo)', cat:'industrializados', unit:'un', base:1, kcal:470, p:9.0, c:65.0, g:18.0, f:2.0, syn:['miojo'] },
+  { id:'barra_cereal', name:'Barra de cereal', cat:'industrializados', unit:'un', base:1, kcal:95, p:1.5, c:18.0, g:2.0, f:1.0, syn:[] },
+  { id:'achocolatado_po', name:'Achocolatado em pó', cat:'industrializados', unit:'g', base:100, kcal:390, p:4.5, c:88.0, g:2.5, f:3.0, syn:[] },
+  { id:'maionese', name:'Maionese', cat:'industrializados', unit:'g', base:100, kcal:680, p:1.0, c:2.6, g:75.0, f:0, syn:[] },
+  // OUTROS
+  { id:'azeite', name:'Azeite de oliva', cat:'outros', unit:'g', base:100, kcal:884, p:0.0, c:0.0, g:100.0, f:0, syn:[] },
+  { id:'manteiga', name:'Manteiga', cat:'outros', unit:'g', base:100, kcal:717, p:0.9, c:0.1, g:81.0, f:0, syn:[] },
+  { id:'molho_tomate', name:'Molho de tomate', cat:'outros', unit:'g', base:100, kcal:38, p:1.6, c:8.0, g:0.3, f:1.5, syn:[] },
+];
+
+const FOOD_CATEGORY_LABELS = {
+  arroz:'Arroz', feijao:'Feijão', massas:'Massas', paes:'Pães', carnes:'Carnes', frango:'Frango', peixe:'Peixe',
+  ovos:'Ovos', leite:'Leite', derivados_leite:'Derivados do leite', queijos:'Queijos', frutas:'Frutas',
+  verduras:'Verduras', legumes:'Legumes', cereais:'Cereais', aveia:'Aveia', castanhas:'Castanhas/Oleaginosas',
+  doces:'Doces', bebidas:'Bebidas', refrigerantes:'Refrigerantes', sucos:'Sucos', fast_food:'Fast food',
+  industrializados:'Industrializados', outros:'Outros', personalizado:'Personalizado'
+};
+
+/* Alimentos personalizados do usuário — mesmo formato do FOOD_DB, com
+   custom:true. Persistidos localmente e, se houver login, sincronizados
+   dentro do MESMO registro `diet_selections` já existente (campo aditivo
+   `customFoods`) — não foi criada nenhuma tabela nova pra isso. */
+let customFoods = [];
+
+/* Índice de busca: reconstruído sob demanda (é O(n) sobre uma lista de
+   algumas centenas de itens no máximo — barato — mas evitamos refazer a
+   cada tecla: só quando a lista muda). */
+let _foodSearchCache = null;
+function allFoods(){ return _foodSearchCache || (_foodSearchCache = FOOD_DB.concat(customFoods)); }
+function invalidateFoodCache(){ _foodSearchCache = null; }
+
+function normSearch(s){ return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim(); }
+
+/* Busca simples e rápida: nome, categoria ou sinônimo começando com ou
+   contendo o termo digitado. Sem dependência externa, funciona 100% offline. */
+function searchFoods(query, limit){
+  const q = normSearch(query);
+  limit = limit || 20;
+  if(!q) return allFoods().slice(0, limit);
+  const starts = [], contains = [];
+  allFoods().forEach(f => {
+    const name = normSearch(f.name);
+    const catLabel = normSearch(FOOD_CATEGORY_LABELS[f.cat] || f.cat);
+    const synMatch = (f.syn||[]).some(s => normSearch(s).indexOf(q) === 0);
+    const synContains = (f.syn||[]).some(s => normSearch(s).indexOf(q) >= 0);
+    if(name.indexOf(q) === 0 || synMatch) starts.push(f);
+    else if(name.indexOf(q) >= 0 || catLabel.indexOf(q) >= 0 || synContains) contains.push(f);
+  });
+  return starts.concat(contains).slice(0, limit);
+}
+function findFoodById(id){ return allFoods().find(f => f.id === id) || null; }
+
+/* Converte a quantidade informada para os macros correspondentes, sem
+   arredondar durante o cálculo (regra 5 do escopo) — arredondamento só
+   acontece na hora de exibir (round1/Math.round nas funções de render). */
+function computeFoodMacros(food, qty){
+  const q = Number(qty);
+  if(!food || !isFinite(q) || q <= 0) return { kcal:0, p:0, c:0, g:0, f:0 };
+  const factor = q / food.base;
+  return {
+    kcal: food.kcal * factor,
+    p: food.p * factor,
+    c: food.c * factor,
+    g: food.g * factor,
+    f: (food.f||0) * factor,
+  };
+}
+
+/* Validação de alimento personalizado (regra 20 — segurança dos dados):
+   nunca aceita quantidade/kcal/macro negativos ou não numéricos. */
+function validateCustomFoodInput(input){
+  const errors = [];
+  const name = String(input.name||'').trim();
+  if(!name) errors.push('Informe um nome para o alimento.');
+  const unit = ['g','ml','un'].includes(input.unit) ? input.unit : 'g';
+  const nums = ['kcal','p','c','g','f'].map(k => Number(input[k]));
+  nums.forEach((n,i) => { if(!isFinite(n) || n < 0) errors.push('Valor inválido em ' + ['kcal','proteína','carboidrato','gordura','fibra'][i] + '.'); });
+  return { valid: errors.length === 0, errors, name, unit, nums };
+}
+
+async function saveCustomFoods(){
+  invalidateFoodCache();
+  await storage.set('dieta:customFoods', JSON.stringify(customFoods));
+  triggerSync('diet_selections'); // customFoods viaja dentro do payload de diet_selections (ver pushDietSelections)
+}
+
+function addCustomFood(input){
+  const v = validateCustomFoodInput(input);
+  if(!v.valid) return { ok:false, errors: v.errors };
+  const [kcal,p,c,g,f] = v.nums;
+  const food = {
+    id: 'custom_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
+    name: v.name, cat:'personalizado', unit: v.unit, base: v.unit === 'un' ? 1 : 100,
+    kcal, p, c, g, f, syn:[], custom:true
+  };
+  customFoods.push(food);
+  saveCustomFoods();
+  return { ok:true, food };
+}
 
 /* ======================================================================
    IMPORTAÇÃO / EXPORTAÇÃO DE DIETA — formato do arquivo:
@@ -1879,7 +2341,17 @@ function exportDiet(){
    CÁLCULOS DERIVADOS
 ====================================================================== */
 function computeNutritionTotals(todayLog){
-  const logged = Object.values(todayLog).filter(Boolean);
+  /* v2.45: antes filtrava com Object.values(todayLog), o que somava
+     QUALQUER chave presente no objeto do dia. Isso era equivalente ao
+     comportamento anterior enquanto só existiam as 5 chaves fixas de
+     mealOrder — mas deixaria de ser equivalente assim que passamos a
+     guardar também as refeições manuais (chaves 'manual_...') no mesmo
+     objeto dietaLog[dia]. Por isso a soma abaixo agora é explícita sobre
+     as chaves de mealOrder, preservando EXATAMENTE o resultado de antes
+     (a nota de aderência continua sendo só sobre as 5 refeições da dieta)
+     e mantendo as refeições manuais fora dela — elas entram à parte em
+     computeConsumedTotals(). */
+  const logged = mealOrder.map(k => todayLog[k]).filter(Boolean);
   const count = logged.length;
   const totals = logged.reduce((acc,e) => { acc.kcal+=e.kcal; acc.prot+=e.p; acc.carb+=e.c; acc.gord+=e.g; return acc; }, {kcal:0,prot:0,carb:0,gord:0});
   let nota = null;
@@ -1905,11 +2377,59 @@ function renderRefeicoes(){
   document.getElementById('t-carb').value = dietaTargets.carb;
   document.getElementById('t-gord').value = dietaTargets.gord;
 
-  const todayLog = dietaLog[todayKey()] || {};
-  document.getElementById('meals-container').innerHTML = mealOrder.map(key => renderMealCard(key, todayLog[key])).join('');
+  const day = todayKey();
+  const todayLog = dietaLog[day] || {};
+  document.getElementById('meals-container').innerHTML = mealOrder.map(key => renderMealCard(key, todayLog[key], day)).join('') + renderOutraSection(day);
 
   renderNutriHero(todayLog);
   renderScore(todayLog);
+  renderPlannedConsumedCard(day);
+}
+
+/* v2.45: entradas manuais registradas com mealSlot='outra' (não pertencem
+   a nenhum dos 5 cards fixos) — exibidas em bloco próprio, só quando
+   existirem, sem alterar os 5 cards de refeição planejada. */
+function renderOutraSection(day){
+  const entries = manualEntriesForSlot(day, 'outra');
+  if(!entries.length) return '';
+  return `<div class="meal-card manual-outra-card">
+    <div class="meal-head"><div class="meal-title">Outras refeições registradas</div></div>
+    <div class="manual-section">${entries.map(e => renderManualEntryRow(day, e)).join('')}</div>
+  </div>`;
+}
+
+function renderManualEntryRow(day, e){
+  const itemsHtml = (e.items && e.items.length)
+    ? `<div class="ing-list">${e.items.map(it => `<div class="ing-row"><span class="ing-name">${escapeHtml(it.nome)}</span>${it.qtd ? '<span class="ing-qtd">'+escapeHtml(it.qtd)+'</span>' : ''}</div>`).join('')}</div>`
+    : '';
+  return `<div class="manual-entry">
+    <div class="manual-entry-top"><span class="badge-fora-dieta">fora da dieta · consumido</span><button class="btn-text" onclick="deleteManualMeal('${day}','${e.key}')">remover</button></div>
+    <div class="manual-entry-label">${escapeHtml(e.label || 'Refeição registrada')}</div>
+    ${itemsHtml}
+    <div class="meal-macro-row"><span class="meal-macro kcal">${Math.round(e.kcal)} kcal</span><span class="meal-macro p">${round1(e.p)}g P</span><span class="meal-macro c">${round1(e.c)}g C</span><span class="meal-macro g">${round1(e.g)}g G</span><span class="meal-macro c">${round1(e.f||0)}g Fibra</span></div>
+  </div>`;
+}
+
+/* v2.45: card "planejado x consumido" — meta / planejado (dieta configurada
+   pro dia, marcada como feito ou não) / consumido (planejado feito + manual).
+   Não implementa gráficos (fora de escopo da 2.45), só os números. */
+function renderPlannedConsumedCard(day){
+  const el = document.getElementById('planned-consumed-card');
+  if(!el) return;
+  const planned = computePlannedTotals();
+  const consumed = computeConsumedTotals(day);
+  const rows = [
+    { l:'meta', kcal: dietaTargets.kcal, p: dietaTargets.prot, c: dietaTargets.carb, g: dietaTargets.gord },
+    { l:'planejado', kcal: planned.kcal, p: planned.p, c: planned.c, g: planned.g },
+    { l:'consumido', kcal: consumed.kcal, p: consumed.p, c: consumed.c, g: consumed.g },
+  ];
+  el.innerHTML = `<div class="pc-eyebrow">planejado × consumido</div>
+    <div class="pc-rows">${rows.map(r => `
+      <div class="pc-row">
+        <div class="pc-row-lbl">${r.l}</div>
+        <div class="pc-row-kcal">${Math.round(r.kcal)} <small>kcal</small></div>
+        <div class="pc-row-macros">${round1(r.p)}g P · ${round1(r.c)}g C · ${round1(r.g)}g G</div>
+      </div>`).join('')}</div>`;
 }
 
 function renderNutriHero(todayLog){
@@ -1936,7 +2456,7 @@ function renderScore(todayLog){
   barFill.style.width = nt.nota + '%';
 }
 
-function renderMealCard(key, entry){
+function renderMealCard(key, entry, day){
   const meta = mealMeta[key];
   const done = !!entry;
   let bodyHtml = '';
@@ -1981,7 +2501,15 @@ function renderMealCard(key, entry){
       <div class="meal-macro-row" style="margin-top:12px;"><span class="meal-macro kcal">${Math.round(tot.kcal)} kcal</span><span class="meal-macro p">${round1(tot.p)}g P</span><span class="meal-macro c">${round1(tot.c)}g C</span><span class="meal-macro g">${round1(tot.g)}g G</span><span class="meal-macro c">${round1(tot.f)}g Fibra</span></div>
       <button class="btn-primary dieta" style="margin-top:12px;" onclick="confirmMeal('${key}','${compKey}')">Marcar como feito</button>${freeTextBlock(key)}`;
   }
-  return `<div class="meal-card ${done?'done':''}"><div class="meal-head"><div class="meal-title">${meta.title}</div><div class="meal-status ${done?'done':''}"></div></div>${bodyHtml}</div>`;
+  /* v2.45: consumo real registrado pra este slot — visualmente separado do
+     "planejado" acima, nunca substitui/edita o bodyHtml calculado acima. */
+  const manualEntries = day ? manualEntriesForSlot(day, key) : [];
+  const manualHtml = manualEntries.length
+    ? `<div class="manual-section"><div class="manual-section-lbl">consumido (fora da dieta)</div>${manualEntries.map(e => renderManualEntryRow(day, e)).join('')}</div>`
+    : '';
+  const registerBtnHtml = `<div class="manual-trigger-row"><button class="btn-ghost manual-trigger-btn" onclick="openManualMealModal('${key}')">não segui esta refeição — registrar o que comi</button></div>`;
+
+  return `<div class="meal-card ${done?'done':''}"><div class="meal-head"><div class="meal-title">${meta.title}</div><div class="meal-status ${done?'done':''}"></div></div>${bodyHtml}${manualHtml}${registerBtnHtml}</div>`;
 }
 
 function renderModeGrid(mealKey, modesObj, currentKey){
@@ -2187,6 +2715,284 @@ async function registrarLivre(key){
 
 async function undoMeal(key){ const day = todayKey(); if(dietaLog[day]) delete dietaLog[day][key]; await saveLog(); if(currentSyncUser) deleteDietLogRemote(day, key); renderRefeicoes(); }
 
+/* ========================================================================
+   v2.45 — CONSUMO REAL: leitura/escrita das entradas manuais + cálculo de
+   PLANEJADO x CONSUMIDO. Tudo aditivo — nenhuma função acima foi tocada
+   além do ajuste (documentado) em computeNutritionTotals.
+==========================================================================*/
+/* Todas as entradas manuais de um dia (chaves 'manual_...'), na ordem em
+   que foram registradas. */
+function manualEntriesForDay(day){
+  const log = dietaLog[day] || {};
+  return Object.keys(log).filter(isManualLogKey).sort().map(k => ({ key:k, ...log[k] }));
+}
+function manualEntriesForSlot(day, slot){ return manualEntriesForDay(day).filter(e => e.mealSlot === slot); }
+
+function computeManualTotals(day){
+  const entries = manualEntriesForDay(day);
+  return entries.reduce((acc,e) => { acc.kcal+=e.kcal||0; acc.p+=e.p||0; acc.c+=e.c||0; acc.g+=e.g||0; acc.f+=e.f||0; return acc; }, {kcal:0,p:0,c:0,g:0,f:0});
+}
+
+/* Total do que está PLANEJADO hoje pras 5 refeições — a opção atualmente
+   configurada em cada uma, independente de já ter sido "marcada como
+   feito" ou não. Espelha, de forma isolada (sem tocar renderMealCard),
+   exatamente a mesma lógica de resolução que renderMealCard já usa pra
+   calcular o "tot" de cada card (catálogo importado > RU do almoço >
+   jantar A/B > mealTotals do dia), pra nunca divergir do que é mostrado. */
+function computePlannedMealTotal(key){
+  if(hasCatalogFor(key)){
+    const options = dietCatalog.meals[key];
+    const selId = (catalogSelection && catalogSelection[key]) || options[0].id;
+    const opt = options.find(o => o.id === selId) || options[0];
+    return { kcal:opt.kcal||0, p:opt.p||0, c:opt.c||0, g:opt.g||0, f:opt.f||0 };
+  }
+  if(key === 'almoco'){
+    const ru = ruWeek[almocoDiaSelecionado];
+    return { kcal:ru.kcal||0, p:ru.p||0, c:ru.c||0, g:ru.g||0, f:0 };
+  }
+  if(key === 'jantar'){
+    const compKey = jantarEscolha === 'A' ? 'jantarA' : 'jantarB';
+    return mealTotals(compKey);
+  }
+  return mealTotals(key);
+}
+function computePlannedTotals(){
+  return mealOrder.reduce((acc,key) => {
+    const t = computePlannedMealTotal(key);
+    acc.kcal+=t.kcal; acc.p+=t.p; acc.c+=t.c; acc.g+=t.g; acc.f+=(t.f||0);
+    return acc;
+  }, {kcal:0,p:0,c:0,g:0,f:0});
+}
+
+/* Total do que foi REALMENTE CONSUMIDO hoje: refeições planejadas
+   marcadas como feito (dietaLog[dia][mealOrder]) + refeições manuais
+   registradas (dietaLog[dia]['manual_...']). Cada refeição só entra uma
+   vez nessa soma — uma marcada como feito e uma manual pra mesma
+   refeição (ex: 'almoco') são registros DIFERENTES (chaves diferentes),
+   nunca a mesma entrada contada duas vezes. */
+function computeConsumedTotals(day){
+  const todayLog = dietaLog[day] || {};
+  const plannedDone = computeNutritionTotals(todayLog).totals; // já filtrado só por mealOrder
+  const manual = computeManualTotals(day);
+  return {
+    kcal: plannedDone.kcal + manual.kcal,
+    p: plannedDone.prot + manual.p,
+    c: plannedDone.carb + manual.c,
+    g: plannedDone.gord + manual.g,
+  };
+}
+
+async function deleteManualMeal(day, key){
+  if(dietaLog[day]) delete dietaLog[day][key];
+  await saveLog();
+  if(currentSyncUser) deleteDietLogRemote(day, key);
+  renderRefeicoes();
+}
+
+/* ========================================================================
+   v2.45 — MODAL "REGISTRAR O QUE COMI" (consumo real)
+   ------------------------------------------------------------------------
+   Modal PRÓPRIO (backdrop/sheet com id próprio), separado do modal de
+   relatório de treino (#modal-backdrop / openReport / closeReport), que
+   não é tocado. Evita qualquer conflito entre os dois fluxos.
+==========================================================================*/
+let manualMealDraft = null; // { slot: string|null, items: [{ foodId, name, unit, base, qty, kcal,p,c,g,f }] }
+let manualCustomFormOpen = false;
+
+function openManualMealModal(prefillSlot){
+  manualMealDraft = { slot: prefillSlot || null, items: [] };
+  manualCustomFormOpen = false;
+  renderManualModal();
+  document.getElementById('manual-modal-backdrop').classList.add('open');
+  document.addEventListener('keydown', escCloseManualModal);
+}
+function escCloseManualModal(e){ if(e.key === 'Escape') closeManualMealModal(); }
+function closeManualMealModal(){
+  document.getElementById('manual-modal-backdrop').classList.remove('open');
+  document.removeEventListener('keydown', escCloseManualModal);
+  manualMealDraft = null;
+}
+
+function computeDraftTotals(){
+  if(!manualMealDraft) return {kcal:0,p:0,c:0,g:0,f:0};
+  return manualMealDraft.items.reduce((acc,it) => { acc.kcal+=it.kcal; acc.p+=it.p; acc.c+=it.c; acc.g+=it.g; acc.f+=it.f; return acc; }, {kcal:0,p:0,c:0,g:0,f:0});
+}
+
+function selectManualMealSlot(slot){
+  if(!manualMealDraft) return;
+  manualMealDraft.slot = slot;
+  renderManualModal();
+}
+
+function unitSuffix(unit){ return unit === 'un' ? 'un' : unit; }
+
+function renderManualFoodResults(query){
+  const results = searchFoods(query, 18);
+  const el = document.getElementById('manual-food-results');
+  if(!el) return;
+  if(!results.length){
+    el.innerHTML = `<div class="manual-empty-hint">Nenhum alimento encontrado.</div>`;
+    return;
+  }
+  el.innerHTML = results.map(f => `
+    <div class="food-result-row" onclick="addFoodToDraft('${f.id}')">
+      <div class="food-result-main">
+        <span class="food-result-name">${escapeHtml(f.name)}</span>
+        <span class="food-result-cat">${escapeHtml(FOOD_CATEGORY_LABELS[f.cat] || f.cat)}</span>
+      </div>
+      <div class="food-result-kcal">${Math.round(f.kcal)} kcal <span class="food-result-base">/ ${f.base}${unitSuffix(f.unit)}</span></div>
+    </div>`).join('');
+}
+function onManualFoodSearch(value){ renderManualFoodResults(value); }
+
+function addFoodToDraft(foodId){
+  const food = findFoodById(foodId);
+  if(!food || !manualMealDraft) return;
+  const qty = food.base; // ponto de partida razoável (1 porção de referência); usuário ajusta em seguida
+  const macros = computeFoodMacros(food, qty);
+  manualMealDraft.items.push({ foodId: food.id, name: food.name, unit: food.unit, base: food.base, qty, ...macros });
+  renderManualDraftSection();
+}
+
+function updateDraftItemQty(idx, value){
+  if(!manualMealDraft || !manualMealDraft.items[idx]) return;
+  let q = Number(String(value).replace(',', '.'));
+  if(!isFinite(q) || q < 0) q = 0; // regra 20: nunca aceitar quantidade negativa/ inválida
+  const item = manualMealDraft.items[idx];
+  const food = findFoodById(item.foodId);
+  item.qty = q;
+  const macros = food ? computeFoodMacros(food, q) : { kcal:0,p:0,c:0,g:0,f:0 };
+  Object.assign(item, macros);
+  renderManualDraftSection(true); // preserva o campo de quantidade em foco (não recria o input)
+}
+
+function removeDraftItem(idx){
+  if(!manualMealDraft) return;
+  manualMealDraft.items.splice(idx, 1);
+  renderManualDraftSection();
+}
+
+function renderManualDraftSection(skipInputsRerender){
+  const totalsEl = document.getElementById('manual-draft-totals');
+  const t = computeDraftTotals();
+  if(totalsEl){
+    totalsEl.innerHTML = manualMealDraft.items.length ? `
+      <div class="meal-macro-row"><span class="meal-macro kcal">${Math.round(t.kcal)} kcal</span><span class="meal-macro p">${round1(t.p)}g P</span><span class="meal-macro c">${round1(t.c)}g C</span><span class="meal-macro g">${round1(t.g)}g G</span><span class="meal-macro c">${round1(t.f)}g Fibra</span></div>` : '';
+  }
+  if(skipInputsRerender) return; // só os totais mudam enquanto o usuário digita a quantidade
+  const listEl = document.getElementById('manual-draft-list');
+  if(!listEl) return;
+  if(!manualMealDraft.items.length){
+    listEl.innerHTML = `<div class="manual-empty-hint">Nenhum alimento adicionado ainda.</div>`;
+  } else {
+    listEl.innerHTML = manualMealDraft.items.map((it, idx) => `
+      <div class="ing-row draft-item-row">
+        <span class="ing-name">${escapeHtml(it.name)}</span>
+        <input class="draft-qty-input" type="number" min="0" step="any" value="${it.qty}" oninput="updateDraftItemQty(${idx}, this.value)">
+        <span class="ing-qtd">${unitSuffix(it.unit)}</span>
+        <span class="draft-item-kcal">${Math.round(it.kcal)} kcal</span>
+        <button class="btn-text" onclick="removeDraftItem(${idx})" title="remover">${icoTrash}</button>
+      </div>`).join('');
+  }
+  const saveBtn = document.getElementById('manual-save-btn');
+  if(saveBtn) saveBtn.disabled = !(manualMealDraft.slot && manualMealDraft.items.length);
+}
+
+function toggleCustomFoodForm(){
+  manualCustomFormOpen = !manualCustomFormOpen;
+  const el = document.getElementById('manual-custom-food-panel');
+  if(el) el.style.display = manualCustomFormOpen ? 'block' : 'none';
+}
+
+function submitCustomFoodForm(){
+  const statusEl = document.getElementById('manual-custom-food-status');
+  const input = {
+    name: document.getElementById('cf-name').value,
+    unit: document.getElementById('cf-unit').value,
+    kcal: document.getElementById('cf-kcal').value,
+    p: document.getElementById('cf-prot').value,
+    c: document.getElementById('cf-carb').value,
+    g: document.getElementById('cf-gord').value,
+    f: document.getElementById('cf-fibra').value,
+  };
+  const res = addCustomFood(input);
+  if(!res.ok){
+    statusEl.textContent = res.errors.join(' ');
+    statusEl.className = 'status error';
+    return;
+  }
+  statusEl.textContent = 'Alimento salvo. Já pode buscar por "' + res.food.name + '".';
+  statusEl.className = 'status';
+  ['cf-name','cf-kcal','cf-prot','cf-carb','cf-gord','cf-fibra'].forEach(id => { document.getElementById(id).value = ''; });
+  addFoodToDraft(res.food.id);
+  renderManualFoodResults(document.getElementById('manual-food-search-input') ? document.getElementById('manual-food-search-input').value : '');
+}
+
+function renderManualModal(){
+  if(!manualMealDraft) return;
+  const slotPills = MANUAL_MEAL_TYPES.map(t => `<div class="weeknav-day ${manualMealDraft.slot===t.key?'selected':''}" onclick="selectManualMealSlot('${t.key}')">${escapeHtml(t.label)}</div>`).join('');
+  document.getElementById('manual-modal-sheet').innerHTML = `
+    <div class="modal-close" onclick="closeManualMealModal()">✕</div>
+    <div class="modal-title">Registrar o que comi</div>
+    <div class="modal-date" style="margin-bottom:14px;">isso não altera a dieta planejada — fica registrado como consumo real, separado</div>
+
+    <div class="fixed-block-lbl" style="margin-bottom:8px;">1. tipo de refeição</div>
+    <div class="weeknav" style="flex-wrap:wrap;">${slotPills}</div>
+
+    <div class="fixed-block-lbl" style="margin:18px 0 8px;">2. buscar alimento</div>
+    <input type="text" id="manual-food-search-input" class="food-search-input" placeholder="Ex: frango, arroz, batata frita..." oninput="onManualFoodSearch(this.value)">
+    <div id="manual-food-results" class="food-results-list"></div>
+    <div class="targets-toggle" style="margin-top:10px;" onclick="toggleCustomFoodForm()">não encontrou o alimento? adicionar personalizado</div>
+    <div id="manual-custom-food-panel" style="display:none; margin-top:10px;">
+      <div class="ai-input-card">
+        <label>Nome</label>
+        <input type="text" id="cf-name" class="food-search-input" placeholder="Nome do alimento">
+        <div class="cf-grid">
+          <div><label>Unidade</label>
+            <select id="cf-unit" class="cf-select"><option value="g">gramas (g)</option><option value="ml">mililitros (ml)</option><option value="un">unidade</option></select>
+          </div>
+          <div><label>Kcal</label><input type="number" min="0" id="cf-kcal" class="cf-num"></div>
+          <div><label>Proteína (g)</label><input type="number" min="0" id="cf-prot" class="cf-num"></div>
+          <div><label>Carbo (g)</label><input type="number" min="0" id="cf-carb" class="cf-num"></div>
+          <div><label>Gordura (g)</label><input type="number" min="0" id="cf-gord" class="cf-num"></div>
+          <div><label>Fibra (g)</label><input type="number" min="0" id="cf-fibra" class="cf-num"></div>
+        </div>
+        <div class="cf-hint">valores referentes à quantidade de 100g/100ml (ou 1 unidade, se escolher "unidade").</div>
+        <button class="btn-ghost" style="margin-top:10px; width:100%;" onclick="submitCustomFoodForm()">salvar alimento personalizado</button>
+        <div class="status" id="manual-custom-food-status"></div>
+      </div>
+    </div>
+
+    <div class="fixed-block-lbl" style="margin:18px 0 8px;">3. alimentos da refeição</div>
+    <div id="manual-draft-list" class="manual-draft-list"></div>
+    <div id="manual-draft-totals"></div>
+
+    <button class="btn-primary dieta" id="manual-save-btn" style="margin-top:16px;" onclick="saveManualMeal()" ${(manualMealDraft.slot && manualMealDraft.items.length) ? '' : 'disabled'}>Registrar refeição</button>
+  `;
+  renderManualFoodResults('');
+  renderManualDraftSection();
+}
+
+async function saveManualMeal(){
+  if(!manualMealDraft || !manualMealDraft.slot || !manualMealDraft.items.length) return;
+  const t = computeDraftTotals();
+  const day = todayKey();
+  dietaLog[day] = dietaLog[day] || {};
+  const key = newManualLogKey();
+  dietaLog[day][key] = {
+    tipo: 'manual',
+    mealSlot: manualMealDraft.slot,
+    label: 'Refeição registrada',
+    items: manualMealDraft.items.map(it => ({ nome: it.name, qtd: it.qty + unitSuffix(it.unit) })),
+    kcal: t.kcal, p: t.p, c: t.c, g: t.g, f: t.f,
+    source: 'manual',
+    ts: new Date().toISOString(),
+  };
+  await saveLog();
+  closeManualMealModal();
+  renderRefeicoes();
+}
+
 /* ======================================================================
    PERGUNTE AO SEU PAINEL
 ====================================================================== */
@@ -2333,9 +3139,32 @@ async function loadAll(){
 
   try{ const w = await storage.get('treino:bodyweight'); bodyWeightLog = w ? JSON.parse(w.value) : []; }catch(e){ bodyWeightLog = []; }
 
+  /* Usuários que nunca configuraram a semana continuam com todos os dias
+     em null (REST DAY) — nunca presumimos que um dia tem treino. */
+  try{
+    const ws = await storage.get('treino:weeklySchedule');
+    if(ws){
+      const parsed = JSON.parse(ws.value);
+      WEEK_DAYS.forEach(day => { weeklySchedule[day] = (parsed[day] !== undefined) ? parsed[day] : null; });
+    }
+  }catch(e){ /* mantém o default (todos REST DAY) */ }
+
   try{ const t = await storage.get('dieta:targets'); if(t) dietaTargets = JSON.parse(t.value); }catch(e){}
 
   try{ const l = await storage.get('dieta:log'); dietaLog = l ? JSON.parse(l.value) : {}; }catch(e){ dietaLog = {}; }
+
+  /* v2.45: alimentos personalizados — fonte local dedicada (rápida, sem
+     depender do objeto de seleções), com validação defensiva: qualquer
+     item corrompido/incompleto é descartado em vez de quebrar a lista
+     inteira (regra 20 — segurança dos dados). */
+  try{
+    const cf = await storage.get('dieta:customFoods');
+    if(cf){
+      const parsed = JSON.parse(cf.value);
+      if(Array.isArray(parsed)) customFoods = parsed.filter(f => f && typeof f.id === 'string' && typeof f.name === 'string');
+    }
+  }catch(e){ /* mantém customFoods = [] */ }
+  invalidateFoodCache();
 
   try{
     const s = await storage.get('dieta:selecoes');
@@ -2347,6 +3176,11 @@ async function loadAll(){
       if(sel.almocoDiaSelecionado) almocoDiaSelecionado = sel.almocoDiaSelecionado;
       if(sel.catalog) dietCatalog = sel.catalog;
       if(sel.catalogSelection) catalogSelection = sel.catalogSelection;
+      if(Array.isArray(sel.customFoods)){
+        const known = new Set(customFoods.map(f => f.id));
+        sel.customFoods.forEach(f => { if(f && f.id && !known.has(f.id)){ customFoods.push(f); known.add(f.id); } });
+        invalidateFoodCache();
+      }
     }
   }catch(e){}
 
@@ -2354,6 +3188,7 @@ async function loadAll(){
   renderBlocksLibrary();
   renderBodyWeightSection();
   renderRefeicoes();
+  renderWeeklyScheduleConfig();
   renderHoje();
 
   initAuthAndSync(); // não bloqueia: a UI local acima já está pronta e usável antes disso terminar
@@ -2391,6 +3226,7 @@ function renderHoje(){
   const metricsEl = document.getElementById('today-metrics');
   if(metricsEl) metricsEl.innerHTML = metrics.join('');
 
+  renderTodayWorkoutCard();
   renderHojeInsights(wt, nt);
 }
 function renderHojeInsights(wt, nt){
@@ -2432,6 +3268,90 @@ function defaultBlocks(){
 }
 async function saveTreino(){ await storage.set('treino:blocks', JSON.stringify(treinoBlocks)); triggerSync('workout_blocks'); }
 async function saveHistory(){ await storage.set('treino:history', JSON.stringify(workoutHistory)); triggerSync('workout_history'); }
+
+/* ======================================================================
+   PROGRAMAÇÃO SEMANAL — storage local + renderização
+   Guarda apenas o id LOCAL do bloco por dia. A tradução para/de remoteId
+   (para funcionar entre dispositivos) acontece só na camada de sync,
+   em pushWorkoutSchedule/pullWorkoutSchedule.
+====================================================================== */
+async function saveWeeklySchedule(){
+  await storage.set('treino:weeklySchedule', JSON.stringify(weeklySchedule));
+  triggerSync('workout_schedule');
+}
+
+function setScheduleDay(day, blockIdRaw){
+  weeklySchedule[day] = blockIdRaw === '' ? null : Number(blockIdRaw);
+  saveWeeklySchedule();
+  renderTodayWorkoutCard();
+  const histPanel = document.getElementById('panel-historico');
+  if(histPanel && histPanel.classList.contains('active')) renderCalendar();
+}
+
+function renderWeeklyScheduleConfig(){
+  const el = document.getElementById('weekly-schedule-grid');
+  if(!el) return;
+  el.innerHTML = WEEK_DAYS.map(day => {
+    const current = weeklySchedule[day];
+    const options = ['<option value="">REST DAY</option>'].concat(
+      treinoBlocks.map(b => `<option value="${b.id}" ${current===b.id?'selected':''}>${escapeHtml(b.name||'Sem nome')}</option>`)
+    );
+    return `<div class="ws-row">
+      <div class="ws-day-label">${WEEK_DAY_LABELS_PT[day]}</div>
+      <select class="ws-select" onchange="setScheduleDay('${day}', this.value)">${options.join('')}</select>
+    </div>`;
+  }).join('');
+}
+
+/* Resolve o bloco programado para uma data qualquer (usada pelo card
+   "TREINO DO DIA" e pelo calendário). Nunca olha para workoutHistory. */
+function getScheduledBlockIdForDate(date){
+  const blockId = weeklySchedule[jsDayToKey(date.getDay())];
+  if(!blockId) return null;
+  /* proteção extra: se por algum motivo o bloco não existir mais
+     (referência não invalidada), trata como REST DAY em vez de quebrar */
+  return findBlock(blockId) ? blockId : null;
+}
+function getTodayScheduledBlockId(){ return getScheduledBlockIdForDate(new Date()); }
+
+/* Quando um bloco é excluído, qualquer dia que apontava para ele volta
+   a ser REST DAY automaticamente. Não toca em workoutHistory. */
+function invalidateScheduleForBlock(blockId){
+  let changed = false;
+  WEEK_DAYS.forEach(day => { if(weeklySchedule[day] === blockId){ weeklySchedule[day] = null; changed = true; } });
+  if(changed) saveWeeklySchedule();
+}
+
+/* Card "TREINO DO DIA" / "REST DAY" na aba Hoje. Ao clicar em um dia com
+   treino programado, reutiliza openWorkoutSession() — o MESMO fluxo de
+   conclusão de treino já existente (checkboxes, PRs, volume, histórico).
+   Realizar esse bloco não altera weeklySchedule; e realizar QUALQUER
+   outro bloco em qualquer outro dia também não altera weeklySchedule. */
+function renderTodayWorkoutCard(){
+  const wrap = document.getElementById('today-schedule-card-wrap');
+  if(!wrap) return;
+  const today = new Date();
+  const weekdayLabel = WEEK_DAY_LABELS_FULL_PT[jsDayToKey(today.getDay())];
+  const blockId = getTodayScheduledBlockId();
+
+  if(!blockId){
+    wrap.innerHTML = `
+      <div class="today-schedule-card rest">
+        <div class="ts-eyebrow"><span>treino do dia</span><span class="ts-weekday">${weekdayLabel}</span></div>
+        <div class="ts-name rest-txt">REST DAY</div>
+        <div class="ts-sub">Não há treino programado para hoje.</div>
+      </div>`;
+    return;
+  }
+  const block = findBlock(blockId);
+  const done = isBlockConcludedToday(blockId);
+  wrap.innerHTML = `
+    <div class="today-schedule-card" onclick="openWorkoutSession(${blockId})">
+      <div class="ts-eyebrow"><span>treino do dia</span><span class="ts-weekday">${weekdayLabel}</span></div>
+      <div class="ts-name">${escapeHtml(block.name||'Sem nome')}</div>
+      <div class="ts-cta">${done ? 'VER RELATÓRIO' : 'COMEÇAR TREINO'} ${icoArrow}</div>
+    </div>`;
+}
 async function saveBodyWeight(){ await storage.set('treino:bodyweight', JSON.stringify(bodyWeightLog)); triggerSync('body_weight'); }
 
 /* ======================================================================
@@ -2458,7 +3378,10 @@ function deleteBlock(blockId){
   const [removed] = treinoBlocks.splice(idx, 1);
   saveTreino(); // persiste a lista sem o bloco e sincroniza os blocos restantes (upsert normal)
   if(currentSyncUser && removed.remoteId) deleteWorkoutBlockRemote(removed.remoteId); // remove também da nuvem, sem tocar no workout_history
+  invalidateScheduleForBlock(blockId); // qualquer dia que apontava para este bloco volta a ser REST DAY; workoutHistory não é tocado
   renderBlocksLibrary();
+  renderWeeklyScheduleConfig();
+  renderTodayWorkoutCard();
 }
 
 /* Uma série só é considerada "concluída" (para fins de progresso ao vivo e de
@@ -3340,7 +4263,7 @@ function renderExercise(blockId, ex){
 /* ======================================================================
    TREINO — MUTAÇÕES
 ====================================================================== */
-function renameBlock(blockId, val){ findBlock(blockId).name = val; saveTreino(); renderBlocksLibrary(); }
+function renameBlock(blockId, val){ findBlock(blockId).name = val; saveTreino(); renderBlocksLibrary(); renderWeeklyScheduleConfig(); renderTodayWorkoutCard(); }
 
 function addExercise(blockId){
   const b = findBlock(blockId);
@@ -3688,8 +4611,13 @@ function renderCalendar(){
     const vol = dayVolumes[key];
     const isToday = key === todayStr;
     const hasEntry = vol !== undefined;
-    html += `<div class="cal-day ${hasEntry?'has':''} ${isToday?'today':''}" ${hasEntry ? 'onclick="openReport(\''+key+'\')"' : ''}>
-      <span>${c.getDate()}</span>${hasEntry ? '<span class="cal-dot" style="opacity:'+(0.35+0.65*(vol/maxVol)).toFixed(2)+'"></span>' : ''}
+    /* Marca de PROGRAMAÇÃO (dia da semana -> bloco), independente do que
+       foi realmente realizado naquele dia — nunca lê workoutHistory aqui. */
+    const scheduledId = getScheduledBlockIdForDate(c);
+    const scheduledBlock = scheduledId ? findBlock(scheduledId) : null;
+    const title = scheduledBlock ? ('Programado: '+scheduledBlock.name) : '';
+    html += `<div class="cal-day ${hasEntry?'has':''} ${isToday?'today':''}" ${hasEntry ? 'onclick="openReport(\''+key+'\')"' : ''} ${title ? 'title="'+escapeHtml(title)+'"' : ''}>
+      <span>${c.getDate()}</span>${hasEntry ? '<span class="cal-dot" style="opacity:'+(0.35+0.65*(vol/maxVol)).toFixed(2)+'"></span>' : ''}${scheduledBlock ? '<span class="cal-sched-tag"></span>' : ''}
     </div>`;
   });
   document.getElementById('cal-grid').innerHTML = html;
