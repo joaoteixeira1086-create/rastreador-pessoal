@@ -671,8 +671,6 @@
   .badge-fora-dieta{ font-family:'JetBrains Mono',monospace; font-size:9px; color: var(--warn); text-transform:uppercase; letter-spacing:0.06em; background: rgba(240,168,96,0.12); padding:3px 7px; border-radius:999px; }
   .manual-entry-label{ font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; margin-bottom:4px; }
   .manual-outra-card .manual-section{ border-top:none; margin-top:0; padding-top:0; }
-  .manual-trigger-row{ margin-top:12px; }
-  .manual-trigger-btn{ width:100%; font-size:10.5px; }
 
   .pending-box{ margin-top:16px; border:1px solid rgba(240,168,96,0.3); background: rgba(240,168,96,0.05); border-radius: var(--radius-md); padding:12px 13px; }
   .pending-item + .pending-item{ margin-top:12px; padding-top:12px; border-top:1px dashed rgba(240,168,96,0.25); }
@@ -703,7 +701,6 @@
   .cf-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px; }
   .cf-select{ width:100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 9px 10px; font-family:'Inter',sans-serif; font-size: 12.5px; outline:none; }
   .cf-num{ width:100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 9px 10px; font-family:'JetBrains Mono',monospace; font-size: 12.5px; outline:none; text-align:left; }
-  .cf-hint{ font-size:10.5px; color: var(--text-faint); margin-top:8px; }
   .ai-input-card{ border: 1px solid var(--border); border-radius: var(--radius-md); padding: 13px; background: rgba(255,255,255,0.02); }
   .ai-input-card .lbl{ font-family:'JetBrains Mono',monospace; font-size:9.5px; color: var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:9px; }
   .ai-analyze-btn{ display:flex; align-items:center; justify-content:center; gap:6px; margin-top:9px; background: var(--dieta); color:#04231a; font-weight:600; width:100%; padding: 11px; }
@@ -882,10 +879,6 @@
   <div class="modal-sheet" id="modal-sheet"></div>
 </div>
 
-<!-- v2.45: modal próprio pra "Registrar o que comi" (consumo real) — isolado do modal de relatório de treino acima -->
-<div class="modal-backdrop" id="manual-modal-backdrop" onclick="if(event.target===this) closeManualMealModal()">
-  <div class="modal-sheet" id="manual-modal-sheet"></div>
-</div>
 
 <div class="rest-timer-widget" id="rest-timer-widget"></div>
 
@@ -2643,7 +2636,7 @@ function renderMealCard(key, entry, day){
     const dayPills = [1,2,3,4,5].map(d => `<div class="weeknav-day ${d===almocoDiaSelecionado?'selected':''}" onclick="selectDiaRu(${d})">${ruWeek[d].label}</div>`).join('');
     bodyHtml = `<div class="weeknav">${dayPills}</div><div class="option-preview"><b>${ru.full}:</b> ${escapeHtml(ru.items)}</div>
       <div class="meal-macro-row"><span class="meal-macro kcal">${ru.kcal} kcal</span><span class="meal-macro p">${ru.p}g P</span><span class="meal-macro c">${ru.c}g C</span><span class="meal-macro g">${ru.g}g G</span></div>
-      <button class="btn-primary dieta" style="margin-top:12px;" onclick="confirmRu()">Marcar como feito</button>${freeTextBlock(key)}`;
+      <button class="btn-primary dieta" style="margin-top:12px;" onclick="confirmRu()">Marcar como feito</button>`;
   } else if(key === 'jantar'){
     const compKey = jantarEscolha === 'A' ? 'jantarA' : 'jantarB';
     const tot = mealTotals(compKey);
@@ -2654,7 +2647,7 @@ function renderMealCard(key, entry, day){
     const ingHtml = renderIngredientRows(compKey);
     bodyHtml = `${toggleHtml}${ingHtml}
       <div class="meal-macro-row" style="margin-top:12px;"><span class="meal-macro kcal">${Math.round(tot.kcal)} kcal</span><span class="meal-macro p">${round1(tot.p)}g P</span><span class="meal-macro c">${round1(tot.c)}g C</span><span class="meal-macro g">${round1(tot.g)}g G</span><span class="meal-macro c">${round1(tot.f)}g Fibra</span></div>
-      <button class="btn-primary dieta" style="margin-top:12px;" onclick="confirmMeal('${key}','${compKey}')">Marcar como feito</button>${freeTextBlock(key)}`;
+      <button class="btn-primary dieta" style="margin-top:12px;" onclick="confirmMeal('${key}','${compKey}')">Marcar como feito</button>`;
   } else {
     const compKey = key;
     const modesObj = key === 'cafe' ? cafeModes : key === 'lanche' ? lancheModes : ceiaModes;
@@ -2668,7 +2661,7 @@ function renderMealCard(key, entry, day){
       ${ingHtml}
       ${currentMode.note ? '<div class="option-preview">'+escapeHtml(currentMode.note)+'</div>' : ''}
       <div class="meal-macro-row" style="margin-top:12px;"><span class="meal-macro kcal">${Math.round(tot.kcal)} kcal</span><span class="meal-macro p">${round1(tot.p)}g P</span><span class="meal-macro c">${round1(tot.c)}g C</span><span class="meal-macro g">${round1(tot.g)}g G</span><span class="meal-macro c">${round1(tot.f)}g Fibra</span></div>
-      <button class="btn-primary dieta" style="margin-top:12px;" onclick="confirmMeal('${key}','${compKey}')">Marcar como feito</button>${freeTextBlock(key)}`;
+      <button class="btn-primary dieta" style="margin-top:12px;" onclick="confirmMeal('${key}','${compKey}')">Marcar como feito</button>`;
   }
   /* v2.45: consumo real registrado pra este slot — visualmente separado do
      "planejado" acima, nunca substitui/edita o bodyHtml calculado acima. */
@@ -2676,9 +2669,17 @@ function renderMealCard(key, entry, day){
   const manualHtml = manualEntries.length
     ? `<div class="manual-section"><div class="manual-section-lbl">consumido (fora da dieta)</div>${manualEntries.map(e => renderManualEntryRow(day, e)).join('')}</div>`
     : '';
-  const registerBtnHtml = `<div class="manual-trigger-row"><button class="btn-ghost manual-trigger-btn" onclick="openManualMealModal('${key}')">não segui esta refeição — registrar o que comi</button></div>`;
+  /* v2.45.1: seção ÚNICA de registro livre por refeição — antes existiam
+     dois componentes com rótulos quase idênticos ("não segui a dieta —
+     registrar o que comi" vindo de freeTextBlock() e "não segui esta
+     refeição — registrar o que comi" vindo de um botão que abria o modal
+     de busca manual). Essa duplicação foi eliminada: freeTextBlock(key) é
+     chamada UMA ÚNICA VEZ aqui, fora do bodyHtml, para aparecer sempre
+     (refeição marcada como feita ou não) — o antigo botão/modal não é
+     mais usado neste fluxo. */
+  const freeTextHtml = freeTextBlock(key);
 
-  return `<div class="meal-card ${done?'done':''}"><div class="meal-head"><div class="meal-title">${meta.title}</div><div class="meal-status ${done?'done':''}"></div></div>${bodyHtml}${manualHtml}${registerBtnHtml}</div>`;
+  return `<div class="meal-card ${done?'done':''}"><div class="meal-head"><div class="meal-title">${meta.title}</div><div class="meal-status ${done?'done':''}"></div></div>${bodyHtml}${manualHtml}${freeTextHtml}</div>`;
 }
 
 function renderModeGrid(mealKey, modesObj, currentKey){
@@ -2741,8 +2742,10 @@ function renderIngredientRows(compKey){
 function freeTextBlock(key){
   return `<div class="divider-or">ou</div><div class="ai-input-card"><div class="lbl">não segui a dieta — registrar o que comi</div>
     <textarea id="free-${key}" placeholder='Ex: 1 maçã, 1 banana e 200 ml de iogurte'></textarea>
-    <button class="ai-analyze-btn" onclick="analisarRegistroLivre('${key}')">analisar →</button>
-    <div class="status" id="status-${key}"></div></div>`;
+    <button class="ai-analyze-btn" onclick="analisarRegistroLivre('${key}')">analisar e registrar →</button>
+    <div class="status" id="status-${key}"></div>
+    <div id="freeresult-${key}"></div>
+  </div>`;
 }
 
 async function confirmMeal(key, compKey){
@@ -2799,7 +2802,7 @@ function renderCatalogMealBody(key){
     <div class="divider-or">opção selecionada: ${escapeHtml(current.label)}</div>
     ${itemsHtml}
     <div class="meal-macro-row" style="margin-top:12px;"><span class="meal-macro kcal">${Math.round(current.kcal)} kcal</span><span class="meal-macro p">${round1(current.p)}g P</span><span class="meal-macro c">${round1(current.c)}g C</span><span class="meal-macro g">${round1(current.g)}g G</span><span class="meal-macro c">${round1(current.f||0)}g Fibra</span></div>
-    <button class="btn-primary dieta" style="margin-top:12px;" onclick="confirmMealFromCatalog('${key}')">Marcar como feito</button>${freeTextBlock(key)}`;
+    <button class="btn-primary dieta" style="margin-top:12px;" onclick="confirmMealFromCatalog('${key}')">Marcar como feito</button>`;
 }
 
 function selectCatalogOption(key, optionId){
@@ -2827,16 +2830,23 @@ async function confirmMealFromCatalog(key){
 }
 
 /* ========================================================================
-   v2.45.1 — "analisar" do registro livre (100% local, sem IA/API/rede)
+   v2.45.1 (correção) — "analisar e registrar" do registro livre, 100%
+   local, sem IA/API/rede e sem depender do modal manual.
    ------------------------------------------------------------------------
-   Antes desta versão, este botão chamava a API da Anthropic (ver histórico
-   da 2.45) e, fora do ambiente Claude, sempre falhava com uma mensagem de
-   erro vermelha. Essa dependência foi completamente removida: o texto
-   digitado agora é interpretado só com parseFoodText() (FOOD_DB local) e o
-   resultado abre o mesmo modal "Registrar o que comi" da 2.45, já
-   pré-preenchido — reaproveitando 100% o fluxo de busca/edição/gravação
-   que o modal manual já tinha, incluindo pendências de ambiguidade e de
-   alimentos não encontrados (ver renderPendingInterpretacao()). */
+   Antes: havia DOIS componentes de registro por refeição (este textarea +
+   um botão separado "não segui esta refeição — registrar o que comi" que
+   abria o modal de busca manual). Isso foi eliminado — ver renderMealCard().
+   Agora todo o resultado (itens reconhecidos, pendências de ambiguidade/
+   não encontrados, totais e o botão "registrar refeição") é renderizado
+   DENTRO desta mesma seção, via renderFreeTextResult(). Nenhuma chamada de
+   rede em nenhum ponto deste bloco. */
+let freeTextDrafts = {}; // { [mealKey]: { items:[], pendingAmbiguous:[], pendingUnresolved:[] } }
+
+/* Sufixo de unidade exibido ao lado da quantidade (ex.: "150" + "g",
+   "2" + "un"). Usado pelo registro livre local (abaixo) — antes vivia
+   dentro do modal manual removido nesta correção. */
+function unitSuffix(unit){ return unit === 'un' ? 'un' : unit; }
+
 function analisarRegistroLivre(key){
   const ta = document.getElementById('free-'+key);
   const desc = ta.value.trim();
@@ -2850,12 +2860,211 @@ function analisarRegistroLivre(key){
   }
   statusEl.textContent = '';
   statusEl.className = 'status';
-  ta.value = '';
-  openManualMealModal(key);
-  parsed.resolved.forEach(r => addFoodToDraft(r.food.id, r.qty));
-  manualMealDraft.pendingAmbiguous = parsed.ambiguous;
-  manualMealDraft.pendingUnresolved = parsed.unresolved;
-  renderManualModal();
+  freeTextDrafts[key] = {
+    items: parsed.resolved.map(r => ({ foodId: r.food.id, name: r.food.name, unit: r.food.unit, base: r.food.base, qty: r.qty, ...computeFoodMacros(r.food, r.qty) })),
+    pendingAmbiguous: parsed.ambiguous.map(a => ({ foodName: a.foodName, qty: a.qty, unit: a.unit, candidates: a.candidates })),
+    pendingUnresolved: parsed.unresolved.map(u => ({ foodName: u.foodName, qty: u.qty, unit: u.unit, searchOpen: false, searchQuery: '', customOpen: false })),
+  };
+  renderFreeTextResult(key);
+}
+
+function freeTextTotals(key){
+  const d = freeTextDrafts[key];
+  if(!d) return { kcal:0, p:0, c:0, g:0, f:0 };
+  return d.items.reduce((acc,it) => { acc.kcal+=it.kcal; acc.p+=it.p; acc.c+=it.c; acc.g+=it.g; acc.f+=it.f; return acc; }, {kcal:0,p:0,c:0,g:0,f:0});
+}
+
+function updateFreeTextItemQty(key, idx, value){
+  const d = freeTextDrafts[key]; if(!d || !d.items[idx]) return;
+  let q = Number(String(value).replace(',', '.'));
+  if(!isFinite(q) || q < 0) q = 0; // nunca aceita quantidade negativa/inválida
+  const it = d.items[idx];
+  it.qty = q;
+  const food = findFoodById(it.foodId);
+  Object.assign(it, food ? computeFoodMacros(food, q) : {kcal:0,p:0,c:0,g:0,f:0});
+  renderFreeTextResult(key, true); // preserva o input em foco — só atualiza os totais
+}
+
+function removeFreeTextItem(key, idx){
+  const d = freeTextDrafts[key]; if(!d) return;
+  d.items.splice(idx, 1);
+  renderFreeTextResult(key);
+}
+
+function resolveFreeTextAmbiguous(key, idx, foodId){
+  const d = freeTextDrafts[key]; if(!d) return;
+  const pend = d.pendingAmbiguous[idx]; if(!pend) return;
+  const food = findFoodById(foodId); if(!food) return;
+  const qty = (pend.qty===null || pend.qty===undefined || !isFinite(pend.qty) || pend.qty<=0) ? food.base : pend.qty;
+  d.items.push({ foodId: food.id, name: food.name, unit: food.unit, base: food.base, qty, ...computeFoodMacros(food, qty) });
+  d.pendingAmbiguous.splice(idx, 1);
+  renderFreeTextResult(key);
+}
+function dismissFreeTextAmbiguous(key, idx){
+  const d = freeTextDrafts[key]; if(!d) return;
+  d.pendingAmbiguous.splice(idx, 1);
+  renderFreeTextResult(key);
+}
+function dismissFreeTextUnresolved(key, idx){
+  const d = freeTextDrafts[key]; if(!d) return;
+  d.pendingUnresolved.splice(idx, 1);
+  renderFreeTextResult(key);
+}
+function toggleFreeTextUnresolvedSearch(key, idx){
+  const d = freeTextDrafts[key]; if(!d) return;
+  const it = d.pendingUnresolved[idx]; if(!it) return;
+  it.searchOpen = !it.searchOpen;
+  it.customOpen = false;
+  renderFreeTextResult(key);
+}
+function searchFreeTextUnresolved(key, idx, query){
+  const d = freeTextDrafts[key]; if(!d) return;
+  const it = d.pendingUnresolved[idx]; if(!it) return;
+  it.searchQuery = query;
+  const listEl = document.getElementById('ft-unresolved-results-'+key+'-'+idx);
+  if(!listEl) return;
+  const results = searchFoods(query, 8);
+  listEl.innerHTML = results.length ? results.map(f => `
+    <div class="food-result-row" onclick="pickFreeTextUnresolvedFood('${key}',${idx},'${f.id}')">
+      <div class="food-result-main"><span class="food-result-name">${escapeHtml(f.name)}</span><span class="food-result-cat">${escapeHtml(FOOD_CATEGORY_LABELS[f.cat]||f.cat)}</span></div>
+      <div class="food-result-kcal">${Math.round(f.kcal)} kcal <span class="food-result-base">/ ${f.base}${unitSuffix(f.unit)}</span></div>
+    </div>`).join('') : `<div class="manual-empty-hint">Nenhum alimento encontrado.</div>`;
+}
+function pickFreeTextUnresolvedFood(key, idx, foodId){
+  const d = freeTextDrafts[key]; if(!d) return;
+  const pend = d.pendingUnresolved[idx]; if(!pend) return;
+  const food = findFoodById(foodId); if(!food) return;
+  const qty = (pend.qty===null || pend.qty===undefined || !isFinite(pend.qty) || pend.qty<=0) ? food.base : pend.qty;
+  d.items.push({ foodId: food.id, name: food.name, unit: food.unit, base: food.base, qty, ...computeFoodMacros(food, qty) });
+  d.pendingUnresolved.splice(idx, 1);
+  renderFreeTextResult(key);
+}
+function toggleFreeTextCustomForm(key, idx){
+  const d = freeTextDrafts[key]; if(!d) return;
+  const it = d.pendingUnresolved[idx]; if(!it) return;
+  it.customOpen = !it.customOpen;
+  it.searchOpen = false;
+  renderFreeTextResult(key);
+}
+function submitFreeTextCustomFood(key, idx){
+  const d = freeTextDrafts[key]; if(!d) return;
+  const pend = d.pendingUnresolved[idx]; if(!pend) return;
+  const statusEl = document.getElementById('ft-cf-status-'+key+'-'+idx);
+  const input = {
+    name: document.getElementById('ft-cf-name-'+key+'-'+idx).value,
+    unit: document.getElementById('ft-cf-unit-'+key+'-'+idx).value,
+    kcal: document.getElementById('ft-cf-kcal-'+key+'-'+idx).value,
+    p: document.getElementById('ft-cf-prot-'+key+'-'+idx).value,
+    c: document.getElementById('ft-cf-carb-'+key+'-'+idx).value,
+    g: document.getElementById('ft-cf-gord-'+key+'-'+idx).value,
+    f: document.getElementById('ft-cf-fibra-'+key+'-'+idx).value,
+  };
+  const res = addCustomFood(input);
+  if(!res.ok){ if(statusEl){ statusEl.textContent = res.errors.join(' '); statusEl.className = 'status error'; } return; }
+  const qty = (pend.qty===null || pend.qty===undefined || !isFinite(pend.qty) || pend.qty<=0) ? res.food.base : pend.qty;
+  d.items.push({ foodId: res.food.id, name: res.food.name, unit: res.food.unit, base: res.food.base, qty, ...computeFoodMacros(res.food, qty) });
+  d.pendingUnresolved.splice(idx, 1);
+  renderFreeTextResult(key);
+}
+
+function renderFreeTextResult(key, skipItemsRerender){
+  const el = document.getElementById('freeresult-'+key);
+  if(!el) return;
+  const d = freeTextDrafts[key];
+  if(!d){ el.innerHTML = ''; return; }
+  const totals = freeTextTotals(key);
+  const totalsHtml = d.items.length ? `<div class="meal-macro-row"><span class="meal-macro kcal">${Math.round(totals.kcal)} kcal</span><span class="meal-macro p">${round1(totals.p)}g P</span><span class="meal-macro c">${round1(totals.c)}g C</span><span class="meal-macro g">${round1(totals.g)}g G</span><span class="meal-macro c">${round1(totals.f)}g Fibra</span></div>` : '';
+
+  if(skipItemsRerender){
+    const totalsEl = document.getElementById('freeresult-totals-'+key);
+    if(totalsEl) totalsEl.innerHTML = totalsHtml;
+    return;
+  }
+
+  let pendingHtml = '';
+  if(d.pendingAmbiguous.length || d.pendingUnresolved.length){
+    pendingHtml = `<div class="pending-box"><div class="manual-section-lbl">pendências da interpretação automática</div>`;
+    d.pendingAmbiguous.forEach((it, idx) => {
+      pendingHtml += `<div class="pending-item">
+        <div class="pending-item-label">Encontramos mais de uma opção para "${escapeHtml(it.foodName)}":</div>
+        <div class="pending-chip-row">
+          ${it.candidates.map(c => `<div class="weeknav-day" onclick="resolveFreeTextAmbiguous('${key}',${idx},'${c.id}')">${escapeHtml(c.name)}</div>`).join('')}
+          <div class="weeknav-day pending-skip" onclick="dismissFreeTextAmbiguous('${key}',${idx})">ignorar</div>
+        </div>
+      </div>`;
+    });
+    d.pendingUnresolved.forEach((it, idx) => {
+      pendingHtml += `<div class="pending-item">
+        <div class="pending-item-label">Não encontramos: "${escapeHtml(it.foodName)}".</div>
+        <div class="pending-chip-row">
+          <div class="weeknav-day" onclick="toggleFreeTextUnresolvedSearch('${key}',${idx})">escolher alimento</div>
+          <div class="weeknav-day" onclick="toggleFreeTextCustomForm('${key}',${idx})">adicionar personalizado</div>
+          <div class="weeknav-day pending-skip" onclick="dismissFreeTextUnresolved('${key}',${idx})">ignorar</div>
+        </div>
+        ${it.searchOpen ? `
+          <input type="text" class="food-search-input" style="margin-top:8px;" placeholder="buscar alimento..." value="${escapeHtml(it.searchQuery||it.foodName)}" oninput="searchFreeTextUnresolved('${key}',${idx},this.value)">
+          <div class="food-results-list" id="ft-unresolved-results-${key}-${idx}"></div>` : ''}
+        ${it.customOpen ? `
+          <div class="ai-input-card" style="margin-top:8px;">
+            <label>Nome</label>
+            <input type="text" id="ft-cf-name-${key}-${idx}" class="food-search-input" placeholder="Nome do alimento" value="${escapeHtml(it.foodName.charAt(0).toUpperCase()+it.foodName.slice(1))}">
+            <div class="cf-grid">
+              <div><label>Unidade</label>
+                <select id="ft-cf-unit-${key}-${idx}" class="cf-select"><option value="g">gramas (g)</option><option value="ml">mililitros (ml)</option><option value="un">unidade</option></select>
+              </div>
+              <div><label>Kcal</label><input type="number" min="0" id="ft-cf-kcal-${key}-${idx}" class="cf-num"></div>
+              <div><label>Proteína (g)</label><input type="number" min="0" id="ft-cf-prot-${key}-${idx}" class="cf-num"></div>
+              <div><label>Carbo (g)</label><input type="number" min="0" id="ft-cf-carb-${key}-${idx}" class="cf-num"></div>
+              <div><label>Gordura (g)</label><input type="number" min="0" id="ft-cf-gord-${key}-${idx}" class="cf-num"></div>
+              <div><label>Fibra (g)</label><input type="number" min="0" id="ft-cf-fibra-${key}-${idx}" class="cf-num"></div>
+            </div>
+            <button class="btn-ghost" style="margin-top:10px; width:100%;" onclick="submitFreeTextCustomFood('${key}',${idx})">salvar e adicionar</button>
+            <div class="status" id="ft-cf-status-${key}-${idx}"></div>
+          </div>` : ''}
+      </div>`;
+    });
+    pendingHtml += `</div>`;
+  }
+
+  const itemsHtml = d.items.length ? d.items.map((it, idx) => `
+    <div class="ing-row draft-item-row">
+      <span class="ing-name">${escapeHtml(it.name)}</span>
+      <input class="draft-qty-input" type="number" min="0" step="any" value="${it.qty}" oninput="updateFreeTextItemQty('${key}',${idx},this.value)">
+      <span class="ing-qtd">${unitSuffix(it.unit)}</span>
+      <span class="draft-item-kcal">${Math.round(it.kcal)} kcal</span>
+      <button class="btn-text" onclick="removeFreeTextItem('${key}',${idx})" title="remover">${icoTrash}</button>
+    </div>`).join('') : `<div class="manual-empty-hint">Nenhum alimento reconhecido ainda.</div>`;
+
+  el.innerHTML = `
+    ${pendingHtml}
+    <div class="fixed-block-lbl" style="margin:14px 0 8px;">alimentos encontrados</div>
+    <div class="manual-draft-list">${itemsHtml}</div>
+    <div id="freeresult-totals-${key}">${totalsHtml}</div>
+    <button class="btn-primary dieta" style="margin-top:12px;" onclick="registrarRefeicaoLivre('${key}')" ${d.items.length ? '' : 'disabled'}>registrar refeição</button>
+  `;
+}
+
+/* Persiste exatamente como o registro manual da 2.45 (source:'manual',
+   chave 'manual_...', só entra em CONSUMIDO, nunca em PLANEJADO). */
+async function registrarRefeicaoLivre(key){
+  const d = freeTextDrafts[key];
+  if(!d || !d.items.length) return;
+  const t = freeTextTotals(key);
+  const day = todayKey();
+  dietaLog[day] = dietaLog[day] || {};
+  const logKey = newManualLogKey();
+  dietaLog[day][logKey] = {
+    tipo: 'manual',
+    mealSlot: key,
+    label: 'Refeição registrada',
+    items: d.items.map(it => ({ nome: it.name, qtd: it.qty + unitSuffix(it.unit) })),
+    kcal: t.kcal, p: t.p, c: t.c, g: t.g, f: t.f,
+    source: 'manual',
+    ts: new Date().toISOString(),
+  };
+  delete freeTextDrafts[key];
+  await saveLog();
+  renderRefeicoes();
 }
 
 async function undoMeal(key){ const day = todayKey(); if(dietaLog[day]) delete dietaLog[day][key]; await saveLog(); if(currentSyncUser) deleteDietLogRemote(day, key); renderRefeicoes(); }
@@ -2934,287 +3143,13 @@ async function deleteManualMeal(day, key){
   renderRefeicoes();
 }
 
-/* ========================================================================
-   v2.45 — MODAL "REGISTRAR O QUE COMI" (consumo real)
-   ------------------------------------------------------------------------
-   Modal PRÓPRIO (backdrop/sheet com id próprio), separado do modal de
-   relatório de treino (#modal-backdrop / openReport / closeReport), que
-   não é tocado. Evita qualquer conflito entre os dois fluxos.
-==========================================================================*/
-let manualMealDraft = null; // { slot, items:[{foodId,name,unit,base,qty,kcal,p,c,g,f}], pendingAmbiguous:[], pendingUnresolved:[] }
-let manualCustomFormOpen = false;
 
-function openManualMealModal(prefillSlot){
-  manualMealDraft = { slot: prefillSlot || null, items: [], pendingAmbiguous: [], pendingUnresolved: [] };
-  manualCustomFormOpen = false;
-  renderManualModal();
-  document.getElementById('manual-modal-backdrop').classList.add('open');
-  document.addEventListener('keydown', escCloseManualModal);
-}
-function escCloseManualModal(e){ if(e.key === 'Escape') closeManualMealModal(); }
-function closeManualMealModal(){
-  document.getElementById('manual-modal-backdrop').classList.remove('open');
-  document.removeEventListener('keydown', escCloseManualModal);
-  manualMealDraft = null;
-}
+/* v2.45.1: o antigo modal manual "REGISTRAR O QUE COMI" (usado antes pelo
+   botão duplicado "não segui esta refeição — registrar o que comi") foi
+   removido nesta correção — o registro livre agora é feito inline, direto
+   na seção "não segui a dieta — registrar o que comi" (ver freeTextBlock/
+   analisarRegistroLivre/renderFreeTextResult acima), sem modal nenhum. */
 
-function computeDraftTotals(){
-  if(!manualMealDraft) return {kcal:0,p:0,c:0,g:0,f:0};
-  return manualMealDraft.items.reduce((acc,it) => { acc.kcal+=it.kcal; acc.p+=it.p; acc.c+=it.c; acc.g+=it.g; acc.f+=it.f; return acc; }, {kcal:0,p:0,c:0,g:0,f:0});
-}
-
-function selectManualMealSlot(slot){
-  if(!manualMealDraft) return;
-  manualMealDraft.slot = slot;
-  renderManualModal();
-}
-
-function unitSuffix(unit){ return unit === 'un' ? 'un' : unit; }
-
-function renderManualFoodResults(query){
-  const results = searchFoods(query, 18);
-  const el = document.getElementById('manual-food-results');
-  if(!el) return;
-  if(!results.length){
-    el.innerHTML = `<div class="manual-empty-hint">Nenhum alimento encontrado.</div>`;
-    return;
-  }
-  el.innerHTML = results.map(f => `
-    <div class="food-result-row" onclick="addFoodToDraft('${f.id}')">
-      <div class="food-result-main">
-        <span class="food-result-name">${escapeHtml(f.name)}</span>
-        <span class="food-result-cat">${escapeHtml(FOOD_CATEGORY_LABELS[f.cat] || f.cat)}</span>
-      </div>
-      <div class="food-result-kcal">${Math.round(f.kcal)} kcal <span class="food-result-base">/ ${f.base}${unitSuffix(f.unit)}</span></div>
-    </div>`).join('');
-}
-function onManualFoodSearch(value){ renderManualFoodResults(value); }
-
-/* qty é opcional: sem ela, usa a porção de referência do alimento (1 base),
-   igual antes da 2.45.1 — usado tanto pelo clique manual na busca quanto
-   pelo parser de texto livre (que já traz uma quantidade interpretada). */
-function addFoodToDraft(foodId, qty){
-  const food = findFoodById(foodId);
-  if(!food || !manualMealDraft) return;
-  const q = (qty === undefined || qty === null || !isFinite(qty) || qty <= 0) ? food.base : qty;
-  const macros = computeFoodMacros(food, q);
-  manualMealDraft.items.push({ foodId: food.id, name: food.name, unit: food.unit, base: food.base, qty: q, ...macros });
-  renderManualDraftSection();
-}
-
-function updateDraftItemQty(idx, value){
-  if(!manualMealDraft || !manualMealDraft.items[idx]) return;
-  let q = Number(String(value).replace(',', '.'));
-  if(!isFinite(q) || q < 0) q = 0; // regra 20: nunca aceitar quantidade negativa/ inválida
-  const item = manualMealDraft.items[idx];
-  const food = findFoodById(item.foodId);
-  item.qty = q;
-  const macros = food ? computeFoodMacros(food, q) : { kcal:0,p:0,c:0,g:0,f:0 };
-  Object.assign(item, macros);
-  renderManualDraftSection(true); // preserva o campo de quantidade em foco (não recria o input)
-}
-
-function removeDraftItem(idx){
-  if(!manualMealDraft) return;
-  manualMealDraft.items.splice(idx, 1);
-  renderManualDraftSection();
-}
-
-function renderManualDraftSection(skipInputsRerender){
-  const totalsEl = document.getElementById('manual-draft-totals');
-  const t = computeDraftTotals();
-  if(totalsEl){
-    totalsEl.innerHTML = manualMealDraft.items.length ? `
-      <div class="meal-macro-row"><span class="meal-macro kcal">${Math.round(t.kcal)} kcal</span><span class="meal-macro p">${round1(t.p)}g P</span><span class="meal-macro c">${round1(t.c)}g C</span><span class="meal-macro g">${round1(t.g)}g G</span><span class="meal-macro c">${round1(t.f)}g Fibra</span></div>` : '';
-  }
-  if(skipInputsRerender) return; // só os totais mudam enquanto o usuário digita a quantidade
-  const listEl = document.getElementById('manual-draft-list');
-  if(!listEl) return;
-  if(!manualMealDraft.items.length){
-    listEl.innerHTML = `<div class="manual-empty-hint">Nenhum alimento adicionado ainda.</div>`;
-  } else {
-    listEl.innerHTML = manualMealDraft.items.map((it, idx) => `
-      <div class="ing-row draft-item-row">
-        <span class="ing-name">${escapeHtml(it.name)}</span>
-        <input class="draft-qty-input" type="number" min="0" step="any" value="${it.qty}" oninput="updateDraftItemQty(${idx}, this.value)">
-        <span class="ing-qtd">${unitSuffix(it.unit)}</span>
-        <span class="draft-item-kcal">${Math.round(it.kcal)} kcal</span>
-        <button class="btn-text" onclick="removeDraftItem(${idx})" title="remover">${icoTrash}</button>
-      </div>`).join('');
-  }
-  const saveBtn = document.getElementById('manual-save-btn');
-  if(saveBtn) saveBtn.disabled = !(manualMealDraft.slot && manualMealDraft.items.length);
-}
-
-function toggleCustomFoodForm(){
-  manualCustomFormOpen = !manualCustomFormOpen;
-  const el = document.getElementById('manual-custom-food-panel');
-  if(el) el.style.display = manualCustomFormOpen ? 'block' : 'none';
-}
-
-function submitCustomFoodForm(){
-  const statusEl = document.getElementById('manual-custom-food-status');
-  const input = {
-    name: document.getElementById('cf-name').value,
-    unit: document.getElementById('cf-unit').value,
-    kcal: document.getElementById('cf-kcal').value,
-    p: document.getElementById('cf-prot').value,
-    c: document.getElementById('cf-carb').value,
-    g: document.getElementById('cf-gord').value,
-    f: document.getElementById('cf-fibra').value,
-  };
-  const res = addCustomFood(input);
-  if(!res.ok){
-    statusEl.textContent = res.errors.join(' ');
-    statusEl.className = 'status error';
-    return;
-  }
-  statusEl.textContent = 'Alimento salvo. Já pode buscar por "' + res.food.name + '".';
-  statusEl.className = 'status';
-  ['cf-name','cf-kcal','cf-prot','cf-carb','cf-gord','cf-fibra'].forEach(id => { document.getElementById(id).value = ''; });
-  addFoodToDraft(res.food.id);
-  renderManualFoodResults(document.getElementById('manual-food-search-input') ? document.getElementById('manual-food-search-input').value : '');
-}
-
-/* ------------------------------------------------------------------------
-   PENDÊNCIAS DA INTERPRETAÇÃO AUTOMÁTICA (v2.45.1)
-   ------------------------------------------------------------------------
-   Quando o parser encontra mais de um alimento compatível (ambíguo) ou
-   nenhum (não encontrado), o item NÃO é adicionado sozinho — fica listado
-   aqui até o usuário escolher, ignorar, buscar manualmente ou cadastrar
-   como personalizado (regras 7 e 8 do escopo). Nunca bloqueia o resto: os
-   itens já resolvidos continuam normalmente na lista de rascunho abaixo.
-==========================================================================*/
-function resolveAmbiguousItem(idx, foodId){
-  if(!manualMealDraft || !manualMealDraft.pendingAmbiguous) return;
-  const item = manualMealDraft.pendingAmbiguous[idx];
-  if(!item) return;
-  addFoodToDraft(foodId, item.qty);
-  manualMealDraft.pendingAmbiguous.splice(idx, 1);
-  renderManualModal();
-}
-function dismissPendingAmbiguous(idx){
-  if(!manualMealDraft || !manualMealDraft.pendingAmbiguous) return;
-  manualMealDraft.pendingAmbiguous.splice(idx, 1);
-  renderManualModal();
-}
-function dismissPendingUnresolved(idx){
-  if(!manualMealDraft || !manualMealDraft.pendingUnresolved) return;
-  manualMealDraft.pendingUnresolved.splice(idx, 1);
-  renderManualModal();
-}
-function searchFromPendingUnresolved(idx){
-  if(!manualMealDraft || !manualMealDraft.pendingUnresolved) return;
-  const item = manualMealDraft.pendingUnresolved[idx];
-  if(!item) return;
-  const input = document.getElementById('manual-food-search-input');
-  if(input){ input.value = item.foodName; onManualFoodSearch(item.foodName); input.focus(); input.scrollIntoView({behavior:'smooth', block:'center'}); }
-}
-function customFoodFromPendingUnresolved(idx){
-  if(!manualMealDraft || !manualMealDraft.pendingUnresolved) return;
-  const item = manualMealDraft.pendingUnresolved[idx];
-  if(!item) return;
-  manualCustomFormOpen = true;
-  renderManualModal();
-  const nameInput = document.getElementById('cf-name');
-  if(nameInput) nameInput.value = item.foodName.charAt(0).toUpperCase() + item.foodName.slice(1);
-}
-function renderPendingInterpretacao(){
-  if(!manualMealDraft) return '';
-  const amb = manualMealDraft.pendingAmbiguous || [];
-  const unr = manualMealDraft.pendingUnresolved || [];
-  if(!amb.length && !unr.length) return '';
-  let html = `<div class="pending-box">
-    <div class="manual-section-lbl">pendências da interpretação automática</div>`;
-  amb.forEach((it, idx) => {
-    html += `<div class="pending-item">
-      <div class="pending-item-label">Encontramos mais de uma opção para "${escapeHtml(it.foodName)}":</div>
-      <div class="pending-chip-row">
-        ${it.candidates.map(c => `<div class="weeknav-day" onclick="resolveAmbiguousItem(${idx},'${c.id}')">${escapeHtml(c.name)}</div>`).join('')}
-        <div class="weeknav-day pending-skip" onclick="dismissPendingAmbiguous(${idx})">ignorar</div>
-      </div>
-    </div>`;
-  });
-  unr.forEach((it, idx) => {
-    html += `<div class="pending-item">
-      <div class="pending-item-label">Não encontramos: "${escapeHtml(it.foodName)}".</div>
-      <div class="pending-chip-row">
-        <div class="weeknav-day" onclick="searchFromPendingUnresolved(${idx})">escolher alimento</div>
-        <div class="weeknav-day" onclick="customFoodFromPendingUnresolved(${idx})">adicionar personalizado</div>
-        <div class="weeknav-day pending-skip" onclick="dismissPendingUnresolved(${idx})">ignorar</div>
-      </div>
-    </div>`;
-  });
-  html += `</div>`;
-  return html;
-}
-
-function renderManualModal(){
-  if(!manualMealDraft) return;
-  const slotPills = MANUAL_MEAL_TYPES.map(t => `<div class="weeknav-day ${manualMealDraft.slot===t.key?'selected':''}" onclick="selectManualMealSlot('${t.key}')">${escapeHtml(t.label)}</div>`).join('');
-  document.getElementById('manual-modal-sheet').innerHTML = `
-    <div class="modal-close" onclick="closeManualMealModal()">✕</div>
-    <div class="modal-title">Registrar o que comi</div>
-    <div class="modal-date" style="margin-bottom:14px;">isso não altera a dieta planejada — fica registrado como consumo real, separado</div>
-
-    <div class="fixed-block-lbl" style="margin-bottom:8px;">1. tipo de refeição</div>
-    <div class="weeknav" style="flex-wrap:wrap;">${slotPills}</div>
-
-    ${renderPendingInterpretacao()}
-
-    <div class="fixed-block-lbl" style="margin:18px 0 8px;">2. buscar alimento</div>
-    <input type="text" id="manual-food-search-input" class="food-search-input" placeholder="Ex: frango, arroz, batata frita..." oninput="onManualFoodSearch(this.value)">
-    <div id="manual-food-results" class="food-results-list"></div>
-    <div class="targets-toggle" style="margin-top:10px;" onclick="toggleCustomFoodForm()">não encontrou o alimento? adicionar personalizado</div>
-    <div id="manual-custom-food-panel" style="display:none; margin-top:10px;">
-      <div class="ai-input-card">
-        <label>Nome</label>
-        <input type="text" id="cf-name" class="food-search-input" placeholder="Nome do alimento">
-        <div class="cf-grid">
-          <div><label>Unidade</label>
-            <select id="cf-unit" class="cf-select"><option value="g">gramas (g)</option><option value="ml">mililitros (ml)</option><option value="un">unidade</option></select>
-          </div>
-          <div><label>Kcal</label><input type="number" min="0" id="cf-kcal" class="cf-num"></div>
-          <div><label>Proteína (g)</label><input type="number" min="0" id="cf-prot" class="cf-num"></div>
-          <div><label>Carbo (g)</label><input type="number" min="0" id="cf-carb" class="cf-num"></div>
-          <div><label>Gordura (g)</label><input type="number" min="0" id="cf-gord" class="cf-num"></div>
-          <div><label>Fibra (g)</label><input type="number" min="0" id="cf-fibra" class="cf-num"></div>
-        </div>
-        <div class="cf-hint">valores referentes à quantidade de 100g/100ml (ou 1 unidade, se escolher "unidade").</div>
-        <button class="btn-ghost" style="margin-top:10px; width:100%;" onclick="submitCustomFoodForm()">salvar alimento personalizado</button>
-        <div class="status" id="manual-custom-food-status"></div>
-      </div>
-    </div>
-
-    <div class="fixed-block-lbl" style="margin:18px 0 8px;">3. alimentos da refeição</div>
-    <div id="manual-draft-list" class="manual-draft-list"></div>
-    <div id="manual-draft-totals"></div>
-
-    <button class="btn-primary dieta" id="manual-save-btn" style="margin-top:16px;" onclick="saveManualMeal()" ${(manualMealDraft.slot && manualMealDraft.items.length) ? '' : 'disabled'}>Registrar refeição</button>
-  `;
-  renderManualFoodResults('');
-  renderManualDraftSection();
-}
-
-async function saveManualMeal(){
-  if(!manualMealDraft || !manualMealDraft.slot || !manualMealDraft.items.length) return;
-  const t = computeDraftTotals();
-  const day = todayKey();
-  dietaLog[day] = dietaLog[day] || {};
-  const key = newManualLogKey();
-  dietaLog[day][key] = {
-    tipo: 'manual',
-    mealSlot: manualMealDraft.slot,
-    label: 'Refeição registrada',
-    items: manualMealDraft.items.map(it => ({ nome: it.name, qtd: it.qty + unitSuffix(it.unit) })),
-    kcal: t.kcal, p: t.p, c: t.c, g: t.g, f: t.f,
-    source: 'manual',
-    ts: new Date().toISOString(),
-  };
-  await saveLog();
-  closeManualMealModal();
-  renderRefeicoes();
-}
 
 /* ======================================================================
    PERGUNTE AO SEU PAINEL
