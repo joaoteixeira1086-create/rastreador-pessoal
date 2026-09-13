@@ -158,6 +158,29 @@
   .btn-primary.dieta{ background: var(--dieta); color:#04231a; }
   .btn-primary.treino{ background: var(--treino); color:#1c1330; }
   .btn-ghost{ background: transparent; border: 1px solid var(--border); color: var(--text-secondary); padding: 9px 12px; }
+  .btn-danger{ background: transparent; border: 1px solid rgba(224,114,93,0.4); color: var(--danger); padding: 9px 12px; font-weight:600; }
+  .btn-danger:active{ background: rgba(224,114,93,0.1); }
+  .confirm-sheet{ max-width:380px; padding: 26px 22px 22px; }
+  .diet-help-sheet{ max-width:480px; padding: 26px 22px 22px; }
+  .dh-title{ font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:700; }
+  .dh-intro{ font-size:12.5px; color: var(--text-secondary); line-height:1.55; margin-top:8px; }
+  .dh-section{ margin-top:22px; padding-top:18px; border-top:1px solid var(--border-soft); }
+  .dh-section-lbl{ font-family:'JetBrains Mono',monospace; font-size:9.5px; color: var(--text-faint); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
+  .dh-p{ font-size:12.5px; color: var(--text-secondary); line-height:1.6; }
+  .dh-p b{ color: var(--text); font-weight:600; }
+  .dh-field{ display:flex; flex-direction:column; gap:2px; padding:7px 0; border-top:1px solid var(--border-soft); }
+  .dh-field:first-of-type{ border-top:none; }
+  .dh-field b{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color: var(--text); }
+  .dh-field span{ font-size:11.5px; color: var(--text-secondary); }
+  .dh-note{ font-size:11px; color: var(--text-faint); line-height:1.5; margin-top:10px; }
+  .dh-example{ background: var(--bg); border:1px solid var(--border); border-radius: var(--radius-md); padding:12px 13px; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.6; color: var(--text-secondary); overflow-x:auto; white-space:pre; max-height:220px; overflow-y:auto; }
+  .dh-copy-feedback{ font-family:'JetBrains Mono',monospace; font-size:10.5px; color: var(--accent); margin-top:8px; min-height:14px; }
+  .dh-warn{ font-size:11px; color: var(--text-faint); line-height:1.55; margin-top:20px; padding-top:16px; border-top:1px solid var(--border-soft); }
+  .confirm-title{ font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:700; }
+  .confirm-message{ font-size:13.5px; color: var(--text-secondary); line-height:1.55; margin-top:10px; }
+  .confirm-message b{ color: var(--text); font-weight:600; }
+  .confirm-actions{ display:flex; gap:10px; margin-top:24px; }
+  .confirm-actions button{ flex:1; min-height:44px; }
   .btn-ghost:hover{ background: var(--surface-hover); color: var(--text); }
   .btn-text{ color: var(--text-faint); font-size: 10.5px; padding: 4px 6px; min-height:auto; }
   .btn-text:hover{ color: var(--danger); }
@@ -263,6 +286,7 @@
   @media (min-width:1200px){ .lib-grid{ grid-template-columns: repeat(4,1fr); } }
 
   .text-action-block{ border-bottom:1px solid var(--border-soft); padding-bottom:14px; margin-bottom:18px; }
+  .file-input-hidden{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; opacity:0; }
   .text-action-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; padding:14px 0 2px; cursor:pointer; min-height:44px; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   .text-action-row:active{ opacity:0.6; }
   .text-action-lbl{ font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.02em; color: var(--text); text-transform:uppercase; }
@@ -409,6 +433,12 @@
   .success-title{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; color: var(--dieta); text-transform:uppercase; }
   .success-name{ font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:700; margin-top:8px; }
   .success-stats{ display:flex; gap:28px; margin-top:22px; }
+  .success-vol-delta{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color: var(--accent); margin-top:10px; text-align:center; }
+  .success-vol-delta.down{ color: var(--text-secondary); }
+  .success-highlight{ margin-top:16px; text-align:center; }
+  .sh-lbl{ font-family:'JetBrains Mono',monospace; font-size:9px; color: var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; }
+  .sh-name{ font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700; margin-top:5px; }
+  .sh-line{ font-size:12px; color: var(--accent); margin-top:2px; }
   .success-stats div{ text-align:center; }
   .success-stats b{ display:block; font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:700; }
   .success-stats span{ font-family:'JetBrains Mono',monospace; font-size:9.5px; color: var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em; }
@@ -521,6 +551,10 @@
   .set-ref-line .delta.down{ color: var(--text-faint); }
   .ex-vol-compare{ display:flex; align-items:center; gap:12px; margin-top:11px; padding: 8px 9px; background: rgba(255,255,255,0.018); border-radius: var(--radius-sm); font-family:'JetBrains Mono',monospace; font-size:10px; color: var(--text-secondary); flex-wrap:wrap; }
   .ex-vol-compare .delta{ color: var(--dieta); font-weight:600; }
+  .ex-next-session{ margin-top:12px; padding: 12px 13px; border-left: 2px solid var(--accent); }
+  .ens-lbl{ font-family:'JetBrains Mono',monospace; font-size:9px; color: var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; }
+  .ens-action{ font-family:'Space Grotesk',sans-serif; font-size:14.5px; font-weight:700; color: var(--accent); margin-top:4px; }
+  .ens-reason{ font-size:11.5px; color: var(--text-secondary); line-height:1.5; margin-top:4px; }
   .ex-vol-compare .delta.down{ color: var(--text-faint); }
 
   /* ===================== PROGRESSÃO — leitura melhorada ===================== */
@@ -837,6 +871,8 @@
   .sync-panel .row button{ flex:1; }
   .sync-panel .msg{ font-size:11px; color: var(--text-faint); margin-top:8px; font-family:'JetBrains Mono',monospace; }
   .sync-panel .msg.error{ color: var(--danger); }
+  .sync-mode-toggle{ font-size:11.5px; color: var(--text-faint); margin-top:14px; text-align:center; }
+  .sync-mode-toggle span{ color: var(--text); text-decoration: underline dotted; cursor:pointer; }
   .sync-account-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
   .sync-account-email{ font-size:12.5px; color: var(--text-secondary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 </style>
@@ -904,7 +940,7 @@
         <span class="text-action-arrow">→</span>
       </label>
       <div class="text-action-sub">Exporte o CSV no Hevy (Perfil → Configurações → Exportar e Importar Dados → Exportar Treinos) e envie aqui.</div>
-      <input type="file" id="hevy-file-input" accept=".csv" style="display:none" onchange="handleHevyImport(this)">
+      <input type="file" id="hevy-file-input" accept=".csv" class="file-input-hidden" onchange="handleHevyImport(this)">
       <div class="status" id="hevy-import-status"></div>
     </div>
     <div class="weekly-schedule-box" id="weekly-schedule-box">
@@ -962,8 +998,9 @@
         <span class="text-action-arrow">→</span>
       </label>
       <div class="text-action-sub">Importe um arquivo JSON pra substituir as opções de café, almoço, lanche, jantar e ceia. Seu histórico não é afetado.</div>
-      <input type="file" id="diet-file-input" accept=".json,application/json" style="display:none" onchange="handleDietImport(this)">
+      <input type="file" id="diet-file-input" accept=".json" class="file-input-hidden" onchange="handleDietImport(this)">
       <div class="targets-toggle" style="margin-top:10px;" onclick="exportDiet()">exportar dieta atual</div>
+      <div class="targets-toggle" style="margin-top:6px;" onclick="openDietHelpModal()">como criar o arquivo?</div>
       <div class="status" id="diet-import-status"></div>
     </div>
 
@@ -999,6 +1036,59 @@
 
 </div>
 
+<div class="modal-backdrop" id="diet-help-backdrop" onclick="if(event.target===this) closeDietHelpModal()">
+  <div class="modal-sheet diet-help-sheet">
+    <div class="dh-title">Como criar o arquivo de dieta</div>
+    <div class="dh-intro">Você pode escrever esse arquivo à mão, ou pedir pra uma IA (como o Claude) montar pra você — veja como.</div>
+
+    <div class="dh-section">
+      <div class="dh-section-lbl">01 · o que é</div>
+      <div class="dh-p">Um arquivo de texto no formato <b>JSON</b>, terminado em <b>.json</b>. Ele descreve as opções de café da manhã, almoço, lanche, jantar e ceia — cada uma com nome, alimentos, calorias e macros.</div>
+    </div>
+
+    <div class="dh-section">
+      <div class="dh-section-lbl">02 · campos</div>
+      <div class="dh-field"><b>label</b><span>nome da opção, ex: "Café opção 1"</span></div>
+      <div class="dh-field"><b>items</b><span>lista dos alimentos — cada um com nome e quantidade</span></div>
+      <div class="dh-field"><b>kcal</b><span>calorias da opção — obrigatório</span></div>
+      <div class="dh-field"><b>protein / carbs / fat / fiber</b><span>macros em gramas — opcionais</span></div>
+      <div class="dh-note">Não precisa preencher as 5 refeições, só as que for importar. Cada refeição pode ter mais de uma opção.</div>
+    </div>
+
+    <div class="dh-section">
+      <div class="dh-section-lbl">03 · exemplo válido</div>
+      <pre class="dh-example" id="dh-example-code"></pre>
+      <button class="btn-ghost" onclick="copyDietExample()">COPIAR EXEMPLO</button>
+      <div class="dh-copy-feedback" id="dh-example-feedback"></div>
+    </div>
+
+    <div class="dh-section">
+      <div class="dh-section-lbl">04 · gerar com o Claude</div>
+      <div class="dh-p">Copie o prompt, cole numa conversa com o Claude, e mande sua dieta em texto (ou foto/PDF do seu plano) logo em seguida.</div>
+      <button class="btn-primary treino" onclick="copyDietPrompt()">COPIAR PROMPT PARA CLAUDE</button>
+      <div class="dh-copy-feedback" id="dh-prompt-feedback"></div>
+    </div>
+
+    <div class="dh-section">
+      <div class="dh-section-lbl">05 · salvar e importar</div>
+      <div class="dh-p">Copie só o JSON que o Claude responder (sem texto antes ou depois). Salve como um arquivo terminado em <b>.json</b> — no iPhone, use o app Arquivos e escolha "Salvar como", sem deixar terminar em .txt. Depois volte aqui e toque em "Importar dieta personalizada".</div>
+    </div>
+
+    <div class="dh-warn">O JSON gerado por IA pode vir com erro — o app valida tudo antes de importar e nunca troca sua dieta atual se o arquivo for inválido.</div>
+
+    <button class="btn-ghost" style="width:100%; margin-top:14px;" onclick="closeDietHelpModal()">FECHAR</button>
+  </div>
+</div>
+<div class="modal-backdrop" id="confirm-modal-backdrop" onclick="if(event.target===this) closeConfirmModal()">
+  <div class="modal-sheet confirm-sheet">
+    <div class="confirm-title" id="confirm-modal-title"></div>
+    <div class="confirm-message" id="confirm-modal-message"></div>
+    <div class="confirm-actions">
+      <button class="btn-ghost" onclick="closeConfirmModal()">CANCELAR</button>
+      <button class="btn-danger" id="confirm-modal-btn" onclick="runConfirmedAction()">REMOVER</button>
+    </div>
+  </div>
+</div>
 <div class="modal-backdrop" id="modal-backdrop" onclick="if(event.target===this) closeReport()">
   <div class="modal-sheet" id="modal-sheet"></div>
 </div>
@@ -1197,12 +1287,28 @@ function setSyncStatus(status, label){
 /* ======================================================================
    AUTENTICAÇÃO
 ====================================================================== */
+/* Traduz erros técnicos do Supabase Auth pra mensagens que fazem sentido
+   pra quem não é dev. O erro técnico original sempre vai pro console —
+   nunca escondido, só não jogado na cara do usuário. */
+function mapAuthError(error){
+  const raw = (error && error.message) || String(error||'');
+  console.warn('[auth] erro técnico:', error);
+  const msg = raw.toLowerCase();
+  if(msg.includes('already registered') || msg.includes('already exists') || msg.includes('user already')) return 'Este e-mail já tem uma conta — tente entrar em vez de criar uma nova.';
+  if(msg.includes('invalid login credentials') || msg.includes('invalid credentials')) return 'E-mail ou senha incorretos.';
+  if(msg.includes('email not confirmed')) return 'Confirme seu e-mail antes de entrar — verifique sua caixa de entrada.';
+  if(msg.includes('password') && (msg.includes('short') || msg.includes('least') || msg.includes('weak') || msg.includes('character'))) return 'Senha muito curta ou fraca.';
+  if(msg.includes('invalid email') || msg.includes('unable to validate email') || msg.includes('email address')) return 'Digite um e-mail válido.';
+  if(msg.includes('rate limit') || msg.includes('too many')) return 'Muitas tentativas seguidas — aguarde um momento e tente de novo.';
+  if(msg.includes('fetch') || msg.includes('network') || msg.includes('failed to fetch')) return 'Sem conexão com a internet.';
+  return raw || 'Não foi possível concluir. Tente novamente.';
+}
 async function signIn(email, password){
   const sb = initSupabase();
   if(!sb) return { error: 'Supabase indisponível neste navegador (sem rede ou biblioteca não carregada).' };
   try{
     const { data, error } = await sb.auth.signInWithPassword({ email, password });
-    if(error) return { error: error.message };
+    if(error) return { error: mapAuthError(error) };
     currentSyncUser = data.user;
     await ensureProfile(currentSyncUser);
     renderSyncUI();
@@ -1210,6 +1316,32 @@ async function signIn(email, password){
     return { user: currentSyncUser };
   }catch(e){
     return { error: 'Falha de rede ao entrar: ' + (e.message||e) };
+  }
+}
+/* signUp() é uma função própria — NÃO reaproveita signIn(). O Supabase
+   pode devolver sessão na hora (confirmação de e-mail desligada no
+   projeto) ou só o usuário sem sessão (confirmação ligada); os dois
+   casos precisam de tratamento visivelmente diferente, então o chamador
+   (handleSignUpClick) decide o que mostrar a partir do retorno. */
+async function signUp(email, password){
+  const sb = initSupabase();
+  if(!sb) return { error: 'Supabase indisponível neste navegador (sem rede ou biblioteca não carregada).' };
+  try{
+    const { data, error } = await sb.auth.signUp({ email, password });
+    if(error) return { error: mapAuthError(error) };
+    if(data && data.session && data.user){
+      /* Confirmação de e-mail desativada no projeto — já veio logado. */
+      currentSyncUser = data.user;
+      await ensureProfile(currentSyncUser);
+      renderSyncUI();
+      runInitialSyncFlow();
+      return { user: currentSyncUser };
+    }
+    /* Confirmação de e-mail ativada — usuário criado, mas sem sessão
+       ainda. Isso NÃO é um erro. */
+    return { pendingConfirmation: true };
+  }catch(e){
+    return { error: 'Falha de rede ao criar conta: ' + (e.message||e) };
   }
 }
 
@@ -1596,8 +1728,14 @@ function refreshAllViews(){
    UI DE CONTA (login/logout) — painel discreto, aberto/fechado via clique na tag
 ====================================================================== */
 let syncPanelOpen = false;
+let syncPanelMode = 'signin'; // 'signin' | 'signup'
 function toggleSyncPanel(){
   syncPanelOpen = !syncPanelOpen;
+  if(syncPanelOpen) syncPanelMode = 'signin';
+  renderSyncUI();
+}
+function switchSyncPanelMode(mode){
+  syncPanelMode = mode;
   renderSyncUI();
 }
 function renderSyncUI(){
@@ -1607,15 +1745,21 @@ function renderSyncUI(){
   tag.onclick = toggleSyncPanel;
   if(!currentSyncUser){
     setSyncStatus('idle', 'entrar');
-    panel.innerHTML = !syncPanelOpen ? '' : `
+    if(!syncPanelOpen){ panel.innerHTML = ''; return; }
+    const isSignup = syncPanelMode === 'signup';
+    panel.innerHTML = `
       <div class="sync-panel">
         <label>e-mail</label>
-        <input type="email" id="sync-email" placeholder="voce@exemplo.com">
+        <input type="email" id="sync-email" placeholder="voce@exemplo.com" autocomplete="email">
         <label>senha</label>
-        <input type="password" id="sync-password" placeholder="••••••••">
+        <input type="password" id="sync-password" placeholder="••••••••" autocomplete="${isSignup?'new-password':'current-password'}">
+        ${isSignup ? `<label>confirmar senha</label><input type="password" id="sync-password-confirm" placeholder="••••••••" autocomplete="new-password">` : ''}
         <div class="row">
-          <button class="btn-primary" onclick="handleSignInClick()">ENTRAR</button>
+          <button class="btn-primary" onclick="${isSignup?'handleSignUpClick()':'handleSignInClick()'}">${isSignup?'CRIAR CONTA':'ENTRAR'}</button>
         </div>
+        <div class="sync-mode-toggle">${isSignup
+          ? `Já tem conta? <span onclick="switchSyncPanelMode('signin')">ENTRAR</span>`
+          : `Ainda não tem conta? <span onclick="switchSyncPanelMode('signup')">CRIAR CONTA</span>`}</div>
         <div class="msg" id="sync-msg"></div>
       </div>`;
   } else {
@@ -1638,6 +1782,31 @@ async function handleSignInClick(){
   msgEl.textContent = 'Entrando...'; msgEl.className = 'msg';
   const res = await signIn(email, password);
   if(res.error){ msgEl.textContent = res.error; msgEl.className = 'msg error'; return; }
+  syncPanelOpen = false;
+  renderSyncUI();
+}
+/* Validação aqui é só uma checagem rápida no cliente (campo vazio, e-mail
+   com cara de e-mail, senhas iguais, mínimo de 6 caracteres — o padrão
+   do próprio Supabase). NÃO inventa regra mais forte que isso, porque o
+   projeto real pode exigir menos ou mais — quem manda é a resposta do
+   signUp(), cujo erro (já traduzido por mapAuthError) sempre prevalece. */
+async function handleSignUpClick(){
+  const email = document.getElementById('sync-email').value.trim();
+  const password = document.getElementById('sync-password').value;
+  const confirm = document.getElementById('sync-password-confirm').value;
+  const msgEl = document.getElementById('sync-msg');
+  if(!email || !password || !confirm){ msgEl.textContent = 'Preencha todos os campos.'; msgEl.className='msg error'; return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ msgEl.textContent = 'Digite um e-mail válido.'; msgEl.className='msg error'; return; }
+  if(password !== confirm){ msgEl.textContent = 'As senhas não coincidem.'; msgEl.className='msg error'; return; }
+  if(password.length < 6){ msgEl.textContent = 'A senha precisa ter pelo menos 6 caracteres.'; msgEl.className='msg error'; return; }
+  msgEl.textContent = 'Criando conta...'; msgEl.className = 'msg';
+  const res = await signUp(email, password);
+  if(res.error){ msgEl.textContent = res.error; msgEl.className = 'msg error'; return; }
+  if(res.pendingConfirmation){
+    msgEl.textContent = 'Conta criada. Verifique seu e-mail para confirmar o cadastro antes de entrar.';
+    msgEl.className = 'msg';
+    return;
+  }
   syncPanelOpen = false;
   renderSyncUI();
 }
@@ -2489,6 +2658,180 @@ function addCustomFood(input){
 ====================================================================== */
 const DIET_MEAL_KEYS = ['cafe','almoco','lanche','jantar','ceia'];
 
+/* v3.1 — exemplo exibido na ajuda de importação. Usa exatamente os campos
+   que importDiet()/validateDietJson() leem hoje: version, name, meals.*
+   (array de opções com label/items/kcal/protein/carbs/fat/fiber). Se o
+   schema real mudar, esta string precisa mudar junto — é a MESMA fonte
+   mostrada ao usuário e ao Claude, não uma cópia que pode ficar desatualizada. */
+const DIET_EXAMPLE_JSON = `{
+  "version": 1,
+  "name": "Minha Dieta",
+  "meals": {
+    "cafe": [
+      {
+        "label": "Café opção 1",
+        "items": [
+          { "nome": "Pão integral", "qtd": "2 fatias" },
+          { "nome": "Ovo mexido", "qtd": "2 unidades" },
+          { "nome": "Café com leite", "qtd": "200 ml" }
+        ],
+        "kcal": 350,
+        "protein": 20,
+        "carbs": 35,
+        "fat": 12,
+        "fiber": 4
+      }
+    ],
+    "almoco": [
+      {
+        "label": "Almoço opção 1",
+        "items": [
+          { "nome": "Arroz branco", "qtd": "4 colheres de sopa" },
+          { "nome": "Feijão", "qtd": "1 concha" },
+          { "nome": "Peito de frango grelhado", "qtd": "150 g" },
+          { "nome": "Salada verde", "qtd": "à vontade" }
+        ],
+        "kcal": 650,
+        "protein": 45,
+        "carbs": 70,
+        "fat": 15,
+        "fiber": 8
+      }
+    ],
+    "lanche": [
+      {
+        "label": "Lanche opção 1",
+        "items": [
+          { "nome": "Iogurte natural", "qtd": "170 g" },
+          { "nome": "Banana", "qtd": "1 unidade" }
+        ],
+        "kcal": 220,
+        "protein": 10,
+        "carbs": 35,
+        "fat": 4,
+        "fiber": 3
+      }
+    ],
+    "jantar": [
+      {
+        "label": "Jantar opção 1",
+        "items": [
+          { "nome": "Batata doce", "qtd": "200 g" },
+          { "nome": "Carne moída magra", "qtd": "120 g" }
+        ],
+        "kcal": 480,
+        "protein": 35,
+        "carbs": 50,
+        "fat": 12,
+        "fiber": 5
+      }
+    ],
+    "ceia": [
+      {
+        "label": "Ceia opção 1",
+        "items": [
+          { "nome": "Caseína ou whey", "qtd": "1 dose" }
+        ],
+        "kcal": 120,
+        "protein": 24,
+        "carbs": 3,
+        "fat": 1,
+        "fiber": 0
+      }
+    ]
+  }
+}`;
+
+/* v3.1 — prompt para gerar o JSON com o Claude, construído em cima do
+   mesmo exemplo acima (não é um texto solto — se DIET_EXAMPLE_JSON mudar,
+   basta lembrar de atualizar aqui também, já que os dois precisam
+   continuar descrevendo o mesmo schema real). */
+const DIET_IMPORT_PROMPT = `Vou te passar minha dieta em texto (ou uma foto/PDF do meu plano alimentar). Quero que você converta isso para um arquivo JSON num formato específico, que vou descrever abaixo.
+
+REGRAS IMPORTANTES:
+- Responda SOMENTE com o JSON. Nenhum texto antes ou depois.
+- NÃO use markdown. NÃO coloque \`\`\`json nem \`\`\` em volta do JSON.
+- NÃO use comentários dentro do JSON.
+- NÃO use vírgula sobrando depois do último item de uma lista (trailing comma).
+- NÃO invente refeições ou alimentos que eu não mencionei.
+- Preserve exatamente as quantidades que eu informar (não arredonde nem troque unidades sem eu pedir).
+- kcal, protein, carbs, fat e fiber são sempre NÚMEROS (não texto, sem aspas, sem unidade escrita junto).
+- Se eu não informar proteína/carboidrato/gordura/fibra de algum alimento, calcule uma estimativa razoável com base em uma tabela nutricional comum.
+- Use exatamente estas chaves, com esta grafia (tudo em inglês, minúsculo):
+
+{
+  "version": 1,
+  "name": "<nome curto para a dieta>",
+  "meals": {
+    "cafe": [ { "label": "<nome da opção>", "items": [ { "nome": "<alimento>", "qtd": "<quantidade em texto>" } ], "kcal": <número>, "protein": <número>, "carbs": <número>, "fat": <número>, "fiber": <número> } ],
+    "almoco": [ ... mesmo formato ... ],
+    "lanche": [ ... mesmo formato ... ],
+    "jantar": [ ... mesmo formato ... ],
+    "ceia": [ ... mesmo formato ... ]
+  }
+}
+
+Só inclua as chaves de refeição (cafe, almoco, lanche, jantar, ceia) que eu realmente te passar — não precisa preencher as 5. Cada refeição é uma LISTA de opções: se eu descrever mais de uma alternativa para a mesma refeição (ex: "café pode ser isso OU aquilo"), crie um item na lista para cada opção. Se eu só descrever uma alternativa, a lista tem só um item.
+
+Aqui está um exemplo válido e completo do formato esperado, pra você usar como referência exata de estrutura:
+
+${DIET_EXAMPLE_JSON}
+
+Agora, aqui está minha dieta:`;
+
+function openDietHelpModal(){
+  document.getElementById('dh-example-code').textContent = DIET_EXAMPLE_JSON;
+  document.getElementById('diet-help-backdrop').classList.add('open');
+  document.addEventListener('keydown', escCloseDietHelp);
+}
+function closeDietHelpModal(){
+  document.getElementById('diet-help-backdrop').classList.remove('open');
+  document.removeEventListener('keydown', escCloseDietHelp);
+}
+function escCloseDietHelp(e){ if(e.key === 'Escape') closeDietHelpModal(); }
+
+/* Copiar com fallback: navigator.clipboard exige contexto seguro (https)
+   e pode não existir em webviews mais antigas. Se falhar ou não existir,
+   cai para execCommand via textarea temporária — e se isso também falhar,
+   mostra o texto selecionável pro usuário copiar manualmente. */
+async function copyTextWithFallback(text, feedbackElId, selectableElId){
+  const feedbackEl = document.getElementById(feedbackElId);
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+      feedbackEl.textContent = 'Copiado.';
+      return;
+    }
+    throw new Error('clipboard API indisponível');
+  }catch(e1){
+    try{
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      if(!ok) throw new Error('execCommand falhou');
+      feedbackEl.textContent = 'Copiado.';
+    }catch(e2){
+      feedbackEl.textContent = 'Não consegui copiar automaticamente — selecione o texto abaixo e copie manualmente.';
+      const selEl = selectableElId && document.getElementById(selectableElId);
+      if(selEl){
+        selEl.style.userSelect = 'text';
+        const range = document.createRange();
+        range.selectNodeContents(selEl);
+        const sel = window.getSelection();
+        sel.removeAllRanges(); sel.addRange(range);
+      }
+    }
+  }
+}
+function copyDietExample(){ copyTextWithFallback(DIET_EXAMPLE_JSON, 'dh-example-feedback', 'dh-example-code'); }
+function copyDietPrompt(){ copyTextWithFallback(DIET_IMPORT_PROMPT, 'dh-prompt-feedback', null); }
+
+
+
 function validateDietJson(obj){
   if(!obj || typeof obj !== 'object' || Array.isArray(obj)) throw new Error('Arquivo inválido: não é um objeto JSON.');
   if(!obj.meals || typeof obj.meals !== 'object') throw new Error('Arquivo inválido: campo "meals" ausente.');
@@ -2535,10 +2878,17 @@ function importDiet(jsonText){
   return { name: newCatalog.name, meals: foundKeys };
 }
 
+const MAX_DIET_IMPORT_BYTES = 2 * 1024 * 1024; // 2MB — generoso pra um JSON de dieta, suficiente pra rejeitar arquivo errado/corrompido
 function handleDietImport(inputEl){
   const file = inputEl.files && inputEl.files[0];
   if(!file) return;
   const statusEl = document.getElementById('diet-import-status');
+  if(file.size > MAX_DIET_IMPORT_BYTES){
+    statusEl.className = 'status error';
+    statusEl.textContent = 'Este arquivo é grande demais para ser uma dieta válida.';
+    inputEl.value = '';
+    return;
+  }
   statusEl.className = 'status loading';
   statusEl.innerHTML = '<span class="spin"></span>lendo arquivo...';
   const reader = new FileReader();
@@ -2547,13 +2897,14 @@ function handleDietImport(inputEl){
       const result = importDiet(e.target.result);
       statusEl.className = 'status';
       statusEl.textContent = `Dieta "${result.name}" importada — refeições: ${result.meals.join(', ')}.`;
-      inputEl.value = '';
     }catch(err){
+      console.warn('[diet import] falhou:', err);
       statusEl.className = 'status error';
-      statusEl.textContent = 'Erro ao importar: ' + err.message;
+      statusEl.textContent = 'Não foi possível importar este arquivo: ' + (err.message || 'formato inesperado') + '.';
     }
+    inputEl.value = '';
   };
-  reader.onerror = () => { statusEl.className = 'status error'; statusEl.textContent = 'Não consegui ler o arquivo.'; };
+  reader.onerror = () => { statusEl.className = 'status error'; statusEl.textContent = 'Não consegui ler o arquivo.'; inputEl.value = ''; };
   reader.readAsText(file);
 }
 
@@ -3639,6 +3990,55 @@ function renderHomeDiet(consumed, hasConsumo){
       </div>
     </div>`;
 }
+/* ======================================================================
+   V3 — INSIGHTS DE TREINO (item 6 do briefing)
+   Função central, só leitura, retorna dados ESTRUTURADOS (chave + texto
+   + prioridade) — nunca HTML pronto. Quem decide como mostrar é
+   renderHojeInsights(), logo abaixo. Reaproveita computeWeekStats(),
+   computeStreak() e distributionFromMuscles(), que já existiam — não
+   duplica esses cálculos, só reorganiza onde eles são usados.
+====================================================================== */
+function computeTrainingInsights(){
+  if(workoutHistory.length === 0) return [];
+  const out = [];
+  const weekStats = computeWeekStats(0), prevWeekStats = computeWeekStats(1);
+  const streak = computeStreak();
+
+  if(streak.current >= 2){
+    out.push({ key:'streak', priority:0, text: `Você está há ${streak.current} dias seguidos treinando.` });
+  }
+
+  const cutoff7 = new Date(); cutoff7.setDate(cutoff7.getDate()-6); cutoff7.setHours(0,0,0,0);
+  const days7 = new Set(workoutHistory.filter(h => new Date(h.date+'T00:00:00') >= cutoff7).map(h=>h.date)).size;
+  if(days7 > 0){
+    out.push({ key:'freq7', priority:1, text: `Você treinou ${days7} ${days7===1?'vez':'vezes'} nos últimos 7 dias.` });
+  }
+
+  if(weekStats.count > 0 && prevWeekStats.count > 0 && prevWeekStats.volume > 0){
+    const pct = Math.round(((weekStats.volume - prevWeekStats.volume) / prevWeekStats.volume) * 100);
+    if(Math.abs(pct) >= 5){
+      out.push({ key:'volweek', priority:2, text: `Seu volume de treino esta semana está ${pct>=0?'+':''}${pct}% em relação à semana passada.` });
+    }
+  }
+
+  /* Novo nesta versão: PRs nos últimos 30 dias corridos — reaproveita
+     newRecords, já salvo em cada entrada do histórico ao concluir treino. */
+  const cutoff30 = new Date(); cutoff30.setDate(cutoff30.getDate()-29); cutoff30.setHours(0,0,0,0);
+  const pr30 = workoutHistory.filter(h => new Date(h.date+'T00:00:00') >= cutoff30).reduce((n,h)=>n+((h.newRecords||[]).length),0);
+  if(pr30 > 0){
+    out.push({ key:'pr30', priority:3, text: `Você bateu ${pr30} ${pr30===1?'recorde':'recordes'} nos últimos 30 dias.` });
+  }
+
+  if(weekStats.count > 0){
+    const dist = distributionFromMuscles(weekStats.musclesVolume, weekStats.muscleTotal);
+    const top = dist.find(d => d.key !== 'nao_classificado');
+    if(top) out.push({ key:'focus', priority:4, text: `Nesta semana seu foco muscular foi majoritariamente em ${top.label} (${top.pct}%).` });
+  }
+
+  out.sort((a,b) => a.priority - b.priority);
+  return out;
+}
+
 function renderHojeInsights(wt, nt, consumed){
   const list = [];
   const todayBlockId = getTodayScheduledBlockId();
@@ -3652,19 +4052,7 @@ function renderHojeInsights(wt, nt, consumed){
     if(falta > 3) list.push({ color:'var(--dieta)', text: 'Faltam aproximadamente <b>'+Math.round(falta)+'g de proteína</b> para bater sua meta de hoje.' });
     else list.push({ color:'var(--dieta)', text: 'Sua meta de proteína de hoje já está praticamente batida.' });
   }
-  const weekStats = computeWeekStats(0);
-  const prevWeekStats = computeWeekStats(1);
-  if(weekStats.count > 0 && prevWeekStats.count > 0 && prevWeekStats.volume > 0){
-    const change = Math.round(((weekStats.volume - prevWeekStats.volume) / prevWeekStats.volume) * 100);
-    list.push({ color:'var(--treino)', text: 'Seu volume de treino esta semana está <b>' + (change>=0?'+':'') + change + '%</b> em relação à semana passada.' });
-  }
-  if(weekStats.count > 0){
-    const dist = distributionFromMuscles(weekStats.musclesVolume, weekStats.muscleTotal);
-    const top = dist.find(d => d.key !== 'nao_classificado');
-    if(top) list.push({ color:'var(--treino)', text: 'Nesta semana seu foco muscular foi majoritariamente em <b>' + top.label + '</b> (' + top.pct + '%).' });
-  }
-  const streak = computeStreak();
-  if(streak.current >= 2) list.push({ color:'var(--treino)', text: 'Você está há <b>' + streak.current + ' dias seguidos</b> treinando.' });
+  computeTrainingInsights().forEach(i => list.push({ color:'var(--treino)', text: i.text }));
 
   const el = document.getElementById('insights-list');
   if(!el) return;
@@ -3672,7 +4060,9 @@ function renderHojeInsights(wt, nt, consumed){
     el.innerHTML = '<div class="empty-state"><div class="ttl">sem dados suficientes</div><div class="sub">Continue registrando treinos e refeições para começar a ver seus insights aqui.</div></div>';
     return;
   }
-  el.innerHTML = list.map(i => '<div class="insight-row"><span class="ic" style="background:'+i.color+'"></span><span class="tx">'+i.text+'</span></div>').join('');
+  /* Nunca mostrar avalanche de mensagens — no máximo 4 no total (status do
+     dia + dieta + os 2 insights de treino de maior prioridade). */
+  el.innerHTML = list.slice(0,4).map(i => '<div class="insight-row"><span class="ic" style="background:'+i.color+'"></span><span class="tx">'+i.text+'</span></div>').join('');
 }
 function defaultBlocks(){
   return [
@@ -3795,10 +4185,15 @@ function addBlock(){
 function confirmDeleteBlock(blockId, fromSession){
   const b = findBlock(blockId);
   if(!b) return;
-  const ok = window.confirm('Excluir o bloco "' + (b.name || 'Sem nome') + '"? Esta ação não pode ser desfeita. O histórico de treinos já concluídos deste bloco continua disponível no relatório e no calendário.');
-  if(!ok) return;
-  if(fromSession) closeWorkoutSession();
-  deleteBlock(blockId);
+  openConfirmModal({
+    title: 'Excluir bloco?',
+    message: `Tem certeza que deseja excluir <b>${escapeHtml(b.name || 'Sem nome')}</b>? Esta ação não pode ser desfeita. O histórico de treinos já concluídos deste bloco continua disponível no relatório e no calendário.`,
+    confirmLabel: 'EXCLUIR',
+    onConfirm: () => {
+      if(fromSession) closeWorkoutSession();
+      deleteBlock(blockId);
+    },
+  });
 }
 function deleteBlock(blockId){
   const idx = treinoBlocks.findIndex(b => b.id === blockId);
@@ -3924,6 +4319,7 @@ function highlightDonut(wrapId, legendId, key){
 ====================================================================== */
 let activeSessionBlockId = null;
 let sessionJustConcluded = false;
+let sessionStartedAt = null;
 
 function findBlock(blockId){ return treinoBlocks.find(b => b.id === blockId); }
 function findExercise(blockId, exId){ return findBlock(blockId).exercises.find(e => e.id === exId); }
@@ -4019,6 +4415,54 @@ function computeExercisePRs(exId, exName, excludeEntryId){
   if(maxCarga === null) return null;
   return { maxCarga, bestSet, maxVolumeSession: Math.round(maxVolumeSession || 0) };
 }
+/* ======================================================================
+   V3 — PROGRESSÃO INTELIGENTE (itens 1 e 3 do briefing)
+   Função central e determinística: só lê séries já registradas (hoje e
+   na sessão anterior), nunca escreve nada. A sugestão é só uma leitura;
+   quem decide a carga continua sendo o usuário. Regras conservadoras,
+   auditáveis, sem heurística "científica":
+   1) carga de hoje > carga da sessão anterior  → já progrediu, sugere manter o ritmo.
+   2) mesma carga, mais reps totais              → sugere tentar +1 rep.
+   3) igualou ou superou TODAS as séries da sessão anterior (carga e reps)
+      série a série                               → sugere aumentar carga.
+   4) mesma carga, mesmo desempenho               → sugere tentar +1 rep.
+   5) desempenho abaixo da sessão anterior        → sugere recuperar, manter carga.
+====================================================================== */
+function computeProgressionSuggestion(currentSets, lastSets){
+  const curFilled = (currentSets||[]).filter(s => s.reps !== '' && s.carga !== '' && isSetCompletedLive(s));
+  const prevFilled = (lastSets||[]).filter(s => s.reps !== '' && s.carga !== '');
+  if(curFilled.length === 0 || prevFilled.length === 0) return null;
+
+  const topOf = (arr) => arr.reduce((m,s) => (parseFloat(s.carga)||0) >= (parseFloat(m.carga)||0) ? s : m, arr[0]);
+  const curTop = topOf(curFilled), prevTop = topOf(prevFilled);
+  const curCarga = parseFloat(curTop.carga)||0, prevCarga = parseFloat(prevTop.carga)||0;
+  const curTotalReps = curFilled.reduce((n,s)=>n+(parseFloat(s.reps)||0),0);
+  const prevTotalReps = prevFilled.reduce((n,s)=>n+(parseFloat(s.reps)||0),0);
+
+  const metOrBeatAll = curFilled.length >= prevFilled.length && curFilled.every((s,i) => {
+    const p = prevFilled[i];
+    if(!p) return true;
+    const c = parseFloat(s.carga)||0, r = parseFloat(s.reps)||0;
+    const pc = parseFloat(p.carga)||0, pr = parseFloat(p.reps)||0;
+    return c > pc || (c === pc && r >= pr);
+  });
+
+  if(curCarga > prevCarga){
+    return { action:'increase_load', label:'AUMENTAR CARGA', reason:`Você já progrediu a carga nesta sessão (${formatWeightBR(prevCarga)}kg → ${formatWeightBR(curCarga)}kg).` };
+  }
+  if(curCarga === prevCarga && metOrBeatAll){
+    return { action:'increase_load', label:'AUMENTAR CARGA', reason:'Você completou todas as séries igualando ou superando a sessão anterior.' };
+  }
+  if(curCarga === prevCarga && curTotalReps > prevTotalReps){
+    return { action:'try_rep', label:'TENTAR +1 REP', reason:'Você manteve a carga e aumentou as repetições.' };
+  }
+  if(curCarga === prevCarga && curTotalReps === prevTotalReps && curFilled.length >= prevFilled.length){
+    return { action:'try_rep', label:'TENTAR +1 REP', reason:'Você manteve o mesmo desempenho da sessão anterior.' };
+  }
+  return { action:'recover', label:'MANTER ' + formatWeightBR(prevCarga) + ' KG', reason:'Você perdeu repetições em relação à sessão anterior. Mantenha a carga e tente recuperar o desempenho.' };
+}
+
+
 function listAllExercisesWithPRs(){
   const seen = new Map(); // key -> {exId, nome}
   workoutHistory.forEach(h => (h.exercises||[]).forEach(ex => {
@@ -4266,6 +4710,7 @@ function renderAddBlockCard(){
 function openWorkoutSession(blockId){
   activeSessionBlockId = blockId;
   sessionJustConcluded = false;
+  sessionStartedAt = Date.now();
   renderSession();
   document.getElementById('session-overlay').classList.add('open');
   document.getElementById('session-footer').style.display = '';
@@ -4459,12 +4904,36 @@ async function concludeWorkout(blockId){
     const filled = ex.sets.filter(s2 => isSetCompletedLive(s2) && s2.reps !== '' && s2.carga !== '');
     if(!filled.length) return;
     const prevPR = computeExercisePRs(ex.id, ex.nome, entryId);
+    if(!prevPR) return; // sem histórico anterior: é a primeira vez, não um "recorde" superado.
     const top = filled.reduce((max,s2) => (parseFloat(s2.carga)||0) >= (parseFloat(max.carga)||0) ? s2 : max, filled[0]);
     const topCarga = parseFloat(top.carga) || 0, topReps = parseFloat(top.reps) || 0;
-    if(prevPR && (topCarga > prevPR.maxCarga || (topCarga === prevPR.maxCarga && topReps > prevPR.bestSet.reps))){
-      newRecords.push({ nome: ex.nome, prevCarga: prevPR.maxCarga, carga: topCarga, reps: topReps, deltaCarga: round1(topCarga - prevPR.maxCarga) });
+    const sessionVol = filled.reduce((v,s2)=>v+(parseFloat(s2.reps)||0)*(parseFloat(s2.carga)||0),0);
+    let type = null;
+    if(topCarga > prevPR.maxCarga) type = 'carga';
+    else if(topCarga === prevPR.maxCarga && topReps > prevPR.bestSet.reps) type = 'reps';
+    else if(sessionVol > prevPR.maxVolumeSession) type = 'volume';
+    if(type){
+      newRecords.push({
+        nome: ex.nome, type,
+        prevCarga: prevPR.maxCarga, carga: topCarga, reps: topReps, prevReps: prevPR.bestSet.reps,
+        deltaCarga: round1(topCarga - prevPR.maxCarga),
+        prevVolume: prevPR.maxVolumeSession, volume: Math.round(sessionVol),
+      });
     }
   });
+
+  /* Duração da sessão — só existe se sessionStartedAt foi marcado (sessão
+     aberta nesta mesma "visita" ao app). Sessões antigas / conclusão sem
+     ter passado por openWorkoutSession() simplesmente não têm essa métrica —
+     campo fica null e quem exibe precisa checar antes de usar. */
+  const durationMin = sessionStartedAt ? Math.max(1, Math.round((Date.now() - sessionStartedAt) / 60000)) : null;
+
+  /* Sessão anterior do MESMO bloco (não do mesmo exercício) — pra comparar
+     volume total do treino, não de um exercício isolado. Reaproveita
+     workoutHistory, não introduz nenhuma fonte de dado nova. */
+  const prevBlockEntry = workoutHistory
+    .filter(h => h.blockId === b.id && h.id !== entryId)
+    .sort((a,b2) => b2.date.localeCompare(a.date))[0] || null;
 
   const entry = {
     id: entryId, date: day, time: new Date().toTimeString().slice(0,5),
@@ -4475,10 +4944,13 @@ async function concludeWorkout(blockId){
     volume: Math.round(completedStats.volume), setCount: totalStats.setCount, filledSets: completedStats.completedSets,
     musclesVolume, muscleTotal: Math.round(total),
     newRecords,
+    durationMin,
+    prevBlockVolume: prevBlockEntry ? prevBlockEntry.volume : null,
   };
   const idx = workoutHistory.findIndex(h => h.id === entryId);
   if(idx >= 0) workoutHistory[idx] = entry; else workoutHistory.push(entry);
   await saveHistory();
+  sessionStartedAt = null;
   renderBlocksLibrary();
 }
 
@@ -4489,19 +4961,43 @@ function renderSessionSuccess(b){
   const recordsHtml = records.length ? `
       <div class="success-records">
         <div class="success-records-lbl">novos recordes · ${records.length}</div>
-        ${records.map(r => `<div class="record-chip"><span>${escapeHtml(r.nome)} <b>${r.carga} kg × ${r.reps}</b></span><span class="delta">+${r.deltaCarga} kg</span></div>`).join('')}
+        ${records.map(r => `<div class="record-chip"><span>${escapeHtml(r.nome)} <b>${r.carga} kg × ${r.reps}</b></span><span class="delta">${r.type==='reps' && r.prevReps!==undefined ? '+'+Math.round(r.reps - r.prevReps)+' reps' : r.type==='volume' && r.prevVolume!==undefined ? '+'+Math.round(r.volume - r.prevVolume)+' kg vol.' : '+'+r.deltaCarga+' kg'}</span></div>`).join('')}
       </div>` : '';
+
+  /* item 5 — duração só existe em sessões concluídas depois desta versão
+     (sessionStartedAt). Sessão antiga ou sem esse dado: mostra exercícios
+     no lugar, como sempre mostrou. */
+  const statsHtml = entry.durationMin
+    ? `<div><b>${entry.durationMin}</b><span>min</span></div><div><b>${entry.filledSets}</b><span>séries</span></div><div><b>${entry.volume.toLocaleString('pt-BR')}</b><span>kg</span></div>`
+    : `<div><b>${entry.exercises.length}</b><span>exercícios</span></div><div><b>${entry.filledSets}</b><span>séries</span></div><div><b>${entry.volume.toLocaleString('pt-BR')}</b><span>kg</span></div>`;
+
+  let volDeltaHtml = '';
+  if(entry.prevBlockVolume && entry.prevBlockVolume > 0){
+    const pct = round1(((entry.volume - entry.prevBlockVolume) / entry.prevBlockVolume) * 100);
+    if(pct !== 0) volDeltaHtml = `<div class="success-vol-delta ${pct<0?'down':''}">${pct>0?'+':''}${pct}% de volume vs sessão anterior</div>`;
+  }
+
+  let highlightHtml = '';
+  if(records.length){
+    const priority = { carga:0, reps:1, volume:2 };
+    const best = records.slice().sort((a,c) => priority[a.type]-priority[c.type])[0];
+    const line = best.type==='carga' ? `+${best.deltaCarga} kg no melhor set`
+      : best.type==='reps' ? `+${Math.round(best.reps-best.prevReps)} reps no melhor set`
+      : `+${Math.round(best.volume-best.prevVolume)} kg de volume`;
+    highlightHtml = `<div class="success-highlight"><div class="sh-lbl">destaque</div><div class="sh-name">${escapeHtml(best.nome)}</div><div class="sh-line">${line}</div></div>`;
+  }
+
   document.getElementById('session-main').innerHTML = `
     <div class="session-success">
       <div class="success-badge">${icoCheck}</div>
       <div class="success-title">treino concluído</div>
       <div class="success-name">${escapeHtml(b.name || 'Sem nome')}</div>
       <div class="success-stats">
-        <div><b>${entry.exercises.length}</b><span>exercícios</span></div>
-        <div><b>${entry.filledSets}</b><span>séries</span></div>
-        <div><b>${entry.volume.toLocaleString('pt-BR')}</b><span>kg</span></div>
+        ${statsHtml}
       </div>
+      ${volDeltaHtml}
       ${recordsHtml}
+      ${highlightHtml}
       <div class="success-actions">
         <button class="btn-primary treino" onclick="openReportFromSession('${entry.date}')">VER RELATÓRIO</button>
         <button class="btn-ghost" onclick="closeWorkoutSession()">VOLTAR AOS TREINOS</button>
@@ -4668,6 +5164,18 @@ function renderExercise(blockId, ex){
     volCompareHtml = `<div class="ex-vol-compare" style="display:${show?'':'none'}">${inner}</div>`;
   }
 
+  let progressionHtml = '';
+  if(complete && last){
+    const suggestion = computeProgressionSuggestion(ex.sets, last.sets);
+    if(suggestion){
+      progressionHtml = `<div class="ex-next-session">
+        <div class="ens-lbl">próxima sessão</div>
+        <div class="ens-action">${suggestion.label}</div>
+        <div class="ens-reason">${suggestion.reason}</div>
+      </div>`;
+    }
+  }
+
   return `
     <div class="exercise ${ex.open ? 'open' : ''} ${complete ? 'complete' : ''}" id="ex-${ex.id}">
       <div class="exercise-summary" onclick="toggleExerciseOpen(${blockId}, ${ex.id})">
@@ -4692,7 +5200,7 @@ function renderExercise(blockId, ex){
         <div class="sets-head"><span></span><span></span><span>Reps</span><span>Carga (kg)</span><span></span></div>
         ${setsHtml || '<div class="empty-state" style="padding:6px 0;"><div class="sub">Sem séries ainda.</div></div>'}
         ${volCompareHtml}
-        <div class="exercise-actions">
+        ${progressionHtml}
           <button class="btn-ghost" onclick="addSet(${blockId}, ${ex.id})">+ série</button>
           <button class="btn-text" onclick="removeExercise(${blockId}, ${ex.id})">remover exercício</button>
         </div>
@@ -4716,7 +5224,45 @@ function addExercise(blockId){
   renderSessionExercises(b);
   updateSessionStats(blockId);
 }
+/* ======================================================================
+   V3 — CONFIRMAÇÃO DE AÇÕES DESTRUTIVAS
+   Modal genérico e reutilizável. Não decide nada sozinho: recebe uma
+   descrição e uma função a executar, e só chama essa função se
+   "remover" for tocado explicitamente. Substitui window.confirm() por
+   um componente visual da própria V2.5.
+====================================================================== */
+let pendingConfirmAction = null;
+function openConfirmModal(opts){
+  pendingConfirmAction = opts.onConfirm;
+  document.getElementById('confirm-modal-title').textContent = opts.title;
+  document.getElementById('confirm-modal-message').innerHTML = opts.message;
+  document.getElementById('confirm-modal-btn').textContent = opts.confirmLabel || 'REMOVER';
+  document.getElementById('confirm-modal-backdrop').classList.add('open');
+  document.addEventListener('keydown', escCloseConfirmModal);
+}
+function closeConfirmModal(){
+  document.getElementById('confirm-modal-backdrop').classList.remove('open');
+  document.removeEventListener('keydown', escCloseConfirmModal);
+  pendingConfirmAction = null;
+}
+function escCloseConfirmModal(e){ if(e.key === 'Escape') closeConfirmModal(); }
+function runConfirmedAction(){
+  const action = pendingConfirmAction;
+  closeConfirmModal();
+  if(action) action();
+}
+
 function removeExercise(blockId, exId){
+  const ex = findExercise(blockId, exId);
+  const nome = ex && ex.nome ? ex.nome : 'este exercício';
+  openConfirmModal({
+    title: 'Remover exercício?',
+    message: `Tem certeza que deseja remover <b>${escapeHtml(nome)}</b> deste treino?`,
+    confirmLabel: 'REMOVER',
+    onConfirm: () => performRemoveExercise(blockId, exId),
+  });
+}
+function performRemoveExercise(blockId, exId){
   const b = findBlock(blockId);
   b.exercises = b.exercises.filter(e => e.id !== exId);
   saveTreino();
