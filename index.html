@@ -272,6 +272,9 @@
   .set-check.checked svg{ opacity:1; }
   .set-block.set-completed .set-idx{ color: var(--dieta); }
   .exercise-actions{ display:flex; gap:8px; margin-top:12px; align-items:center; justify-content:space-between; }
+  .ex-muscle-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px; padding-top:12px; border-top:1px solid var(--border-soft); }
+  .ex-muscle-lbl{ font-family:'JetBrains Mono',monospace; font-size:var(--fs-micro); color: var(--text-faint); text-transform:uppercase; letter-spacing:0.06em; }
+  .ex-muscle-row select{ background:transparent; border:none; color: var(--text-secondary); font-family:'JetBrains Mono',monospace; font-size:11px; text-align:right; }
   .obs-field{ margin-top:11px; }
   .obs-field textarea{ min-height:36px; font-size:12px; padding: 8px 10px; }
   .add-exercise-btn{ width:100%; margin-top:12px; padding: 13px; border: 1px dashed var(--border); color: var(--text-secondary); border-radius: var(--radius-md); font-size:11px; display:flex; align-items:center; justify-content:center; gap:6px; transition: border-color .15s ease, color .15s ease, background .15s ease; cursor:pointer; }
@@ -782,6 +785,17 @@
   .slot-card .qt{ font-family:'JetBrains Mono',monospace; font-size:10px; color: var(--text-faint); margin-top:2px; }
 
   .composicao-box{ margin-top:16px; border-top: 1px solid var(--border-soft); padding-top:14px; }
+  .slot-block{ margin-top:10px; border-top:1px solid var(--border-soft); }
+  .slot-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 0; cursor:pointer; min-height:44px; -webkit-tap-highlight-color:transparent; }
+  .slot-lbl{ font-family:'JetBrains Mono',monospace; font-size:10px; color: var(--text-faint); text-transform:uppercase; letter-spacing:0.06em; flex-shrink:0; }
+  .slot-chosen{ font-size:13px; color: var(--text); text-align:right; }
+  .slot-alts{ display:none; padding-bottom:10px; }
+  .slot-block.open .slot-alts{ display:block; }
+  .slot-alt-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 8px; border-radius: var(--radius-sm); cursor:pointer; font-size:12.5px; color: var(--text-secondary); min-height:40px; }
+  .slot-alt-row:active{ background: var(--surface-hover); }
+  .slot-alt-row.selected{ color: var(--text); }
+  .slot-alt-row.selected span:first-child::before{ content:'✓ '; color: var(--accent); }
+  .slot-alt-kcal{ font-family:'JetBrains Mono',monospace; font-size:10.5px; color: var(--text-faint); flex-shrink:0; }
   .composicao-lbl{ font-family:'JetBrains Mono',monospace; font-size:9.5px; color: var(--text-secondary); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
 
   .obs-note{ border: 1px solid var(--border); border-left: 3px solid var(--dieta); border-radius: var(--radius-md); padding: 13px 15px; font-size: 12.5px; color: var(--text-secondary); line-height:1.55; margin-bottom:10px; }
@@ -1056,21 +1070,35 @@
     </div>
 
     <div class="dh-section">
-      <div class="dh-section-lbl">03 · exemplo válido</div>
+      <div class="dh-section-lbl">03 · substituições (opcional)</div>
+      <div class="dh-p">Se uma refeição tem partes que você troca entre si (ex: arroz OU macarrão OU batata, mantendo o resto igual), use <b>fixed</b> pros itens que não mudam e <b>slots</b> pros grupos de alternativas — ao trocar dentro do app, só aquele grupo muda, o resto da refeição continua igual.</div>
+      <div class="dh-field"><b>fixed</b><span>itens que sempre entram, com macros de cada um</span></div>
+      <div class="dh-field"><b>slots</b><span>grupos de troca — cada um com um id, um nome e uma lista de opções</span></div>
+    </div>
+
+    <div class="dh-section">
+      <div class="dh-section-lbl">04 · exemplo simples</div>
       <pre class="dh-example" id="dh-example-code"></pre>
       <button class="btn-ghost" onclick="copyDietExample()">COPIAR EXEMPLO</button>
       <div class="dh-copy-feedback" id="dh-example-feedback"></div>
     </div>
 
     <div class="dh-section">
-      <div class="dh-section-lbl">04 · gerar com o Claude</div>
+      <div class="dh-section-lbl">05 · exemplo com substituição</div>
+      <pre class="dh-example" id="dh-example-v2-code"></pre>
+      <button class="btn-ghost" onclick="copyDietExampleV2()">COPIAR EXEMPLO</button>
+      <div class="dh-copy-feedback" id="dh-example-v2-feedback"></div>
+    </div>
+
+    <div class="dh-section">
+      <div class="dh-section-lbl">06 · gerar com o Claude</div>
       <div class="dh-p">Copie o prompt, cole numa conversa com o Claude, e mande sua dieta em texto (ou foto/PDF do seu plano) logo em seguida.</div>
       <button class="btn-primary treino" onclick="copyDietPrompt()">COPIAR PROMPT PARA CLAUDE</button>
       <div class="dh-copy-feedback" id="dh-prompt-feedback"></div>
     </div>
 
     <div class="dh-section">
-      <div class="dh-section-lbl">05 · salvar e importar</div>
+      <div class="dh-section-lbl">07 · salvar e importar</div>
       <div class="dh-p">Copie só o JSON que o Claude responder (sem texto antes ou depois). Salve como um arquivo terminado em <b>.json</b> — no iPhone, use o app Arquivos e escolha "Salvar como", sem deixar terminar em .txt. Depois volte aqui e toque em "Importar dieta personalizada".</div>
     </div>
 
@@ -2742,6 +2770,44 @@ const DIET_EXAMPLE_JSON = `{
   }
 }`;
 
+/* v3.1 — exemplo V2 (substituição via slots), mesma fonte única usada na
+   ajuda e no prompt do Claude. Testei este exemplo exato contra
+   validateDietJson/importDiet/computeOptionTotals antes de publicar. */
+const DIET_EXAMPLE_V2_JSON = `{
+  "version": 2,
+  "name": "Minha Dieta",
+  "meals": {
+    "jantar": [
+      {
+        "label": "Jantar",
+        "fixed": [
+          { "name": "Salada verde", "amount": "à vontade", "kcal": 30, "protein": 2, "carbs": 5, "fat": 0, "fiber": 2 },
+          { "name": "Azeite", "amount": "5 ml", "kcal": 40, "protein": 0, "carbs": 0, "fat": 4.5, "fiber": 0 }
+        ],
+        "slots": [
+          {
+            "id": "carbo",
+            "label": "Carboidrato",
+            "options": [
+              { "name": "Arroz branco", "amount": "150 g", "kcal": 195, "protein": 4, "carbs": 42, "fat": 0.5, "fiber": 1 },
+              { "name": "Macarrão cozido", "amount": "180 g", "kcal": 230, "protein": 7, "carbs": 45, "fat": 1.5, "fiber": 2 },
+              { "name": "Batata", "amount": "250 g", "kcal": 210, "protein": 5, "carbs": 48, "fat": 0.2, "fiber": 3 }
+            ]
+          },
+          {
+            "id": "proteina",
+            "label": "Proteína",
+            "options": [
+              { "name": "Frango grelhado", "amount": "150 g", "kcal": 250, "protein": 45, "carbs": 0, "fat": 6, "fiber": 0 },
+              { "name": "Patinho moído", "amount": "140 g", "kcal": 230, "protein": 40, "carbs": 0, "fat": 8, "fiber": 0 }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}`;
+
 /* v3.1 — prompt para gerar o JSON com o Claude, construído em cima do
    mesmo exemplo acima (não é um texto solto — se DIET_EXAMPLE_JSON mudar,
    basta lembrar de atualizar aqui também, já que os dois precisam
@@ -2757,30 +2823,65 @@ REGRAS IMPORTANTES:
 - Preserve exatamente as quantidades que eu informar (não arredonde nem troque unidades sem eu pedir).
 - kcal, protein, carbs, fat e fiber são sempre NÚMEROS (não texto, sem aspas, sem unidade escrita junto).
 - Se eu não informar proteína/carboidrato/gordura/fibra de algum alimento, calcule uma estimativa razoável com base em uma tabela nutricional comum.
-- Use exatamente estas chaves, com esta grafia (tudo em inglês, minúsculo):
+- Use exatamente estas chaves, com esta grafia (tudo em inglês, minúsculo).
+
+Existem DOIS jeitos de representar uma opção de refeição, e escolher o certo é a parte mais importante deste trabalho:
+
+FORMATO SIMPLES (uma refeição fechada, sem partes trocáveis):
+{ "label": "<nome>", "items": [ { "nome": "<alimento>", "qtd": "<quantidade>" } ], "kcal": <número>, "protein": <número>, "carbs": <número>, "fat": <número>, "fiber": <número> }
+
+FORMATO COM SUBSTITUIÇÃO (a refeição tem itens fixos + partes que podem ser trocadas entre si):
+{ "label": "<nome>",
+  "fixed": [ { "name": "<alimento fixo>", "amount": "<quantidade>", "kcal": <número>, "protein": <número>, "carbs": <número>, "fat": <número>, "fiber": <número> } ],
+  "slots": [
+    { "id": "<identificador curto, ex: carbo>", "label": "<nome do grupo, ex: Carboidrato>",
+      "options": [ { "name": "<alimento>", "amount": "<quantidade>", "kcal": <número>, "protein": <número>, "carbs": <número>, "fat": <número>, "fiber": <número> } ] }
+  ]
+}
+
+REGRA PARA ESCOLHER O FORMATO CERTO — isso é crítico, preste muita atenção:
+
+Se eu descrever a mesma refeição com partes INTERCAMBIÁVEIS — usando palavras como "ou", "substituir por", "alternativa", "opções", "equivalente", "trocar por" — para APENAS UM COMPONENTE da refeição (por exemplo, só o carboidrato, mantendo o resto igual), isso é um SLOT dentro da MESMA opção. NÃO crie uma opção inteira separada pra cada alternativa.
+
+Exemplo do que NÃO fazer (errado — explode em refeições completas repetidas):
+"150g arroz OU 180g macarrão OU 250g batata, com 150g frango" → NÃO vire 3 opções de jantar (arroz+frango, macarrão+frango, batata+frango).
+
+Exemplo do que fazer (certo — um slot de carboidrato):
+Uma única opção de jantar, com frango em "fixed" (ou em outro slot "proteina" se a proteína também tiver alternativas), e arroz/macarrão/batata como as 3 "options" de um slot "carbo".
+
+Já quando as alternativas são de fato REFEIÇÕES INTEIRAS diferentes (ex: "no café da manhã como isso OU, em outro dia, como aquilo outro" — pratos sem relação entre si) — aí sim, cada alternativa vira uma opção separada na lista da refeição (formato simples, uma pra cada).
+
+Se a refeição não tiver nenhuma substituição descrita, use sempre o formato simples — não invente slots que eu não mencionei.
+
+Estrutura geral do arquivo:
 
 {
-  "version": 1,
+  "version": 2,
   "name": "<nome curto para a dieta>",
   "meals": {
-    "cafe": [ { "label": "<nome da opção>", "items": [ { "nome": "<alimento>", "qtd": "<quantidade em texto>" } ], "kcal": <número>, "protein": <número>, "carbs": <número>, "fat": <número>, "fiber": <número> } ],
-    "almoco": [ ... mesmo formato ... ],
-    "lanche": [ ... mesmo formato ... ],
-    "jantar": [ ... mesmo formato ... ],
-    "ceia": [ ... mesmo formato ... ]
+    "cafe": [ <opção no formato simples ou com substituição> ],
+    "almoco": [ ... ],
+    "lanche": [ ... ],
+    "jantar": [ ... ],
+    "ceia": [ ... ]
   }
 }
 
-Só inclua as chaves de refeição (cafe, almoco, lanche, jantar, ceia) que eu realmente te passar — não precisa preencher as 5. Cada refeição é uma LISTA de opções: se eu descrever mais de uma alternativa para a mesma refeição (ex: "café pode ser isso OU aquilo"), crie um item na lista para cada opção. Se eu só descrever uma alternativa, a lista tem só um item.
+Só inclua as chaves de refeição (cafe, almoco, lanche, jantar, ceia) que eu realmente te passar — não precisa preencher as 5. Se NENHUMA refeição tiver substituição, pode usar "version": 1 com todas as opções no formato simples — funciona igual.
 
-Aqui está um exemplo válido e completo do formato esperado, pra você usar como referência exata de estrutura:
+Aqui estão dois exemplos válidos e completos pra você usar como referência exata de estrutura — um simples (sem substituição) e um com slots:
 
+Exemplo formato simples:
 ${DIET_EXAMPLE_JSON}
+
+Exemplo com substituição (slots):
+${DIET_EXAMPLE_V2_JSON}
 
 Agora, aqui está minha dieta:`;
 
 function openDietHelpModal(){
   document.getElementById('dh-example-code').textContent = DIET_EXAMPLE_JSON;
+  document.getElementById('dh-example-v2-code').textContent = DIET_EXAMPLE_V2_JSON;
   document.getElementById('diet-help-backdrop').classList.add('open');
   document.addEventListener('keydown', escCloseDietHelp);
 }
@@ -2828,6 +2929,7 @@ async function copyTextWithFallback(text, feedbackElId, selectableElId){
   }
 }
 function copyDietExample(){ copyTextWithFallback(DIET_EXAMPLE_JSON, 'dh-example-feedback', 'dh-example-code'); }
+function copyDietExampleV2(){ copyTextWithFallback(DIET_EXAMPLE_V2_JSON, 'dh-example-v2-feedback', 'dh-example-v2-code'); }
 function copyDietPrompt(){ copyTextWithFallback(DIET_IMPORT_PROMPT, 'dh-prompt-feedback', null); }
 
 
@@ -2837,11 +2939,33 @@ function validateDietJson(obj){
   if(!obj.meals || typeof obj.meals !== 'object') throw new Error('Arquivo inválido: campo "meals" ausente.');
   const foundKeys = DIET_MEAL_KEYS.filter(k => Array.isArray(obj.meals[k]) && obj.meals[k].length);
   if(!foundKeys.length) throw new Error('Arquivo inválido: nenhuma refeição reconhecida (cafe, almoco, lanche, jantar, ceia) com opções.');
+  const isNum = (v) => typeof v === 'number' && !isNaN(v) && isFinite(v);
   foundKeys.forEach(k => {
     obj.meals[k].forEach((o, i) => {
       if(!o || typeof o.label !== 'string' || !o.label.trim()) throw new Error(`Opção ${i+1} de "${k}" sem "label" válido.`);
-      const kcalVal = o.kcal;
-      if(typeof kcalVal !== 'number' || isNaN(kcalVal)) throw new Error(`Opção "${o.label}" de "${k}" sem "kcal" numérico.`);
+      const isV2 = Array.isArray(o.slots) || Array.isArray(o.fixed);
+      if(!isV2){
+        // V1 — opção fechada, validação inalterada
+        if(!isNum(o.kcal)) throw new Error(`Opção "${o.label}" de "${k}" sem "kcal" numérico.`);
+        return;
+      }
+      // V2 — fixed (opcional) + slots (opcional, mas ao menos um dos dois precisa existir com conteúdo)
+      if(o.fixed !== undefined && !Array.isArray(o.fixed)) throw new Error(`"fixed" de "${o.label}" precisa ser uma lista.`);
+      (o.fixed||[]).forEach((it,fi) => {
+        if(!it || typeof it.name !== 'string' && typeof it.nome !== 'string') throw new Error(`Item fixo ${fi+1} de "${o.label}" sem nome.`);
+        if(!isNum(it.kcal)) throw new Error(`Item fixo "${it.name||it.nome}" de "${o.label}" sem "kcal" numérico.`);
+      });
+      if(o.slots !== undefined && !Array.isArray(o.slots)) throw new Error(`"slots" de "${o.label}" precisa ser uma lista.`);
+      (o.slots||[]).forEach((slot,si) => {
+        if(!slot || typeof slot.id !== 'string' || !slot.id.trim()) throw new Error(`Slot ${si+1} de "${o.label}" sem "id" válido.`);
+        if(typeof slot.label !== 'string' || !slot.label.trim()) throw new Error(`Slot "${slot.id}" de "${o.label}" sem "label" válido.`);
+        if(!Array.isArray(slot.options) || !slot.options.length) throw new Error(`Slot "${slot.label}" de "${o.label}" precisa ter ao menos uma opção em "options".`);
+        slot.options.forEach((so,oi) => {
+          if(!so || (typeof so.name !== 'string' && typeof so.nome !== 'string')) throw new Error(`Opção ${oi+1} do slot "${slot.label}" sem nome.`);
+          if(!isNum(so.kcal)) throw new Error(`Opção "${so.name||so.nome}" do slot "${slot.label}" sem "kcal" numérico.`);
+        });
+      });
+      if(!(o.fixed||[]).length && !(o.slots||[]).length) throw new Error(`Opção "${o.label}" de "${k}" (formato V2) precisa ter "fixed" ou "slots" com conteúdo.`);
     });
   });
   return foundKeys;
@@ -2852,23 +2976,53 @@ function importDiet(jsonText){
   try{ obj = JSON.parse(jsonText); }catch(e){ throw new Error('JSON inválido: ' + e.message); }
   const foundKeys = validateDietJson(obj);
 
+  let usedV2 = false;
+  const normFixedOrOption = (it) => ({
+    nome: String((it && (it.nome||it.name))||'').trim(),
+    qtd: (it && (it.qtd||it.amount)) || '',
+    kcal: Number(it.kcal)||0,
+    p: Number(it.protein!==undefined ? it.protein : it.p)||0,
+    c: Number(it.carbs!==undefined ? it.carbs : it.c)||0,
+    g: Number(it.fat!==undefined ? it.fat : it.g)||0,
+    f: Number(it.fiber!==undefined ? it.fiber : it.f)||0,
+  });
+
   const newCatalog = { version: Number(obj.version)||1, name: (obj.name && String(obj.name).trim()) || 'Dieta importada', meals: {} };
   const newSelection = {};
   foundKeys.forEach(key => {
-    newCatalog.meals[key] = obj.meals[key].map((o, i) => ({
-      id: key + '_' + (i+1),
-      label: String(o.label).trim(),
-      items: Array.isArray(o.items)
-        ? o.items.map(it => ({ nome: String((it && (it.nome||it.name))||'').trim(), qtd: (it && (it.qtd||it.amount)) || '' })).filter(it => it.nome)
-        : [],
-      kcal: Number(o.kcal)||0,
-      p: Number(o.protein!==undefined ? o.protein : o.p)||0,
-      c: Number(o.carbs!==undefined ? o.carbs : o.c)||0,
-      g: Number(o.fat!==undefined ? o.fat : o.g)||0,
-      f: Number(o.fiber!==undefined ? o.fiber : o.f)||0
-    }));
+    newCatalog.meals[key] = obj.meals[key].map((o, i) => {
+      const isV2 = Array.isArray(o.slots) || Array.isArray(o.fixed);
+      if(!isV2){
+        // V1 — normalização inalterada
+        return {
+          id: key + '_' + (i+1),
+          label: String(o.label).trim(),
+          items: Array.isArray(o.items)
+            ? o.items.map(it => ({ nome: String((it && (it.nome||it.name))||'').trim(), qtd: (it && (it.qtd||it.amount)) || '' })).filter(it => it.nome)
+            : [],
+          kcal: Number(o.kcal)||0,
+          p: Number(o.protein!==undefined ? o.protein : o.p)||0,
+          c: Number(o.carbs!==undefined ? o.carbs : o.c)||0,
+          g: Number(o.fat!==undefined ? o.fat : o.g)||0,
+          f: Number(o.fiber!==undefined ? o.fiber : o.f)||0,
+        };
+      }
+      usedV2 = true;
+      return {
+        id: key + '_' + (i+1),
+        label: String(o.label).trim(),
+        fixed: (o.fixed||[]).map(normFixedOrOption),
+        slots: (o.slots||[]).map(slot => ({
+          id: String(slot.id).trim(),
+          label: String(slot.label).trim(),
+          selected: 0,
+          options: (slot.options||[]).map(normFixedOrOption),
+        })),
+      };
+    });
     newSelection[key] = newCatalog.meals[key][0].id;
   });
+  if(usedV2) newCatalog.version = Math.max(2, newCatalog.version);
 
   /* Substitui inteiramente — sem merge, conforme decidido */
   dietCatalog = newCatalog;
@@ -2941,12 +3095,22 @@ function getCompositionForExportMode(mealKey, modeKey){
 function buildExportCatalog(){
   if(dietCatalog && dietCatalog.meals){
     const meals = {};
+    let usedV2 = false;
     Object.keys(dietCatalog.meals).forEach(key => {
-      meals[key] = dietCatalog.meals[key].map(o => ({
-        label: o.label, items: o.items, kcal: o.kcal, protein: o.p, carbs: o.c, fat: o.g, fiber: o.f
-      }));
+      meals[key] = dietCatalog.meals[key].map(o => {
+        if(o.slots || o.fixed){
+          usedV2 = true;
+          const toOut = (it) => ({ name: it.nome, amount: it.qtd, kcal: it.kcal, protein: it.p, carbs: it.c, fat: it.g, fiber: it.f });
+          return {
+            label: o.label,
+            fixed: (o.fixed||[]).map(toOut),
+            slots: (o.slots||[]).map(slot => ({ id: slot.id, label: slot.label, options: slot.options.map(toOut) })),
+          };
+        }
+        return { label: o.label, items: o.items, kcal: o.kcal, protein: o.p, carbs: o.c, fat: o.g, fiber: o.f };
+      });
     });
-    return { version: 1, name: dietCatalog.name || 'Minha dieta', meals };
+    return { version: usedV2 ? 2 : 1, name: dietCatalog.name || 'Minha dieta', meals };
   }
   /* Fallback: nenhum catálogo próprio ainda — serializa o sistema padrão
      atual (cafeModes/lancheModes/ceiaModes/ruWeek/jantarA+B) no mesmo
@@ -3295,24 +3459,48 @@ function renderCatalogMealBody(key){
   if(!options.find(o => o.id === selId)) selId = options[0].id; // auto-heal: opção salva não existe mais nesta refeição
   catalogSelection[key] = selId;
   const current = options.find(o => o.id === selId) || options[0];
+  const currentTotals = computeOptionTotals(current);
 
-  const cardsHtml = options.map(o => `
-    <div class="option-card ${o.id===current.id?'selected':''}" onclick="selectCatalogOption('${key}','${o.id}')">
+  const cardsHtml = options.map(o => {
+    const t = computeOptionTotals(o);
+    return `<div class="option-card ${o.id===current.id?'selected':''}" onclick="selectCatalogOption('${key}','${o.id}')">
       <div class="ttl">${escapeHtml(o.label)}<span class="option-check"></span></div>
-      <div class="kc">${Math.round(o.kcal)} kcal</div>
-      <div class="pr">${round1(o.p)}g proteína</div>
-    </div>`).join('');
+      <div class="kc">${Math.round(t.kcal)} kcal</div>
+      <div class="pr">${round1(t.p)}g proteína</div>
+    </div>`;
+  }).join('');
 
-  const itemsHtml = (current.items && current.items.length)
+  /* V2 — slots de substituição. Cada slot é uma linha; tocar expande as
+     alternativas embaixo dela mesma (sem modal novo, sem card dentro de
+     card). Opções V1 (sem .slots) simplesmente pulam este bloco. */
+  const slotsHtml = (current.slots && current.slots.length) ? current.slots.map(slot => {
+    const idx = (slot.selected>=0 && slot.selected<slot.options.length) ? slot.selected : 0;
+    const chosen = slot.options[idx];
+    const altsHtml = slot.options.map((o,i) => `
+      <div class="slot-alt-row ${i===idx?'selected':''}" onclick="event.stopPropagation(); selectSlotOption('${key}','${current.id}','${slot.id}',${i})">
+        <span>${escapeHtml(o.nome)}${o.qtd ? ' · '+escapeHtml(o.qtd) : ''}</span>
+        <span class="slot-alt-kcal">${Math.round(o.kcal||0)} kcal</span>
+      </div>`).join('');
+    return `<div class="slot-block">
+      <div class="slot-row" onclick="this.parentElement.classList.toggle('open')">
+        <div class="slot-lbl">${escapeHtml(slot.label)}</div>
+        <div class="slot-chosen">${escapeHtml(chosen.nome)}${chosen.qtd ? ' · '+escapeHtml(chosen.qtd) : ''} ⇄</div>
+      </div>
+      <div class="slot-alts">${altsHtml}</div>
+    </div>`;
+  }).join('') : '';
+
+  const itemsHtml = (currentTotals.items && currentTotals.items.length)
     ? `<div class="composicao-box"><div class="composicao-lbl">composição</div>
-        <div class="ing-list">${current.items.map(it => `<div class="ing-row"><span class="ing-name">${escapeHtml(it.nome)}</span>${it.qtd ? '<span class="ing-qtd">'+escapeHtml(it.qtd)+'</span>' : ''}</div>`).join('')}</div>
+        <div class="ing-list">${currentTotals.items.map(it => `<div class="ing-row"><span class="ing-name">${escapeHtml(it.nome)}</span>${it.qtd ? '<span class="ing-qtd">'+escapeHtml(it.qtd)+'</span>' : ''}</div>`).join('')}</div>
       </div>`
     : '';
 
   return `<div class="fixed-block-lbl" style="margin-bottom:8px;">escolha uma opção</div><div class="option-cards">${cardsHtml}</div>
     <div class="divider-or">opção selecionada: ${escapeHtml(current.label)}</div>
+    ${slotsHtml}
     ${itemsHtml}
-    <div class="meal-macro-row" style="margin-top:12px;"><span class="meal-macro kcal">${Math.round(current.kcal)} kcal</span><span class="meal-macro p">${round1(current.p)}g P</span><span class="meal-macro c">${round1(current.c)}g C</span><span class="meal-macro g">${round1(current.g)}g G</span><span class="meal-macro c">${round1(current.f||0)}g Fibra</span></div>
+    <div class="meal-macro-row" style="margin-top:12px;"><span class="meal-macro kcal">${Math.round(currentTotals.kcal)} kcal</span><span class="meal-macro p">${round1(currentTotals.p)}g P</span><span class="meal-macro c">${round1(currentTotals.c)}g C</span><span class="meal-macro g">${round1(currentTotals.g)}g G</span><span class="meal-macro c">${round1(currentTotals.f||0)}g Fibra</span></div>
     <button class="btn-primary dieta" style="margin-top:12px;" onclick="confirmMealFromCatalog('${key}')">Marcar como feito</button>`;
 }
 
@@ -3327,15 +3515,17 @@ async function confirmMealFromCatalog(key){
   const options = dietCatalog.meals[key];
   const selId = (catalogSelection && catalogSelection[key]) || options[0].id;
   const opt = options.find(o => o.id === selId) || options[0];
+  const totals = computeOptionTotals(opt);
   const day = todayKey();
   dietaLog[day] = dietaLog[day] || {};
   /* Snapshot congelado, no mesmo formato que confirmMeal()/confirmRu() já usam
      hoje — histórico já registrado (diet_log) nunca é reescrito depois disso,
-     mesmo que o catálogo seja trocado ou reimportado no futuro. */
+     mesmo que o catálogo seja trocado, reimportado, ou as opções dos slots
+     sejam alteradas no futuro. */
   dietaLog[day][key] = {
     tipo:'dieta', label: opt.label, option: opt.id,
-    items: (opt.items || []).map(it => ({ nome: it.nome, qtd: it.qtd || '' })),
-    kcal: opt.kcal||0, p: opt.p||0, c: opt.c||0, g: opt.g||0, f: opt.f||0
+    items: totals.items.map(it => ({ nome: it.nome, qtd: it.qtd || '' })),
+    kcal: totals.kcal||0, p: totals.p||0, c: totals.c||0, g: totals.g||0, f: totals.f||0
   };
   await saveLog(); renderRefeicoes();
 }
@@ -3604,12 +3794,43 @@ function computeManualTotals(day){
    exatamente a mesma lógica de resolução que renderMealCard já usa pra
    calcular o "tot" de cada card (catálogo importado > RU do almoço >
    jantar A/B > mealTotals do dia), pra nunca divergir do que é mostrado. */
+function computeOptionTotals(option){
+  if(!option.slots && !option.fixed){
+    // V1 — opção fechada, comportamento inalterado
+    return { kcal: option.kcal||0, p: option.p||0, c: option.c||0, g: option.g||0, f: option.f||0, items: option.items||[] };
+  }
+  // V2 — soma itens fixos + a opção escolhida em cada slot de substituição
+  let kcal=0, p=0, c=0, g=0, f=0;
+  const items = [];
+  (option.fixed||[]).forEach(it => {
+    kcal += it.kcal||0; p += it.p||0; c += it.c||0; g += it.g||0; f += it.f||0;
+    items.push({ nome: it.nome, qtd: it.qtd||'' });
+  });
+  (option.slots||[]).forEach(slot => {
+    const idx = (slot.selected>=0 && slot.selected<slot.options.length) ? slot.selected : 0;
+    const chosen = slot.options[idx];
+    if(chosen){
+      kcal += chosen.kcal||0; p += chosen.p||0; c += chosen.c||0; g += chosen.g||0; f += chosen.f||0;
+      items.push({ nome: chosen.nome, qtd: chosen.qtd||'' });
+    }
+  });
+  return { kcal, p, c, g, f, items };
+}
+function selectSlotOption(key, optionId, slotId, idx){
+  const option = dietCatalog.meals[key].find(o => o.id === optionId);
+  if(!option || !option.slots) return;
+  const slot = option.slots.find(s => s.id === slotId);
+  if(!slot || idx < 0 || idx >= slot.options.length) return;
+  slot.selected = idx;
+  saveSelecoes();
+  renderRefeicoes();
+}
 function computePlannedMealTotal(key){
   if(hasCatalogFor(key)){
     const options = dietCatalog.meals[key];
     const selId = (catalogSelection && catalogSelection[key]) || options[0].id;
     const opt = options.find(o => o.id === selId) || options[0];
-    return { kcal:opt.kcal||0, p:opt.p||0, c:opt.c||0, g:opt.g||0, f:opt.f||0 };
+    return computeOptionTotals(opt);
   }
   if(key === 'almoco'){
     const ru = ruWeek[almocoDiaSelecionado];
@@ -3805,6 +4026,37 @@ const exerciseMuscles = {
   'elevacao de pernas': { abdomen:1.0 },
 };
 
+/* Aliases → nome canônico já presente em exerciseMuscles. Resolve
+   variações comuns de nome (sinônimos, termos em inglês, abreviações)
+   pro mesmo exercício canônico, sem duplicar a tabela de músculos. */
+const EXERCISE_ALIASES = {
+  'supino plano': 'supino reto', 'supino livre': 'supino reto', 'bench press': 'supino reto', 'supino': 'supino reto',
+  'incline bench press': 'supino inclinado', 'supino inclinado halteres': 'supino inclinado',
+  'fly': 'crucifixo', 'peck deck': 'crucifixo', 'voador': 'crucifixo',
+  'triceps na polia': 'triceps pulley', 'triceps corda na polia': 'triceps corda', 'skull crusher': 'triceps testa',
+  'mergulho': 'mergulho no banco', 'dip': 'mergulho no banco', 'dips': 'mergulho no banco',
+  'rosca biceps': 'rosca direta', 'rosca barra': 'rosca direta', 'bicep curl': 'rosca direta', 'hammer curl': 'rosca martelo',
+  'desenvolvimento': 'desenvolvimento militar', 'overhead press': 'desenvolvimento militar', 'shoulder press': 'desenvolvimento militar',
+  'lateral raise': 'elevacao lateral', 'front raise': 'elevacao frontal', 'reverse fly': 'crucifixo inverso',
+  'remada': 'remada curvada', 'bent over row': 'remada curvada', 'row': 'remada curvada',
+  'puxada': 'puxada frente', 'lat pulldown': 'puxada frente', 'pulldown': 'puxada frente',
+  'pull up': 'barra fixa', 'pullup': 'barra fixa', 'chin up': 'barra fixa',
+  'terra': 'levantamento terra', 'deadlift': 'levantamento terra', 'stiff leg deadlift': 'stiff',
+  'agachamento': 'agachamento livre', 'squat': 'agachamento livre', 'back squat': 'agachamento livre',
+  'leg press 45': 'leg press', 'lunge': 'afundo', 'walking lunge': 'passada',
+  'flexora': 'mesa flexora', 'leg curl': 'mesa flexora', 'extensora': 'cadeira extensora', 'leg extension': 'cadeira extensora',
+  'panturrilha': 'panturrilha em pe', 'calf raise': 'panturrilha em pe',
+  'abdominal supra': 'abdominal', 'crunch': 'abdominal', 'plank': 'prancha', 'prancha isometrica': 'prancha',
+  'leg raise': 'elevacao de pernas',
+};
+function resolveExerciseMuscleKey(nome){
+  const key = normName(nome);
+  if(exerciseMuscles[key]) return key;
+  const alias = EXERCISE_ALIASES[key];
+  if(alias && exerciseMuscles[alias]) return alias;
+  return null;
+}
+
 function computeMuscleVolume(exercises){
   const musclesVolume = {};
   let total = 0;
@@ -3813,8 +4065,19 @@ function computeMuscleVolume(exercises){
     const vol = filled.reduce((v,s) => v + (parseFloat(s.reps)||0)*(parseFloat(s.carga)||0), 0);
     if(vol <= 0) return;
     total += vol;
-    const key = normName(ex.nome);
-    const map = exerciseMuscles[key];
+    /* Prioridade: classificação manual (ex.muscleOverride) sempre vence o
+       reconhecimento automático — exatamente como pedido. Sem override,
+       cai no reconhecimento por nome/alias; sem match nenhum, não
+       classificado. Nada disso infla o volume: os pesos de cada mapa
+       (auto ou manual) sempre somam 1.0, então o volume total do
+       exercício continua sendo distribuído, nunca duplicado. */
+    let map = null;
+    if(ex.muscleOverride && typeof ex.muscleOverride === 'object' && Object.keys(ex.muscleOverride).length){
+      map = ex.muscleOverride;
+    } else {
+      const key = resolveExerciseMuscleKey(ex.nome);
+      map = key ? exerciseMuscles[key] : null;
+    }
     if(map){
       Object.entries(map).forEach(([m,w]) => { musclesVolume[m] = (musclesVolume[m]||0) + vol*w; });
     } else {
@@ -4950,6 +5213,19 @@ async function concludeWorkout(blockId){
   const idx = workoutHistory.findIndex(h => h.id === entryId);
   if(idx >= 0) workoutHistory[idx] = entry; else workoutHistory.push(entry);
   await saveHistory();
+
+  /* Bug corrigido: o template do bloco (treinoBlocks) e o histórico
+     (workoutHistory) são estruturas persistidas SEPARADAMENTE. Só salvar
+     o histórico aqui deixava o "certinho" (completed) de cada série
+     marcado no template pra sempre — reabrir esse bloco dias depois
+     mostrava "EM ANDAMENTO" com as séries da sessão antiga ainda
+     marcadas, mesmo já concluída havia tempo. Reps/carga permanecem como
+     referência (mesmo padrão já usado em "última sessão" durante o
+     treino) — só o estado de conclusão é zerado, nada de estrutura ou
+     números é apagado. */
+  b.exercises.forEach(ex => { ex.sets.forEach(s => { s.completed = false; }); });
+  await saveTreino();
+
   sessionStartedAt = null;
   renderBlocksLibrary();
 }
@@ -5176,6 +5452,13 @@ function renderExercise(blockId, ex){
     }
   }
 
+  const hasMuscleOverride = !!(ex.muscleOverride && Object.keys(ex.muscleOverride).length);
+  const overrideMuscleKey = hasMuscleOverride ? Object.keys(ex.muscleOverride)[0] : '';
+  const autoMuscleKeyResolved = resolveExerciseMuscleKey(ex.nome);
+  const autoMuscleMap = autoMuscleKeyResolved ? exerciseMuscles[autoMuscleKeyResolved] : null;
+  const autoMusclePrimary = autoMuscleMap ? Object.entries(autoMuscleMap).sort((a,b) => b[1]-a[1])[0][0] : 'nao_classificado';
+  const autoMuscleLabel = muscleLabels[autoMusclePrimary];
+
   return `
     <div class="exercise ${ex.open ? 'open' : ''} ${complete ? 'complete' : ''}" id="ex-${ex.id}">
       <div class="exercise-summary" onclick="toggleExerciseOpen(${blockId}, ${ex.id})">
@@ -5201,6 +5484,13 @@ function renderExercise(blockId, ex){
         ${setsHtml || '<div class="empty-state" style="padding:6px 0;"><div class="sub">Sem séries ainda.</div></div>'}
         ${volCompareHtml}
         ${progressionHtml}
+        <div class="ex-muscle-row">
+          <span class="ex-muscle-lbl">musculatura</span>
+          <select onchange="setExerciseMuscleOverride(${blockId}, ${ex.id}, this.value)">
+            <option value="" ${!hasMuscleOverride ? 'selected' : ''}>${autoMuscleLabel} (auto)</option>
+            ${Object.keys(muscleLabels).filter(k => k !== 'nao_classificado').map(k => `<option value="${k}" ${overrideMuscleKey===k ? 'selected' : ''}>${muscleLabels[k]}</option>`).join('')}
+          </select>
+        </div>
           <button class="btn-ghost" onclick="addSet(${blockId}, ${ex.id})">+ série</button>
           <button class="btn-text" onclick="removeExercise(${blockId}, ${ex.id})">remover exercício</button>
         </div>
@@ -5252,6 +5542,17 @@ function runConfirmedAction(){
   if(action) action();
 }
 
+function setExerciseMuscleOverride(blockId, exId, muscleKey){
+  const ex = findExercise(blockId, exId);
+  if(!ex) return;
+  if(!muscleKey){
+    delete ex.muscleOverride;
+  } else {
+    ex.muscleOverride = { [muscleKey]: 1 };
+  }
+  saveTreino();
+  renderSessionExercises(findBlock(blockId));
+}
 function removeExercise(blockId, exId){
   const ex = findExercise(blockId, exId);
   const nome = ex && ex.nome ? ex.nome : 'este exercício';
