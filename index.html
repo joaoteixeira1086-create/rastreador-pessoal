@@ -2812,70 +2812,234 @@ const DIET_EXAMPLE_V2_JSON = `{
    mesmo exemplo acima (não é um texto solto — se DIET_EXAMPLE_JSON mudar,
    basta lembrar de atualizar aqui também, já que os dois precisam
    continuar descrevendo o mesmo schema real). */
-const DIET_IMPORT_PROMPT = `Vou te passar minha dieta em texto (ou uma foto/PDF do meu plano alimentar). Quero que você converta isso para um arquivo JSON num formato específico, que vou descrever abaixo.
+const DIET_IMPORT_PROMPT = `Vou te enviar minha dieta em texto, imagem ou arquivo.
 
-REGRAS IMPORTANTES:
-- Responda SOMENTE com o JSON. Nenhum texto antes ou depois.
-- NÃO use markdown. NÃO coloque \`\`\`json nem \`\`\` em volta do JSON.
-- NÃO use comentários dentro do JSON.
-- NÃO use vírgula sobrando depois do último item de uma lista (trailing comma).
-- NÃO invente refeições ou alimentos que eu não mencionei.
-- Preserve exatamente as quantidades que eu informar (não arredonde nem troque unidades sem eu pedir).
-- kcal, protein, carbs, fat e fiber são sempre NÚMEROS (não texto, sem aspas, sem unidade escrita junto).
-- Se eu não informar proteína/carboidrato/gordura/fibra de algum alimento, calcule uma estimativa razoável com base em uma tabela nutricional comum.
-- Use exatamente estas chaves, com esta grafia (tudo em inglês, minúsculo).
+Sua tarefa é transformar essa dieta em um arquivo JSON compatível com meu app.
 
-Existem DOIS jeitos de representar uma opção de refeição, e escolher o certo é a parte mais importante deste trabalho:
+IMPORTANTE:
+retorne APENAS JSON válido.
 
-FORMATO SIMPLES (uma refeição fechada, sem partes trocáveis):
-{ "label": "<nome>", "items": [ { "nome": "<alimento>", "qtd": "<quantidade>" } ], "kcal": <número>, "protein": <número>, "carbs": <número>, "fat": <número>, "fiber": <número> }
+NÃO use:
+- markdown
+- \`\`\`json
+- comentários
+- explicações antes ou depois
+- texto fora do JSON
 
-FORMATO COM SUBSTITUIÇÃO (a refeição tem itens fixos + partes que podem ser trocadas entre si):
-{ "label": "<nome>",
-  "fixed": [ { "name": "<alimento fixo>", "amount": "<quantidade>", "kcal": <número>, "protein": <número>, "carbs": <número>, "fat": <número>, "fiber": <número> } ],
-  "slots": [
-    { "id": "<identificador curto, ex: carbo>", "label": "<nome do grupo, ex: Carboidrato>",
-      "options": [ { "name": "<alimento>", "amount": "<quantidade>", "kcal": <número>, "protein": <número>, "carbs": <número>, "fat": <número>, "fiber": <número> } ] }
-  ]
-}
+==================================================
+FORMATO
+==================================================
 
-REGRA PARA ESCOLHER O FORMATO CERTO — isso é crítico, preste muita atenção:
+Use preferencialmente:
 
-Se eu descrever a mesma refeição com partes INTERCAMBIÁVEIS — usando palavras como "ou", "substituir por", "alternativa", "opções", "equivalente", "trocar por" — para APENAS UM COMPONENTE da refeição (por exemplo, só o carboidrato, mantendo o resto igual), isso é um SLOT dentro da MESMA opção. NÃO crie uma opção inteira separada pra cada alternativa.
+"version": 2
 
-Exemplo do que NÃO fazer (errado — explode em refeições completas repetidas):
-"150g arroz OU 180g macarrão OU 250g batata, com 150g frango" → NÃO vire 3 opções de jantar (arroz+frango, macarrão+frango, batata+frango).
-
-Exemplo do que fazer (certo — um slot de carboidrato):
-Uma única opção de jantar, com frango em "fixed" (ou em outro slot "proteina" se a proteína também tiver alternativas), e arroz/macarrão/batata como as 3 "options" de um slot "carbo".
-
-Já quando as alternativas são de fato REFEIÇÕES INTEIRAS diferentes (ex: "no café da manhã como isso OU, em outro dia, como aquilo outro" — pratos sem relação entre si) — aí sim, cada alternativa vira uma opção separada na lista da refeição (formato simples, uma pra cada).
-
-Se a refeição não tiver nenhuma substituição descrita, use sempre o formato simples — não invente slots que eu não mencionei.
-
-Estrutura geral do arquivo:
+Estrutura geral:
 
 {
   "version": 2,
-  "name": "<nome curto para a dieta>",
+  "name": "Nome da dieta",
   "meals": {
-    "cafe": [ <opção no formato simples ou com substituição> ],
-    "almoco": [ ... ],
-    "lanche": [ ... ],
-    "jantar": [ ... ],
-    "ceia": [ ... ]
+    "cafe": [],
+    "almoco": [],
+    "lanche": [],
+    "jantar": [],
+    "ceia": []
   }
 }
 
-Só inclua as chaves de refeição (cafe, almoco, lanche, jantar, ceia) que eu realmente te passar — não precisa preencher as 5. Se NENHUMA refeição tiver substituição, pode usar "version": 1 com todas as opções no formato simples — funciona igual.
+Use somente as refeições que realmente existirem.
 
-Aqui estão dois exemplos válidos e completos pra você usar como referência exata de estrutura — um simples (sem substituição) e um com slots:
+Cada refeição pode conter uma ou mais opções.
 
-Exemplo formato simples:
-${DIET_EXAMPLE_JSON}
+==================================================
+REGRA MAIS IMPORTANTE — SUBSTITUIÇÕES
+==================================================
 
-Exemplo com substituição (slots):
+Quando a dieta disser coisas como:
+
+- OU
+- substituir por
+- alternativa
+- equivalente
+- opção
+- pode trocar por
+
+NÃO transforme isso em refeições completas separadas.
+
+Crie um SLOT de substituição.
+
+Exemplo de dieta:
+
+Jantar:
+150 g de arroz
+OU
+180 g de macarrão
+OU
+250 g de batata
+
+150 g de frango
+OU
+140 g de patinho
+
+Salada à vontade
+
+Isso deve virar:
+
+- um slot "Carboidrato" com arroz, macarrão e batata;
+- um slot "Proteína" com frango e patinho;
+- salada como item fixo.
+
+NÃO gere combinações como:
+
+arroz + frango
+arroz + patinho
+macarrão + frango
+macarrão + patinho
+
+==================================================
+ESTRUTURA DE UMA REFEIÇÃO V2
+==================================================
+
+Use o schema V2 REAL que o app aceita atualmente. Aqui está um exemplo válido:
+
 ${DIET_EXAMPLE_V2_JSON}
+
+==================================================
+ITENS FIXOS
+==================================================
+
+Use "fixed" para alimentos que fazem parte da refeição e NÃO são alternativas.
+
+Exemplos:
+
+- salada
+- legumes
+- azeite
+- café
+- leite
+- molho
+- suplemento obrigatório
+
+==================================================
+SLOTS
+==================================================
+
+Use "slots" para grupos de substituição.
+
+Exemplos de labels:
+
+- Carboidrato
+- Proteína
+- Fruta
+- Pão
+- Laticínio
+- Gordura
+- Acompanhamento
+
+Cada slot deve ter:
+
+"id"
+"label"
+"options"
+
+Cada option deve ter:
+
+"name"
+"amount"
+"kcal"
+"protein"
+"carbs"
+"fat"
+"fiber"
+
+==================================================
+MACROS
+==================================================
+
+Use números, não strings.
+
+Correto:
+
+"kcal": 200
+"protein": 25
+
+Errado:
+
+"kcal": "200 kcal"
+"protein": "25g"
+
+Se a dieta já fornecer valores nutricionais, preserve-os.
+
+Se não fornecer e você precisar estimar, use valores nutricionais plausíveis e coerentes com a quantidade informada.
+
+Não altere arbitrariamente as quantidades da dieta só para fazer os macros fecharem.
+
+==================================================
+QUANTIDADES
+==================================================
+
+Preserve exatamente as quantidades prescritas sempre que possível.
+
+Exemplos:
+
+"150 g"
+"200 ml"
+"2 unidades"
+"1 fatia"
+"1 colher de sopa"
+
+==================================================
+NÃO INVENTAR TROCAS
+==================================================
+
+Não crie alimentos alternativos que não estejam presentes na dieta.
+
+Se a dieta disser apenas:
+
+150 g arroz
+
+não invente macarrão ou batata.
+
+Só crie slots quando houver alternativas explícitas no material que eu enviar.
+
+==================================================
+OPÇÕES COMPLETAS DE REFEIÇÃO
+==================================================
+
+Se a dieta realmente apresentar duas refeições completas diferentes, aí sim crie duas opções separadas dentro da refeição.
+
+Exemplo:
+
+Opção 1:
+omelete + pão + fruta
+
+Opção 2:
+iogurte + granola + banana
+
+Essas podem ser duas opções completas.
+
+Mas substituições internas com "OU" devem virar slots.
+
+==================================================
+VALIDADE DO JSON
+==================================================
+
+Antes de responder, confira:
+
+- JSON válido;
+- aspas duplas;
+- sem vírgula sobrando;
+- sem comentários;
+- sem markdown;
+- version = 2;
+- meals válido;
+- slots com pelo menos uma opção;
+- macros numéricos;
+- quantidades preservadas;
+- nenhuma explicação fora do JSON.
+
+Retorne SOMENTE o JSON final.
 
 Agora, aqui está minha dieta:`;
 
@@ -3966,95 +4130,304 @@ async function askTracker(){
 /* ======================================================================
    MAPEAMENTO MUSCULAR (base editável — volume-ponderado)
 ====================================================================== */
-const muscleLabels = { peito:'Peito', costas:'Costas', ombro:'Ombro', biceps:'Bíceps', triceps:'Tríceps', pernas:'Pernas', panturrilha:'Panturrilha', abdomen:'Abdômen', nao_classificado:'Não classificado' };
-const muscleColors = { peito:'#a78bfa', costas:'#7c9df0', ombro:'#f0b86a', biceps:'#e08fb0', triceps:'#7fd0c4', pernas:'#c9b26a', panturrilha:'#8f97a8', abdomen:'#b98fe0', nao_classificado:'#3a3d45' };
-const exerciseMuscles = {
-  'supino reto': { peito:0.70, triceps:0.20, ombro:0.10 },
-  'supino inclinado': { peito:0.65, ombro:0.20, triceps:0.15 },
-  'supino declinado': { peito:0.75, triceps:0.25 },
-  'supino maquina': { peito:0.75, triceps:0.25 },
-  'crucifixo': { peito:0.90, ombro:0.10 },
-  'crucifixo reto': { peito:0.90, ombro:0.10 },
-  'crucifixo inclinado': { peito:0.85, ombro:0.15 },
-  'crossover': { peito:0.90, ombro:0.10 },
-  'cross over': { peito:0.90, ombro:0.10 },
-  'triceps testa': { triceps:1.0 },
-  'triceps corda': { triceps:1.0 },
-  'triceps pulley': { triceps:1.0 },
-  'triceps frances': { triceps:1.0 },
-  'triceps coice': { triceps:1.0 },
-  'mergulho no banco': { triceps:0.7, peito:0.3 },
-  'rosca direta': { biceps:1.0 },
-  'rosca alternada': { biceps:1.0 },
-  'rosca martelo': { biceps:1.0 },
-  'rosca scott': { biceps:1.0 },
-  'rosca concentrada': { biceps:1.0 },
-  'desenvolvimento militar': { ombro:0.80, triceps:0.20 },
-  'desenvolvimento arnold': { ombro:0.85, triceps:0.15 },
-  'desenvolvimento maquina': { ombro:0.85, triceps:0.15 },
-  'elevacao lateral': { ombro:1.0 },
-  'elevacao frontal': { ombro:1.0 },
-  'crucifixo inverso': { ombro:0.90, costas:0.10 },
-  'face pull': { ombro:0.70, costas:0.30 },
-  'remada curvada': { costas:0.70, biceps:0.20, ombro:0.10 },
-  'remada baixa': { costas:0.75, biceps:0.25 },
-  'remada cavalinho': { costas:0.70, ombro:0.20, biceps:0.10 },
-  'remada unilateral': { costas:0.75, biceps:0.25 },
-  'puxada frente': { costas:0.75, biceps:0.25 },
-  'puxada alta': { costas:0.75, biceps:0.25 },
-  'puxada atras': { costas:0.75, biceps:0.25 },
-  'barra fixa': { costas:0.70, biceps:0.30 },
-  'levantamento terra': { costas:0.40, pernas:0.50, ombro:0.10 },
-  'stiff': { pernas:0.85, costas:0.15 },
-  'agachamento livre': { pernas:0.90, abdomen:0.10 },
-  'agachamento smith': { pernas:1.0 },
-  'agachamento busca': { pernas:1.0 },
-  'leg press': { pernas:1.0 },
-  'cadeira extensora': { pernas:1.0 },
-  'mesa flexora': { pernas:1.0 },
-  'cadeira flexora': { pernas:1.0 },
-  'afundo': { pernas:1.0 },
-  'passada': { pernas:1.0 },
-  'hip thrust': { pernas:1.0 },
-  'gluteo na polia': { pernas:1.0 },
-  'panturrilha em pe': { panturrilha:1.0 },
-  'panturrilha sentado': { panturrilha:1.0 },
-  'panturrilha no leg press': { panturrilha:1.0 },
-  'abdominal': { abdomen:1.0 },
-  'abdominal na maquina': { abdomen:1.0 },
-  'prancha': { abdomen:1.0 },
-  'elevacao de pernas': { abdomen:1.0 },
+const muscleLabels = { peito:'Peito', costas:'Costas', ombro:'Ombro', biceps:'Bíceps', triceps:'Tríceps', pernas:'Pernas', panturrilha:'Panturrilha', abdomen:'Abdômen', antebraco:'Antebraço', nao_classificado:'Não classificado' };
+const muscleColors = { peito:'#a78bfa', costas:'#7c9df0', ombro:'#f0b86a', biceps:'#e08fb0', triceps:'#7fd0c4', pernas:'#c9b26a', panturrilha:'#8f97a8', abdomen:'#b98fe0', antebraco:'#8aa88f', nao_classificado:'#3a3d45' };
+
+/* ======================================================================
+   TAXONOMIA MUSCULAR GRANULAR (v3.2)
+   Cada músculo granular pertence a um dos 9 grupos "coarse" acima — é
+   assim que qualquer gráfico/legenda existente (donut, balanço
+   muscular, insights) continua funcionando sem nenhuma mudança: eles só
+   enxergam o grupo pai, nunca o músculo granular diretamente.
+
+   IMPORTANTE: os pesos abaixo (em EXERCISE_DB) são uma HEURÍSTICA DE
+   DISTRIBUIÇÃO DE VOLUME para analytics do app — não uma afirmação
+   fisiológica de "quanto cada músculo trabalhou". Servem só pra
+   distribuir o volume (reps×carga) de um exercício entre os músculos
+   envolvidos, sempre somando 1.0, pra nunca inflar o volume total.
+====================================================================== */
+const MUSCLE_TAXONOMY = {
+  peitoral_maior_clavicular: { label:'Peitoral maior · clavicular', group:'peito' },
+  peitoral_maior_esternocostal: { label:'Peitoral maior · esternocostal', group:'peito' },
+
+  deltoide_anterior: { label:'Deltoide anterior', group:'ombro' },
+  deltoide_lateral: { label:'Deltoide lateral', group:'ombro' },
+  deltoide_posterior: { label:'Deltoide posterior', group:'ombro' },
+  infraespinal: { label:'Infraespinal', group:'ombro' },
+  redondo_menor: { label:'Redondo menor', group:'ombro' },
+  subescapular: { label:'Subescapular', group:'ombro' },
+
+  latissimo_dorso: { label:'Latíssimo do dorso', group:'costas' },
+  trapezio_superior: { label:'Trapézio superior', group:'costas' },
+  trapezio_medio: { label:'Trapézio médio', group:'costas' },
+  trapezio_inferior: { label:'Trapézio inferior', group:'costas' },
+  romboides: { label:'Romboides', group:'costas' },
+  eretores_espinha: { label:'Eretores da espinha', group:'costas' },
+  redondo_maior: { label:'Redondo maior', group:'costas' },
+  serrato_anterior: { label:'Serrátil anterior', group:'costas' },
+
+  biceps_cabeca_longa: { label:'Bíceps · cabeça longa', group:'biceps' },
+  biceps_cabeca_curta: { label:'Bíceps · cabeça curta', group:'biceps' },
+  braquial: { label:'Braquial', group:'biceps' },
+  braquiorradial: { label:'Braquiorradial', group:'biceps' },
+
+  triceps_cabeca_longa: { label:'Tríceps · cabeça longa', group:'triceps' },
+  triceps_cabeca_lateral: { label:'Tríceps · cabeça lateral', group:'triceps' },
+  triceps_cabeca_medial: { label:'Tríceps · cabeça medial', group:'triceps' },
+
+  flexores_antebraco: { label:'Flexores do antebraço', group:'antebraco' },
+  extensores_antebraco: { label:'Extensores do antebraço', group:'antebraco' },
+
+  gluteo_maximo: { label:'Glúteo máximo', group:'pernas' },
+  gluteo_medio: { label:'Glúteo médio', group:'pernas' },
+  gluteo_minimo: { label:'Glúteo mínimo', group:'pernas' },
+  adutores: { label:'Adutores', group:'pernas' },
+  abdutores: { label:'Abdutores', group:'pernas' },
+  reto_femoral: { label:'Quadríceps · reto femoral', group:'pernas' },
+  vasto_lateral: { label:'Quadríceps · vasto lateral', group:'pernas' },
+  vasto_medial: { label:'Quadríceps · vasto medial', group:'pernas' },
+  vasto_intermedio: { label:'Quadríceps · vasto intermédio', group:'pernas' },
+  biceps_femoral: { label:'Isquiotibiais · bíceps femoral', group:'pernas' },
+  semitendinoso: { label:'Isquiotibiais · semitendinoso', group:'pernas' },
+  semimembranoso: { label:'Isquiotibiais · semimembranoso', group:'pernas' },
+
+  gastrocnemio: { label:'Gastrocnêmio', group:'panturrilha' },
+  soleo: { label:'Sóleo', group:'panturrilha' },
+
+  reto_abdominal: { label:'Reto abdominal', group:'abdomen' },
+  obliquos: { label:'Oblíquos', group:'abdomen' },
+  transverso_abdominal: { label:'Transverso abdominal', group:'abdomen' },
+};
+/* Devolve o grupo "coarse" de um músculo granular. Se a chave já for um
+   grupo coarse (dado legado — override antigo salvo como {peito:1}),
+   devolve ela mesma sem alterar nada — é assim que dado antigo continua
+   funcionando sem qualquer migração. */
+function muscleParentGroup(muscleKey){
+  const t = MUSCLE_TAXONOMY[muscleKey];
+  return t ? t.group : muscleKey;
+}
+
+/* ======================================================================
+   EXERCISE_DB (v3.2) — biblioteca ampliada de exercícios
+   Cada entrada: { label, muscles: {musculo_granular: peso, ...soma 1.0},
+   aliases: [nomes alternativos, PT-BR e inglês] }. resolveExercise() já
+   varre nome canônico + aliases — não precisa de tabela separada.
+====================================================================== */
+const EXERCISE_DB = {
+  // ===== PEITO =====
+  supino_reto_barra: { label:'Supino reto com barra', muscles:{peitoral_maior_esternocostal:.50, triceps_cabeca_lateral:.13, triceps_cabeca_medial:.12, deltoide_anterior:.25}, aliases:['supino reto','supino barra','supino livre','bench press','barbell bench press','bench press barbell','supino'] },
+  supino_reto_halteres: { label:'Supino reto com halteres', muscles:{peitoral_maior_esternocostal:.52, deltoide_anterior:.23, triceps_cabeca_lateral:.13, triceps_cabeca_medial:.12}, aliases:['supino reto halteres','supino halteres','dumbbell bench press','db bench press'] },
+  supino_reto_maquina: { label:'Supino reto na máquina', muscles:{peitoral_maior_esternocostal:.55, triceps_cabeca_lateral:.15, triceps_cabeca_medial:.12, deltoide_anterior:.18}, aliases:['supino maquina','supino na maquina','chest press machine','machine bench press'] },
+  supino_smith: { label:'Supino no Smith', muscles:{peitoral_maior_esternocostal:.52, triceps_cabeca_lateral:.14, triceps_cabeca_medial:.12, deltoide_anterior:.22}, aliases:['supino smith','smith bench press','smith machine bench press'] },
+  supino_inclinado_barra: { label:'Supino inclinado com barra', muscles:{peitoral_maior_clavicular:.48, deltoide_anterior:.30, triceps_cabeca_lateral:.12, triceps_cabeca_medial:.10}, aliases:['supino inclinado','supino inclinado barra','incline bench press','incline barbell bench press'] },
+  supino_inclinado_halteres: { label:'Supino inclinado com halteres', muscles:{peitoral_maior_clavicular:.48, deltoide_anterior:.30, triceps_cabeca_lateral:.12, triceps_cabeca_medial:.10}, aliases:['supino inclinado halteres','incline dumbbell press','incline db press'] },
+  supino_inclinado_maquina: { label:'Supino inclinado na máquina', muscles:{peitoral_maior_clavicular:.50, deltoide_anterior:.28, triceps_cabeca_lateral:.12, triceps_cabeca_medial:.10}, aliases:['supino inclinado maquina','incline machine press','incline chest press machine'] },
+  supino_inclinado_smith: { label:'Supino inclinado no Smith', muscles:{peitoral_maior_clavicular:.48, deltoide_anterior:.30, triceps_cabeca_lateral:.12, triceps_cabeca_medial:.10}, aliases:['supino inclinado smith','smith incline press'] },
+  supino_declinado_barra: { label:'Supino declinado com barra', muscles:{peitoral_maior_esternocostal:.62, triceps_cabeca_lateral:.20, triceps_cabeca_medial:.13, deltoide_anterior:.05}, aliases:['supino declinado','decline bench press','decline barbell press'] },
+  supino_declinado_halteres: { label:'Supino declinado com halteres', muscles:{peitoral_maior_esternocostal:.62, triceps_cabeca_lateral:.20, triceps_cabeca_medial:.13, deltoide_anterior:.05}, aliases:['supino declinado halteres','decline dumbbell press'] },
+  supino_pegada_fechada: { label:'Supino pegada fechada', muscles:{triceps_cabeca_lateral:.30, triceps_cabeca_medial:.25, peitoral_maior_esternocostal:.35, deltoide_anterior:.10}, aliases:['supino fechado','close grip bench press','close-grip bench','supino pegada fechada'] },
+  supino_pegada_aberta: { label:'Supino pegada aberta', muscles:{peitoral_maior_esternocostal:.60, deltoide_anterior:.22, triceps_cabeca_lateral:.10, triceps_cabeca_medial:.08}, aliases:['supino aberto','wide grip bench press','wide-grip bench'] },
+  crucifixo_reto: { label:'Crucifixo reto', muscles:{peitoral_maior_esternocostal:.85, deltoide_anterior:.15}, aliases:['crucifixo','crucifixo reto','dumbbell fly','chest fly','flat dumbbell fly'] },
+  crucifixo_inclinado: { label:'Crucifixo inclinado', muscles:{peitoral_maior_clavicular:.85, deltoide_anterior:.15}, aliases:['crucifixo inclinado','incline dumbbell fly','incline fly'] },
+  crucifixo_declinado: { label:'Crucifixo declinado', muscles:{peitoral_maior_esternocostal:.90, deltoide_anterior:.10}, aliases:['crucifixo declinado','decline fly','decline dumbbell fly'] },
+  crucifixo_cabo: { label:'Crucifixo no cabo', muscles:{peitoral_maior_esternocostal:.88, deltoide_anterior:.12}, aliases:['crucifixo cabo','cable fly','cable crossover fly'] },
+  crossover_baixo_alto: { label:'Crossover (baixo pra alto)', muscles:{peitoral_maior_clavicular:.85, deltoide_anterior:.15}, aliases:['crossover','cable crossover','low-to-high cable fly','crossover baixo'] },
+  crossover_alto_baixo: { label:'Crossover (alto pra baixo)', muscles:{peitoral_maior_esternocostal:.88, deltoide_anterior:.12}, aliases:['crossover alto','high-to-low cable fly','crossover polia alta'] },
+  peck_deck: { label:'Peck deck', muscles:{peitoral_maior_esternocostal:.92, deltoide_anterior:.08}, aliases:['peck deck','pec deck','voador','peitoral maquina','butterfly machine'] },
+  flexao_bracos: { label:'Flexão de braços', muscles:{peitoral_maior_esternocostal:.45, triceps_cabeca_lateral:.20, triceps_cabeca_medial:.15, deltoide_anterior:.20}, aliases:['flexao de braco','push-up','pushup','flexao'] },
+  flexao_inclinada: { label:'Flexão inclinada', muscles:{peitoral_maior_clavicular:.45, deltoide_anterior:.30, triceps_cabeca_lateral:.15, triceps_cabeca_medial:.10}, aliases:['flexao inclinada','incline push-up'] },
+  flexao_declinada: { label:'Flexão declinada', muscles:{peitoral_maior_esternocostal:.55, triceps_cabeca_lateral:.20, triceps_cabeca_medial:.15, deltoide_anterior:.10}, aliases:['flexao declinada','decline push-up'] },
+  flexao_diamante: { label:'Flexão diamante', muscles:{triceps_cabeca_lateral:.35, triceps_cabeca_medial:.30, peitoral_maior_esternocostal:.35}, aliases:['flexao diamante','diamond push-up'] },
+  mergulho_paralelas_peito: { label:'Mergulho nas paralelas (peito)', muscles:{peitoral_maior_esternocostal:.45, triceps_cabeca_lateral:.30, triceps_cabeca_medial:.15, deltoide_anterior:.10}, aliases:['mergulho','mergulho paralelas','chest dip','weighted chest dip'] },
+
+  // ===== OMBROS =====
+  desenvolvimento_militar_barra: { label:'Desenvolvimento militar com barra', muscles:{deltoide_anterior:.55, triceps_cabeca_lateral:.15, triceps_cabeca_medial:.10, deltoide_lateral:.20}, aliases:['desenvolvimento militar','military press','overhead press','ohp','barbell overhead press','desenvolvimento'] },
+  desenvolvimento_halteres_sentado: { label:'Desenvolvimento com halteres', muscles:{deltoide_anterior:.50, deltoide_lateral:.25, triceps_cabeca_lateral:.13, triceps_cabeca_medial:.12}, aliases:['desenvolvimento halteres','shoulder press','seated dumbbell press','dumbbell shoulder press'] },
+  desenvolvimento_maquina: { label:'Desenvolvimento na máquina', muscles:{deltoide_anterior:.55, deltoide_lateral:.20, triceps_cabeca_lateral:.14, triceps_cabeca_medial:.11}, aliases:['desenvolvimento maquina','machine shoulder press'] },
+  desenvolvimento_smith: { label:'Desenvolvimento no Smith', muscles:{deltoide_anterior:.55, triceps_cabeca_lateral:.15, triceps_cabeca_medial:.10, deltoide_lateral:.20}, aliases:['desenvolvimento smith','smith shoulder press','smith overhead press'] },
+  arnold_press: { label:'Arnold press', muscles:{deltoide_anterior:.45, deltoide_lateral:.30, triceps_cabeca_lateral:.13, triceps_cabeca_medial:.12}, aliases:['arnold press','desenvolvimento arnold'] },
+  push_press: { label:'Push press', muscles:{deltoide_anterior:.50, triceps_cabeca_lateral:.15, triceps_cabeca_medial:.10, deltoide_lateral:.15, gluteo_maximo:.10}, aliases:['push press'] },
+  elevacao_lateral_halteres: { label:'Elevação lateral com halteres', muscles:{deltoide_lateral:1.0}, aliases:['elevacao lateral','lateral raise','side raise','elevacao lateral halteres'] },
+  elevacao_lateral_cabo: { label:'Elevação lateral no cabo', muscles:{deltoide_lateral:1.0}, aliases:['elevacao lateral cabo','cable lateral raise','unilateral cable lateral raise'] },
+  elevacao_lateral_maquina: { label:'Elevação lateral na máquina', muscles:{deltoide_lateral:1.0}, aliases:['elevacao lateral maquina','lateral raise machine','leaning lateral raise'] },
+  elevacao_frontal: { label:'Elevação frontal', muscles:{deltoide_anterior:1.0}, aliases:['elevacao frontal','front raise'] },
+  elevacao_posterior_halteres: { label:'Elevação posterior com halteres', muscles:{deltoide_posterior:.75, trapezio_medio:.15, romboides:.10}, aliases:['elevacao posterior','rear delt raise','reverse fly','rear lateral raise'] },
+  crucifixo_invertido_maquina: { label:'Crucifixo invertido na máquina', muscles:{deltoide_posterior:.70, trapezio_medio:.20, romboides:.10}, aliases:['crucifixo invertido','reverse pec deck','reverse fly maquina'] },
+  face_pull: { label:'Face pull', muscles:{deltoide_posterior:.45, trapezio_medio:.30, infraespinal:.25}, aliases:['face pull'] },
+  remada_alta: { label:'Remada alta', muscles:{deltoide_lateral:.45, trapezio_superior:.40, biceps_cabeca_curta:.15}, aliases:['remada alta','upright row'] },
+  encolhimento_ombros: { label:'Encolhimento de ombros', muscles:{trapezio_superior:1.0}, aliases:['encolhimento','shrug','barbell shrug','dumbbell shrug'] },
+  parada_de_mao_flexao: { label:'Flexão em parada de mão', muscles:{deltoide_anterior:.55, triceps_cabeca_lateral:.25, triceps_cabeca_medial:.20}, aliases:['handstand push-up','parada de mao com flexao'] },
+  pike_push_up: { label:'Pike push-up', muscles:{deltoide_anterior:.55, triceps_cabeca_lateral:.25, triceps_cabeca_medial:.20}, aliases:['pike push-up'] },
+
+  // ===== COSTAS =====
+  puxada_frente_aberta: { label:'Puxada frente pegada aberta', muscles:{latissimo_dorso:.65, biceps_cabeca_curta:.15, biceps_cabeca_longa:.10, romboides:.10}, aliases:['puxada frente','puxada aberta','lat pulldown','wide grip pulldown','pulley frente','puxada'] },
+  puxada_frente_fechada: { label:'Puxada frente pegada fechada', muscles:{latissimo_dorso:.55, biceps_cabeca_curta:.20, biceps_cabeca_longa:.15, romboides:.10}, aliases:['puxada fechada','close grip pulldown'] },
+  puxada_pegada_neutra: { label:'Puxada pegada neutra', muscles:{latissimo_dorso:.58, biceps_cabeca_curta:.18, biceps_cabeca_longa:.14, romboides:.10}, aliases:['puxada neutra','neutral grip pulldown'] },
+  puxada_pegada_supinada: { label:'Puxada pegada supinada', muscles:{latissimo_dorso:.50, biceps_cabeca_curta:.25, biceps_cabeca_longa:.15, romboides:.10}, aliases:['puxada supinada','underhand pulldown','puxada invertida'] },
+  puxada_unilateral: { label:'Puxada unilateral', muscles:{latissimo_dorso:.58, biceps_cabeca_curta:.17, biceps_cabeca_longa:.13, obliquos:.12}, aliases:['puxada unilateral','single arm lat pulldown'] },
+  pullover_polia: { label:'Pullover no cabo', muscles:{latissimo_dorso:.75, peitoral_maior_esternocostal:.15, triceps_cabeca_longa:.10}, aliases:['pullover cabo','straight arm pulldown','cable pullover'] },
+  pullover_halter: { label:'Pullover com halter', muscles:{latissimo_dorso:.60, peitoral_maior_esternocostal:.30, triceps_cabeca_longa:.10}, aliases:['pullover','pullover halteres','dumbbell pullover'] },
+  barra_fixa_pronada: { label:'Barra fixa pronada', muscles:{latissimo_dorso:.60, biceps_cabeca_curta:.18, biceps_cabeca_longa:.12, romboides:.10}, aliases:['barra fixa','pull-up','pullup','wide grip pull-up'] },
+  barra_fixa_supinada: { label:'Barra fixa supinada', muscles:{latissimo_dorso:.45, biceps_cabeca_curta:.30, biceps_cabeca_longa:.20, romboides:.05}, aliases:['barra fixa supinada','chin-up','chinup','chin up'] },
+  barra_fixa_neutra: { label:'Barra fixa pegada neutra', muscles:{latissimo_dorso:.53, biceps_cabeca_curta:.24, biceps_cabeca_longa:.16, romboides:.07}, aliases:['barra fixa neutra','neutral grip pull-up'] },
+  barra_fixa_assistida: { label:'Barra fixa assistida', muscles:{latissimo_dorso:.58, biceps_cabeca_curta:.20, biceps_cabeca_longa:.12, romboides:.10}, aliases:['barra assistida','assisted pull-up'] },
+  barra_fixa_com_peso: { label:'Barra fixa com peso', muscles:{latissimo_dorso:.60, biceps_cabeca_curta:.18, biceps_cabeca_longa:.12, romboides:.10}, aliases:['barra com peso','weighted pull-up'] },
+  remada_curvada_barra: { label:'Remada curvada com barra', muscles:{latissimo_dorso:.40, romboides:.20, trapezio_medio:.15, biceps_cabeca_curta:.15, eretores_espinha:.10}, aliases:['remada curvada','remada barra','bent over row','barbell row','remada'] },
+  remada_pendlay: { label:'Remada Pendlay', muscles:{latissimo_dorso:.38, romboides:.22, trapezio_medio:.15, biceps_cabeca_curta:.15, eretores_espinha:.10}, aliases:['remada pendlay','pendlay row'] },
+  remada_yates: { label:'Remada Yates', muscles:{latissimo_dorso:.42, biceps_cabeca_curta:.20, trapezio_medio:.15, romboides:.13, eretores_espinha:.10}, aliases:['remada yates','yates row'] },
+  remada_cavalinho: { label:'Remada cavalinho', muscles:{latissimo_dorso:.38, trapezio_medio:.22, romboides:.20, biceps_cabeca_curta:.12, deltoide_posterior:.08}, aliases:['remada cavalinho','t-bar row'] },
+  remada_cavalinho_apoiada: { label:'Remada cavalinho apoiada', muscles:{latissimo_dorso:.42, trapezio_medio:.22, romboides:.20, biceps_cabeca_curta:.16}, aliases:['remada cavalinho apoiada','chest supported row','remada apoiada'] },
+  remada_sentada_cabo: { label:'Remada sentada no cabo', muscles:{latissimo_dorso:.38, trapezio_medio:.22, romboides:.18, biceps_cabeca_curta:.15, deltoide_posterior:.07}, aliases:['remada sentada','seated cable row'] },
+  remada_maquina: { label:'Remada na máquina', muscles:{latissimo_dorso:.40, trapezio_medio:.20, romboides:.18, biceps_cabeca_curta:.15, deltoide_posterior:.07}, aliases:['remada maquina','machine row'] },
+  remada_unilateral_halter: { label:'Remada unilateral com halter', muscles:{latissimo_dorso:.42, romboides:.18, trapezio_medio:.15, biceps_cabeca_curta:.15, obliquos:.10}, aliases:['remada unilateral','single-arm dumbbell row','serrote'] },
+  remada_meadows: { label:'Remada Meadows', muscles:{latissimo_dorso:.45, romboides:.18, trapezio_medio:.12, biceps_cabeca_curta:.15, deltoide_posterior:.10}, aliases:['remada meadows','meadows row'] },
+  remada_seal: { label:'Remada seal', muscles:{latissimo_dorso:.42, romboides:.20, trapezio_medio:.18, biceps_cabeca_curta:.20}, aliases:['remada seal','seal row'] },
+  remada_invertida: { label:'Remada invertida', muscles:{latissimo_dorso:.35, romboides:.20, trapezio_medio:.18, biceps_cabeca_curta:.17, deltoide_posterior:.10}, aliases:['remada invertida','inverted row','australian pull-up'] },
+  remada_alta_polia_alta: { label:'Remada alta na polia', muscles:{trapezio_medio:.35, romboides:.25, deltoide_posterior:.25, latissimo_dorso:.15}, aliases:['remada alta polia','high row'] },
+  remada_baixa_polia: { label:'Remada baixa na polia', muscles:{latissimo_dorso:.42, romboides:.20, trapezio_inferior:.20, biceps_cabeca_curta:.18}, aliases:['remada baixa polia','low row','remada baixa'] },
+  levantamento_terra_convencional: { label:'Levantamento terra convencional', muscles:{eretores_espinha:.28, gluteo_maximo:.24, biceps_femoral:.14, semitendinoso:.10, latissimo_dorso:.14, trapezio_superior:.10}, aliases:['levantamento terra','deadlift','terra','conventional deadlift'] },
+  levantamento_terra_sumo: { label:'Levantamento terra sumô', muscles:{gluteo_maximo:.28, adutores:.16, eretores_espinha:.22, biceps_femoral:.12, semitendinoso:.10, latissimo_dorso:.12}, aliases:['terra sumo','sumo deadlift'] },
+  rack_pull: { label:'Rack pull', muscles:{eretores_espinha:.35, trapezio_superior:.20, gluteo_maximo:.20, latissimo_dorso:.15, biceps_femoral:.10}, aliases:['rack pull'] },
+  extensao_lombar: { label:'Extensão lombar', muscles:{eretores_espinha:.75, gluteo_maximo:.15, biceps_femoral:.10}, aliases:['extensao lombar','back extension','hiperextensao','hyperextension'] },
+  bom_dia: { label:'Bom dia (good morning)', muscles:{eretores_espinha:.35, biceps_femoral:.30, semitendinoso:.15, gluteo_maximo:.20}, aliases:['bom dia','good morning'] },
+  y_raise: { label:'Y-raise / trapézio inferior', muscles:{trapezio_inferior:.55, trapezio_medio:.30, romboides:.15}, aliases:['trapezio inferior','y-raise','prone y raise'] },
+
+  // ===== BÍCEPS / ANTEBRAÇO =====
+  rosca_direta_barra: { label:'Rosca direta com barra', muscles:{biceps_cabeca_curta:.45, biceps_cabeca_longa:.35, braquial:.20}, aliases:['rosca direta','rosca barra','barbell curl','rosca biceps'] },
+  rosca_direta_barra_ez: { label:'Rosca direta com barra EZ', muscles:{biceps_cabeca_curta:.45, biceps_cabeca_longa:.35, braquial:.20}, aliases:['rosca ez','ez bar curl','ez curl'] },
+  rosca_direta_halteres: { label:'Rosca direta com halteres', muscles:{biceps_cabeca_curta:.42, biceps_cabeca_longa:.38, braquial:.20}, aliases:['rosca halteres','dumbbell curl','rosca alternada','alternating curl','bicep curl'] },
+  rosca_inclinada: { label:'Rosca inclinada', muscles:{biceps_cabeca_longa:.55, biceps_cabeca_curta:.25, braquial:.20}, aliases:['rosca inclinada','incline dumbbell curl'] },
+  rosca_scott: { label:'Rosca Scott', muscles:{biceps_cabeca_curta:.55, biceps_cabeca_longa:.25, braquial:.20}, aliases:['rosca scott','preacher curl','rosca preacher'] },
+  rosca_scott_maquina: { label:'Rosca Scott na máquina', muscles:{biceps_cabeca_curta:.55, biceps_cabeca_longa:.25, braquial:.20}, aliases:['rosca scott maquina','machine preacher curl'] },
+  rosca_spider: { label:'Rosca spider', muscles:{biceps_cabeca_curta:.55, biceps_cabeca_longa:.25, braquial:.20}, aliases:['rosca spider','spider curl'] },
+  rosca_concentrada: { label:'Rosca concentrada', muscles:{biceps_cabeca_curta:.50, biceps_cabeca_longa:.30, braquial:.20}, aliases:['rosca concentrada','concentration curl'] },
+  rosca_cabo: { label:'Rosca no cabo', muscles:{biceps_cabeca_curta:.45, biceps_cabeca_longa:.35, braquial:.20}, aliases:['rosca cabo','cable curl'] },
+  rosca_bayesian: { label:'Rosca bayesian', muscles:{biceps_cabeca_longa:.55, biceps_cabeca_curta:.25, braquial:.20}, aliases:['rosca bayesian','bayesian curl'] },
+  rosca_martelo: { label:'Rosca martelo', muscles:{braquial:.45, braquiorradial:.35, biceps_cabeca_longa:.20}, aliases:['rosca martelo','hammer curl'] },
+  rosca_martelo_cruzada: { label:'Rosca martelo cruzada', muscles:{braquial:.45, braquiorradial:.35, biceps_cabeca_longa:.20}, aliases:['rosca martelo cruzada','cross-body hammer curl'] },
+  rosca_inversa: { label:'Rosca inversa', muscles:{braquiorradial:.50, extensores_antebraco:.30, braquial:.20}, aliases:['rosca inversa','reverse curl'] },
+  rosca_arrasto: { label:'Rosca arrasto', muscles:{biceps_cabeca_curta:.45, biceps_cabeca_longa:.35, braquial:.20}, aliases:['rosca arrasto','drag curl'] },
+  rosca_zottman: { label:'Rosca Zottman', muscles:{braquial:.35, biceps_cabeca_curta:.30, braquiorradial:.35}, aliases:['rosca zottman','zottman curl'] },
+  flexao_punho: { label:'Flexão de punho', muscles:{flexores_antebraco:1.0}, aliases:['flexao de punho','wrist curl'] },
+  extensao_punho: { label:'Extensão de punho', muscles:{extensores_antebraco:1.0}, aliases:['extensao de punho','reverse wrist curl','behind-back wrist curl'] },
+  rolo_de_punho: { label:'Rolo de punho', muscles:{flexores_antebraco:.55, extensores_antebraco:.45}, aliases:['rolo de punho','wrist roller'] },
+  dead_hang: { label:'Dead hang', muscles:{flexores_antebraco:.70, latissimo_dorso:.30}, aliases:['dead hang','pendurar na barra'] },
+
+  // ===== TRÍCEPS =====
+  triceps_pulley_barra: { label:'Tríceps pulley (barra reta)', muscles:{triceps_cabeca_lateral:.42, triceps_cabeca_medial:.38, triceps_cabeca_longa:.20}, aliases:['triceps pulley','triceps na polia','cable pushdown','straight bar pushdown','triceps pushdown','pushdown'] },
+  triceps_pulley_corda: { label:'Tríceps corda na polia', muscles:{triceps_cabeca_lateral:.40, triceps_cabeca_medial:.38, triceps_cabeca_longa:.22}, aliases:['triceps corda','rope pushdown','triceps corda na polia'] },
+  triceps_pulley_invertida: { label:'Tríceps pulley pegada invertida', muscles:{triceps_cabeca_medial:.45, triceps_cabeca_lateral:.35, triceps_cabeca_longa:.20}, aliases:['triceps pegada invertida','reverse grip pushdown'] },
+  triceps_testa_barra: { label:'Tríceps testa com barra', muscles:{triceps_cabeca_longa:.45, triceps_cabeca_lateral:.30, triceps_cabeca_medial:.25}, aliases:['triceps testa','skull crusher','skullcrusher','lying triceps extension'] },
+  triceps_testa_halteres: { label:'Tríceps testa com halteres', muscles:{triceps_cabeca_longa:.45, triceps_cabeca_lateral:.30, triceps_cabeca_medial:.25}, aliases:['triceps testa halteres','dumbbell skull crusher'] },
+  triceps_frances: { label:'Tríceps francês', muscles:{triceps_cabeca_longa:.50, triceps_cabeca_lateral:.28, triceps_cabeca_medial:.22}, aliases:['triceps frances','french press','overhead dumbbell extension'] },
+  triceps_testa_jm: { label:'JM press', muscles:{triceps_cabeca_longa:.42, triceps_cabeca_lateral:.32, triceps_cabeca_medial:.26}, aliases:['jm press'] },
+  triceps_corda_polia_alta: { label:'Tríceps na polia alta', muscles:{triceps_cabeca_longa:.48, triceps_cabeca_lateral:.30, triceps_cabeca_medial:.22}, aliases:['triceps polia alta','overhead cable extension'] },
+  mergulho_banco: { label:'Mergulho no banco', muscles:{triceps_cabeca_lateral:.40, triceps_cabeca_medial:.35, peitoral_maior_esternocostal:.15, deltoide_anterior:.10}, aliases:['mergulho no banco','bench dip','triceps dip','dip','dips'] },
+  triceps_coice: { label:'Tríceps coice', muscles:{triceps_cabeca_lateral:.45, triceps_cabeca_medial:.35, triceps_cabeca_longa:.20}, aliases:['triceps coice','kickback','triceps kickback'] },
+  triceps_unilateral_cabo: { label:'Tríceps unilateral no cabo', muscles:{triceps_cabeca_lateral:.42, triceps_cabeca_medial:.38, triceps_cabeca_longa:.20}, aliases:['triceps unilateral','single-arm cable extension'] },
+
+  // ===== PERNAS — agachamentos =====
+  agachamento_livre_costas: { label:'Agachamento livre', muscles:{vasto_lateral:.24, vasto_medial:.20, vasto_intermedio:.10, reto_femoral:.10, gluteo_maximo:.28, adutores:.08}, aliases:['agachamento livre','back squat','agachamento costas','squat','agachamento'] },
+  agachamento_barra_alta: { label:'Agachamento barra alta', muscles:{vasto_lateral:.26, vasto_medial:.22, vasto_intermedio:.11, reto_femoral:.11, gluteo_maximo:.22, adutores:.08}, aliases:['agachamento barra alta','high-bar squat'] },
+  agachamento_barra_baixa: { label:'Agachamento barra baixa', muscles:{gluteo_maximo:.32, vasto_lateral:.20, vasto_medial:.16, adutores:.12, eretores_espinha:.12, reto_femoral:.08}, aliases:['agachamento barra baixa','low-bar squat'] },
+  agachamento_frontal: { label:'Agachamento frontal', muscles:{reto_femoral:.22, vasto_lateral:.22, vasto_medial:.20, vasto_intermedio:.12, gluteo_maximo:.16, eretores_espinha:.08}, aliases:['agachamento frontal','front squat'] },
+  agachamento_smith: { label:'Agachamento no Smith', muscles:{vasto_lateral:.26, vasto_medial:.22, vasto_intermedio:.12, reto_femoral:.10, gluteo_maximo:.22, adutores:.08}, aliases:['agachamento smith','smith squat'] },
+  agachamento_hack: { label:'Agachamento hack', muscles:{vasto_lateral:.28, vasto_medial:.26, vasto_intermedio:.16, reto_femoral:.14, gluteo_maximo:.16}, aliases:['agachamento hack','hack squat'] },
+  agachamento_pendulum: { label:'Agachamento pendulum', muscles:{vasto_lateral:.28, vasto_medial:.26, vasto_intermedio:.16, reto_femoral:.14, gluteo_maximo:.16}, aliases:['pendulum squat','agachamento pendulum'] },
+  agachamento_taca: { label:'Agachamento taça (goblet)', muscles:{vasto_lateral:.22, vasto_medial:.22, vasto_intermedio:.12, reto_femoral:.12, gluteo_maximo:.24, adutores:.08}, aliases:['agachamento taca','goblet squat'] },
+  agachamento_zercher: { label:'Agachamento Zercher', muscles:{vasto_lateral:.20, vasto_medial:.18, gluteo_maximo:.26, eretores_espinha:.20, reto_femoral:.10, adutores:.06}, aliases:['agachamento zercher','zercher squat'] },
+  agachamento_sumo: { label:'Agachamento sumô', muscles:{gluteo_maximo:.28, adutores:.24, vasto_lateral:.18, vasto_medial:.16, reto_femoral:.14}, aliases:['agachamento sumo','sumo squat'] },
+  agachamento_bulgaro: { label:'Agachamento búlgaro', muscles:{vasto_lateral:.26, vasto_medial:.22, gluteo_maximo:.30, reto_femoral:.10, adutores:.12}, aliases:['agachamento bulgaro','bulgarian split squat'] },
+  pistol_squat: { label:'Pistol squat', muscles:{vasto_lateral:.26, vasto_medial:.24, gluteo_maximo:.28, reto_femoral:.12, abdutores:.10}, aliases:['pistol squat','agachamento pistol'] },
+  sissy_squat: { label:'Sissy squat', muscles:{reto_femoral:.35, vasto_lateral:.30, vasto_medial:.25, vasto_intermedio:.10}, aliases:['sissy squat'] },
+
+  // ===== PERNAS — leg press / extensão =====
+  leg_press_45: { label:'Leg press 45°', muscles:{vasto_lateral:.26, vasto_medial:.22, vasto_intermedio:.14, reto_femoral:.10, gluteo_maximo:.28}, aliases:['leg press','leg press 45','horizontal leg press'] },
+  leg_press_unilateral: { label:'Leg press unilateral', muscles:{vasto_lateral:.26, vasto_medial:.22, vasto_intermedio:.14, reto_femoral:.10, gluteo_maximo:.28}, aliases:['leg press unilateral','unilateral leg press'] },
+  cadeira_extensora: { label:'Cadeira extensora', muscles:{vasto_lateral:.30, vasto_medial:.28, vasto_intermedio:.22, reto_femoral:.20}, aliases:['cadeira extensora','extensora','leg extension','knee extension'] },
+  cadeira_extensora_unilateral: { label:'Cadeira extensora unilateral', muscles:{vasto_lateral:.30, vasto_medial:.28, vasto_intermedio:.22, reto_femoral:.20}, aliases:['extensora unilateral','unilateral leg extension'] },
+
+  // ===== PERNAS — avanços/passadas =====
+  afundo: { label:'Afundo', muscles:{vasto_lateral:.24, vasto_medial:.22, gluteo_maximo:.32, reto_femoral:.10, adutores:.12}, aliases:['afundo','forward lunge','lunge'] },
+  afundo_reverso: { label:'Afundo reverso', muscles:{gluteo_maximo:.36, vasto_lateral:.22, vasto_medial:.20, reto_femoral:.10, adutores:.12}, aliases:['afundo reverso','reverse lunge'] },
+  passada: { label:'Passada (walking lunge)', muscles:{vasto_lateral:.22, vasto_medial:.20, gluteo_maximo:.34, reto_femoral:.10, adutores:.14}, aliases:['passada','walking lunge'] },
+  afundo_lateral: { label:'Afundo lateral', muscles:{adutores:.30, gluteo_medio:.24, vasto_medial:.22, gluteo_maximo:.24}, aliases:['afundo lateral','lateral lunge'] },
+  subida_no_step: { label:'Subida no step', muscles:{gluteo_maximo:.34, vasto_lateral:.24, vasto_medial:.22, reto_femoral:.10, abdutores:.10}, aliases:['step-up','subida no banco'] },
+
+  // ===== PERNAS — hinge =====
+  stiff: { label:'Stiff', muscles:{biceps_femoral:.30, semitendinoso:.22, semimembranoso:.18, gluteo_maximo:.22, eretores_espinha:.08}, aliases:['stiff','stiff leg deadlift','romanian deadlift','rdl'] },
+  rdl_halteres: { label:'RDL com halteres', muscles:{biceps_femoral:.30, semitendinoso:.22, semimembranoso:.18, gluteo_maximo:.22, eretores_espinha:.08}, aliases:['rdl halteres','dumbbell rdl'] },
+  rdl_unilateral: { label:'RDL unilateral', muscles:{biceps_femoral:.28, semitendinoso:.20, semimembranoso:.16, gluteo_maximo:.20, abdutores:.10, eretores_espinha:.06}, aliases:['rdl unilateral','single-leg rdl'] },
+
+  // ===== PERNAS — flexora =====
+  mesa_flexora_deitado: { label:'Mesa flexora (deitado)', muscles:{biceps_femoral:.38, semitendinoso:.32, semimembranoso:.30}, aliases:['mesa flexora','flexora','leg curl','lying leg curl'] },
+  cadeira_flexora_sentado: { label:'Cadeira flexora (sentado)', muscles:{biceps_femoral:.36, semitendinoso:.33, semimembranoso:.31}, aliases:['cadeira flexora','seated leg curl'] },
+  flexora_em_pe: { label:'Flexora em pé', muscles:{biceps_femoral:.37, semitendinoso:.32, semimembranoso:.31}, aliases:['flexora em pe','standing leg curl'] },
+  flexora_unilateral: { label:'Flexora unilateral', muscles:{biceps_femoral:.37, semitendinoso:.32, semimembranoso:.31}, aliases:['flexora unilateral','unilateral leg curl'] },
+  flexora_nordica: { label:'Flexora nórdica', muscles:{biceps_femoral:.35, semitendinoso:.35, semimembranoso:.30}, aliases:['nordic curl','flexora nordica'] },
+  glute_ham_raise: { label:'Glute ham raise', muscles:{biceps_femoral:.32, semitendinoso:.28, semimembranoso:.25, gluteo_maximo:.15}, aliases:['glute ham raise','ghr'] },
+
+  // ===== PERNAS — glúteos =====
+  elevacao_pelvica_barra: { label:'Elevação pélvica com barra', muscles:{gluteo_maximo:.65, biceps_femoral:.20, semitendinoso:.15}, aliases:['elevacao pelvica','hip thrust','hip thrust barbell'] },
+  hip_thrust_maquina: { label:'Hip thrust na máquina', muscles:{gluteo_maximo:.68, biceps_femoral:.17, semitendinoso:.15}, aliases:['hip thrust maquina','hip thrust machine'] },
+  hip_thrust_unilateral: { label:'Hip thrust unilateral', muscles:{gluteo_maximo:.68, biceps_femoral:.17, semitendinoso:.15}, aliases:['hip thrust unilateral','single-leg hip thrust'] },
+  ponte_gluteo: { label:'Ponte de glúteo', muscles:{gluteo_maximo:.65, biceps_femoral:.22, semitendinoso:.13}, aliases:['ponte','glute bridge'] },
+  coice_cabo: { label:'Coice no cabo', muscles:{gluteo_maximo:.80, biceps_femoral:.20}, aliases:['coice','cable kickback','glute kickback'] },
+  coice_maquina: { label:'Coice na máquina', muscles:{gluteo_maximo:.80, biceps_femoral:.20}, aliases:['coice maquina','machine kickback','gluteo na polia'] },
+  frog_pump: { label:'Frog pump', muscles:{gluteo_maximo:.75, adutores:.25}, aliases:['frog pump'] },
+
+  // ===== PERNAS — abdução/adução =====
+  abducao_quadril_maquina: { label:'Abdução de quadril na máquina', muscles:{gluteo_medio:.55, gluteo_minimo:.30, abdutores:.15}, aliases:['abducao','cadeira abdutora','hip abduction machine','abducao de quadril'] },
+  abducao_cabo: { label:'Abdução no cabo', muscles:{gluteo_medio:.55, gluteo_minimo:.30, abdutores:.15}, aliases:['abducao cabo','cable hip abduction'] },
+  caminhada_com_banda: { label:'Caminhada lateral com banda', muscles:{gluteo_medio:.60, gluteo_minimo:.25, abdutores:.15}, aliases:['caminhada lateral','band lateral walk','monster walk'] },
+  elevacao_perna_lateral: { label:'Elevação lateral de perna', muscles:{gluteo_medio:.55, gluteo_minimo:.30, abdutores:.15}, aliases:['elevacao lateral de perna','lateral leg raise'] },
+  fire_hydrant: { label:'Fire hydrant', muscles:{gluteo_medio:.50, gluteo_minimo:.30, gluteo_maximo:.20}, aliases:['fire hydrant'] },
+  aducao_quadril_maquina: { label:'Adução de quadril na máquina', muscles:{adutores:1.0}, aliases:['aducao','cadeira adutora','hip adduction machine'] },
+  aducao_cabo: { label:'Adução no cabo', muscles:{adutores:1.0}, aliases:['aducao cabo','cable adduction'] },
+  copenhagen_plank: { label:'Copenhagen plank', muscles:{adutores:.70, obliquos:.30}, aliases:['copenhagen plank'] },
+
+  // ===== PANTURRILHA =====
+  panturrilha_em_pe: { label:'Panturrilha em pé', muscles:{gastrocnemio:.65, soleo:.35}, aliases:['panturrilha em pe','standing calf raise','panturrilha'] },
+  panturrilha_sentado: { label:'Panturrilha sentado', muscles:{soleo:.65, gastrocnemio:.35}, aliases:['panturrilha sentado','seated calf raise'] },
+  panturrilha_burro: { label:'Panturrilha burro', muscles:{gastrocnemio:.65, soleo:.35}, aliases:['panturrilha burro','donkey calf raise'] },
+  panturrilha_leg_press: { label:'Panturrilha no leg press', muscles:{gastrocnemio:.60, soleo:.40}, aliases:['panturrilha leg press','panturrilha no leg press','leg press calf raise'] },
+  panturrilha_smith: { label:'Panturrilha no Smith', muscles:{gastrocnemio:.62, soleo:.38}, aliases:['panturrilha smith','smith calf raise'] },
+  panturrilha_unilateral: { label:'Panturrilha unilateral', muscles:{gastrocnemio:.62, soleo:.38}, aliases:['panturrilha unilateral','single-leg calf raise'] },
+
+  // ===== CORE =====
+  abdominal_supra: { label:'Abdominal supra', muscles:{reto_abdominal:1.0}, aliases:['abdominal','abdominal supra','crunch','sit-up'] },
+  abdominal_cabo: { label:'Abdominal no cabo', muscles:{reto_abdominal:1.0}, aliases:['abdominal cabo','cable crunch'] },
+  abdominal_maquina: { label:'Abdominal na máquina', muscles:{reto_abdominal:1.0}, aliases:['abdominal maquina','abdominal na maquina','machine crunch'] },
+  abdominal_declinado: { label:'Abdominal declinado', muscles:{reto_abdominal:1.0}, aliases:['abdominal declinado','decline crunch','decline sit-up'] },
+  elevacao_pernas_suspenso: { label:'Elevação de pernas suspenso', muscles:{reto_abdominal:.60, obliquos:.25, flexores_antebraco:.15}, aliases:['elevacao de pernas','hanging leg raise','hanging knee raise'] },
+  elevacao_pernas_deitado: { label:'Elevação de pernas deitado', muscles:{reto_abdominal:.75, obliquos:.25}, aliases:['elevacao de pernas deitado','lying leg raise','leg raise'] },
+  elevacao_joelhos: { label:'Elevação de joelhos', muscles:{reto_abdominal:.70, obliquos:.30}, aliases:['elevacao de joelhos','knee raise'] },
+  abdominal_infra_reverso: { label:'Abdominal infra (reverso)', muscles:{reto_abdominal:1.0}, aliases:['abdominal infra','reverse crunch'] },
+  ab_wheel: { label:'Roda abdominal', muscles:{reto_abdominal:.55, obliquos:.20, transverso_abdominal:.25}, aliases:['ab wheel','roda abdominal'] },
+  prancha: { label:'Prancha', muscles:{transverso_abdominal:.55, reto_abdominal:.25, obliquos:.20}, aliases:['prancha','plank','prancha isometrica'] },
+  prancha_lateral: { label:'Prancha lateral', muscles:{obliquos:.75, transverso_abdominal:.25}, aliases:['prancha lateral','side plank'] },
+  prancha_com_peso: { label:'Prancha com peso', muscles:{transverso_abdominal:.55, reto_abdominal:.25, obliquos:.20}, aliases:['prancha com peso','weighted plank'] },
+  dead_bug: { label:'Dead bug', muscles:{transverso_abdominal:.55, reto_abdominal:.30, obliquos:.15}, aliases:['dead bug'] },
+  bird_dog: { label:'Bird dog', muscles:{transverso_abdominal:.40, eretores_espinha:.35, gluteo_maximo:.25}, aliases:['bird dog'] },
+  pallof_press: { label:'Pallof press', muscles:{obliquos:.55, transverso_abdominal:.45}, aliases:['pallof press'] },
+  rotacao_russa: { label:'Rotação russa', muscles:{obliquos:.75, reto_abdominal:.25}, aliases:['rotacao russa','russian twist'] },
+  wood_chop: { label:'Wood chop (lenhador)', muscles:{obliquos:.80, transverso_abdominal:.20}, aliases:['wood chop','lenhador'] },
+  suitcase_carry: { label:'Suitcase carry', muscles:{obliquos:.60, transverso_abdominal:.30, flexores_antebraco:.10}, aliases:['suitcase carry'] },
+  farmer_carry: { label:'Farmer carry', muscles:{transverso_abdominal:.35, trapezio_superior:.30, flexores_antebraco:.35}, aliases:['farmer carry','caminhada do fazendeiro'] },
 };
 
-/* Aliases → nome canônico já presente em exerciseMuscles. Resolve
-   variações comuns de nome (sinônimos, termos em inglês, abreviações)
-   pro mesmo exercício canônico, sem duplicar a tabela de músculos. */
-const EXERCISE_ALIASES = {
-  'supino plano': 'supino reto', 'supino livre': 'supino reto', 'bench press': 'supino reto', 'supino': 'supino reto',
-  'incline bench press': 'supino inclinado', 'supino inclinado halteres': 'supino inclinado',
-  'fly': 'crucifixo', 'peck deck': 'crucifixo', 'voador': 'crucifixo',
-  'triceps na polia': 'triceps pulley', 'triceps corda na polia': 'triceps corda', 'skull crusher': 'triceps testa',
-  'mergulho': 'mergulho no banco', 'dip': 'mergulho no banco', 'dips': 'mergulho no banco',
-  'rosca biceps': 'rosca direta', 'rosca barra': 'rosca direta', 'bicep curl': 'rosca direta', 'hammer curl': 'rosca martelo',
-  'desenvolvimento': 'desenvolvimento militar', 'overhead press': 'desenvolvimento militar', 'shoulder press': 'desenvolvimento militar',
-  'lateral raise': 'elevacao lateral', 'front raise': 'elevacao frontal', 'reverse fly': 'crucifixo inverso',
-  'remada': 'remada curvada', 'bent over row': 'remada curvada', 'row': 'remada curvada',
-  'puxada': 'puxada frente', 'lat pulldown': 'puxada frente', 'pulldown': 'puxada frente',
-  'pull up': 'barra fixa', 'pullup': 'barra fixa', 'chin up': 'barra fixa',
-  'terra': 'levantamento terra', 'deadlift': 'levantamento terra', 'stiff leg deadlift': 'stiff',
-  'agachamento': 'agachamento livre', 'squat': 'agachamento livre', 'back squat': 'agachamento livre',
-  'leg press 45': 'leg press', 'lunge': 'afundo', 'walking lunge': 'passada',
-  'flexora': 'mesa flexora', 'leg curl': 'mesa flexora', 'extensora': 'cadeira extensora', 'leg extension': 'cadeira extensora',
-  'panturrilha': 'panturrilha em pe', 'calf raise': 'panturrilha em pe',
-  'abdominal supra': 'abdominal', 'crunch': 'abdominal', 'plank': 'prancha', 'prancha isometrica': 'prancha',
-  'leg raise': 'elevacao de pernas',
-};
+/* Índice de aliases construído uma vez, na carga: normName(cada alias
+   e o próprio label) -> chave canônica em EXERCISE_DB. */
+const EXERCISE_ALIAS_INDEX = {};
+Object.keys(EXERCISE_DB).forEach(key => {
+  const entry = EXERCISE_DB[key];
+  EXERCISE_ALIAS_INDEX[normName(entry.label)] = key;
+  (entry.aliases||[]).forEach(a => { EXERCISE_ALIAS_INDEX[normName(a)] = key; });
+});
+/* Ordem de resolução: 1) nome bate com um alias/label conhecido — exato,
+   sem fuzzy matching. Sem match nenhum -> null (não classificado). */
 function resolveExerciseMuscleKey(nome){
-  const key = normName(nome);
-  if(exerciseMuscles[key]) return key;
-  const alias = EXERCISE_ALIASES[key];
-  if(alias && exerciseMuscles[alias]) return alias;
-  return null;
+  return EXERCISE_ALIAS_INDEX[normName(nome)] || null;
 }
 
 function computeMuscleVolume(exercises){
@@ -4066,20 +4439,28 @@ function computeMuscleVolume(exercises){
     if(vol <= 0) return;
     total += vol;
     /* Prioridade: classificação manual (ex.muscleOverride) sempre vence o
-       reconhecimento automático — exatamente como pedido. Sem override,
-       cai no reconhecimento por nome/alias; sem match nenhum, não
-       classificado. Nada disso infla o volume: os pesos de cada mapa
-       (auto ou manual) sempre somam 1.0, então o volume total do
-       exercício continua sendo distribuído, nunca duplicado. */
+       reconhecimento automático. Sem override, cai no reconhecimento por
+       nome/alias na EXERCISE_DB; sem match nenhum, não classificado.
+       Nada disso infla o volume: os pesos de cada mapa (auto ou manual)
+       sempre somam 1.0, então o volume total do exercício continua
+       sendo distribuído, nunca duplicado. Toda chave (granular nova ou
+       coarse legada) passa por muscleParentGroup antes de somar — é
+       assim que dado antigo em formato coarse ({peito:1}) e dado novo
+       granular ({peitoral_maior_esternocostal:.5,...}) acabam no MESMO
+       lugar (musclesVolume['peito']), sem nenhuma tela precisar saber
+       a diferença. */
     let map = null;
     if(ex.muscleOverride && typeof ex.muscleOverride === 'object' && Object.keys(ex.muscleOverride).length){
       map = ex.muscleOverride;
     } else {
       const key = resolveExerciseMuscleKey(ex.nome);
-      map = key ? exerciseMuscles[key] : null;
+      map = key ? EXERCISE_DB[key].muscles : null;
     }
     if(map){
-      Object.entries(map).forEach(([m,w]) => { musclesVolume[m] = (musclesVolume[m]||0) + vol*w; });
+      Object.entries(map).forEach(([m,w]) => {
+        const group = muscleParentGroup(m);
+        musclesVolume[group] = (musclesVolume[group]||0) + vol*w;
+      });
     } else {
       musclesVolume['nao_classificado'] = (musclesVolume['nao_classificado']||0) + vol;
     }
@@ -5373,8 +5754,8 @@ function renderExercise(blockId, ex){
   const repsSummary = ex.sets.length ? (ex.sets[0].reps || '-') : '-';
   const metaLine = ex.sets.length ? ex.sets.length + '×' + repsSummary + (volume > 0 ? ' · ' + Math.round(volume) + ' kg' : '') : 'sem séries';
   const complete = ex.sets.length > 0 && ex.sets.every(isSetCompletedLive);
-  const muscleKey = normName(ex.nome);
-  const muscleTag = ex.nome && !exerciseMuscles[muscleKey] ? '<div class="exercise-muscle-tag">musculatura não classificada</div>' : '';
+  const hasOverrideForTag = !!(ex.muscleOverride && Object.keys(ex.muscleOverride).length);
+  const muscleTag = ex.nome && !hasOverrideForTag && !resolveExerciseMuscleKey(ex.nome) ? '<div class="exercise-muscle-tag">musculatura não classificada</div>' : '';
 
   const last = ex.nome ? findLastSession(blockId, ex.id, ex.nome) : null;
   const pr = ex.nome ? computeExercisePRs(ex.id, ex.nome, todayKey() + '_' + blockId) : null;
@@ -5455,9 +5836,22 @@ function renderExercise(blockId, ex){
   const hasMuscleOverride = !!(ex.muscleOverride && Object.keys(ex.muscleOverride).length);
   const overrideMuscleKey = hasMuscleOverride ? Object.keys(ex.muscleOverride)[0] : '';
   const autoMuscleKeyResolved = resolveExerciseMuscleKey(ex.nome);
-  const autoMuscleMap = autoMuscleKeyResolved ? exerciseMuscles[autoMuscleKeyResolved] : null;
-  const autoMusclePrimary = autoMuscleMap ? Object.entries(autoMuscleMap).sort((a,b) => b[1]-a[1])[0][0] : 'nao_classificado';
-  const autoMuscleLabel = muscleLabels[autoMusclePrimary];
+  const autoMuscleMap = autoMuscleKeyResolved ? EXERCISE_DB[autoMuscleKeyResolved].muscles : null;
+  const autoMusclePrimaryGranular = autoMuscleMap ? Object.entries(autoMuscleMap).sort((a,b) => b[1]-a[1])[0][0] : null;
+  const autoMuscleLabel = autoMusclePrimaryGranular
+    ? (MUSCLE_TAXONOMY[autoMusclePrimaryGranular] ? MUSCLE_TAXONOMY[autoMusclePrimaryGranular].label : muscleLabels[autoMusclePrimaryGranular])
+    : 'Não classificado';
+  /* Seletor manual agora mostra músculos granulares, agrupados por
+     região anatômica (optgroup) — mesmo se o override salvo for de um
+     formato antigo (chave coarse tipo "peito"), a classificação em si
+     continua correta via muscleParentGroup(); só o destaque visual de
+     "selecionado" no dropdown não vai bater até a pessoa escolher de
+     novo, o que é um limite cosmético, não um erro de cálculo. */
+  const muscleOptgroupsHtml = Object.keys(muscleLabels).filter(g => g !== 'nao_classificado').map(group => {
+    const items = Object.entries(MUSCLE_TAXONOMY).filter(([k,v]) => v.group === group);
+    if(!items.length) return '';
+    return `<optgroup label="${muscleLabels[group]}">${items.map(([k,v]) => `<option value="${k}" ${overrideMuscleKey===k ? 'selected' : ''}>${v.label}</option>`).join('')}</optgroup>`;
+  }).join('');
 
   return `
     <div class="exercise ${ex.open ? 'open' : ''} ${complete ? 'complete' : ''}" id="ex-${ex.id}">
@@ -5488,7 +5882,7 @@ function renderExercise(blockId, ex){
           <span class="ex-muscle-lbl">musculatura</span>
           <select onchange="setExerciseMuscleOverride(${blockId}, ${ex.id}, this.value)">
             <option value="" ${!hasMuscleOverride ? 'selected' : ''}>${autoMuscleLabel} (auto)</option>
-            ${Object.keys(muscleLabels).filter(k => k !== 'nao_classificado').map(k => `<option value="${k}" ${overrideMuscleKey===k ? 'selected' : ''}>${muscleLabels[k]}</option>`).join('')}
+            ${muscleOptgroupsHtml}
           </select>
         </div>
           <button class="btn-ghost" onclick="addSet(${blockId}, ${ex.id})">+ série</button>
