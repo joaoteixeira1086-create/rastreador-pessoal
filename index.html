@@ -1051,6 +1051,9 @@ h1,h2,h3,.sx-ex-name,.ts-name,.lib-name,.sx-head-title{ font-family:'Fraunces',G
 .sx-set.done .sx-check{ background:var(--dieta); border-color:var(--dieta); color:var(--on-light); }
 .sx-btn.finish{ background:var(--dieta); color:var(--on-light); }
 .today-schedule-card{ border-color:rgba(183,122,102,0.30); }
+  .recover-row{ margin-top:18px; text-align:center; }
+  .recover-btn{ font-family:inherit; font-size:12.5px; color:var(--text-faint); background:none; border:1px dashed var(--border-soft); border-radius:99px; padding:10px 16px; min-height:44px; cursor:pointer; }
+  .recover-btn:hover{ color:var(--text-secondary); border-color:var(--border); }
 </style>
 </head>
 <body>
@@ -1127,6 +1130,7 @@ h1,h2,h3,.sx-ex-name,.ts-name,.lib-name,.sx-head-title{ font-family:'Fraunces',G
       <div class="ws-grid" id="weekly-schedule-grid"></div>
     </div>
     <div class="lib-grid" id="lib-grid"></div>
+    <div class="recover-row"><button type="button" class="recover-btn" onclick="openRecoveryModal()">Recuperar treinos</button></div>
   </div>
 
   <!-- ===== DIETA ===== -->
@@ -1551,36 +1555,244 @@ async function signOut(){
 /* ======================================================================
    PULL — lê do Supabase e funde no estado local (nunca apaga dado local)
 ====================================================================== */
+/* ----------------------------------------------------------------------
+   Regra de ouro do sync de treinos: LOCAL COM CONTEÚDO NUNCA É SOBRESCRITO
+   automaticamente e a ausência de um bloco na nuvem NUNCA apaga o local.
+   Só uma ação explícita do usuário (excluir treino) remove um treino.
+---------------------------------------------------------------------- */
+function blockHasContent(b){ return !!b && Array.isArray(b.exercises) && b.exercises.length > 0; }
+function sameJSON(a, b){ try{ return JSON.stringify(a) === JSON.stringify(b); }catch(e){ return false; } }
+
+const BLOCKS_BACKUP_KEY = 'treino:blocks:lastBackup';
+const HISTORY_BACKUP_KEY = 'treino:history:lastBackup';
+const BLOCKS_PREV_BACKUP_KEY = 'treino:blocks:prevBackup';       /* backup anterior, guardado quando o novo tem MENOS conteúdo */
+const HISTORY_PREV_BACKUP_KEY = 'treino:history:prevBackup';
+const BLOCKS_PRERECOVERY_KEY = 'treino:blocks:preRecovery';      /* estado do template logo antes de uma recuperação */
+let syncBackupDone = false;
+
+function blocksContentScore(list){ return (list || []).reduce((n, b) => n + ((b && Array.isArray(b.exercises)) ? b.exercises.length : 0), 0); }
+async function readBackupRecord(key){
+  try{
+    const r = await storage.get(key);
+    if(!r || !r.value) return null;
+    const o = JSON.parse(r.value);
+    return (o && typeof o === 'object') ? o : null;
+  }catch(e){ return null; }
+}
+/* Grava {savedAt, count, <field>: cópia completa}. Se já existia um backup com
+   MAIS conteúdo que o novo (ex.: estado local já esvaziado), o antigo é
+   preservado em prevKey antes de ser substituído — nunca se perde a cópia rica. */
+async function writeBackupRecord(key, prevKey, field, items, score){
+  const now = Date.now();
+  const rec = { version:1, savedAt: now, savedAtISO: new Date(now).toISOString(), count: items.length };
+  rec[field] = JSON.parse(JSON.stringify(items));
+  const old = await readBackupRecord(key);
+  if(old && Array.isArray(old[field]) && score(old[field]) > score(items)) await storage.set(prevKey, JSON.stringify(old));
+  await storage.set(key, JSON.stringify(rec));
+}
+/* Chamado ANTES do primeiro pull da sessão: copia o estado local original
+   (ainda não tocado por nenhum dado vindo da nuvem). */
+async function backupLocalBeforeSync(){
+  if(syncBackupDone) return;
+  syncBackupDone = true;
+  try{
+    await writeBackupRecord(BLOCKS_BACKUP_KEY, BLOCKS_PREV_BACKUP_KEY, 'blocks', treinoBlocks, blocksContentScore);
+    await writeBackupRecord(HISTORY_BACKUP_KEY, HISTORY_PREV_BACKUP_KEY, 'history', workoutHistory, l => l.length);
+  }catch(e){
+    syncBackupDone = false;
+    console.warn('[sync] não foi possível gravar o backup local antes do sync:', e);
+  }
+}
+
 async function pullWorkoutBlocks(user){
   const sb = initSupabase(); if(!sb) return;
   const { data, error } = await sb.from('workout_blocks').select('*').eq('user_id', user.id);
-  if(error){ console.warn('[sync] pull workout_blocks:', error.message); return; } // erro de rede/consulta: nada é removido localmente
+  if(error){ console.warn('[sync] pull workout_blocks:', error.message); return; } // erro de rede/consulta: nada é alterado localmente
   const rows = data || [];
+  const remoteIds = new Set(rows.map(row => row.id));
   rows.forEach(row => {
+    const remoteEx = Array.isArray(row.data) ? row.data : [];
     const local = treinoBlocks.find(b => b.remoteId === row.id);
-    if(local){
-      local.name = row.name;
-      local.restSeconds = row.rest_seconds || undefined;
-      local.exercises = Array.isArray(row.data) ? row.data : (local.exercises||[]);
-    } else {
+    if(!local){
       treinoBlocks.push({
         id: Date.now() + treinoBlocks.length + Math.floor(Math.random()*1000),
         name: row.name, open:false, restSeconds: row.rest_seconds || undefined,
-        exercises: Array.isArray(row.data) ? row.data : [],
+        exercises: remoteEx,
         remoteId: row.id
       });
+      return;
+    }
+    if(!Array.isArray(local.exercises)) local.exercises = [];
+    if(sameJSON(local.exercises, remoteEx)){
+      if(local.restSeconds == null && row.rest_seconds) local.restSeconds = row.rest_seconds; // só completa o que faltava
+      return;
+    }
+    if(blockHasContent(local)){
+      console.warn('[sync] CONFLITO em workout_blocks:', row.id, '(' + (local.name || 'Sem nome') + ') — mantendo a versão LOCAL; a nuvem tem uma versão diferente e será atualizada pelo push.');
+      return;
+    }
+    if(remoteEx.length > 0){
+      /* local realmente vazio/padrão e nuvem com conteúdo: aceita a nuvem */
+      local.name = row.name || local.name;
+      local.restSeconds = row.rest_seconds || local.restSeconds;
+      local.exercises = remoteEx;
     }
   });
-  /* Propaga exclusões remotas: um bloco local com remoteId preenchido que não
-     veio nesta consulta bem-sucedida foi excluído em outro dispositivo — remove
-     só o bloco de treinoBlocks (mutação in-place, sem reatribuir a variável).
-     Blocos sem remoteId (ainda não sincronizados) nunca são tocados aqui, e o
-     workoutHistory não é lido nem alterado por este laço. */
-  const remoteIds = new Set(rows.map(row => row.id));
-  for(let i = treinoBlocks.length - 1; i >= 0; i--){
-    const b = treinoBlocks[i];
-    if(b.remoteId && !remoteIds.has(b.remoteId)) treinoBlocks.splice(i, 1);
+  /* Exclusão remota NÃO é propagada. Um bloco local cujo remoteId não veio nesta
+     consulta é mantido; só se solta o remoteId (que não existe mais na nuvem)
+     para que o próximo push o recrie, em vez de atualizar uma linha inexistente. */
+  treinoBlocks.forEach(b => {
+    if(b.remoteId && !remoteIds.has(b.remoteId)){
+      console.warn('[sync] bloco local "' + (b.name || 'Sem nome') + '" não está na nuvem — mantido localmente (exclusão remota NÃO é propagada).');
+      delete b.remoteId;
+    }
+  });
+}
+
+/* ======================================================================
+   RECUPERAR TREINOS (temporário) — fontes, em ordem: backup, sessão ativa,
+   histórico. Nunca altera workoutHistory, nunca sobrescreve template
+   não vazio sem confirmação e nunca inventa treino.
+====================================================================== */
+function cloneJSON(x){ return JSON.parse(JSON.stringify(x)); }
+function templateExFromRun(ex, i){
+  const n = Array.isArray(ex.sets) ? ex.sets.length : 0;
+  const rawId = ex.exId != null ? ex.exId : ex.id;
+  const out = {
+    id: rawId != null ? rawId : (Date.now() + i + Math.floor(Math.random() * 100000)),
+    nome: ex.nome || '',
+    obs: ex.obs || '',
+    sets: Array.from({ length: Math.max(1, n) }, () => ({ reps:'', carga:'' }))  /* sem reps/carga/RIR/completed da execução */
+  };
+  if(ex.muscleOverride && typeof ex.muscleOverride === 'object' && Object.keys(ex.muscleOverride).length) out.muscleOverride = cloneJSON(ex.muscleOverride);
+  return out;
+}
+function recoveryStatus(c){
+  const local = c.blockId != null ? findBlock(c.blockId) : null;
+  if(!local) return 'missing';
+  if(!blockHasContent(local)) return 'empty';
+  return sameJSON(local.exercises, c.exercises) ? 'same' : 'differs';
+}
+async function collectRecoveryCandidates(){
+  const found = { backup:false, prevBackup:false, session:false, history:false };
+  const out = [];
+  const keyOf = c => c.blockId != null ? 'id:' + c.blockId : 'n:' + String(c.name || '').trim().toLowerCase();
+  const take = (c) => { c.status = recoveryStatus(c); out.push(c); };
+  const addBackup = (rec, source, label) => {
+    if(!rec || !Array.isArray(rec.blocks)) return;
+    const withContent = rec.blocks.filter(blockHasContent);
+    if(withContent.length) found[source] = true;
+    withContent.forEach(b => {
+      const c = { source, sourceLabel: label + (rec.savedAt ? ' de ' + new Date(rec.savedAt).toLocaleString('pt-BR') : ''),
+        blockId: b.id, name: b.name || 'Sem nome', restSeconds: b.restSeconds, remoteId: b.remoteId,
+        exercises: cloneJSON(b.exercises) };
+      if(out.some(o => (o.source === 'backup' || o.source === 'prevBackup') && o.blockId === c.blockId && sameJSON(o.exercises, c.exercises))) return;
+      if(recoveryStatus(c) === 'same') return;
+      take(c);
+    });
+  };
+  addBackup(await readBackupRecord(BLOCKS_BACKUP_KEY), 'backup', 'backup');
+  addBackup(await readBackupRecord(BLOCKS_PREV_BACKUP_KEY), 'prevBackup', 'backup anterior');
+  const covered = new Set(out.map(keyOf));
+
+  const s = activeWorkoutSession;
+  if(s && Array.isArray(s.exercises) && s.exercises.some(e => e && e.nome)){
+    found.session = true;
+    const c = { source:'session', sourceLabel:'sessão ativa', blockId: s.blockId, name: s.blockName || 'Treino recuperado',
+      restSeconds: s.restSeconds, exercises: s.exercises.filter(e => e && e.nome).map(templateExFromRun) };
+    if(!covered.has(keyOf(c))){
+      c.status = recoveryStatus(c);
+      if(c.status === 'missing' || c.status === 'empty'){ out.push(c); covered.add(keyOf(c)); }
+    }
   }
+
+  const groups = new Map();
+  (workoutHistory || []).forEach(h => {
+    if(!h || !Array.isArray(h.exercises) || !h.exercises.some(e => e && e.nome)) return;
+    const k = h.blockId != null ? 'id:' + h.blockId : 'n:' + String(h.blockName || '').trim().toLowerCase();
+    const cur = groups.get(k);
+    if(!cur || historySortKey(h).localeCompare(historySortKey(cur)) > 0) groups.set(k, h);
+  });
+  if(groups.size) found.history = true;
+  groups.forEach(h => {
+    const c = { source:'history', sourceLabel:'histórico (' + fmtDateShort(h.date) + ')', blockId: h.blockId != null ? h.blockId : null,
+      name: h.blockName || 'Treino recuperado', restSeconds: (typeof h.restSeconds === 'number' ? h.restSeconds : undefined),
+      exercises: h.exercises.filter(e => e && e.nome).map(templateExFromRun) };
+    if(covered.has(keyOf(c)) || covered.has('n:' + String(c.name).trim().toLowerCase())) return;
+    c.status = recoveryStatus(c);
+    if(c.status === 'missing' || c.status === 'empty') out.push(c);
+  });
+  return { found, candidates: out };
+}
+async function applyRecoveryCandidate(c){
+  const fromBackup = c.source === 'backup' || c.source === 'prevBackup';
+  let b = c.blockId != null ? findBlock(c.blockId) : null;
+  if(b && blockHasContent(b) && !fromBackup) return { ok:false, reason:'O treino atual tem conteúdo; nada foi alterado.' };
+  /* guarda o estado atual do template antes de mexer (rede de segurança extra) */
+  try{ await writeBackupRecord(BLOCKS_PRERECOVERY_KEY, BLOCKS_PRERECOVERY_KEY + ':prev', 'blocks', treinoBlocks, blocksContentScore); }catch(e){}
+  const ex = cloneJSON(c.exercises);
+  if(b){
+    b.exercises = ex;
+    if(!b.name) b.name = c.name;
+    if(c.restSeconds) b.restSeconds = c.restSeconds;
+  } else {
+    b = { id: (c.blockId != null && !findBlock(c.blockId)) ? c.blockId : (Date.now() + treinoBlocks.length + Math.floor(Math.random() * 1000)),
+      name: c.name, open:false, exercises: ex };
+    if(c.restSeconds) b.restSeconds = c.restSeconds;
+    if(c.remoteId && !treinoBlocks.some(x => x.remoteId === c.remoteId)) b.remoteId = c.remoteId;
+    treinoBlocks.push(b);
+  }
+  sanitizeTemplates();
+  await saveTreino();
+  renderBlocksLibrary(); renderWeeklyScheduleConfig(); renderHoje();
+  return { ok:true, block:b };
+}
+function recoveryLine(c){
+  const sets = c.exercises.reduce((n, e) => n + (e.sets ? e.sets.length : 0), 0);
+  const st = c.status === 'differs' ? ' · substitui o conteúdo atual' : c.status === 'empty' ? ' · template atual vazio' : ' · treino ausente';
+  return escapeHtml(c.name) + ' — ' + c.exercises.length + ' exercícios, ' + sets + ' séries (' + escapeHtml(c.sourceLabel) + ')' + st;
+}
+function showRecoveryInfo(title, message){
+  openChoiceModal({ title, message, actions:[{ label:'Fechar', tone:'ghost' }] });
+}
+function confirmRecovery(list){
+  const lines = list.map(c => '<li>' + recoveryLine(c) + '</li>').join('');
+  const replace = list.some(c => c.status === 'differs');
+  openChoiceModal({
+    title: list.length > 1 ? 'Restaurar ' + list.length + ' treinos?' : 'Restaurar treino?',
+    message: '<ul style="text-align:left;padding-left:18px;margin:6px 0">' + lines + '</ul>'
+      + (replace ? 'Um template com conteúdo será substituído pela cópia. O estado atual fica guardado em <b>' + BLOCKS_PRERECOVERY_KEY + '</b>. ' : 'Nenhum template com conteúdo será alterado. ')
+      + 'Reps e carga voltam em branco quando a origem é sessão ou histórico. O histórico de treinos não é modificado.',
+    actions:[
+      { label:'Cancelar', tone:'ghost' },
+      { label:'Restaurar', tone:'primary', onClick: async () => {
+        let n = 0, skipped = 0;
+        for(const c of list){ const r = await applyRecoveryCandidate(c); if(r.ok) n++; else skipped++; }
+        showRecoveryInfo(n ? 'Treino restaurado' : 'Nada alterado', n + ' treino(s) restaurado(s)' + (skipped ? ', ' + skipped + ' ignorado(s) por já terem conteúdo' : '') + '.');
+      } }
+    ]
+  });
+}
+async function openRecoveryModal(){
+  const { found, candidates } = await collectRecoveryCandidates();
+  const anySource = found.backup || found.prevBackup || found.session || found.history;
+  if(!anySource){
+    showRecoveryInfo('Nenhum treino recuperável', 'Não foi encontrada cópia no backup, na sessão ativa nem no histórico. Nada foi criado ou alterado.');
+    return;
+  }
+  if(!candidates.length){
+    showRecoveryInfo('Nada a recuperar', 'Foram encontradas cópias, mas todos os treinos delas já estão presentes nos seus templates atuais.');
+    return;
+  }
+  const actions = candidates.map(c => ({ label:'Restaurar ' + c.name + ' (' + c.sourceLabel.split(' de ')[0] + ')', tone:'primary', onClick: () => confirmRecovery([c]) }));
+  const safeBackup = candidates.filter(c => c.source === 'backup' && c.status !== 'differs');
+  if(safeBackup.length > 1) actions.push({ label:'Restaurar todos do backup (' + safeBackup.length + ')', tone:'primary', onClick: () => confirmRecovery(safeBackup) });
+  actions.push({ label:'Fechar', tone:'ghost' });
+  openChoiceModal({
+    title: 'Recuperar treinos',
+    message: '<ul style="text-align:left;padding-left:18px;margin:6px 0">' + candidates.map(c => '<li>' + recoveryLine(c) + '</li>').join('') + '</ul>Escolha o que restaurar. Nada é aplicado antes da sua confirmação.',
+    actions, stack:true
+  });
 }
 
 function historyLegacyKey(entry){
@@ -1845,6 +2057,7 @@ async function syncFromSupabase(user){
      a programação resolve remoteId -> blockId local usando treinoBlocks
      já atualizado. Por isso saiu do Promise.all e virou um await isolado
      — o restante continua paralelo, como antes. */
+  await backupLocalBeforeSync(); // cópia do estado local ORIGINAL, antes de qualquer dado da nuvem entrar
   await pullWorkoutBlocks(user);
   await Promise.all([
     pullWorkoutHistory(user),
