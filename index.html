@@ -1054,6 +1054,49 @@ h1,h2,h3,.sx-ex-name,.ts-name,.lib-name,.sx-head-title{ font-family:'Fraunces',G
   .recover-row{ margin-top:18px; text-align:center; }
   .recover-btn{ font-family:inherit; font-size:12.5px; color:var(--text-faint); background:none; border:1px dashed var(--border-soft); border-radius:99px; padding:10px 16px; min-height:44px; cursor:pointer; }
   .recover-btn:hover{ color:var(--text-secondary); border-color:var(--border); }
+/* ===================== DESCANSO — painel, estados e faixa fixa ===================== */
+#sx-rest-panel{ display:block; margin-top:22px; padding-top:18px; border-top:1px solid var(--border-soft); }
+.sx-rest-chips{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.sx-rest-big{ width:100%; min-height:72px; margin-top:12px; padding:10px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px;
+  border-radius:18px; border:1px solid rgba(196,151,85,0.34); background:rgba(196,151,85,0.07); color:var(--text); cursor:pointer; }
+.sx-rest-big-l{ font-family:'Figtree',system-ui,sans-serif; font-size:17px; font-weight:700; letter-spacing:0; color:var(--warn); }
+.sx-rest-big-t{ font-family:'Fraunces',Georgia,serif; font-size:30px; font-weight:500; font-variant-numeric:tabular-nums lining-nums; color:var(--text); }
+.sx-rest-big:active{ transform:scale(0.985); }
+.sx-rest-big.nudge{ animation:restNudge 1.5s ease-out 1; }
+@keyframes restNudge{
+  0%{ background:rgba(196,151,85,0.24); border-color:rgba(196,151,85,0.8); transform:translateY(3px); }
+  30%{ transform:translateY(0); }
+  100%{ background:rgba(196,151,85,0.07); border-color:rgba(196,151,85,0.34); }
+}
+.sx-rest-live{ border-radius:20px; border:1px solid rgba(196,151,85,0.30); background:linear-gradient(180deg,#211719,#1A1214); padding:18px 16px 16px; text-align:center; }
+.sx-rest-cap{ font-family:'Figtree',system-ui,sans-serif; font-size:14px; font-weight:600; color:var(--warn); }
+.sx-rest-time{ font-family:'Fraunces',Georgia,serif; font-size:clamp(46px,14vw,54px); line-height:1.05; font-weight:500; font-variant-numeric:tabular-nums lining-nums; letter-spacing:-0.01em; color:var(--text); margin-top:2px; }
+.sx-rest-sub{ min-height:18px; font-size:13px; color:var(--text-secondary); margin-top:2px; }
+.sx-rest-bar{ height:6px; border-radius:99px; background:rgba(239,225,214,0.08); overflow:hidden; margin:12px 4px 16px; }
+.sx-rest-bar i{ display:block; height:100%; width:0; background:var(--warn); border-radius:99px; transition:width .25s linear; }
+.sx-rest-ctl{ display:grid; grid-template-columns:1fr 1.3fr 1fr; gap:8px; }
+.sx-rest-ctl-btn{ min-height:48px; border-radius:14px; border:1px solid var(--border); background:rgba(239,225,214,0.04); color:var(--text-secondary); font-size:15px; font-weight:600; cursor:pointer; }
+.sx-rest-ctl-btn.main{ color:var(--on-treino); background:var(--warn); border-color:var(--warn); }
+#sx-rest-panel[data-state="paused"] .sx-rest-time{ color:var(--text-secondary); }
+#sx-rest-panel[data-state="finished"] .sx-rest-ctl{ grid-template-columns:1fr 1.4fr; }
+#sx-rest-panel[data-state="finished"] .sx-rest-live{ animation:restDone 1.6s ease-out 1; border-color:rgba(196,151,85,0.6); }
+#sx-rest-panel[data-state="finished"] .sx-rest-time{ color:var(--warn); }
+@keyframes restDone{ 0%{ background:rgba(196,151,85,0.22); } 100%{ background:linear-gradient(180deg,#211719,#1A1214); } }
+/* faixa fixa no topo da rolagem: só aparece quando o painel saiu da tela */
+.sx-rest-mini{ position:sticky; top:0; z-index:6; display:none; background:rgba(24,17,19,0.96); border-bottom:1px solid rgba(196,151,85,0.28); }
+.sx-rest-mini.show{ display:block; }
+.sx-rest-mini-in{ width:100%; min-height:44px; padding:0 16px; display:flex; align-items:center; justify-content:space-between; color:var(--text); font-family:'Figtree',system-ui,sans-serif; cursor:pointer; }
+.sx-rest-mini-l{ font-size:14px; font-weight:600; color:var(--warn); }
+.sx-rest-mini-t{ font-family:'Fraunces',Georgia,serif; font-size:22px; font-weight:500; font-variant-numeric:tabular-nums lining-nums; }
+.sx-rest-mini-bar{ height:3px; background:rgba(239,225,214,0.08); }
+.sx-rest-mini-bar i{ display:block; height:100%; width:0; background:var(--warn); }
+/* cápsula flutuante (sessão fechada): mesma identidade âmbar */
+.rt-ring{ background:conic-gradient(var(--warn) calc(var(--p)*1%), rgba(239,225,214,0.08) 0); }
+.rest-timer-widget.finished{ border-color:rgba(196,151,85,0.5); }
+.rest-timer-widget.finished .rt-time{ color:var(--warn); }
+.rt-btn{ min-height:36px; font-size:12.5px; }
+@media (max-width:420px){ .rt-btn{ padding:7px 10px; font-size:12px; } }
+@media (prefers-reduced-motion:reduce){ .sx-rest-big.nudge,#sx-rest-panel[data-state="finished"] .sx-rest-live{ animation:none !important; } .sx-rest-bar i{ transition:none; } }
 </style>
 </head>
 <body>
@@ -1293,7 +1336,7 @@ h1,h2,h3,.sx-ex-name,.ts-name,.lib-name,.sx-head-title{ font-family:'Fraunces',G
     <div class="sx-head" id="session-header"></div>
     <div class="sx-nav" id="session-nav"></div>
   </div></div>
-  <div class="session-scroll" id="session-scroll"><div class="sx-content" id="session-main"></div></div>
+  <div class="session-scroll" id="session-scroll"><div class="sx-rest-mini" id="sx-rest-mini"></div><div class="sx-content" id="session-main"></div></div>
   <div class="sx-toast" id="session-toast" role="status"></div>
   <div class="session-footer" id="session-footer"></div>
 </div>
@@ -2258,7 +2301,10 @@ let workoutHistory = [];
 let bodyWeightLog = [];
 let calendarMonth = new Date();
 const REST_DEFAULT = 90;
-let restTimerState = null; /* { blockId, totalSeconds, remaining, running, intervalId } */
+let restTickId = null;        /* setInterval só para REDESENHAR; o tempo vem sempre de endAt */
+let restAudioCtx = null;      /* AudioContext desbloqueado pelo toque em DESCANSAR */
+let restPanelObserver = null; /* mostra a faixa fixa quando o painel de descanso sai da tela */
+let restPanelVisible = true;
 
 /* ======================================================================
    PROGRAMAÇÃO SEMANAL — dia da semana -> blockId (ou null = Dia livre)
@@ -5486,6 +5532,7 @@ async function loadActiveSession(){
     const n = s.exercises.length;
     s.currentExerciseIndex = n ? Math.max(0, Math.min(n - 1, parseInt(s.currentExerciseIndex, 10) || 0)) : 0;
     activeWorkoutSession = s;
+    restResumeAfterLoad();
   }catch(e){
     console.warn('[treino] falha ao ler treino:activeSession:', e);
     activeWorkoutSession = null;
@@ -5886,67 +5933,271 @@ function fmtRestTime(sec){
   const m = Math.floor(sec/60), s = sec%60;
   return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
 }
+/* ----------------------------------------------------------------------
+   Estado do descanso = activeWorkoutSession.restTimer (pertence à SESSÃO, não a
+   um exercício):  { durationSeconds, endAt, pausedRemaining, running, finished }
+   O tempo restante é sempre derivado do relógio absoluto endAt; o setInterval
+   só redesenha. Persiste junto com a sessão (flushActiveSession).
+---------------------------------------------------------------------- */
+function curRest(){ const s = activeWorkoutSession; return (s && s.restTimer) ? s.restTimer : null; }
+function restRemaining(rt){
+  if(!rt) return 0;
+  if(rt.finished) return 0;
+  if(rt.running && typeof rt.endAt === 'number') return Math.max(0, Math.ceil((rt.endAt - Date.now()) / 1000));
+  return Math.max(0, Math.ceil(rt.pausedRemaining || 0));
+}
+function startRestTicker(){
+  if(restTickId) clearInterval(restTickId);
+  restTickId = setInterval(tickRestTimer, 250);
+}
+function stopRestTicker(){ if(restTickId){ clearInterval(restTickId); restTickId = null; } }
+
 function startRestTimer(seconds){
-  seconds = seconds || REST_DEFAULT;
-  if(restTimerState && restTimerState.intervalId) clearInterval(restTimerState.intervalId);
-  restTimerState = { totalSeconds: seconds, remaining: seconds, running: true, intervalId: null, finished:false };
-  restTimerState.intervalId = setInterval(tickRestTimer, 1000);
+  const s = activeWorkoutSession;
+  if(!s) return;
+  seconds = Math.max(1, Math.round(seconds || s.restSeconds || REST_DEFAULT));
+  unlockRestAudio(); /* chamado a partir do toque do usuário */
+  s.restTimer = { durationSeconds: seconds, endAt: Date.now() + seconds * 1000, pausedRemaining: null, running: true, finished: false };
+  flushActiveSession();
+  startRestTicker();
+  renderRestPanel();
   renderRestTimerWidget();
 }
 function tickRestTimer(){
-  if(!restTimerState || !restTimerState.running) return;
-  restTimerState.remaining--;
-  if(restTimerState.remaining <= 0){
-    restTimerState.remaining = 0;
-    restTimerState.running = false;
-    clearInterval(restTimerState.intervalId);
-    restTimerState.finished = true;
-    if(navigator.vibrate){ try{ navigator.vibrate(200); }catch(e){} }
-  }
+  const rt = curRest();
+  if(!rt || !rt.running){ stopRestTicker(); return; }
+  if(restRemaining(rt) <= 0){ finishRest(0); return; }
+  updateRestDom();
+}
+/* Encerra o descanso (chegou a zero). lateMs = há quanto tempo já deveria ter acabado. */
+function finishRest(lateMs){
+  const s = activeWorkoutSession, rt = curRest();
+  if(!s || !rt || rt.finished) return;
+  rt.running = false; rt.endAt = null; rt.pausedRemaining = 0; rt.finished = true;
+  stopRestTicker();
+  flushActiveSession();
+  renderRestPanel();
   renderRestTimerWidget();
+  onRestFinished({ late: (lateMs || 0) > 10000 });
+}
+/* Ponto ÚNICO de "descanso terminou": som + vibração. Próxima missão (notificações)
+   deve se conectar aqui. Não inicia nada, não marca série, não avança exercício. */
+function onRestFinished(info){
+  if(info && info.late) return; /* descanso que terminou há muito tempo (app fechado/suspenso): só o estado visual */
+  playRestChime();
+  if('vibrate' in navigator){ try{ navigator.vibrate([120, 80, 180]); }catch(e){} }
+}
+function unlockRestAudio(){
+  try{
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if(!AC) return;
+    if(!restAudioCtx) restAudioCtx = new AC();
+    if(restAudioCtx.state === 'suspended') restAudioCtx.resume();
+    /* toca 1 amostra muda: libera o áudio no iOS/Safari dentro do gesto do usuário */
+    const buf = restAudioCtx.createBuffer(1, 1, 22050), src = restAudioCtx.createBufferSource();
+    src.buffer = buf; src.connect(restAudioCtx.destination); src.start(0);
+  }catch(e){}
+}
+function playRestChime(){
+  try{
+    if(!restAudioCtx) return;
+    if(restAudioCtx.state === 'suspended') restAudioCtx.resume();
+    const ctx = restAudioCtx, t0 = ctx.currentTime + 0.02;
+    /* "plim-plim": duas notas suaves (Lá5 e Ré6), ataque curto e decaimento exponencial */
+    [[880, 0], [1174.66, 0.2]].forEach(([freq, off]) => {
+      const osc = ctx.createOscillator(), g = ctx.createGain();
+      osc.type = 'sine'; osc.frequency.value = freq;
+      const t = t0 + off;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.22, t + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.45);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(t); osc.stop(t + 0.5);
+    });
+  }catch(e){}
 }
 function pauseRestTimer(){
-  if(!restTimerState) return;
-  restTimerState.running = !restTimerState.running;
-  if(restTimerState.running){
-    restTimerState.finished = false;
-    restTimerState.intervalId = setInterval(tickRestTimer, 1000);
+  const rt = curRest();
+  if(!rt || rt.finished) return;
+  if(rt.running){
+    rt.pausedRemaining = restRemaining(rt);
+    rt.running = false; rt.endAt = null;
+    stopRestTicker();
   } else {
-    clearInterval(restTimerState.intervalId);
+    rt.endAt = Date.now() + (rt.pausedRemaining || 0) * 1000;
+    rt.running = true;
+    startRestTicker();
   }
-  renderRestTimerWidget();
+  flushActiveSession();
+  updateRestDom();
 }
 function addRestSeconds(sec){
-  if(!restTimerState) return;
-  restTimerState.remaining = Math.max(0, restTimerState.remaining + sec);
-  restTimerState.totalSeconds = Math.max(restTimerState.totalSeconds, restTimerState.remaining);
-  if(restTimerState.remaining > 0){
-    restTimerState.finished = false;
-    if(!restTimerState.running){ restTimerState.running = true; restTimerState.intervalId = setInterval(tickRestTimer, 1000); }
-  }
-  renderRestTimerWidget();
+  const rt = curRest();
+  if(!rt || rt.finished) return;
+  if(rt.running) rt.endAt += sec * 1000;
+  else rt.pausedRemaining = (rt.pausedRemaining || 0) + sec;
+  rt.durationSeconds += sec;
+  flushActiveSession();
+  updateRestDom();
 }
+/* PULAR / FECHAR: encerra sem marcar nada no treino */
 function skipRestTimer(){
-  if(!restTimerState) return;
-  clearInterval(restTimerState.intervalId);
-  restTimerState = null;
+  const s = activeWorkoutSession;
+  stopRestTicker();
+  if(s && s.restTimer){ s.restTimer = null; flushActiveSession(); }
+  renderRestPanel();
   renderRestTimerWidget();
 }
+/* Recalcula pelo relógio real (volta do background, reload, retomada). Nunca compensa segundos "perdidos". */
+function syncRestFromClock(){
+  const rt = curRest();
+  if(!rt) return;
+  if(rt.running){
+    const left = rt.endAt - Date.now();
+    if(left <= 0){ finishRest(-left); return; }
+    startRestTicker();
+  }
+  updateRestDom();
+}
+/* chamado ao carregar a sessão do storage */
+function restResumeAfterLoad(){
+  const s = activeWorkoutSession;
+  if(!s) return;
+  const rt = s.restTimer;
+  const ok = rt && typeof rt === 'object' && typeof rt.durationSeconds === 'number' && rt.durationSeconds > 0;
+  if(!ok){ s.restTimer = null; return; }
+  rt.running = !!rt.running; rt.finished = !!rt.finished;
+  if(rt.running && typeof rt.endAt !== 'number'){ rt.running = false; rt.pausedRemaining = rt.durationSeconds; }
+  if(rt.running && rt.endAt <= Date.now()){ rt.running = false; rt.endAt = null; rt.pausedRemaining = 0; rt.finished = true; } /* já passou: concluído, sem som */
+  if(rt.running) startRestTicker();
+}
+
+/* ---------- interface do descanso ---------- */
+function restLabel(rt){ return rt.finished ? 'Descanso finalizado' : 'Descanso'; }
+function restSubText(rt){ return rt.finished ? 'próxima série' : (rt.running ? '' : 'pausado'); }
+function restProgressPct(rt){
+  if(rt.finished) return 100;
+  const total = rt.durationSeconds || 1;
+  return Math.max(0, Math.min(100, Math.round((1 - restRemaining(rt) / total) * 100)));
+}
+/* (re)constrói SÓ o painel de descanso — não contém inputs da série */
+function renderRestPanel(){
+  const panel = document.getElementById('sx-rest-panel');
+  const mini = document.getElementById('sx-rest-mini');
+  const s = activeWorkoutSession, rt = curRest();
+  if(panel && s){
+    const rest = s.restSeconds || REST_DEFAULT;
+    if(!rt){
+      panel.setAttribute('data-state', 'idle');
+      panel.innerHTML = `
+        <div class="sx-rest-chips">
+          <span class="sx-rest-lbl">descanso</span>
+          ${[60, 90, 120, 180].map(v => `<button type="button" class="sx-rest-chip ${rest === v ? 'active' : ''}" data-sec="${v}" onclick="sxSetRest(${v})">${v}s</button>`).join('')}
+        </div>
+        <button type="button" class="sx-rest-big" id="sx-rest-big" onclick="sxStartRest()">
+          <span class="sx-rest-big-l">Descansar</span>
+          <span class="sx-rest-big-t" id="sx-rest-big-t">${fmtRestTime(rest)}</span>
+        </button>`;
+    } else {
+      panel.setAttribute('data-state', rt.finished ? 'finished' : (rt.running ? 'running' : 'paused'));
+      panel.innerHTML = `
+        <div class="sx-rest-live">
+          <div class="sx-rest-cap" id="sx-rest-cap"></div>
+          <div class="sx-rest-time" id="sx-rest-time" role="timer"></div>
+          <div class="sx-rest-sub" id="sx-rest-sub"></div>
+          <div class="sx-rest-bar"><i id="sx-rest-bar-fill"></i></div>
+          <div class="sx-rest-ctl">
+            ${rt.finished
+              ? `<button type="button" class="sx-rest-ctl-btn" onclick="skipRestTimer()">Fechar</button>
+                 <button type="button" class="sx-rest-ctl-btn main" onclick="sxStartRest()">Novo descanso</button>`
+              : `<button type="button" class="sx-rest-ctl-btn" onclick="addRestSeconds(30)">+30s</button>
+                 <button type="button" class="sx-rest-ctl-btn main" id="sx-rest-pause" onclick="pauseRestTimer()">Pausar</button>
+                 <button type="button" class="sx-rest-ctl-btn" onclick="skipRestTimer()">Pular</button>`}
+          </div>
+        </div>`;
+    }
+  }
+  if(mini){
+    mini.setAttribute('data-state', rt ? (rt.finished ? 'finished' : (rt.running ? 'running' : 'paused')) : 'none');
+    mini.innerHTML = rt ? `<button type="button" class="sx-rest-mini-in" onclick="restScrollToPanel()"><span class="sx-rest-mini-l" id="sx-rest-mini-l"></span><span class="sx-rest-mini-t" id="sx-rest-mini-t"></span></button><div class="sx-rest-mini-bar"><i id="sx-rest-mini-fill"></i></div>` : '';
+  }
+  restObservePanel();
+  updateRestDom();
+}
+/* Atualiza SOMENTE textos/largura dos elementos do timer (nada de re-render) */
+function updateRestDom(){
+  const rt = curRest();
+  if(!rt) return;
+  const rem = restRemaining(rt), time = fmtRestTime(rem), pct = restProgressPct(rt);
+  const setTxt = (id, v) => { const el = document.getElementById(id); if(el && el.textContent !== v) el.textContent = v; };
+  setTxt('sx-rest-time', time);
+  setTxt('sx-rest-cap', restLabel(rt));
+  setTxt('sx-rest-sub', restSubText(rt));
+  setTxt('sx-rest-mini-t', time);
+  setTxt('sx-rest-mini-l', restLabel(rt));
+  const f = document.getElementById('sx-rest-bar-fill'); if(f) f.style.width = pct + '%';
+  const mf = document.getElementById('sx-rest-mini-fill'); if(mf) mf.style.width = pct + '%';
+  const pb = document.getElementById('sx-rest-pause'); if(pb) setTxt('sx-rest-pause', rt.running ? 'Pausar' : 'Retomar');
+  const panel = document.getElementById('sx-rest-panel');
+  const st = rt.finished ? 'finished' : (rt.running ? 'running' : 'paused');
+  if(panel && panel.getAttribute('data-state') !== st) panel.setAttribute('data-state', st);
+  const mini = document.getElementById('sx-rest-mini');
+  if(mini){ if(mini.getAttribute('data-state') !== st) mini.setAttribute('data-state', st); mini.classList.toggle('show', !restPanelVisible && sessionOverlayOpen); }
+  renderRestTimerWidget();
+}
+function restObservePanel(){
+  if(restPanelObserver){ restPanelObserver.disconnect(); restPanelObserver = null; }
+  const panel = document.getElementById('sx-rest-panel');
+  restPanelVisible = true;
+  if(!panel || !('IntersectionObserver' in window)) return;
+  restPanelObserver = new IntersectionObserver(entries => {
+    restPanelVisible = entries[entries.length - 1].isIntersecting;
+    const mini = document.getElementById('sx-rest-mini');
+    if(mini) mini.classList.toggle('show', !restPanelVisible && sessionOverlayOpen && !!curRest());
+  }, { root: document.getElementById('session-scroll'), threshold: 0.2 });
+  restPanelObserver.observe(panel);
+}
+function restScrollToPanel(){
+  const panel = document.getElementById('sx-rest-panel');
+  if(panel) panel.scrollIntoView({ block:'center', behavior:'smooth' });
+}
+/* destaque curto no botão DESCANSAR depois de concluir uma série (não inicia nada) */
+function sxNudgeRest(){
+  const b = document.getElementById('sx-rest-big');
+  if(!b) return;
+  b.classList.remove('nudge'); void b.offsetWidth; b.classList.add('nudge');
+}
+/* cápsula flutuante: só aparece com a tela de sessão FECHADA, para o descanso continuar visível */
 function renderRestTimerWidget(){
   const el = document.getElementById('rest-timer-widget');
   if(!el) return;
-  if(!restTimerState){ el.classList.remove('open','finished'); el.innerHTML=''; return; }
-  const pct = restTimerState.totalSeconds > 0 ? Math.round((1 - restTimerState.remaining/restTimerState.totalSeconds)*100) : 100;
-  el.innerHTML = `
-    <div class="rt-ring" style="--p:${pct}"><span class="rt-time">${restTimerState.finished ? 'Pronto' : fmtRestTime(restTimerState.remaining)}</span></div>
-    <div class="rt-controls">
-      <button class="rt-btn" onclick="pauseRestTimer()">${restTimerState.running ? 'Pausar' : 'Retomar'}</button>
-      <button class="rt-btn" onclick="addRestSeconds(15)">+15s</button>
-      <button class="rt-btn ghost" onclick="skipRestTimer()">Pular</button>
-    </div>`;
+  const rt = curRest();
+  if(!rt || sessionOverlayOpen){ el.classList.remove('open','finished'); if(!rt) el.innerHTML=''; return; }
+  const rem = restRemaining(rt), pct = restProgressPct(rt);
+  if(!el.dataset.built || el.dataset.fin !== String(rt.finished) || el.dataset.run !== String(rt.running)){
+    el.dataset.built = '1'; el.dataset.fin = String(rt.finished); el.dataset.run = String(rt.running);
+    el.innerHTML = `
+      <div class="rt-ring" id="rt-ring"><span class="rt-time" id="rt-time"></span></div>
+      <div class="rt-controls">
+        ${rt.finished
+          ? `<button class="rt-btn" onclick="resumeWorkoutSession()">Abrir treino</button><button class="rt-btn ghost" onclick="skipRestTimer()">Fechar</button>`
+          : `<button class="rt-btn" onclick="pauseRestTimer()">${rt.running ? 'Pausar' : 'Retomar'}</button>
+             <button class="rt-btn" onclick="addRestSeconds(30)">+30s</button>
+             <button class="rt-btn ghost" onclick="skipRestTimer()">Pular</button>`}
+      </div>`;
+  }
+  const ring = document.getElementById('rt-ring'); if(ring) ring.style.setProperty('--p', pct);
+  const t = document.getElementById('rt-time'); const txt = rt.finished ? 'Pronto' : fmtRestTime(rem);
+  if(t && t.textContent !== txt) t.textContent = txt;
   el.classList.add('open');
-  el.classList.toggle('finished', !!restTimerState.finished);
+  el.classList.toggle('finished', !!rt.finished);
 }
+
+/* destrava o áudio no primeiro toque (ex.: depois de reload com descanso em andamento) */
+document.addEventListener('pointerdown', () => { if(curRest() && !restAudioCtx) unlockRestAudio(); }, { passive:true });
+/* voltou ao primeiro plano: recalcula imediatamente pelo horário real */
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') syncRestFromClock(); });
+window.addEventListener('pageshow', () => syncRestFromClock());
 
 /* ======================================================================
    PESO CORPORAL
@@ -6227,6 +6478,7 @@ function openWorkoutSession(){
   sxEl('session-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
   renderSession();
+  renderRestTimerWidget();
   if(activeWorkoutSession) startSessionClock();
   document.addEventListener('keydown', escCloseSession);
 }
@@ -6244,6 +6496,7 @@ function closeWorkoutSession(){
   if(activeWorkoutSession) flushActiveSession();
   sessionOverlayOpen = false;
   sessionSuccessEntryId = null;
+  renderRestTimerWidget();
   renderBlocksLibrary();
   renderHoje();
   const hp = sxEl('panel-historico');
@@ -6407,11 +6660,7 @@ function renderSessionExercise(resetScroll){
         <span class="sx-pr-badge" id="sx-live-pr">Novo recorde</span>
       </div>
       <div id="sx-next"></div>
-      <div class="sx-rest">
-        <span class="sx-rest-lbl">descanso</span>
-        ${[60, 90, 120, 180].map(v => `<button type="button" class="sx-rest-chip ${rest === v ? 'active' : ''}" data-sec="${v}" onclick="sxSetRest(${v})">${v}s</button>`).join('')}
-        <button type="button" class="sx-rest-go" id="sx-rest-go" onclick="sxStartRest()">INICIAR DESCANSO · ${rest}s</button>
-      </div>
+      <div class="sx-rest" id="sx-rest-panel"></div>
       <div class="sx-obs">
         <label for="sx-obs-ta">Observação</label>
         <textarea id="sx-obs-ta" placeholder="Ex: subir carga na próxima, senti dor no ombro..." oninput="sxObs(this.value)">${escapeHtml(ex.obs || '')}</textarea>
@@ -6421,6 +6670,7 @@ function renderSessionExercise(resetScroll){
         <button type="button" class="btn-text add" onclick="sxAddExercise()">+ exercício nesta sessão</button>
       </div>
     </div>`;
+  renderRestPanel();
   sxRefreshLive();
   if(sc) sc.scrollTop = resetScroll ? 0 : prevTop;
 }
@@ -6492,6 +6742,7 @@ function sxToggleSet(i){
   sxApplySetState(i);
   flushActiveSession();
   sxRefreshLive();
+  if(set.completed) sxNudgeRest(); /* só realce visual: não inicia descanso nem avança */
 }
 const RIR_CYCLE = ['', '4+', '3', '2', '1', '0'];
 function sxCycleRir(i, btn){
@@ -6612,8 +6863,8 @@ function sxSetRest(sec){
   s.restSeconds = sec;
   schedulePersistSession();
   document.querySelectorAll('.sx-rest-chip').forEach(b => b.classList.toggle('active', Number(b.dataset.sec) === sec));
-  const go = sxEl('sx-rest-go');
-  if(go) go.textContent = 'INICIAR DESCANSO · ' + sec + 's';
+  const t = sxEl('sx-rest-big-t');
+  if(t) t.textContent = fmtRestTime(sec);
 }
 function sxStartRest(){
   const s = activeWorkoutSession;
