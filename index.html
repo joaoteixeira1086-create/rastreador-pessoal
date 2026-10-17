@@ -516,6 +516,57 @@
   .rest-timer-widget{ z-index:600; }
   @media (max-width:360px){ .sx-set .sx-in{ font-size:20px; } .sx-head{ padding-right:4px; } }
 
+  /* ===================== BIBLIOTECA INTELIGENTE / MUSCULATURA 3 NÍVEIS ===================== */
+  .ex-ref{ font-family:'Figtree',system-ui,sans-serif; font-size:11.5px; color: var(--text-faint); margin:6px 0 0 0; line-height:1.4; }
+  .ex-ref b{ color: var(--text-secondary); font-weight:600; }
+  .ex-ref-btn{ background:none; border:none; color: var(--treino); font:inherit; font-size:11.5px; padding:6px 4px; min-height:32px; cursor:pointer; }
+  .ex-suggest{ position:fixed; z-index:650; display:none; overflow-y:auto; background: var(--bg3); border:1px solid var(--border); border-radius: var(--radius-sm); box-shadow:0 12px 32px rgba(0,0,0,0.5); -webkit-overflow-scrolling:touch; }
+  .exs-item{ display:flex; align-items:stretch; gap:6px; border-bottom:1px solid var(--border-soft); }
+  .exs-item:last-child{ border-bottom:none; }
+  .exs-main{ flex:1; min-width:0; padding:10px 12px; min-height:48px; cursor:pointer; }
+  .exs-main:active{ background: var(--surface-hover); }
+  .exs-name{ font-family:'Figtree',system-ui,sans-serif; font-size:14.5px; font-weight:600; color: var(--text); }
+  .exs-sub{ font-size:11.5px; color: var(--text-faint); margin-top:2px; }
+  .exs-tag{ font-size:10px; font-weight:600; color: var(--treino); border:1px solid var(--border); border-radius:6px; padding:1px 5px; margin-left:4px; }
+  .exs-link{ flex-shrink:0; background:none; border:none; border-left:1px solid var(--border-soft); color: var(--text-secondary); font-family:'Figtree',system-ui,sans-serif; font-size:11px; padding:0 12px; min-width:76px; cursor:pointer; }
+  .exs-empty{ padding:12px; font-size:12.5px; color: var(--text-faint); }
+  .exs-create .exs-name{ color: var(--treino); }
+  .mp-open{ flex:1; text-align:left; background: var(--surface); border:1px solid var(--border-soft); border-radius: var(--radius-sm); color: var(--text-secondary); padding:8px 10px; min-height:44px; font-family:'Figtree',system-ui,sans-serif; font-size:12.5px; cursor:pointer; }
+  .mp-open:active{ background: var(--surface-hover); }
+  .mp-sum-row{ display:flex; gap:8px; align-items:baseline; line-height:1.45; }
+  .mp-lv{ flex-shrink:0; font-size:10px; font-weight:700; letter-spacing:0.02em; padding:1px 6px; border-radius:6px; border:1px solid var(--border); color: var(--text-secondary); }
+  .mp-lv-p{ color: var(--treino); border-color: rgba(183,122,102,0.5); background: var(--treino-dim); }
+  .mp-lv-t{ color: var(--text-faint); }
+  .mp-none{ color: var(--text-faint); }
+  .mp-src{ font-size:10.5px; color: var(--text-faint); margin-top:3px; }
+  .mp-backdrop{ position:fixed; inset:0; z-index:640; display:none; align-items:flex-end; justify-content:center; background: rgba(10,6,7,0.7); backdrop-filter: blur(4px); }
+  .mp-backdrop.open{ display:flex; }
+  .mp-sheet{ width:100%; max-width:560px; max-height:92vh; overflow-y:auto; background: var(--bg2); border:1px solid var(--border); border-bottom:none; border-radius:18px 18px 0 0; padding:16px 16px calc(16px + env(safe-area-inset-bottom)); -webkit-overflow-scrolling:touch; }
+  .mp-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px; }
+  .mp-title{ font-size:11.5px; color: var(--text-faint); }
+  .mp-name{ font-family:'Fraunces',Georgia,serif; font-size:20px; font-weight:600; color: var(--text); }
+  .mp-done{ min-height:44px; padding:0 16px; background: var(--accent-dim); border:1px solid var(--accent-soft); border-radius: var(--radius-sm); color: var(--text); font-family:'Figtree',system-ui,sans-serif; font-weight:600; cursor:pointer; }
+  .mp-note{ font-size:12px; color: var(--text-secondary); line-height:1.45; margin-bottom:12px; }
+  .mp-level{ border:1px solid var(--border-soft); border-radius: var(--radius-sm); padding:8px 10px 10px; margin-bottom:8px; }
+  .mp-level.active{ border-color: var(--accent-soft); background: var(--accent-dim); }
+  .mp-level-head{ width:100%; display:flex; justify-content:space-between; align-items:center; background:none; border:none; padding:4px 0; min-height:36px; cursor:pointer; color: var(--text-secondary); }
+  .mp-level-hint{ font-size:11px; color: var(--text-faint); }
+  .mp-chips{ display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
+  .mp-chip{ display:inline-flex; align-items:center; gap:2px; padding:2px 2px 2px 10px; border:1px solid var(--border); border-radius:999px; font-size:12.5px; color: var(--text); background: var(--surface); }
+  .mp-chip button{ width:32px; height:32px; border:none; background:none; color: var(--text-secondary); font-size:18px; cursor:pointer; }
+  .mp-empty{ font-size:12px; color: var(--text-faint); padding:6px 0; }
+  .mp-q{ width:100%; min-height:44px; margin-top:6px; background: var(--surface); border:1px solid var(--border); border-radius: var(--radius-sm); padding:0 12px; font-size:16px; color: var(--text); outline:none; font-family:'Figtree',system-ui,sans-serif; }
+  .mp-results{ display:flex; flex-direction:column; gap:4px; margin:8px 0 12px; }
+  .mp-res{ display:flex; justify-content:space-between; align-items:center; min-height:44px; padding:0 12px; background: var(--surface); border:1px solid var(--border-soft); border-radius: var(--radius-sm); color: var(--text); font-size:14px; cursor:pointer; text-align:left; }
+  .mp-res.dis{ opacity:0.45; cursor:default; }
+  .mp-res-tag{ font-size:11px; color: var(--text-faint); }
+  .mp-groups{ display:flex; flex-wrap:wrap; gap:6px; }
+  .mp-group{ min-height:40px; padding:0 14px; background: var(--surface); border:1px solid var(--border-soft); border-radius:999px; color: var(--text-secondary); font-size:12.5px; cursor:pointer; }
+  .mp-foot{ display:flex; gap:8px; flex-wrap:wrap; }
+  .mp-foot .btn-ghost{ flex:1; min-height:44px; font-size:12px; }
+  .bal-level{ margin-top:18px; padding-top:14px; border-top:1px solid var(--border-soft); }
+  .bal-level-t{ font-size:11.5px; color: var(--text-faint); margin-bottom:8px; }
+
   /* ===================== HISTÓRICO ===================== */
   .hist-section{ margin-bottom:30px; padding-top:26px; border-top:1px solid var(--border-soft); }
   .hist-section:first-of-type{ padding-top:0; border-top:none; }
@@ -1097,6 +1148,64 @@ h1,h2,h3,.sx-ex-name,.ts-name,.lib-name,.sx-head-title{ font-family:'Fraunces',G
 .rt-btn{ min-height:36px; font-size:12.5px; }
 @media (max-width:420px){ .rt-btn{ padding:7px 10px; font-size:12px; } }
 @media (prefers-reduced-motion:reduce){ .sx-rest-big.nudge,#sx-rest-panel[data-state="finished"] .sx-rest-live{ animation:none !important; } .sx-rest-bar i{ transition:none; } }
+/* configurações do aviso de descanso (push) */
+.rp-box{ margin-top:16px; padding-top:14px; border-top:1px solid var(--border-soft); display:flex; flex-direction:column; gap:10px; }
+.rp-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.rp-txt{ display:flex; flex-direction:column; gap:2px; min-width:0; }
+.rp-title{ font-family:'Figtree',system-ui,sans-serif; font-size:13px; color:var(--text); }
+.rp-sub{ font-family:'Figtree',system-ui,sans-serif; font-size:11.5px; color:var(--text-faint); line-height:1.35; }
+.rp-btn{ flex:none; padding:7px 12px; font-size:12px; min-height:34px; }
+.rp-btn[disabled]{ opacity:.5; pointer-events:none; }
+  /* ===== CONEXÕES (ETAPA 2) ===== */
+  .soc-h{ font-family:'Fraunces',Georgia,serif; font-size:19px; font-weight:700; letter-spacing:-0.01em; margin:4px 0 4px; }
+  .soc-sub{ font-size:12.5px; color:var(--text-faint); margin-bottom:16px; line-height:1.5; }
+  .soc-card{ background:var(--surface); border:1px solid var(--border-soft); border-radius:16px; padding:16px; margin-bottom:12px; }
+  .soc-card h3{ font-family:'Fraunces',Georgia,serif; font-size:14px; font-weight:700; margin:0 0 10px; letter-spacing:0.01em; }
+  .soc-lbl{ font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-faint); font-weight:600; margin:14px 0 6px; }
+  .soc-row{ display:flex; align-items:center; gap:10px; }
+  .soc-row.sp{ justify-content:space-between; }
+  .soc-grow{ flex:1; min-width:0; }
+  .soc-name{ font-weight:600; font-size:14px; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .soc-meta{ font-size:11.5px; color:var(--text-faint); margin-top:2px; line-height:1.45; }
+  .soc-actions{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .soc-actions button{ width:auto; padding:8px 12px; font-size:12px; }
+  .soc-in{ width:100%; background:transparent; border:none; border-bottom:1px solid var(--border); color:var(--text); border-radius:0; padding:8px 2px; font-family:'Figtree',system-ui,sans-serif; font-size:14px; outline:none; margin:0; }
+  .soc-in:focus{ border-bottom-color:var(--text); }
+  .soc-opt{ display:flex; gap:10px; align-items:flex-start; padding:10px 0; border-top:1px solid var(--border-soft); font-size:13px; cursor:pointer; }
+  .soc-opt:first-of-type{ border-top:none; }
+  .soc-opt input{ margin-top:3px; accent-color:var(--accent); }
+  .soc-opt small{ display:block; color:var(--text-faint); font-size:11.5px; margin-top:2px; line-height:1.4; }
+  .soc-tag{ display:inline-block; font-size:10.5px; padding:2px 8px; border-radius:99px; border:1px solid var(--border); color:var(--text-secondary); margin:2px 4px 0 0; }
+  .soc-tag.on{ border-color:var(--accent-soft); background:var(--accent-dim); color:var(--text); }
+  .soc-code{ font-family:'DM Mono',ui-monospace,monospace; font-size:22px; letter-spacing:0.12em; text-align:center; padding:14px 8px; border:1px dashed var(--accent-soft); border-radius:12px; margin:10px 0; word-break:break-all; user-select:all; }
+  .soc-note{ font-size:11.5px; color:var(--text-faint); line-height:1.5; border-left:2px solid var(--border); padding-left:10px; margin:10px 0; }
+  .soc-note.warn{ border-left-color:var(--warn); }
+  .soc-bars{ display:flex; gap:6px; align-items:flex-end; height:46px; }
+  .soc-bar{ flex:1; background:var(--bg3); border-radius:4px 4px 0 0; min-height:3px; position:relative; }
+  .soc-bar.met{ background:var(--accent); }
+  .soc-bar span{ position:absolute; top:-14px; left:0; right:0; text-align:center; font-size:10px; color:var(--text-secondary); }
+  .soc-barlbl{ display:flex; gap:6px; margin-top:4px; }
+  .soc-barlbl div{ flex:1; text-align:center; font-size:9.5px; color:var(--text-faint); }
+  .soc-cal{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+  .soc-cal div{ aspect-ratio:1; border-radius:6px; background:var(--bg3); font-size:9.5px; color:var(--text-faint); display:flex; align-items:center; justify-content:center; }
+  .soc-cal div.hd{ background:transparent; aspect-ratio:auto; }
+  .soc-cal div.on{ background:var(--accent); color:#fff; font-weight:600; }
+  .soc-cal div.today{ outline:1px solid var(--text-faint); }
+  .soc-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+  .soc-table td, .soc-table th{ padding:8px 4px; border-top:1px solid var(--border-soft); text-align:center; }
+  .soc-table th{ font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-faint); font-weight:600; border-top:none; }
+  .soc-table td:first-child, .soc-table th:first-child{ text-align:left; }
+  .soc-react{ display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+  .soc-react button{ width:auto; padding:5px 10px; font-size:11.5px; border-radius:99px; background:transparent; border:1px solid var(--border); color:var(--text-secondary); }
+  .soc-react button.on{ border-color:var(--accent-soft); background:var(--accent-dim); color:var(--text); }
+  .soc-back{ background:none; border:none; color:var(--text-secondary); font-size:12.5px; padding:4px 0 12px; width:auto; cursor:pointer; }
+  .soc-seg{ display:flex; gap:6px; margin-bottom:14px; }
+  .soc-seg button{ flex:1; width:auto; padding:8px 6px; font-size:12px; }
+  .soc-seg button.on{ background:var(--accent-dim); border-color:var(--accent-soft); color:var(--text); }
+  .soc-ex{ padding:10px 0; border-top:1px solid var(--border-soft); }
+  .soc-ex:first-of-type{ border-top:none; }
+  .soc-up{ color:var(--dieta); } .soc-dn{ color:var(--danger); }
+
 </style>
 </head>
 <body>
@@ -1125,6 +1234,10 @@ h1,h2,h3,.sx-ex-name,.ts-name,.lib-name,.sx-head-title{ font-family:'Fraunces',G
       <div class="segnav-tab" data-tab="dieta">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v7a3 3 0 0 0 3 3v10M9 2v10M12 2v7a3 3 0 0 1-3 3M18 2c-2 1.5-2 4-2 6s.5 3.5 2 4v10"/></svg>
         <span class="segnav-lbl">Dieta</span>
+      </div>
+      <div class="segnav-tab" data-tab="conexoes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1"/><path d="M16.5 4.6a3.2 3.2 0 0 1 0 6.2"/><path d="M18 14.2a5 5 0 0 1 3 4.8v1"/></svg>
+        <span class="segnav-lbl">Conexões</span>
       </div>
       <div class="segnav-tab" data-tab="historico">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/></svg>
@@ -1255,6 +1368,11 @@ h1,h2,h3,.sx-ex-name,.ts-name,.lib-name,.sx-head-title{ font-family:'Fraunces',G
   <!-- ===== HISTÓRICO ===== -->
   <div class="panel" id="panel-historico">
     <div id="historico-content"></div>
+  </div>
+
+  <!-- ===== CONEXÕES ===== -->
+  <div class="panel" id="panel-conexoes">
+    <div id="conexoes-content"></div>
   </div>
 
 </div>
@@ -1589,6 +1707,7 @@ async function signUp(email, password){
 
 async function signOut(){
   const sb = initSupabase();
+  await rpOnSignOut(); /* ainda autenticado: cancela pendentes, desativa o aparelho no servidor e remove a assinatura local */
   currentSyncUser = null;
   setSyncStatus('idle', 'entrar');
   try{ if(sb) await sb.auth.signOut(); }catch(e){}
@@ -1647,50 +1766,333 @@ async function backupLocalBeforeSync(){
   }
 }
 
-async function pullWorkoutBlocks(user){
-  const sb = initSupabase(); if(!sb) return;
+
+/* ======================================================================
+   SYNC DE TREINOS (workout_blocks / workout_schedule)
+   ----------------------------------------------------------------------
+   Modelo (aditivo, sem mexer em tabelas antigas além de 2 colunas novas):
+   - ID estável: cada bloco recebe um UUID (remoteId) ANTES do primeiro envio e é gravado
+     localmente antes da rede; reenvios são idempotentes (nunca duplicam).
+   - Revisão: a nuvem tem `rev` (sobe a cada UPDATE, por gatilho). O bloco local guarda
+     `rev` (última revisão vista) e `sh` (hash do conteúdo naquele momento). Pendência =
+     conteúdo atual diferente de `sh`. Nenhuma instrumentação de edição é necessária.
+   - Escrita condicional: UPDATE ... WHERE rev = <rev que o aparelho viu>. Se a nuvem
+     avançou, o UPDATE não acerta nenhuma linha: o aparelho NUNCA sobrescreve versão mais nova.
+   - Conflito (os dois lados mudaram): a versão da nuvem fica no bloco original e as edições
+     locais viram um bloco novo "(cópia deste aparelho)". Nada é descartado.
+   - Exclusão: `deleted_at` (tombstone) em vez de DELETE; exclusões pendentes ficam numa fila
+     persistente e são reenviadas. Bloco apagado em outro aparelho some aqui só se não houver
+     edição local pendente nem sessão ativa usando ele.
+   - Blocos padrão vazios ("Bloco A..D", nunca editados) não são enviados e adotam o bloco de
+     mesmo nome da nuvem em vez de duplicar.
+   - Erros de rede/servidor sobem (throw): o status só vira "sincronizado" se tudo foi aceito.
+====================================================================== */
+const BLOCKS_DELETED_KEY = 'treino:blocksDeleted';
+const SCHEDULE_SYNC_KEY = 'treino:scheduleSync';
+const SYNC_CONFLICT_LOG_KEY = 'treino:syncConflictLog';
+let syncPushFailCount = 0;
+let blocksLockChain = Promise.resolve();
+let pendingConflictNotes = [];
+function withBlocksLock(fn){ const run = blocksLockChain.catch(() => {}).then(fn); blocksLockChain = run.catch(() => {}); return run; }
+function newUuid(){
+  if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  const b = new Uint8Array(16); crypto.getRandomValues(b);
+  b[6] = (b[6] & 0x0f) | 0x40; b[8] = (b[8] & 0x3f) | 0x80;
+  const h = Array.from(b, x => x.toString(16).padStart(2, '0')).join('');
+  return h.slice(0, 8) + '-' + h.slice(8, 12) + '-' + h.slice(12, 16) + '-' + h.slice(16, 20) + '-' + h.slice(20);
+}
+/* JSON canônico (chaves ordenadas): o jsonb do Postgres reordena chaves, então comparar strings cruas dá falso conflito */
+function canonJSON(x){
+  if(Array.isArray(x)) return '[' + x.map(canonJSON).join(',') + ']';
+  if(x && typeof x === 'object') return '{' + Object.keys(x).filter(k => x[k] !== undefined).sort().map(k => JSON.stringify(k) + ':' + canonJSON(x[k])).join(',') + '}';
+  return JSON.stringify(x === undefined ? null : x);
+}
+function hashStr(s){
+  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+  for(let i = 0; i < s.length; i++){ const ch = s.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
+}
+function blockContent(b){ return { name: b.name || 'Sem nome', rest: b.restSeconds || null, ex: Array.isArray(b.exercises) ? b.exercises : [] }; }
+function rowContent(row){ return { name: row.name || 'Sem nome', rest: row.rest_seconds || null, ex: Array.isArray(row.data) ? row.data : [] }; }
+function blockHash(b){ return hashStr(canonJSON(blockContent(b))); }
+function blockDirty(b){ return b.rev == null || b.sh !== blockHash(b); }
+function sameBlockAsRow(b, row){ return canonJSON(blockContent(b)) === canonJSON(rowContent(row)); }
+function isPlaceholderBlock(b){
+  return !b.remoteId && b.rev == null && typeof b.id === 'number' && b.id >= 1 && b.id <= 4
+    && /^Bloco [A-D]$/.test(b.name || '') && !(b.exercises || []).length;
+}
+function persistBlocksLocal(){ return storage.set('treino:blocks', JSON.stringify(treinoBlocks)); } /* sem re-disparar push */
+function newLocalBlockId(){
+  let id; do{ id = Date.now() + treinoBlocks.length + Math.floor(Math.random() * 100000); }while(treinoBlocks.some(b => b.id === id));
+  return id;
+}
+function applyRemoteToBlock(b, row){
+  b.name = row.name || b.name;
+  if(row.rest_seconds) b.restSeconds = row.rest_seconds; else delete b.restSeconds;
+  b.exercises = cloneJSON(Array.isArray(row.data) ? row.data : []);
+  b.remoteId = row.id; b.rev = row.rev; b.sh = blockHash(b);
+}
+function noteConflict(c){ pendingConflictNotes.push(c); }
+
+/* ---- fila persistente de exclusões ---- */
+async function loadBlocksDeleted(){
+  try{ const r = await storage.get(BLOCKS_DELETED_KEY); const l = r && r.value ? JSON.parse(r.value) : []; return Array.isArray(l) ? l : []; }catch(e){ return []; }
+}
+async function flushBlockDeletes(sb, uid){
+  const list = await loadBlocksDeleted();
+  if(!list.length) return;
+  const rest = []; let lastErr = null;
+  for(const it of list){
+    const { error } = await sb.from('workout_blocks').update({ deleted_at: new Date().toISOString() }).eq('id', it.remoteId).eq('user_id', uid).is('deleted_at', null);
+    if(error){ rest.push(it); lastErr = error; }
+  }
+  await storage.set(BLOCKS_DELETED_KEY, JSON.stringify(rest));
+  if(rest.length) throw new Error('delete workout_blocks: ' + (lastErr && lastErr.message));
+}
+async function deleteWorkoutBlockRemote(remoteId){
+  if(!remoteId) return;
+  const list = await loadBlocksDeleted();
+  if(!list.some(x => x.remoteId === remoteId)) list.push({ remoteId, at: Date.now() });
+  await storage.set(BLOCKS_DELETED_KEY, JSON.stringify(list));
+  triggerSync('workout_blocks'); /* sem login: fica na fila e sai no próximo login */
+}
+
+/* ---- PULL de blocos ---- */
+function reconcileBlockRow(row, conflicts){
+  let local = treinoBlocks.find(b => b.remoteId === row.id);
+
+  if(row.deleted_at){
+    if(!local) return;
+    if(activeWorkoutSession && activeWorkoutSession.blockId === local.id){
+      conflicts.push({ kind:'excluido_em_uso', name: local.name });
+      delete local.remoteId; delete local.rev; delete local.sh; /* vira bloco novo; a sessão ativa continua intacta */
+      return;
+    }
+    if(blockHasContent(local) && blockDirty(local)){
+      conflicts.push({ kind:'excluido_remoto_editado_local', name: local.name });
+      delete local.remoteId; delete local.rev; delete local.sh; /* preserva as edições locais como bloco novo */
+      return;
+    }
+    const idx = treinoBlocks.indexOf(local);
+    if(idx >= 0) treinoBlocks.splice(idx, 1);
+    invalidateScheduleForBlock(local.id);
+    return;
+  }
+
+  if(!local){
+    const remoteEmpty = !(Array.isArray(row.data) && row.data.length);
+    const isDefaultName = /^Bloco [A-D]$/.test(row.name || '');
+    const ph = treinoBlocks.find(b => isPlaceholderBlock(b) && b.name === row.name);
+    if(ph){ applyRemoteToBlock(ph, row); return; }                       /* adota em vez de duplicar */
+    if(remoteEmpty && isDefaultName && treinoBlocks.some(b => b.name === row.name)) return; /* duplicata vazia antiga da nuvem: ignora */
+    const nb = { id: newLocalBlockId(), name: row.name, open:false, exercises: [] };
+    applyRemoteToBlock(nb, row);
+    treinoBlocks.push(nb);
+    return;
+  }
+
+  if(!Array.isArray(local.exercises)) local.exercises = [];
+  if(local.rev != null && row.rev === local.rev) return;                 /* nuvem não mudou; pendência local (se houver) é enviada no push */
+  if(local.rev != null && row.rev < local.rev){                           /* nuvem "voltou" (restauração): o local vira pendente */
+    local.rev = row.rev; delete local.sh; return;
+  }
+  /* aqui: nuvem mais nova que a última revisão vista (ou bloco legado sem revisão) */
+  if(sameBlockAsRow(local, row)){ local.rev = row.rev; local.sh = blockHash(local); if(row.rest_seconds && !local.restSeconds) local.restSeconds = row.rest_seconds; return; }
+  if(local.rev != null && !blockDirty(local)){ applyRemoteToBlock(local, row); return; } /* só a nuvem mudou: avança */
+  if(!blockHasContent(local)){ applyRemoteToBlock(local, row); return; }  /* local vazio: nada a preservar */
+  /* CONFLITO: os dois lados mudaram (ou não há base para saber). Preserva as duas versões. */
+  const copy = { id: newLocalBlockId(), name: (local.name || 'Sem nome') + ' (cópia deste aparelho)', open:false, exercises: cloneJSON(local.exercises) };
+  if(local.restSeconds) copy.restSeconds = local.restSeconds;
+  const at = treinoBlocks.indexOf(local);
+  treinoBlocks.splice(at + 1, 0, copy);
+  conflicts.push({ kind:'conflito', name: local.name, copia: copy.name });
+  applyRemoteToBlock(local, row);
+}
+async function pullWorkoutBlocksInner(user){
+  const sb = initSupabase(); if(!sb) throw new Error('Supabase indisponível');
+  try{ await flushBlockDeletes(sb, user.id); }catch(e){ console.warn('[sync] exclusões pendentes ainda não enviadas:', e.message || e); }
+  const pendingDel = new Set((await loadBlocksDeleted()).map(x => x.remoteId));
   const { data, error } = await sb.from('workout_blocks').select('*').eq('user_id', user.id);
-  if(error){ console.warn('[sync] pull workout_blocks:', error.message); return; } // erro de rede/consulta: nada é alterado localmente
-  const rows = data || [];
-  const remoteIds = new Set(rows.map(row => row.id));
-  rows.forEach(row => {
-    const remoteEx = Array.isArray(row.data) ? row.data : [];
-    const local = treinoBlocks.find(b => b.remoteId === row.id);
-    if(!local){
-      treinoBlocks.push({
-        id: Date.now() + treinoBlocks.length + Math.floor(Math.random()*1000),
-        name: row.name, open:false, restSeconds: row.rest_seconds || undefined,
-        exercises: remoteEx,
-        remoteId: row.id
-      });
-      return;
+  if(error) throw new Error('pull workout_blocks: ' + error.message);
+  const all = data || [];
+  const seen = new Set(all.map(r => r.id));
+  const hasEx = r => (Array.isArray(r.data) && r.data.length > 0) ? 1 : 0;
+  const rows = all.filter(r => !pendingDel.has(r.id)).sort((a, b) => (hasEx(b) - hasEx(a)) || String(b.updated_at).localeCompare(String(a.updated_at)));
+  const conflicts = [];
+  for(const row of rows) reconcileBlockRow(row, conflicts);
+  /* bloco que já foi sincronizado e sumiu da nuvem (apagado por versão antiga do app): preserva e recria sob novo ID */
+  treinoBlocks.forEach(b => { if(b.remoteId && b.rev != null && !seen.has(b.remoteId)){ delete b.remoteId; delete b.rev; delete b.sh; } });
+  await persistBlocksLocal();
+  conflicts.forEach(noteConflict);
+  return conflicts;
+}
+function pullWorkoutBlocks(user){ return withBlocksLock(() => pullWorkoutBlocksInner(user)); }
+
+/* ---- PUSH de blocos (escrita condicional por revisão) ---- */
+async function pushWorkoutBlocks(){
+  const sb = initSupabase(); if(!sb || !currentSyncUser) return { pulled:false };
+  return withBlocksLock(async () => {
+    const uid = currentSyncUser.id;
+    let pulled = false;
+    await flushBlockDeletes(sb, uid);
+    for(let attempt = 0; attempt < 3; attempt++){
+      const pending = treinoBlocks.filter(b => !isPlaceholderBlock(b) && blockDirty(b));
+      if(!pending.length) break;
+      let needPull = false;
+      for(const b of pending){
+        const snapHash = blockHash(b);
+        const content = { name: b.name || 'Sem nome', rest_seconds: b.restSeconds || null, data: cloneJSON(b.exercises || []) };
+        if(b.rev == null){
+          if(!b.remoteId){ b.remoteId = newUuid(); await persistBlocksLocal(); } /* ID gravado ANTES da rede: retry nunca duplica */
+          const { data, error } = await sb.from('workout_blocks').insert(Object.assign({ id: b.remoteId, user_id: uid }, content)).select('rev').single();
+          if(error){ if(error.code === '23505'){ needPull = true; continue; } throw new Error('push workout_blocks: ' + error.message); }
+          b.rev = data.rev; b.sh = snapHash;
+        } else {
+          const { data, error } = await sb.from('workout_blocks').update(content).eq('id', b.remoteId).eq('user_id', uid).eq('rev', b.rev).is('deleted_at', null).select('rev');
+          if(error) throw new Error('push workout_blocks: ' + error.message);
+          if(!data || data.length !== 1){ needPull = true; continue; } /* a nuvem avançou: reconcilia, nunca sobrescreve */
+          b.rev = data[0].rev; b.sh = snapHash;
+        }
+      }
+      await persistBlocksLocal();
+      if(!needPull) break;
+      await pullWorkoutBlocksInner(currentSyncUser); pulled = true;
+      if(attempt === 2) throw new Error('push workout_blocks: conflito não resolvido nesta rodada (será tentado de novo)');
     }
-    if(!Array.isArray(local.exercises)) local.exercises = [];
-    if(sameJSON(local.exercises, remoteEx)){
-      if(local.restSeconds == null && row.rest_seconds) local.restSeconds = row.rest_seconds; // só completa o que faltava
-      return;
-    }
-    if(blockHasContent(local)){
-      console.warn('[sync] CONFLITO em workout_blocks:', row.id, '(' + (local.name || 'Sem nome') + ') — mantendo a versão LOCAL; a nuvem tem uma versão diferente e será atualizada pelo push.');
-      return;
-    }
-    if(remoteEx.length > 0){
-      /* local realmente vazio/padrão e nuvem com conteúdo: aceita a nuvem */
-      local.name = row.name || local.name;
-      local.restSeconds = row.rest_seconds || local.restSeconds;
-      local.exercises = remoteEx;
-    }
-  });
-  /* Exclusão remota NÃO é propagada. Um bloco local cujo remoteId não veio nesta
-     consulta é mantido; só se solta o remoteId (que não existe mais na nuvem)
-     para que o próximo push o recrie, em vez de atualizar uma linha inexistente. */
-  treinoBlocks.forEach(b => {
-    if(b.remoteId && !remoteIds.has(b.remoteId)){
-      console.warn('[sync] bloco local "' + (b.name || 'Sem nome') + '" não está na nuvem — mantido localmente (exclusão remota NÃO é propagada).');
-      delete b.remoteId;
-    }
+    return { pulled };
   });
 }
+
+/* ---- PROGRAMAÇÃO SEMANAL: mescla em 3 vias (base = última versão da nuvem vista) + escrita condicional ---- */
+async function loadScheduleMeta(){
+  try{ const r = await storage.get(SCHEDULE_SYNC_KEY); const m = r && r.value ? JSON.parse(r.value) : null; return (m && typeof m === 'object') ? m : { rev:null, base:null }; }catch(e){ return { rev:null, base:null }; }
+}
+function saveScheduleMeta(m){ return storage.set(SCHEDULE_SYNC_KEY, JSON.stringify(m)); }
+function localScheduleRemoteMap(){
+  const map = {};
+  WEEK_DAYS.forEach(day => {
+    const id = weeklySchedule[day];
+    if(!id){ map[day] = null; return; }
+    const b = findBlock(id);
+    map[day] = (b && b.remoteId) ? b.remoteId : undefined; /* undefined = bloco ainda sem ID na nuvem */
+  });
+  return map;
+}
+async function pullScheduleInner(user){
+  const sb = initSupabase(); if(!sb) throw new Error('Supabase indisponível');
+  const { data, error } = await sb.from('workout_schedule').select('*').eq('user_id', user.id).maybeSingle();
+  if(error) throw new Error('pull workout_schedule: ' + error.message);
+  const meta = await loadScheduleMeta();
+  if(!data || !data.data){ meta.rev = null; await saveScheduleMeta(meta); return []; }
+  const R = data.data || {}, B = meta.base, L = localScheduleRemoteMap();
+  const conflicts = [], baseNew = {};
+  WEEK_DAYS.forEach(day => {
+    const hasR = Object.prototype.hasOwnProperty.call(R, day);
+    const r = hasR ? R[day] : undefined;
+    const l = L[day];
+    let result;
+    if(l === undefined){ result = undefined; }
+    else if(!B){
+      result = (r !== undefined && r !== null) ? r : l;
+      if(l && r && l !== r) conflicts.push({ kind:'programacao', day });
+    } else {
+      const b = Object.prototype.hasOwnProperty.call(B, day) ? B[day] : null;
+      if(l === b) result = hasR ? r : l;
+      else if(!hasR || r === b || r === l) result = l;
+      else { result = l; conflicts.push({ kind:'programacao', day }); }
+    }
+    let applied = true;
+    if(result !== undefined){
+      if(result === null) weeklySchedule[day] = null;
+      else { const blk = treinoBlocks.find(x => x.remoteId === result); if(blk) weeklySchedule[day] = blk.id; else applied = false; }
+    }
+    /* base = o que a nuvem tinha, exceto onde não deu para aplicar (ex.: bloco ainda não baixado): ali a base fica igual ao local */
+    baseNew[day] = (l === undefined) ? (hasR && r !== undefined ? r : null) : (applied ? (hasR ? (r === undefined ? null : r) : null) : l);
+  });
+  await saveScheduleMeta({ rev: data.rev, base: baseNew });
+  await storage.set('treino:weeklySchedule', JSON.stringify(weeklySchedule));
+  conflicts.forEach(noteConflict);
+  return conflicts;
+}
+function pullWorkoutSchedule(user){ return withBlocksLock(() => pullScheduleInner(user)); }
+async function pushScheduleInner(){
+  const sb = initSupabase(); if(!sb || !currentSyncUser) return;
+  const uid = currentSyncUser.id;
+  for(let attempt = 0; attempt < 3; attempt++){
+    const meta = await loadScheduleMeta();
+    const L = localScheduleRemoteMap();
+    const payload = {};
+    WEEK_DAYS.forEach(d => { payload[d] = L[d] === undefined ? ((meta.base && meta.base[d] != null) ? meta.base[d] : null) : L[d]; });
+    const baseNorm = {}; WEEK_DAYS.forEach(d => { baseNorm[d] = (meta.base && meta.base[d] != null) ? meta.base[d] : null; });
+    if(meta.base && meta.rev != null && canonJSON(payload) === canonJSON(baseNorm)) return; /* nada pendente */
+    let newRev = null;
+    if(meta.rev == null){
+      const { data, error } = await sb.from('workout_schedule').insert({ user_id: uid, data: payload }).select('rev').single();
+      if(error && error.code !== '23505') throw new Error('push workout_schedule: ' + error.message);
+      if(!error) newRev = data.rev;
+    } else {
+      const { data, error } = await sb.from('workout_schedule').update({ data: payload }).eq('user_id', uid).eq('rev', meta.rev).select('rev');
+      if(error) throw new Error('push workout_schedule: ' + error.message);
+      if(data && data.length === 1) newRev = data[0].rev;
+    }
+    if(newRev != null){ await saveScheduleMeta({ rev: newRev, base: payload }); return; }
+    await pullScheduleInner(currentSyncUser); /* a nuvem avançou: mescla e tenta de novo */
+  }
+  throw new Error('push workout_schedule: conflito não resolvido nesta rodada (será tentado de novo)');
+}
+async function pushWorkoutSchedule(){
+  const sb = initSupabase(); if(!sb || !currentSyncUser) return;
+  const r = await pushWorkoutBlocks(); /* garante os IDs (remoteId) dos blocos usados na programação */
+  await withBlocksLock(pushScheduleInner);
+  return r;
+}
+
+/* ---- avisos de conflito (nada é descartado; o usuário é informado) ---- */
+async function flushConflictNotes(){
+  if(!pendingConflictNotes.length) return;
+  const list = pendingConflictNotes; pendingConflictNotes = [];
+  const DAY_PT = { monday:'segunda', tuesday:'terça', wednesday:'quarta', thursday:'quinta', friday:'sexta', saturday:'sábado', sunday:'domingo' };
+  const lines = list.map(c => {
+    if(c.kind === 'conflito') return '<li><b>' + escapeHtml(c.name || 'Treino') + '</b> foi alterado em outro aparelho. A versão da nuvem ficou no treino original e as suas edições deste aparelho foram guardadas em <b>' + escapeHtml(c.copia) + '</b>.</li>';
+    if(c.kind === 'excluido_remoto_editado_local') return '<li><b>' + escapeHtml(c.name || 'Treino') + '</b> foi excluído em outro aparelho, mas você o editou aqui. Mantive a sua versão como treino novo.</li>';
+    if(c.kind === 'excluido_em_uso') return '<li><b>' + escapeHtml(c.name || 'Treino') + '</b> foi excluído em outro aparelho, mas há uma sessão em andamento com ele. Mantive o treino aqui.</li>';
+    if(c.kind === 'programacao') return '<li>A programação de <b>' + escapeHtml(DAY_PT[c.day] || c.day) + '</b> foi alterada nos dois aparelhos. Mantive a deste aparelho.</li>';
+    return '';
+  }).join('');
+  try{
+    const r = await storage.get(SYNC_CONFLICT_LOG_KEY);
+    const old = r && r.value ? JSON.parse(r.value) : [];
+    await storage.set(SYNC_CONFLICT_LOG_KEY, JSON.stringify(old.concat(list.map(c => Object.assign({ at: Date.now() }, c))).slice(-50)));
+  }catch(e){}
+  try{
+    openChoiceModal({
+      title: 'Alterações em conflito preservadas',
+      message: '<ul style="text-align:left;padding-left:18px;margin:6px 0">' + lines + '</ul>Nada foi apagado. Confira os treinos e exclua a cópia que não precisar.',
+      actions: [{ label:'Entendi', tone:'primary' }]
+    });
+  }catch(e){}
+}
+
+/* ---- repetição e sincronização ao voltar para o app ---- */
+let syncFlowRunning = false, syncRetryTimer = null, syncRetryN = 0, lastAutoSyncAt = 0;
+function scheduleSyncRetry(){
+  if(syncRetryTimer || !currentSyncUser) return;
+  const wait = [15000, 30000, 60000, 120000][Math.min(syncRetryN, 3)]; syncRetryN++;
+  syncRetryTimer = setTimeout(() => { syncRetryTimer = null; if(currentSyncUser) runInitialSyncFlow(); }, wait);
+}
+function autoSyncIfIdle(){
+  if(!currentSyncUser || syncFlowRunning) return;
+  if(Date.now() - lastAutoSyncAt < 45000 && syncStatusState !== 'error') return;
+  if(sessionOverlayOpen || editingBlockId != null) return;
+  const ae = document.activeElement;
+  if(ae && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) return;
+  lastAutoSyncAt = Date.now();
+  runInitialSyncFlow();
+}
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') autoSyncIfIdle(); });
+window.addEventListener('online', () => { lastAutoSyncAt = 0; autoSyncIfIdle(); });
 
 /* ======================================================================
    RECUPERAR TREINOS (temporário) — fontes, em ordem: backup, sessão ativa,
@@ -1708,6 +2110,8 @@ function templateExFromRun(ex, i){
     sets: Array.from({ length: Math.max(1, n) }, () => ({ reps:'', carga:'' }))  /* sem reps/carga/RIR/completed da execução */
   };
   if(ex.muscleOverride && typeof ex.muscleOverride === 'object' && Object.keys(ex.muscleOverride).length) out.muscleOverride = cloneJSON(ex.muscleOverride);
+  if(exHasLevels(ex.muscleLevels)) out.muscleLevels = normLevels(ex.muscleLevels);
+  if(ex.refId) out.refId = ex.refId;
   return out;
 }
 function recoveryStatus(c){
@@ -1919,23 +2323,6 @@ async function pullDietSelections(user){
    pullDietSelections: só sobrescreve um dia local se a nuvem tiver um
    valor definido para ele — nunca apaga uma programação local só porque
    a nuvem ainda não tem aquele dia preenchido. */
-async function pullWorkoutSchedule(user){
-  const sb = initSupabase(); if(!sb) return false;
-  const { data, error } = await sb.from('workout_schedule').select('*').eq('user_id', user.id).maybeSingle();
-  if(error){ console.warn('[sync] pull workout_schedule:', error.message); return false; }
-  if(!data || !data.data) return false;
-  const remote = data.data;
-  WEEK_DAYS.forEach(day => {
-    if(!Object.prototype.hasOwnProperty.call(remote, day)) return; // chave nem existe no registro remoto (dado antigo/incompleto): não mexe no local
-    const remoteBlockId = remote[day];
-    if(remoteBlockId === null){ weeklySchedule[day] = null; return; } // Dia livre explícito na nuvem: aplica localmente
-    const local = treinoBlocks.find(b => b.remoteId === remoteBlockId);
-    if(local) weeklySchedule[day] = local.id;
-    /* se o bloco correspondente ainda não existe localmente (corrida rara
-       entre pulls), o dia é ignorado nesta rodada e se resolve na próxima */
-  });
-  return true;
-}
 
 async function pullDietLog(user){
   const sb = initSupabase(); if(!sb) return;
@@ -1963,24 +2350,6 @@ function isDefaultBlocksState(){
   return treinoBlocks.every((b,i) => b.name === d[i].name && (b.exercises||[]).length === 0 && !b.remoteId);
 }
 
-async function pushWorkoutBlocks(){
-  const sb = initSupabase(); if(!sb || !currentSyncUser) return;
-  if(isDefaultBlocksState()) return; // não envia os 4 blocos padrão vazios, nunca editados
-  for(const b of treinoBlocks){
-    const payload = { user_id: currentSyncUser.id, name: b.name || 'Sem nome', rest_seconds: b.restSeconds || null, data: b.exercises || [] };
-    try{
-      if(b.remoteId){
-        const { error } = await sb.from('workout_blocks').update(payload).eq('id', b.remoteId).eq('user_id', currentSyncUser.id);
-        if(error) throw error;
-      } else {
-        const { data, error } = await sb.from('workout_blocks').insert(payload).select('id').single();
-        if(error) throw error;
-        b.remoteId = data.id;
-      }
-    }catch(e){ console.warn('[sync] push workout_blocks falhou para bloco', b.name, e.message||e); }
-  }
-  await storage.set('treino:blocks', JSON.stringify(treinoBlocks)); // persiste os remoteIds obtidos, sem re-disparar push
-}
 
 async function pushWorkoutHistory(entriesToPush){
   const sb = initSupabase(); if(!sb || !currentSyncUser) return;
@@ -2003,7 +2372,7 @@ async function pushWorkoutHistory(entriesToPush){
     try{
       const { error } = await sb.from('workout_history').upsert(payload, { onConflict: 'user_id,legacy_id' });
       if(error) throw error;
-    }catch(e){ console.warn('[sync] push workout_history falhou para', h.id, e.message||e); }
+    }catch(e){ syncPushFailCount++; console.warn('[sync] push workout_history falhou para', h.id, e.message||e); }
   }
 }
 
@@ -2015,7 +2384,7 @@ async function pushBodyWeight(entriesToPush){
     try{
       const { error } = await sb.from('body_weight').upsert(payload, { onConflict: 'user_id,weight_date' });
       if(error) throw error;
-    }catch(e){ console.warn('[sync] push body_weight falhou para', w.date, e.message||e); }
+    }catch(e){ syncPushFailCount++; console.warn('[sync] push body_weight falhou para', w.date, e.message||e); }
   }
 }
 
@@ -2025,7 +2394,7 @@ async function pushDietTargets(){
   try{
     const { error } = await sb.from('diet_targets').upsert(payload, { onConflict: 'user_id' });
     if(error) throw error;
-  }catch(e){ console.warn('[sync] push diet_targets falhou:', e.message||e); }
+  }catch(e){ syncPushFailCount++; console.warn('[sync] push diet_targets falhou:', e.message||e); }
 }
 
 async function pushDietSelections(){
@@ -2034,7 +2403,7 @@ async function pushDietSelections(){
   try{
     const { error } = await sb.from('diet_selections').upsert(payload, { onConflict: 'user_id' });
     if(error) throw error;
-  }catch(e){ console.warn('[sync] push diet_selections falhou:', e.message||e); }
+  }catch(e){ syncPushFailCount++; console.warn('[sync] push diet_selections falhou:', e.message||e); }
 }
 
 /* A programação local guarda blockId LOCAL. Para a nuvem, traduzimos cada
@@ -2043,22 +2412,6 @@ async function pushDietSelections(){
    garantimos isso chamando pushWorkoutBlocks() antes — de forma idempotente,
    sem duplicar nada (é um upsert). O dia só fica de fora desta rodada de
    push se, mesmo assim, o bloco não tiver remoteId; ele entra na próxima. */
-async function pushWorkoutSchedule(){
-  const sb = initSupabase(); if(!sb || !currentSyncUser) return;
-  await pushWorkoutBlocks();
-  const remoteData = {};
-  WEEK_DAYS.forEach(day => {
-    const blockId = weeklySchedule[day];
-    if(!blockId){ remoteData[day] = null; return; }
-    const block = findBlock(blockId);
-    remoteData[day] = (block && block.remoteId) ? block.remoteId : null;
-  });
-  const payload = { user_id: currentSyncUser.id, data: remoteData };
-  try{
-    const { error } = await sb.from('workout_schedule').upsert(payload, { onConflict: 'user_id' });
-    if(error) throw error;
-  }catch(e){ console.warn('[sync] push workout_schedule falhou:', e.message||e); }
-}
 
 async function pushDietLog(day){
   const sb = initSupabase(); if(!sb || !currentSyncUser) return;
@@ -2069,7 +2422,7 @@ async function pushDietLog(day){
     try{
       const { error } = await sb.from('diet_log').upsert(payload, { onConflict: 'user_id,log_date,meal_slot' });
       if(error) throw error;
-    }catch(e){ console.warn('[sync] push diet_log falhou para', targetDay, slot, e.message||e); }
+    }catch(e){ syncPushFailCount++; console.warn('[sync] push diet_log falhou para', targetDay, slot, e.message||e); }
   }
 }
 
@@ -2077,13 +2430,6 @@ async function pushAllDietLog(){
   for(const day of Object.keys(dietaLog)) await pushDietLog(day);
 }
 
-async function deleteWorkoutBlockRemote(remoteId){
-  const sb = initSupabase(); if(!sb || !currentSyncUser || !remoteId) return;
-  try{
-    const { error } = await sb.from('workout_blocks').delete().eq('id', remoteId).eq('user_id', currentSyncUser.id);
-    if(error) throw error;
-  }catch(e){ console.warn('[sync] delete workout_blocks falhou (não bloqueante):', e.message||e); }
-}
 
 async function deleteDietLogRemote(day, slot){
   const sb = initSupabase(); if(!sb || !currentSyncUser) return;
@@ -2108,7 +2454,8 @@ async function syncFromSupabase(user){
     pullDietTargets(user),
     pullDietSelections(user),
     pullDietLog(user),
-    pullWorkoutSchedule(user)
+    pullWorkoutSchedule(user),
+    syncCustomExercises(user)
   ]);
   await storage.set('treino:blocks', JSON.stringify(treinoBlocks));
   await storage.set('treino:history', JSON.stringify(workoutHistory));
@@ -2121,26 +2468,34 @@ async function syncFromSupabase(user){
 }
 
 async function syncToSupabase(){
-  await pushWorkoutBlocks();
-  await pushWorkoutHistory();
-  await pushBodyWeight();
-  await pushDietTargets();
-  await pushAllDietLog();
-  await pushDietSelections();
-  await pushWorkoutSchedule();
+  /* roda todos os envios; se algum falhar, os outros ainda tentam e o erro sobe no fim (nunca "sincronizado" em falso) */
+  const steps = [pushWorkoutBlocks, syncCustomExercises, pushWorkoutHistory, pushBodyWeight, pushDietTargets, pushAllDietLog, pushDietSelections, pushWorkoutSchedule, socPublishStep];
+  let firstErr = null;
+  for(const fn of steps){
+    try{ await fn(); }catch(e){ if(!firstErr) firstErr = e; console.warn('[sync] etapa falhou:', fn.name, e && e.message || e); }
+  }
+  if(firstErr) throw firstErr;
 }
 
 async function runInitialSyncFlow(){
-  if(!currentSyncUser) return;
+  if(!currentSyncUser || syncFlowRunning) return;
+  syncFlowRunning = true;
+  const failBase = syncPushFailCount;
   setSyncStatus('syncing', 'sincronizando...');
   try{
-    await syncFromSupabase(currentSyncUser); // 1) traz o que já existe na nuvem (aditivo, não destrutivo)
-    await syncToSupabase();                   // 2) envia o que só existia localmente
+    await syncFromSupabase(currentSyncUser); // 1) traz a nuvem, reconciliando por revisão (nunca sobrescreve edição local pendente)
+    await syncToSupabase();                   // 2) envia só o que está pendente, com escrita condicional por revisão
+    if(syncPushFailCount > failBase) throw new Error('algum envio falhou');
+    syncRetryN = 0;
     setSyncStatus('synced', currentSyncUser.email || 'sincronizado');
-    refreshAllViews();
   }catch(e){
     console.warn('[sync] runInitialSyncFlow falhou:', e);
     setSyncStatus('error', 'erro de sincronização');
+    scheduleSyncRetry();
+  }finally{
+    syncFlowRunning = false;
+    try{ refreshAllViews(); }catch(e){}
+    flushConflictNotes();
   }
 }
 
@@ -2148,20 +2503,26 @@ function triggerSync(entity){
   if(!currentSyncUser) return; // sem login: nada acontece, app 100% local via IndexedDB
   clearTimeout(syncDebounce[entity]);
   syncDebounce[entity] = setTimeout(async () => {
+    const failBase = syncPushFailCount;
+    let res = null;
     setSyncStatus('syncing', 'sincronizando...');
     try{
-      if(entity === 'workout_blocks') await pushWorkoutBlocks();
-      else if(entity === 'workout_history') await pushWorkoutHistory();
+      if(entity === 'workout_blocks') res = await pushWorkoutBlocks();
+      else if(entity === 'workout_history'){ await pushWorkoutHistory(); socPublishStep(); }
       else if(entity === 'body_weight') await pushBodyWeight();
       else if(entity === 'diet_targets') await pushDietTargets();
       else if(entity === 'diet_log') await pushDietLog();
       else if(entity === 'diet_selections') await pushDietSelections();
-      else if(entity === 'workout_schedule') await pushWorkoutSchedule();
+      else if(entity === 'workout_schedule') res = await pushWorkoutSchedule();
+      else if(entity === 'custom_exercises') await syncCustomExercises(currentSyncUser);
+      if(syncPushFailCount > failBase) throw new Error('envio falhou');
       setSyncStatus('synced', currentSyncUser.email || 'sincronizado');
     }catch(e){
       console.warn('[sync] push falhou para', entity, e);
       setSyncStatus('error', 'erro de sincronização');
+      scheduleSyncRetry();
     }
+    if((res && res.pulled) || pendingConflictNotes.length){ try{ refreshAllViews(); }catch(e){} flushConflictNotes(); }
   }, 600);
 }
 
@@ -2223,6 +2584,7 @@ function renderSyncUI(){
           <span class="sync-account-email">${escapeHtml(currentSyncUser.email||'')}</span>
           <button class="btn-ghost" onclick="handleSignOutClick()">Sair</button>
         </div>
+        ${rpSettingsHtml()}
       </div>`;
   }
 }
@@ -2281,11 +2643,13 @@ async function initAuthAndSync(){
       currentSyncUser = user;
       renderSyncUI();
       await runInitialSyncFlow();
+      if(socPending()) socLoadAll();
     } else {
       renderSyncUI();
     }
     sb.auth.onAuthStateChange((event, session) => {
-      if(event === 'SIGNED_OUT'){ currentSyncUser = null; setSyncStatus('idle',''); renderSyncUI(); }
+      if(event === 'SIGNED_OUT'){ currentSyncUser = null; setSyncStatus('idle',''); renderSyncUI(); socOnSignOut(); }
+      if(event === 'SIGNED_IN' && currentSyncUser){ socOnSignIn(); }
     });
   }catch(e){
     console.warn('[sync] initAuthAndSync falhou (app continua local):', e);
@@ -2344,9 +2708,648 @@ function setGreeting(){
   el.textContent = greet + (weekday ? ' · ' + weekday.toUpperCase() : '');
 }
 
+/* ======================================================================
+   CONEXÕES PRIVADAS (ETAPA 2)
+   - O histórico completo NUNCA é compartilhado com conexões (fica no aparelho e na conta privada do dono). O dono publica só agregados
+     (sessões por data, séries, volume, duração e carga/volume por exercício da
+     biblioteca) em tabelas separadas, e só depois de aceitar um convite.
+   - Quem vê é decidido pelo banco (RLS), por permissão e por pessoa; revogar vale na hora.
+   - Dados de amigos ficam só em memória (SOC.*): nada é gravado no aparelho de quem vê.
+   - "Registrado" significa que a pessoa anotou o treino no app. O app NÃO comprova presença na academia.
+====================================================================== */
+const SOC = { gen:0, uid:null, pub:{ state:'idle', at:0, err:'', tries:0 }, pubTimer:null, profile:null, loaded:false, loading:false, conns:[], invites:[], blocks:[], view:'home', personId:null, person:null, group:null, tabGroup:true, newInvite:null, msg:'', pubBusy:false, pubAgain:false, previewing:false };
+const SOC_REACT = { parabens:'Parabéns', constancia:'Constância', bora:'Bora' };
+const SOC_PENDING_KEY = 'social:pendingInvite';
+const SOC_WINDOW_DAYS = 180;
+
+function socUser(){ return currentSyncUser || null; }
+function socSb(){ return socUser() ? initSupabase() : null; }
+function socErrText(e){
+  const m = String((e && (e.message || e.error)) || e || '');
+  if(/display_name_required/.test(m)) return 'Defina seu nome de exibição primeiro.';
+  if(/too_many_attempts/.test(m)) return 'Muitas tentativas inválidas. Aguarde cerca de 1 hora.';
+  if(/invalid_or_expired_invite/.test(m)) return 'Convite inválido, expirado, já usado ou indisponível.';
+  if(/too_many_invites|max_invites/.test(m)) return 'Você já tem convites ativos demais. Revogue algum antes de criar outro.';
+  if(/perms_required/.test(m)) return 'Escolha o que você quer compartilhar.';
+  if(/link_not_found/.test(m)) return 'Conexão não encontrada.';
+  if(/Failed to fetch|NetworkError|network/i.test(m)) return 'Sem conexão. Tente novamente quando estiver online.';
+  return 'Não foi possível concluir (' + m.slice(0,80) + ').';
+}
+async function socRpc(fn, args){
+  const sb = socSb(); if(!sb) throw new Error('Entre na sua conta para usar Conexões.');
+  const { data, error } = await sb.rpc(fn, args || {});
+  if(error) throw error;
+  return data;
+}
+function socNum(x){ const n = parseFloat(String(x == null ? '' : x).replace(',', '.')); return isFinite(n) ? n : 0; }
+function socDay(offsetDays){ const d = new Date(); d.setDate(d.getDate() + offsetDays); return dateKey(d); }
+function socWeekKey(dateStr){ return dateKey(startOfWeek(new Date(dateStr + 'T12:00:00'))); }
+function socFmtCode(c){ c = String(c || ''); return c.replace(/(.{4})(?=.)/g, '$1-'); }
+function socPermTags(p){
+  if(!p) return '';
+  const t = [];
+  if(p.weekly) t.push('Semana'); if(p.progress) t.push('Progresso'); if(p.reactions) t.push('Reações');
+  return t.length ? t.map(x => '<span class="soc-tag on">' + x + '</span>').join('') : '<span class="soc-tag">nada</span>';
+}
+function socName(id){
+  if(socUser() && id === socUser().id) return 'Você';
+  const c = SOC.conns.find(x => x.user_id === id);
+  return c ? c.name : 'Alguém';
+}
+
+/* ---------- perfil e carga ---------- */
+async function socLoadProfile(){
+  const sb = socSb(); if(!sb) return null;
+  const { data, error } = await sb.from('social_profiles').select('display_name,weekly_goal,sharing_enabled').eq('user_id', socUser().id).maybeSingle();
+  if(error){ console.warn('[social] perfil:', error.message); return SOC.profile; }
+  SOC.profile = data || null;
+  return SOC.profile;
+}
+async function socLoadAll(){
+  if(!socUser()){ socReset(); socRender(); return; }
+  if(SOC.uid && SOC.uid !== socUser().id) socReset(); /* outra conta entrou sem passar por SIGNED_OUT */
+  SOC.uid = socUser().id;
+  if(SOC.loading) return;
+  const gen = SOC.gen;
+  SOC.loading = true;
+  try{
+    await socLoadProfile();
+    if(gen !== SOC.gen) return;
+    if(SOC.profile){
+      const [c, i, b] = await Promise.all([socRpc('list_connections'), socRpc('list_my_invites'), socRpc('list_blocks')]);
+      if(gen !== SOC.gen) return;
+      SOC.conns = c || []; SOC.invites = i || []; SOC.blocks = b || [];
+      try{ const rr = await socSb().from('workout_reactions').select('session_key,reactor_id,kind,created_at').eq('owner_id', socUser().id).order('created_at', { ascending:false }).limit(20); SOC.recv = rr.error ? [] : (rr.data || []); }catch(e){ SOC.recv = []; }
+    } else { SOC.conns = []; SOC.invites = []; SOC.blocks = []; }
+    SOC.loaded = true; SOC.msg = '';
+  }catch(e){ if(gen !== SOC.gen) return; SOC.msg = socErrText(e); }
+  SOC.loading = false;
+  socRender();
+  socProcessPending();
+}
+function socReset(){
+  /* logout ou troca de conta: invalida execuções em andamento (gen), cancela retry e zera qualquer estado de publicação da sessão anterior */
+  SOC.gen++; SOC.uid = null;
+  clearTimeout(SOC.pubTimer); SOC.pubTimer = null;
+  SOC.pub = { state:'idle', at:0, err:'', tries:0 }; SOC.pubBusy = false; SOC.pubAgain = false;
+  SOC.loading = false; SOC.previewing = false; SOC.accepting = false;
+  SOC.profile = null; SOC.loaded = false; SOC.conns = []; SOC.invites = []; SOC.blocks = [];
+  SOC.view = 'home'; SOC.personId = null; SOC.person = null; SOC.group = null; SOC.newInvite = null; SOC.msg = ''; SOC.recv = [];
+}
+function socOnSignOut(){ socReset(); socRender(); }
+function socOnSignIn(){ if(SOC.uid && socUser() && SOC.uid !== socUser().id) socReset(); socLoadAll(); }
+
+async function socSaveProfile(){
+  const name = (document.getElementById('soc-name').value || '').trim();
+  const goalRaw = parseInt(document.getElementById('soc-goal').value, 10);
+  if(!(goalRaw >= 1 && goalRaw <= 7)){ SOC.msg = 'A meta é de 1 a 7 dias de treino por semana.'; return socRender(); }
+  const goal = goalRaw;
+  if(name.length < 2 || name.length > 30){ SOC.msg = 'O nome precisa ter de 2 a 30 caracteres.'; return socRender(); }
+  const sb = socSb(); if(!sb) return;
+  const row = { user_id: socUser().id, display_name: name, weekly_goal: goal, updated_at: new Date().toISOString() };
+  let r;
+  if(SOC.profile) r = await sb.from('social_profiles').update({ display_name: row.display_name, weekly_goal: row.weekly_goal, updated_at: row.updated_at }).eq('user_id', row.user_id);
+  else r = await sb.from('social_profiles').insert({ user_id: row.user_id, display_name: row.display_name, weekly_goal: row.weekly_goal });
+  if(r.error){ SOC.msg = socErrText(r.error); return socRender(); }
+  SOC.msg = '';
+  await socLoadAll();
+}
+
+/* ---------- agregados locais (usados para publicar e para comparar) ---------- */
+function socLibKeyOf(ex){
+  /* só exercícios da biblioteca são comparáveis entre pessoas; personalizados sem base ficam de fora */
+  if(ex.refId){ return (typeof EXERCISE_DB !== 'undefined' && EXERCISE_DB[ex.refId]) ? ex.refId : null; }
+  return resolveExerciseMuscleKey(ex.nome) || null;
+}
+function socBuildLocal(){
+  const since = socDay(-SOC_WINDOW_DAYS);
+  const sessions = [], stats = [];
+  (workoutHistory || []).forEach(h => {
+    if(!h || !h.date || h.date < since) return;
+    if(!(h.filledSets > 0)) return;
+    const key = historyLegacyKey(h);
+    const perKey = {};
+    let exCount = 0;
+    (h.exercises || []).forEach(ex => {
+      const done = (ex.sets || []).filter(isSetRealizedHistoric);
+      if(!done.length) return;
+      exCount++;
+      const k = socLibKeyOf(ex); if(!k) return;
+      const o = perKey[k] || (perKey[k] = { top_load:0, top_reps:0, volume:0 });
+      done.forEach(s => {
+        const c = socNum(s.carga), r = Math.round(socNum(s.reps));
+        o.volume += c * r;
+        if(c > o.top_load || (c === o.top_load && r > o.top_reps)){ o.top_load = c; o.top_reps = r; }
+      });
+    });
+    sessions.push({ session_key:key, session_date:h.date, set_count:h.filledSets|0, exercise_count:exCount, volume:Math.round(h.volume || 0), duration_min:(h.durationMin > 0 && h.durationMin < 720) ? Math.round(h.durationMin) : null });
+    Object.keys(perKey).forEach(k => stats.push({ session_key:key, ref_key:k, session_date:h.date, top_load:round1(perKey[k].top_load), top_reps:perKey[k].top_reps, volume:Math.round(perKey[k].volume) }));
+  });
+  return { sessions, stats };
+}
+
+/* ---------- publicação (só com sharing_enabled; só alterados; lotes) ---------- */
+async function publishSharedActivity(){
+  const sb = socSb(); if(!sb) return;
+  if(SOC.pubBusy){ SOC.pubAgain = true; return; }
+  /* uma execução pertence a UMA sessão/conta: se sair ou trocar de conta no meio, ela aborta sem tocar no estado da nova sessão */
+  if(SOC.uid && SOC.uid !== socUser().id) socReset();
+  SOC.uid = socUser().id;
+  const gen = SOC.gen, uid = socUser().id;
+  const gone = () => gen !== SOC.gen || !socUser() || socUser().id !== uid;
+  SOC.pubBusy = true;
+  SOC.pub.state = 'running';
+  let okRun = false;
+  try{
+    if(!SOC.profile) await socLoadProfile();
+    if(gone()) return false;
+    if(!SOC.profile || !SOC.profile.sharing_enabled){ SOC.pub.state = 'idle'; return; }
+    if(typeof navigator !== 'undefined' && navigator.onLine === false) throw new Error('sem conexão');
+    const mapKey = 'social:pub:' + uid;
+    let map = {};
+    try{ const g = await storage.get(mapKey); if(g && g.value) map = JSON.parse(g.value) || {}; }catch(e){ map = {}; }
+    if(gone()) return false;
+    const { sessions, stats } = socBuildLocal();
+    const statsBy = {};
+    stats.forEach(s => (statsBy[s.session_key] = statsBy[s.session_key] || []).push(s));
+    const cur = {}, changed = [];
+    sessions.forEach(s => {
+      const h = hashStr(canonJSON({ s, st: (statsBy[s.session_key] || []) }));
+      cur[s.session_key] = h;
+      if(map[s.session_key] !== h) changed.push(s);
+    });
+    const stale = Object.keys(map).filter(k => !(k in cur));
+    const chunk = (a, n) => { const o = []; for(let i = 0; i < a.length; i += n) o.push(a.slice(i, i + n)); return o; };
+    const next = Object.assign({}, map);
+    for(const part of chunk(stale, 100)){
+      if(gone()) return false;
+      const { error } = await sb.from('shared_sessions').delete().eq('owner_id', uid).in('session_key', part);
+      if(error) throw error;
+      part.forEach(k => delete next[k]);
+    }
+    for(const part of chunk(changed, 60)){
+      if(gone()) return false;
+      const keys = part.map(s => s.session_key);
+      let r = await sb.from('shared_sessions').upsert(part.map(s => Object.assign({ owner_id: uid, presence:'logged' }, s)), { onConflict:'owner_id,session_key' });
+      if(r.error) throw r.error;
+      r = await sb.from('shared_exercise_stats').delete().eq('owner_id', uid).in('session_key', keys);
+      if(r.error) throw r.error;
+      const rows = [];
+      keys.forEach(k => (statsBy[k] || []).forEach(s => rows.push(Object.assign({ owner_id: uid }, s))));
+      for(const sp of chunk(rows, 200)){
+        r = await sb.from('shared_exercise_stats').insert(sp);
+        if(r.error) throw r.error;
+      }
+      keys.forEach(k => { next[k] = cur[k]; });
+      await storage.set(mapKey, JSON.stringify(next));
+    }
+    await storage.set(mapKey, JSON.stringify(next));
+    if(gone()) return false;
+    okRun = true;
+    SOC.pub = { state:'ok', at:Date.now(), err:'', tries:0 };
+    clearTimeout(SOC.pubTimer);
+  }catch(e){
+    /* falha NUNCA é mostrada como "atualizado": o estado vira erro, a interface avisa e há nova tentativa automática (3x, com espera crescente) */
+    if(gone()) return false; /* erro de outra sessão: não vira aviso nem retry na sessão atual */
+    const msg = String((e && e.message) || e || 'erro');
+    console.warn('[social] publicação falhou:', msg);
+    SOC.pub = { state:'error', at:SOC.pub.at, err:msg, tries:(SOC.pub.tries || 0) + 1 };
+    clearTimeout(SOC.pubTimer);
+    if(SOC.pub.tries <= 3) SOC.pubTimer = setTimeout(() => { if(gen === SOC.gen) publishSharedActivity(); }, 15000 * SOC.pub.tries);
+  }finally{
+    if(gen === SOC.gen){
+      SOC.pubBusy = false;
+      if(SOC.pubAgain){ SOC.pubAgain = false; setTimeout(() => { if(gen === SOC.gen) publishSharedActivity(); }, 800); }
+    }
+    try{ if(gen === SOC.gen && document.getElementById('panel-conexoes').classList.contains('active') && SOC.view === 'home') socRender(); }catch(e){}
+  }
+  return okRun;
+}
+async function socRetryPublish(){
+  SOC.pub.tries = 0; SOC.pub.state = 'running'; socRender();
+  await publishSharedActivity();
+  socRender();
+}
+function socPubBannerHtml(){
+  const p = SOC.pub;
+  if(!SOC.profile || !SOC.profile.sharing_enabled) return '';
+  if(p.state === 'error') return '<div class="soc-note warn"><b>Resumo NÃO atualizado.</b> Não consegui enviar seus treinos recentes (' + escapeHtml(p.err.slice(0, 60)) + '). Suas conexões podem estar vendo dados desatualizados. ' + (p.tries <= 3 ? 'Vou tentar de novo sozinho. ' : '') + '<div class="soc-actions"><button class="btn-ghost" onclick="socRetryPublish()">TENTAR DE NOVO</button></div></div>';
+  if(p.state === 'running') return '<div class="soc-note">Enviando seu resumo…</div>';
+  if(p.state === 'ok') return '<div class="soc-note">Resumo publicado às ' + new Date(p.at).toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' }) + '.</div>';
+  return '<div class="soc-note">Resumo ainda não enviado nesta sessão.</div>';
+}
+/* etapa isolada: nunca lança nem conta como falha de sync */
+async function socPublishStep(){ try{ await publishSharedActivity(); }catch(e){} }
+
+/* ---------- semana / consistência ---------- */
+function socWeekStats(dates, goal){
+  /* n = DIAS treinados (datas distintas) -> é o que conta para meta e sequência; s = sessões concluídas (pode haver 2 no mesmo dia) */
+  const cnt = {}, ses = {}, seen = {};
+  dates.forEach(d => { const k = socWeekKey(d); ses[k] = (ses[k] || 0) + 1; if(!seen[d]){ seen[d] = 1; cnt[k] = (cnt[k] || 0) + 1; } });
+  const weeks = [];
+  const w0 = startOfWeek(new Date());
+  for(let i = 0; i < 12; i++){
+    const d = new Date(w0); d.setDate(d.getDate() - 7 * i);
+    const k = dateKey(d);
+    weeks.push({ key:k, n:cnt[k] || 0, s:ses[k] || 0, label: fmtDateShort(k) });
+  }
+  let streak = 0;
+  for(let i = 0; i < weeks.length; i++){
+    if(weeks[i].n >= goal) streak++;
+    else if(i === 0) continue; /* semana em andamento não quebra a sequência */
+    else break;
+  }
+  const last4 = weeks.slice(0, 4).reverse();
+  return { thisWeek: weeks[0].n, thisWeekSessions: weeks[0].s, weeks, last4, streak, met4: last4.filter(w => w.n >= goal).length };
+}
+function socBarsHtml(st, goal){
+  const max = Math.max(goal, ...st.last4.map(w => w.n), 1);
+  return '<div class="soc-bars">' + st.last4.map(w => '<div class="soc-bar' + (w.n >= goal ? ' met' : '') + '" style="height:' + Math.max(6, Math.round(w.n / max * 100)) + '%"><span>' + w.n + '</span></div>').join('') + '</div>' +
+    '<div class="soc-barlbl">' + st.last4.map(w => '<div>' + w.label + '</div>').join('') + '</div>';
+}
+function socCalHtml(dates){
+  const set = new Set(dates), today = todayKey();
+  const w0 = startOfWeek(new Date()); w0.setDate(w0.getDate() - 21);
+  let h = '<div class="soc-cal">' + ['S','T','Q','Q','S','S','D'].map(x => '<div class="hd">' + x + '</div>').join('');
+  for(let i = 0; i < 28; i++){
+    const d = new Date(w0); d.setDate(d.getDate() + i); const k = dateKey(d);
+    h += '<div class="' + (set.has(k) ? 'on' : '') + (k === today ? ' today' : '') + '">' + d.getDate() + '</div>';
+  }
+  return h + '</div>';
+}
+
+/* ---------- convites ---------- */
+function socCaptureInviteFromUrl(){
+  try{
+    const u = new URL(location.href); const c = u.searchParams.get('convite');
+    if(!c) return;
+    localStorage.setItem(SOC_PENDING_KEY, c.replace(/[^A-Za-z0-9]/g, '').slice(0, 20));
+    u.searchParams.delete('convite');
+    history.replaceState(null, '', u.pathname + (u.search || '') + u.hash);
+  }catch(e){}
+}
+function socPending(){ try{ return localStorage.getItem(SOC_PENDING_KEY) || ''; }catch(e){ return ''; } }
+function socClearPending(){ try{ localStorage.removeItem(SOC_PENDING_KEY); }catch(e){} }
+async function socProcessPending(){
+  const code = socPending();
+  if(!code || !socUser() || !SOC.profile || SOC.previewing) return;
+  if(!document.getElementById('panel-conexoes').classList.contains('active')) switchTab('conexoes');
+  socPreviewCode(code);
+}
+function socEnterCode(){
+  const el = document.getElementById('soc-code-in'); if(!el) return;
+  const code = el.value.replace(/[^A-Za-z0-9]/g, '');
+  if(code.length < 8){ SOC.msg = 'Digite o código completo.'; return socRender(); }
+  socPreviewCode(code);
+}
+async function socPreviewCode(code){
+  if(SOC.previewing) return;
+  SOC.previewing = true;
+  try{
+    const r = await socRpc('preview_connection_invite', { p_code: code });
+    if(!r || r.error){ SOC.msg = socErrText(r && r.error); socClearPending(); SOC.previewing = false; return socRender(); }
+    const k = r.kind, nm = escapeHtml(r.owner_name || 'Alguém');
+    const needPerms = (k === 'guest_to_owner' || k === 'mutual');
+    const theyShare = (k === 'owner_to_guest' || k === 'mutual');
+    let msg = '<div style="text-align:left">';
+    if(k === 'owner_to_guest') msg += '<b>' + nm + '</b> quer compartilhar a atividade dela(e) com você. Você não compartilha nada.';
+    else if(k === 'guest_to_owner') msg += '<b>' + nm + '</b> quer acompanhar a SUA atividade. Ele(a) não compartilha a dele(a) com você.';
+    else msg += '<b>' + nm + '</b> propõe acompanhamento mútuo: cada um vê o que o outro autorizar.';
+    if(theyShare) msg += '<div class="soc-lbl">' + nm + ' compartilha com você</div>' + socPermTags(r.owner_perms);
+    if(needPerms){
+      msg += '<div class="soc-lbl">O que você autoriza ' + nm + ' a ver</div>' +
+        '<label class="soc-opt"><input type="checkbox" id="soc-ap-weekly" checked><span>Semana e calendário<small>Dia de cada treino registrado, séries, volume e duração.</small></span></label>' +
+        '<label class="soc-opt"><input type="checkbox" id="soc-ap-progress"><span>Progresso por exercício<small>Maior carga e volume por exercício da biblioteca.</small></span></label>' +
+        '<label class="soc-opt"><input type="checkbox" id="soc-ap-reactions" checked><span>Reações<small>Permite enviar parabéns, constância e bora nos seus treinos.</small></span></label>';
+    }
+    msg += '<div class="soc-note">Seu histórico completo, dieta, peso, e-mail e anotações continuam privados (só no seu aparelho e na sua conta) e não são compartilhados com ninguém. Você pode mudar permissões, remover ou bloquear a qualquer momento.</div></div>';
+    openChoiceModal({
+      title: 'Convite de conexão', message: msg, stack: true,
+      actions: [
+        { label:'Aceitar', tone:'primary', onClick: () => socAccept(code, needPerms) },
+        { label:'Agora não', tone:'ghost', onClick: () => { SOC.previewing = false; socClearPending(); } }
+      ]
+    });
+    /* fechar o modal por fora (Esc/fundo) também libera nova tentativa */
+    const bd = document.getElementById('confirm-modal-backdrop');
+    const rel = () => { if(!bd.classList.contains('open')){ if(!SOC.accepting) SOC.previewing = false; } else setTimeout(rel, 400); };
+    setTimeout(rel, 400);
+  }catch(e){ SOC.msg = socErrText(e); SOC.previewing = false; socRender(); }
+}
+async function socAccept(code, needPerms){
+  SOC.accepting = true;
+  let perms = null;
+  if(needPerms){
+    const g = id => { const el = document.getElementById(id); return !!(el && el.checked); };
+    perms = { weekly: g('soc-ap-weekly'), progress: g('soc-ap-progress'), reactions: g('soc-ap-reactions') };
+    if(perms.progress) perms.weekly = true;
+  }
+  /* os valores acima foram lidos antes do modal fechar (onClick roda antes do fechamento) */
+  try{
+    const r = await socRpc('accept_connection_invite', { p_code: code, p_my_perms: perms });
+    SOC.previewing = false; SOC.accepting = false; socClearPending();
+    if(!r || r.error){ SOC.msg = socErrText(r && r.error); return socRender(); }
+    SOC.msg = 'Conexão criada com ' + (r.owner_name || 'a pessoa') + '.';
+    SOC.profile = null;
+    await socLoadAll();
+    await publishSharedActivity();
+    socRender();
+  }catch(e){ SOC.previewing = false; SOC.accepting = false; SOC.msg = socErrText(e); socRender(); }
+}
+function socOpenCreate(){
+  const msg = '<div style="text-align:left">' +
+    '<div class="soc-lbl">Tipo de convite</div>' +
+    '<label class="soc-opt"><input type="radio" name="soc-kind" value="owner_to_guest" checked><span>Eu compartilho com a pessoa<small>Ela vê minha atividade; eu não vejo a dela.</small></span></label>' +
+    '<label class="soc-opt"><input type="radio" name="soc-kind" value="guest_to_owner"><span>Eu quero acompanhar a pessoa<small>Ela escolhe o que me mostrar ao aceitar.</small></span></label>' +
+    '<label class="soc-opt"><input type="radio" name="soc-kind" value="mutual"><span>Mútuo<small>Cada um vê o que o outro autorizar.</small></span></label>' +
+    '<div class="soc-lbl">O que eu compartilho (quando eu for quem compartilha)</div>' +
+    '<label class="soc-opt"><input type="checkbox" id="soc-cp-weekly" checked><span>Semana e calendário</span></label>' +
+    '<label class="soc-opt"><input type="checkbox" id="soc-cp-progress"><span>Progresso por exercício</span></label>' +
+    '<label class="soc-opt"><input type="checkbox" id="soc-cp-reactions" checked><span>Reações</span></label>' +
+    '<div class="soc-lbl">Validade do código</div>' +
+    '<select id="soc-ttl" class="soc-in"><option value="24">24 horas</option><option value="48" selected>48 horas</option><option value="168">7 dias</option></select>' +
+    '</div>';
+  openChoiceModal({
+    title:'Novo convite', message: msg, stack:true,
+    actions:[ { label:'Gerar código', tone:'primary', onClick: socCreateInvite }, { label:'Cancelar', tone:'ghost' } ]
+  });
+}
+async function socCreateInvite(){
+  const kEl = document.querySelector('input[name="soc-kind"]:checked');
+  const kind = kEl ? kEl.value : 'owner_to_guest';
+  const g = id => { const el = document.getElementById(id); return !!(el && el.checked); };
+  const perms = { weekly: g('soc-cp-weekly'), progress: g('soc-cp-progress'), reactions: g('soc-cp-reactions') };
+  if(perms.progress) perms.weekly = true;
+  const ttl = parseInt((document.getElementById('soc-ttl') || {}).value, 10) || 48;
+  try{
+    const r = await socRpc('create_connection_invite', { p_kind: kind, p_ttl_hours: ttl, p_perms: kind === 'guest_to_owner' ? null : perms });
+    if(!r || r.error){ SOC.msg = socErrText(r && r.error); return socRender(); }
+    SOC.newInvite = { code: r.code, expires_at: r.expires_at, kind };
+    SOC.msg = '';
+    SOC.invites = (await socRpc('list_my_invites')) || [];
+  }catch(e){ SOC.msg = socErrText(e); }
+  socRender();
+}
+function socInviteLink(code){ return location.origin + location.pathname + '?convite=' + code; }
+async function socCopy(txt, label){
+  try{ await navigator.clipboard.writeText(txt); SOC.msg = label + ' copiado.'; }
+  catch(e){ SOC.msg = 'Não deu para copiar automaticamente. Selecione o texto e copie.'; }
+  socRender();
+}
+async function socShareInvite(){
+  const n = SOC.newInvite; if(!n) return;
+  const text = 'Convite para acompanharmos os treinos no Rastreador Pessoal. Código: ' + socFmtCode(n.code);
+  if(navigator.share){ try{ await navigator.share({ title:'Convite Rastreador', text, url: socInviteLink(n.code) }); return; }catch(e){ if(e && e.name === 'AbortError') return; } }
+  socCopy(text + ' ' + socInviteLink(n.code), 'Convite');
+}
+function socDismissInvite(){ SOC.newInvite = null; socRender(); }
+async function socRevokeInvite(id){
+  try{ await socRpc('revoke_connection_invite', { p_id: id }); SOC.invites = (await socRpc('list_my_invites')) || []; SOC.msg = 'Convite revogado.'; }
+  catch(e){ SOC.msg = socErrText(e); }
+  socRender();
+}
+
+/* ---------- gerenciar conexões ---------- */
+function socOpenPerms(uid){
+  const c = SOC.conns.find(x => x.user_id === uid); if(!c) return;
+  const p = c.i_share || { weekly:false, progress:false, reactions:false };
+  const nm = escapeHtml(c.name);
+  const chk = (id, on, t, s) => '<label class="soc-opt"><input type="checkbox" id="' + id + '"' + (on ? ' checked' : '') + '><span>' + t + '<small>' + s + '</small></span></label>';
+  const msg = '<div style="text-align:left"><div class="soc-lbl">O que ' + nm + ' pode ver de você</div>' +
+    chk('soc-ep-weekly', p.weekly, 'Semana e calendário', 'Dia de cada treino registrado, séries, volume e duração.') +
+    chk('soc-ep-progress', p.progress, 'Progresso por exercício', 'Maior carga e volume por exercício da biblioteca.') +
+    chk('soc-ep-reactions', p.reactions, 'Reações', 'Parabéns, constância e bora nos seus treinos.') +
+    '<div class="soc-note">Desmarcar tudo mantém a conexão, mas ' + nm + ' deixa de ver seus dados imediatamente.</div></div>';
+  openChoiceModal({
+    title:'Permissões', message: msg, stack:true,
+    actions:[ { label:'Salvar', tone:'primary', onClick: () => {
+      const g = id => !!document.getElementById(id).checked;
+      const perms = { weekly:g('soc-ep-weekly'), progress:g('soc-ep-progress'), reactions:g('soc-ep-reactions') };
+      if(perms.progress) perms.weekly = true;
+      socSetPerms(uid, perms);
+    } }, { label:'Cancelar', tone:'ghost' } ]
+  });
+}
+async function socSetPerms(uid, perms){
+  try{ await socRpc('set_link_perms', { p_viewer: uid, p_perms: perms }); SOC.msg = 'Permissões atualizadas.'; SOC.conns = (await socRpc('list_connections')) || []; }
+  catch(e){ SOC.msg = socErrText(e); }
+  socRender();
+}
+function socConfirmRemove(uid){
+  const c = SOC.conns.find(x => x.user_id === uid); if(!c) return;
+  openConfirmModal({ title:'Remover conexão', message:'Remover ' + escapeHtml(c.name) + '? Vocês dois deixam de ver a atividade um do outro. Os treinos de cada um continuam intactos.', confirmLabel:'Remover',
+    onConfirm: async () => { try{ await socRpc('remove_connection', { p_other: uid }); SOC.msg = 'Conexão removida.'; await socLoadAll(); }catch(e){ SOC.msg = socErrText(e); socRender(); } } });
+}
+function socConfirmBlock(uid){
+  const c = SOC.conns.find(x => x.user_id === uid); if(!c) return;
+  openConfirmModal({ title:'Bloquear pessoa', message:'Bloquear ' + escapeHtml(c.name) + '? A conexão é encerrada e nenhum dos dois consegue aceitar convites do outro até você desbloquear.', confirmLabel:'Bloquear',
+    onConfirm: async () => { try{ await socRpc('block_user', { p_other: uid }); SOC.msg = 'Pessoa bloqueada.'; if(SOC.personId === uid){ SOC.view = 'home'; } await socLoadAll(); }catch(e){ SOC.msg = socErrText(e); socRender(); } } });
+}
+async function socUnblock(uid){
+  const sb = socSb(); if(!sb) return;
+  const { error } = await sb.from('social_blocks').delete().eq('blocker_id', socUser().id).eq('blocked_id', uid);
+  SOC.msg = error ? socErrText(error) : 'Pessoa desbloqueada.';
+  await socLoadAll();
+}
+function socConfirmStopAll(){
+  openConfirmModal({ title:'Parar de compartilhar', message:'Isso encerra todas as conexões que veem você, revoga convites pendentes e APAGA da nuvem o resumo de atividade que você publicou. Seus treinos no app não são tocados. Você pode voltar a compartilhar depois com um novo convite.', confirmLabel:'Parar e apagar',
+    onConfirm: async () => {
+      try{
+        await socRpc('stop_all_sharing');
+        const sb = socSb();
+        if(sb){ const r = await sb.from('shared_sessions').delete().eq('owner_id', socUser().id); if(r.error) throw r.error; }
+        try{ await storage.set('social:pub:' + socUser().id, '{}'); }catch(e){}
+        SOC.msg = 'Compartilhamento encerrado e resumo apagado da nuvem.';
+        SOC.profile = null; await socLoadAll();
+      }catch(e){ SOC.msg = socErrText(e); socRender(); }
+    } });
+}
+
+/* ---------- visualização ---------- */
+async function socOpenGroup(){
+  SOC.view = 'group'; SOC.group = null; socRender();
+  const sb = socSb(); if(!sb) return;
+  const vis = SOC.conns.filter(c => c.they_share && c.they_share.weekly);
+  const out = {};
+  try{
+    if(vis.length){
+      const { data, error } = await sb.from('shared_sessions').select('owner_id,session_date').gte('session_date', socDay(-84)).order('session_date', { ascending:false }).limit(3000);
+      if(error) throw error;
+      (data || []).forEach(r => (out[r.owner_id] = out[r.owner_id] || []).push(r.session_date));
+    }
+    SOC.group = { dates: out };
+  }catch(e){ SOC.msg = socErrText(e); SOC.group = { dates: {}, err:true }; }
+  socRender();
+}
+async function socOpenPerson(uid){
+  SOC.view = 'person'; SOC.personId = uid; SOC.person = null; socRender();
+  const sb = socSb(); const c = SOC.conns.find(x => x.user_id === uid); if(!sb || !c) return;
+  const p = { sessions:[], stats:[], mine:{}, sent:{}, err:false };
+  try{
+    if(c.they_share && c.they_share.weekly){
+      const r = await sb.from('shared_sessions').select('session_key,session_date,set_count,exercise_count,volume,duration_min').eq('owner_id', uid).gte('session_date', socDay(-84)).order('session_date', { ascending:false }).limit(400);
+      if(r.error) throw r.error; p.sessions = r.data || [];
+    }
+    if(c.they_share && c.they_share.progress){
+      const r = await sb.from('shared_exercise_stats').select('session_key,ref_key,session_date,top_load,top_reps,volume').eq('owner_id', uid).gte('session_date', socDay(-SOC_WINDOW_DAYS)).order('session_date', { ascending:true }).limit(2500);
+      if(r.error) throw r.error; p.stats = r.data || [];
+    }
+    const rr = await sb.from('workout_reactions').select('session_key,kind').eq('owner_id', uid).eq('reactor_id', socUser().id);
+    if(!rr.error) (rr.data || []).forEach(x => { p.sent[x.session_key] = x.kind; });
+  }catch(e){ SOC.msg = socErrText(e); p.err = true; }
+  SOC.person = p; socRender();
+}
+async function socReact(uid, idx, kind){
+  const sb = socSb(); if(!sb || !SOC.person) return;
+  const row = SOC.person.sessions[idx]; if(!row) return;
+  const sessionKey = row.session_key;
+  const cur = SOC.person.sent[sessionKey];
+  try{
+    if(cur){ const d = await sb.from('workout_reactions').delete().eq('owner_id', uid).eq('session_key', sessionKey).eq('reactor_id', socUser().id); if(d.error) throw d.error; delete SOC.person.sent[sessionKey]; }
+    if(cur !== kind){ const i = await sb.from('workout_reactions').insert({ owner_id: uid, session_key: sessionKey, reactor_id: socUser().id, kind }); if(i.error) throw i.error; SOC.person.sent[sessionKey] = kind; }
+  }catch(e){ SOC.msg = socErrText(e); }
+  socRender();
+}
+function socProgressHtml(stats, mineBy){
+  const by = {};
+  stats.forEach(s => (by[s.ref_key] = by[s.ref_key] || []).push(s));
+  const keys = Object.keys(by).sort((a, b) => by[b].length - by[a].length).slice(0, 12);
+  if(!keys.length) return '<div class="soc-meta">Sem exercícios da biblioteca no período.</div>';
+  return keys.map(k => {
+    const arr = by[k];
+    const best = arr.reduce((m, s) => (s.top_load > m.top_load || (s.top_load === m.top_load && s.top_reps > m.top_reps)) ? s : m, arr[0]);
+    const last = arr[arr.length - 1], first = arr[0];
+    const bestVol = Math.max.apply(null, arr.map(s => +s.volume));
+    const delta = arr.length > 1 ? round1(last.top_load - first.top_load) : null;
+    const pr = arr.length > 1 && last.top_load >= best.top_load && last.top_load > first.top_load;
+    const mine = mineBy[k];
+    const label = (EXERCISE_DB[k] && EXERCISE_DB[k].label) || k;
+    return '<div class="soc-ex"><div class="soc-row sp"><div class="soc-name">' + escapeHtml(label) + '</div>' + (pr ? '<span class="soc-tag on">recorde recente</span>' : '') + '</div>' +
+      '<div class="soc-meta">Maior carga: ' + best.top_load + ' kg x ' + best.top_reps + ' (' + fmtDateShort(best.session_date) + ') &middot; melhor volume: ' + Math.round(bestVol) + ' kg &middot; ' + arr.length + ' sessão(ões)' +
+      (delta !== null ? ' &middot; <span class="' + (delta > 0 ? 'soc-up' : delta < 0 ? 'soc-dn' : '') + '">' + (delta > 0 ? '+' : '') + delta + ' kg no período</span>' : '') + '</div>' +
+      (mine ? '<div class="soc-meta">Você (mesmo exercício): ' + mine.top_load + ' kg x ' + mine.top_reps + ' &middot; melhor volume ' + mine.bestVol + ' kg</div>' : '') + '</div>';
+  }).join('');
+}
+function socMineByKey(){
+  const { stats } = socBuildLocal(); const o = {};
+  stats.forEach(s => {
+    const m = o[s.ref_key] || (o[s.ref_key] = { top_load:0, top_reps:0, bestVol:0 });
+    if(s.top_load > m.top_load || (s.top_load === m.top_load && s.top_reps > m.top_reps)){ m.top_load = s.top_load; m.top_reps = s.top_reps; }
+    if(s.volume > m.bestVol) m.bestVol = s.volume;
+  });
+  return o;
+}
+function socMyDates(){ return socBuildLocal().sessions.map(s => s.session_date); }
+
+/* ---------- renderização ---------- */
+function socRender(){
+  const el = document.getElementById('conexoes-content'); if(!el) return;
+  const msg = SOC.msg ? '<div class="soc-note warn">' + escapeHtml(SOC.msg) + '</div>' : '';
+  if(!socUser()){
+    const pend = socPending() ? '<div class="soc-note warn">Você recebeu um convite. Entre na sua conta para vê-lo.</div>' : '';
+    el.innerHTML = '<div class="soc-h">Conexões</div><div class="soc-sub">Acompanhe treinos com pessoas de confiança, de forma privada.</div>' + pend +
+      '<div class="empty-state"><div class="ttl">entre na sua conta</div><div class="sub">Conexões usa a sua conta para controlar quem vê o quê. Seus treinos continuam funcionando sem login.</div><button class="btn-primary treino" style="width:auto;padding:10px 20px;" onclick="toggleSyncPanel()">ENTRAR</button></div>';
+    return;
+  }
+  if(SOC.loading && !SOC.loaded){ el.innerHTML = '<div class="soc-h">Conexões</div><div class="soc-sub">Carregando…</div>'; return; }
+  if(!SOC.profile){
+    el.innerHTML = '<div class="soc-h">Conexões</div><div class="soc-sub">Acompanhe treinos com pessoas de confiança. Nada é compartilhado até você criar ou aceitar um convite.</div>' + msg +
+      '<div class="soc-card"><h3>Seu perfil</h3><div class="soc-lbl" style="margin-top:0">Nome de exibição</div><input id="soc-name" class="soc-in" maxlength="30" placeholder="como seus amigos verão você" autocomplete="off">' +
+      '<div class="soc-lbl">Meta de dias de treino por semana</div><input id="soc-goal" class="soc-in" type="number" min="1" max="7" value="4">' +
+      '<div class="soc-note">Apenas esse nome é visível para quem se conectar com você. Seu e-mail nunca aparece.</div>' +
+      '<div class="soc-actions"><button class="btn-primary treino" style="width:auto;padding:10px 18px" onclick="socSaveProfile()">SALVAR PERFIL</button></div></div>' + socCodeBox();
+    return;
+  }
+  if(SOC.view === 'person') return socRenderPerson(el, msg);
+  if(SOC.view === 'group') return socRenderGroup(el, msg);
+  socRenderHome(el, msg);
+}
+function socCodeBox(){
+  return '<div class="soc-card"><h3>Tenho um código de convite</h3><div class="soc-row"><input id="soc-code-in" class="soc-in" placeholder="XXXX-XXXX-XXXX" autocapitalize="characters" autocomplete="off"><button class="btn-ghost" style="width:auto;white-space:nowrap" onclick="socEnterCode()">VER CONVITE</button></div></div>';
+}
+function socRenderHome(el, msg){
+  const p = SOC.profile;
+  let h = '<div class="soc-h">Conexões</div><div class="soc-sub">Você é <b>' + escapeHtml(p.display_name) + '</b> &middot; meta ' + p.weekly_goal + ' dias de treino/semana &middot; <a href="#" onclick="socEditProfile();return false" style="color:var(--text-secondary)">editar</a></div>' + msg + socPubBannerHtml();
+  if(SOC.newInvite){
+    const n = SOC.newInvite;
+    h += '<div class="soc-card"><h3>Convite criado</h3><div class="soc-code">' + socFmtCode(n.code) + '</div>' +
+      '<div class="soc-meta">Vale até ' + new Date(n.expires_at).toLocaleString('pt-BR', { dateStyle:'short', timeStyle:'short' }) + ' &middot; uso único.</div>' +
+      '<div class="soc-note warn">Este código aparece só agora. Depois não dá para vê-lo de novo (só o resumo na lista de convites). Envie por um canal que você confia.</div>' +
+      '<div class="soc-actions"><button class="btn-primary treino" style="width:auto" onclick="socShareInvite()">ENVIAR</button><button class="btn-ghost" onclick="socCopy(\'' + n.code + '\',\'Código\')">COPIAR CÓDIGO</button><button class="btn-ghost" onclick="socCopy(socInviteLink(\'' + n.code + '\'),\'Link\')">COPIAR LINK</button><button class="btn-ghost" onclick="socDismissInvite()">OK, JÁ ENVIEI</button></div></div>';
+  }
+  const hasW = SOC.conns.some(c => c.they_share && c.they_share.weekly);
+  h += '<div class="soc-actions" style="margin:0 0 12px"><button class="btn-primary treino" style="width:auto;padding:10px 16px" onclick="socOpenCreate()">NOVO CONVITE</button>' + (hasW || SOC.conns.length ? '<button class="btn-ghost" onclick="socOpenGroup()">VISÃO DO GRUPO</button>' : '') + '</div>';
+  if(!SOC.conns.length) h += '<div class="soc-card"><div class="soc-meta">Nenhuma conexão ainda. Crie um convite ou digite um código recebido.</div></div>';
+  SOC.conns.forEach(c => {
+    const canSee = c.they_share && c.they_share.weekly;
+    h += '<div class="soc-card"><div class="soc-row sp"><div class="soc-grow"><div class="soc-name">' + escapeHtml(c.name) + '</div><div class="soc-meta">meta ' + c.weekly_goal + '/semana</div></div></div>' +
+      '<div class="soc-lbl">Você compartilha</div>' + (c.i_share ? socPermTags(c.i_share) : '<span class="soc-tag">nada</span>') +
+      '<div class="soc-lbl">Compartilha com você</div>' + (c.they_share ? socPermTags(c.they_share) : '<span class="soc-tag">nada</span>') +
+      '<div class="soc-actions">' + (canSee ? '<button class="btn-primary treino" style="width:auto" onclick="socOpenPerson(\'' + c.user_id + '\')">VER PAINEL</button>' : '') +
+      '<button class="btn-ghost" onclick="socOpenPerms(\'' + c.user_id + '\')">PERMISSÕES</button><button class="btn-ghost" onclick="socConfirmRemove(\'' + c.user_id + '\')">REMOVER</button><button class="btn-danger" onclick="socConfirmBlock(\'' + c.user_id + '\')">BLOQUEAR</button></div></div>';
+  });
+  const pend = SOC.invites.filter(i => i.status === 'pending');
+  if(pend.length){
+    h += '<div class="soc-card"><h3>Convites pendentes</h3>' + pend.map(i => '<div class="soc-row sp" style="padding:8px 0"><div class="soc-grow"><div class="soc-name" style="font-size:13px">' + ({ owner_to_guest:'Eu compartilho', guest_to_owner:'Eu acompanho', mutual:'Mútuo' }[i.kind] || i.kind) + '</div><div class="soc-meta">expira ' + new Date(i.expires_at).toLocaleString('pt-BR', { dateStyle:'short', timeStyle:'short' }) + '</div></div><button class="btn-ghost" style="width:auto;padding:6px 10px;font-size:11.5px" onclick="socRevokeInvite(\'' + i.id + '\')">REVOGAR</button></div>').join('') + '</div>';
+  }
+  if(SOC.recv && SOC.recv.length){
+    const dateOf = {}; (workoutHistory || []).forEach(x => { dateOf[historyLegacyKey(x)] = x.date; });
+    h += '<div class="soc-card"><h3>Reações recebidas</h3>' + SOC.recv.slice(0, 8).map(r => '<div class="soc-meta" style="padding:3px 0"><b style="color:var(--text)">' + escapeHtml(socName(r.reactor_id)) + '</b> &middot; ' + (SOC_REACT[r.kind] || r.kind) + (dateOf[r.session_key] ? ' no treino de ' + fmtDateShort(dateOf[r.session_key]) : '') + '</div>').join('') + '</div>';
+  }
+  h += socCodeBox();
+  if(SOC.blocks.length) h += '<div class="soc-card"><h3>Bloqueados</h3>' + SOC.blocks.map(b => '<div class="soc-row sp" style="padding:6px 0"><div class="soc-name" style="font-size:13px">' + escapeHtml(b.name || 'Pessoa') + '</div><button class="btn-ghost" style="width:auto;padding:6px 10px;font-size:11.5px" onclick="socUnblock(\'' + b.user_id + '\')">DESBLOQUEAR</button></div>').join('') + '</div>';
+  h += '<div class="soc-card"><h3>Privacidade</h3><div class="soc-meta">Só o resumo que você autorizar é publicado: dia de cada treino registrado, séries, volume, duração e carga máxima por exercício da biblioteca. Seu histórico completo, dieta, peso e anotações ficam só no seu aparelho e na sua conta privada (se você usa sincronização) e <b>nunca são compartilhados com as conexões</b>; seu e-mail também nunca aparece. &quot;Registrado&quot; quer dizer que a pessoa anotou o treino; o app não comprova presença na academia.</div><div class="soc-actions"><button class="btn-danger" onclick="socConfirmStopAll()">PARAR DE COMPARTILHAR E APAGAR RESUMO</button></div></div>';
+  el.innerHTML = h;
+}
+function socEditProfile(){
+  SOC.profile = Object.assign({}, SOC.profile, { _edit:true });
+  const p = SOC.profile; const el = document.getElementById('conexoes-content');
+  el.innerHTML = '<div class="soc-h">Editar perfil</div><div class="soc-card"><div class="soc-lbl" style="margin-top:0">Nome de exibição</div><input id="soc-name" class="soc-in" maxlength="30" value="' + escapeHtml(p.display_name) + '"><div class="soc-lbl">Meta de dias de treino por semana</div><input id="soc-goal" class="soc-in" type="number" min="1" max="7" value="' + Math.min(7, Math.max(1, p.weekly_goal)) + '"><div class="soc-actions"><button class="btn-primary treino" style="width:auto;padding:10px 18px" onclick="socSaveProfile()">SALVAR</button><button class="btn-ghost" onclick="socLoadAll()">CANCELAR</button></div></div>';
+}
+function socBack(){ SOC.view = 'home'; SOC.person = null; SOC.group = null; SOC.msg = ''; socRender(); }
+function socRenderGroup(el, msg){
+  const goalMe = SOC.profile.weekly_goal;
+  let h = '<button class="soc-back" onclick="socBack()">&larr; Conexões</button><div class="soc-h">Visão do grupo</div><div class="soc-sub">Dias treinados por semana (mais recente à direita); dois treinos no mesmo dia contam como um dia. Só entram pessoas que compartilham a semana com você.</div>' + msg;
+  if(!SOC.group){ el.innerHTML = h + '<div class="soc-meta">Carregando…</div>'; return; }
+  const rows = [{ name:'Você', goal:goalMe, dates:socMyDates(), me:true }];
+  SOC.conns.filter(c => c.they_share && c.they_share.weekly).forEach(c => rows.push({ name:c.name, goal:c.weekly_goal, dates:SOC.group.dates[c.user_id] || [], id:c.user_id }));
+  const w = rows.map(r => Object.assign(r, { st: socWeekStats(r.dates, r.goal) }));
+  const labs = w[0].st.last4.map(x => x.label);
+  h += '<div class="soc-card" style="overflow-x:auto"><table class="soc-table"><tr><th></th><th>Semana</th>' + labs.map(l => '<th>' + l + '</th>').join('') + '<th>Sequência</th></tr>' +
+    w.map(r => '<tr><td>' + (r.id ? '<a href="#" style="color:var(--text)" onclick="socOpenPerson(\'' + r.id + '\');return false">' + escapeHtml(r.name) + '</a>' : '<b>' + r.name + '</b>') + '</td><td>' + r.st.thisWeek + '/' + r.goal + '</td>' + r.st.last4.map(x => '<td style="' + (x.n >= r.goal ? 'color:var(--text);font-weight:600' : 'color:var(--text-faint)') + '">' + x.n + '</td>').join('') + '<td>' + r.st.streak + ' sem.</td></tr>').join('') + '</table></div>' +
+    '<div class="soc-note">Sequência = semanas seguidas em que a meta de dias treinados de cada um foi atingida (a semana em andamento só conta se já bateu). Treino registrado não comprova presença na academia.</div>';
+  el.innerHTML = h;
+}
+function socRenderPerson(el, msg){
+  const c = SOC.conns.find(x => x.user_id === SOC.personId);
+  if(!c){ return socBack(); }
+  let h = '<button class="soc-back" onclick="socBack()">&larr; Conexões</button><div class="soc-h">' + escapeHtml(c.name) + '</div><div class="soc-sub">Você vê: ' + socPermTags(c.they_share) + '</div>' + msg;
+  const P = SOC.person;
+  if(!P){ el.innerHTML = h + '<div class="soc-meta">Carregando…</div>'; return; }
+  const dates = P.sessions.map(s => s.session_date);
+  const st = socWeekStats(dates, c.weekly_goal);
+  h += '<div class="soc-card"><h3>Semana atual</h3><div class="soc-row sp"><div><div class="soc-h" style="margin:0">' + st.thisWeek + ' / ' + c.weekly_goal + '</div><div class="soc-meta">dias treinados' + (st.thisWeekSessions !== st.thisWeek ? ' (' + st.thisWeekSessions + ' sessões)' : '') + '</div></div><div style="text-align:right"><div class="soc-h" style="margin:0">' + st.streak + '</div><div class="soc-meta">semanas seguidas na meta</div></div></div></div>';
+  h += '<div class="soc-card"><h3>Últimas 4 semanas (dias treinados)</h3>' + socBarsHtml(st, c.weekly_goal) + '<div class="soc-meta" style="margin-top:8px">Meta batida em ' + st.met4 + ' de 4 semanas.</div>' +
+    '<div class="soc-lbl">Calendário</div>' + socCalHtml(dates) + '</div>';
+  const my = socWeekStats(socMyDates(), SOC.profile.weekly_goal);
+  h += '<div class="soc-card"><h3>Comparação (dias treinados em 4 semanas)</h3><table class="soc-table"><tr><th></th>' + st.last4.map(x => '<th>' + x.label + '</th>').join('') + '</tr>' +
+    '<tr><td>' + escapeHtml(c.name) + '</td>' + st.last4.map(x => '<td>' + x.n + '</td>').join('') + '</tr><tr><td>Você</td>' + my.last4.map(x => '<td>' + x.n + '</td>').join('') + '</tr></table></div>';
+  if(c.they_share && c.they_share.progress){
+    h += '<div class="soc-card"><h3>Evolução por exercício</h3><div class="soc-meta" style="margin-bottom:6px">Só exercícios da biblioteca, assim a comparação é entre exercícios equivalentes.</div>' + socProgressHtml(P.stats, socMineByKey()) + '</div>';
+  }
+  const canReact = c.they_share && c.they_share.reactions;
+  h += '<div class="soc-card"><h3>Treinos recentes</h3>' + (P.sessions.length ? P.sessions.slice(0, 10).map((s, si) => {
+    const mine = P.sent[s.session_key];
+    return '<div class="soc-ex"><div class="soc-row sp"><div class="soc-name" style="font-size:13px">' + fmtDateShort(s.session_date) + ' <span class="soc-tag">registrado</span></div><div class="soc-meta">' + s.set_count + ' séries &middot; ' + Math.round(s.volume) + ' kg' + (s.duration_min ? ' &middot; ' + s.duration_min + ' min' : '') + '</div></div>' +
+      (canReact ? '<div class="soc-react">' + Object.keys(SOC_REACT).map(k => '<button class="' + (mine === k ? 'on' : '') + '" onclick="socReact(\'' + c.user_id + '\',' + si + ',\'' + k + '\')">' + SOC_REACT[k] + '</button>').join('') + '</div>' : '') + '</div>';
+  }).join('') : '<div class="soc-meta">Nenhum treino registrado nas últimas 12 semanas.</div>') +
+    '<div class="soc-note">Treino registrado significa que a pessoa anotou a sessão no app. A presença na academia não é verificada.</div></div>';
+  el.innerHTML = h;
+}
+
 function switchTab(name){
   document.querySelectorAll('.segnav-tab[data-tab]').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-  ['hoje','treino','dieta','historico'].forEach(k => {
+  ['hoje','treino','dieta','conexoes','historico'].forEach(k => {
     document.getElementById('panel-' + k).classList.toggle('active', k === name);
   });
   const activeEl = document.querySelector('.segnav-tab[data-tab="'+name+'"]');
@@ -2354,6 +3357,7 @@ function switchTab(name){
   if(name === 'historico') renderHistorico();
   if(name === 'dieta') renderRefeicoes();
   if(name === 'hoje') renderHoje();
+  if(name === 'conexoes'){ if(socUser() && !SOC.loaded) socLoadAll(); else socRender(); }
 }
 function updateSegnavIndicator(activeEl){
   if(!activeEl) return;
@@ -4843,6 +5847,105 @@ const EXERCISE_DB = {
   farmer_carry: { label:'Farmer carry', muscles:{transverso_abdominal:.35, trapezio_superior:.30, flexores_antebraco:.35}, aliases:['farmer carry','caminhada do fazendeiro'] },
 };
 
+/* ======================================================================
+   EXERCISE_DB_V4 — variações reais de pegada, equipamento e execução.
+   Cada variação é uma entrada própria (pesos diferentes), NUNCA sinônimo
+   da versão base: a biomecânica muda (ex.: supinada recruta mais bíceps
+   curto; triângulo/neutra reduz pronação e aumenta braquial/braquiorradial).
+   Pesos = heurística de distribuição de volume (somam 1.0), não fisiologia exata.
+   Aliases que colidiriam com entradas já existentes são descartados no merge.
+====================================================================== */
+const EXERCISE_DB_V4 = {
+  // ----- COSTAS: puxadas -----
+  puxada_alta: { label:'Puxada alta', muscles:{latissimo_dorso:.60, biceps_cabeca_curta:.14, biceps_cabeca_longa:.10, romboides:.08, redondo_maior:.08}, aliases:['puxada alta','puxada no pulley','puxada na polia alta','pulldown','puxada pulley'] },
+  puxada_alta_triangulo: { label:'Puxada alta com triângulo', muscles:{latissimo_dorso:.56, biceps_cabeca_curta:.17, biceps_cabeca_longa:.13, redondo_maior:.07, romboides:.07}, aliases:['puxada triangulo','puxada alta triangulo','puxada com triangulo','v-bar pulldown','close grip neutral pulldown'] },
+  puxada_alta_supinada: { label:'Puxada alta supinada', muscles:{latissimo_dorso:.48, biceps_cabeca_curta:.26, biceps_cabeca_longa:.16, braquial:.05, redondo_maior:.05}, aliases:['puxada alta supinada','puxada alta invertida','puxada pegada supinada alta'] },
+  puxada_alta_neutra: { label:'Puxada alta pegada neutra', muscles:{latissimo_dorso:.56, biceps_cabeca_curta:.17, biceps_cabeca_longa:.13, braquial:.06, redondo_maior:.08}, aliases:['puxada alta neutra','puxada alta pegada neutra'] },
+  puxada_alta_aberta: { label:'Puxada alta pegada aberta', muscles:{latissimo_dorso:.64, redondo_maior:.10, biceps_cabeca_curta:.10, biceps_cabeca_longa:.06, romboides:.10}, aliases:['puxada alta aberta','puxada alta pegada larga','wide grip lat pulldown'] },
+  puxada_alta_fechada: { label:'Puxada alta pegada fechada', muscles:{latissimo_dorso:.54, biceps_cabeca_curta:.20, biceps_cabeca_longa:.14, redondo_maior:.06, romboides:.06}, aliases:['puxada alta fechada','puxada alta pegada estreita'] },
+  puxada_nuca: { label:'Puxada por trás (nuca)', muscles:{latissimo_dorso:.55, redondo_maior:.12, trapezio_medio:.10, romboides:.08, deltoide_posterior:.07, biceps_cabeca_curta:.08}, aliases:['puxada atras da nuca','puxada nuca','puxada por tras','behind the neck pulldown'] },
+  barra_fixa_fechada: { label:'Barra fixa pegada fechada', muscles:{latissimo_dorso:.52, biceps_cabeca_curta:.22, biceps_cabeca_longa:.14, romboides:.06, redondo_maior:.06}, aliases:['barra fixa fechada','close grip pull-up','barra fixa pegada estreita'] },
+  // ----- COSTAS: remadas -----
+  remada_triangulo: { label:'Remada sentada com triângulo', muscles:{latissimo_dorso:.36, trapezio_medio:.18, romboides:.16, biceps_cabeca_curta:.13, biceps_cabeca_longa:.08, deltoide_posterior:.09}, aliases:['remada triangulo','remada com triangulo','remada sentada triangulo','close grip seated row'] },
+  remada_sentada_barra_reta: { label:'Remada sentada com barra reta', muscles:{latissimo_dorso:.32, trapezio_medio:.22, romboides:.18, deltoide_posterior:.12, biceps_cabeca_curta:.10, biceps_cabeca_longa:.06}, aliases:['remada barra reta cabo','remada sentada barra reta','remada polia barra reta'] },
+  remada_curvada_supinada: { label:'Remada curvada supinada', muscles:{latissimo_dorso:.38, biceps_cabeca_curta:.18, biceps_cabeca_longa:.12, romboides:.12, trapezio_medio:.10, eretores_espinha:.10}, aliases:['remada supinada','remada curvada pegada supinada','underhand barbell row'] },
+  remada_curvada_halteres: { label:'Remada curvada com halteres', muscles:{latissimo_dorso:.34, romboides:.18, trapezio_medio:.16, deltoide_posterior:.08, biceps_cabeca_curta:.12, eretores_espinha:.12}, aliases:['remada curvada halteres','bent over dumbbell row'] },
+  remada_peito_apoiado: { label:'Remada com apoio no peito (halteres)', muscles:{trapezio_medio:.24, romboides:.22, latissimo_dorso:.24, deltoide_posterior:.14, biceps_cabeca_curta:.10, biceps_cabeca_longa:.06}, aliases:['chest supported row','remada apoiada no banco inclinado','remada com apoio no peito','remada banco inclinado'] },
+  remada_alta_maquina: { label:'Remada articulada (high row)', muscles:{latissimo_dorso:.30, trapezio_medio:.22, romboides:.18, deltoide_posterior:.10, biceps_cabeca_curta:.12, biceps_cabeca_longa:.08}, aliases:['high row','remada articulada','remada maquina neutra','remada maquina articulada'] },
+  remada_unilateral_cabo: { label:'Remada unilateral no cabo', muscles:{latissimo_dorso:.40, romboides:.14, trapezio_medio:.14, biceps_cabeca_curta:.14, biceps_cabeca_longa:.08, obliquos:.10}, aliases:['remada unilateral cabo','single arm cable row','remada unilateral polia'] },
+  encolhimento_halteres: { label:'Encolhimento com halteres', muscles:{trapezio_superior:.75, trapezio_medio:.10, flexores_antebraco:.15}, aliases:['encolhimento halteres','dumbbell shrug'] },
+  encolhimento_barra: { label:'Encolhimento com barra', muscles:{trapezio_superior:.75, trapezio_medio:.10, flexores_antebraco:.15}, aliases:['encolhimento barra','barbell shrug'] },
+  // ----- PEITO -----
+  supino_halteres_neutro: { label:'Supino com halteres pegada neutra', muscles:{peitoral_maior_esternocostal:.48, deltoide_anterior:.20, triceps_cabeca_lateral:.16, triceps_cabeca_medial:.16}, aliases:['supino neutro','supino halteres neutro','supino halteres pegada neutra'] },
+  supino_inclinado_halteres_neutro: { label:'Supino inclinado com halteres pegada neutra', muscles:{peitoral_maior_clavicular:.46, deltoide_anterior:.30, triceps_cabeca_lateral:.12, triceps_cabeca_medial:.12}, aliases:['supino inclinado neutro','supino inclinado halteres neutro'] },
+  flexao_pegada_fechada: { label:'Flexão pegada fechada', muscles:{peitoral_maior_esternocostal:.38, triceps_cabeca_lateral:.22, triceps_cabeca_medial:.20, deltoide_anterior:.20}, aliases:['flexao fechada','close grip push-up','flexao pegada fechada'] },
+  flexao_pegada_aberta: { label:'Flexão pegada aberta', muscles:{peitoral_maior_esternocostal:.55, deltoide_anterior:.25, triceps_cabeca_lateral:.10, triceps_cabeca_medial:.10}, aliases:['flexao aberta','wide push-up','flexao pegada aberta'] },
+  crossover_unilateral: { label:'Crossover unilateral', muscles:{peitoral_maior_esternocostal:.60, peitoral_maior_clavicular:.15, deltoide_anterior:.15, serrato_anterior:.10}, aliases:['crossover unilateral','cable fly unilateral','crucifixo cabo unilateral'] },
+  svend_press: { label:'Svend press', muscles:{peitoral_maior_esternocostal:.50, peitoral_maior_clavicular:.25, deltoide_anterior:.15, serrato_anterior:.10}, aliases:['svend press','prensa svend'] },
+  // ----- OMBRO -----
+  desenvolvimento_halteres_neutro: { label:'Desenvolvimento com halteres pegada neutra', muscles:{deltoide_anterior:.46, deltoide_lateral:.18, triceps_cabeca_lateral:.18, triceps_cabeca_medial:.18}, aliases:['desenvolvimento neutro','desenvolvimento halteres neutro'] },
+  desenvolvimento_barra_sentado: { label:'Desenvolvimento com barra sentado', muscles:{deltoide_anterior:.46, deltoide_lateral:.18, triceps_cabeca_lateral:.18, triceps_cabeca_medial:.10, trapezio_superior:.08}, aliases:['desenvolvimento barra sentado','seated barbell press'] },
+  elevacao_lateral_inclinada: { label:'Elevação lateral inclinada (apoio no banco)', muscles:{deltoide_lateral:.80, trapezio_superior:.10, deltoide_anterior:.10}, aliases:['elevacao lateral inclinada','lateral raise incline bench','elevacao lateral apoiada'] },
+  elevacao_lateral_sentado: { label:'Elevação lateral sentado', muscles:{deltoide_lateral:.85, trapezio_superior:.15}, aliases:['elevacao lateral sentado','seated lateral raise'] },
+  crucifixo_invertido_halteres: { label:'Crucifixo invertido com halteres', muscles:{deltoide_posterior:.60, romboides:.15, trapezio_medio:.15, infraespinal:.10}, aliases:['crucifixo invertido','reverse fly dumbbell','crucifixo invertido halteres'] },
+  crucifixo_invertido_cabo: { label:'Crucifixo invertido no cabo', muscles:{deltoide_posterior:.62, romboides:.12, trapezio_medio:.14, infraespinal:.12}, aliases:['crucifixo invertido cabo','reverse cable fly','crucifixo invertido polia'] },
+  rotacao_externa_cabo: { label:'Rotação externa no cabo', muscles:{infraespinal:.50, redondo_menor:.30, deltoide_posterior:.20}, aliases:['rotacao externa','external rotation cable','rotacao externa ombro'] },
+  // ----- BÍCEPS -----
+  rosca_cabo_barra_reta: { label:'Rosca direta no cabo (barra reta)', muscles:{biceps_cabeca_curta:.42, biceps_cabeca_longa:.38, braquial:.15, braquiorradial:.05}, aliases:['rosca no cabo barra reta','rosca polia baixa','rosca direta cabo','cable curl straight bar'] },
+  rosca_martelo_corda: { label:'Rosca martelo na corda', muscles:{braquial:.35, braquiorradial:.30, biceps_cabeca_longa:.20, biceps_cabeca_curta:.15}, aliases:['rosca martelo corda','rope hammer curl','rosca martelo no cabo'] },
+  rosca_alternada: { label:'Rosca alternada com halteres', muscles:{biceps_cabeca_curta:.38, biceps_cabeca_longa:.34, braquial:.18, braquiorradial:.10}, aliases:['rosca alternada','alternating dumbbell curl'] },
+  rosca_pegada_aberta: { label:'Rosca direta pegada aberta', muscles:{biceps_cabeca_curta:.46, biceps_cabeca_longa:.30, braquial:.16, braquiorradial:.08}, aliases:['rosca pegada aberta','wide grip curl'] },
+  rosca_pegada_fechada: { label:'Rosca direta pegada fechada', muscles:{biceps_cabeca_longa:.46, biceps_cabeca_curta:.30, braquial:.16, braquiorradial:.08}, aliases:['rosca pegada fechada','close grip curl'] },
+  rosca_scott_unilateral: { label:'Rosca Scott unilateral com halter', muscles:{biceps_cabeca_curta:.46, biceps_cabeca_longa:.30, braquial:.16, braquiorradial:.08}, aliases:['rosca scott unilateral','rosca scott halter'] },
+  // ----- TRÍCEPS -----
+  triceps_pulley_triangulo: { label:'Tríceps pulley com triângulo (pegada neutra)', muscles:{triceps_cabeca_lateral:.34, triceps_cabeca_medial:.33, triceps_cabeca_longa:.33}, aliases:['triceps triangulo','triceps pulley triangulo','triceps v-bar','triceps pulley neutro'] },
+  triceps_overhead_corda: { label:'Tríceps francês na corda (acima da cabeça)', muscles:{triceps_cabeca_longa:.60, triceps_cabeca_lateral:.22, triceps_cabeca_medial:.18}, aliases:['triceps overhead corda','overhead triceps extension cable','triceps frances corda','triceps frances na polia'] },
+  triceps_frances_unilateral: { label:'Tríceps francês unilateral com halter', muscles:{triceps_cabeca_longa:.60, triceps_cabeca_lateral:.22, triceps_cabeca_medial:.18}, aliases:['frances unilateral','triceps frances unilateral'] },
+  triceps_maquina: { label:'Tríceps na máquina (extensão)', muscles:{triceps_cabeca_lateral:.36, triceps_cabeca_medial:.34, triceps_cabeca_longa:.30}, aliases:['triceps maquina','triceps na maquina','dip machine'] },
+  // ----- PERNAS -----
+  hack_pes_juntos: { label:'Agachamento hack pés juntos', muscles:{vasto_lateral:.30, vasto_medial:.26, vasto_intermedio:.18, reto_femoral:.14, gluteo_maximo:.12}, aliases:['hack pes juntos','hack pés juntos'] },
+  leg_press_horizontal: { label:'Leg press horizontal', muscles:{vasto_lateral:.24, vasto_medial:.22, vasto_intermedio:.16, reto_femoral:.10, gluteo_maximo:.28}, aliases:['leg press horizontal','leg horizontal'] },
+  leg_press_pes_altos: { label:'Leg press pés altos', muscles:{gluteo_maximo:.34, biceps_femoral:.10, vasto_lateral:.18, vasto_medial:.16, vasto_intermedio:.12, reto_femoral:.10}, aliases:['leg press pes altos','leg press pés altos','leg press pe alto'] },
+  leg_press_pes_baixos: { label:'Leg press pés baixos', muscles:{vasto_lateral:.28, vasto_medial:.26, vasto_intermedio:.18, reto_femoral:.12, gluteo_maximo:.16}, aliases:['leg press pes baixos','leg press pés baixos','leg press pe baixo'] },
+  leg_press_pes_afastados: { label:'Leg press pés afastados', muscles:{gluteo_maximo:.26, adutores:.14, vasto_lateral:.18, vasto_medial:.18, vasto_intermedio:.14, reto_femoral:.10}, aliases:['leg press pes afastados','leg press pés afastados','leg press pegada larga'] },
+  agachamento_calcanhar_elevado: { label:'Agachamento com calcanhar elevado', muscles:{vasto_medial:.28, vasto_lateral:.24, vasto_intermedio:.18, reto_femoral:.16, gluteo_maximo:.14}, aliases:['agachamento calcanhar elevado','heel elevated squat','agachamento com anilha no calcanhar'] },
+  agachamento_caixa: { label:'Agachamento na caixa (box squat)', muscles:{gluteo_maximo:.30, biceps_femoral:.14, eretores_espinha:.10, vasto_lateral:.16, vasto_medial:.14, vasto_intermedio:.10, adutores:.06}, aliases:['box squat','agachamento na caixa','agachamento no banco'] },
+  stiff_halteres: { label:'Stiff com halteres', muscles:{biceps_femoral:.26, semitendinoso:.16, semimembranoso:.14, gluteo_maximo:.26, eretores_espinha:.18}, aliases:['stiff halteres','stiff com halter'] },
+  afundo_smith: { label:'Afundo no Smith', muscles:{vasto_lateral:.22, vasto_medial:.22, vasto_intermedio:.14, reto_femoral:.10, gluteo_maximo:.32}, aliases:['afundo smith','avanco smith','lunge smith'] },
+  elevacao_pelvica_smith: { label:'Elevação pélvica no Smith', muscles:{gluteo_maximo:.70, biceps_femoral:.12, semitendinoso:.08, vasto_lateral:.10}, aliases:['hip thrust smith','elevacao pelvica smith','elevação pélvica smith'] },
+  // ----- CORE -----
+  abdominal_canivete: { label:'Abdominal canivete (V-up)', muscles:{reto_abdominal:.70, obliquos:.15, transverso_abdominal:.15}, aliases:['canivete','v-up','abdominal canivete'] },
+  abdominal_obliquo: { label:'Abdominal oblíquo (crunch cruzado)', muscles:{obliquos:.60, reto_abdominal:.40}, aliases:['abdominal obliquo','oblique crunch','crunch obliquo'] },
+  abdominal_bicicleta: { label:'Abdominal bicicleta', muscles:{obliquos:.50, reto_abdominal:.50}, aliases:['abdominal bicicleta','bicycle crunch'] },
+  // ----- LOTE 2: comuns que faltavam -----
+  terra_romeno: { label:'Levantamento terra romeno', muscles:{biceps_femoral:.22, semitendinoso:.14, semimembranoso:.12, gluteo_maximo:.28, eretores_espinha:.24}, aliases:['terra romeno','romanian deadlift','rdl barra'] },
+  terra_trap_bar: { label:'Levantamento terra com trap bar', muscles:{gluteo_maximo:.24, vasto_lateral:.14, vasto_medial:.12, vasto_intermedio:.08, eretores_espinha:.18, biceps_femoral:.12, trapezio_superior:.12}, aliases:['trap bar deadlift','terra trap bar','terra barra hexagonal'] },
+  hiperextensao_banco: { label:'Hiperextensão no banco romano', muscles:{eretores_espinha:.40, gluteo_maximo:.35, biceps_femoral:.25}, aliases:['hiperextensao','banco romano','back extension','hiperextensao lombar'] },
+  triceps_testa_polia: { label:'Tríceps testa na polia', muscles:{triceps_cabeca_longa:.50, triceps_cabeca_lateral:.25, triceps_cabeca_medial:.25}, aliases:['triceps testa polia','triceps testa cabo','cable skullcrusher'] },
+  crossover_medio: { label:'Crossover médio (altura do peito)', muscles:{peitoral_maior_esternocostal:.60, peitoral_maior_clavicular:.20, deltoide_anterior:.12, serrato_anterior:.08}, aliases:['crossover medio','crucifixo cabo reto','cable fly mid'] },
+  elevacao_frontal_cabo: { label:'Elevação frontal no cabo', muscles:{deltoide_anterior:.80, peitoral_maior_clavicular:.12, trapezio_superior:.08}, aliases:['elevacao frontal cabo','cable front raise'] },
+  elevacao_frontal_anilha: { label:'Elevação frontal com anilha', muscles:{deltoide_anterior:.80, peitoral_maior_clavicular:.12, trapezio_superior:.08}, aliases:['elevacao frontal anilha','plate front raise'] },
+  flexao_joelhos: { label:'Flexão de braços com apoio de joelhos', muscles:{peitoral_maior_esternocostal:.50, deltoide_anterior:.25, triceps_cabeca_lateral:.13, triceps_cabeca_medial:.12}, aliases:['flexao joelhos','flexao apoiada nos joelhos','knee push-up'] },
+  remada_curvada_aberta: { label:'Remada curvada pegada aberta (pronada)', muscles:{trapezio_medio:.22, romboides:.22, latissimo_dorso:.24, deltoide_posterior:.14, eretores_espinha:.10, biceps_cabeca_curta:.08}, aliases:['remada curvada aberta','remada pegada aberta','wide grip barbell row'] },
+  puxada_unilateral_neutra: { label:'Puxada alta unilateral pegada neutra', muscles:{latissimo_dorso:.56, biceps_cabeca_curta:.16, biceps_cabeca_longa:.12, redondo_maior:.08, obliquos:.08}, aliases:['puxada alta unilateral','puxada unilateral neutra'] },
+  rosca_scott_barra_ez: { label:'Rosca Scott com barra EZ', muscles:{biceps_cabeca_curta:.46, biceps_cabeca_longa:.30, braquial:.16, braquiorradial:.08}, aliases:['rosca scott ez','rosca scott barra ez','preacher curl ez'] },
+  agachamento_halteres: { label:'Agachamento com halteres', muscles:{vasto_lateral:.20, vasto_medial:.18, vasto_intermedio:.14, reto_femoral:.10, gluteo_maximo:.26, adutores:.06, eretores_espinha:.06}, aliases:['agachamento halteres','dumbbell squat'] },
+  extensora_pes_dentro: { label:'Cadeira extensora (ênfase no vasto lateral)', muscles:{vasto_lateral:.34, vasto_medial:.22, vasto_intermedio:.24, reto_femoral:.20}, aliases:['extensora vasto lateral','extensora pontas para dentro'] },
+  flexora_pontas_dentro: { label:'Mesa flexora (ênfase no semitendinoso)', muscles:{biceps_femoral:.30, semitendinoso:.38, semimembranoso:.32}, aliases:['flexora semitendinoso','flexora pontas para dentro'] },
+};
+
+(function mergeExerciseDbV4(){
+  const taken = new Set();
+  Object.keys(EXERCISE_DB).forEach(k => { taken.add(normName(EXERCISE_DB[k].label)); (EXERCISE_DB[k].aliases || []).forEach(a => taken.add(normName(a))); });
+  Object.keys(EXERCISE_DB_V4).forEach(k => {
+    if(EXERCISE_DB[k]) return;
+    const e = EXERCISE_DB_V4[k];
+    const al = (e.aliases || []).filter(a => !taken.has(normName(a)));
+    EXERCISE_DB[k] = { label:e.label, muscles:e.muscles, aliases:al, v:4 };
+    taken.add(normName(e.label)); al.forEach(a => taken.add(normName(a)));
+  });
+})();
+
 /* Índice de aliases construído uma vez, na carga: normName(cada alias
    e o próprio label) -> chave canônica em EXERCISE_DB. */
 const EXERCISE_ALIAS_INDEX = {};
@@ -4858,47 +5961,489 @@ function resolveExerciseMuscleKey(nome){
 }
 
 function computeMuscleVolume(exercises){
-  const musclesVolume = {};
+  const musclesVolume = {}, levelVolume = { p:0, s:0, t:0, none:0 };
   let total = 0;
   exercises.forEach(ex => {
     const filled = (ex.sets||[]).filter(s => s.reps !== '' && s.carga !== '');
     const vol = filled.reduce((v,s) => v + (parseFloat(s.reps)||0)*(parseFloat(s.carga)||0), 0);
     if(vol <= 0) return;
     total += vol;
-    /* Prioridade: classificação manual (ex.muscleOverride) sempre vence o
-       reconhecimento automático. Sem override, cai no reconhecimento por
-       nome/alias na EXERCISE_DB; sem match nenhum, não classificado.
-       Nada disso infla o volume: os pesos de cada mapa (auto ou manual)
-       sempre somam 1.0, então o volume total do exercício continua
-       sendo distribuído, nunca duplicado. Toda chave (granular nova ou
-       coarse legada) passa por muscleParentGroup antes de somar — é
-       assim que dado antigo em formato coarse ({peito:1}) e dado novo
-       granular ({peitoral_maior_esternocostal:.5,...}) acabam no MESMO
-       lugar (musclesVolume['peito']), sem nenhuma tela precisar saber
-       a diferença. */
-    let map = null;
-    if(ex.muscleOverride && typeof ex.muscleOverride === 'object' && Object.keys(ex.muscleOverride).length){
-      map = ex.muscleOverride;
-    } else {
-      const key = resolveExerciseMuscleKey(ex.nome);
-      map = key ? EXERCISE_DB[key].muscles : null;
-    }
-    if(map){
-      Object.entries(map).forEach(([m,w]) => {
+    /* Prioridade (resolveExerciseClass): níveis manuais > override legado > referência (refId) >
+       reconhecimento por nome > não classificado. Os pesos de cada mapa somam 1.0, então o volume
+       é DISTRIBUÍDO entre músculos/níveis, nunca duplicado. Toda chave passa por muscleParentGroup
+       (dado legado coarse {peito:1} e granular novo caem no mesmo grupo). */
+    const cls = resolveExerciseClass(ex);
+    if(cls.weights){
+      Object.entries(cls.weights).forEach(([m,w]) => {
         const group = muscleParentGroup(m);
         musclesVolume[group] = (musclesVolume[group]||0) + vol*w;
+        levelVolume[levelOfMuscle(cls.levels, m)] += vol*w;
       });
     } else {
       musclesVolume['nao_classificado'] = (musclesVolume['nao_classificado']||0) + vol;
+      levelVolume.none += vol;
     }
   });
-  return { musclesVolume, total };
+  return { musclesVolume, total, levelVolume };
 }
 function distributionFromMuscles(musclesVolume, total){
   if(total <= 0) return [];
   return Object.entries(musclesVolume)
     .sort((a,b) => b[1]-a[1])
     .map(([m,v]) => ({ key:m, label: muscleLabels[m]||m, pct: Math.round(v/total*100), volume: Math.round(v), color: muscleColors[m]||'#3a3d45' }));
+}
+
+/* ======================================================================
+   BIBLIOTECA INTELIGENTE + CLASSIFICAÇÃO MUSCULAR EM 3 NÍVEIS
+   ----------------------------------------------------------------------
+   Modelo de dados por exercício (todos os campos opcionais, retrocompatíveis):
+     nome          nome exibido (livre, do usuário) — NUNCA é reescrito pela biblioteca
+     refId         id de referência (chave da EXERCISE_DB ou "c_..." de exercício próprio)
+     muscleLevels  { p:[...], s:[...], t:[...] }  classificação MANUAL (fonte da verdade)
+     muscleOverride mapa músculo->peso derivado de muscleLevels (mantido para versões antigas
+                    do app e para dados legados {musculo:1}); nunca é apagado por migração
+   Prioridade de cálculo: muscleLevels > muscleOverride (legado) > refId > nome (auto) > não classificado.
+   Escolhas manuais nunca são sobrescritas por renomear, autocomplete ou atualização da biblioteca.
+====================================================================== */
+const LEVEL_KEYS = ['p', 's', 't'];
+const LEVEL_NAME = { p:'Primários', s:'Secundários', t:'Terciários' };
+const LEVEL_SHARE = { p:0.60, s:0.30, t:0.10 };  /* fatia do volume por nível; renormalizada entre os níveis presentes */
+function muscleLabelOf(k){ return MUSCLE_TAXONOMY[k] ? MUSCLE_TAXONOMY[k].label : (muscleLabels[k] || k); }
+function exHasLevels(l){ return !!(l && typeof l === 'object' && LEVEL_KEYS.some(k => Array.isArray(l[k]) && l[k].length)); }
+/* garante arrays, sem repetidos e SEM o mesmo músculo em dois níveis (p vence s vence t) */
+function normLevels(l){
+  const out = { p:[], s:[], t:[] }, seen = new Set();
+  LEVEL_KEYS.forEach(k => { ((l && Array.isArray(l[k])) ? l[k] : []).forEach(m => { if(typeof m === 'string' && m && !seen.has(m)){ seen.add(m); out[k].push(m); } }); });
+  return out;
+}
+/* pesos estimativos normalizados (somam 1.0): o volume é DISTRIBUÍDO, nunca multiplicado */
+function weightsFromLevels(levels){
+  const lv = normLevels(levels), present = LEVEL_KEYS.filter(k => lv[k].length);
+  const out = {};
+  if(!present.length) return out;
+  const tot = present.reduce((a, k) => a + LEVEL_SHARE[k], 0);
+  /* fatia por nível dividida entre seus músculos; depois, nenhum músculo de nível mais baixo pode pesar
+     mais que 80% de um músculo do nível acima (evita "diluição" invertida) e tudo é renormalizado para 1.0 */
+  const per = {}; let cap = Infinity;
+  present.forEach(k => { let w = (LEVEL_SHARE[k] / tot) / lv[k].length; w = Math.min(w, cap); per[k] = w; cap = w * 0.8; });
+  const sum = present.reduce((a, k) => a + per[k] * lv[k].length, 0);
+  present.forEach(k => { const w = per[k] / sum; lv[k].forEach(m => { out[m] = Math.round(w * 10000) / 10000; }); });
+  return out;
+}
+/* converte um mapa de pesos (biblioteca ou override legado) em níveis sugeridos */
+function levelsFromWeights(weights){
+  const entries = Object.entries(weights || {}).filter(([, w]) => w > 0).sort((a, b) => b[1] - a[1]);
+  const out = { p:[], s:[], t:[] };
+  if(!entries.length) return out;
+  const max = entries[0][1];
+  entries.forEach(([m, w], i) => { (i === 0 || w >= 0.6 * max ? out.p : (w >= 0.15 * max ? out.s : out.t)).push(m); });
+  return out;
+}
+function levelOfMuscle(levels, m){ return !levels ? 't' : (levels.p.indexOf(m) >= 0 ? 'p' : levels.s.indexOf(m) >= 0 ? 's' : 't'); }
+
+/* ---------- exercícios próprios (reutilizáveis entre treinos e aparelhos) ---------- */
+let customExercises = [];   /* [{ id:'c_...', name, base, levels:{p,s,t}, updatedAt, deleted? }] */
+let exSearchDirty = true, exSearchIndex = [];
+const CUSTOM_EX_KEY = 'treino:customExercises';
+const CUSTOM_EX_SYNC_KEY = 'treino:customExercisesSync';
+function liveCustom(){ return customExercises.filter(c => c && !c.deleted); }
+async function loadCustomExercises(){
+  try{ const r = await storage.get(CUSTOM_EX_KEY); const l = r && r.value ? JSON.parse(r.value) : []; customExercises = Array.isArray(l) ? l.filter(c => c && typeof c.id === 'string' && typeof c.name === 'string') : []; }
+  catch(e){ customExercises = []; }
+  exSearchDirty = true;
+}
+async function saveCustomExercises(){
+  exSearchDirty = true;
+  await storage.set(CUSTOM_EX_KEY, JSON.stringify(customExercises));
+  triggerSync('custom_exercises');
+}
+function findCustomByName(nome){
+  const n = normName(nome); if(!n) return null;
+  return liveCustom().find(c => normName(c.name) === n) || null;
+}
+function exLibEntry(refId){
+  if(!refId || typeof refId !== 'string') return null;
+  if(refId.indexOf('c_') === 0){
+    const c = liveCustom().find(x => x.id === refId);
+    return c ? { kind:'custom', id:c.id, label:c.name, levels:c.levels } : null;
+  }
+  const e = EXERCISE_DB[refId];
+  return e ? { kind:'lib', id:refId, label:e.label, weights:e.muscles } : null;
+}
+/* classificação efetiva de um exercício (única fonte para volume, rótulos e UI) */
+function resolveExerciseClass(ex){
+  const none = { source:'none', weights:null, levels:null, ref:null };
+  if(!ex) return none;
+  const ref = exLibEntry(ex.refId);
+  if(exHasLevels(ex.muscleLevels)){ const lv = normLevels(ex.muscleLevels); return { source:'manual', weights:weightsFromLevels(lv), levels:lv, ref }; }
+  if(ex.muscleOverride && typeof ex.muscleOverride === 'object' && Object.keys(ex.muscleOverride).length){
+    return { source:'legacy', weights:ex.muscleOverride, levels:levelsFromWeights(ex.muscleOverride), ref };
+  }
+  if(ref){
+    if(ref.kind === 'lib') return { source:'ref', weights:ref.weights, levels:levelsFromWeights(ref.weights), ref };
+    if(exHasLevels(ref.levels)){ const lv = normLevels(ref.levels); return { source:'ref', weights:weightsFromLevels(lv), levels:lv, ref }; }
+  }
+  const key = resolveExerciseMuscleKey(ex.nome);
+  if(key){ const w = EXERCISE_DB[key].muscles; return { source:'auto', weights:w, levels:levelsFromWeights(w), ref:{ kind:'lib', id:key, label:EXERCISE_DB[key].label } }; }
+  const cn = findCustomByName(ex.nome);
+  if(cn && exHasLevels(cn.levels)){ const lv = normLevels(cn.levels); return { source:'auto', weights:weightsFromLevels(lv), levels:lv, ref:{ kind:'custom', id:cn.id, label:cn.name } }; }
+  return none;
+}
+
+/* ---------- busca local (sem IA/serviço externo): sinônimos, abreviações, acentos, typos ---------- */
+const EX_SYN_GROUPS = [
+  ['polia','pulley','cabo','cable'], ['maquina','machine','mq','maq'], ['halteres','halter','dumbbell','db','halt'], ['barra','barbell','bb'],
+  ['triangulo','triangle','vbar'], ['supinada','supinado','underhand','supinacao'], ['pronada','pronado','overhand'], ['neutra','neutro','neutral'],
+  ['aberta','aberto','wide'], ['fechada','fechado','close','closed','estreita'], ['inclinado','inclinada','incline','inc'], ['declinado','declinada','decline','dec'],
+  ['unilateral','single','unilat'], ['frente','frontal'], ['agachamento','squat','agacho'], ['rosca','curl'], ['remada','row'], ['triceps','tricep'], ['biceps','bicep'],
+  ['elevacao','raise'], ['afundo','lunge','avanco'], ['panturrilha','calf','gemeos'], ['abdominal','crunch','abdomen'], ['ombro','shoulder'],
+  ['peito','peitoral','chest'], ['gluteo','glute','gluteos'], ['terra','deadlift'], ['puxada','pulldown'], ['prancha','plank'], ['smith','sm']
+];
+const EX_CANON = {};
+EX_SYN_GROUPS.forEach(g => g.forEach(t => { EX_CANON[t] = g[0]; }));
+const EX_STOP = new Set(['de','da','do','das','dos','no','na','nos','nas','com','em','a','o','e','para','pra','por','ao','the','with']);
+function exStem(t){ if(t.length > 4){ t = t.replace(/(es|s)$/, ''); } if(t.length > 4) t = t.replace(/[ao]$/, ''); return t; }
+function exNorm(s){ return normName(s).replace(/[^a-z0-9]+/g, ' ').trim(); }
+function exTokens(s){ return exNorm(s).split(' ').filter(t => t && !EX_STOP.has(t)).map(t => exStem(EX_CANON[t] || t)); }
+/* distância de edição com transposição (Damerau/OSA): "supnio" -> "supino" custa 1. Devolve max+1 quando passa do limite. */
+function exDist(a, b, max){
+  if(a === b) return 0;
+  if(Math.abs(a.length - b.length) > max) return max + 1;
+  const n = a.length, m = b.length;
+  let pp = null, prev = Array.from({ length: m + 1 }, (_, i) => i);
+  for(let i = 1; i <= n; i++){
+    const cur = [i]; let rowMin = i;
+    for(let j = 1; j <= m; j++){
+      let v = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      if(pp && i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) v = Math.min(v, pp[j - 2] + 1);
+      cur.push(v); if(v < rowMin) rowMin = v;
+    }
+    if(rowMin > max) return max + 1;
+    pp = prev; prev = cur;
+  }
+  return prev[m];
+}
+function exLev(a, b, max){ return exDist(a, b, max) <= max; }
+/* Termos que mudam a biomecânica (inclinação, pegada, lateralidade, posição...). Erros de digitação NUNCA podem trocar um pelo outro
+   (ex.: "inclinado" x "declinado" ficam a 2 letras de distância, mas são exercícios diferentes). */
+const EX_CRIT_WORDS = ['inclinado','declinado','supinada','pronada','neutra','aberta','fechada','unilateral','bilateral','frontal','lateral','posterior','anterior','frente','costas','curta','longa','reta','hack','sumo','romeno','bulgaro','martelo','scott','concentrada','sentado','deitado','invertida','alternada','simultanea','cruzada','cross','stiff','terra','leg','pullover','pulldown','puxada','remada','rosca','extensao','flexao','elevacao','crucifixo','desenvolvimento'];
+let EX_CRIT = null, EX_VOCAB = null;
+function exCritInit(){
+  EX_CRIT = new Map(); /* token -> tokens críticos confundíveis (distância <= 2) */
+  const toks = Array.from(new Set(EX_CRIT_WORDS.map(w => exStem(EX_CANON[w] || w))));
+  toks.forEach(a => EX_CRIT.set(a, toks.filter(b => b !== a && exDist(a, b, 2) <= 2)));
+  EX_VOCAB = new Set();
+  Object.keys(EXERCISE_DB).forEach(k => exTokens(EXERCISE_DB[k].label).forEach(x => { if(!EX_CRIT.has(x)) EX_VOCAB.add(x); }));
+}
+/* "d" é a palavra do exercício; "q" o que foi digitado. Retorna a nota do casamento aproximado (0 = não casa). */
+function exFuzzyScore(q, d){
+  if(q.length < 4) return 0;
+  const max = q.length >= 8 ? 2 : 1;
+  if(!EX_CRIT) exCritInit();
+  if(EX_CRIT.has(q)) return 0;               /* termo biomecânico digitado inteiro: só casa exato (ou sinônimo) */
+  const dist = exDist(q, d, max);
+  if(dist > max) return 0;
+  if(dist > 0 && !EX_CRIT.has(d)){
+    /* empate com um termo crítico mais plausível (ex.: "supinda" está a 1 letra de "supinada"): não sugere a palavra comum */
+    for(const c of EX_CRIT.keys()){ if(exDist(q, c, dist) <= dist) return 0; }
+  }
+  if(EX_CRIT.has(d)){
+    if(dist > 1) return 0;                   /* perto de um termo crítico: no máximo 1 letra de diferença... */
+    const others = EX_CRIT.get(d) || [];
+    for(const o of others){ if(exDist(q, o, 2) <= dist) return 0; } /* ...e só se ele for claramente o mais próximo */
+  }
+  return dist === 0 ? 3 : (dist === 1 ? 1.4 : 1.1);
+}
+function exBuildIndex(){
+  const idx = [];
+  const add = (id, kind, label, extra) => {
+    const cands = [{ norm: exNorm(label), tokens: exTokens(label), isLabel:true }];
+    (extra || []).forEach(a => cands.push({ norm: exNorm(a), tokens: exTokens(a), isLabel:false }));
+    idx.push({ id, kind, label, cands });
+  };
+  Object.keys(EXERCISE_DB).forEach(k => add(k, 'lib', EXERCISE_DB[k].label, EXERCISE_DB[k].aliases));
+  liveCustom().forEach(c => add(c.id, 'custom', c.name, []));
+  exSearchIndex = idx; exSearchDirty = false;
+}
+/* "supino" não pode virar "supinada" só por prefixo: se o que foi digitado já é uma palavra de exercício completa, não completa para um termo crítico */
+function exPrefixBlocked(q, d){
+  if(!EX_CRIT) exCritInit();
+  return EX_CRIT.has(d) && EX_VOCAB.has(q);
+}
+function exScoreCand(qt, qnorm, cand){
+  if(!cand.tokens.length) return 0;
+  let sum = 0, last = -1, ordered = true;
+  for(let i = 0; i < qt.length; i++){
+    const q = qt[i]; let best = 0, bi = -1;
+    for(let di = 0; di < cand.tokens.length; di++){
+      const d = cand.tokens[di]; let sc = 0;
+      if(d === q) sc = 3;
+      else if(q.length >= 2 && d.indexOf(q) === 0 && !exPrefixBlocked(q, d)) sc = 2.2;
+      else sc = exFuzzyScore(q, d);
+      if(sc > best){ best = sc; bi = di; }
+    }
+    if(!best) return 0;                       /* todos os termos digitados precisam casar */
+    sum += best; if(bi < last) ordered = false; last = bi;
+  }
+  let s = sum / qt.length;
+  s += Math.min(1, qt.length / cand.tokens.length);
+  if(cand.norm === qnorm) s += 3; else if(cand.norm.indexOf(qnorm) === 0) s += 1.2;
+  if(ordered) s += 0.4;
+  return s;
+}
+function exSearch(query, limit){
+  const qnorm = exNorm(query), qt = exTokens(query);
+  if(!qt.length) return [];
+  if(exSearchDirty) exBuildIndex();
+  const res = [];
+  exSearchIndex.forEach(e => {
+    let best = 0;
+    e.cands.forEach(c => { let sc = exScoreCand(qt, qnorm, c); if(sc > 0 && c.isLabel) sc += 0.3; if(sc > best) best = sc; });
+    if(best > 0) res.push({ id:e.id, kind:e.kind, label:e.label, score: best + (e.kind === 'custom' ? 0.4 : 0) });
+  });
+  res.sort((a, b) => (b.score - a.score) || (a.label.length - b.label.length) || a.label.localeCompare(b.label));
+  return res.slice(0, limit || 8);
+}
+function exSubText(refId){
+  const e = exLibEntry(refId); if(!e) return '';
+  const lv = e.kind === 'lib' ? levelsFromWeights(e.weights) : normLevels(e.levels);
+  return lv.p.slice(0, 2).map(muscleLabelOf).join(' · ');
+}
+
+/* ======================================================================
+   UI — autocomplete, linha de referência e seletor de músculos (3 níveis)
+====================================================================== */
+function exTarget(kind, exId){
+  if(kind === 'ed') return edExercise(exId);
+  if(kind === 'sx'){ const s = activeWorkoutSession; return s ? (s.exercises.find(e => e.id === exId) || null) : null; }
+  return null;
+}
+function exPersist(kind){ if(kind === 'ed') saveTreino(); else schedulePersistSession(); }
+function exSourceText(c){
+  return ({ manual:'manual', legacy:'manual (classificação antiga)', ref:'sugestão da referência', auto:'reconhecimento automático', none:'' })[c.source] || '';
+}
+/* resumo legível dos 3 níveis (editor e sessão) */
+function exLevelsText(c){
+  if(!c.levels) return '';
+  const parts = [];
+  LEVEL_KEYS.forEach(k => { if(c.levels[k].length) parts.push((k === 'p' ? 'P: ' : k === 's' ? 'S: ' : 'T: ') + c.levels[k].map(muscleLabelOf).join(', ')); });
+  return parts.join(' · ');
+}
+function exRefLineHtml(kind, ex){
+  const ref = exLibEntry(ex.refId);
+  const idArg = typeof ex.id === 'number' ? ex.id : JSON.stringify(ex.id);
+  if(ref){
+    return `Referência: <b>${escapeHtml(ref.label)}</b>${kind === 'ed' ? ` <button type="button" class="ex-ref-btn" onclick="exUnlink('${kind}', ${idArg})">remover</button>` : ''}`;
+  }
+  const c = resolveExerciseClass(ex);
+  if(c.source === 'auto' && c.ref) return `Reconhecido automaticamente: <b>${escapeHtml(c.ref.label)}</b>`;
+  return ex.nome ? 'Sem referência na biblioteca. Escolha uma sugestão ou crie um exercício próprio.' : 'Digite para buscar na biblioteca.';
+}
+function exUnlink(kind, exId){
+  const ex = exTarget(kind, exId); if(!ex) return;
+  delete ex.refId; exPersist(kind); exRefreshUi(kind, exId);
+}
+function exRefreshUi(kind, exId){
+  const ex = exTarget(kind, exId); if(!ex) return;
+  if(kind === 'ed'){
+    const r = sxEl('ed-ref-' + exId); if(r) r.innerHTML = exRefLineHtml('ed', ex);
+    const m = sxEl('ed-mus-' + exId); if(m) m.innerHTML = muscleSummaryHtml(ex);
+    const inp = document.querySelector('.ed-ex[data-ex="' + exId + '"] .ed-name'); if(inp && inp.value !== ex.nome) inp.value = ex.nome || '';
+    edAfterBlockChange();
+  } else {
+    const inp = sxEl('sx-name'); if(inp && inp.value !== ex.nome) inp.value = ex.nome || '';
+    const t = sxEl('sx-chip-t-' + activeWorkoutSession.currentExerciseIndex); if(t) t.textContent = shortExName(ex.nome);
+    sxRefreshMuscle();
+  }
+}
+function muscleSummaryHtml(ex){
+  const c = resolveExerciseClass(ex);
+  if(!c.levels) return '<span class="mp-none">Não classificado. Toque para definir.</span>';
+  const rows = LEVEL_KEYS.filter(k => c.levels[k].length).map(k => `<div class="mp-sum-row"><span class="mp-lv mp-lv-${k}">${LEVEL_NAME[k]}</span><span>${c.levels[k].map(m => escapeHtml(muscleLabelOf(m))).join(' · ')}</span></div>`).join('');
+  return rows + `<div class="mp-src">${escapeHtml(exSourceText(c))}</div>`;
+}
+
+/* ---------- dropdown de sugestões ---------- */
+let exSugState = { kind:null, exId:null, results:[], q:'' }, exSugBlurTimer = null;
+function exSugEl(){
+  let el = document.getElementById('ex-suggest');
+  if(!el){ el = document.createElement('div'); el.id = 'ex-suggest'; el.className = 'ex-suggest'; el.setAttribute('role', 'listbox'); document.body.appendChild(el);
+    el.addEventListener('pointerdown', exSuggestPick); }
+  return el;
+}
+function exSuggestOpen(inputEl, kind, exId){
+  clearTimeout(exSugBlurTimer);
+  const q = (inputEl.value || '').trim();
+  const el = exSugEl();
+  if(q.length < 2){ el.style.display = 'none'; return; }
+  const results = exSearch(q, 7);
+  exSugState = { kind, exId, results, q };
+  const rows = results.map((r, i) => `<div class="exs-item" role="option" data-i="${i}">
+      <div class="exs-main" data-act="use" data-i="${i}"><div class="exs-name">${escapeHtml(r.label)}${r.kind === 'custom' ? ' <span class="exs-tag">próprio</span>' : ''}</div><div class="exs-sub">${escapeHtml(exSubText(r.id))}</div></div>
+      <button type="button" class="exs-link" data-act="link" data-i="${i}" title="Vincular sem alterar o nome digitado">só vincular</button>
+    </div>`).join('');
+  const exact = results.length && exNorm(results[0].label) === exNorm(q);
+  const create = exact ? '' : `<div class="exs-item exs-create" data-act="create"><div class="exs-main" data-act="create"><div class="exs-name">Criar exercício próprio “${escapeHtml(q)}”</div><div class="exs-sub">salva a classificação para reutilizar em outros treinos e aparelhos</div></div></div>`;
+  el.innerHTML = (rows || '<div class="exs-empty">Nada na biblioteca com esse nome.</div>') + create;
+  const r = inputEl.getBoundingClientRect(), vv = window.visualViewport, vh = vv ? vv.height : window.innerHeight;
+  const below = vh - r.bottom - 8, above = r.top - 8;
+  el.style.display = 'block'; el.style.left = Math.max(8, r.left) + 'px'; el.style.width = Math.min(r.width, window.innerWidth - 16) + 'px';
+  if(below >= 170 || below >= above){ el.style.top = (r.bottom + 4) + 'px'; el.style.bottom = 'auto'; el.style.maxHeight = Math.max(120, Math.min(360, below)) + 'px'; }
+  else { el.style.bottom = (window.innerHeight - r.top + 4) + 'px'; el.style.top = 'auto'; el.style.maxHeight = Math.max(120, Math.min(360, above)) + 'px'; }
+}
+function exSuggestClose(){ const el = document.getElementById('ex-suggest'); if(el) el.style.display = 'none'; }
+function exSuggestCloseSoon(){ clearTimeout(exSugBlurTimer); exSugBlurTimer = setTimeout(exSuggestClose, 180); }
+function exSuggestPick(ev){
+  const t = ev.target.closest('[data-act]'); if(!t) return;
+  ev.preventDefault();                      /* mantém o foco no campo (teclado do celular não fecha antes do toque) */
+  const act = t.getAttribute('data-act'), i = parseInt(t.getAttribute('data-i'), 10);
+  const { kind, exId, results, q } = exSugState;
+  if(act === 'create'){ exCreateCustom(kind, exId, q); exSuggestClose(); return; }
+  const r = results[i]; if(!r) return;
+  exApplyRef(kind, exId, r.id, act === 'use'); exSuggestClose();
+}
+/* escolher uma referência NUNCA mexe em muscleLevels/muscleOverride (escolha manual é preservada) */
+function exApplyRef(kind, exId, refId, setName){
+  const ex = exTarget(kind, exId); if(!ex) return;
+  const e = exLibEntry(refId); if(!e) return;
+  ex.refId = refId;
+  if(setName) ex.nome = e.label;
+  exPersist(kind); exRefreshUi(kind, exId);
+}
+async function exCreateCustom(kind, exId, name){
+  const ex = exTarget(kind, exId); if(!ex) return;
+  const nm = (name || ex.nome || '').trim(); if(!nm) return;
+  const base = resolveExerciseClass(ex);
+  const c = { id:'c_' + newUuid(), name:nm, base: base.ref && base.ref.kind === 'lib' ? base.ref.id : null, levels: base.levels ? cloneJSON(base.levels) : { p:[], s:[], t:[] }, updatedAt: Date.now() };
+  customExercises.push(c);
+  ex.refId = c.id; if(!ex.nome) ex.nome = nm;
+  exPersist(kind); await saveCustomExercises(); exRefreshUi(kind, exId);
+  if(kind === 'ed' && !exHasLevels(c.levels)) openMuscleSheet(exId);
+}
+
+/* ---------- seletor de músculos (editor) ---------- */
+const MUSCLE_SEARCH_EXTRA = {
+  latissimo_dorso:'dorsal lats grande dorsal costas largura', trapezio_superior:'trapezio superior pescoco', trapezio_medio:'trapezio meio escapula', trapezio_inferior:'trapezio inferior',
+  romboides:'romboide escapula', eretores_espinha:'lombar eretor coluna', serrato_anterior:'serratil serrato', reto_femoral:'quadriceps coxa quad', vasto_lateral:'quadriceps coxa quad',
+  vasto_medial:'quadriceps coxa quad', vasto_intermedio:'quadriceps coxa quad', biceps_femoral:'isquiotibiais isquios posterior coxa hamstring', semitendinoso:'isquiotibiais isquios posterior coxa hamstring',
+  semimembranoso:'isquiotibiais isquios posterior coxa hamstring', gluteo_maximo:'gluteo bumbum', gluteo_medio:'gluteo', gluteo_minimo:'gluteo', reto_abdominal:'abs abdomen core tanquinho',
+  obliquos:'abdomen core lateral obliquo', transverso_abdominal:'abdomen core profundo', gastrocnemio:'panturrilha gemeos', soleo:'panturrilha', flexores_antebraco:'antebraco pegada', extensores_antebraco:'antebraco'
+};
+let mpState = { exId:null, active:'p', q:'' };
+function mpSheetEl(){
+  let el = document.getElementById('mp-backdrop');
+  if(!el){ el = document.createElement('div'); el.id = 'mp-backdrop'; el.className = 'mp-backdrop'; el.addEventListener('click', e => { if(e.target === el) closeMuscleSheet(); }); document.body.appendChild(el); }
+  return el;
+}
+function mpLevels(ex){ if(exHasLevels(ex.muscleLevels)) return normLevels(ex.muscleLevels); const c = resolveExerciseClass(ex); return c.levels ? cloneJSON(c.levels) : { p:[], s:[], t:[] }; }
+function mpCommit(ex, lv){
+  lv = normLevels(lv);
+  if(!exHasLevels(lv)){ delete ex.muscleLevels; delete ex.muscleOverride; }
+  else { ex.muscleLevels = lv; ex.muscleOverride = weightsFromLevels(lv); }
+  saveTreino(); exRefreshUi('ed', ex.id);
+}
+function openMuscleSheet(exId){
+  if(!edExercise(exId)) return;
+  mpState = { exId, active:'p', q:'' };
+  mpRender(true);
+  mpSheetEl().classList.add('open');
+}
+function closeMuscleSheet(){ const el = document.getElementById('mp-backdrop'); if(el) el.classList.remove('open'); }
+function mpMatches(q){
+  const toks = exNorm(q).split(' ').filter(Boolean);
+  if(!toks.length) return [];
+  return Object.keys(MUSCLE_TAXONOMY).filter(k => {
+    const hay = exNorm(muscleLabelOf(k) + ' ' + (muscleLabels[MUSCLE_TAXONOMY[k].group] || '') + ' ' + (MUSCLE_SEARCH_EXTRA[k] || '')).split(' ');
+    return toks.every(t => hay.some(h => h.indexOf(t) === 0 || (t.length >= 5 && exLev(t, h, 1))));
+  }).slice(0, 14);
+}
+function mpRender(focusSearch){
+  const ex = edExercise(mpState.exId); if(!ex){ closeMuscleSheet(); return; }
+  const c = resolveExerciseClass(ex), lv = mpLevels(ex), manual = exHasLevels(ex.muscleLevels);
+  const used = {}; LEVEL_KEYS.forEach(k => lv[k].forEach(m => { used[m] = k; }));
+  const levelBlocks = LEVEL_KEYS.map(k => `
+    <div class="mp-level ${mpState.active === k ? 'active' : ''}" data-lv="${k}">
+      <button type="button" class="mp-level-head" onclick="mpSetActive('${k}')"><span class="mp-lv mp-lv-${k}">${LEVEL_NAME[k]}</span><span class="mp-level-hint">${mpState.active === k ? 'adicionando aqui' : 'toque para adicionar aqui'}</span></button>
+      <div class="mp-chips">${lv[k].map(m => `<span class="mp-chip">${escapeHtml(muscleLabelOf(m))}<button type="button" aria-label="Remover ${escapeHtml(muscleLabelOf(m))}" onclick="mpRemove('${k}','${m}')">×</button></span>`).join('') || '<span class="mp-empty">nenhum</span>'}</div>
+    </div>`).join('');
+  const matches = mpMatches(mpState.q);
+  const results = mpState.q.trim()
+    ? (matches.map(m => { const u = used[m]; return `<button type="button" class="mp-res ${u === mpState.active ? 'dis' : ''}" ${u === mpState.active ? 'disabled' : ''} onclick="mpAdd('${m}')"><span>${escapeHtml(muscleLabelOf(m))}</span><span class="mp-res-tag">${u ? (u === mpState.active ? 'já está aqui' : 'mover de ' + LEVEL_NAME[u].toLowerCase()) : 'adicionar'}</span></button>`; }).join('') || '<div class="mp-empty">Nenhum músculo encontrado.</div>')
+    : `<div class="mp-groups">${Object.keys(muscleLabels).filter(g => g !== 'nao_classificado').map(g => `<button type="button" class="mp-group" onclick="mpQuery('${muscleLabels[g]}')">${muscleLabels[g]}</button>`).join('')}</div>`;
+  const note = manual ? 'Classificação manual. Renomear, autocomplete e atualizações da biblioteca não alteram esta escolha.' : (c.levels ? 'Sugestão editável (' + exSourceText(c) + '). Ao alterar, ela vira uma classificação manual.' : 'Este exercício ainda não foi classificado. Busque os músculos abaixo.');
+  const customLinked = ex.refId && ex.refId.indexOf('c_') === 0;
+  mpSheetEl().innerHTML = `
+    <div class="mp-sheet" role="dialog" aria-modal="true" aria-label="Musculatura do exercício">
+      <div class="mp-top"><div><div class="mp-title">Musculatura</div><div class="mp-name">${escapeHtml(ex.nome || 'Exercício sem nome')}</div></div><button type="button" class="mp-done" onclick="closeMuscleSheet()">Concluir</button></div>
+      <div class="mp-note">${escapeHtml(note)} Cada músculo fica em apenas um nível; o volume é distribuído, não multiplicado.</div>
+      ${levelBlocks}
+      <div class="mp-search"><input type="text" id="mp-q" class="mp-q" value="${escapeHtml(mpState.q)}" placeholder="Buscar músculo (ex.: dorsal, tríceps, glúteo)" autocomplete="off" oninput="mpQuery(this.value, true)" aria-label="Buscar músculo"></div>
+      <div class="mp-results">${results}</div>
+      <div class="mp-foot">
+        <button type="button" class="btn-ghost" onclick="mpRestore()">Restaurar automático</button>
+        <button type="button" class="btn-ghost" onclick="mpSaveCustom()">${customLinked ? 'Atualizar exercício próprio' : 'Salvar como exercício próprio'}</button>
+      </div>
+    </div>`;
+  if(focusSearch === 'keep'){ const i = sxEl('mp-q'); if(i){ i.focus(); const l = i.value.length; try{ i.setSelectionRange(l, l); }catch(e){} } }
+}
+function mpSetActive(k){ mpState.active = k; mpRender(); }
+function mpQuery(q, keepFocus){ mpState.q = q; mpRender(keepFocus ? 'keep' : false); }
+function mpAdd(m){
+  const ex = edExercise(mpState.exId); if(!ex) return;
+  const lv = mpLevels(ex);
+  LEVEL_KEYS.forEach(k => { lv[k] = lv[k].filter(x => x !== m); });   /* nunca em dois níveis: mover */
+  lv[mpState.active].push(m);
+  mpCommit(ex, lv); mpState.q = ''; mpRender();
+}
+function mpRemove(k, m){
+  const ex = edExercise(mpState.exId); if(!ex) return;
+  const lv = mpLevels(ex); lv[k] = lv[k].filter(x => x !== m);
+  mpCommit(ex, lv); mpRender();
+}
+function mpRestore(){
+  const ex = edExercise(mpState.exId); if(!ex) return;
+  delete ex.muscleLevels; delete ex.muscleOverride;
+  saveTreino(); exRefreshUi('ed', ex.id); mpRender();
+}
+async function mpSaveCustom(){
+  const ex = edExercise(mpState.exId); if(!ex) return;
+  const nm = (ex.nome || '').trim(); if(!nm){ return; }
+  const lv = mpLevels(ex); if(!exHasLevels(lv)) return;
+  let c = ex.refId && ex.refId.indexOf('c_') === 0 ? customExercises.find(x => x.id === ex.refId && !x.deleted) : null;
+  if(c){ c.levels = cloneJSON(lv); c.updatedAt = Date.now(); }
+  else { c = { id:'c_' + newUuid(), name:nm, base: (resolveExerciseClass(ex).ref || {}).kind === 'lib' ? resolveExerciseClass(ex).ref.id : null, levels: cloneJSON(lv), updatedAt: Date.now() }; customExercises.push(c); ex.refId = c.id; saveTreino(); }
+  await saveCustomExercises(); exRefreshUi('ed', ex.id); mpRender();
+}
+
+/* ---------- sync dos exercícios próprios (tabela user_exercises: 1 linha por usuário, revisão + escrita condicional) ---------- */
+function mergeCustomLists(local, remote){
+  const map = new Map();
+  (local || []).forEach(c => map.set(c.id, c));
+  (remote || []).forEach(r => { const l = map.get(r.id); if(!l || (r.updatedAt || 0) > (l.updatedAt || 0)) map.set(r.id, r); });
+  return Array.from(map.values()).sort((a, b) => a.id < b.id ? -1 : 1);
+}
+async function syncCustomExercises(user){
+  const sb = initSupabase(); if(!sb) throw new Error('Supabase indisponível');
+  user = user || currentSyncUser; if(!user) return;
+  for(let attempt = 0; attempt < 3; attempt++){
+    const { data, error } = await sb.from('user_exercises').select('*').eq('user_id', user.id).maybeSingle();
+    if(error) throw new Error('pull user_exercises: ' + error.message);
+    const remote = data && Array.isArray(data.data) ? data.data : [];
+    const merged = mergeCustomLists(customExercises, remote);
+    if(canonJSON(merged) !== canonJSON(customExercises)){ customExercises = merged; exSearchDirty = true; await storage.set(CUSTOM_EX_KEY, JSON.stringify(customExercises)); }
+    if(data && canonJSON(merged) === canonJSON(mergeCustomLists(remote, []))) return;           /* nuvem já está igual */
+    if(!data){
+      if(!merged.length) return;
+      const ins = await sb.from('user_exercises').insert({ user_id: user.id, data: merged }).select('rev').single();
+      if(ins.error && ins.error.code !== '23505') throw new Error('push user_exercises: ' + ins.error.message);
+      if(!ins.error) return;
+      continue;
+    }
+    const up = await sb.from('user_exercises').update({ data: merged }).eq('user_id', user.id).eq('rev', data.rev).select('rev');
+    if(up.error) throw new Error('push user_exercises: ' + up.error.message);
+    if(up.data && up.data.length === 1) return;
+  }
+  throw new Error('push user_exercises: conflito não resolvido nesta rodada (será tentado de novo)');
 }
 
 /* ======================================================================
@@ -4912,6 +6457,7 @@ async function loadAll(){
 
   /* migração defensiva: `completed` legado no template nunca define sessão */
   if(sanitizeTemplates()) await saveTreino();
+  await loadCustomExercises();
   await loadActiveSession();
 
   try{ const w = await storage.get('treino:bodyweight'); bodyWeightLog = w ? JSON.parse(w.value) : []; }catch(e){ bodyWeightLog = []; }
@@ -4969,6 +6515,7 @@ async function loadAll(){
   renderWeeklyScheduleConfig();
   renderHoje();
 
+  socCaptureInviteFromUrl();
   initAuthAndSync(); // não bloqueia: a UI local acima já está pronta e usável antes disso terminar
 }
 
@@ -5280,7 +6827,7 @@ function deleteBlock(blockId){
   if(idx < 0) return;
   const [removed] = treinoBlocks.splice(idx, 1);
   saveTreino(); // persiste a lista sem o bloco e sincroniza os blocos restantes (upsert normal)
-  if(currentSyncUser && removed.remoteId) deleteWorkoutBlockRemote(removed.remoteId); // remove também da nuvem, sem tocar no workout_history
+  if(removed.remoteId) deleteWorkoutBlockRemote(removed.remoteId); // remove também da nuvem, sem tocar no workout_history
   invalidateScheduleForBlock(blockId); // qualquer dia que apontava para este bloco volta a ser Dia livre; workoutHistory não é tocado
   renderBlocksLibrary();
   renderWeeklyScheduleConfig();
@@ -5502,6 +7049,7 @@ async function flushActiveSession(){
 async function clearActiveSession(){
   clearTimeout(sessionPersistTimer);
   sessionPersistTimer = null;
+  if(activeWorkoutSession) rpCancelSession(activeWorkoutSession.id); /* concluir/descartar: invalida o push pendente */
   activeWorkoutSession = null;
   sessionCtx = null;
   await storage.remove(ACTIVE_SESSION_KEY);
@@ -5565,6 +7113,8 @@ function buildSessionFromBlock(b){
       if(ex.muscleOverride && typeof ex.muscleOverride === 'object' && Object.keys(ex.muscleOverride).length){
         e.muscleOverride = JSON.parse(JSON.stringify(ex.muscleOverride));
       }
+      if(exHasLevels(ex.muscleLevels)) e.muscleLevels = normLevels(ex.muscleLevels);
+      if(ex.refId) e.refId = ex.refId;
       return e;
     })
   };
@@ -5667,7 +7217,7 @@ async function concludeWorkout(){
   /* musculatura: só séries realizadas, com a classificação/override do
      snapshot da sessão e a EXERCISE_DB atual */
   const realizedExercises = s.exercises.map(ex => ({ ...ex, sets: ex.sets.filter(isSetDone) }));
-  const { musclesVolume, total } = computeMuscleVolume(realizedExercises);
+  const { musclesVolume, total, levelVolume } = computeMuscleVolume(realizedExercises);
 
   /* novos recordes: comparados ao histórico existente (a sessão atual ainda não está nele) */
   const newRecords = [];
@@ -5703,6 +7253,11 @@ async function concludeWorkout(){
       sets: ex.sets.map(x => ({ reps: x.reps, carga: x.carga, rir: x.rir || '', completed: !!x.completed })),
       obs: ex.obs || ''
     };
+    /* novos registros guardam a referência e a classificação usadas (base para comparar exercícios equivalentes);
+       registros antigos NUNCA são reescritos */
+    if(ex.refId) out.refId = ex.refId;
+    if(exHasLevels(ex.muscleLevels)) out.muscleLevels = normLevels(ex.muscleLevels);
+    else if(ex.muscleOverride && typeof ex.muscleOverride === 'object' && Object.keys(ex.muscleOverride).length) out.muscleOverride = Object.assign({}, ex.muscleOverride); /* classificação legada preservada no registro */
     if(ex.nome && isExerciseDone(ex)){
       const last = findLastSession(s.blockId, ex.id, ex.nome);
       const sug = last ? computeProgressionSuggestion(ex.sets, last.sets.filter(isSetRealizedHistoric)) : null;
@@ -5728,6 +7283,7 @@ async function concludeWorkout(){
     exercises: exercisesOut,
     volume: Math.round(totals.volume), setCount: totals.setCount, filledSets: totals.completedSets,
     musclesVolume, muscleTotal: Math.round(total),
+    levelVolume: { p:Math.round(levelVolume.p), s:Math.round(levelVolume.s), t:Math.round(levelVolume.t), none:Math.round(levelVolume.none) },
     newRecords,
     durationMin,
     prevBlockVolume: prevBlockEntry ? prevBlockEntry.volume : null,
@@ -5957,34 +7513,48 @@ function startRestTimer(seconds){
   if(!s) return;
   seconds = Math.max(1, Math.round(seconds || s.restSeconds || REST_DEFAULT));
   unlockRestAudio(); /* chamado a partir do toque do usuário */
-  s.restTimer = { durationSeconds: seconds, endAt: Date.now() + seconds * 1000, pausedRemaining: null, running: true, finished: false };
+  s.restTimer = { durationSeconds: seconds, endAt: Date.now() + seconds * 1000, pausedRemaining: null, running: true, finished: false, restId: newRestId() };
   flushActiveSession();
   startRestTicker();
   renderRestPanel();
   renderRestTimerWidget();
+  rpSyncRest(); /* agenda a notificação push (no-op se desativada) */
 }
 function tickRestTimer(){
   const rt = curRest();
   if(!rt || !rt.running){ stopRestTicker(); return; }
-  if(restRemaining(rt) <= 0){ finishRest(0); return; }
+  if(restRemaining(rt) <= 0){
+    /* atraso REAL (o setInterval é estrangulado em segundo plano; antes passava sempre 0) */
+    finishRest(Math.max(0, Date.now() - (typeof rt.endAt === 'number' ? rt.endAt : Date.now())));
+    return;
+  }
   updateRestDom();
 }
+/* Política do aviso sonoro: só toca o plim-plim se o descanso terminou "agora" (atraso <= 3 s) e o app está
+   visível. Se terminou com o app suspenso/em segundo plano, quem avisa é a notificação push; ao voltar,
+   o app só mostra o estado "Descanso finalizado", sem som atrasado. */
+const REST_CHIME_MAX_LATE_MS = 3000;
 /* Encerra o descanso (chegou a zero). lateMs = há quanto tempo já deveria ter acabado. */
 function finishRest(lateMs){
   const s = activeWorkoutSession, rt = curRest();
   if(!s || !rt || rt.finished) return;
+  const visible = document.visibilityState === 'visible';
   rt.running = false; rt.endAt = null; rt.pausedRemaining = 0; rt.finished = true;
   stopRestTicker();
   flushActiveSession();
   renderRestPanel();
   renderRestTimerWidget();
-  onRestFinished({ late: (lateMs || 0) > 10000 });
+  onRestFinished({ late: (lateMs || 0) > REST_CHIME_MAX_LATE_MS || !visible });
+  if(visible){
+    /* app em primeiro plano: o aviso local já cumpriu o papel — invalida o push pendente e limpa notificações antigas */
+    rpCancelSession(s.id);
+    rpCloseNotifications();
+  }
 }
-/* Ponto ÚNICO de "descanso terminou": som + vibração. Próxima missão (notificações)
-   deve se conectar aqui. Não inicia nada, não marca série, não avança exercício. */
+/* Ponto ÚNICO de "descanso terminou": som + vibração. Não inicia nada, não marca série, não avança exercício. */
 function onRestFinished(info){
-  if(info && info.late) return; /* descanso que terminou há muito tempo (app fechado/suspenso): só o estado visual */
-  playRestChime();
+  if(info && info.late) return; /* terminou com o app suspenso/atrasado: só o estado visual (o push avisa) */
+  if(rpSoundOn()) playRestChime();
   if('vibrate' in navigator){ try{ navigator.vibrate([120, 80, 180]); }catch(e){} }
 }
 function unlockRestAudio(){
@@ -5998,11 +7568,15 @@ function unlockRestAudio(){
     src.buffer = buf; src.connect(restAudioCtx.destination); src.start(0);
   }catch(e){}
 }
-function playRestChime(){
+async function playRestChime(){
   try{
     if(!restAudioCtx) return;
-    if(restAudioCtx.state === 'suspended') restAudioCtx.resume();
-    const ctx = restAudioCtx, t0 = ctx.currentTime + 0.02;
+    const ctx = restAudioCtx, asked = Date.now();
+    /* Antes: resume() sem await e as notas eram agendadas no currentTime "congelado" do contexto suspenso,
+       tocando atrasadas ao retomar. Agora espera o contexto realmente rodar e descarta se já passou do tempo. */
+    if(ctx.state !== 'running'){ try{ await ctx.resume(); }catch(e){} }
+    if(ctx.state !== 'running' || Date.now() - asked > 1500) return;
+    const t0 = ctx.currentTime + 0.02;
     /* "plim-plim": duas notas suaves (Lá5 e Ré6), ataque curto e decaimento exponencial */
     [[880, 0], [1174.66, 0.2]].forEach(([freq, off]) => {
       const osc = ctx.createOscillator(), g = ctx.createGain();
@@ -6030,6 +7604,7 @@ function pauseRestTimer(){
   }
   flushActiveSession();
   updateRestDom();
+  rpSyncRest(); /* pausar = cancela o push; retomar = reagenda com o novo endAt */
 }
 function addRestSeconds(sec){
   const rt = curRest();
@@ -6039,12 +7614,13 @@ function addRestSeconds(sec){
   rt.durationSeconds += sec;
   flushActiveSession();
   updateRestDom();
+  if(rt.running) rpSyncRest(); /* +30s = atualiza o horário do push */
 }
 /* PULAR / FECHAR: encerra sem marcar nada no treino */
 function skipRestTimer(){
   const s = activeWorkoutSession;
   stopRestTicker();
-  if(s && s.restTimer){ s.restTimer = null; flushActiveSession(); }
+  if(s && s.restTimer){ rpCancelSession(s.id); s.restTimer = null; flushActiveSession(); }
   renderRestPanel();
   renderRestTimerWidget();
 }
@@ -6072,6 +7648,361 @@ function restResumeAfterLoad(){
   if(rt.running) startRestTicker();
 }
 
+/* ======================================================================
+   NOTIFICAÇÕES DE DESCANSO (Web Push)
+   ----------------------------------------------------------------------
+   - O horário do aviso é SEMPRE derivado de rt.endAt; o servidor só guarda um "despertador".
+   - Cada pedido leva uma `version` monotônica (contador persistente por aparelho). O servidor
+     aceita só versões maiores e mantém uma "lápide" ao cancelar: pedidos antigos, repetidos ou
+     fora de ordem nunca ressuscitam um descanso cancelado.
+   - Os pedidos vão para um OUTBOX (localStorage, "último vence" por sessão) e são reenviados
+     até o servidor confirmar (falha de rede, app fechado/reaberto, volta do background).
+   - A permissão só é pedida no toque em "Ativar" (exigência do iOS).
+   - A chave privada VAPID existe somente no servidor; aqui só há a chave pública.
+====================================================================== */
+const RP_VAPID_PUBLIC = 'BIgdKjJGR1BlV_D76FxIMPW4jEoiFSDb3oVhlgNJ257pZJMgMKEjjDFzzIdawwiMUT8ea_acEweSGrupBcawlUw';
+const RP_FN_URL = SUPABASE_URL + '/functions/v1/push-schedule';
+const RP_LS = { dev:'rp:dev', ver:'rp:ver', on:'rp:on', sound:'rp:sound', box:'rp:outbox', ep:'rp:endpoint', unsub:'rp:unsubPending' };
+const rpMem = {};
+let rpBusy = false, rpMsg = '', rpNeedsResub = false;
+let rpFlushing = false, rpFlushAgain = false, rpRetryTimer = null, rpRetryN = 0, rpEnsuring = null, rpMemVer = 0;
+
+function rpGet(k){ try{ const v = localStorage.getItem(k); return v === null ? (rpMem[k] !== undefined ? rpMem[k] : null) : v; }catch(e){ return rpMem[k] !== undefined ? rpMem[k] : null; } }
+function rpSet(k, v){ rpMem[k] = v; try{ localStorage.setItem(k, v); }catch(e){} }
+function rpDel(k){ delete rpMem[k]; try{ localStorage.removeItem(k); }catch(e){} }
+function newRestId(){ return 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+function rpDeviceId(){
+  let d = rpGet(RP_LS.dev);
+  if(!d || d.length < 8){
+    d = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : ('d' + Date.now().toString(36) + Math.random().toString(36).slice(2, 12));
+    rpSet(RP_LS.dev, d);
+  }
+  return d;
+}
+/* contador estritamente crescente, persistente; nunca volta mesmo que o relógio volte */
+function rpNextVersion(){
+  let last = parseInt(rpGet(RP_LS.ver) || '0', 10) || 0;
+  last = Math.max(last, rpMemVer);
+  const v = Math.max(Date.now(), last + 1);
+  rpMemVer = v; rpSet(RP_LS.ver, String(v));
+  return v;
+}
+function rpBump(n){
+  if(typeof n !== 'number' || !isFinite(n)) return;
+  if(n > rpMemVer) rpMemVer = n;
+  const cur = parseInt(rpGet(RP_LS.ver) || '0', 10) || 0;
+  if(n > cur) rpSet(RP_LS.ver, String(n));
+}
+function rpIsIOS(){ return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); }
+function rpStandalone(){ return navigator.standalone === true || (window.matchMedia && matchMedia('(display-mode: standalone)').matches); }
+function rpSupported(){ return ('serviceWorker' in navigator) && ('PushManager' in window) && ('Notification' in window); }
+function rpEnabled(){ return rpGet(RP_LS.on) === '1'; }
+function rpSoundOn(){ return rpGet(RP_LS.sound) !== '0'; }
+function rpState(){
+  if(!rpSupported()) return (rpIsIOS() && !rpStandalone()) ? 'install' : 'unsupported';
+  if(!currentSyncUser) return 'login';
+  if(Notification.permission === 'denied') return 'denied';
+  return (rpEnabled() && Notification.permission === 'granted') ? 'on' : 'off';
+}
+function rpKeyBytes(){
+  const pad = '='.repeat((4 - (RP_VAPID_PUBLIC.length % 4)) % 4);
+  const raw = atob(RP_VAPID_PUBLIC.replace(/-/g, '+').replace(/_/g, '/') + pad);
+  const out = new Uint8Array(raw.length);
+  for(let i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
+  return out;
+}
+function rpKeyMatches(sub){
+  try{
+    const k = sub.options && sub.options.applicationServerKey;
+    if(!k) return true;
+    const a = new Uint8Array(k), b = rpKeyBytes();
+    if(a.length !== b.length) return false;
+    for(let i = 0; i < a.length; i++) if(a[i] !== b[i]) return false;
+    return true;
+  }catch(e){ return true; }
+}
+
+/* ---- rede: sempre com o JWT do usuário logado ---- */
+async function rpPost(body, timeoutMs){
+  const sb = initSupabase();
+  if(!sb) return { net:true };
+  let token = null;
+  try{ const r = await sb.auth.getSession(); token = (r && r.data && r.data.session) ? r.data.session.access_token : null; }catch(e){}
+  if(!token) return { auth:true };
+  const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), timeoutMs || 8000);
+  try{
+    const res = await fetch(RP_FN_URL, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'Authorization':'Bearer ' + token, 'apikey': SUPABASE_ANON_KEY },
+      body: JSON.stringify(body), signal: ctl.signal
+    });
+    let j = null; try{ j = await res.json(); }catch(e){}
+    if(res.status === 401) return { auth:true };
+    if(res.status >= 500) return { net:true };
+    return Object.assign({ http: res.status }, j || {});
+  }catch(e){ return { net:true }; }
+  finally{ clearTimeout(timer); }
+}
+
+/* ---- outbox: último pedido por sessão vence ---- */
+function rpBoxLoad(){ try{ const o = JSON.parse(rpGet(RP_LS.box) || '{}'); return (o && typeof o === 'object') ? o : {}; }catch(e){ return {}; } }
+function rpBoxSave(o){ rpSet(RP_LS.box, JSON.stringify(o)); }
+function rpBoxDrop(sid, version){ const b = rpBoxLoad(); if(b[sid] && b[sid].version === version){ delete b[sid]; rpBoxSave(b); } }
+function rpEnqueue(entry){ const b = rpBoxLoad(); b[entry.sessionId] = entry; rpBoxSave(b); rpFlush(); }
+function rpScheduleRetry(){
+  if(rpRetryTimer) return;
+  const wait = [4000, 10000, 30000, 60000][Math.min(rpRetryN, 3)]; rpRetryN++;
+  rpRetryTimer = setTimeout(() => { rpRetryTimer = null; rpFlush(); }, wait);
+}
+function rpSendOp(sid, op){
+  const dev = rpDeviceId();
+  return op.op === 'schedule'
+    ? rpPost({ action:'schedule', device_id:dev, session_id:sid, rest_id:op.restId, version:op.version, fire_at:op.fireAt })
+    : rpPost({ action:'cancel', device_id:dev, session_id:sid, version:op.version });
+}
+/* resposta definitiva de rejeição (4xx que não é sessão/limite): repetir não adianta */
+function rpDefinitiveReject(res){ return !!(res && res.http >= 400 && res.http < 500 && [401, 408, 429].indexOf(res.http) < 0); }
+/* cancelamento de aparelho que o servidor ainda não confirmou (rede fora, sem sessão...): reenviado até confirmar */
+async function rpFlushPendingUnsub(){
+  let p = null; try{ p = JSON.parse(rpGet(RP_LS.unsub)); }catch(e){}
+  if(!p || !p.version){ rpDel(RP_LS.unsub); return true; }
+  const send = () => rpPost({ action:'unsubscribe', device_id:rpDeviceId(), version:p.version });
+  let res = await send();
+  if(res.net){ rpScheduleRetry(); return false; }
+  if(res.auth) return false; /* sem sessão: tenta de novo quando entrar na conta */
+  if(!res.ok && (res.floor || res.current_version) && res.reason !== 'no_subscription'){
+    rpBump(res.floor); rpBump(res.current_version);
+    p.version = rpNextVersion(); rpSet(RP_LS.unsub, JSON.stringify(p));
+    res = await send();
+    if(res.net){ rpScheduleRetry(); return false; }
+    if(res.auth) return false;
+  }
+  if(res.ok || res.reason === 'no_subscription' || rpDefinitiveReject(res)){
+    rpDel(RP_LS.unsub); rpRetryN = 0;
+    if(/não confirmou/.test(rpMsg || '')){ rpMsg = ''; rpRefreshUI(); }
+    return true;
+  }
+  rpScheduleRetry(); return false;
+}
+async function rpFlush(){
+  if(rpFlushing){ rpFlushAgain = true; return; }
+  rpFlushing = true;
+  try{
+    do{
+      rpFlushAgain = false;
+      if(currentSyncUser && rpGet(RP_LS.unsub)){ if(!(await rpFlushPendingUnsub())) break; }
+      if(!rpEnabled()){ if(!rpGet(RP_LS.unsub) && Object.keys(rpBoxLoad()).length) rpBoxSave({}); break; }
+      if(!currentSyncUser) break;
+      const box = rpBoxLoad();
+      for(const sid of Object.keys(box)){
+        let op = box[sid];
+        if(op.op === 'schedule' && op.fireAt < Date.now() - 4000){
+          /* o descanso já terminou: não há o que agendar. Mas um agendamento anterior pode estar no servidor,
+             então o pedido vira CANCELAMENTO (mesma versão) em vez de ser descartado sem confirmação. */
+          op = { op:'cancel', sessionId:sid, version:op.version };
+          const b0 = rpBoxLoad(); b0[sid] = op; rpBoxSave(b0);
+        }
+        let res = await rpSendOp(sid, op);
+        if(res.net){ rpScheduleRetry(); break; }
+        if(res.auth) break; /* sem sessão agora: o outbox fica guardado e é reenviado ao reabrir/entrar */
+        rpBump(res.floor); rpBump(res.current_version);
+        if(res.reason === 'stale_floor' || res.reason === 'stale_version' || res.reason === 'version_conflict'){
+          /* contador local ficou atrás do servidor (ex.: dados do navegador limpos): reemite UMA vez com versão nova */
+          const cur = rpBoxLoad()[sid];
+          if(cur && cur.version === op.version){
+            op = Object.assign({}, cur, { version: rpNextVersion() });
+            const b2 = rpBoxLoad(); b2[sid] = op; rpBoxSave(b2);
+            res = await rpSendOp(sid, op);
+            if(res.net){ rpScheduleRetry(); break; }
+            if(res.auth) break;
+            rpBump(res.floor); rpBump(res.current_version);
+          }
+        }
+        if(res.reason === 'no_subscription') rpNeedsResub = true; /* servidor perdeu o aparelho (ex.: endpoint expirado) */
+        /* só sai do outbox o que o servidor CONFIRMOU (ok), o que não tem mais o que cancelar, ou uma rejeição definitiva */
+        const done = res.ok || (op.op === 'cancel' && res.reason === 'no_subscription') || rpDefinitiveReject(res);
+        if(!done){ rpScheduleRetry(); break; } /* não confirmado: continua no outbox e tenta de novo com espera crescente */
+        if(res.ok && op.op === 'schedule'){
+          const s = activeWorkoutSession, rt = curRest();
+          if(s && rt && s.id === sid && rt.restId === op.restId && rt.endAt === op.fireAt){ rt.pn = op.fireAt; schedulePersistSession(); }
+        }
+        rpBoxDrop(sid, op.version);
+        rpRetryN = 0;
+      }
+    } while(rpFlushAgain);
+  } finally { rpFlushing = false; }
+}
+
+/* ---- ganchos do descanso ---- */
+function rpSyncRest(){
+  if(!rpEnabled()) return;
+  const s = activeWorkoutSession; if(!s) return;
+  const rt = curRest();
+  if(rt && rt.running && !rt.finished && typeof rt.endAt === 'number'){
+    if(!rt.restId) rt.restId = newRestId();
+    rpEnqueue({ op:'schedule', sessionId:s.id, restId:rt.restId, fireAt:rt.endAt, version:rpNextVersion() });
+  } else {
+    rpEnqueue({ op:'cancel', sessionId:s.id, version:rpNextVersion() });
+  }
+}
+function rpCancelSession(sid){
+  if(!sid || !rpEnabled()) return;
+  rpEnqueue({ op:'cancel', sessionId:sid, version:rpNextVersion() });
+}
+async function rpCloseNotifications(){
+  try{
+    if(!('serviceWorker' in navigator)) return;
+    const reg = await navigator.serviceWorker.getRegistration();
+    if(!reg || !reg.getNotifications) return;
+    (await reg.getNotifications()).forEach(n => { if((n.tag || '').indexOf('rest-') === 0) n.close(); });
+  }catch(e){}
+}
+
+/* ---- assinatura push (sem gesto: só quando a permissão já foi concedida) ---- */
+function rpEnsureSubscription(){
+  if(!rpEnsuring) rpEnsuring = rpEnsureSubscriptionInner().then(() => { rpEnsuring = null; }, () => { rpEnsuring = null; });
+  return rpEnsuring;
+}
+async function rpEnsureSubscriptionInner(){
+  try{
+    if(Notification.permission !== 'granted') return;
+    const reg = await navigator.serviceWorker.ready;
+    let sub = await reg.pushManager.getSubscription();
+    if(sub && !rpKeyMatches(sub)){ await sub.unsubscribe(); sub = null; }
+    if(!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey: rpKeyBytes() });
+    if(rpGet(RP_LS.ep) === sub.endpoint && !rpNeedsResub) return;
+    const r = await rpPost({ action:'subscribe', device_id:rpDeviceId(), subscription: sub.toJSON(), sound_enabled: rpSoundOn(), user_agent: navigator.userAgent });
+    if(r && r.ok){ rpSet(RP_LS.ep, sub.endpoint); rpNeedsResub = false; rpBump(r.floor); }
+  }catch(e){ console.warn('[push] assinatura:', e); }
+}
+/* reconcilia: reabriu o app, voltou a rede, voltou do background, entrou na conta */
+async function rpReconcile(){
+  if(currentSyncUser && rpGet(RP_LS.unsub)) rpFlush();
+  if(!rpEnabled() || rpState() !== 'on') return;
+  await rpEnsureSubscription();
+  const s = activeWorkoutSession, rt = curRest();
+  if(s && rt && rt.running && !rt.finished && typeof rt.endAt === 'number' && rt.pn !== rt.endAt && !rpBoxLoad()[s.id]) rpSyncRest();
+  rpFlush();
+}
+
+/* ---- ações do usuário ---- */
+async function rpToggleNotif(){
+  if(rpBusy) return;
+  const st = rpState();
+  if(st === 'on') return rpDisable();
+  if(st !== 'off'){ rpMsg = ''; rpRefreshUI(); return; }
+  rpBusy = true; rpMsg = 'Ativando...'; rpRefreshUI();
+  try{
+    /* primeiro await da função = ainda dentro do gesto do toque (exigido pelo iOS) */
+    const perm = await Notification.requestPermission();
+    if(perm !== 'granted'){ rpMsg = perm === 'denied' ? 'Permissão negada. Libere em Ajustes > Notificações.' : 'Permissão não concedida.'; return; }
+    const reg = await navigator.serviceWorker.ready;
+    let sub = await reg.pushManager.getSubscription();
+    if(sub && !rpKeyMatches(sub)){ await sub.unsubscribe(); sub = null; }
+    if(!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey: rpKeyBytes() });
+    const r = await rpPost({ action:'subscribe', device_id:rpDeviceId(), subscription: sub.toJSON(), sound_enabled: rpSoundOn(), user_agent: navigator.userAgent });
+    if(r && r.ok){
+      rpSet(RP_LS.on, '1'); rpDel(RP_LS.unsub); rpSet(RP_LS.ep, sub.endpoint); rpBump(r.floor); rpNeedsResub = false; rpMsg = '';
+      rpSyncRest(); /* se já houver um descanso rodando, agenda agora */
+    } else {
+      rpMsg = (r && r.net) ? 'Sem conexão. Tente novamente.' : 'Não foi possível registrar este aparelho. Tente novamente.';
+    }
+  }catch(e){
+    rpMsg = 'Falha ao ativar: ' + ((e && e.message) || e);
+  }finally{
+    rpBusy = false; rpRefreshUI();
+  }
+}
+async function rpDisable(){
+  rpBusy = true; rpMsg = 'Desativando...'; rpRefreshUI();
+  try{
+    /* cancela tudo e sobe o piso de versão no servidor ANTES de remover a assinatura */
+    const ver = rpNextVersion();
+    const res = await rpPost({ action:'unsubscribe', device_id:rpDeviceId(), version:ver });
+    const confirmed = !!(res && (res.ok || res.reason === 'no_subscription'));
+    if(res){ rpBump(res.floor); rpBump(res.current_version); }
+    /* servidor não confirmou: guarda o cancelamento para reenviar até confirmar (não afirma que foi cancelado) */
+    if(!confirmed && !rpDefinitiveReject(res)) rpSet(RP_LS.unsub, JSON.stringify({ version:ver, at:Date.now() }));
+    let browserOk = true;
+    try{ const reg = await navigator.serviceWorker.ready; const sub = await reg.pushManager.getSubscription(); if(sub) await sub.unsubscribe(); }catch(e){ browserOk = false; }
+    rpSet(RP_LS.on, '0'); rpDel(RP_LS.ep); rpBoxSave({});
+    rpMsg = confirmed ? '' : 'Desativado neste aparelho, mas o servidor não confirmou o cancelamento dos avisos pendentes. Vou tentar de novo automaticamente.';
+    if(!browserOk) rpMsg += (rpMsg ? ' ' : '') + 'Não consegui remover a assinatura do navegador; se ainda receber avisos, desative em Ajustes do aparelho > Notificações.';
+  }finally{
+    rpBusy = false; rpRefreshUI();
+  }
+}
+function rpToggleSound(){
+  rpSet(RP_LS.sound, rpSoundOn() ? '0' : '1');
+  if(rpEnabled() && currentSyncUser) rpPost({ action:'settings', device_id:rpDeviceId(), sound_enabled: rpSoundOn() });
+  rpRefreshUI();
+}
+async function rpTest(){
+  if(rpBusy || rpState() !== 'on') return;
+  rpBusy = true; rpMsg = 'Agendando teste...'; rpRefreshUI();
+  try{
+    const body = () => ({ action:'schedule', device_id:rpDeviceId(), session_id:'test-' + rpDeviceId().slice(0, 40), rest_id:'test' + Date.now().toString(36), version:rpNextVersion(), fire_at: Date.now() + 8000 });
+    let r = await rpPost(body());
+    if(r && !r.ok && !r.net && !r.auth && r.reason){ rpBump(r.floor); rpBump(r.current_version); r = await rpPost(body()); }
+    rpMsg = (r && r.ok) ? 'Teste agendado. Bloqueie a tela: a notificação chega em até ~20 s.' : 'Não foi possível agendar o teste.';
+  }finally{ rpBusy = false; rpRefreshUI(); }
+}
+/* logout: com o JWT ainda válido, cancela pendentes, desativa o aparelho e remove a assinatura local */
+async function rpOnSignOut(){
+  if(!rpEnabled()) return;
+  const ver = rpNextVersion();
+  let res = null, timer = null;
+  try{
+    /* timeout REAL: se o servidor não responder em 3,5 s, o logout segue (a requisição também é abortada em 3 s) */
+    res = await Promise.race([
+      rpPost({ action:'unsubscribe', device_id:rpDeviceId(), version:ver }, 3000),
+      new Promise(r => { timer = setTimeout(() => r({ net:true, timeout:true }), 3500); })
+    ]);
+  }catch(e){ res = { net:true }; }
+  finally{ clearTimeout(timer); }
+  const confirmed = !!(res && (res.ok || res.reason === 'no_subscription'));
+  /* não confirmado: guarda o cancelamento e reenvia no próximo login, em vez de fingir que deu certo */
+  if(!confirmed && !rpDefinitiveReject(res)) rpSet(RP_LS.unsub, JSON.stringify({ version:ver, at:Date.now() }));
+  try{ const reg = await navigator.serviceWorker.getRegistration(); const sub = reg && await reg.pushManager.getSubscription(); if(sub) await sub.unsubscribe(); }
+  catch(e){ console.warn('[push] não foi possível remover a assinatura do navegador no logout:', e); }
+  rpSet(RP_LS.on, '0'); rpDel(RP_LS.ep); rpBoxSave({});
+}
+
+/* ---- interface ---- */
+function rpStateHint(st){
+  return ({
+    install: 'Para receber o aviso com a tela bloqueada, adicione o app à Tela de Início (Compartilhar > Adicionar à Tela de Início) e abra por ela.',
+    unsupported: 'Este navegador não suporta notificações push.',
+    login: 'Entre na sua conta (botão no topo) para ativar o aviso.',
+    denied: 'Notificações bloqueadas. Libere em Ajustes do aparelho > Notificações.',
+    off: 'Receba um aviso quando o descanso acabar, mesmo com a tela bloqueada.',
+    on: 'Ativado neste aparelho.'
+  })[st] || '';
+}
+function rpSettingsHtml(){
+  const st = rpState();
+  const btn = st === 'on' ? 'Desativar' : (st === 'off' ? 'Ativar' : '');
+  return `<div class="rp-box">
+    <div class="rp-row"><div class="rp-txt"><span class="rp-title">Aviso do descanso</span><span class="rp-sub">${escapeHtml(rpMsg || rpStateHint(st))}</span></div>${btn ? `<button type="button" class="btn-ghost rp-btn" onclick="rpToggleNotif()" ${rpBusy ? 'disabled' : ''}>${btn}</button>` : ''}</div>
+    <div class="rp-row"><div class="rp-txt"><span class="rp-title">Som</span><span class="rp-sub">${rpSoundOn() ? 'Plim-plim com o app aberto' : 'Silencioso'}</span></div><button type="button" class="btn-ghost rp-btn" onclick="rpToggleSound()">${rpSoundOn() ? 'Desativar' : 'Ativar'}</button></div>
+    ${st === 'on' ? `<div class="rp-row"><div class="rp-txt"><span class="rp-sub">Enviar uma notificação de teste (chega em ~10 s)</span></div><button type="button" class="btn-ghost rp-btn" onclick="rpTest()" ${rpBusy ? 'disabled' : ''}>Testar</button></div>` : ''}
+  </div>`;
+}
+function rpRefreshUI(){
+  try{ if(!curRest()) renderRestPanel(); }catch(e){}
+  try{ if(currentSyncUser) renderSyncUI(); }catch(e){}
+}
+document.addEventListener('visibilitychange', () => {
+  if(document.visibilityState !== 'visible') return;
+  rpCloseNotifications();
+  try{ if(restAudioCtx && restAudioCtx.state !== 'running') restAudioCtx.resume().catch(() => {}); }catch(e){}
+  rpReconcile();
+});
+window.addEventListener('online', () => { rpFlush(); rpReconcile(); });
+window.addEventListener('pageshow', () => { rpReconcile(); });
+setTimeout(rpReconcile, 2500);
+setTimeout(rpReconcile, 9000);
+
 /* ---------- interface do descanso ---------- */
 function restLabel(rt){ return rt.finished ? 'Descanso finalizado' : 'Descanso'; }
 function restSubText(rt){ return rt.finished ? 'próxima série' : (rt.running ? '' : 'pausado'); }
@@ -6097,7 +8028,8 @@ function renderRestPanel(){
         <button type="button" class="sx-rest-big" id="sx-rest-big" onclick="sxStartRest()">
           <span class="sx-rest-big-l">Descansar</span>
           <span class="sx-rest-big-t" id="sx-rest-big-t">${fmtRestTime(rest)}</span>
-        </button>`;
+        </button>
+        ${rpSettingsHtml()}`;
     } else {
       panel.setAttribute('data-state', rt.finished ? 'finished' : (rt.running ? 'running' : 'paused'));
       panel.innerHTML = `
@@ -6172,9 +8104,17 @@ function renderRestTimerWidget(){
   const el = document.getElementById('rest-timer-widget');
   if(!el) return;
   const rt = curRest();
-  if(!rt || sessionOverlayOpen){ el.classList.remove('open','finished'); if(!rt) el.innerHTML=''; return; }
+  if(!rt || sessionOverlayOpen){
+    el.classList.remove('open','finished');
+    if(!rt){
+      el.innerHTML = '';
+      /* limpa o cache de construção: sem isso, um descanso novo com os mesmos fin/run não reconstruía e a cápsula ficava vazia */
+      delete el.dataset.built; delete el.dataset.fin; delete el.dataset.run;
+    }
+    return;
+  }
   const rem = restRemaining(rt), pct = restProgressPct(rt);
-  if(!el.dataset.built || el.dataset.fin !== String(rt.finished) || el.dataset.run !== String(rt.running)){
+  if(!el.dataset.built || !el.firstElementChild || el.dataset.fin !== String(rt.finished) || el.dataset.run !== String(rt.running)){
     el.dataset.built = '1'; el.dataset.fin = String(rt.finished); el.dataset.run = String(rt.running);
     el.innerHTML = `
       <div class="rt-ring" id="rt-ring"><span class="rt-time" id="rt-time"></span></div>
@@ -6302,6 +8242,8 @@ function closeConfirmModal(){
   pendingModalActions = [];
 }
 function escCloseConfirmModal(e){ if(e.key === 'Escape') closeConfirmModal(); }
+document.addEventListener('keydown', e => { if(e.key === 'Escape'){ exSuggestClose(); closeMuscleSheet(); } });
+window.addEventListener('resize', () => exSuggestClose());
 function runModalAction(i){
   const a = pendingModalActions[i];
   closeConfirmModal();
@@ -6312,30 +8254,10 @@ function runModalAction(i){
    TREINO — musculatura (rótulos para a UI)
 ====================================================================== */
 function exerciseMuscleInfo(ex){
-  let map = null;
-  if(ex.muscleOverride && typeof ex.muscleOverride === 'object' && Object.keys(ex.muscleOverride).length) map = ex.muscleOverride;
-  else { const key = resolveExerciseMuscleKey(ex.nome); if(key) map = EXERCISE_DB[key].muscles; }
-  if(!map) return { classified:false, group:'Não classificado', detail:'' };
-  const entries = Object.entries(map).sort((a,b) => b[1] - a[1]);
-  const labelOf = k => (MUSCLE_TAXONOMY[k] ? MUSCLE_TAXONOMY[k].label : (muscleLabels[k] || k));
-  const group = muscleLabels[muscleParentGroup(entries[0][0])] || labelOf(entries[0][0]);
-  return { classified:true, group, detail: entries.slice(0, 3).map(([k]) => labelOf(k)).join(' · ') };
-}
-function muscleOptionsHtml(ex){
-  const has = !!(ex.muscleOverride && Object.keys(ex.muscleOverride).length);
-  const selected = has ? Object.keys(ex.muscleOverride)[0] : '';
-  const autoKey = resolveExerciseMuscleKey(ex.nome);
-  let autoLabel = 'Não classificado';
-  if(autoKey){
-    const top = Object.entries(EXERCISE_DB[autoKey].muscles).sort((a,b) => b[1] - a[1])[0][0];
-    autoLabel = MUSCLE_TAXONOMY[top] ? MUSCLE_TAXONOMY[top].label : (muscleLabels[top] || top);
-  }
-  const groups = Object.keys(muscleLabels).filter(g => g !== 'nao_classificado').map(group => {
-    const items = Object.entries(MUSCLE_TAXONOMY).filter(([k, v]) => v.group === group);
-    if(!items.length) return '';
-    return `<optgroup label="${muscleLabels[group]}">${items.map(([k, v]) => `<option value="${k}" ${selected === k ? 'selected' : ''}>${v.label}</option>`).join('')}</optgroup>`;
-  }).join('');
-  return `<option value="" ${!has ? 'selected' : ''}>${autoLabel} (auto)</option>${groups}`;
+  const c = resolveExerciseClass(ex);
+  if(!c.weights || !Object.keys(c.weights).length) return { classified:false, group:'Não classificado', detail:'' };
+  const top = Object.entries(c.weights).sort((a,b) => b[1] - a[1])[0][0];
+  return { classified:true, group: muscleLabels[muscleParentGroup(top)] || muscleLabelOf(top), detail: exLevelsText(c), source:c.source };
 }
 
 /* ======================================================================
@@ -6646,8 +8568,9 @@ function renderSessionExercise(resetScroll){
   main.innerHTML = `
     <div class="sx-ex" data-ex="${ex.id}">
       <div class="sx-ex-eyebrow" id="sx-eyebrow">${escapeHtml(mi.group)}</div>
-      <input type="text" class="sx-ex-name" id="sx-name" value="${escapeHtml(ex.nome)}" placeholder="Nome do exercício" autocomplete="off" enterkeyhint="done" aria-label="Nome do exercício" oninput="sxRename(this.value)" onchange="sxRefreshMuscle()">
+      <input type="text" class="sx-ex-name" id="sx-name" value="${escapeHtml(ex.nome)}" placeholder="Nome do exercício" autocomplete="off" enterkeyhint="done" aria-label="Nome do exercício" oninput="sxRename(this.value); exSuggestOpen(this,'sx',${ex.id})" onfocus="exSuggestOpen(this,'sx',${ex.id})" onblur="exSuggestCloseSoon()" onchange="sxRefreshMuscle()">
       <div class="sx-ex-muscles" id="sx-muscles">${mi.classified ? escapeHtml(mi.detail) : 'musculatura não classificada — defina em EDITAR TREINO'}</div>
+      <div class="ex-ref" id="sx-ref-line">${exRefLineHtml('sx', ex)}</div>
       ${refHtml}
       <div class="sx-sets-head"><span>#</span><span>reps</span><span>kg</span><span>RIR</span><span></span></div>
       <div class="sx-sets" id="sx-sets">${ex.sets.map((set, i) => sxSetRowHtml(set, i, last)).join('')}</div>
@@ -6779,6 +8702,7 @@ function sxRefreshMuscle(){
   const a = sxEl('sx-eyebrow'), b = sxEl('sx-muscles');
   if(a) a.textContent = mi.group;
   if(b) b.textContent = mi.classified ? mi.detail : 'musculatura não classificada — defina em EDITAR TREINO';
+  const r = sxEl('sx-ref-line'); if(r) r.innerHTML = exRefLineHtml('sx', ex);
 }
 /* USAR ÚLTIMA: preenche só séries ainda vazias, a partir da mesma posição
    da última sessão. Ação manual — nunca acontece sozinha. */
@@ -7040,9 +8964,10 @@ function renderEditorMain(resetScroll){
     <div class="ed-ex" data-ex="${ex.id}">
       <div class="ed-ex-top">
         <div class="ed-n">${String(i + 1).padStart(2, '0')}</div>
-        <input type="text" class="ed-name" value="${escapeHtml(ex.nome || '')}" placeholder="Nome do exercício" autocomplete="off" aria-label="Nome do exercício ${i + 1}" oninput="edExName(${ex.id}, this.value)" onchange="edRefreshMuscle(${ex.id})">
+        <input type="text" class="ed-name" value="${escapeHtml(ex.nome || '')}" placeholder="Nome do exercício" autocomplete="off" aria-label="Nome do exercício ${i + 1}" oninput="edExName(${ex.id}, this.value); exSuggestOpen(this,'ed',${ex.id})" onfocus="exSuggestOpen(this,'ed',${ex.id})" onblur="exSuggestCloseSoon()" onchange="edRefreshMuscle(${ex.id})">
         <button type="button" class="sx-icon-btn danger" onclick="edRemoveEx(${ex.id})" aria-label="Remover exercício">${icoTrash}</button>
       </div>
+      <div class="ex-ref" id="ed-ref-${ex.id}">${exRefLineHtml('ed', ex)}</div>
       <div class="ed-row">
         <span class="ed-row-lbl">séries</span>
         <div class="ed-step">
@@ -7053,7 +8978,7 @@ function renderEditorMain(resetScroll){
       </div>
       <div class="ed-row">
         <span class="ed-row-lbl">musculatura</span>
-        <select class="ed-select" id="ed-muscle-${ex.id}" onchange="edMuscle(${ex.id}, this.value)" aria-label="Musculatura">${muscleOptionsHtml(ex)}</select>
+        <button type="button" class="mp-open" id="ed-mus-${ex.id}" onclick="openMuscleSheet(${ex.id})" aria-label="Definir musculatura">${muscleSummaryHtml(ex)}</button>
       </div>
       <div class="ed-obs">
         <textarea placeholder="Observação (ex: subir carga na próxima, ajuste do banco...)" aria-label="Observação" oninput="edObs(${ex.id}, this.value)">${escapeHtml(ex.obs || '')}</textarea>
@@ -7089,21 +9014,11 @@ function edExName(exId, val){
   ex.nome = val;
   saveTreino();
 }
-function edRefreshMuscle(exId){
-  const ex = edExercise(exId);
-  const sel = sxEl('ed-muscle-' + exId);
-  if(ex && sel) sel.innerHTML = muscleOptionsHtml(ex);
-}
+function edRefreshMuscle(exId){ exRefreshUi('ed', exId); }
 function edObs(exId, val){
   const ex = edExercise(exId);
   if(!ex) return;
   ex.obs = val;
-  saveTreino();
-}
-function edMuscle(exId, key){
-  const ex = edExercise(exId);
-  if(!ex) return;
-  if(!key) delete ex.muscleOverride; else ex.muscleOverride = { [key]: 1 };
   saveTreino();
 }
 function edSetCount(exId, delta){
@@ -7343,14 +9258,15 @@ function renderHistorico(){
 
   const streak = computeStreak();
   const thisMonthCount = workoutHistory.filter(h => { const d = new Date(h.date+'T00:00:00'); const now = new Date(); return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear(); }).length;
+  const thisMonthDays = new Set(workoutHistory.filter(h => { const d = new Date(h.date+'T00:00:00'); const now = new Date(); return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear(); }).map(h => h.date)).size;
   const wk = computeWeekStats(0), pwk = computeWeekStats(1);
   const volChange = (wk.volume>0 && pwk.volume>0) ? Math.round(((wk.volume-pwk.volume)/pwk.volume)*100) : null;
 
   el.innerHTML = `
     <div class="stats-row">
-      <div class="stat-box"><div class="n">${streak.current}</div><div class="l">sequência atual</div></div>
-      <div class="stat-box"><div class="n">${streak.best}</div><div class="l">melhor sequência</div></div>
-      <div class="stat-box"><div class="n">${thisMonthCount}</div><div class="l">treinos este mês</div></div>
+      <div class="stat-box"><div class="n">${streak.current}</div><div class="l">dias seguidos (atual)</div></div>
+      <div class="stat-box"><div class="n">${streak.best}</div><div class="l">melhor seq. (dias)</div></div>
+      <div class="stat-box"><div class="n">${thisMonthCount}</div><div class="l">sessões concluídas no mês &middot; ${thisMonthDays} dias</div></div>
       <div class="stat-box"><div class="n">${Math.round(wk.volume).toLocaleString('pt-BR')}<small> kg</small></div><div class="l">volume esta semana</div>${volChange!==null ? `<div class="chg ${volChange>=0?'up':'down'}">${volChange>=0?'+':''}${volChange}% vs semana anterior</div>` : ''}</div>
     </div>
 
@@ -7472,7 +9388,11 @@ function renderMuscleBalance(){
   const dist = distributionFromMuscles(musclesVolume, total);
   const el = document.getElementById('muscle-balance');
   if(dist.length === 0){ el.innerHTML = '<div class="empty-state"><div class="sub">Sem volume suficiente nos últimos 30 dias.</div></div>'; return; }
-  el.innerHTML = dist.map(d => `<div class="balance-row"><div class="balance-top"><span>${d.label}</span><b>${d.pct}%</b></div><div class="balance-bar"><div class="balance-bar-fill" style="width:${d.pct}%; background:${d.color};"></div></div></div>`).join('');
+  const lvTot = { p:0, s:0, t:0 };
+  entries.forEach(e => { if(e.levelVolume){ lvTot.p += e.levelVolume.p || 0; lvTot.s += e.levelVolume.s || 0; lvTot.t += e.levelVolume.t || 0; } });
+  const lvSum = lvTot.p + lvTot.s + lvTot.t;
+  const lvHtml = lvSum > 0 ? `<div class="bal-level"><div class="bal-level-t">Por nível de participação (treinos registrados com esta versão)</div>${LEVEL_KEYS.map(k => { const pct = Math.round(lvTot[k] / lvSum * 100); return `<div class="balance-row"><div class="balance-top"><span>${LEVEL_NAME[k]}</span><b>${pct}%</b></div><div class="balance-bar"><div class="balance-bar-fill" style="width:${pct}%; background:${k === 'p' ? 'var(--treino)' : k === 's' ? 'var(--text-secondary)' : 'var(--text-faint)'};"></div></div></div>`; }).join('')}</div>` : '';
+  el.innerHTML = dist.map(d => `<div class="balance-row"><div class="balance-top"><span>${d.label}</span><b>${d.pct}%</b></div><div class="balance-bar"><div class="balance-bar-fill" style="width:${d.pct}%; background:${d.color};"></div></div></div>`).join('') + lvHtml;
 }
 
 function renderPRSection(){

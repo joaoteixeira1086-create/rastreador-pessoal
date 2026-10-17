@@ -12,7 +12,7 @@
    do subdiretório do GitHub Pages.
 ========================================================================== */
 
-const CACHE_NAME = 'rastreador-pessoal-shell-v1';
+const CACHE_NAME = 'rastreador-pessoal-shell-v2';
 
 /* Apenas o "app shell" mínimo — os próprios arquivos do projeto,
    com caminhos relativos a este sw.js (que fica na raiz do projeto).
@@ -80,4 +80,54 @@ self.addEventListener('fetch', (event) => {
       })
       .catch(() => caches.match(req))
   );
+});
+
+/* ==========================================================================
+   NOTIFICAÇÕES PUSH — fim do descanso
+   --------------------------------------------------------------------------
+   O servidor (Edge Function push-dispatch) envia um push criptografado
+   (aes128gcm) assinado com VAPID. Este handler SEMPRE mostra uma notificação
+   (exigência do iOS/Safari: userVisibleOnly, sem push "silencioso").
+   - App visível: o app já tocou o aviso local; a notificação sai silenciosa e
+     é fechada logo em seguida, para não duplicar o alerta.
+   - App em segundo plano / tela bloqueada: notificação normal.
+   O push não altera nenhum dado do app (só avisa).
+========================================================================== */
+self.addEventListener('push', (event) => {
+  let d = {};
+  try { d = event.data ? event.data.json() : {}; } catch (e) { d = {}; }
+  const title = d.title || 'Descanso finalizado';
+  const tag = 'rest-' + (d.rest_id || 'done');
+
+  event.waitUntil((async () => {
+    const wins = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    const visible = wins.some((c) => c.visibilityState === 'visible');
+    await self.registration.showNotification(title, {
+      body: d.body || 'Hora da próxima série',
+      tag,
+      icon: './icon-192.png',
+      badge: './icon-192.png',
+      silent: visible || d.sound === false,
+      data: { url: './index.html', rest_id: d.rest_id || null, session_id: d.session_id || null },
+    });
+    wins.forEach((c) => { try { c.postMessage({ type: 'rest_push', rest_id: d.rest_id || null, session_id: d.session_id || null }); } catch (e) {} });
+    if (visible) {
+      /* já alertado dentro do app: remove o banner em seguida */
+      await new Promise((r) => setTimeout(r, 1200));
+      const list = await self.registration.getNotifications({ tag });
+      list.forEach((n) => n.close());
+    }
+  })());
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const target = (event.notification.data && event.notification.data.url) || './index.html';
+  event.waitUntil((async () => {
+    const wins = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    for (const c of wins) {
+      if ('focus' in c) { try { await c.focus(); return; } catch (e) {} }
+    }
+    if (self.clients.openWindow) await self.clients.openWindow(target);
+  })());
 });
