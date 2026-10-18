@@ -1611,7 +1611,7 @@ function initSupabase(){
       console.warn('[sync] biblioteca supabase-js não carregou (offline/bloqueada) — sincronização desativada, app continua local.');
       return null;
     }
-    if(!supabaseClient) supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    if(!supabaseClient) supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { global: { fetch: syncFetch } });
     return supabaseClient;
   }catch(e){
     console.warn('[sync] falha ao inicializar Supabase:', e);
@@ -1636,7 +1636,46 @@ async function ensureProfile(user){
   }catch(e){ console.warn('[sync] ensureProfile falhou (não bloqueante):', e.message||e); }
 }
 
+/* Vigia: pedidos ao Supabase não têm timeout próprio e, no iPhone, uma requisição suspensa ao ir para segundo plano pode nunca resolver.
+   Se "sincronizando..." durar mais de 90 s, vira erro, libera a trava (syncFlowRunning) e agenda nova tentativa. */
+let syncWatchTimer = null, syncRunId = 0;
+/* Geração/cancelamento do sync. syncRunId identifica a rodada completa; syncEpoch muda sempre que a rodada em curso é
+   invalidada (watchdog, logout, troca de conta). syncCtl aborta de verdade as requisições de dados (/rest/v1/) em voo:
+   uma rodada antiga não consegue mais confirmar sucesso, mexer em estado nem liberar a trava da rodada nova. */
+let syncEpoch = 0, syncCtl = null, syncPushInflight = 0;
+function syncCtlEnsure(){ if(!syncCtl){ try{ syncCtl = new AbortController(); }catch(e){} } return syncCtl; }
+function syncFetch(input, init){
+  const ctl = syncCtl;
+  const url = typeof input === 'string' ? input : (input && input.url) || '';
+  if(!ctl || url.indexOf('/rest/v1/') < 0) return fetch(input, init);
+  if(ctl.signal.aborted) return Promise.reject(new DOMException('sync cancelado', 'AbortError'));
+  const own = init && init.signal;
+  const signal = own && typeof AbortSignal.any === 'function' ? AbortSignal.any([own, ctl.signal]) : (own || ctl.signal);
+  return fetch(input, Object.assign({}, init, { signal }));
+}
+function syncInvalidate(hard){
+  syncEpoch++; syncRunId++; syncFlowRunning = false; syncPushInflight = 0;
+  try{ if(syncCtl) syncCtl.abort(); }catch(e){}
+  syncCtl = null;
+  if(hard){ /* logout / troca de conta: nada do usuário anterior pode continuar agendado */
+    clearTimeout(syncRetryTimer); syncRetryTimer = null; syncRetryN = 0;
+    Object.keys(syncDebounce).forEach(k => { clearTimeout(syncDebounce[k]); delete syncDebounce[k]; });
+  }
+}
+function syncDead(ctx){ if(!ctx) return false; return ctx.run !== syncRunId || !currentSyncUser || currentSyncUser.id !== ctx.uid; }
+class SyncStale extends Error { constructor(){ super('sync_stale'); this.stale = true; } }
+function syncGuard(ctx){ if(syncDead(ctx)) throw new SyncStale(); }
 function setSyncStatus(status, label){
+  clearTimeout(syncWatchTimer); syncWatchTimer = null;
+  if(status === 'syncing'){
+    syncWatchTimer = setTimeout(() => {
+      if(syncStatusState !== 'syncing') return;
+      console.warn('[sync] "sincronizando..." passou de 90 s: tratando como falha e liberando nova tentativa');
+      syncInvalidate(false);
+      setSyncStatus('error', 'erro de sincronização');
+      try{ scheduleSyncRetry(); }catch(e){}
+    }, 90000);
+  }
   syncStatusState = status;
   const el = document.getElementById('sync-tag');
   if(!el) return;
@@ -1669,6 +1708,7 @@ async function signIn(email, password){
   try{
     const { data, error } = await sb.auth.signInWithPassword({ email, password });
     if(error) return { error: mapAuthError(error) };
+    if(!currentSyncUser || currentSyncUser.id !== data.user.id) syncInvalidate(true);
     currentSyncUser = data.user;
     await ensureProfile(currentSyncUser);
     renderSyncUI();
@@ -1691,6 +1731,7 @@ async function signUp(email, password){
     if(error) return { error: mapAuthError(error) };
     if(data && data.session && data.user){
       /* Confirmação de e-mail desativada no projeto — já veio logado. */
+      if(!currentSyncUser || currentSyncUser.id !== data.user.id) syncInvalidate(true);
       currentSyncUser = data.user;
       await ensureProfile(currentSyncUser);
       renderSyncUI();
@@ -1708,6 +1749,7 @@ async function signUp(email, password){
 async function signOut(){
   const sb = initSupabase();
   await rpOnSignOut(); /* ainda autenticado: cancela pendentes, desativa o aparelho no servidor e remove a assinatura local */
+  syncInvalidate(true);
   currentSyncUser = null;
   setSyncStatus('idle', 'entrar');
   try{ if(sb) await sb.auth.signOut(); }catch(e){}
@@ -2441,13 +2483,15 @@ async function deleteDietLogRemote(day, slot){
 /* ======================================================================
    ORQUESTRAÇÃO
 ====================================================================== */
-async function syncFromSupabase(user){
+async function syncFromSupabase(user, ctx){
   /* pullWorkoutBlocks precisa terminar ANTES de pullWorkoutSchedule, porque
      a programação resolve remoteId -> blockId local usando treinoBlocks
      já atualizado. Por isso saiu do Promise.all e virou um await isolado
      — o restante continua paralelo, como antes. */
   await backupLocalBeforeSync(); // cópia do estado local ORIGINAL, antes de qualquer dado da nuvem entrar
+  syncGuard(ctx);
   await pullWorkoutBlocks(user);
+  syncGuard(ctx);
   await Promise.all([
     pullWorkoutHistory(user),
     pullBodyWeight(user),
@@ -2457,6 +2501,7 @@ async function syncFromSupabase(user){
     pullWorkoutSchedule(user),
     syncCustomExercises(user)
   ]);
+  syncGuard(ctx); // rodada expirada/conta trocada: nada é gravado localmente
   await storage.set('treino:blocks', JSON.stringify(treinoBlocks));
   await storage.set('treino:history', JSON.stringify(workoutHistory));
   await storage.set('treino:bodyweight', JSON.stringify(bodyWeightLog));
@@ -2467,12 +2512,13 @@ async function syncFromSupabase(user){
   await storage.set('treino:weeklySchedule', JSON.stringify(weeklySchedule));
 }
 
-async function syncToSupabase(){
+async function syncToSupabase(ctx){
   /* roda todos os envios; se algum falhar, os outros ainda tentam e o erro sobe no fim (nunca "sincronizado" em falso) */
   const steps = [pushWorkoutBlocks, syncCustomExercises, pushWorkoutHistory, pushBodyWeight, pushDietTargets, pushAllDietLog, pushDietSelections, pushWorkoutSchedule, socPublishStep];
   let firstErr = null;
   for(const fn of steps){
-    try{ await fn(); }catch(e){ if(!firstErr) firstErr = e; console.warn('[sync] etapa falhou:', fn.name, e && e.message || e); }
+    syncGuard(ctx);
+    try{ await fn(); }catch(e){ if(e && e.stale) throw e; if(!firstErr) firstErr = e; console.warn('[sync] etapa falhou:', fn.name, e && e.message || e); }
   }
   if(firstErr) throw firstErr;
 }
@@ -2480,22 +2526,29 @@ async function syncToSupabase(){
 async function runInitialSyncFlow(){
   if(!currentSyncUser || syncFlowRunning) return;
   syncFlowRunning = true;
+  const myRun = ++syncRunId;
+  const ctx = { run: myRun, uid: currentSyncUser.id };
+  syncCtlEnsure();
   const failBase = syncPushFailCount;
   setSyncStatus('syncing', 'sincronizando...');
   try{
-    await syncFromSupabase(currentSyncUser); // 1) traz a nuvem, reconciliando por revisão (nunca sobrescreve edição local pendente)
-    await syncToSupabase();                   // 2) envia só o que está pendente, com escrita condicional por revisão
+    await syncFromSupabase(currentSyncUser, ctx); // 1) traz a nuvem, reconciliando por revisão (nunca sobrescreve edição local pendente)
+    syncGuard(ctx);
+    await syncToSupabase(ctx);                    // 2) envia só o que está pendente, com escrita condicional por revisão
+    syncGuard(ctx);                               // rodada expirada: não confirma sucesso
     if(syncPushFailCount > failBase) throw new Error('algum envio falhou');
     syncRetryN = 0;
-    setSyncStatus('synced', currentSyncUser.email || 'sincronizado');
+    if(!syncPushInflight) setSyncStatus('synced', currentSyncUser.email || 'sincronizado');
   }catch(e){
+    if(e && e.stale || syncDead(ctx)){ console.warn('[sync] rodada antiga descartada (expirou ou conta mudou)'); return; }
     console.warn('[sync] runInitialSyncFlow falhou:', e);
-    setSyncStatus('error', 'erro de sincronização');
-    scheduleSyncRetry();
+    setSyncStatus('error', 'erro de sincronização'); scheduleSyncRetry();
   }finally{
-    syncFlowRunning = false;
-    try{ refreshAllViews(); }catch(e){}
-    flushConflictNotes();
+    if(!syncDead(ctx)){
+      syncFlowRunning = false; if(!syncPushInflight) syncCtl = null;
+      try{ refreshAllViews(); }catch(e){}
+      flushConflictNotes();
+    }
   }
 }
 
@@ -2503,8 +2556,13 @@ function triggerSync(entity){
   if(!currentSyncUser) return; // sem login: nada acontece, app 100% local via IndexedDB
   clearTimeout(syncDebounce[entity]);
   syncDebounce[entity] = setTimeout(async () => {
+    /* rodada completa em andamento: não escreve em paralelo (evita corrida de revisão); tenta de novo logo depois */
+    if(syncFlowRunning){ syncDebounce[entity] = setTimeout(() => triggerSync(entity), 2000); return; }
+    const ep = syncEpoch, uid = currentSyncUser && currentSyncUser.id;
+    const dead = () => ep !== syncEpoch || !currentSyncUser || currentSyncUser.id !== uid;
     const failBase = syncPushFailCount;
     let res = null;
+    syncPushInflight++; syncCtlEnsure();
     setSyncStatus('syncing', 'sincronizando...');
     try{
       if(entity === 'workout_blocks') res = await pushWorkoutBlocks();
@@ -2515,12 +2573,16 @@ function triggerSync(entity){
       else if(entity === 'diet_selections') await pushDietSelections();
       else if(entity === 'workout_schedule') res = await pushWorkoutSchedule();
       else if(entity === 'custom_exercises') await syncCustomExercises(currentSyncUser);
+      if(dead()) return;
       if(syncPushFailCount > failBase) throw new Error('envio falhou');
-      setSyncStatus('synced', currentSyncUser.email || 'sincronizado');
+      if(syncPushInflight <= 1 && !syncFlowRunning) setSyncStatus('synced', currentSyncUser.email || 'sincronizado');
     }catch(e){
+      if(dead()) return; // expirou/trocou de conta: o resultado não vale mais
       console.warn('[sync] push falhou para', entity, e);
       setSyncStatus('error', 'erro de sincronização');
       scheduleSyncRetry();
+    }finally{
+      if(!dead()){ syncPushInflight = Math.max(0, syncPushInflight - 1); if(!syncPushInflight && !syncFlowRunning) syncCtl = null; }
     }
     if((res && res.pulled) || pendingConflictNotes.length){ try{ refreshAllViews(); }catch(e){} flushConflictNotes(); }
   }, 600);
@@ -2648,7 +2710,7 @@ async function initAuthAndSync(){
       renderSyncUI();
     }
     sb.auth.onAuthStateChange((event, session) => {
-      if(event === 'SIGNED_OUT'){ currentSyncUser = null; setSyncStatus('idle',''); renderSyncUI(); socOnSignOut(); }
+      if(event === 'SIGNED_OUT'){ syncInvalidate(true); currentSyncUser = null; setSyncStatus('idle',''); renderSyncUI(); socOnSignOut(); }
       if(event === 'SIGNED_IN' && currentSyncUser){ socOnSignIn(); }
     });
   }catch(e){
@@ -7724,12 +7786,16 @@ function rpKeyMatches(sub){
 
 /* ---- rede: sempre com o JWT do usuário logado ---- */
 async function rpPost(body, timeoutMs){
+  /* Cada falha devolve `kind` (causa real) sem expor token/chaves. `net:true` continua valendo para
+     falhas transitórias (timeout, rede, 5xx), que as filas de reenvio já tratam como "tentar de novo". */
   const sb = initSupabase();
-  if(!sb) return { net:true };
+  if(!sb) return { net:true, kind:'no_client' };
   let token = null;
   try{ const r = await sb.auth.getSession(); token = (r && r.data && r.data.session) ? r.data.session.access_token : null; }catch(e){}
-  if(!token) return { auth:true };
-  const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), timeoutMs || 8000);
+  if(!token) return { auth:true, kind:'no_session' };
+  const limit = timeoutMs || 8000;
+  let timedOut = false;
+  const ctl = new AbortController(), timer = setTimeout(() => { timedOut = true; ctl.abort(); }, limit);
   try{
     const res = await fetch(RP_FN_URL, {
       method:'POST',
@@ -7737,11 +7803,28 @@ async function rpPost(body, timeoutMs){
       body: JSON.stringify(body), signal: ctl.signal
     });
     let j = null; try{ j = await res.json(); }catch(e){}
-    if(res.status === 401) return { auth:true };
-    if(res.status >= 500) return { net:true };
+    const code = (j && typeof j.error === 'string') ? j.error.slice(0, 40) : '';
+    if(res.status === 401) return { auth:true, kind:'auth', http:401, code };
+    if(res.status >= 500) return { net:true, kind:'http5xx', http:res.status, code };
     return Object.assign({ http: res.status }, j || {});
-  }catch(e){ return { net:true }; }
+  }catch(e){
+    /* AbortError por nosso timer = timeout; TypeError do fetch = não chegou ao servidor (rede, DNS, bloqueio ou CORS/preflight) */
+    return { net:true, kind: timedOut ? 'timeout' : 'network', limit: Math.round(limit / 1000), detail: String((e && e.name) || 'erro').slice(0, 30) };
+  }
   finally{ clearTimeout(timer); }
+}
+/* texto para a pessoa, por causa real (sem tokens, chaves ou URLs internas) */
+function rpDiagText(r){
+  if(!r) return 'Sem resposta do servidor.';
+  switch(r.kind){
+    case 'no_client': return 'O app não conseguiu iniciar a conexão com o servidor. Recarregue o app e tente de novo.';
+    case 'no_session': return 'Você não está logado. Toque em "conta", entre e tente ativar de novo.';
+    case 'auth': return 'Sessão recusada pelo servidor (HTTP 401). Saia e entre de novo na conta.';
+    case 'timeout': return 'O servidor não respondeu em ' + (r.limit || 8) + ' s (timeout). Tente de novo.';
+    case 'network': return 'A requisição não chegou ao servidor (falha de rede, bloqueio ou CORS no navegador: ' + (r.detail || 'erro') + ').';
+    case 'http5xx': return 'Erro no servidor (HTTP ' + r.http + (r.code ? ': ' + r.code : '') + '). O problema está no serviço, não na sua internet.';
+    default: return r.http ? 'Pedido recusado pelo servidor (HTTP ' + r.http + (r.code || r.error ? ': ' + String(r.code || r.error).slice(0, 40) : '') + ').' : 'Não foi possível concluir.';
+  }
 }
 
 /* ---- outbox: último pedido por sessão vence ---- */
@@ -7905,7 +7988,8 @@ async function rpToggleNotif(){
       rpSet(RP_LS.on, '1'); rpDel(RP_LS.unsub); rpSet(RP_LS.ep, sub.endpoint); rpBump(r.floor); rpNeedsResub = false; rpMsg = '';
       rpSyncRest(); /* se já houver um descanso rodando, agenda agora */
     } else {
-      rpMsg = (r && r.net) ? 'Sem conexão. Tente novamente.' : 'Não foi possível registrar este aparelho. Tente novamente.';
+      rpMsg = 'Não foi possível ativar. ' + rpDiagText(r);
+      console.warn('[push] subscribe falhou:', r && r.kind, r && r.http, r && (r.code || r.error));
     }
   }catch(e){
     rpMsg = 'Falha ao ativar: ' + ((e && e.message) || e);
@@ -7944,7 +8028,7 @@ async function rpTest(){
     const body = () => ({ action:'schedule', device_id:rpDeviceId(), session_id:'test-' + rpDeviceId().slice(0, 40), rest_id:'test' + Date.now().toString(36), version:rpNextVersion(), fire_at: Date.now() + 8000 });
     let r = await rpPost(body());
     if(r && !r.ok && !r.net && !r.auth && r.reason){ rpBump(r.floor); rpBump(r.current_version); r = await rpPost(body()); }
-    rpMsg = (r && r.ok) ? 'Teste agendado. Bloqueie a tela: a notificação chega em até ~20 s.' : 'Não foi possível agendar o teste.';
+    rpMsg = (r && r.ok) ? 'Teste agendado. Bloqueie a tela: a notificação chega em até ~20 s.' : 'Não foi possível agendar o teste. ' + rpDiagText(r);
   }finally{ rpBusy = false; rpRefreshUI(); }
 }
 /* logout: com o JWT ainda válido, cancela pendentes, desativa o aparelho e remove a assinatura local */
