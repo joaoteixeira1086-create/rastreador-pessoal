@@ -2121,7 +2121,7 @@ async function flushConflictNotes(){
 let syncFlowRunning = false, syncRetryTimer = null, syncRetryN = 0, lastAutoSyncAt = 0;
 function scheduleSyncRetry(){
   if(syncRetryTimer || !currentSyncUser) return;
-  const wait = [15000, 30000, 60000, 120000][Math.min(syncRetryN, 3)]; syncRetryN++;
+  const wait = [2500, 15000, 30000, 60000, 120000][Math.min(syncRetryN, 4)]; syncRetryN++; /* 1ª repetição rápida: ao voltar do 2º plano a primeira tentativa costuma falhar por sessão/conexão suspensa */
   syncRetryTimer = setTimeout(() => { syncRetryTimer = null; if(currentSyncUser) runInitialSyncFlow(); }, wait);
 }
 function autoSyncIfIdle(){
@@ -2523,6 +2523,12 @@ async function syncToSupabase(ctx){
   if(firstErr) throw firstErr;
 }
 
+async function syncWarmSession(){
+  try{
+    const sb = initSupabase(); if(!sb || !sb.auth || typeof sb.auth.getSession !== 'function') return;
+    await Promise.race([sb.auth.getSession(), new Promise(r => setTimeout(r, 8000))]); // getSession renova o token se estiver vencido
+  }catch(e){ console.warn('[sync] aquecer sessão falhou (segue mesmo assim):', e && e.message || e); }
+}
 async function runInitialSyncFlow(){
   if(!currentSyncUser || syncFlowRunning) return;
   syncFlowRunning = true;
@@ -2532,6 +2538,8 @@ async function runInitialSyncFlow(){
   const failBase = syncPushFailCount;
   setSyncStatus('syncing', 'sincronizando...');
   try{
+    await syncWarmSession(); // renova o token vencido ANTES dos pedidos (iPhone: voltar do 2º plano com sessão expirada)
+    syncGuard(ctx);
     await syncFromSupabase(currentSyncUser, ctx); // 1) traz a nuvem, reconciliando por revisão (nunca sobrescreve edição local pendente)
     syncGuard(ctx);
     await syncToSupabase(ctx);                    // 2) envia só o que está pendente, com escrita condicional por revisão
