@@ -7722,9 +7722,9 @@ function restResumeAfterLoad(){
    - A permissão só é pedida no toque em "Ativar" (exigência do iOS).
    - A chave privada VAPID existe somente no servidor; aqui só há a chave pública.
 ====================================================================== */
-const RP_VAPID_PUBLIC = 'BIgdKjJGR1BlV_D76FxIMPW4jEoiFSDb3oVhlgNJ257pZJMgMKEjjDFzzIdawwiMUT8ea_acEweSGrupBcawlUw';
+const RP_VAPID_PUBLIC = 'BO0HkRWamJbqnzdfvj6TYiAxFRpicpY9yYjku2TO7QcjbJ_x4ZHqnolrT1dizL8Kfo89prUracL3c5u_Za-Ugh4';
 const RP_FN_URL = SUPABASE_URL + '/functions/v1/push-schedule';
-const RP_LS = { dev:'rp:dev', ver:'rp:ver', on:'rp:on', sound:'rp:sound', box:'rp:outbox', ep:'rp:endpoint', unsub:'rp:unsubPending' };
+const RP_LS = { dev:'rp:dev', ver:'rp:ver', on:'rp:on', sound:'rp:sound', box:'rp:outbox', ep:'rp:endpoint', unsub:'rp:unsubPending', vk:'rp:vapidKey' };
 const rpMem = {};
 let rpBusy = false, rpMsg = '', rpNeedsResub = false;
 let rpFlushing = false, rpFlushAgain = false, rpRetryTimer = null, rpRetryN = 0, rpEnsuring = null, rpMemVer = 0;
@@ -7776,7 +7776,8 @@ function rpKeyBytes(){
 function rpKeyMatches(sub){
   try{
     const k = sub.options && sub.options.applicationServerKey;
-    if(!k) return true;
+    /* sem a chave exposta pelo navegador: confia no registro local da chave usada (inexistente = assinatura anterior à troca de chave) */
+    if(!k) return rpGet(RP_LS.vk) === RP_VAPID_PUBLIC;
     const a = new Uint8Array(k), b = rpKeyBytes();
     if(a.length !== b.length) return false;
     for(let i = 0; i < a.length; i++) if(a[i] !== b[i]) return false;
@@ -7953,6 +7954,7 @@ async function rpEnsureSubscriptionInner(){
     let sub = await reg.pushManager.getSubscription();
     if(sub && !rpKeyMatches(sub)){ await sub.unsubscribe(); sub = null; }
     if(!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey: rpKeyBytes() });
+    rpSet(RP_LS.vk, RP_VAPID_PUBLIC);
     if(rpGet(RP_LS.ep) === sub.endpoint && !rpNeedsResub) return;
     const r = await rpPost({ action:'subscribe', device_id:rpDeviceId(), subscription: sub.toJSON(), sound_enabled: rpSoundOn(), user_agent: navigator.userAgent });
     if(r && r.ok){ rpSet(RP_LS.ep, sub.endpoint); rpNeedsResub = false; rpBump(r.floor); }
@@ -7983,6 +7985,7 @@ async function rpToggleNotif(){
     let sub = await reg.pushManager.getSubscription();
     if(sub && !rpKeyMatches(sub)){ await sub.unsubscribe(); sub = null; }
     if(!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey: rpKeyBytes() });
+    rpSet(RP_LS.vk, RP_VAPID_PUBLIC);
     const r = await rpPost({ action:'subscribe', device_id:rpDeviceId(), subscription: sub.toJSON(), sound_enabled: rpSoundOn(), user_agent: navigator.userAgent });
     if(r && r.ok){
       rpSet(RP_LS.on, '1'); rpDel(RP_LS.unsub); rpSet(RP_LS.ep, sub.endpoint); rpBump(r.floor); rpNeedsResub = false; rpMsg = '';
