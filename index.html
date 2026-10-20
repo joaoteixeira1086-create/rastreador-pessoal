@@ -1644,14 +1644,57 @@ let syncWatchTimer = null, syncRunId = 0;
    uma rodada antiga não consegue mais confirmar sucesso, mexer em estado nem liberar a trava da rodada nova. */
 let syncEpoch = 0, syncCtl = null, syncPushInflight = 0;
 function syncCtlEnsure(){ if(!syncCtl){ try{ syncCtl = new AbortController(); }catch(e){} } return syncCtl; }
+/* Telemetria do sync: SÓ contagens e tempos por tabela/etapa (nenhum dado pessoal, nenhum corpo de resposta).
+   Serve para provar onde o tempo vai. Último relatório: syncPerfReport() no console, ou "Diagnóstico" no painel da conta. */
+const syncPerf = { run: null, last: null };
+function syncPerfBegin(kind){ syncPerf.run = { kind, t0: Date.now(), steps: {}, tables: {} }; }
+function syncPerfNote(url, method, ms, ok, bytes){
+  const r = syncPerf.run; if(!r) return;
+  const m = /\/rest\/v1\/([a-z_]+)/.exec(url);
+  const k = (m ? m[1] : '?') + ' ' + (method || 'GET').toUpperCase();
+  const o = r.tables[k] || (r.tables[k] = { req: 0, ms: 0, err: 0, bytes: 0, rows: 0 });
+  o.req++; o.ms += ms; if(!ok) o.err++; if(bytes > 0) o.bytes += bytes;
+}
+function syncPerfRows(table, n){
+  const r = syncPerf.run; if(!r) return;
+  const o = r.tables[table + ' rows'] || (r.tables[table + ' rows'] = { req: 0, ms: 0, err: 0, bytes: 0, rows: 0 });
+  o.rows += n | 0;
+}
+async function syncPerfStep(name, fn){
+  const r = syncPerf.run, t0 = Date.now();
+  try{ return await fn(); }
+  finally{ if(r) r.steps[name] = (r.steps[name] || 0) + (Date.now() - t0); }
+}
+function syncPerfEnd(outcome){
+  const r = syncPerf.run; if(!r) return;
+  syncPerf.run = null;
+  r.total = Date.now() - r.t0; r.outcome = outcome; r.at = Date.now();
+  r.requests = Object.keys(r.tables).reduce((n, k) => n + r.tables[k].req, 0);
+  syncPerf.last = r;
+  try{ console.info('[sync-perf]', r.kind, outcome, r.total + ' ms', r.requests + ' pedidos', JSON.stringify(r.steps)); }catch(e){}
+}
+function syncPerfReport(){
+  const r = syncPerf.last; if(!r) return 'Nenhum sync medido ainda nesta sessão.';
+  const L = ['Último sync (' + r.kind + ', ' + r.outcome + '): ' + (r.total / 1000).toFixed(1) + ' s, ' + r.requests + ' pedidos'];
+  Object.keys(r.steps).forEach(k => L.push('etapa ' + k + ': ' + r.steps[k] + ' ms'));
+  Object.keys(r.tables).forEach(k => { const o = r.tables[k]; L.push(k + ': ' + (o.req ? o.req + ' ped., ' + o.ms + ' ms' + (o.err ? ', ' + o.err + ' erro(s)' : '') + (o.bytes ? ', ' + Math.round(o.bytes / 1024) + ' KB' : '') : '') + (o.rows ? o.rows + ' linhas' : '')); });
+  return L.join('\n');
+}
 function syncFetch(input, init){
-  const ctl = syncCtl;
   const url = typeof input === 'string' ? input : (input && input.url) || '';
-  if(!ctl || url.indexOf('/rest/v1/') < 0) return fetch(input, init);
+  const isData = url.indexOf('/rest/v1/') >= 0;
+  const t0 = Date.now();
+  const method = (init && init.method) || (input && input.method) || 'GET';
+  const note = p => (!isData || !syncPerf.run) ? p : p.then(res => {
+    let b = 0; try{ b = parseInt(res.headers.get('content-length'), 10) || 0; }catch(e){}
+    syncPerfNote(url, method, Date.now() - t0, res.ok, b); return res;
+  }, err => { syncPerfNote(url, method, Date.now() - t0, false, 0); throw err; });
+  const ctl = syncCtl;
+  if(!ctl || !isData) return note(fetch(input, init));
   if(ctl.signal.aborted) return Promise.reject(new DOMException('sync cancelado', 'AbortError'));
   const own = init && init.signal;
   const signal = own && typeof AbortSignal.any === 'function' ? AbortSignal.any([own, ctl.signal]) : (own || ctl.signal);
-  return fetch(input, Object.assign({}, init, { signal }));
+  return note(fetch(input, Object.assign({}, init, { signal })));
 }
 function syncInvalidate(hard){
   syncEpoch++; syncRunId++; syncFlowRunning = false; syncPushInflight = 0;
@@ -2100,6 +2143,8 @@ async function flushConflictNotes(){
     if(c.kind === 'conflito') return '<li><b>' + escapeHtml(c.name || 'Treino') + '</b> foi alterado em outro aparelho. A versão da nuvem ficou no treino original e as suas edições deste aparelho foram guardadas em <b>' + escapeHtml(c.copia) + '</b>.</li>';
     if(c.kind === 'excluido_remoto_editado_local') return '<li><b>' + escapeHtml(c.name || 'Treino') + '</b> foi excluído em outro aparelho, mas você o editou aqui. Mantive a sua versão como treino novo.</li>';
     if(c.kind === 'excluido_em_uso') return '<li><b>' + escapeHtml(c.name || 'Treino') + '</b> foi excluído em outro aparelho, mas há uma sessão em andamento com ele. Mantive o treino aqui.</li>';
+    if(c.kind === 'historico') return '<li>O treino de <b>' + escapeHtml(c.date || '') + '</b> (' + escapeHtml(c.name || 'Treino') + ') existe com conteúdo diferente em outro aparelho. As duas versões foram preservadas: a da nuvem entrou como cópia marcada como conflito. Confira e decida qual manter.</li>';
+    if(c.kind === 'identidade') return '<li>O treino de <b>' + escapeHtml(c.date || '') + '</b> (' + escapeHtml(c.name || 'Treino') + ') tinha o mesmo identificador de outro treino criado em outro aparelho. Os dois foram mantidos; este recebeu um identificador novo.</li>';
     if(c.kind === 'programacao') return '<li>A programação de <b>' + escapeHtml(DAY_PT[c.day] || c.day) + '</b> foi alterada nos dois aparelhos. Mantive a deste aparelho.</li>';
     return '';
   }).join('');
@@ -2290,25 +2335,200 @@ function historyLegacyKey(entry){
   return entry.date + '_' + blockPart + (entry.sessionId ? '_' + entry.sessionId : '');
 }
 
+/* IDENTIDADE IMUTÁVEL DE CADA TREINO (workout_history.legacy_id e shared_sessions.session_key = entry.syncKey).
+   historyLegacyKey() continua sendo a chave-base legada e só é usada UMA vez, para dar a chave inicial a um treino que ainda não tem
+   identidade. A partir daí a identidade fica gravada no próprio treino (entry.syncKey), viaja com ele para a nuvem e para os outros
+   aparelhos e NUNCA é recalculada ou reatribuída: não depende da ordem dos registros, nem de outros treinos chegarem depois, nem de o
+   bloco ganhar remoteId. Chaves legadas existentes são preservadas (a chave inicial é exatamente a que o app já usava).
+   Ao dar a chave inicial, se a base já pertence a OUTRO treino (já identificado localmente, ou reivindicada na nuvem por outro
+   data.id), o novo treino recebe base + '~' + hash(id). Só quando vários treinos sem identidade disputam a mesma base ao mesmo tempo
+   (dados legados que nunca foram publicados) a ordem por id desempata, e isso é gravado na hora. Mesmo id + conteúdo igual = réplica
+   (mesma chave); mesmo id + conteúdo DIVERGENTE = versões distintas (chaves distintas, nenhuma é descartada). */
+const HISTORY_META_FIELDS = ['syncKey', 'conflitoDe', 'conflitoSig'];
+function historyEntryId(h){ return (h && h.id != null) ? String(h.id) : ('c' + hashStr(canonJSON(historyStrip(h || {})))); }
+function historyStrip(o){ const c = {}; Object.keys(o || {}).forEach(k => { if(HISTORY_META_FIELDS.indexOf(k) < 0) c[k] = o[k]; }); return c; }
+function historySig(o){ return hashStr(canonJSON(historyStrip(o))); }
+/* claims: Map(legacy_id -> {id, d}) = o que a nuvem já registra (data.id e assinatura do conteúdo); pub: Set das chaves já publicadas em
+   Conexões por esta conta. Ambos opcionais. Devolve true se algum treino ganhou identidade agora (e marca historyKeysDirty).
+   Antes de criar uma chave nova, um treino SEM identidade adota a que já existe para a MESMA sessão (mesmo data.id, mesma data):
+   1) se alguma chave candidata já foi publicada em Conexões, ela vence (reações/estatísticas sociais ficam onde estão);
+   2) senão a chave-base atual, se a nuvem a tem; 3) senão a menor chave da nuvem para esse id (igual em todos os aparelhos). Nunca
+   adota uma chave que já pertence a outro treino local. */
+let historyKeysDirty = false;
+function ensureHistoryKeys(list, claims, pub){
+  const arr = list || workoutHistory;
+  const holder = new Map();   /* chave -> id do treino que a detém */
+  const byVersion = new Map(); /* id|conteúdo -> chave (réplicas idênticas compartilham) */
+  let changed = false;
+  arr.forEach(h => {
+    if(!h || !h.syncKey) return;
+    const id = historyEntryId(h);
+    if(!holder.has(h.syncKey)) holder.set(h.syncKey, id);
+    byVersion.set(id + '|' + historySig(h), h.syncKey);
+  });
+  /* corrida entre aparelhos: se a nuvem JÁ atribui a chave-base a OUTRO treino (e esta chave foi auto-atribuída aqui, nunca adotada nem restaurada
+     da nuvem), este treino passa para base~hash. Só mexe em chave que a nuvem reivindica para outro id; avisa o usuário; nunca toca em chave
+     adotada, restaurada, de conflito ou já confirmada para este treino. */
+  if(claims) arr.forEach(h => {
+    if(!h || !h.syncKey) return;
+    const c = claims.get(h.syncKey), id = historyEntryId(h);
+    if(!c || String(c.id) === id || h.syncKey !== historyLegacyKey(h)) return;
+    const nk = h.syncKey + '~' + hashStr(id + '|' + historySig(h));
+    if(holder.has(nk)) return;
+    console.warn('[sync] chave', h.syncKey, 'já pertence a outro treino na nuvem; este treino passa a usar', nk);
+    noteConflict({ kind: 'identidade', name: h.blockName || 'Treino', date: h.date });
+    byVersion.set(id + '|' + historySig(h), nk); holder.set(nk, id); h.syncKey = nk; changed = true;
+  });
+  /* índice reverso da nuvem: id -> [{key,d}] */
+  const rev = new Map();
+  if(claims) claims.forEach((c, key) => { if(c && c.id != null){ const l = rev.get(String(c.id)) || []; l.push({ key, d: c.d }); rev.set(String(c.id), l); } });
+  const adopt = (h, id, base) => {
+    const list = (rev.get(id) || []).filter(c => c.key.indexOf(h.date + '_') === 0 && (!holder.has(c.key) || holder.get(c.key) === id));
+    if(!list.length) return null;
+    const sig = historySig(h);
+    const cand = list.filter(c => c.d === sig);
+    /* se o conteúdo local não bate com nenhuma versão da nuvem mas OUTRO treino local já representa essa versão, não adota (não rouba a chave) */
+    const pool = cand.length ? cand : (arr.some(o => o && o !== h && historyEntryId(o) === id && list.some(c => c.d === historySig(o))) ? [] : list);
+    if(!pool.length) return null;
+    if(pub){ const p = pool.filter(c => pub.has(c.key)); if(pub.has(base)) return null; if(p.length === 1) return p[0].key; }
+    if(pool.some(c => c.key === base)) return base;
+    return pool.map(c => c.key).sort()[0];
+  };
+  const pending = arr.filter(h => h && !h.syncKey).sort((x, y) => {
+    const a = historyEntryId(x), b = historyEntryId(y);
+    return a < b ? -1 : a > b ? 1 : (historySig(x) < historySig(y) ? -1 : 1);
+  });
+  pending.forEach(h => {
+    const id = historyEntryId(h), vk = id + '|' + historySig(h);
+    let key = byVersion.get(vk);
+    if(!key){
+      const base = historyLegacyKey(h);
+      const sameIdTaken = [...byVersion.keys()].some(k => k.indexOf(id + '|') === 0); /* mesmo id, conteúdo divergente */
+      const adopted = sameIdTaken ? null : adopt(h, id, base);
+      if(adopted) key = adopted;
+      else {
+        const hid = holder.get(base);
+        const claim = claims ? claims.get(base) : null;
+        if((hid != null && hid !== id) || (claim && claim.id != null && String(claim.id) !== id) || (hid === id && sameIdTaken)){
+          key = base + '~' + hashStr(id + (sameIdTaken ? '|' + historySig(h) : ''));
+        } else key = base;
+      }
+      if(holder.has(key) && holder.get(key) !== id) key = key + hashStr(vk); /* defesa final: nunca duas identidades iguais */
+      byVersion.set(vk, key);
+    }
+    holder.set(key, holder.get(key) != null ? holder.get(key) : id);
+    h.syncKey = key; changed = true;
+  });
+  if(changed) historyKeysDirty = true;
+  return changed;
+}
+function historyKeyMap(list, claims, pub){
+  const arr = list || workoutHistory;
+  ensureHistoryKeys(arr, claims, pub);
+  const keyOf = new Map(); arr.forEach(h => { if(h) keyOf.set(h, h.syncKey); });
+  return keyOf;
+}
+/* Grava a identidade no aparelho e CONFIRMA a gravação (storage.set devolve null se falhar). Devolve false se não gravou: quem chama
+   NÃO pode publicar nada remoto nesse caso. Cobre identidades atribuídas por qualquer caminho (pull, push, Conexões). */
+async function historyKeysPersist(){
+  const uid = currentSyncUser && currentSyncUser.id;
+  ensureHistoryKeys(workoutHistory, syncClaimsFor(uid), syncPubFor(uid));
+  if(!historyKeysDirty) return true;
+  let saved = null;
+  try{ saved = await storage.set('treino:history', JSON.stringify(workoutHistory)); }catch(e){ saved = null; }
+  if(!saved){ console.warn('[sync] não consegui gravar a identidade dos treinos neste aparelho; nada será publicado agora'); return false; }
+  historyKeysDirty = false; return true;
+}
+/* o que a nuvem reivindica por chave e o que já foi publicado em Conexões, só desta conta */
+let syncClaims = { uid: null, map: null }, syncPub = { uid: null, set: null };
+function syncClaimsFor(uid){ return (uid && syncClaims.uid === uid) ? syncClaims.map : null; }
+function syncPubFor(uid){ return (uid && syncPub.uid === uid) ? syncPub.set : null; }
+async function syncLoadPub(uid){
+  try{ const g = await storage.get('social:pub:' + uid); syncPub = { uid, set: new Set(Object.keys((g && g.value && JSON.parse(g.value)) || {})) }; }
+  catch(e){ syncPub = { uid, set: null }; }
+}
+function historySigNoId(o){ const c = historyStrip(o || {}); delete c.id; return hashStr(canonJSON(c)); }
+
+/* O que a nuvem já tem (preenchido pelo pull da mesma rodada): evita reenviar o que não mudou. Só vale para esta conta. */
+let syncKnown = { uid: null, hist: null, diet: null };
+function syncKnownFor(kind, uid){ return (syncKnown.uid === uid && syncKnown[kind]) ? syncKnown[kind] : null; }
+function syncKnownSet(kind, uid, map){ if(syncKnown.uid !== uid){ syncKnown = { uid, hist: null, diet: null }; } syncKnown[kind] = map; }
+function historyRowSig(p){
+  return hashStr(canonJSON({ d: historyStrip(p.data), b: p.block_id || null, bl: p.block_legacy_id == null ? null : String(p.block_legacy_id), bn: p.block_name || '', v: Number(p.volume) || 0, s: p.set_count | 0, f: p.filled_sets | 0 }));
+}
+
 async function pullWorkoutHistory(user){
   const sb = initSupabase(); if(!sb) return;
   const { data, error } = await sb.from('workout_history').select('*').eq('user_id', user.id);
-  if(error){ console.warn('[sync] pull workout_history:', error.message); return; }
-  (data||[]).forEach(row => {
-    const localMatch = workoutHistory.find(h => historyLegacyKey(h) === row.legacy_id);
-    if(localMatch){
-      if(JSON.stringify(localMatch) !== JSON.stringify(row.data)){
-        console.warn('[sync] CONFLITO em workout_history:', row.legacy_id, '— mantendo a versão local; servidor tem uma versão diferente para esta sessão. Revisar manualmente se necessário.');
+  if(error){
+    /* FAIL-CLOSED: sem leitura confiável não há base para enviar nada. O sync desta rodada falha (e tenta de novo) em vez de seguir às cegas */
+    console.warn('[sync] pull workout_history:', error.message); syncKnownSet('hist', user.id, null); syncClaims = { uid: user.id, map: null };
+    syncPushFailCount++; return;
+  }
+  syncPerfRows('workout_history', (data || []).length);
+  /* ordem do SELECT não pode influenciar nada: tudo abaixo roda em ordem determinística de chave */
+  const rows = (data || []).slice().sort((x, y) => x.legacy_id < y.legacy_id ? -1 : x.legacy_id > y.legacy_id ? 1 : 0);
+  const known = new Map(), claims = new Map();
+  rows.forEach(row => {
+    const rid = row.data && row.data.id;
+    const d = historySig(row.data || {});
+    known.set(row.legacy_id, { sig: historyRowSig(row), id: rid == null ? null : String(rid), d });
+    if(rid != null) claims.set(row.legacy_id, { id: String(rid), d });
+  });
+  syncClaims = { uid: user.id, map: claims };
+  await syncLoadPub(user.id);
+  const histLen0 = workoutHistory.length;
+  /* 1) todo treino local sem identidade a recebe AGORA, adotando a que a nuvem já tem para a mesma sessão */
+  ensureHistoryKeys(workoutHistory, claims, syncPubFor(user.id));
+  const byKey = new Map(), byIdSig = new Map(), confSigs = new Set(), notedIds = new Set();
+  const index = h => {
+    if(h.syncKey && !byKey.has(h.syncKey)) byKey.set(h.syncKey, h);
+    if(h.id != null){ const ik = h.id + '|' + historySig(h); if(!byIdSig.has(ik)) byIdSig.set(ik, h); }
+    if(h.conflitoSig) confSigs.add(h.conflitoDe + '|' + h.conflitoSig);
+  };
+  workoutHistory.forEach(index);
+  rows.forEach(row => {
+    const rid = row.data && row.data.id;
+    const rsig = historySig(row.data || {});
+    /* PROVENIÊNCIA: a linha da nuvem pertence à chave sob a qual está guardada. Mesma chave = mesmo treino. */
+    let local = byKey.get(row.legacy_id) || null;
+    if(local && rid != null && local.id != null && String(local.id) !== String(rid)) local = null;
+    if(local){
+      if(historySig(local) !== rsig){
+        /* mesma chave e mesmo treino com conteúdo DIFERENTE: as duas versões ficam; a da nuvem entra como cópia de conflito com chave própria
+           derivada da chave+conteúdo (não da ordem). A local segue na sua chave. Nada é sobrescrito nem escolhido em silêncio. */
+        if(!confSigs.has(local.id + '|' + rsig) && !(row.data && row.data.conflitoSig)){
+          const copy = Object.assign({}, row.data, { id: String(local.id) + '~cf' + rsig, conflitoDe: String(local.id), conflitoSig: rsig, syncKey: 'cf_' + hashStr(row.legacy_id + '|' + rsig) });
+          copy.date = copy.date || row.workout_date;
+          workoutHistory.push(copy); index(copy);
+          noteConflict({ kind: 'historico', name: copy.blockName || 'Treino', date: copy.date });
+          console.warn('[sync] CONFLITO em workout_history:', row.legacy_id, '— versões diferentes do mesmo treino; as duas foram preservadas.');
+        }
       }
       return;
+    }
+    /* o MESMO conteúdo já está aqui sob outra chave (linha duplicada local/remoto): já representado, nada a restaurar */
+    if(rid != null && byIdSig.has(rid + '|' + rsig)) return;
+    /* cópia de conflito que este aparelho já representa */
+    if(row.data && row.data.conflitoDe != null){
+      const orig = workoutHistory.find(h => String(h.id) === String(row.data.conflitoDe) && historySigNoId(h) === historySigNoId(row.data));
+      if(orig) return;
     }
     if(row.data && typeof row.data === 'object'){
       const restored = { ...row.data };
       restored.id = restored.id || (row.workout_date + '_remote_' + row.id);
       restored.date = restored.date || row.workout_date;
-      workoutHistory.push(restored);
+      restored.syncKey = row.legacy_id; /* a identidade é a chave da própria linha, nunca a de outra versão */
+      /* já existe outro treino com o mesmo id e conteúdo diferente: duas versões reais, ambas ficam; avisa uma vez */
+      if(workoutHistory.some(h => String(h.id) === String(restored.id) && historySig(h) !== rsig) && !notedIds.has(String(restored.id))){
+        notedIds.add(String(restored.id));
+        noteConflict({ kind: 'historico', name: restored.blockName || 'Treino', date: restored.date });
+      }
+      workoutHistory.push(restored); index(restored);
     }
   });
+  if(workoutHistory.length !== histLen0) historyKeysDirty = true; /* treinos restaurados/cópias desta rodada também precisam estar gravados antes de qualquer envio */
+  syncKnownSet('hist', user.id, known);
 }
 
 async function pullBodyWeight(user){
@@ -2369,8 +2589,11 @@ async function pullDietSelections(user){
 async function pullDietLog(user){
   const sb = initSupabase(); if(!sb) return;
   const { data, error } = await sb.from('diet_log').select('*').eq('user_id', user.id);
-  if(error){ console.warn('[sync] pull diet_log:', error.message); return; }
+  if(error){ console.warn('[sync] pull diet_log:', error.message); syncKnownSet('diet', user.id, null); return; }
+  syncPerfRows('diet_log', (data || []).length);
+  const knownDiet = new Map();
   (data||[]).forEach(row => {
+    knownDiet.set(row.log_date + '|' + row.meal_slot, dietRowSig(row.data));
     dietaLog[row.log_date] = dietaLog[row.log_date] || {};
     const existing = dietaLog[row.log_date][row.meal_slot];
     if(existing){
@@ -2381,6 +2604,7 @@ async function pullDietLog(user){
     }
     dietaLog[row.log_date][row.meal_slot] = row.data;
   });
+  syncKnownSet('diet', user.id, knownDiet);
 }
 
 /* ======================================================================
@@ -2393,41 +2617,95 @@ function isDefaultBlocksState(){
 }
 
 
+/* Envio em LOTE. Antes: 1 pedido (aguardando a rede) por treino, o histórico inteiro a cada sync. Agora: só o que a nuvem ainda não tem
+   igual (comparado com o que o pull da mesma rodada trouxe), em lotes de até 100 linhas, com chave única garantida por lote.
+   Lote que falha é reenviado linha a linha para isolar a linha ruim, mantendo a contagem de falhas de antes. */
+const SYNC_BATCH = 100;
+function syncIsAbort(e){ return !!e && (e.name === 'AbortError' || /abort/i.test(String(e.message || e))); }
+async function syncUpsertBatch(sb, table, rows, onConflict, label, opts){
+  /* devolve o conjunto de ÍNDICES de rows que a nuvem confirmou. opts.insertOnly: nunca sobrescreve linha existente (ignora duplicata) e
+     confirma só o que foi realmente inserido (opts.keyOf identifica cada linha). */
+  const okIdx = new Set();
+  const call = async (part) => {
+    let q = sb.from(table).upsert(part, opts && opts.insertOnly ? { onConflict, ignoreDuplicates: true } : { onConflict });
+    if(opts && opts.insertOnly) q = q.select(opts.returning);
+    const r = await q; if(r.error) throw r.error;
+    return (opts && opts.insertOnly) ? new Set((r.data || []).map(opts.keyOf)) : null;
+  };
+  for(let i = 0; i < rows.length; i += SYNC_BATCH){
+    const part = rows.slice(i, i + SYNC_BATCH);
+    try{
+      const got = await call(part);
+      part.forEach((row, j) => { if(!got || got.has(opts.keyOf(row))) okIdx.add(i + j); });
+    }catch(e){
+      if(syncIsAbort(e)){ syncPushFailCount++; console.warn('[sync] push ' + table + ' cancelado:', e.message || e); return okIdx; }
+      console.warn('[sync] lote de ' + table + ' falhou (' + (e.message || e) + '); reenviando linha a linha para isolar o problema');
+      for(let j = 0; j < part.length; j++){
+        try{
+          const got = await call([part[j]]);
+          if(!got || got.has(opts.keyOf(part[j]))) okIdx.add(i + j);
+        }catch(e2){
+          syncPushFailCount++; console.warn('[sync] push ' + table + ' falhou para', label(part[j]), e2.message || e2);
+          if(syncIsAbort(e2)) return okIdx;
+        }
+      }
+    }
+  }
+  return okIdx;
+}
+
+/* Envio do histórico: FAIL-CLOSED e SÓ-INSERE. (a) sem leitura confiável da nuvem nesta sessão nada é enviado e o sync falha para tentar de
+   novo; (b) a identidade precisa estar gravada no aparelho antes; (c) nunca sobrescreve uma linha existente, nem uma que outro aparelho tenha
+   criado depois da nossa leitura: a escrita é "inserir se não existir" e o que não foi inserido não é dado como enviado. */
 async function pushWorkoutHistory(entriesToPush){
   const sb = initSupabase(); if(!sb || !currentSyncUser) return;
+  const uid = currentSyncUser.id;
   const list = entriesToPush || workoutHistory;
-  for(const h of list){
+  if(!(await historyKeysPersist())){ syncPushFailCount++; return; }
+  const known = syncKnownFor('hist', uid);
+  if(!known){ syncPushFailCount++; console.warn('[sync] histórico NÃO enviado: sem leitura confiável da nuvem nesta sessão (nova tentativa agendada)'); return; }
+  const seen = new Set(), rows = [], sigs = [];
+  list.forEach(h => {
+    let key = h.syncKey;
+    const id = historyEntryId(h), dsig = historySig(h);
     const block = treinoBlocks.find(b => b.id === h.blockId);
-    const payload = {
-      user_id: currentSyncUser.id,
-      legacy_id: historyLegacyKey(h),
-      workout_date: h.date,
-      workout_time: h.time || null,
-      block_id: block && block.remoteId ? block.remoteId : null,
-      block_legacy_id: String(h.blockId),
-      block_name: h.blockName || '',
-      data: h,
-      volume: h.volume || 0,
-      set_count: h.setCount || 0,
-      filled_sets: h.filledSets || 0
-    };
-    try{
-      const { error } = await sb.from('workout_history').upsert(payload, { onConflict: 'user_id,legacy_id' });
-      if(error) throw error;
-    }catch(e){ syncPushFailCount++; console.warn('[sync] push workout_history falhou para', h.id, e.message||e); }
+    const mk = (k, d) => ({
+      user_id: uid, legacy_id: k, workout_date: h.date, workout_time: h.time || null,
+      block_id: block && block.remoteId ? block.remoteId : null, block_legacy_id: String(h.blockId), block_name: h.blockName || '',
+      data: d, volume: h.volume || 0, set_count: h.setCount || 0, filled_sets: h.filledSets || 0
+    });
+    const srv = known.get(key);
+    let payload;
+    if(srv){
+      if(srv.id === id && srv.d === dsig) return; /* a nuvem já tem este treino, com este conteúdo */
+      /* a nuvem tem OUTRA versão (ou outro treino) nesta chave: não sobrescrever. A local sobe sob chave própria, estável (mesma versão = mesma chave) */
+      key = 'cf_' + hashStr(key + '|' + id + '|' + dsig);
+      if(known.has(key)) return;
+      payload = mk(key, Object.assign({}, h, { syncKey: key }));
+    } else payload = mk(key, h);
+    if(seen.has(key)) return; /* réplica idêntica: uma linha só por chave no lote */
+    seen.add(key);
+    rows.push(payload); sigs.push(historyRowSig(payload));
+  });
+  if(!rows.length) return;
+  const failBefore = syncPushFailCount;
+  const ok = await syncUpsertBatch(sb, 'workout_history', rows, 'user_id,legacy_id', r => r.data && r.data.id, { insertOnly: true, returning: 'legacy_id', keyOf: r => r.legacy_id });
+  const cur = syncKnownFor('hist', uid);
+  if(cur) ok.forEach(i => cur.set(rows[i].legacy_id, { sig: sigs[i], id: rows[i].data && rows[i].data.id != null ? String(rows[i].data.id) : null, d: historySig(rows[i].data || {}) }));
+  if(ok.size < rows.length && syncPushFailCount === failBefore){
+    /* alguma linha já existia na nuvem (criada por outro aparelho depois da nossa leitura): NÃO foi sobrescrita nem dada como enviada. A próxima rodada lê de novo e reconcilia. */
+    syncPushFailCount++; console.warn('[sync] ' + (rows.length - ok.size) + ' treino(s) já existiam na nuvem; nada foi sobrescrito, reconciliando na próxima rodada');
   }
 }
 
 async function pushBodyWeight(entriesToPush){
   const sb = initSupabase(); if(!sb || !currentSyncUser) return;
   const list = entriesToPush || bodyWeightLog;
-  for(const w of list){
-    const payload = { user_id: currentSyncUser.id, weight_date: w.date, weight: w.weight, recorded_time: w.time || null };
-    try{
-      const { error } = await sb.from('body_weight').upsert(payload, { onConflict: 'user_id,weight_date' });
-      if(error) throw error;
-    }catch(e){ syncPushFailCount++; console.warn('[sync] push body_weight falhou para', w.date, e.message||e); }
-  }
+  const byDate = new Map(); /* chave do upsert é (user_id, weight_date): a última entrada de cada data vence, como no envio sequencial de antes */
+  list.forEach(w => byDate.set(w.date, { user_id: currentSyncUser.id, weight_date: w.date, weight: w.weight, recorded_time: w.time || null }));
+  const rows = [...byDate.values()];
+  if(!rows.length) return;
+  await syncUpsertBatch(sb, 'body_weight', rows, 'user_id,weight_date', r => r.weight_date);
 }
 
 async function pushDietTargets(){
@@ -2455,22 +2733,28 @@ async function pushDietSelections(){
    sem duplicar nada (é um upsert). O dia só fica de fora desta rodada de
    push se, mesmo assim, o bloco não tiver remoteId; ele entra na próxima. */
 
-async function pushDietLog(day){
+function dietRowSig(data){ return hashStr(canonJSON(data)); }
+async function pushDietLogDays(days){
   const sb = initSupabase(); if(!sb || !currentSyncUser) return;
-  const targetDay = day || todayKey();
-  const slots = dietaLog[targetDay] || {};
-  for(const slot of Object.keys(slots)){
-    const payload = { user_id: currentSyncUser.id, log_date: targetDay, meal_slot: slot, data: slots[slot] };
-    try{
-      const { error } = await sb.from('diet_log').upsert(payload, { onConflict: 'user_id,log_date,meal_slot' });
-      if(error) throw error;
-    }catch(e){ syncPushFailCount++; console.warn('[sync] push diet_log falhou para', targetDay, slot, e.message||e); }
-  }
+  const uid = currentSyncUser.id;
+  const known = syncKnownFor('diet', uid);
+  const rows = [], sigs = [];
+  days.forEach(day => {
+    const slots = dietaLog[day] || {};
+    Object.keys(slots).forEach(slot => {
+      const sig = dietRowSig(slots[slot]);
+      if(known && known.get(day + '|' + slot) === sig) return; /* a nuvem já tem exatamente isto */
+      rows.push({ user_id: uid, log_date: day, meal_slot: slot, data: slots[slot] }); sigs.push(sig);
+    });
+  });
+  if(!rows.length) return;
+  const ok = await syncUpsertBatch(sb, 'diet_log', rows, 'user_id,log_date,meal_slot', r => r.log_date + ' ' + r.meal_slot);
+  const cur = syncKnownFor('diet', uid);
+  if(cur) ok.forEach(i => cur.set(rows[i].log_date + '|' + rows[i].meal_slot, sigs[i]));
 }
+async function pushDietLog(day){ return pushDietLogDays([day || todayKey()]); }
 
-async function pushAllDietLog(){
-  for(const day of Object.keys(dietaLog)) await pushDietLog(day);
-}
+async function pushAllDietLog(){ return pushDietLogDays(Object.keys(dietaLog)); }
 
 
 async function deleteDietLogRemote(day, slot){
@@ -2488,19 +2772,19 @@ async function syncFromSupabase(user, ctx){
      a programação resolve remoteId -> blockId local usando treinoBlocks
      já atualizado. Por isso saiu do Promise.all e virou um await isolado
      — o restante continua paralelo, como antes. */
-  await backupLocalBeforeSync(); // cópia do estado local ORIGINAL, antes de qualquer dado da nuvem entrar
+  await syncPerfStep('backup', () => backupLocalBeforeSync()); // cópia do estado local ORIGINAL, antes de qualquer dado da nuvem entrar
   syncGuard(ctx);
-  await pullWorkoutBlocks(user);
+  await syncPerfStep('pull:blocks', () => pullWorkoutBlocks(user));
   syncGuard(ctx);
-  await Promise.all([
-    pullWorkoutHistory(user),
-    pullBodyWeight(user),
-    pullDietTargets(user),
-    pullDietSelections(user),
-    pullDietLog(user),
-    pullWorkoutSchedule(user),
-    syncCustomExercises(user)
-  ]);
+  await syncPerfStep('pull:paralelo', () => Promise.all([
+    syncPerfStep('pull:history', () => pullWorkoutHistory(user)),
+    syncPerfStep('pull:bodyweight', () => pullBodyWeight(user)),
+    syncPerfStep('pull:diet_targets', () => pullDietTargets(user)),
+    syncPerfStep('pull:diet_selections', () => pullDietSelections(user)),
+    syncPerfStep('pull:diet_log', () => pullDietLog(user)),
+    syncPerfStep('pull:schedule', () => pullWorkoutSchedule(user)),
+    syncPerfStep('pull:custom_ex', () => syncCustomExercises(user))
+  ]));
   syncGuard(ctx); // rodada expirada/conta trocada: nada é gravado localmente
   await storage.set('treino:blocks', JSON.stringify(treinoBlocks));
   await storage.set('treino:history', JSON.stringify(workoutHistory));
@@ -2514,12 +2798,15 @@ async function syncFromSupabase(user, ctx){
 
 async function syncToSupabase(ctx){
   /* roda todos os envios; se algum falhar, os outros ainda tentam e o erro sobe no fim (nunca "sincronizado" em falso) */
-  const steps = [pushWorkoutBlocks, syncCustomExercises, pushWorkoutHistory, pushBodyWeight, pushDietTargets, pushAllDietLog, pushDietSelections, pushWorkoutSchedule, socPublishStep];
+  const steps = [pushWorkoutBlocks, syncCustomExercises, pushWorkoutHistory, pushBodyWeight, pushDietTargets, pushAllDietLog, pushDietSelections, pushWorkoutSchedule];
   let firstErr = null;
   for(const fn of steps){
     syncGuard(ctx);
-    try{ await fn(); }catch(e){ if(e && e.stale) throw e; if(!firstErr) firstErr = e; console.warn('[sync] etapa falhou:', fn.name, e && e.message || e); }
+    try{ await syncPerfStep('push:' + fn.name, () => fn()); }catch(e){ if(e && e.stale) throw e; if(!firstErr) firstErr = e; console.warn('[sync] etapa falhou:', fn.name, e && e.message || e); }
   }
+  /* Conexões sai do caminho crítico: o indicador "sincronizando..." só depende dos dados do próprio usuário. A publicação social roda
+     em seguida, independente (estado, aviso de erro e novas tentativas próprios em SOC.pub; falha dela nunca marca o sync como falho). */
+  if(!syncDead(ctx)) socPublishStep();
   if(firstErr) throw firstErr;
 }
 
@@ -2537,8 +2824,9 @@ async function runInitialSyncFlow(){
   syncCtlEnsure();
   const failBase = syncPushFailCount;
   setSyncStatus('syncing', 'sincronizando...');
+  syncPerfBegin('completo');
   try{
-    await syncWarmSession(); // renova o token vencido ANTES dos pedidos (iPhone: voltar do 2º plano com sessão expirada)
+    await syncPerfStep('sessao', () => syncWarmSession()); // renova o token vencido ANTES dos pedidos (iPhone: voltar do 2º plano com sessão expirada)
     syncGuard(ctx);
     await syncFromSupabase(currentSyncUser, ctx); // 1) traz a nuvem, reconciliando por revisão (nunca sobrescreve edição local pendente)
     syncGuard(ctx);
@@ -2547,9 +2835,11 @@ async function runInitialSyncFlow(){
     if(syncPushFailCount > failBase) throw new Error('algum envio falhou');
     syncRetryN = 0;
     if(!syncPushInflight) setSyncStatus('synced', currentSyncUser.email || 'sincronizado');
+    syncPerfEnd('ok');
   }catch(e){
-    if(e && e.stale || syncDead(ctx)){ console.warn('[sync] rodada antiga descartada (expirou ou conta mudou)'); return; }
+    if(e && e.stale || syncDead(ctx)){ console.warn('[sync] rodada antiga descartada (expirou ou conta mudou)'); syncPerf.run = null; return; }
     console.warn('[sync] runInitialSyncFlow falhou:', e);
+    syncPerfEnd('erro');
     setSyncStatus('error', 'erro de sincronização'); scheduleSyncRetry();
   }finally{
     if(!syncDead(ctx)){
@@ -2655,6 +2945,7 @@ function renderSyncUI(){
           <button class="btn-ghost" onclick="handleSignOutClick()">Sair</button>
         </div>
         ${rpSettingsHtml()}
+        <details style="margin-top:10px"><summary style="cursor:pointer;font-size:12px;color:var(--text-secondary)">Diagnóstico do sync</summary><pre style="white-space:pre-wrap;font-size:11px;line-height:1.5;color:var(--text-secondary);margin:6px 0 0">${escapeHtml(syncPerfReport())}</pre></details>
       </div>`;
   }
 }
@@ -2894,10 +3185,14 @@ function socLibKeyOf(ex){
 function socBuildLocal(){
   const since = socDay(-SOC_WINDOW_DAYS);
   const sessions = [], stats = [];
+  const keyOf = historyKeyMap(null, syncClaimsFor(socUser() && socUser().id), syncPubFor(socUser() && socUser().id)); /* identidade imutável por treino (entry.syncKey) */
+  const seenKeys = new Set();
   (workoutHistory || []).forEach(h => {
     if(!h || !h.date || h.date < since) return;
     if(!(h.filledSets > 0)) return;
-    const key = historyLegacyKey(h);
+    const key = keyOf.get(h) || historyLegacyKey(h);
+    if(seenKeys.has(key)) return; /* só pode sobrar aqui uma RÉPLICA do mesmo treino (mesmo id): publicada uma única vez */
+    seenKeys.add(key);
     const perKey = {};
     let exCount = 0;
     (h.exercises || []).forEach(ex => {
@@ -2939,7 +3234,12 @@ async function publishSharedActivity(){
     let map = {};
     try{ const g = await storage.get(mapKey); if(g && g.value) map = JSON.parse(g.value) || {}; }catch(e){ map = {}; }
     if(gone()) return false;
+    syncPub = { uid, set: new Set(Object.keys(map)) };
     const { sessions, stats } = socBuildLocal();
+    /* a identidade dos treinos precisa estar GRAVADA neste aparelho antes de qualquer publicação remota (reabrir o app não pode trocá-la) */
+    if(!(await historyKeysPersist())) throw new Error('não consegui gravar a identidade dos treinos neste aparelho');
+    if(gone()) return false;
+    { const ks = new Set(); sessions.forEach(s => { if(ks.has(s.session_key)) throw new Error('chave de sessão duplicada: ' + s.session_key); ks.add(s.session_key); }); } /* nunca enviar um lote que o Postgres recusaria; falha visível em vez de silenciosa */
     const statsBy = {};
     stats.forEach(s => (statsBy[s.session_key] = statsBy[s.session_key] || []).push(s));
     const cur = {}, changed = [];
@@ -2948,15 +3248,19 @@ async function publishSharedActivity(){
       cur[s.session_key] = h;
       if(map[s.session_key] !== h) changed.push(s);
     });
+    const claimsNow = syncClaimsFor(uid);
     const stale = Object.keys(map).filter(k => !(k in cur));
+    /* nunca apagar uma sessão social cuja chave o histórico da nuvem ainda reivindica (pode ser de outro aparelho ou de outra versão do treino) */
+    const staleDel = stale.filter(k => !(claimsNow && claimsNow.has(k)));
     const chunk = (a, n) => { const o = []; for(let i = 0; i < a.length; i += n) o.push(a.slice(i, i + n)); return o; };
     const next = Object.assign({}, map);
-    for(const part of chunk(stale, 100)){
+    for(const part of chunk(staleDel, 100)){
       if(gone()) return false;
       const { error } = await sb.from('shared_sessions').delete().eq('owner_id', uid).in('session_key', part);
       if(error) throw error;
       part.forEach(k => delete next[k]);
     }
+    stale.forEach(k => { delete next[k]; }); /* as protegidas deixam de ser acompanhadas por este aparelho, sem apagar nada na nuvem */
     for(const part of chunk(changed, 60)){
       if(gone()) return false;
       const keys = part.map(s => s.session_key);
@@ -3363,7 +3667,7 @@ function socRenderHome(el, msg){
     h += '<div class="soc-card"><h3>Convites pendentes</h3>' + pend.map(i => '<div class="soc-row sp" style="padding:8px 0"><div class="soc-grow"><div class="soc-name" style="font-size:13px">' + ({ owner_to_guest:'Eu compartilho', guest_to_owner:'Eu acompanho', mutual:'Mútuo' }[i.kind] || i.kind) + '</div><div class="soc-meta">expira ' + new Date(i.expires_at).toLocaleString('pt-BR', { dateStyle:'short', timeStyle:'short' }) + '</div></div><button class="btn-ghost" style="width:auto;padding:6px 10px;font-size:11.5px" onclick="socRevokeInvite(\'' + i.id + '\')">REVOGAR</button></div>').join('') + '</div>';
   }
   if(SOC.recv && SOC.recv.length){
-    const dateOf = {}; (workoutHistory || []).forEach(x => { dateOf[historyLegacyKey(x)] = x.date; });
+    const dateOf = {}; { const ko = historyKeyMap(null, syncClaimsFor(socUser() && socUser().id), syncPubFor(socUser() && socUser().id)); (workoutHistory || []).forEach(x => { dateOf[ko.get(x) || historyLegacyKey(x)] = x.date; }); }
     h += '<div class="soc-card"><h3>Reações recebidas</h3>' + SOC.recv.slice(0, 8).map(r => '<div class="soc-meta" style="padding:3px 0"><b style="color:var(--text)">' + escapeHtml(socName(r.reactor_id)) + '</b> &middot; ' + (SOC_REACT[r.kind] || r.kind) + (dateOf[r.session_key] ? ' no treino de ' + fmtDateShort(dateOf[r.session_key]) : '') + '</div>').join('') + '</div>';
   }
   h += socCodeBox();
