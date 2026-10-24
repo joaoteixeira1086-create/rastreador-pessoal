@@ -412,6 +412,7 @@
   .sx-set .sx-in::-webkit-outer-spin-button, .sx-set .sx-in::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
   .sx-set.done .sx-in{ background: rgba(166,106,112,0.05); border-color: rgba(166,106,112,0.28); }
   .sx-rir{ height:48px; min-height:48px; padding:0; border-radius: var(--radius-sm); border:1px solid var(--border-soft); background: rgba(239,225,214,0.025); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; color: var(--text-faint); }
+  .sx-rir, button{ touch-action:manipulation; }  /* evita o zoom de toque duplo do Safari ao tocar rápido */
   .sx-rir-l{ font-size:8px; letter-spacing:0.01em; }
   .sx-rir-v{ font-size:14px; font-weight:600; }
   .sx-rir.has{ color: var(--treino); border-color: rgba(183,122,102,0.4); background: var(--treino-dim); }
@@ -1316,6 +1317,117 @@ h1,h2,h3,.sx-ex-name,.ts-name,.lib-name,.sx-head-title{ font-family:'Fraunces',G
   .dr-act{ display:flex; flex-direction:column; gap:8px; margin-top:16px; }
   .dr-act button{ min-height:48px; width:100%; }
 
+
+  /* ===== Modo Caos (protótipo): aparelho ocupado ===== */
+  .sx-ex-eyerow{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .caos-chip{ min-height:36px; padding:0 12px; border-radius:99px; border:1px solid var(--border); background:transparent; color:var(--text-secondary); font-family:'Figtree',system-ui,sans-serif; font-size:12px; cursor:pointer; white-space:nowrap; }
+  .caos-chip:active{ background:var(--surface-hover); }
+  .caos-sub{ margin-top:6px; font-size:11.5px; color:var(--warn); }
+  .caos-bd{ position:fixed; inset:0; z-index:650; display:none; align-items:flex-end; justify-content:center; background:rgba(10,6,7,.72); backdrop-filter:blur(6px); }
+  .caos-bd.open{ display:flex; }
+  .caos-sheet{ width:100%; max-width:560px; max-height:90vh; overflow-y:auto; background:var(--bg2); border:1px solid var(--border-soft); border-radius:22px 22px 0 0; padding:20px 18px calc(20px + env(safe-area-inset-bottom)); }
+  .caos-h{ font-family:'Fraunces',Georgia,serif; font-size:20px; font-weight:700; }
+  .caos-sub2{ font-size:12.5px; color:var(--text-secondary); margin-top:4px; line-height:1.45; }
+  .caos-sec{ font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); font-weight:600; margin:18px 0 8px; }
+  .caos-eq{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+  .caos-eq button{ min-height:36px; padding:0 12px; border-radius:99px; border:1px solid var(--border); background:transparent; color:var(--text-faint); font-size:12px; cursor:pointer; }
+  .caos-eq button.on{ border-color:var(--accent-soft); background:var(--accent-dim); color:var(--text); }
+  .caos-opt{ display:flex; align-items:center; gap:12px; padding:12px 0; border-top:1px solid var(--border-soft); }
+  .caos-opt:first-of-type{ border-top:none; }
+  .caos-opt-main{ flex:1; min-width:0; }
+  .caos-opt-n{ font-size:14px; font-weight:600; color:var(--text); }
+  .caos-opt-m{ font-size:11.5px; color:var(--text-faint); margin-top:3px; line-height:1.4; }
+  .caos-opt-m b{ color:var(--text-secondary); font-weight:600; }
+  .caos-tag{ display:inline-block; font-size:10.5px; padding:1px 8px; border-radius:99px; border:1px solid var(--border); color:var(--text-secondary); margin-right:4px; }
+  .caos-opt button.use{ min-height:44px; width:auto; min-width:76px; padding:0 14px; flex:none; }
+  .caos-note{ font-size:11.5px; line-height:1.5; color:var(--text-faint); margin-top:10px; }
+  .caos-note.warn{ color:var(--warn); }
+  .caos-btn{ width:100%; min-height:48px; margin-top:8px; }
+  .caos-later{ display:flex; align-items:center; gap:12px; padding:10px 0; border-top:1px solid var(--border-soft); }
+  .caos-later span{ flex:1; font-size:13.5px; color:var(--text); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .caos-later button{ min-height:44px; padding:0 14px; flex:none; }
+
+
+  /* Anatomy Guide — interactive vector atlas, scoped to avoid global redesign. */
+  .an-card{ --an-text:#e5e9e5; background:#101413; border:1px solid #29322d; border-radius:22px; padding:22px; margin:24px 0; color:var(--an-text); text-align:left; overflow:hidden; }
+  .an-heading{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .an-eyebrow{ color:#96b39d; font:600 9px/1.4 'Figtree',system-ui,sans-serif; letter-spacing:.16em; margin-bottom:9px; }
+  .an-heading h3{ color:#edf1eb; font:500 25px/1.16 'Fraunces',Georgia,serif; margin:0; letter-spacing:-.035em; }
+  .an-sub{ color:#a5afa8; font:12px/1.6 'Figtree',system-ui,sans-serif; margin:12px 0 22px; }
+  .an-live{ width:7px; height:7px; border-radius:100%; background:#f4f4ef; box-shadow:0 0 0 5px #f4f4ef0e; flex:none; }
+  .an-badge{ padding:6px 9px; background:#70d99b0e; color:#a8d4b5; border:1px solid #70d99b24; font:11px system-ui; border-radius:20px; white-space:nowrap; }
+  .an-figs{ display:flex; justify-content:center; gap:16px; max-width:480px; margin:0 auto; }
+  .an-fig{ flex:1; min-width:0; max-width:225px; text-align:center; }
+  .an-fig svg{ display:block; width:100%; height:auto; overflow:visible; }
+  .an-fig-l{ display:block; font:500 9px system-ui; letter-spacing:.14em; color:#84988c; text-transform:uppercase; padding:10px 0 0; }
+  .an-body{ fill:#c4c9c5; stroke:#a2aba4; stroke-width:1.8; stroke-linejoin:round; }
+  .an-head{ fill:#c4c9c5; stroke:#c4c9c5; stroke-width:1.2; }
+  .an-tendon{ fill:none; stroke:#101413; stroke-width:2.5; stroke-linejoin:round; }
+  .an-neutral{ fill:#c4c9c5; stroke:#202823; stroke-width:2; stroke-linejoin:round; }
+  .an-fingers{ fill:none; stroke:#c4c9c5; stroke-width:5.3; stroke-linecap:round; }
+  .an-region{ cursor:pointer; stroke:#101413; stroke-width:2.2; stroke-linejoin:round; -webkit-tap-highlight-color:transparent; transition:fill .2s; }
+  .an-region:hover{ filter:brightness(1.15); }
+  .an-region.sel,.an-region:focus-visible{ stroke:#fff5cc; stroke-width:2.6; outline:none; }
+  .an-legend{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px 12px; padding:18px 0; font:10px/1.4 system-ui; color:#a5afa8; }
+  .an-legend span{ display:inline-flex; align-items:center; gap:5px; }
+  .an-legend i{ width:6px; height:6px; border-radius:2px; }
+  .an-detail{ background:#171d19; border:1px solid #2b352e; padding:12px 14px; border-radius:12px; margin:0 0 10px; }
+  .an-detail h4{ font:600 16px/1.3 'Figtree',system-ui,sans-serif; margin:0 0 5px; color:#edf1eb; }
+  .an-detail p{ font:12px/1.55 'Figtree',system-ui,sans-serif; margin:0; color:#adb9af; }
+  .an-ex-detail{ font:500 12px/1.5 'Figtree',system-ui,sans-serif; color:#e5e9e5; padding-top:10px; margin-top:10px; border-top:1px solid #303930; }
+  .an-ex-detail p{ color:#a5afa8; margin-top:4px; font-variant-numeric:tabular-nums; }
+  .an-ex-detail small{ color:#bdad8c; }
+  .an-role{ font-size:10px; margin-left:4px; }
+  .an-list{ margin:8px 0 16px; }
+  .an-row{ width:100%; display:grid; grid-template-columns:100px minmax(30px,1fr) 42px; align-items:center; gap:12px; padding:12px 0; min-height:54px; border:0; border-bottom:1px solid #283029; color:inherit; background:none; text-align:left; cursor:pointer; font-family:'Figtree',system-ui,sans-serif; }
+  .an-row.sel{ background:#70d99b09; }
+  .an-row-n{ font-size:12px; line-height:1.3; }
+  .an-row-progress{ min-width:0; }
+  .an-bar{ display:block; height:6px; border-radius:20px; background:#2a302c; overflow:hidden; }
+  .an-bar b{ display:block; height:100%; border-radius:20px; }
+  .an-row small{ display:block; color:#9ba99e; font-size:9px; margin-top:5px; line-height:1.35; }
+  .an-row-t{ text-align:right; font-size:15px; font-variant-numeric:tabular-nums; }
+  .an-fac{ display:flex; align-items:center; flex-wrap:wrap; gap:6px; font:10px system-ui; color:#a5afa8; }
+  .an-fac>span{ width:100%; margin-bottom:3px; }
+  .an-fac button,.an-muscle-buttons button{ background:transparent; border:1px solid #354137; border-radius:20px; color:#adb9af; padding:8px 10px; min-height:36px; font:10px system-ui; cursor:pointer; }
+  .an-fac button.on,.an-muscle-buttons button.sel{ background:#70d99b10; color:#b4eac6; border-color:#70d99b70; }
+  .an-limitation{ font:10px/1.6 'Figtree',system-ui,sans-serif; color:#929e95; margin:14px 0 0; }
+  .an-how{ color:#a5afa8; font:11px/1.6 system-ui; margin-top:8px; }
+  .an-how summary{ padding:8px 0; cursor:pointer; color:#bdc9bd; }
+  .an-how p{ margin:8px 0; }
+  .an-summary{ font:12px/1.5 system-ui; color:#c0d4c5; margin:0 0 14px; }
+  .an-muscle-buttons{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+  .an-session .an-figs{ max-width:410px; }
+  .session-success .an-card{ width:100%; box-sizing:border-box; }
+  @media(max-width:420px){ .an-card{padding:18px 14px;border-radius:18px}.an-heading h3{font-size:23px}.an-figs{gap:10px}.an-row{grid-template-columns:89px minmax(30px,1fr) 39px;gap:8px}.an-row-t{font-size:14px}.an-badge{font-size:10px}.an-legend{font-size:9px;gap:8px}.an-fac button{padding:8px} }
+  @media(prefers-reduced-motion:reduce){.an-region{transition:none}}
+
+  /* ===== Ghost Mode (protótipo): competir com o último treino ===== */
+  .gh-line{ grid-column:1/-1; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:0 0 2px 34px; min-height:18px; font-size:11.5px; color:var(--text-faint); }
+  .gh-l b{ color:var(--text-secondary); font-weight:600; }
+  .gh-d{ padding:1px 9px; border-radius:99px; border:1px solid var(--border); font-size:11px; white-space:nowrap; }
+  .gh-d.up{ color:var(--text); border-color:rgba(183,122,102,.55); background:var(--treino-dim); }
+  .gh-d.eq{ color:var(--text-secondary); }
+  .gh-d.down{ color:var(--warn); border-color:rgba(196,151,85,.45); }
+  .gh-bar{ display:flex; align-items:flex-start; gap:10px; margin-top:8px; padding:0 16px; font-size:12px; color:var(--text-secondary); }
+  .gh-tg{ min-height:36px; padding:0 12px; border-radius:99px; border:1px solid var(--border); background:transparent; color:var(--text-faint); font-size:12px; cursor:pointer; flex:none; }
+  .gh-tg.on{ border-color:var(--accent-soft); background:var(--accent-dim); color:var(--text); }
+  .caos-eq-help{ color:var(--text-secondary); font-size:12px; line-height:1.45; margin:0 0 10px; }
+  .caos-eq-clear{ color:var(--treino); min-height:36px; padding:0 10px; border:1px solid var(--border); border-radius:10px; font-size:11px; margin-bottom:9px; }
+  .gh-sc{ flex:1; min-width:0; min-height:36px; padding:7px 0; border:none; background:none; color:var(--text-secondary); font-size:12px; line-height:1.45; text-align:left; cursor:pointer; white-space:normal; overflow-wrap:anywhere; }
+  .gh-sc b{ color:var(--text); }
+  .gh-sc.up b{ color:var(--accent); }
+  .gh-sc.down b{ color:var(--warn); }
+  .gh-ex{ display:flex; align-items:center; gap:10px; padding:11px 0; border-top:1px solid var(--border-soft); font-size:13.5px; }
+  .gh-ex:first-of-type{ border-top:none; }
+  .gh-ex span:first-child{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text); }
+  .gh-ex span:last-child{ flex:none; font-size:12px; color:var(--text-secondary); text-align:right; }
+  .gh-succ{ margin:14px 0; padding:12px 14px; border:1px solid var(--border-soft); border-radius:14px; background:rgba(239,225,214,0.035); text-align:left; }
+  .gh-succ .t{ font-size:11.5px; color:var(--text-faint); }
+  .gh-succ .v{ font-family:'Fraunces',Georgia,serif; font-size:19px; font-weight:700; margin-top:3px; }
+  .gh-succ .v.up{ color:var(--accent); }
+  .gh-succ .s{ font-size:12px; color:var(--text-secondary); margin-top:3px; }
+
   /* ===== Cópia de segurança (somente leitura dos dados) ===== */
   .bk-card{ padding:16px; border-radius:var(--radius-lg,18px); border:1px solid var(--border-soft); background:linear-gradient(160deg,var(--card-a),var(--card-b)); }
   .bk-card p{ margin:0 0 12px; font-size:13px; line-height:1.55; color:var(--text-secondary); }
@@ -1733,7 +1845,9 @@ function idbSet(key, value){
     const tx = db.transaction(RASTREADOR_STORE_NAME, 'readwrite');
     const store = tx.objectStore(RASTREADOR_STORE_NAME);
     const req = store.put({ key, value });
-    req.onsuccess = () => resolve();
+    tx.oncomplete = () => resolve();
+    tx.onabort = () => reject(tx.error || new Error('Transação cancelada'));
+    tx.onerror = () => reject(tx.error);
     req.onerror = () => reject(req.error);
   }));
 }
@@ -1743,7 +1857,9 @@ function idbRemove(key){
     const tx = db.transaction(RASTREADOR_STORE_NAME, 'readwrite');
     const store = tx.objectStore(RASTREADOR_STORE_NAME);
     const req = store.delete(key);
-    req.onsuccess = () => resolve();
+    tx.oncomplete = () => resolve();
+    tx.onabort = () => reject(tx.error || new Error('Transação cancelada'));
+    tx.onerror = () => reject(tx.error);
     req.onerror = () => reject(req.error);
   }));
 }
@@ -2264,6 +2380,44 @@ async function pushWorkoutBlocks(){
   });
 }
 
+/* Card order only: optional JSON metadata in workout_schedule.data. No new
+   table, column, ID rewrite or history change. The existing revision-CAS is
+   retained. Unknown schedule keys are round-tripped for forward compatibility. */
+const BLOCK_ORDER_KEY = 'treino:blockOrder';
+const BLOCK_ORDER_FIELD = '__blockOrderV1';
+let blockOrderMeta = { dirty:false, explicit:false };
+async function loadBlockOrder(){
+  try{ const r = await storage.get(BLOCK_ORDER_KEY); if(r && r.value) blockOrderMeta = { ...blockOrderMeta, ...JSON.parse(r.value) }; }catch(e){}
+}
+function blockOrderRemote(){ return treinoBlocks.filter(b=>b.remoteId).map(b=>b.remoteId); }
+function blockOrderApplyRemote(ids){
+  if(!Array.isArray(ids)) return;
+  const pos = new Map(ids.filter(x=>typeof x==='string').map((id,i)=>[id,i]));
+  treinoBlocks.sort((a,b)=>(pos.get(a.remoteId)??1e9)-(pos.get(b.remoteId)??1e9));
+}
+async function persistBlockOrder(){
+  try{
+    const db=await openRastreadorDB();
+    const blocks=JSON.stringify(treinoBlocks), meta=JSON.stringify(blockOrderMeta);
+    await new Promise((resolve,reject)=>{
+      const tx=db.transaction(RASTREADOR_STORE_NAME,'readwrite'), store=tx.objectStore(RASTREADOR_STORE_NAME);
+      store.put({key:'treino:blocks',value:blocks}); store.put({key:BLOCK_ORDER_KEY,value:meta});
+      tx.oncomplete=resolve; tx.onabort=()=>reject(tx.error||new Error('Ordem não salva')); tx.onerror=()=>reject(tx.error);
+    }); return true;
+  }catch(e){console.warn('[order] local commit failed',e);return false;}
+}
+async function blockOrderPull(remote,base,conflicts){
+  const r=remote[BLOCK_ORDER_FIELD], b=base && base[BLOCK_ORDER_FIELD];
+  if(!Array.isArray(r)) return;
+  const local=blockOrderRemote();
+  if(blockOrderMeta.dirty && canonJSON(local)!==canonJSON(r)){
+    if(b && canonJSON(b)!==canonJSON(r)) conflicts.push({kind:'ordem'});
+    // Pending local user intent survives a concurrent remote edit; CAS will retry.
+  }else{
+    blockOrderApplyRemote(r); blockOrderMeta={dirty:false,explicit:true};
+  }
+  if(!(await persistBlockOrder())) throw new Error('Não foi possível guardar a ordem recebida.');
+}
 /* ---- PROGRAMAÇÃO SEMANAL: mescla em 3 vias (base = última versão da nuvem vista) + escrita condicional ---- */
 async function loadScheduleMeta(){
   try{ const r = await storage.get(SCHEDULE_SYNC_KEY); const m = r && r.value ? JSON.parse(r.value) : null; return (m && typeof m === 'object') ? m : { rev:null, base:null }; }catch(e){ return { rev:null, base:null }; }
@@ -2286,7 +2440,8 @@ async function pullScheduleInner(user){
   const meta = await loadScheduleMeta();
   if(!data || !data.data){ meta.rev = null; await saveScheduleMeta(meta); return []; }
   const R = data.data || {}, B = meta.base, L = localScheduleRemoteMap();
-  const conflicts = [], baseNew = {};
+  const conflicts = [], baseNew = cloneJSON(R);
+  await blockOrderPull(R, B, conflicts);
   WEEK_DAYS.forEach(day => {
     const hasR = Object.prototype.hasOwnProperty.call(R, day);
     const r = hasR ? R[day] : undefined;
@@ -2322,10 +2477,14 @@ async function pushScheduleInner(){
   for(let attempt = 0; attempt < 3; attempt++){
     const meta = await loadScheduleMeta();
     const L = localScheduleRemoteMap();
-    const payload = {};
+    const payload = cloneJSON(meta.base || {});
+    if(blockOrderMeta.explicit) payload[BLOCK_ORDER_FIELD] = blockOrderRemote();
     WEEK_DAYS.forEach(d => { payload[d] = L[d] === undefined ? ((meta.base && meta.base[d] != null) ? meta.base[d] : null) : L[d]; });
-    const baseNorm = {}; WEEK_DAYS.forEach(d => { baseNorm[d] = (meta.base && meta.base[d] != null) ? meta.base[d] : null; });
-    if(meta.base && meta.rev != null && canonJSON(payload) === canonJSON(baseNorm)) return; /* nada pendente */
+    const baseNorm = cloneJSON(meta.base || {}); WEEK_DAYS.forEach(d => { baseNorm[d] = (meta.base && meta.base[d] != null) ? meta.base[d] : null; });
+    if(meta.base && meta.rev != null && canonJSON(payload) === canonJSON(baseNorm)){
+      if(blockOrderMeta.dirty){blockOrderMeta.dirty=false; if(!(await persistBlockOrder())) throw new Error('Falha ao confirmar ordem local.');}
+      return;
+    } /* nada pendente */
     let newRev = null;
     if(meta.rev == null){
       const { data, error } = await sb.from('workout_schedule').insert({ user_id: uid, data: payload }).select('rev').single();
@@ -2336,7 +2495,11 @@ async function pushScheduleInner(){
       if(error) throw new Error('push workout_schedule: ' + error.message);
       if(data && data.length === 1) newRev = data[0].rev;
     }
-    if(newRev != null){ await saveScheduleMeta({ rev: newRev, base: payload }); return; }
+    if(newRev != null){
+      if(!(await saveScheduleMeta({ rev:newRev,base:payload }))) throw new Error('Revisão da programação não salva.');
+      if(Array.isArray(payload[BLOCK_ORDER_FIELD]) && canonJSON(payload[BLOCK_ORDER_FIELD])===canonJSON(blockOrderRemote())){ blockOrderMeta.dirty=false; if(!(await persistBlockOrder())) throw new Error('Ordem não confirmada localmente.'); }
+      return;
+    }
     await pullScheduleInner(currentSyncUser); /* a nuvem avançou: mescla e tenta de novo */
   }
   throw new Error('push workout_schedule: conflito não resolvido nesta rodada (será tentado de novo)');
@@ -2359,6 +2522,7 @@ async function flushConflictNotes(){
     if(c.kind === 'excluido_em_uso') return '<li><b>' + escapeHtml(c.name || 'Treino') + '</b> foi excluído em outro aparelho, mas há uma sessão em andamento com ele. Mantive o treino aqui.</li>';
     if(c.kind === 'historico') return '<li>O treino de <b>' + escapeHtml(c.date || '') + '</b> (' + escapeHtml(c.name || 'Treino') + ') existe com conteúdo diferente em outro aparelho. As duas versões foram preservadas: a da nuvem entrou como cópia marcada como conflito. Confira e decida qual manter.</li>';
     if(c.kind === 'identidade') return '<li>O treino de <b>' + escapeHtml(c.date || '') + '</b> (' + escapeHtml(c.name || 'Treino') + ') tinha o mesmo identificador de outro treino criado em outro aparelho. Os dois foram mantidos; este recebeu um identificador novo.</li>';
+    if(c.kind === 'ordem') return '<li>A ordem dos cartões mudou nos dois aparelhos. Mantive a ordem escolhida neste aparelho; o próximo envio usará a revisão atual da nuvem.</li>';
     if(c.kind === 'programacao') return '<li>A programação de <b>' + escapeHtml(DAY_PT[c.day] || c.day) + '</b> foi alterada nos dois aparelhos. Mantive a deste aparelho.</li>';
     return '';
   }).join('');
@@ -7090,6 +7254,7 @@ async function loadAll(){
 
   /* migração defensiva: `completed` legado no template nunca define sessão */
   if(sanitizeTemplates()) await saveTreino();
+  await loadBlockOrder();
   await loadCustomExercises();
   await loadActiveSession();
 
@@ -7480,7 +7645,7 @@ function isSetCompletedLive(s){ return !!(s && s.completed); }
 function isSetFilled(s){
   if(!s) return false;
   if(s.reps === '' || s.carga === '' || s.reps == null || s.carga == null) return false;
-  return !isNaN(parseFloat(s.reps)) && !isNaN(parseFloat(s.carga));
+  return Number.isFinite(Number(s.reps)) && Number(s.reps) > 0 && Number.isFinite(Number(s.carga)) && Number(s.carga) >= 0;
 }
 
 /* Série REALIZADA numa sessão ativa: certinho marcado E dados preenchidos.
@@ -7494,7 +7659,7 @@ function isSetDone(s){ return !!(s && s.completed) && isSetFilled(s); }
    `completed` — para não perder nem inventar informação, elas continuam
    contando como realizadas se tinham reps e carga preenchidas. Só séries
    novas, com completed===false explícito, deixam de contar. */
-function isSetRealizedHistoric(s){ return s.reps !== '' && s.carga !== '' && s.completed !== false; }
+function isSetRealizedHistoric(s){ return isSetFilled(s) && s.completed !== false; }
 
 /* ======================================================================
    CÁLCULOS DERIVADOS
@@ -7594,6 +7759,8 @@ let sessionSuccessEntryId = null;    /* entrada do histórico mostrada na tela d
 let sessionStaleAcked = false;       /* usuário já escolheu "continuar" para uma sessão de outro dia nesta visita */
 let sessionConcluding = false;       /* trava contra toque duplo em CONCLUIR */
 let sessionPersistTimer = null;
+let sessionWriteChain = Promise.resolve();
+let sessionSaveFailed = false;
 let sessionClockTimer = null;
 let sessionToastTimer = null;
 let sessionCtx = null;               /* { exId, last, pr } — referência do exercício atual, calculada ao renderizar */
@@ -7643,7 +7810,7 @@ function blockCtaLabel(state){ return state === 'active' ? 'Continuar treino' : 
 function runBlockPrimaryAction(blockId){
   const st = blockWorkoutState(blockId);
   if(st === 'active') resumeWorkoutSession();
-  else if(st === 'done'){ const e = getTodayEntry(blockId); if(e) openReport(e.date); }
+  else if(st === 'done'){ const e = getTodayEntry(blockId); if(e) openReport(e.date, e.id); }
   else requestStartWorkout(blockId);
 }
 
@@ -7671,21 +7838,34 @@ function schedulePersistSession(){
   clearTimeout(sessionPersistTimer);
   sessionPersistTimer = setTimeout(() => { sessionPersistTimer = null; flushActiveSession(); }, 300);
 }
-async function flushActiveSession(){
-  clearTimeout(sessionPersistTimer);
-  sessionPersistTimer = null;
-  if(!activeWorkoutSession) return true;
-  activeWorkoutSession.updatedAt = Date.now();
-  const r = await storage.set(ACTIVE_SESSION_KEY, JSON.stringify(activeWorkoutSession));
-  return !!r;
+function sessionSaveNotice(ok){
+  sessionSaveFailed = !ok;
+  let el = document.getElementById('session-save-warning');
+  if(!el){ el = document.createElement('div'); el.id = 'session-save-warning'; el.setAttribute('role','alert'); el.style.cssText = 'position:fixed;bottom:12px;left:12px;right:12px;z-index:1200;padding:14px;background:#442c20;color:#fff2dc;border:1px solid #e4b65a;border-radius:12px;font:13px system-ui'; document.body.appendChild(el); }
+  el.hidden = ok;
+  el.innerHTML = ok ? '' : 'Não foi possível salvar no aparelho. Mantenha o app aberto. <button type="button" onclick="flushActiveSession()" style="margin-left:8px;min-height:44px">Tentar salvar novamente</button>';
 }
-async function clearActiveSession(){
-  clearTimeout(sessionPersistTimer);
-  sessionPersistTimer = null;
-  if(activeWorkoutSession) rpCancelSession(activeWorkoutSession.id); /* concluir/descartar: invalida o push pendente */
-  activeWorkoutSession = null;
-  sessionCtx = null;
-  await storage.remove(ACTIVE_SESSION_KEY);
+function flushActiveSession(){
+  clearTimeout(sessionPersistTimer); sessionPersistTimer = null;
+  if(!activeWorkoutSession) return Promise.resolve(true);
+  activeWorkoutSession.updatedAt = Date.now();
+  const snapshot = JSON.stringify(activeWorkoutSession);
+  const run = sessionWriteChain.catch(() => {}).then(async () => {
+    const saved = !!(await storage.set(ACTIVE_SESSION_KEY, snapshot));
+    sessionSaveNotice(saved); return saved;
+  });
+  sessionWriteChain = run; return run;
+}
+
+async function clearActiveSession(completed=false){
+  clearTimeout(sessionPersistTimer); sessionPersistTimer=null;
+  await sessionWriteChain.catch(()=>{});
+  const saved=await storage.remove(ACTIVE_SESSION_KEY);
+  if(!saved && !completed){sessionSaveNotice(false);return false;}
+  if(activeWorkoutSession) rpCancelSession(activeWorkoutSession.id);
+  activeWorkoutSession=null;sessionCtx=null;
+  // If history was committed, a residual snapshot is ignored on reopening.
+  sessionSaveNotice(true);return true;
 }
 function isValidSession(s){
   return !!s && typeof s === 'object' && s.version === ACTIVE_SESSION_VERSION
@@ -7708,7 +7888,7 @@ async function loadActiveSession(){
     s.restSeconds = s.restSeconds || REST_DEFAULT;
     s.exercises.forEach(ex => {
       ex.nome = ex.nome || ''; ex.obs = ex.obs || '';
-      ex.sets = ex.sets.map(x => ({ reps: x && x.reps != null ? String(x.reps) : '', carga: x && x.carga != null ? String(x.carga) : '', rir: (x && x.rir) || '', completed: !!(x && x.completed) }));
+      ex.sets = ex.sets.map(x => ({ reps: x && x.reps != null ? String(x.reps) : '', carga: x && x.carga != null ? String(x.carga) : '', rir: (x && x.rir) ?? '', completed: !!(x && x.completed), ...(Number.isInteger(x && x.ghostIndex) ? {ghostIndex:x.ghostIndex} : {}) }));
     });
     const n = s.exercises.length;
     s.currentExerciseIndex = n ? Math.max(0, Math.min(n - 1, parseInt(s.currentExerciseIndex, 10) || 0)) : 0;
@@ -7782,10 +7962,11 @@ async function startWorkoutSession(blockId){
   activeWorkoutSession = buildSessionFromBlock(b);
   sessionSuccessEntryId = null;
   sessionStaleAcked = true;
-  await flushActiveSession();
+  const saved = await flushActiveSession();
   renderBlocksLibrary();
   renderHoje();
   openWorkoutSession();
+  if(!saved) sessionSaveNotice(false);
 }
 function showSessionConflict(newBlockId){
   const cur = activeWorkoutSession;
@@ -7799,7 +7980,7 @@ function showSessionConflict(newBlockId){
     stack: true,
     actions: [
       { label:`Continuar ${curName}`, tone:'primary', onClick: () => resumeWorkoutSession() },
-      { label:`Descartar e iniciar ${newName}`, tone:'danger', onClick: async () => { await clearActiveSession(); skipRestTimer(); await startWorkoutSession(newBlockId); } },
+      { label:`Descartar e iniciar ${newName}`, tone:'danger', onClick: async () => { if(!(await clearActiveSession())) return; skipRestTimer(); await startWorkoutSession(newBlockId); } },
       { label:'Cancelar', tone:'ghost' }
     ]
   });
@@ -7834,7 +8015,7 @@ function confirmDiscardSession(){
   });
 }
 async function discardActiveSession(){
-  await clearActiveSession();
+  if(!(await clearActiveSession())) return;
   skipRestTimer();
   closeWorkoutSession();
 }
@@ -7844,8 +8025,11 @@ async function discardActiveSession(){
 async function concludeWorkout(){
   const s = activeWorkoutSession;
   if(!s) return null;
+  const existing = workoutHistory.find(h => h.id === s.id);
+  if(existing){ await clearActiveSession(true); return existing; }
   const totals = sessionTotals(s);
   if(totals.completedSets === 0) return null;
+  if(!(await flushActiveSession())) return null;
 
   /* musculatura: só séries realizadas, com a classificação/override do
      snapshot da sessão e a EXERCISE_DB atual */
@@ -7883,11 +8067,14 @@ async function concludeWorkout(){
   const exercisesOut = s.exercises.map(ex => {
     const out = {
       exId: ex.id, nome: ex.nome,
-      sets: ex.sets.map(x => ({ reps: x.reps, carga: x.carga, rir: x.rir || '', completed: !!x.completed })),
+      sets: ex.sets.map(x => ({ ...cloneJSON(x), reps:x.reps, carga:x.carga, rir:x.rir ?? '', completed:!!x.completed })),
       obs: ex.obs || ''
     };
     /* novos registros guardam a referência e a classificação usadas (base para comparar exercícios equivalentes);
        registros antigos NUNCA são reescritos */
+    if(ex.substituiDe) out.substituiDe = cloneJSON(ex.substituiDe);
+    const classification = resolveExerciseClass(ex);
+    if(classification.weights) out.anatomySnapshot = { weights:cloneJSON(classification.weights), levels:cloneJSON(classification.levels), source:classification.source };
     if(ex.refId) out.refId = ex.refId;
     if(exHasLevels(ex.muscleLevels)) out.muscleLevels = normLevels(ex.muscleLevels);
     else if(ex.muscleOverride && typeof ex.muscleOverride === 'object' && Object.keys(ex.muscleOverride).length) out.muscleOverride = Object.assign({}, ex.muscleOverride); /* classificação legada preservada no registro */
@@ -7930,7 +8117,7 @@ async function concludeWorkout(){
     return null; // a sessão ativa continua intacta — nada foi perdido
   }
   triggerSync('workout_history');
-  await clearActiveSession();
+  await clearActiveSession(true);
   skipRestTimer();
   return entry;
 }
@@ -8954,7 +9141,7 @@ function dndScroller(el){
   return document.scrollingElement || document.documentElement;
 }
 function dndStart(e){
-  if(DND || (e.pointerType === 'mouse' && e.button !== 0)) return;
+  if(DND || dndSaving || (e.pointerType === 'mouse' && e.button !== 0)) return;
   const h = e.currentTarget, kind = h.dataset.dnd, cfg = dndCfg(kind);
   const item = h.closest(cfg.item); if(!item) return;
   e.preventDefault(); e.stopPropagation();
@@ -8969,17 +9156,18 @@ function dndBegin(){
   const d = DND; d.started = true;
   const pre = d.item.getBoundingClientRect();
   document.body.classList.add('dnd-on');
-  if(d.cfg.compact) d.container.classList.add('dnd-compact');
+  // Keep list heights stable under the finger; only the floating preview is compact.
   const r = d.item.getBoundingClientRect();
   const g = d.item.cloneNode(true);
   g.removeAttribute('id'); g.querySelectorAll('[id]').forEach(n => n.removeAttribute('id'));
   g.classList.add('dnd-ghost'); g.style.width = r.width + 'px'; if(!d.cfg.compact) g.style.height = r.height + 'px';
   d.gw = r.width; d.gh = r.height;
   d.gx = Math.max(0, Math.min(r.width, d.x0 - pre.left));
-  d.gy = d.cfg.compact ? r.height / 2 : Math.max(0, Math.min(r.height, d.y0 - pre.top));
+  d.gy = Math.max(0, Math.min(d.cfg.compact ? 45 : r.height, d.y0 - pre.top));
   document.body.appendChild(g); d.ghost = g;
   d.item.classList.add('dnd-placeholder');
   d.scroller = dndScroller(d.item);
+  d.anchorBefore=d.scroller.style.overflowAnchor; d.scroller.style.overflowAnchor='none';
   dndMeasure();
   dndPlaceGhost();
   try{ if(navigator.vibrate) navigator.vibrate(8); }catch(e){}
@@ -8997,7 +9185,7 @@ function dndPlaceGhost(){
   d.ghost.style.transform = 'translate3d(' + (d.x - d.gx) + 'px,' + (d.y - d.gy) + 'px,0) scale(1.025)';
 }
 function dndMove(e){
-  const d = DND; if(!d || e.pointerId !== d.pid) return;
+  const d = DND; if(!d || d.finishing || e.pointerId !== d.pid) return;
   d.x = e.clientX; d.y = e.clientY;
   if(!d.started){ if(Math.hypot(d.x - d.x0, d.y - d.y0) < 4) return; dndBegin(); }
   e.preventDefault();
@@ -9005,37 +9193,36 @@ function dndMove(e){
   dndReorder();
 }
 function dndReorder(){
-  const d = DND; if(!d || !d.started) return;
-  const now = performance.now(); if(now - d.lastSwap < 70) return;
-  const items = dndItems(d), dy = dndScrollPos(d) - d.rectScroll;
-  const over = items.find(it => {
-    if(it === d.item) return false;
-    const r = d.rects.get(it); if(!r) return false;
-    return d.x >= r.l && d.x <= r.r && d.y >= r.t - dy && d.y <= r.b - dy;
-  });
-  if(!over) return;
-  const visual = new Map(items.map(it => [it, it.getBoundingClientRect()]));   /* onde cada item aparece AGORA (inclui animação em curso) */
-  items.forEach(it => { it.style.transition = 'none'; it.style.transform = ''; });
-  const after = items.indexOf(over) > items.indexOf(d.item);
-  d.container.insertBefore(d.item, after ? over.nextSibling : over);
-  d.lastSwap = now;
-  dndMeasure();                                                                  /* layout final, sem transform */
-  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches){ items.forEach(it => { it.style.transition = ''; }); return; }
-  items.forEach(it => {
-    if(it === d.item) return;
-    const a = visual.get(it), r = d.rects.get(it), x = a.left - r.l, y = a.top - r.t;
-    if(!x && !y){ it.style.transition = ''; return; }
-    it.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-    requestAnimationFrame(() => requestAnimationFrame(() => { it.style.transition = 'transform .2s cubic-bezier(.22,1,.36,1)'; it.style.transform = ''; setTimeout(() => { if(it.style.transform === '') it.style.transition = ''; }, 260); }));
-  });
+  const d=DND; if(!d || !d.started || d.finishing) return;
+  const items=dndItems(d), current=items.indexOf(d.item);
+  const own=d.item.getBoundingClientRect();
+  let target=null;
+  for(const it of items){
+    if(it===d.item) continue;
+    const r=it.getBoundingClientRect(), idx=items.indexOf(it);
+    const sameRow=Math.abs(r.top-own.top)<Math.min(r.height,own.height)*.4;
+    const insideX=d.x>=r.left && d.x<=r.right;
+    const insideY=d.y>=r.top && d.y<=r.bottom;
+    const crossed=sameRow ? (insideY && (idx>current ? d.x>(r.left+r.right)/2+6 : d.x<(r.left+r.right)/2-6))
+      : (insideX && (idx>current ? d.y>(r.top+r.bottom)/2+6 : d.y<(r.top+r.bottom)/2-6));
+    if(crossed && (insideY || !sameRow)) target=it;
+    if(target && idx<current) break;
+  }
+  if(!target) return;
+  const after=items.indexOf(target)>current;
+  d.container.insertBefore(d.item,after?target.nextSibling:target);
+  // No FLIP transforms: hit testing always observes the displayed layout.
+  dndMeasure();
 }
+
 function dndTick(){
-  const d = DND; if(!d || !d.started) return;
+  const d = DND; if(!d || !d.started || d.finishing) return;
   const sc = d.scroller, isDoc = (sc === document.scrollingElement || sc === document.documentElement);
   const top = isDoc ? 0 : sc.getBoundingClientRect().top, bot = isDoc ? innerHeight : sc.getBoundingClientRect().bottom;
   const zone = 70; let v = 0;
   if(d.y < top + zone) v = -Math.ceil((top + zone - d.y) / 5);
   else if(d.y > bot - zone) v = Math.ceil((d.y - (bot - zone)) / 5);
+  v=Math.max(-18,Math.min(18,v));
   if(v){ if(isDoc) window.scrollBy(0, v); else sc.scrollTop += v; dndReorder(); }
   d.raf = requestAnimationFrame(dndTick);
 }
@@ -9046,6 +9233,7 @@ function dndCleanup(){
   window.removeEventListener('pointerup', dndEnd);
   window.removeEventListener('pointercancel', dndAbort);
   window.removeEventListener('keydown', dndEsc);
+  if(d.scroller) d.scroller.style.overflowAnchor=d.anchorBefore || '';
   if(d.ghost) d.ghost.remove();
   d.item.classList.remove('dnd-placeholder');
   d.container.classList.remove('dnd-compact');
@@ -9054,7 +9242,7 @@ function dndCleanup(){
   DND = null;
 }
 function dndEnd(e){
-  const d = DND; if(!d || e.pointerId !== d.pid) return;
+  const d = DND; if(!d || d.finishing || e.pointerId !== d.pid) return;
   if(!d.started){ dndCleanup(); return; }
   const order = dndOrder(d), changed = order.join('|') !== d.before;
   const r = d.item.getBoundingClientRect();
@@ -9062,6 +9250,7 @@ function dndEnd(e){
   d.ghost.style.transform = 'translate3d(' + r.left + 'px,' + r.top + 'px,0) scale(1)';
   const kind = d.kind, container = d.container;
   const finish = () => {
+    if(DND !== d) return;
     dndCleanup();
     if(changed) dndCommit(kind, order);
     else dndRefresh(kind);
@@ -9074,22 +9263,32 @@ function dndEsc(e){ if(e.key === 'Escape'){ e.stopPropagation(); dndAbort(); } }
 function dndRefresh(kind){
   if(kind === 'block') renderBlocksLibrary(); else renderEditorMain(false);
 }
-function dndApply(kind, order){
-  const pos = new Map(order.map((id, i) => [String(id), i]));
-  const key = o => pos.has(String(o.id)) ? pos.get(String(o.id)) : 1e9;
-  if(kind === 'block'){
-    treinoBlocks.sort((a, b) => key(a) - key(b));          /* estável: o que não está na lista mantém a posição relativa */
-    persistBlocksLocal();                                   /* ordem dos cartões: local (não altera conteúdo nem revisão dos treinos) */
-    renderBlocksLibrary(); renderWeeklyScheduleConfig();
-  } else {
-    const b = edBlock(); if(!b) return;
-    b.exercises.sort((x, y) => key(x) - key(y));
-    saveTreino();                                           /* a ordem é conteúdo do treino: segue o sync normal com revisão */
-    renderEditorMain(false); edAfterBlockChange();
-  }
+let dndSaving=false;
+async function dndApply(kind,order){
+  if(dndSaving) return false;
+  dndSaving=true;
+  const pos=new Map(order.map((id,i)=>[String(id),i]));
+  const key=o=>pos.get(String(o.id))??1e9;
+  try{
+    return await withBlocksLock(async()=>{
+      const before=treinoBlocks.slice(), meta={...blockOrderMeta};
+      if(kind==='block'){
+        treinoBlocks.sort((a,b)=>key(a)-key(b)); blockOrderMeta={dirty:true,explicit:true};
+        if(!(await persistBlockOrder())){treinoBlocks=before;blockOrderMeta=meta;dndRefresh(kind);sxToast('Ordem não salva. Mantida a ordem anterior.');return false;}
+        triggerSync('workout_schedule'); renderBlocksLibrary();renderWeeklyScheduleConfig();
+      }else{
+        const b=edBlock(); if(!b) return false;
+        const exBefore=b.exercises.slice();b.exercises.sort((a,b)=>key(a)-key(b));
+        if(!(await persistBlocksLocal())){b.exercises=exBefore;dndRefresh(kind);sxToast('Ordem não salva. Mantida a ordem anterior.');return false;}
+        triggerSync('workout_blocks');renderEditorMain(false);edAfterBlockChange();
+      }
+      sxToast('Ordem salva neste aparelho.');return true;
+    });
+  }finally{dndSaving=false;}
 }
-function dndCommit(kind, order){ dndApply(kind, order); }
-function dndKey(e){
+function dndCommit(kind,order){return dndApply(kind,order);}
+
+async function dndKey(e){
   if(e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
   e.preventDefault(); e.stopPropagation();
   const h = e.currentTarget, kind = h.dataset.dnd, cfg = dndCfg(kind), item = h.closest(cfg.item); if(!item) return;
@@ -9098,7 +9297,7 @@ function dndKey(e){
   if(j < 0 || j >= sibs.length) return;
   const order = sibs.map(c => c.dataset[cfg.attr]); order.splice(j, 0, order.splice(i, 1)[0]);
   const id = h.dataset.id;
-  dndApply(kind, order);
+  await dndApply(kind, order);
   const nh = document.querySelector('.dnd-handle[data-dnd="' + kind + '"][data-id="' + id + '"]'); if(nh) nh.focus();
 }
 
@@ -9312,8 +9511,9 @@ async function directorStart(){
   skipRestTimer();
   activeWorkoutSession = buildSessionFromBlock(copy);   /* o template (b) não é tocado */
   sessionSuccessEntryId = null; sessionStaleAcked = true;
-  await flushActiveSession();
+  const saved = await flushActiveSession();
   renderBlocksLibrary(); renderHoje(); openWorkoutSession();
+  if(!saved){ sessionSaveNotice(false); return; }
   sxToast('Versão de ' + DR.min + ' min iniciada. O treino original não foi alterado.');
 }
 
@@ -9468,7 +9668,7 @@ function renderSessionNav(){
   const s = activeWorkoutSession;
   sxEl('session-nav').innerHTML = `
     <div class="sx-strip" id="sx-strip">${s.exercises.map(sxChipHtml.bind(null)).join('')}</div>
-    <div class="sx-progress"><span id="sx-prog-lbl"></span><div class="sx-bar"><i id="sx-bar-fill"></i></div></div>`;
+    <div class="sx-progress"><span id="sx-prog-lbl"></span><div class="sx-bar"><i id="sx-bar-fill"></i></div></div>${ghBarHtml()}`;
   sxRefreshChrome();
 }
 function sxCenterChip(smooth){
@@ -9493,6 +9693,7 @@ function sxRefreshChrome(){
   if(lbl) lbl.textContent = `${t.exCount ? Math.min(s.currentExerciseIndex + 1, t.exCount) : 0} de ${t.exCount} exercícios · ${t.completedSets}/${t.setCount} séries`;
   const fill = sxEl('sx-bar-fill');
   if(fill) fill.style.width = t.pct + '%';
+  try{ ghRefreshBar(); }catch(e){}
 }
 function sxUpdateChipCurrent(){
   const s = activeWorkoutSession;
@@ -9513,8 +9714,9 @@ function sxSetRowHtml(set, i, last){
     <div class="sx-set-idx">${String(i + 1).padStart(2, '0')}</div>
     <input class="sx-in" type="number" inputmode="decimal" step="any" min="0" placeholder="${escapeHtml(String(phReps))}" value="${escapeHtml(String(set.reps ?? ''))}" aria-label="Repetições da série ${i + 1}" oninput="sxInput(${i}, 'reps', this.value)">
     <input class="sx-in" type="number" inputmode="decimal" step="any" min="0" placeholder="${escapeHtml(String(phKg))}" value="${escapeHtml(String(set.carga ?? ''))}" aria-label="Carga em kg da série ${i + 1}" oninput="sxInput(${i}, 'carga', this.value)">
-    <button type="button" class="sx-rir ${set.rir ? 'has' : ''}" onclick="sxCycleRir(${i}, this)" aria-label="RIR da série ${i + 1}"><span class="sx-rir-l">RIR</span><span class="sx-rir-v">${set.rir || '–'}</span></button>
+    <button type="button" class="sx-rir ${set.rir !== '' && set.rir != null ? 'has' : ''}" onclick="sxCycleRir(${i}, this)" aria-label="RIR da série ${i + 1}"><span class="sx-rir-l">RIR</span><span class="sx-rir-v">${set.rir !== '' && set.rir != null ? set.rir : '–'}</span></button>
     <button type="button" class="sx-check" onclick="sxToggleSet(${i})" aria-label="Concluir série ${i + 1}" aria-pressed="${!!set.completed}">${icoCheck}</button>
+    ${ghLineHtml(set, curEx() || { sets: [] }, i)}
   </div>`;
 }
 
@@ -9531,6 +9733,323 @@ function sxProgressionHtml(ex){
 
 /* Reconstrói SÓ a área do exercício atual. Usado ao trocar de exercício e
    ao adicionar/remover série — nunca durante a digitação. */
+
+/* ======================================================================
+   MODO CAOS (protótipo) — "aparelho ocupado" durante o treino.
+   - Substituir: sugere exercícios da biblioteca com músculos parecidos (cosseno dos pesos de
+     músculos que o app já tem), mesmo padrão de movimento quando reconhecido e só com os
+     equipamentos que o usuário marcar. Equipamento e padrão são INFERIDOS do nome (a biblioteca
+     não guarda esses campos).
+   - Adiar / fazer agora: só reordena os exercícios da SESSÃO em andamento.
+   - Tudo atua na sessão (snapshot). O template do treino NUNCA é alterado. Séries já feitas
+     ficam no exercício original; só as que faltam passam para o substituto.
+====================================================================== */
+const CAOS_EQUIP = [['barra','Barra'],['halteres','Halteres'],['maquina','Máquina'],['cabo','Cabo'],['smith','Smith'],['corporal','Peso corporal'],['banco','Banco'],['banco_scott','Banco Scott'],['fixa','Barra fixa'],['paralelas','Paralelas'],['elastico','Elástico'],['roda','Roda abdominal'],['kettlebell','Kettlebell']];
+const CAOS_EQ_KEY = 'caos:equip';
+let CAOS = { equip:null, cands:[] };
+function caosLoadEquip(){
+  // Sem preferência salva, não pressupor acesso a nenhum aparelho ocupado.
+  // Preserva seleções antigas, inclusive [] quando a pessoa limpou a lista.
+  const known = new Set(CAOS_EQUIP.map(e => e[0]));
+  try{ const v = JSON.parse(localStorage.getItem(CAOS_EQ_KEY) || 'null');
+    if(Array.isArray(v)) return [...new Set(v.filter(k => known.has(k)))];
+  }catch(e){}
+  return [];
+}
+function caosEquipment(label){
+  const t = normName(label), req = [];
+  const add = k => { if(!req.includes(k)) req.push(k); };
+  if(/smith/.test(t)) add('smith');
+  else if(/maquina|machine|leg press|hack|peck|voador|extensora|flexora|articulad|aparelho|cadeira|panturrilha sentado|adutora|abdutora|graviton/.test(t)) add('maquina');
+  else if(/cabo|polia|pulley|crossover|corda|face pull|pulldown|puxada|remada baixa|triangulo/.test(t)) add('cabo');
+  else if(/elastico|resistance band/.test(t)) add('elastico');
+  else if(/kettlebell/.test(t)) add('kettlebell');
+  else if(/halter|dumbbell/.test(t)) add('halteres');
+  else if(/barra fixa|pull.?up|chin.?up|australiana/.test(t)){ add('corporal'); add('fixa'); }
+  else if(/paralela/.test(t)){ add('corporal'); add('paralelas'); }
+  else if(/roda abdominal|ab wheel/.test(t)){ add('corporal'); add('roda'); }
+  else if(/mergulho no banco/.test(t)){ add('corporal'); add('banco'); }
+  else if(/barra|barbell|agachamento livre|levantamento terra|good morning|desenvolvimento militar/.test(t)) add('barra');
+  else if(/^(flexao( de bracos)?|flexao diamante|prancha( lateral)?|abdominal( supra| infra| bicicleta| crunch| reverso)?|burpee|ponte de gluteos|agachamento com peso corporal|afundo com peso corporal)$/.test(t)) add('corporal');
+  if(req.includes('halteres') || req.includes('barra') || req.includes('smith')){
+    if(/supino|inclinado|inclinada|declinado|declinada|sentado|sentada|serrote|testa|hip thrust/.test(t)) add('banco');
+    if(/scott/.test(t)) add('banco_scott');
+  }
+  return { known:req.length > 0, required:req };
+}
+function caosEquipOf(label){ return caosEquipment(label).required[0] || 'outro'; }
+function caosHasSetData(st){ return !!st.completed || ['reps','carga','rir'].some(k => st[k] != null && String(st[k]).trim() !== ''); }
+
+function caosEquipLabel(k){ const f = CAOS_EQUIP.find(e => e[0] === k); return f ? f[1] : 'Outro'; }
+const CAOS_PATTERNS = [
+  ['push_h','Empurrar (horizontal)', /supino|flexao de bracos|flexao inclinada|flexao declinada|crucifixo|peck|voador|crossover|chest press/],
+  ['push_v','Empurrar (vertical)', /desenvolvimento|arnold|push press|militar|overhead press/],
+  ['pull_v','Puxar (vertical)', /puxada|barra fixa|pulldown|pull-?up|chin-?up/],
+  ['pull_h','Puxar (horizontal)', /remada|serrote|pullover|face pull/],
+  ['squat','Agachar', /agachamento|leg press|hack|afundo|passada|avanco|bulgaro|cadeira extensora|extensora/],
+  ['hinge','Dobradiça de quadril', /terra|stiff|good morning|hip thrust|elevacao pelvica|flexora|mesa flexora|cadeira flexora|ponte/],
+  ['curl','Flexão de cotovelo', /rosca/],
+  ['ext','Extensão de cotovelo', /triceps|frances|testa|mergulho no banco|coice/],
+  ['raise','Elevações de ombro', /elevacao lateral|elevacao frontal|crucifixo inverso|voador inverso|posterior de ombro/],
+  ['calf','Panturrilha', /panturrilha|gemeos|calf/],
+  ['core','Abdômen', /abdominal|prancha|infra|supra|roda/]
+];
+function caosPattern(label){ const t = normName(label); const f = CAOS_PATTERNS.find(p => p[2].test(t)); return f ? { id:f[0], label:f[1] } : null; }
+function caosCos(a, b){
+  let d = 0, na = 0, nb = 0;
+  Object.keys(a).forEach(k => { na += a[k] * a[k]; if(b[k]) d += a[k] * b[k]; });
+  Object.keys(b).forEach(k => { nb += b[k] * b[k]; });
+  return na && nb ? d / Math.sqrt(na * nb) : 0;
+}
+function caosTop(w, n){ return Object.keys(w).sort((x, y) => w[y] - w[x]).slice(0, n); }
+function caosSuggest(ex){
+  const cls = resolveExerciseClass(ex), w = cls && cls.weights;
+  if(!w || !Object.keys(w).length) return { ok:false, list:[] };
+  const s = activeWorkoutSession, inSession = new Set();
+  s.exercises.forEach(e => { if(e.refId) inSession.add(e.refId); inSession.add(normName(e.nome)); });
+  const main = caosTop(w, 1)[0], pat = caosPattern(ex.nome), eq = caosEquipOf(ex.nome);
+  const allowed = new Set(CAOS.equip);
+  const out = [];
+  Object.keys(EXERCISE_DB).forEach(key => {
+    const e = EXERCISE_DB[key];
+    if(!e.muscles || key === ex.refId || normName(e.label) === normName(ex.nome) || inSession.has(key) || inSession.has(normName(e.label))) return;
+    if(caosTop(e.muscles, 2).indexOf(main) < 0) return;                   /* o músculo principal do original tem de ser principal (top 2) no substituto */
+    const equipment = caosEquipment(e.label), equip = equipment.required[0];
+    if(!equipment.known || !equipment.required.every(k => allowed.has(k))) return;
+    const sim = caosCos(w, e.muscles); if(sim < 0.55) return;
+    const p = caosPattern(e.label), samePat = !!(pat && p && p.id === pat.id);
+    const score = sim + (samePat ? 0.12 : 0) - (equip === 'corporal' && eq !== 'corporal' ? 0.08 : 0);
+    out.push({ key, label:e.label, sim, score, equip, required:equipment.required, pat:p, samePat, muscles:e.muscles });
+  });
+  out.sort((a, b) => b.score - a.score);
+  return { ok:true, main, pat, eq, list: out.slice(0, 6) };
+}
+function caosOpen(){
+  const s = activeWorkoutSession, ex = curEx(); if(!s || !ex) return;
+  CAOS.equip = caosLoadEquip();
+  let bd = document.getElementById('caos-bd');
+  if(!bd){ bd = document.createElement('div'); bd.id = 'caos-bd'; bd.className = 'caos-bd'; bd.onclick = e => { if(e.target === bd) caosClose(); }; bd.innerHTML = '<div class="caos-sheet" id="caos-sheet"></div>'; document.body.appendChild(bd); }
+  caosRender(); bd.classList.add('open');
+}
+function caosClose(){ const bd = document.getElementById('caos-bd'); if(bd) bd.classList.remove('open'); }
+function caosToggleEq(k){
+  if(!CAOS_EQUIP.some(e => e[0] === k)) return;
+  const set = new Set(CAOS.equip); if(set.has(k)) set.delete(k); else set.add(k);
+  CAOS.equip = CAOS_EQUIP.map(e => e[0]).filter(x => set.has(x));
+  try{ localStorage.setItem(CAOS_EQ_KEY, JSON.stringify(CAOS.equip)); }catch(e){}
+  caosRender();
+}
+function caosClearEquip(){
+  CAOS.equip = [];
+  try{ localStorage.setItem(CAOS_EQ_KEY, '[]'); }catch(e){}
+  caosRender();
+}
+function caosRender(){
+  const s = activeWorkoutSession, ex = curEx(); if(!s || !ex) return;
+  const idx = s.currentExerciseIndex;
+  const doneSets = ex.sets.filter(caosHasSetData).length, restN = ex.sets.length - doneSets;
+  const sg = caosSuggest(ex); CAOS.cands = sg.list;
+  const labM = m => muscleLabelOf(m) || m;
+  const eqChips = CAOS_EQUIP.map(e => '<button type="button" aria-pressed="' + (CAOS.equip.includes(e[0]) ? 'true' : 'false') + '" class="' + (CAOS.equip.includes(e[0]) ? 'on' : '') + '" onclick="caosToggleEq(\'' + e[0] + '\')">' + e[1] + '</button>').join('');
+  let subs;
+  if(!sg.ok) subs = '<div class="caos-note warn">Este exercício não tem musculatura classificada, então não consigo sugerir substitutos parecidos. Defina a musculatura no editor do treino ou troque manualmente o nome.</div>';
+  else if(restN < 1) subs = '<div class="caos-note">Todas as séries já têm dados. Para preservá-las, nenhuma será transferida.</div>';
+  else if(!sg.list.length) subs = '<div class="caos-note">' + (CAOS.equip.length ? 'Nenhum substituto parecido com os equipamentos marcados. Confira a seleção acima.' : 'Selecione os equipamentos que você realmente pode usar agora para ver sugestões.') + '</div>';
+  else subs = sg.list.map((c, i) => {
+    const mt = caosTop(c.muscles, 3).map((m, k) => (k === 0 ? '<b>' + escapeHtml(labM(m)) + '</b>' : escapeHtml(labM(m)))).join(' · ');
+    return '<div class="caos-opt"><div class="caos-opt-main"><div class="caos-opt-n">' + escapeHtml(c.label) + '</div><div class="caos-opt-m"><span class="caos-tag">' + escapeHtml(c.required.map(caosEquipLabel).join(' + ')) + '</span>' + (c.samePat ? '<span class="caos-tag">' + escapeHtml(c.pat.label) + '</span>' : '') + Math.round(c.sim * 100) + '% parecido</div><div class="caos-opt-m">' + mt + '</div></div><button type="button" class="btn-primary treino use" onclick="caosApplySub(' + i + ')">Usar</button></div>';
+  }).join('');
+  const pend = s.exercises.map((e, j) => ({ e, j })).filter(x => x.j !== idx && !x.e.sets.every(st => st.completed));
+  const later = pend.map(x => '<div class="caos-later"><span>' + escapeHtml(x.e.nome || 'Sem nome') + '</span><button type="button" class="btn-ghost" onclick="caosDoNow(' + x.j + ')">Fazer agora</button></div>').join('');
+  document.getElementById('caos-sheet').innerHTML =
+    '<div class="caos-h">Aparelho ocupado</div><div class="caos-sub2">' + escapeHtml(ex.nome || 'Exercício') + (sg.ok ? ' &middot; ' + escapeHtml(labM(sg.main)) + (sg.pat ? ' &middot; ' + escapeHtml(sg.pat.label) : '') : '') + '</div>' +
+    '<div class="caos-sec">Fazer depois</div>' +
+    '<button type="button" class="btn-ghost caos-btn" onclick="caosPostpone()" ' + (idx >= s.exercises.length - 1 ? 'disabled' : '') + '>Deixar este para o final da sessão</button>' +
+    (later ? '<div class="caos-sec">Ou começar por outro agora</div>' + later : '') +
+    '<div class="caos-sec">Trocar por um parecido</div><div class="caos-eq-help">Marque somente os equipamentos disponíveis agora. Aparelhos ocupados devem ficar desmarcados.</div><button type="button" class="caos-eq-clear" onclick="caosClearEquip()">Limpar seleção</button><div class="caos-eq" role="group" aria-label="Equipamentos que posso usar">' + eqChips + '</div>' + subs +
+    (doneSets && restN > 0 ? '<div class="caos-note warn">Você já registrou dados em ' + doneSets + (doneSets === 1 ? ' série' : ' séries') + ' deste exercício. Elas ficam registradas nele; só as ' + restN + ' restantes vão para o substituto.</div>' : '') +
+    '<div class="caos-note">Vale só para esta sessão: o treino original (template) não é alterado. Sugestões por semelhança muscular, não equivalência garantida. Confira execução e equipamento; variantes ambíguas ficam fora do filtro.</div>' +
+    '<button type="button" class="btn-ghost caos-btn" onclick="caosClose()">Fechar</button>';
+}
+function caosRefresh(){ renderSessionNav(); renderSessionExercise(true); renderSessionFooter(); try{ sxCenterChip(false); }catch(e){} }
+async function caosCommit(change, message){
+  if(CAOS.busy || sessionConcluding || !activeWorkoutSession) return false;
+  CAOS.busy = true;
+  const before = cloneJSON(activeWorkoutSession);
+  const overlay = document.getElementById('session-overlay');
+  const sheet = document.getElementById('caos-sheet');
+  if(overlay) overlay.inert = true; if(sheet) sheet.inert = true;
+  let committed = false;
+  try{
+    if(change(activeWorkoutSession) === false) return false;
+    if(!(await flushActiveSession())){
+      activeWorkoutSession = before;
+      // A failed operation is rolled back in memory and is never announced as saved.
+      sxToast('Alteração não salva. A sessão anterior foi preservada.');
+      return false;
+    }
+    committed = true;
+    caosClose(); caosRefresh(); sxToast(message); return true;
+  }catch(e){
+    console.error('[caos] falha:', e);
+    if(committed){
+      // O dado já foi confirmado: não desfazer em memória por falha de renderização.
+      sxToast('Alteração salva, mas a tela não atualizou. Reabra a sessão.');
+      return true;
+    }
+    activeWorkoutSession = before;
+    sxToast('Não foi possível salvar a alteração. Sessão original preservada.');
+    return false;
+  }finally{
+    CAOS.busy = false; if(overlay) overlay.inert = false; if(sheet) sheet.inert = false;
+  }
+}
+async function caosApplySub(i){
+  const ex = curEx(), c = CAOS.cands[i]; if(!ex || !c) return false;
+  // Revalidate stale suggestion buttons and prevent rapid double substitutions.
+  if(!caosSuggest(ex).list.some(x => x.key === c.key)) return false;
+  return caosCommit(s => {
+    const current = s.exercises[s.currentExerciseIndex];
+    const keep = [], rest = [];
+    current.sets.forEach((st, j) => (caosHasSetData(st) ? keep : rest).push({ ...cloneJSON(st), ghostIndex:Number.isInteger(st.ghostIndex) ? st.ghostIndex : j }));
+    if(!rest.length) return false;
+    let subId; do{subId=newLocalBlockId();}while(s.exercises.some(e=>String(e.id)===String(subId)));
+    const sub = { id:subId, nome:c.label, obs:'', refId:c.key,
+      sets:rest.map(st => { delete st.ghostIndex; return st; }),
+      substituiDe:{ id:current.id, nome:current.nome || '', refId:current.refId || null, motivo:'aparelho ocupado', ...(current.substituiDe ? { anterior:cloneJSON(current.substituiDe) } : {}) } };
+    const at = s.currentExerciseIndex;
+    if(keep.length){ current.sets = keep; s.exercises.splice(at + 1, 0, sub); s.currentExerciseIndex = at + 1; }
+    else s.exercises[at] = sub;
+  }, 'Substituição salva neste aparelho. Vale só para esta sessão.');
+}
+async function caosPostpone(){
+  return caosCommit(s => {
+    const at = s.currentExerciseIndex; if(at >= s.exercises.length - 1) return false;
+    s.exercises.push(s.exercises.splice(at, 1)[0]);
+  }, 'Ordem da sessão salva: exercício adiado.');
+}
+async function caosDoNow(j){
+  return caosCommit(s => {
+    const at = s.currentExerciseIndex; if(j === at || !s.exercises[j]) return false;
+    s.exercises.splice(at, 0, s.exercises.splice(j, 1)[0]);
+  }, 'Ordem da sessão salva.');
+}
+
+/* Ghost: all per-set, aggregate and success comparisons use Epley estimated
+   strength. Volume is a separate, explicitly labelled secondary statistic. */
+const GH_KEY = 'ghost:on';
+let GH = { on:null, memo:{}, hlen:-1 };
+let GH_RESULT = null;
+
+function ghOn(){
+  if(GH.on == null){ let v = '0'; try{ v = localStorage.getItem(GH_KEY) || '0'; }catch(e){} GH.on = v === '1'; }
+  return GH.on;
+}
+function ghFmt(v){ return (Math.round(v * 10) / 10).toString().replace('.', ','); }
+function ghSign(v){ return (v > 0 ? '+' : v < 0 ? '−' : '') + ghFmt(Math.abs(v)); }
+function ghLast(ex, sess){
+  const s = sess || activeWorkoutSession; if(!s || !ex) return null;
+  const candidates = [];
+  workoutHistory.forEach(h => {
+    if(h.id === s.id || (anEntryTime(h) != null && anEntryTime(h) > s.startedAt)) return;
+    (h.exercises || []).forEach(e => {
+      const same = ex.refId && e.refId ? ex.refId === e.refId : normName(e.nome) === normName(ex.nome);
+      if(same && (e.sets || []).some(isSetRealizedHistoric)) candidates.push({ ...h, sets:e.sets, sameBlock:h.blockId === s.blockId });
+    });
+  });
+  candidates.sort((a,b) => Number(b.sameBlock) - Number(a.sameBlock) || historySortKey(b).localeCompare(historySortKey(a)) || (anEntryTime(b)||0) - (anEntryTime(a)||0));
+  return candidates[0] || null;
+}
+
+function ghSetOf(ex, i){
+  const last = ghLast(ex), slot = ex.sets[i] && ex.sets[i].ghostIndex;
+  const g = last && last.sets[Number.isInteger(slot) ? slot : i];
+  return g && isSetRealizedHistoric(g) ? g : null;
+}
+const ghE1 = (c, r) => c * (1 + r / 30);
+function ghCompare(set, g){
+  if(!g || !isSetFilled(set)) return null;
+  const c = parseFloat(set.carga), r = parseFloat(set.reps), gc = parseFloat(g.carga), gr = parseFloat(g.reps);
+  if(!(c > 0) || !(gc > 0) || !(gr > 0) || ![c,r,gc,gr].every(Number.isFinite)) return null;
+  const pct = (ghE1(c, r) / ghE1(gc, gr) - 1) * 100;
+  const state = pct > 1 ? 'up' : pct < -1 ? 'down' : 'eq';
+  const dc = c - gc, dr = r - gr, parts = [];
+  if(dc) parts.push(ghSign(dc) + ' kg');
+  if(dr) parts.push(ghSign(dr) + (Math.abs(dr) === 1 ? ' rep' : ' reps'));
+  const text = !parts.length ? '= fantasma' : parts.join(' · ');
+  return { state, text, c, r, gc, gr, pct };
+}
+function ghRowInner(set, ex, i){
+  const g = ghSetOf(ex, i);
+  if(!g) return '<span class="gh-l">sem referência comparável</span><span></span>';
+  const cmp = ghCompare(set, g);
+  const lab = (cmp && cmp.state === 'up' ? 'força ↑ ' : cmp && cmp.state === 'down' ? 'força ↓ ' : 'força ≈ ');
+  return '<span class="gh-l">fantasma <b>' + ghFmt(parseFloat(g.carga)) + ' kg × ' + ghFmt(parseFloat(g.reps)) + '</b></span>'
+    + (cmp ? '<span class="gh-d ' + cmp.state + '">' + (lab ? lab : '') + escapeHtml(cmp.text) + '</span>' : '<span></span>');
+}
+function ghLineHtml(set, ex, i){ return ghOn() ? '<div class="gh-line" data-gh="' + i + '">' + ghRowInner(set, ex, i) + '</div>' : ''; }
+function ghRefreshRows(){
+  const ex = curEx(); if(!ex) return;
+  document.querySelectorAll('#sx-sets .gh-line').forEach(el => { const i = +el.dataset.gh; if(ex.sets[i]) el.innerHTML = ghRowInner(ex.sets[i], ex, i); });
+}
+/* Placar da sessão: só séries CONCLUÍDAS que têm série-fantasma na mesma posição */
+function ghScore(sess){
+  const out = { cur:0, gh:0, n:0, up:0, down:0, eq:0, per:[], pct:0, volumePct:0 };
+  let sum = 0;
+  (sess ? sess.exercises : []).forEach(ex => {
+    const last = ghLast(ex, sess); if(!last) return;
+    let cur = 0, gh = 0, n = 0, strength = 0;
+    ex.sets.forEach((st,i) => {
+      if(!isSetDone(st)) return;
+      const g = last.sets[Number.isInteger(st.ghostIndex) ? st.ghostIndex : i];
+      if(!isSetRealizedHistoric(g)) return;
+      const cmp = ghCompare(st,g); if(!cmp) return;
+      cur += cmp.c * cmp.r; gh += cmp.gc * cmp.gr; n++; strength += cmp.pct; out[cmp.state]++;
+    });
+    if(n){ out.cur += cur; out.gh += gh; out.n += n; sum += strength;
+      out.per.push({ nome:ex.nome || 'Exercício', cur, gh, n, pct:strength/n, volumePct:gh ? (cur/gh-1)*100 : 0 }); }
+  });
+  out.pct = out.n ? sum/out.n : 0;
+  out.volumePct = out.gh ? (out.cur/out.gh-1)*100 : 0;
+  return out;
+}
+
+function ghBarHtml(){
+  return '<div class="gh-bar" id="gh-bar"></div>';
+}
+function ghRefreshBar(){
+  const el = document.getElementById('gh-bar'); if(!el) return;
+  const on = ghOn(), sc = on ? ghScore(activeWorkoutSession) : null;
+  let txt = '';
+  if(on){
+    if(sc && sc.n){ const cls = sc.pct > 1 ? 'up' : sc.pct < -1 ? 'down' : ''; txt = '<button type="button" class="gh-sc ' + cls + '" onclick="ghOpen()">Força estimada: <b>' + (Math.abs(sc.pct) <= 1 ? 'empatado' : ghSign(Math.round(sc.pct * 10) / 10) + '%') + '</b> &middot; ' + sc.up + ' de ' + sc.n + (sc.n === 1 ? ' série à frente' : ' séries à frente') + '</button>'; }
+    else txt = '<span class="gh-sc" style="cursor:default">Conclua uma série para comparar com o último treino</span>';
+  }
+  el.innerHTML = '<button type="button" class="gh-tg ' + (on ? 'on' : '') + '" aria-pressed="' + on + '" onclick="ghToggle()">Fantasma</button>' + txt;
+}
+function ghToggle(){
+  GH.on = !ghOn(); try{ localStorage.setItem(GH_KEY, GH.on ? '1' : '0'); }catch(e){}
+  renderSessionExercise(false); ghRefreshBar();
+}
+function ghOpen(){
+  const sc = ghScore(activeWorkoutSession); if(!sc.n) return;
+  let bd = document.getElementById('gh-bd');
+  if(!bd){ bd = document.createElement('div'); bd.id = 'gh-bd'; bd.className = 'caos-bd'; bd.onclick = e => { if(e.target === bd) ghClose(); }; bd.innerHTML = '<div class="caos-sheet" id="gh-sheet"></div>'; document.body.appendChild(bd); }
+  document.getElementById('gh-sheet').innerHTML = '<div class="caos-h">Fantasma · força estimada</div><div class="caos-sub2">' + ghSign(sc.pct) + '% em média nas ' + sc.n + ' séries comparáveis concluídas. ' + sc.up + ' acima, ' + sc.eq + ' próximas e ' + sc.down + ' abaixo.</div>'
+    + '<div class="caos-sec">Força estimada por exercício</div>' + sc.per.map(x => '<div class="gh-ex"><span>' + escapeHtml(x.nome) + '</span><span>' + ghSign(x.pct) + '%</span></div>').join('')
+    + '<div class="caos-sec">Volume · métrica separada</div><div class="caos-sub2">' + ghFmt(sc.cur) + ' vs ' + ghFmt(sc.gh) + ' kg × rep (' + ghSign(sc.volumePct) + '%). Mais repetições podem aumentar o volume mesmo quando a força estimada cai.</div>'
+    + '<div class="caos-note">O placar e cada série usam a mesma métrica: carga × (1 + repetições/30), fórmula de Epley. O placar é a média das variações percentuais por série; ±1% conta como empate. Compara a mesma posição no último registro do exercício, com prioridade para este bloco. Séries sem carga externa positiva não entram. É uma estimativa, especialmente limitada em séries longas; não é um teste de força máxima. O histórico permanece intacto.</div>'
+    + '<button type="button" class="btn-ghost caos-btn" onclick="ghClose()">Fechar</button>';
+  bd.classList.add('open');
+}
+
+function ghClose(){ const bd = document.getElementById('gh-bd'); if(bd) bd.classList.remove('open'); }
+function ghSuccessHtml(entry){
+  if(!ghOn() || !GH_RESULT || GH_RESULT.id !== entry.id || !GH_RESULT.score.n) return '';
+  const sc = GH_RESULT.score, tie = Math.abs(sc.pct) <= 1;
+  return '<div class="gh-succ"><div class="t">fantasma · força estimada</div><div class="v ' + (sc.pct > 1 ? 'up' : '') + '">' + (tie ? 'Força estimada próxima da referência' : (sc.pct > 0 ? 'Média de força estimada acima da referência' : 'Média de força estimada abaixo da referência')) + ' (' + ghSign(Math.round(sc.pct * 10) / 10) + '%)</div><div class="s">' + sc.up + ' de ' + sc.n + ' séries à frente, ' + sc.eq + (sc.eq === 1 ? ' igual' : ' iguais') + ', ' + sc.down + ' atrás.</div></div>';
+}
+
 function renderSessionExercise(resetScroll){
   const s = activeWorkoutSession;
   const main = sxEl('session-main');
@@ -9568,7 +10087,8 @@ function renderSessionExercise(resetScroll){
   const rest = s.restSeconds || REST_DEFAULT;
   main.innerHTML = `
     <div class="sx-ex" data-ex="${ex.id}">
-      <div class="sx-ex-eyebrow" id="sx-eyebrow">${escapeHtml(mi.group)}</div>
+      <div class="sx-ex-eyerow"><div class="sx-ex-eyebrow" id="sx-eyebrow">${escapeHtml(mi.group)}</div><button type="button" class="caos-chip" onclick="caosOpen()">Aparelho ocupado</button></div>
+      ${ex.substituiDe ? `<div class="caos-sub">Substituiu ${escapeHtml(ex.substituiDe.nome || 'o exercício do treino')} (aparelho ocupado)</div>` : ''}
       <input type="text" class="sx-ex-name" id="sx-name" value="${escapeHtml(ex.nome)}" placeholder="Nome do exercício" autocomplete="off" enterkeyhint="done" aria-label="Nome do exercício" oninput="sxRename(this.value); exSuggestOpen(this,'sx',${ex.id})" onfocus="exSuggestOpen(this,'sx',${ex.id})" onblur="exSuggestCloseSoon()" onchange="sxRefreshMuscle()">
       <div class="sx-ex-muscles" id="sx-muscles">${mi.classified ? escapeHtml(mi.detail) : 'musculatura não classificada — defina em EDITAR TREINO'}</div>
       <div class="ex-ref" id="sx-ref-line">${exRefLineHtml('sx', ex)}</div>
@@ -9633,6 +10153,7 @@ function sxRefreshLive(){
   }
   const prEl = sxEl('sx-live-pr');
   if(prEl) prEl.classList.toggle('show', anyPR);
+  try{ ghRefreshRows(); }catch(e){}
   const nextEl = sxEl('sx-next');
   if(nextEl) nextEl.innerHTML = sxProgressionHtml(ex);
   sxRefreshChrome();
@@ -9668,12 +10189,12 @@ function sxToggleSet(i){
   sxRefreshLive();
   if(set.completed) sxNudgeRest(); /* só realce visual: não inicia descanso nem avança */
 }
-const RIR_CYCLE = ['', '4+', '3', '2', '1', '0'];
+const RIR_CYCLE = ['', '0', '1', '2', '3', '4+'];  /* 0 primeiro: quem treina perto da falha usa mais o 0 */
 function sxCycleRir(i, btn){
   const ex = curEx();
   if(!ex || !ex.sets[i]) return;
   const set = ex.sets[i];
-  const next = RIR_CYCLE[(RIR_CYCLE.indexOf(set.rir || '') + 1) % RIR_CYCLE.length];
+  const next = RIR_CYCLE[(RIR_CYCLE.indexOf(String(set.rir ?? '')) + 1) % RIR_CYCLE.length];
   set.rir = next;
   if(btn){
     btn.classList.toggle('has', !!next);
@@ -9854,9 +10375,11 @@ async function handleConcludeClick(){
   await doConclude();
 }
 async function doConclude(){
-  if(sessionConcluding || !activeWorkoutSession) return;
+  if(sessionConcluding || CAOS.busy || !activeWorkoutSession) return;
   sessionConcluding = true;
+  const overlay=sxEl('session-overlay'); if(overlay){overlay.inert=true;overlay.setAttribute('aria-busy','true');}
   try{
+    try{ GH_RESULT = { id: activeWorkoutSession.id, score: ghScore(activeWorkoutSession) }; }catch(e){ GH_RESULT = null; }
     const entry = await concludeWorkout();
     if(!entry){ sxToast('Não foi possível salvar o treino. A sessão continua aberta — tente de novo.'); return; }
     stopSessionClock();
@@ -9864,7 +10387,7 @@ async function doConclude(){
     renderSession();
     renderBlocksLibrary();
     renderHoje();
-  } finally { sessionConcluding = false; }
+  } finally { sessionConcluding = false; if(overlay){overlay.inert=false;overlay.removeAttribute('aria-busy');} }
 }
 
 function renderSessionSuccess(){
@@ -9904,25 +10427,24 @@ function renderSessionSuccess(){
       <div class="success-name">${escapeHtml(entry.blockName || 'Sem nome')}</div>
       <div class="success-stats">${statsHtml}</div>
       ${volDeltaHtml}
+      ${ghSuccessHtml(entry)}
+      ${anSessionHtml(entry, 'success')}
       ${recordsHtml}
       ${highlightHtml}
       <div class="success-actions">
-        <button type="button" class="btn-primary treino" onclick="openReportFromSession('${entry.date}')">Ver relatório</button>
+        <button type="button" class="btn-primary treino" onclick="openReportFromSession()">Ver relatório</button>
         <button type="button" class="btn-ghost" onclick="closeWorkoutSession()">Voltar aos treinos</button>
       </div>
     </div>`;
 }
-function openReportFromSession(dateStr){
+function openReportFromSession(){
+  const entry = workoutHistory.find(h => h.id === sessionSuccessEntryId);
   closeWorkoutSession();
-  openReport(dateStr);
+  if(entry) openReport(entry.date, entry.id);
 }
 
-/* ======================================================================
-   TREINO — EDITOR DO TEMPLATE
-   Edita SOMENTE treinoBlocks (estrutura). Não existe campo de reps/carga
-   aqui, e nada disso altera uma sessão já ativa: ela é um snapshot, e a
-   mudança vale para a PRÓXIMA sessão.
-====================================================================== */
+/* Template editor: unrelated behavior preserved. */
+
 function openBlockEditor(blockId){
   if(!findBlock(blockId)) return;
   closeBlockPreview();
@@ -10267,62 +10789,335 @@ function computeStreak(){
    Chaves de Push/credenciais ficam de fora do arquivo.
 ====================================================================== */
 const BK_LAST_KEY = 'rastreador:ultimoBackup';
-const BK_SKIP = /push|vapid|token|auth|secret|password|senha/i;
-function bkLast(){ try{ return localStorage.getItem(BK_LAST_KEY) || ''; }catch(e){ return ''; } }
+const BK_SKIP = /push|vapid|token|auth|secret|password|senha|credential|api.?key|private.?key|subscription|endpoint/i;
+function bkLast(){ try{ return JSON.parse(localStorage.getItem(BK_LAST_KEY) || 'null'); }catch(e){ return null; } }
 function bkCardHtml(){
-  const last = bkLast();
-  const txt = last ? 'Última cópia: ' + new Date(last).toLocaleString('pt-BR', { dateStyle:'short', timeStyle:'short' }) : 'Você ainda não fez nenhuma cópia neste aparelho.';
-  return '<div class="bk-card"><p>Baixe um arquivo com seus treinos, dieta, peso e configurações. Guarde no Drive, no e-mail ou no computador: é a sua garantia extra, mesmo com a sincronização ligada.</p>' +
-    '<div class="bk-row"><span class="bk-last" id="bk-last">' + escapeHtml(txt) + '</span><button class="btn-ghost" id="bk-btn" onclick="bkExport()">BAIXAR CÓPIA</button></div></div>';
+  const last=bkLast();
+  const txt=last && last.at ? (last.method==='share'?'Compartilhamento concluído: ':'Download solicitado: ')+new Date(last.at).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'}) : 'Nenhuma exportação registrada neste aparelho.';
+  return '<div class="bk-card"><p>Exporte os dados disponíveis neste aparelho: treinos, histórico, sessão em andamento, dieta, peso e preferências. Credenciais e assinaturas de push ficam de fora. Conexões e reações mantidas apenas no servidor não fazem parte desta cópia.</p><div class="bk-row"><span class="bk-last" id="bk-last">'+escapeHtml(txt)+'</span><button class="btn-ghost" id="bk-btn" onclick="bkExport()">EXPORTAR CÓPIA</button></div><p id="bk-status" role="status">Depois da exportação, confira o arquivo em Arquivos ou no destino escolhido.</p></div>';
+}
+function bkSanitize(value){
+  if(Array.isArray(value)) return value.map(bkSanitize);
+  if(value && typeof value==='object'){
+    const out={};Object.entries(value).forEach(([k,v])=>{if(!BK_SKIP.test(k) && !/^(session|credentials|authorization|apikey|api_key)$/i.test(k))out[k]=bkSanitize(v);});return out;
+  }
+  return value;
 }
 async function bkReadAll(){
-  const db = await openRastreadorDB();
-  return await new Promise((resolve, reject) => {
-    const out = {};
-    const tx = db.transaction(RASTREADOR_STORE_NAME, 'readonly');
-    const req = tx.objectStore(RASTREADOR_STORE_NAME).openCursor();
-    req.onsuccess = () => {
-      const cur = req.result;
-      if(cur){ if(!BK_SKIP.test(String(cur.key))) out[cur.key] = cur.value && cur.value.value; cur.continue(); }
-      else resolve(out);
+  const db=await openRastreadorDB();
+  return new Promise((resolve,reject)=>{
+    const out={},tx=db.transaction(RASTREADOR_STORE_NAME,'readonly'),req=tx.objectStore(RASTREADOR_STORE_NAME).openCursor();
+    req.onsuccess=()=>{
+      const cur=req.result;if(!cur)return;
+      const key=String(cur.key);
+      if(!BK_SKIP.test(key) && /^(treino:|dieta:|sync:|social:pub:)/.test(key)){
+        const value=cur.value && cur.value.value;
+        if(typeof value==='string'){
+          try{out[key]=JSON.stringify(bkSanitize(JSON.parse(value)));}catch(e){out[key]=value;}
+        }else out[key]=bkSanitize(value);
+      }
+      cur.continue();
     };
-    req.onerror = () => reject(req.error);
+    tx.oncomplete=()=>resolve(out);tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||new Error('Leitura interrompida'));
   });
 }
-async function bkExport(){
-  const btn = document.getElementById('bk-btn');
-  if(btn) btn.disabled = true;
-  try{
-    const data = await bkReadAll();
-    const n = Object.keys(data).length;
-    if(!n){ sxToast('Não há dados neste aparelho para copiar.'); return; }
-    const now = new Date();
-    const payload = { app:'rastreador-pessoal', formato:1, exportadoEm: now.toISOString(), chaves:n, dados:data };
-    const json = JSON.stringify(payload);
-    const name = 'rastreador-backup-' + dateKey(now) + '.json';
-    const blob = new Blob([json], { type:'application/json' });
-    let shared = false;
-    try{
-      const f = new File([blob], name, { type:'application/json' });
-      if(navigator.canShare && navigator.canShare({ files:[f] }) && /iPhone|iPad|iPod/i.test(navigator.userAgent)){ await navigator.share({ files:[f], title:name }); shared = true; }
-    }catch(e){ if(e && e.name === 'AbortError'){ return; } }
-    if(!shared){
-      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
-      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-    }
-    try{ localStorage.setItem(BK_LAST_KEY, now.toISOString()); }catch(e){}
-    const el = document.getElementById('bk-last'); if(el) el.textContent = 'Última cópia: ' + now.toLocaleString('pt-BR', { dateStyle:'short', timeStyle:'short' });
-    sxToast('Cópia gerada (' + n + ' itens, ' + Math.max(1, Math.round(json.length / 1024)) + ' KB).');
-  }catch(e){
-    console.warn('[backup] falhou:', e);
-    sxToast('Não consegui gerar a cópia. Seus dados não foram alterados.');
-  }finally{ if(btn) btn.disabled = false; }
+function bkPreferences(){
+  const out={};
+  // Allowlist only: never dump localStorage, where Supabase stores sessions.
+  [GH_KEY,CAOS_EQ_KEY,AN_FAC_KEY,'rp:sound',BK_LAST_KEY].forEach(k=>{try{const v=localStorage.getItem(k);if(v!=null)out[k]=v;}catch(e){}});
+  return out;
 }
+async function bkBuildPayload(){
+  if(!(await flushActiveSession())) throw new Error('Sessão ativa ainda não foi salva');
+  await blocksLockChain.catch(()=>{});
+  const data=await bkReadAll(),now=new Date();
+  return {app:'rastreador-pessoal',formato:2,exportadoEm:now.toISOString(),chaves:Object.keys(data).length,dados:data,preferencias:bkPreferences(),escopo:'Dados locais deste aparelho. Exclui credenciais, push e dados sociais exclusivos do servidor.'};
+}
+let bkPending=null,bkBusy=false;
+function bkStatus(message){const el=document.getElementById('bk-status');if(el)el.textContent=message;}
+async function bkExport(){
+  if(bkBusy)return;bkBusy=true;
+  const btn=document.getElementById('bk-btn');if(btn)btn.disabled=true;
+  try{
+    // Second tap preserves iOS transient user activation for navigator.share.
+    if(!bkPending){
+      const payload=await bkBuildPayload();
+      const name='rastreador-backup-'+dateKey(new Date())+'.json';
+      const file=new File([JSON.stringify(payload,null,2)],name,{type:'application/json'});
+      const canShare=/iPhone|iPad|iPod/i.test(navigator.userAgent) && navigator.canShare && navigator.canShare({files:[file]});
+      if(canShare){bkPending={file,payload};if(btn)btn.textContent='SALVAR / COMPARTILHAR';bkStatus('Cópia preparada. Toque novamente para escolher Arquivos ou outro destino.');return;}
+      bkPending={file,payload};
+    }
+    const pending=bkPending;let method='download';
+    if(/iPhone|iPad|iPod/i.test(navigator.userAgent) && navigator.canShare && navigator.canShare({files:[pending.file]})){
+      await navigator.share({files:[pending.file],title:pending.file.name});method='share';
+    }else{
+      const url=URL.createObjectURL(pending.file),a=document.createElement('a');a.href=url;a.download=pending.file.name;
+      document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+    }
+    const record={at:new Date().toISOString(),method,exportadoEm:pending.payload.exportadoEm};
+    try{localStorage.setItem(BK_LAST_KEY,JSON.stringify(record));}catch(e){}
+    const last=document.getElementById('bk-last');if(last)last.textContent=(method==='share'?'Compartilhamento concluído':'Download solicitado')+' · '+new Date(record.at).toLocaleString('pt-BR');
+    bkStatus(method==='share'?'Compartilhamento concluído. Confira o arquivo no destino escolhido.':'Download solicitado. O navegador não confirma a gravação final; confira o arquivo baixado.');
+    bkPending=null;
+  }catch(e){
+    if(e && e.name==='AbortError') bkStatus('Exportação cancelada. Nenhuma cópia foi confirmada.');
+    else {console.warn('[backup]',e);bkStatus('Não foi possível exportar. Seus dados foram preservados.');}
+    bkPending=null;
+  }finally{bkBusy=false;if(btn){btn.disabled=false;if(!bkPending)btn.textContent='EXPORTAR CÓPIA';}}
+}
+
+/* Anatomy Guide — region mapping retained from the original implementation. */
+const AN_REGIONS = {
+  peito:{n:'Peito'},ombro:{n:'Ombros'},trapezio:{n:'Trapézio e romboides'},dorsal:{n:'Dorsais'},lombar:{n:'Lombar'},biceps:{n:'Bíceps'},triceps:{n:'Tríceps'},antebraco:{n:'Antebraços'},abdomen:{n:'Abdômen'},gluteos:{n:'Glúteos'},quadriceps:{n:'Quadríceps'},isquiotibiais:{n:'Posteriores de coxa'},adutores:{n:'Adutores'},panturrilha:{n:'Panturrilhas'}
+};
+const AN_FINE = {
+  peitoral_maior_clavicular:'peito', peitoral_maior_esternocostal:'peito',
+  deltoide_anterior:'ombro', deltoide_lateral:'ombro', deltoide_posterior:'ombro', infraespinal:'ombro', redondo_menor:'ombro', subescapular:'ombro',
+  latissimo_dorso:'dorsal', redondo_maior:'dorsal', serrato_anterior:'dorsal',
+  trapezio_superior:'trapezio', trapezio_medio:'trapezio', trapezio_inferior:'trapezio', romboides:'trapezio',
+  eretores_espinha:'lombar',
+  biceps_cabeca_longa:'biceps', biceps_cabeca_curta:'biceps', braquial:'biceps',
+  braquiorradial:'antebraco', flexores_antebraco:'antebraco', extensores_antebraco:'antebraco',
+  triceps_cabeca_longa:'triceps', triceps_cabeca_lateral:'triceps', triceps_cabeca_medial:'triceps',
+  gluteo_maximo:'gluteos', gluteo_medio:'gluteos', gluteo_minimo:'gluteos', abdutores:'gluteos', adutores:'adutores',
+  reto_femoral:'quadriceps', vasto_lateral:'quadriceps', vasto_medial:'quadriceps', vasto_intermedio:'quadriceps',
+  biceps_femoral:'isquiotibiais', semitendinoso:'isquiotibiais', semimembranoso:'isquiotibiais',
+  gastrocnemio:'panturrilha', soleo:'panturrilha',
+  reto_abdominal:'abdomen', obliquos:'abdomen', transverso_abdominal:'abdomen',
+  /* dados legados (grupo "coarse" salvo como chave) */
+  peito:'peito', ombro:'ombro', costas:'dorsal', biceps:'biceps', triceps:'triceps', antebraco:'antebraco', pernas:'quadriceps', panturrilha:'panturrilha', abdomen:'abdomen'
+};
+const AN_FACTORS = [['0.85','Recupero rápido'],['1','Padrão'],['1.15','Recupero devagar']];
+const AN_FAC_KEY = 'an:fator';
+let AN = { sel:null, fac:null };
+
+function anFactor(){
+  if(AN.fac == null){ let v = '1'; try{ v = localStorage.getItem(AN_FAC_KEY) || '1'; }catch(e){} AN.fac = AN_FACTORS.some(f => f[0] === v) ? v : '1'; }
+  return parseFloat(AN.fac);
+}
+/* Anatomy Guide. Shared exercise contribution model; SVG paths are individual
+   hit targets. Historical snapshots are read-only. No external artwork or API. */
+function anEntryTime(h){
+  for(const v of [h.endedAt,h.startedAt]){
+    if(v != null){ const n = typeof v === 'number' ? v : Date.parse(v); if(Number.isFinite(n)) return n; }
+  }
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(h.date || '')) return null;
+  const time = /^\d{2}:\d{2}(:\d{2})?$/.test(h.time || '') ? h.time : '12:00';
+  const n = Date.parse(h.date + 'T' + time); return Number.isFinite(n) ? n : null;
+}
+function anUniqueHistory(history){
+  const seen = new Map();
+  return (history || []).filter(h => {
+    if(!h || typeof h !== 'object') return false;
+    // Same identity AND identical complete payload (apart from sync metadata).
+    // Equal date/name/volume alone is never proof of equivalence.
+    const ids = [h.syncKey && 'sync:' + h.syncKey, h.sessionId && 'session:' + h.sessionId, h.id != null && 'id:' + h.id].filter(Boolean);
+    const signature = canonJSON(historyStrip(h));
+    const duplicate = ids.some(id => seen.has(id) && seen.get(id).has(signature));
+    ids.forEach(id => { if(!seen.has(id)) seen.set(id,new Set()); seen.get(id).add(signature); });
+    return !duplicate;
+  });
+}
+function anExerciseStimulus(ex){
+  const sets = (ex.sets || []).map((s,i) => ({ ...s, index:Number.isInteger(s && s.ghostIndex) ? s.ghostIndex + 1 : i + 1 })).filter(isSetRealizedHistoric);
+  const cls = ex.anatomySnapshot && ex.anatomySnapshot.weights ? ex.anatomySnapshot : resolveExerciseClass(ex);
+  const regions = {};
+  Object.entries(cls.weights || {}).forEach(([m,weight]) => {
+    if(!(Number.isFinite(weight) && weight > 0)) return;
+    const r = AN_FINE[m] || AN_FINE[muscleParentGroup(m)]; if(!r) return;
+    const lev = levelOfMuscle(cls.levels || levelsFromWeights(cls.weights),m);
+    const a = regions[r] || (regions[r] = { weight:0, level:lev, muscles:[] });
+    a.weight += weight; a.muscles.push(m);
+    if(LEVEL_KEYS.indexOf(lev) < LEVEL_KEYS.indexOf(a.level)) a.level = lev;
+  });
+  const top = Object.keys(regions).sort((a,b) => regions[b].weight - regions[a].weight)[0];
+  return { sets, regions, top, mono:!!top && regions[top].weight >= .8, classified:!!top };
+}
+function anSessionStimulus(entry){
+  const regions = {}; let performed = 0, unknown = 0;
+  (entry.exercises || []).forEach((ex,exIndex) => {
+    const c = anExerciseStimulus(ex); performed += c.sets.length;
+    if(!c.classified){ unknown += c.sets.length; return; }
+    if(!c.sets.length) return;
+    Object.entries(c.regions).forEach(([r,info]) => {
+      const a = regions[r] || (regions[r] = { p:0,s:0,t:0,level:info.level,exercises:[] });
+      a[info.level] += c.sets.length;
+      if(LEVEL_KEYS.indexOf(info.level) < LEVEL_KEYS.indexOf(a.level)) a.level = info.level;
+      a.exercises.push({ nome:ex.nome || 'Exercício', exIndex, level:info.level, sets:c.sets, substituiDe:ex.substituiDe || null });
+    });
+  });
+  return { regions, performed, unknown };
+}
+/* Same recovery dose as the existing model: top regional weight = 1, other
+   regional weights >= .10 = .5. Role labels use the existing p/s/t classifier. */
+function anSessionLoad(entry){
+  const acc = {};
+  (entry.exercises || []).forEach(ex => {
+    const c = anExerciseStimulus(ex); if(!c.sets.length || !c.top) return;
+    const rirs = c.sets.map(x => x.rir === '' || x.rir == null ? NaN : parseFloat(x.rir)).filter(v => Number.isFinite(v) && v >= 0);
+    Object.entries(c.regions).forEach(([r,info]) => {
+      const credit = r === c.top ? 1 : info.weight >= .10 ? .5 : 0;
+      if(!credit) return;
+      const a = acc[r] || (acc[r] = { S:0,mw:0,rirSum:0,rirN:0,exercises:[] });
+      a.S += credit*c.sets.length; a.mw += credit*c.sets.length*(c.mono ? .85 : 1);
+      rirs.forEach(v => { a.rirSum += v*credit; a.rirN += credit; });
+      a.exercises.push({ nome:ex.nome || 'Exercício', level:info.level, sets:c.sets });
+    });
+  });
+  const out = {};
+  Object.entries(acc).forEach(([r,a]) => {
+    const rir = a.rirN ? a.rirSum/a.rirN : null;
+    const adj = rir == null ? 0 : rir <= .5 ? 18 : rir <= 1.5 ? 8 : rir <= 3 ? 0 : -8;
+    out[r] = { S:a.S, H:Math.min(132,Math.max(24,(36 + 6*a.S)*a.mw/a.S + adj))*anFactor(), d:Math.min(1,Math.max(.3,.3 + .7*a.S/8)), rir, exercises:a.exercises };
+  });
+  return out;
+}
+const AN_READY = .08;
+function anCompute(now = Date.now(), history = workoutHistory){
+  const sessions = [];
+  anUniqueHistory(history).forEach(h => {
+    const t = anEntryTime(h); if(t == null || t > now) return;
+    const ld = anSessionLoad(h); if(Object.keys(ld).length) sessions.push({ t,ld,name:h.blockName || 'Treino', approximate:!h.endedAt && !h.startedAt });
+  });
+  const res = {};
+  Object.keys(AN_REGIONS).forEach(r => {
+    const list = sessions.filter(x => x.ld[r]);
+    const F = at => Math.min(1,list.reduce((sum,x) => sum + x.ld[r].d*Math.max(0,1 - Math.max(0,(at-x.t)/3600e3)/x.ld[r].H),0));
+    const f = F(now), last = list.reduce((a,b) => !a || b.t > a.t ? b : a,null);
+    let readyIn = 0;
+    if(f > 0){
+      // 100% and the remaining time share the same endpoint (F=0).
+      readyIn = Math.max(0,Math.ceil(Math.max(...list.map(x => (x.t + x.ld[r].H*3600e3 - now)/3600e3))));
+    }
+    res[r] = { F:f, pct:last ? (f > 0 ? Math.min(99,Math.floor((1-f)*100)) : 100) : null, readyIn,
+      last:last ? { t:last.t, S:last.ld[r].S, H:last.ld[r].H,name:last.name, exercises:last.ld[r].exercises, approximate:last.approximate } : null };
+  });
+  return res;
+}
+// Progressão visual: vermelho → laranja → amarelo → amarelo claro → branco → verde (100%); preto = sem dados.
+function anColor(F){ return F == null ? '#202524' : F <= 0 ? '#70d99b' : F < .015 ? '#f4f4ef' : F < .08 ? '#ede08a' : F < .30 ? '#e8b93a' : F < .60 ? '#e8833a' : '#d64545'; }
+function anState(F){ return F <= 0 ? 'Recuperação estimada completa' : F < .3 ? 'Recuperação avançada' : 'Em recuperação'; }
+function anFmtH(h){ return h <= 0 ? 'Completa' : Math.ceil(h) + ' h'; }
+function anAgo(t,now){ const h = Math.max(0,Math.floor((now-t)/3600e3)); return h < 1 ? 'há menos de 1 h' : h < 24 ? 'há '+h+' h' : 'há '+Math.floor(h/24)+' dias'; }
+const AN_LEVEL_COLORS = {p:'#d64545',s:'#e8833a',t:'#e8b93a'};
+const AN_ROLE = {p:'Primário',s:'Secundário',t:'Terciário'};
+/* Paths follow the reference silhouette: relaxed, externally rotated arms,
+   segmented pectorals/abdomen, broad upper back, tapered thighs and lower legs.
+   Each path is independently focusable; symmetric halves share data only. */
+const AN_SHAPES = {
+ front:{
+  trapezio:['M132 55 Q133 71 155 76 L143 79 L130 67 Z'],
+  ombro:['M157 77 C174 72 185 84 184 99 Q183 109 176 114 Q169 111 166 101 Q163 88 151 85 Z'],
+  peito:['M123 86 C129 80 147 80 157 88 Q167 98 162 114 Q155 129 139 128 Q126 128 123 120 Z'],
+  dorsal:['M160 118 L161 128 L154 137 L150 129 Z','M159 131 L159 142 L150 150 L149 139 Z','M158 145 L157 156 L147 163 L148 152 Z'],
+  abdomen:['M123 129 Q135 127 142 137 L143 150 L122 145 Z','M122 149 L143 155 L143 167 L122 165 Z','M122 170 L143 171 L142 185 L122 185 Z','M122 190 L141 190 Q139 218 125 229 L122 230 Z','M147 136 L152 145 L155 166 L154 200 L143 208 L147 183 Z'],
+  biceps:['M174 118 Q184 117 188 139 Q189 151 182 157 Q174 150 172 137 Q170 127 174 118 Z','M170 135 Q169 149 179 163 L173 169 L167 150 Z'],
+  triceps:['M182 107 Q187 119 189 135 L188 143 Q181 124 180 119 Z'],
+  antebraco:['M188 154 Q199 173 204 202 L210 222 L205 225 Q198 205 192 189 Q187 178 188 154 Z','M181 163 Q185 159 188 174 Q189 193 203 226 L197 225 Q187 208 181 189 Q176 177 181 163 Z','M176 170 Q177 191 195 224 L192 224 L178 198 Q172 181 176 170 Z'],
+  quadriceps:['M155 215 Q166 230 164 258 Q162 286 153 308 L147 312 Q149 287 147 266 Q148 238 155 215 Z','M149 227 Q150 249 145 274 Q141 296 143 309 L138 314 Q132 295 135 276 Q139 252 149 227 Z','M132 269 Q135 288 137 306 Q134 318 128 314 Q123 305 126 294 Z'],
+  adutores:['M126 233 L144 212 Q141 237 132 257 L126 270 L123 248 Z'],
+  panturrilha:['M157 331 Q166 356 155 386 L148 415 L146 407 Q152 375 151 356 Z']
+ },
+ back:{
+  ombro:['M157 77 C174 72 185 84 184 99 L181 111 Q172 108 168 97 Q164 87 151 85 Z','M153 87 Q166 90 169 107 Q158 119 145 108 Z'],
+  trapezio:['M122 77 Q139 75 150 81 Q147 104 134 128 L122 148 Z','M131 56 Q135 70 157 76 L146 79 L129 68 Z'],
+  dorsal:['M143 112 Q155 119 170 111 Q169 129 158 143 L151 178 L140 190 L123 151 Z','M169 112 L173 123 Q168 136 159 138 L162 124 Z'],
+  lombar:['M122 154 Q132 173 141 192 L131 204 L122 209 Z'],
+  triceps:['M173 119 Q180 117 183 132 Q184 149 177 163 Q169 157 170 142 Z','M184 127 Q191 139 190 155 L185 168 Q182 155 183 144 Z'],
+  antebraco:['M190 159 Q199 178 205 205 L211 224 L206 226 Q198 209 192 189 Z','M184 168 Q185 184 202 226 L197 227 Q185 207 180 190 Q176 181 181 168 Z','M176 172 L180 195 L195 225 L191 224 Q176 204 173 188 Z'],
+  gluteos:['M124 212 Q135 198 148 201 L156 214 Q139 208 127 220 Z','M124 224 Q138 209 155 221 Q166 232 158 250 Q148 270 125 262 L122 253 Z'],
+  adutores:['M125 267 Q138 274 134 293 L128 318 L124 307 Z'],
+  isquiotibiais:['M157 259 Q166 277 155 308 L145 335 L145 312 Q152 292 151 274 Z','M142 269 Q152 279 143 307 L136 331 L132 327 Q136 309 136 292 Z','M129 274 Q135 285 129 310 L126 324 L124 312 Z'],
+  panturrilha:['M143 331 Q153 339 153 361 Q153 384 144 386 Q138 381 139 361 Z','M136 334 Q139 348 137 371 Q138 388 131 388 Q124 386 125 370 Q125 348 136 334 Z','M144 390 L151 390 L143 423 L140 435 L138 432 Z','M129 392 L135 391 L136 434 L133 435 Z']
+ }
+};
+const AN_BODY_HALF = 'M131 54 Q132 70 155 74 Q180 71 186 87 Q189 99 184 111 Q191 128 192 150 Q204 174 209 207 L214 226 Q229 231 229 241 Q224 247 215 245 L205 237 L198 227 Q186 208 179 190 Q172 176 170 160 L162 138 Q160 157 157 178 L157 203 Q170 233 166 271 Q165 297 157 318 Q167 345 160 376 L148 416 Q150 428 160 436 Q165 442 158 448 L139 450 Q131 450 130 443 L130 422 L126 396 Q120 370 125 345 L127 325 Q120 299 124 276 L120 248 L120 54 Z';
+function anNeutral(view){
+  const leg = view === 'front' ? '<path d="M130 317 Q140 312 150 318 Q149 336 141 341 Q132 338 130 317 Z M130 343 Q141 352 140 378 L137 414 L131 420 L130 392 Q123 364 130 343 Z M151 214 Q145 245 128 286 L126 278 Q134 243 149 211 Z M133 423 L140 417 L146 429 L145 439 L135 445 L130 440 Z"/>' : '<path d="M130 393 L138 389 L137 428 L141 436 L135 443 L129 437 Z"/>';
+  return '<g class="an-neutral">'+leg+'<path d="M133 439 L135 447 M140 439 L141 448 M146 438 L148 447 M152 437 L155 445" fill="none"/></g>';
+}
+function anFigure(view,data,context='recovery',selected=null){
+  const halves = [false,true].map(mirror => {
+    const parts = Object.entries(AN_SHAPES[view]).map(([r,paths]) => {
+      const d = data[r], session = context !== 'recovery';
+      const fill = session ? (d ? AN_LEVEL_COLORS[d.level] : '#343b3a') : anColor(d && d.last ? d.F : null);
+      const state = session ? (d ? AN_ROLE[d.level] : 'Sem estímulo registrado') : (d && d.last ? d.pct+'% de recuperação estimada' : 'Sem dados suficientes');
+      return paths.map((path,i) => '<path class="an-region'+(selected===r?' sel':'')+'" d="'+path+'" fill="'+fill+'" data-region="'+r+'" tabindex="0" role="button" aria-label="'+AN_REGIONS[r].n+' · '+state+'" aria-pressed="'+(selected===r)+'" onclick="anPick(this,\''+r+'\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();anPick(this,\''+r+'\')}"/>').join('');
+    }).join('');
+    const fingers = '<g class="an-fingers"><path d="M211 240 L207 252 M216 242 L214 257 M221 241 L221 256 M225 239 L228 251 M228 232 L236 240"/></g>';
+    return '<g'+(mirror?' transform="translate(240 0) scale(-1 1)"':'')+'><path class="an-body" d="'+AN_BODY_HALF+'"/>'+anNeutral(view)+fingers+parts+'</g>';
+  }).join('');
+  const head = '<path class="an-head" d="M120 5 C104 5 98 20 99 34 Q94 25 95 38 Q96 45 101 45 Q104 55 112 60 L120 67 L128 60 Q136 55 139 45 Q144 45 145 38 Q146 25 141 34 C142 20 136 5 120 5 Z"/>';
+  const neck = '<path class="an-tendon" d="M109 58 L114 80 L120 69 L126 80 L131 58 M120 71 L120 79"/>';
+  return '<svg viewBox="0 0 240 456" xmlns="http://www.w3.org/2000/svg" aria-label="Atlas '+(view==='front'?'frontal':'posterior')+' interativo" role="group">'+halves+head+neck+'</svg>';
+}
+function anFigures(data,context,selected){
+  return '<div class="an-figs">'+['front','back'].map(v=>'<div class="an-fig">'+anFigure(v,data,context,selected)+'<span class="an-fig-l">'+(v==='front'?'Anterior':'Posterior')+'</span></div>').join('')+'</div>';
+}
+function anSetLines(exercises){
+  return exercises.map(ex => '<div class="an-ex-detail"><div>'+escapeHtml(ex.nome)+' <span class="an-role" style="color:'+AN_LEVEL_COLORS[ex.level]+'">'+AN_ROLE[ex.level]+'</span></div><p>'+ex.sets.map(st => 'S'+st.index+': '+escapeHtml(String(st.carga))+' kg × '+escapeHtml(String(st.reps))+(st.rir!=='' && st.rir!=null ? ' · RIR '+escapeHtml(String(st.rir)) : '')).join('<br>')+'</p>'+(ex.substituiDe ? '<small>Substituiu '+escapeHtml(ex.substituiDe.nome)+'</small>' : '')+'</div>').join('');
+}
+const AN_CONTEXTS = new Map();
+function anSessionHtml(entry,context){
+  AN_CONTEXTS.set(context,entry);
+  const model = anSessionStimulus(entry), data = model.regions;
+  const counts = LEVEL_KEYS.map(k=>Object.values(data).filter(d=>d.level===k).length);
+  return '<section class="an-card an-session" data-an-context="'+context+'"><div class="an-heading"><div><div class="an-eyebrow">ANATOMY GUIDE · SESSÃO</div><h3>Seu treino, no corpo</h3></div><span class="an-badge">'+model.performed+' séries</span></div>'
+    +'<p class="an-sub">'+escapeHtml(entry.blockName || 'Treino')+' · '+fmtDM(entry.date)+' · '+escapeHtml(entry.time || '')+'<br>Participação muscular das séries realizadas nesta sessão.</p>'
+    +anFigures(data,context,null)+'<div class="an-legend">'+LEVEL_KEYS.map(k=>'<span><i style="background:'+AN_LEVEL_COLORS[k]+'"></i>'+AN_ROLE[k]+'</span>').join('')+'<span><i style="background:#343b3a"></i>Sem estímulo</span></div>'
+    +'<div class="an-summary">'+Object.keys(data).length+' grupos envolvidos · '+counts[0]+' primários, '+counts[1]+' secundários e '+counts[2]+' terciários.</div>'
+    +(model.unknown ? '<p class="an-limitation">'+model.unknown+' séries sem classificação muscular; não estão coloridas no atlas.</p>' : '')
+    +((entry.exercises || []).some(ex=>ex.substituiDe) ? '<details class="an-how"><summary>Adaptações desta sessão</summary>'+entry.exercises.filter(ex=>ex.substituiDe).map(ex=>'<p>'+escapeHtml(ex.nome)+' · Substituiu '+escapeHtml(ex.substituiDe.nome || 'exercício original')+'. '+(ex.sets || []).filter(isSetRealizedHistoric).length+' séries realizadas.</p>').join('')+'</details>' : '')
+    +'<div class="an-detail" aria-live="polite"><p>Toque em uma região para ver os exercícios e as séries.</p></div>'
+    +'<div class="an-muscle-buttons">'+Object.keys(data).map(r=>'<button type="button" data-region="'+r+'" onclick="anPick(this,\''+r+'\')">'+AN_REGIONS[r].n+'</button>').join('')+'</div>'
+    +'<p class="an-limitation">Cores indicam participação, não intensidade ou recuperação. Uma região com vários papéis usa o nível mais alto; o detalhe mostra cada exercício.</p></section>';
+}
+function anPick(el,r){
+  const card = el.closest('[data-an-context]'); if(!card) return;
+  const context = card.dataset.anContext;
+  const detail = card.querySelector('.an-detail');
+  card.querySelectorAll('[data-region]').forEach(n=>{ const yes=n.dataset.region===r; n.classList.toggle('sel',yes); n.setAttribute('aria-pressed',yes); });
+  if(context==='recovery'){
+    AN.sel=r; const d=anCompute()[r];
+    detail.innerHTML='<h4>'+AN_REGIONS[r].n+'</h4>'+(d.last ? '<p>'+d.pct+'% de recuperação estimada'+(d.readyIn?' · cerca de '+d.readyIn+' h até 100%':'')+'. Último estímulo '+anAgo(d.last.t,Date.now())+' · '+escapeHtml(d.last.name)+'.'+(d.last.approximate?' Horário aproximado do registro legado.':'')+'</p>'+anSetLines(d.last.exercises) : '<p>Sem séries classificadas com dose suficiente para estimar este grupo. Ausência de dados não significa 100% recuperado.</p>');
+  }else{
+    const entry=AN_CONTEXTS.get(context); if(!entry) return;
+    const d=anSessionStimulus(entry).regions[r];
+    detail.innerHTML='<h4>'+AN_REGIONS[r].n+'</h4>'+(d ? '<p>'+d.p+' séries com participação primária · '+d.s+' secundária · '+d.t+' terciária.</p>'+anSetLines(d.exercises) : '<p>Não há estímulo muscular classificado para esta região nesta sessão.</p>');
+  }
+}
+function anSelect(r){ AN.sel=r; const el=document.querySelector('#an-card [data-region="'+r+'"]'); if(el) anPick(el,r); }
+function anSetFac(v){ if(!AN_FACTORS.some(f=>f[0]===v)) return; AN.fac=v; try{ localStorage.setItem(AN_FAC_KEY,v); }catch(e){} anRefresh(); }
+function anHtml(){
+  const data=anCompute(), rows=Object.keys(AN_REGIONS).map(r=>{
+    const d=data[r], color=anColor(d.last?d.F:null);
+    return '<button type="button" class="an-row" data-region="'+r+'" onclick="anPick(this,\''+r+'\')"><span class="an-row-n">'+AN_REGIONS[r].n+'</span><span class="an-row-progress"><span class="an-bar"><b style="width:'+(d.pct??0)+'%;background:'+color+'"></b></span><small>'+(d.last?(d.readyIn?'Cerca de '+d.readyIn+' h até 100%':'Estimativa completa'):'Sem dados suficientes')+'</small></span><span class="an-row-t" style="color:'+ (d.last?color:'#8e9894')+'">'+(d.pct==null?'—':d.pct+'%')+'</span></button>';
+  }).join('');
+  return '<section class="an-card" id="an-card" data-an-context="recovery"><div class="an-heading"><div><div class="an-eyebrow">ANATOMY GUIDE · AGORA</div><h3>Recuperação muscular</h3></div><span class="an-live" aria-label="Atualiza a cada minuto"></span></div><p class="an-sub">Seu histórico, visto de outro jeito.<br>Toque no corpo para explorar o último estímulo.</p>'
+    +anFigures(data,'recovery',AN.sel)+'<div class="an-legend" aria-label="Recuperação: vermelho, laranja, amarelo, amarelo claro, branco, verde e preto">'+[[1,'Maior fadiga'],[.5,'Recuperando'],[.2,'Avançando'],[.04,'Quase completa'],[.005,'Quase 100%'],[0,'100%'],[null,'Sem dados']].map(([f,label])=>'<span><i style="background:'+anColor(f)+'"></i>'+label+'</span>').join('')+'</div>'
+    +'<div class="an-detail" aria-live="polite"><p>Selecione um músculo para ver o último treino, os exercícios e as séries.</p></div><div class="an-list">'+rows+'</div>'
+    +'<div class="an-fac"><span>Ritmo estimado</span>'+AN_FACTORS.map(f=>'<button type="button" class="'+(AN.fac===f[0]?'on':'')+'" onclick="anSetFac(\''+f[0]+'\')">'+f[1]+'</button>').join('')+'</div>'
+    +'<p class="an-limitation">Modelo experimental. Percentuais e horas são estimativas, não medições fisiológicas nem liberação para treinar.</p>'
+    +'<details class="an-how"><summary>Como a estimativa funciona</summary><p>Reutiliza a classificação e a dose de treino do aplicativo: uma série para a região predominante e meia série para outra região com pelo menos 10% do peso muscular. Participações menores aparecem no relatório, mas não geram uma estimativa de recuperação.</p><p>Janela base de 36 h + 6 h por série efetiva, ajustada por concentração muscular, RIR e ritmo escolhido. A fadiga cai linearmente e estímulos sobrepostos se somam. O tempo restante é até zerar a fadiga do modelo (100%). Esses coeficientes são heurísticos, não uma previsão fisiológica validada.</p><p>Sem data válida ou sem dose classificada, não calculamos um percentual. Registros antigos sem horário usam meio-dia. Réplicas só deixam de contar duas vezes quando identidade e conteúdo completos coincidem; nenhum registro é removido.</p></details></section>';
+}
+function anRefresh(){
+  const el=document.getElementById('an-card'), hp=document.getElementById('panel-historico');
+  if(!el || (hp && !hp.classList.contains('active')) || document.hidden) return;
+  const expanded=el.querySelector('details')?.open;
+  const focus=document.activeElement, focused=el.contains(focus)?focus.dataset.region:null;
+  el.outerHTML=anHtml();
+  if(expanded) document.querySelector('#an-card details').open=true;
+  if(AN.sel) anSelect(AN.sel);
+  if(focused) document.querySelector('#an-card button[data-region="'+focused+'"]')?.focus({preventScroll:true});
+}
+setInterval(anRefresh,60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden) anRefresh();});
 
 function renderHistorico(){
   const el = document.getElementById('historico-content');
   if(workoutHistory.length === 0){
-    el.innerHTML = '<div class="empty-state"><div class="ttl">nenhum treino registrado</div><div class="sub">Conclua seu primeiro treino na aba TREINO para começar a ver seu histórico, calendário e evolução aqui.</div><button class="btn-primary treino" style="width:auto; padding:10px 20px;" onclick="switchTab(\'treino\')">IR PARA TREINO</button></div>' + '<div class="hist-section"><div class="hist-section-title">seus dados</div>' + bkCardHtml() + '</div>';
+    el.innerHTML = anHtml() + '<div class="empty-state"><div class="ttl">nenhum treino registrado</div><div class="sub">Conclua seu primeiro treino na aba TREINO para começar a ver seu histórico, calendário e evolução aqui.</div><button class="btn-primary treino" style="width:auto; padding:10px 20px;" onclick="switchTab(\'treino\')">IR PARA TREINO</button></div>' + '<div class="hist-section"><div class="hist-section-title">seus dados</div>' + bkCardHtml() + '</div>';
     return;
   }
 
@@ -10335,6 +11130,7 @@ function renderHistorico(){
   el.innerHTML = `
     ${hxHeroHtml()}
     ${hxRecapHtml()}
+    ${anHtml()}
     ${hxWeeklyHtml()}
 
     <div class="hist-section hx-card-flat">
@@ -10625,7 +11421,7 @@ function renderRecentList(){
     if(pct !== null) pills.push('<span class="hx-pill ' + (pct > 0 ? 'up' : '') + '">' + (pct === 0 ? 'igual ao treino anterior' : (pct > 0 ? '+' : '') + pct + '% vs treino anterior') + '</span>');
     if(prN > 0) pills.push('<span class="set-pr-tag">PR' + (prN > 1 ? ' ×' + prN : '') + '</span>');
     const meta = [h.time ? h.time : '', h.durationMin ? h.durationMin + ' min' : '', h.filledSets + '/' + h.setCount + ' séries'].filter(Boolean).join(' · ');
-    return '<div class="hx-recent" onclick="openReport(\'' + h.date + '\')">' +
+    return '<div class="hx-recent" data-date="' + escapeHtml(h.date) + '" data-entry-id="' + escapeHtml(String(h.id)) + '" onclick="openReport(this.dataset.date,this.dataset.entryId)">' +
       '<div class="hx-recent-top"><div><div class="nm">' + escapeHtml(h.blockName) + '</div><div class="dt">' + dstr.toUpperCase() + ' · ' + escapeHtml(meta) + '</div></div>' +
       '<div class="vol">' + h.volume.toLocaleString('pt-BR') + '<small> kg</small></div></div>' +
       (pills.length ? '<div class="hx-recent-meta">' + pills.join('') + '</div>' : '') + '</div>';
@@ -10637,8 +11433,9 @@ function renderRecentList(){
 /* ======================================================================
    WORKOUT REPORT (MODAL)
 ====================================================================== */
-function openReport(dateStr){
-  const entries = workoutHistory.filter(h => h.date === dateStr);
+function openReport(dateStr, entryId){
+  [...AN_CONTEXTS.keys()].filter(k=>k.startsWith('report-')).forEach(k=>AN_CONTEXTS.delete(k));
+  const entries = workoutHistory.filter(h => h.date === dateStr && (entryId == null || String(h.id) === String(entryId)));
   if(entries.length === 0) return;
 
   const totalVolume = entries.reduce((v,e) => v+e.volume, 0);
@@ -10658,7 +11455,7 @@ function openReport(dateStr){
     if(prevEntry && prevEntry.volume > 0){
       const pct = round1(((totalVolume - prevEntry.volume) / prevEntry.volume) * 100);
       const sign = pct > 0 ? '+' : '';
-      progressionHtml = `<div class="report-summary-item">progressão<b class="${pct>0?'up':''}">${sign}${pct}%</b></div>`;
+      progressionHtml = `<div class="report-summary-item">volume vs anterior<b class="${pct>0?'up':''}">${sign}${pct}%</b></div>`;
     }
   }
   const recordsSummaryHtml = totalNewRecords > 0 ? `<div class="report-summary-item">novos recordes<b class="up">${totalNewRecords}</b></div>` : '';
@@ -10682,6 +11479,7 @@ function openReport(dateStr){
         <div class="modal-ex-name">${escapeHtml(ex.nome||'Sem nome')}${isRecord ? ' <span class="set-pr-tag" style="margin-left:6px; vertical-align:middle;">PR</span>' : ''}</div>
         <div class="modal-ex-meta">${ex.sets.length}×${repsSummary}${vol>0 ? ' · '+Math.round(vol)+' kg' : ''}</div>
       </div>
+      ${ex.substituiDe ? '<div class="caos-sub">Substituiu ' + escapeHtml(ex.substituiDe.nome || 'exercício original') + '</div>' : ''}
       <div class="modal-ex-evo"></div>
     </div>`;
   }).join('')).join('');
@@ -10702,6 +11500,7 @@ function openReport(dateStr){
       <div class="wh-stat"><div class="n">${totalVolume.toLocaleString('pt-BR')}</div><div class="l">kg volume</div></div>
     </div>
     ${summaryRowHtml}
+    ${entries.map((e,i) => anSessionHtml(e, 'report-' + i)).join('')}
     ${donutHtml}
     <div class="section-lbl">exercícios</div>
     <div class="modal-exlist">${exHtml}</div>
@@ -10712,7 +11511,7 @@ function openReport(dateStr){
   document.addEventListener('keydown', escCloseReport);
 }
 function toggleExerciseEvolution(rowEl){
-  const evoEl = rowEl.nextElementSibling;
+  const evoEl = rowEl.parentElement.querySelector('.modal-ex-evo');
   if(!evoEl) return;
   const isOpen = evoEl.classList.contains('open');
   document.querySelectorAll('.modal-ex-evo.open').forEach(el => { if(el !== evoEl){ el.classList.remove('open'); el.innerHTML=''; } });
